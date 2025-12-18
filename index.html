@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo - Header Segregado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="header.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Incluindo o Header Segregado -->
+    <iframe src="header.html" style="width: 100%; border: none; height: 500px;"></iframe>
+
+    <!-- Conteúdo Principal de Exemplo -->
+    <main class="pt-20 pb-20 px-4 max-w-7xl mx-auto">
+        <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100 text-center">
+            <h2 class="text-3xl font-bold text-[#1A3E74] mb-4">Código Segregado com Sucesso!</h2>
+            <p class="text-lg text-gray-600 mb-8">O código foi dividido em três arquivos separados, mantendo toda a funcionalidade original:</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 text-left">
+                <div class="p-6 bg-gray-50 rounded-lg border border-gray-100">
+                    <h3 class="font-bold text-[#1A3E74] mb-2">header.html</h3>
+                    <p class="text-sm text-gray-600">Contém a estrutura HTML completa do header, incluindo o menu mobile e desktop.</p>
+                </div>
+                 <div class="p-6 bg-gray-50 rounded-lg border border-gray-100">
+                    <h3 class="font-bold text-[#1A3E74] mb-2">header.css</h3>
+                    <p class="text-sm text-gray-600">Todos os estilos CSS extraídos, incluindo animações e efeitos visuais.</p>
+                </div>
+                 <div class="p-6 bg-gray-50 rounded-lg border border-gray-100">
+                    <h3 class="font-bold text-[#1A3E74] mb-2">header.js</h3>
+                    <p class="text-sm text-gray-600">Todo o JavaScript para funcionalidade de mega menus, tabs e mobile.</p>
+                </div>
+            </div>
+
+            <div class="mt-12 p-6 bg-blue-50 rounded-lg border border-blue-200">
+                <h3 class="font-bold text-[#1A3E74] mb-2">Características Mantidas:</h3>
+                <ul class="text-sm text-gray-600 text-left space-y-1">
+                    <li>✅ Mega menus funcionais com animações</li>
+                    <li>✅ Sistema de abas interno (tabs)</li>
+                    <li>✅ Menu mobile responsivo</li>
+                    <li>✅ Efeitos visuais e transições</li>
+                    <li>✅ Acessibilidade (ARIA labels)</li>
+                    <li>✅ Scroll personalizado</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé de Exemplo -->
+    <footer class="bg-[#1A3E74] text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm opacity-80">&copy; 2025 Exemplo de Header Segregado. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="header.js"></script>
+</body>
+</html>
