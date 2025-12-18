@@ -1,0 +1,206 @@
+/* ==================================== */
+/* FOOTER CSS - ESTILOS ESPECÍFICOS DO FOOTER E ELEMENTOS RELACIONADOS */
+/* ==================================== */
+
+/* Footer Specific Styles */
+footer {
+    background-color: #1f2937;
+    color: white;
+    padding: 3rem 0;
+    margin-top: 4rem;
+}
+
+footer .container {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+footer .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    footer .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    footer .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Social Media Icons */
+footer .fab {
+    font-size: 1.5rem;
+}
+
+/* Links list styles */
+footer ul li a {
+    color: #d1d5db;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+footer ul li a:hover {
+    color: white;
+}
+
+/* Footer Bottom */
+footer .border-t {
+    border-top: 1px solid #374151;
+    margin-top: 2rem;
+    padding-top: 2rem;
+}
+
+/* ==================================== */
+/* ESTILOS DOS BOTÕES FAB */
+/* ==================================== */
+
+/* Variáveis CSS para Posição Base dos FABs */
+:root {
+    --fab-cookie-bottom-base: 100px;
+    --fab-top-bottom-base: 160px;
+    --banner-height: 96px; /* Altura de segurança para o banner */
+}
+
+#back-to-top-btn, #manage-cookies-fab-btn {
+    position: fixed;
+    right: 20px;
+    width: 48px;
+    height: 48px; 
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: bottom 0.5s ease-out, opacity 0.3s, visibility 0.3s, transform 0.1s;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: white;
+    border: none;
+    padding: 0;
+}
+
+/* Back to Top Button (FAB Superior) */
+#back-to-top-btn {
+    bottom: var(--fab-top-bottom-base);
+    background-color: #3b82f6; /* Azul Primário */
+    opacity: 0; /* Começa invisível, JS controla */
+    visibility: hidden;
+}
+#back-to-top-btn:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+}
+
+/* Cookie Management FAB Button (FAB Inferior) */
+#manage-cookies-fab-btn {
+    bottom: var(--fab-cookie-bottom-base); 
+    background-color: #f59e0b; /* Amarelo/Âmbar para aviso */
+    opacity: 1; 
+    visibility: visible;
+}
+#manage-cookies-fab-btn:hover {
+    background-color: #d97706;
+    transform: translateY(-2px);
+}
+
+/* Ajuste de Posição quando o Banner está visível */
+body.cookie-banner-active #back-to-top-btn {
+    bottom: calc(var(--fab-top-bottom-base) + var(--banner-height));
+}
+body.cookie-banner-active #manage-cookies-fab-btn {
+    bottom: calc(var(--fab-cookie-bottom-base) + var(--banner-height));
+}
+
+/* ==================================== */
+/* ESTILOS ADICIONAIS: Banner e Modal de Cookies */
+/* ==================================== */
+
+/* Cookie Banner */
+#cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000; /* Acima de FABs */
+    transform: translateY(100%); /* Inicialmente escondido */
+    transition: transform 0.5s ease-out;
+    max-width: 100vw;
+}
+#cookie-banner.show {
+    transform: translateY(0);
+}
+
+/* Modal Overlay */
+#cookie-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 3000;
+    display: none; /* Controlado por JS */
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+}
+
+/* Modal Content */
+#cookie-modal-content {
+    background-color: white;
+    color: #1f2937;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    max-width: 95%;
+    width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Alternância para Dark Mode (Contraste) */
+.contrast-dark #cookie-modal-content {
+    background-color: #1a1a1a !important;
+    color: #f3f4f6 !important;
+    filter: invert(1) hue-rotate(180deg) !important;
+}
+
+/* Limpeza de filtro para o footer */
+.contrast-dark footer, 
+.contrast-inverted footer, 
+.contrast-light footer {
+    filter: none !important;
+    /* Recarregar as cores originais, se necessário, para garantir consistência */
+    background-color: #1f2937 !important;
+    color: #ffffff !important;
+}
+
+/* Outras Correções Críticas de Acessibilidade */
+.contrast-inverted footer a, .contrast-inverted footer p {
+    color: #1a1a1a !important;
+}
+.contrast-inverted footer {
+    background-color: #ffffff !important;
+    border-top: 1px solid #ddd !important;
+}
+
+/* Footer Links Focus States */
+footer a:focus,
+footer button:focus {
+    outline: 3px solid #3b82f6; 
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+    border-radius: 0.25rem;
+}

@@ -1,0 +1,252 @@
+<!-- ==================================== -->
+<!-- MODALS - ESTRUTURA LIMPA E MODULAR -->
+<!-- ==================================== -->
+
+<!-- Accessibility Menu Modal -->
+<div id="accessibility-menu" class="accessibility-menu" aria-labelledby="accessibility-title" role="dialog" aria-hidden="true">
+    <div class="accessibility-menu-header">
+        <h2 id="accessibility-title" class="accessibility-menu-title">Acessibilidade</h2>
+        <button class="accessibility-menu-close" aria-label="Fechar menu de acessibilidade">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
+    
+    <div class="accessibility-menu-content">
+        <!-- Font Size Controls -->
+        <div class="accessibility-section" data-group="fontSize">
+            <h3 class="accessibility-section-title">Tamanho da Fonte</h3>
+            <div class="accessibility-options">
+                <button class="accessibility-option" data-action="font-size" data-value="small">
+                    Pequena
+                </button>
+                <button class="accessibility-option" data-action="font-size" data-value="medium">
+                    Média
+                </button>
+                <button class="accessibility-option" data-action="font-size" data-value="large">
+                    Grande
+                </button>
+                <button class="accessibility-option" data-action="font-size" data-value="extra-large">
+                    Extra Grande
+                </button>
+            </div>
+        </div>
+
+        <!-- Contrast Controls -->
+        <div class="accessibility-section" data-group="contrast">
+            <h3 class="accessibility-section-title">Contraste</h3>
+            <div class="accessibility-options">
+                <button class="accessibility-option" data-action="contrast" data-value="normal">
+                    Normal
+                </button>
+                <button class="accessibility-option" data-action="contrast" data-value="light">
+                    Alto Contraste (Claro)
+                </button>
+                <button class="accessibility-option" data-action="contrast" data-value="dark">
+                    Alto Contraste (Escuro)
+                </button>
+                <button class="accessibility-option" data-action="contrast" data-value="inverted">
+                    Cores Invertidas
+                </button>
+            </div>
+        </div>
+
+        <!-- Reading Tools -->
+        <div class="accessibility-section" data-group="reading">
+            <h3 class="accessibility-section-title">Ferramentas de Leitura</h3>
+            <div class="accessibility-options">
+                <button class="accessibility-option" data-action="reading-mask">
+                    Máscara de Leitura
+                </button>
+                <button class="accessibility-option" data-action="reading-guide">
+                    Guia de Leitura
+                </button>
+                <button class="accessibility-option" data-action="content-magnifier">
+                    Lupa de Conteúdo
+                </button>
+            </div>
+        </div>
+
+        <!-- Site Reader -->
+        <div class="accessibility-section" data-group="siteReader">
+            <h3 class="accessibility-section-title">Leitor de Sites</h3>
+            <div class="accessibility-controls">
+                <button class="accessibility-option" data-action="site-reader">
+                    Ativar Leitor
+                </button>
+                <div class="reading-speed-control">
+                    <label for="reading-speed" class="reading-speed-label">Velocidade:</label>
+                    <input type="range" id="reading-speed" min="0.5" max="2" step="0.1" value="0.8" class="reading-speed-slider">
+                    <span id="reading-speed-value" class="reading-speed-value">0.8x</span>
+                </div>
+                <button type="button" class="accessibility-option test-voice-btn">
+                    Testar Voz
+                </button>
+            </div>
+        </div>
+
+        <!-- Reset Button -->
+        <div class="accessibility-section">
+            <button id="reset-accessibility" class="accessibility-reset-btn">
+                <i class="fas fa-undo" aria-hidden="true"></i>
+                Resetar Configurações
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner" class="cookie-banner" role="banner" aria-live="polite" aria-hidden="true">
+    <div class="cookie-banner-content">
+        <div class="cookie-banner-info">
+            <i class="cookie-banner-icon fas fa-cookie-bite" aria-hidden="true"></i>
+            <div class="cookie-banner-text">
+                <h3 class="cookie-banner-title">Política de Cookies</h3>
+                <p class="cookie-banner-description">
+                    Utilizamos cookies para melhorar sua experiência em nosso site. 
+                    <a href="#" class="cookie-banner-link">Saiba mais</a>
+                </p>
+            </div>
+        </div>
+        <div class="cookie-banner-actions">
+            <button id="accept-cookies-btn" class="cookie-btn cookie-btn-primary">
+                Aceitar
+            </button>
+            <button id="decline-cookies-btn" class="cookie-btn cookie-btn-secondary">
+                Recusar
+            </button>
+            <button id="manage-cookies-banner-btn" class="cookie-btn cookie-btn-tertiary">
+                Configurar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Cookie Preferences Modal -->
+<div id="cookie-prefs-modal" class="modal" role="dialog" aria-labelledby="cookie-modal-title" aria-hidden="true">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="cookie-modal-title" class="modal-title">Configurações de Cookies</h3>
+            <button class="modal-close" aria-label="Fechar modal">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="cookie-preferences">
+                <div class="cookie-preference-group">
+                    <div class="cookie-preference-header">
+                        <h4 class="cookie-preference-title">Cookies Necessários</h4>
+                        <span class="cookie-preference-status cookie-status-required">Sempre Ativos</span>
+                    </div>
+                    <p class="cookie-preference-description">
+                        Estes cookies são essenciais para o funcionamento básico do site.
+                    </p>
+                </div>
+                
+                <div class="cookie-preference-group">
+                    <div class="cookie-preference-header">
+                        <h4 class="cookie-preference-title">Cookies Analíticos</h4>
+                        <label class="cookie-toggle">
+                            <input type="checkbox" id="cookies-analytics" class="cookie-toggle-input">
+                            <span class="cookie-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <p class="cookie-preference-description">
+                        Para melhorar nosso site e entender como você o utiliza.
+                    </p>
+                </div>
+                
+                <div class="cookie-preference-group">
+                    <div class="cookie-preference-header">
+                        <h4 class="cookie-preference-title">Cookies de Marketing</h4>
+                        <label class="cookie-toggle">
+                            <input type="checkbox" id="cookies-marketing" class="cookie-toggle-input">
+                            <span class="cookie-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <p class="cookie-preference-description">
+                        Para personalização de anúncios e conteúdo relevante.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button id="save-cookie-prefs-btn" class="modal-btn modal-btn-primary">
+                Salvar Preferências
+            </button>
+            <button id="accept-all-cookies-btn" class="modal-btn modal-btn-success">
+                Aceitar Todos
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Suggestion Modal -->
+<div id="suggestion-modal" class="modal" role="dialog" aria-labelledby="suggestion-modal-title" aria-hidden="true">
+    <div class="modal-content modal-content-large">
+        <div class="modal-header">
+            <h3 id="suggestion-modal-title" class="modal-title">Sugira uma Ferramenta</h3>
+            <button class="modal-close" aria-label="Fechar modal">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+        
+        <form id="suggestion-form" class="modal-body">
+            <div class="form-group">
+                <label for="tool-name" class="form-label">Nome da Ferramenta *</label>
+                <input type="text" id="tool-name" name="name" required 
+                       class="form-input"
+                       placeholder="Ex: Calculadora de Dosagem Pediátrica">
+            </div>
+            
+            <div class="form-group">
+                <label for="tool-category" class="form-label">Categoria *</label>
+                <select id="tool-category" name="category" required class="form-select">
+                    <option value="">Selecione uma categoria</option>
+                    <option value="calculo">Cálculos</option>
+                    <option value="escala">Escalas Clínicas</option>
+                    <option value="dosagem">Dosagem</option>
+                    <option value="avaliacao">Avaliação</option>
+                    <option value="conversao">Conversão de Unidades</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="tool-description" class="form-label">Descrição *</label>
+                <textarea id="tool-description" name="description" rows="3" required
+                          class="form-textarea"
+                          placeholder="Descreva brevemente como a ferramenta deve funcionar..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact-email" class="form-label">Email (opcional)</label>
+                <input type="email" id="contact-email" name="email" 
+                       class="form-input"
+                       placeholder="seu@email.com">
+                <small class="form-help">Para receber atualizações sobre sua sugestão</small>
+            </div>
+        </form>
+        
+        <div class="modal-footer">
+            <button type="button" class="modal-btn modal-btn-secondary modal-close">
+                Cancelar
+            </button>
+            <button type="submit" form="suggestion-form" class="modal-btn modal-btn-primary">
+                Enviar Sugestão
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Reading Mask Overlay -->
+<div id="reading-mask" class="reading-mask" aria-hidden="true"></div>
+
+<!-- Reading Guide Line -->
+<div id="reading-guide" class="reading-guide" aria-hidden="true"></div>
+
+<!-- Content Magnifier -->
+<div id="content-magnifier" class="content-magnifier" aria-hidden="true">
+    <div class="magnifier-lens"></div>
+</div>
+

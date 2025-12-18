@@ -1,0 +1,9 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#059669"/>
+    <text x="50%" y="50%" text-anchor="middle" dy=".3em" 
+          font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold">
+        Ferramentas
+    </text>
+    <rect x="250" y="10" width="30" height="30" fill="#34d399" rx="5"/>
+    <text x="265" y="30" text-anchor="middle" font-size="16" fill="white">⚙</text>
+</svg>
