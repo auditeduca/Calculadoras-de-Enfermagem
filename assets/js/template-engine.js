@@ -1,16 +1,35 @@
 /**
- * Template Engine Robusto para Calculadoras de Enfermagem
+ * Template Engine v2.1 - Robusto para Calculadoras de Enfermagem
  * 
  * Características:
  * - Suporte automático a estruturas de pastas profundas
  * - Injeção dinâmica de Header, Footer e Modais
- * - Carregamento inteligente de CSS/JS
+ * - Carregamento GARANTIDO de todos os CSS/JS dos componentes
  * - Cache de componentes
  * - Tratamento robusto de erros
+ * - Suporte a modais específicos da página
  * - Suporte a GitHub Pages e localhost
  * 
+ * Estrutura de Assets Esperada:
+ * assets/
+ * ├── components/
+ * │   ├── header.html
+ * │   ├── footer.html
+ * │   └── modals-main.html
+ * ├── css/
+ * │   ├── global.css
+ * │   ├── header.css
+ * │   ├── footer.css
+ * │   └── modals.css
+ * └── js/
+ *     ├── header.js
+ *     ├── footer.js
+ *     ├── modals.js
+ *     ├── utils.js
+ *     └── console-cleaner.js
+ * 
  * @author Calculadoras de Enfermagem
- * @version 2.0.0
+ * @version 2.1.0
  */
 
 class TemplateEngine {
@@ -31,7 +50,14 @@ class TemplateEngine {
         this.rootPath = this._calculateRootPath();
         this.currentPageDepth = this._calculatePageDepth();
 
-        this._log('Inicializando Template Engine', {
+        // Mapeamento de componentes para seus assets
+        this.componentAssets = {
+            'header': { css: 'header.css', js: 'header.js' },
+            'footer': { css: 'footer.css', js: 'footer.js' },
+            'modals': { css: 'modals.css', js: 'modals.js' }
+        };
+
+        this._log('Inicializando Template Engine v2.1', {
             rootPath: this.rootPath,
             pageDepth: this.currentPageDepth,
             hostname: window.location.hostname,
@@ -85,16 +111,6 @@ class TemplateEngine {
     }
 
     /**
-     * Calcula o caminho relativo para assets baseado na profundidade da página
-     */
-    _getAssetsRelativePath() {
-        if (this.currentPageDepth === 0) {
-            return './assets/';
-        }
-        return '../'.repeat(this.currentPageDepth) + 'assets/';
-    }
-
-    /**
      * Obtém o caminho absoluto para um componente
      */
     _getComponentPath(fileName) {
@@ -132,18 +148,21 @@ class TemplateEngine {
             // 1. Carregar CSS global primeiro (evita FOUC)
             await this._loadCss('global.css');
 
-            // 2. Carregar componentes principais
+            // 2. Carregar componentes principais COM seus assets
             await Promise.all([
-                this._injectComponent('header-container', 'header.html', 'header'),
-                this._injectComponent('footer-container', 'footer.html', 'footer'),
-                this._injectComponent('modals-container', 'modals-main.html', 'modals')
+                this._injectComponentWithAssets('header-container', 'header.html', 'header'),
+                this._injectComponentWithAssets('footer-container', 'footer.html', 'footer'),
+                this._injectComponentWithAssets('modals-container', 'modals-main.html', 'modals')
             ]);
 
             // 3. Carregar scripts utilitários
-            await this._loadJs('utils.js');
-            await this._loadJs('console-cleaner.js');
+            await Promise.all([
+                this._loadJs('utils.js'),
+                this._loadJs('console-cleaner.js')
+            ]);
 
-            this._log('Todos os componentes carregados com sucesso');
+            this._log('✓ Todos os componentes carregados com sucesso');
+            this._logAssetsSummary();
 
             // Disparar evento customizado
             window.dispatchEvent(new CustomEvent('templateEngineReady', {
@@ -151,7 +170,7 @@ class TemplateEngine {
             }));
 
         } catch (error) {
-            console.error('Template Engine: Erro fatal ao inicializar', error);
+            console.error('❌ Template Engine: Erro fatal ao inicializar', error);
             window.dispatchEvent(new CustomEvent('templateEngineError', {
                 detail: { error }
             }));
@@ -159,10 +178,10 @@ class TemplateEngine {
     }
 
     /**
-     * Injeta um componente HTML em um container
-     * Carrega automaticamente CSS e JS associados
+     * Injeta um componente HTML e carrega TODOS seus assets (CSS + JS)
+     * Garante que CSS seja carregado ANTES do JS
      */
-    async _injectComponent(containerId, fileName, assetName) {
+    async _injectComponentWithAssets(containerId, fileName, assetName) {
         const container = document.getElementById(containerId);
         
         if (!container) {
@@ -171,21 +190,27 @@ class TemplateEngine {
         }
 
         try {
+            // 1. Buscar e injetar HTML do componente
             const html = await this._fetchComponent(fileName);
             container.innerHTML = html;
+            this._log(`✓ HTML injetado: ${fileName}`);
 
-            // Carregar CSS e JS associados
-            if (assetName) {
-                await Promise.all([
-                    this._loadCss(`${assetName}.css`),
-                    this._loadJs(`${assetName}.js`)
-                ]);
+            // 2. Carregar CSS do componente (ANTES do JS)
+            if (assetName && this.componentAssets[assetName]) {
+                const cssFile = this.componentAssets[assetName].css;
+                await this._loadCss(cssFile);
+                this._log(`✓ CSS carregado: ${cssFile}`);
             }
 
-            this._log(`Componente ${fileName} injetado com sucesso`);
+            // 3. Carregar JS do componente (DEPOIS do CSS)
+            if (assetName && this.componentAssets[assetName]) {
+                const jsFile = this.componentAssets[assetName].js;
+                await this._loadJs(jsFile);
+                this._log(`✓ JS carregado: ${jsFile}`);
+            }
 
         } catch (error) {
-            console.error(`Erro ao injetar componente ${fileName}:`, error);
+            console.error(`❌ Erro ao injetar componente ${fileName}:`, error);
             throw error;
         }
     }
@@ -198,7 +223,7 @@ class TemplateEngine {
 
         // Verificar cache
         if (this.config.cacheComponents && this.cache.has(cacheKey)) {
-            this._log(`Usando cache para ${fileName}`);
+            this._log(`📦 Cache: ${fileName}`);
             return this.cache.get(cacheKey);
         }
 
@@ -234,19 +259,21 @@ class TemplateEngine {
 
     /**
      * Carrega um arquivo CSS com verificação de duplicatas
+     * Aguarda o carregamento completo antes de retornar
      */
     async _loadCss(fileName) {
-        const assetId = `css-${fileName}`;
+        const assetId = `css-${fileName.replace(/\./g, '-')}`;
 
         // Verificar se já foi carregado
         if (this.loadedAssets.has(assetId)) {
-            this._log(`CSS ${fileName} já foi carregado`);
+            this._log(`📦 CSS já carregado: ${fileName}`);
             return;
         }
 
         // Verificar se já existe no DOM
         if (document.getElementById(assetId)) {
             this.loadedAssets.add(assetId);
+            this._log(`📦 CSS já no DOM: ${fileName}`);
             return;
         }
 
@@ -258,12 +285,29 @@ class TemplateEngine {
         return new Promise((resolve, reject) => {
             link.onload = () => {
                 this.loadedAssets.add(assetId);
-                this._log(`CSS carregado: ${fileName}`);
+                this._log(`✓ CSS carregado: ${fileName}`);
                 resolve();
             };
 
             link.onerror = () => {
-                reject(new Error(`Falha ao carregar CSS: ${fileName}`));
+                reject(new Error(`❌ Falha ao carregar CSS: ${fileName}`));
+            };
+
+            // Timeout de 10 segundos
+            const timeout = setTimeout(() => {
+                reject(new Error(`⏱ Timeout ao carregar CSS: ${fileName}`));
+            }, 10000);
+
+            link.onload = () => {
+                clearTimeout(timeout);
+                this.loadedAssets.add(assetId);
+                this._log(`✓ CSS carregado: ${fileName}`);
+                resolve();
+            };
+
+            link.onerror = () => {
+                clearTimeout(timeout);
+                reject(new Error(`❌ Falha ao carregar CSS: ${fileName}`));
             };
 
             document.head.appendChild(link);
@@ -272,19 +316,21 @@ class TemplateEngine {
 
     /**
      * Carrega um arquivo JavaScript com verificação de duplicatas
+     * Aguarda o carregamento completo antes de retornar
      */
     async _loadJs(fileName) {
-        const assetId = `js-${fileName}`;
+        const assetId = `js-${fileName.replace(/\./g, '-')}`;
 
         // Verificar se já foi carregado
         if (this.loadedAssets.has(assetId)) {
-            this._log(`JS ${fileName} já foi carregado`);
+            this._log(`📦 JS já carregado: ${fileName}`);
             return;
         }
 
         // Verificar se já existe no DOM
         if (document.getElementById(assetId)) {
             this.loadedAssets.add(assetId);
+            this._log(`📦 JS já no DOM: ${fileName}`);
             return;
         }
 
@@ -296,12 +342,29 @@ class TemplateEngine {
         return new Promise((resolve, reject) => {
             script.onload = () => {
                 this.loadedAssets.add(assetId);
-                this._log(`JS carregado: ${fileName}`);
+                this._log(`✓ JS carregado: ${fileName}`);
                 resolve();
             };
 
             script.onerror = () => {
-                reject(new Error(`Falha ao carregar JS: ${fileName}`));
+                reject(new Error(`❌ Falha ao carregar JS: ${fileName}`));
+            };
+
+            // Timeout de 10 segundos
+            const timeout = setTimeout(() => {
+                reject(new Error(`⏱ Timeout ao carregar JS: ${fileName}`));
+            }, 10000);
+
+            script.onload = () => {
+                clearTimeout(timeout);
+                this.loadedAssets.add(assetId);
+                this._log(`✓ JS carregado: ${fileName}`);
+                resolve();
+            };
+
+            script.onerror = () => {
+                clearTimeout(timeout);
+                reject(new Error(`❌ Falha ao carregar JS: ${fileName}`));
             };
 
             document.body.appendChild(script);
@@ -326,7 +389,7 @@ class TemplateEngine {
             }
 
             if (i < attempts - 1) {
-                this._log(`Retry ${i + 1}/${attempts - 1} para ${url}`);
+                this._log(`🔄 Retry ${i + 1}/${attempts - 1} para ${url}`);
                 await new Promise(resolve => setTimeout(resolve, delay));
             }
         }
@@ -336,7 +399,7 @@ class TemplateEngine {
 
     /**
      * Carrega um componente customizado em um container específico
-     * Útil para modais ou componentes específicos de página
+     * Útil para modais específicos da página ou componentes adicionais
      */
     async load(containerId, fileName, assetName = null) {
         const container = document.getElementById(containerId);
@@ -350,17 +413,48 @@ class TemplateEngine {
             const html = await this._fetchComponent(fileName);
             container.innerHTML = html;
 
+            // Carregar CSS e JS associados se fornecidos
             if (assetName) {
-                await Promise.all([
-                    this._loadCss(`${assetName}.css`),
-                    this._loadJs(`${assetName}.js`)
-                ]);
+                // Verificar se há mapeamento para este asset
+                if (this.componentAssets[assetName]) {
+                    const cssFile = this.componentAssets[assetName].css;
+                    const jsFile = this.componentAssets[assetName].js;
+                    
+                    await this._loadCss(cssFile);
+                    await this._loadJs(jsFile);
+                } else {
+                    // Tentar carregar com o nome fornecido
+                    await this._loadCss(`${assetName}.css`);
+                    await this._loadJs(`${assetName}.js`);
+                }
             }
 
-            this._log(`Componente customizado ${fileName} carregado em #${containerId}`);
+            this._log(`✓ Componente customizado ${fileName} carregado em #${containerId}`);
 
         } catch (error) {
-            console.error(`Erro ao carregar componente customizado ${fileName}:`, error);
+            console.error(`❌ Erro ao carregar componente customizado ${fileName}:`, error);
+            throw error;
+        }
+    }
+
+    /**
+     * Carrega modais específicos da página
+     * Útil para páginas que têm modais customizados além dos globais
+     */
+    async loadPageSpecificModals(fileName) {
+        const container = document.getElementById('specific-page-modals');
+        
+        if (!container) {
+            this._warn('Container #specific-page-modals não encontrado');
+            return;
+        }
+
+        try {
+            const html = await this._fetchComponent(fileName);
+            container.innerHTML = html;
+            this._log(`✓ Modais específicos da página carregados: ${fileName}`);
+        } catch (error) {
+            console.error(`❌ Erro ao carregar modais específicos: ${fileName}`, error);
             throw error;
         }
     }
@@ -370,7 +464,7 @@ class TemplateEngine {
      */
     clearCache() {
         this.cache.clear();
-        this._log('Cache de componentes limpo');
+        this._log('🗑 Cache de componentes limpo');
     }
 
     /**
@@ -378,14 +472,27 @@ class TemplateEngine {
      */
     getDebugInfo() {
         return {
+            version: '2.1.0',
             rootPath: this.rootPath,
             currentPageDepth: this.currentPageDepth,
-            assetsRelativePath: this._getAssetsRelativePath(),
             loadedAssets: Array.from(this.loadedAssets),
             cachedComponents: Array.from(this.cache.keys()),
             pendingLoads: Array.from(this.pendingLoads.keys()),
-            config: this.config
+            componentAssets: this.componentAssets,
+            config: this.config,
+            timestamp: new Date().toISOString()
         };
+    }
+
+    /**
+     * Log resumido dos assets carregados
+     */
+    _logAssetsSummary() {
+        const debug = this.getDebugInfo();
+        this._log('📊 Resumo de Assets Carregados:', {
+            total: debug.loadedAssets.length,
+            assets: debug.loadedAssets
+        });
     }
 
     /**
@@ -394,9 +501,9 @@ class TemplateEngine {
     _log(message, data = null) {
         if (this.config.debug) {
             if (data) {
-                console.log(`[TemplateEngine] ${message}`, data);
+                console.log(`[TemplateEngine v2.1] ${message}`, data);
             } else {
-                console.log(`[TemplateEngine] ${message}`);
+                console.log(`[TemplateEngine v2.1] ${message}`);
             }
         }
     }
@@ -405,7 +512,7 @@ class TemplateEngine {
      * Warn com prefix
      */
     _warn(message) {
-        console.warn(`[TemplateEngine] ${message}`);
+        console.warn(`[TemplateEngine v2.1] ⚠️ ${message}`);
     }
 }
 
