@@ -1,14 +1,14 @@
 /**
  * HEADER-SCRIPTS.JS - Lógica de Interação e Menu (Mega-Menu)
  * Foco: Delegação de Eventos para compatibilidade com Template Engines.
- * Nota: Requer utils.js e console-cleaner.js carregados previamente.
- * A lógica de Modais foi removida para segregação no ficheiro modals.js.
+ * * ATENÇÃO: Este arquivo NÃO contém as classes ConsoleCleaner ou Utils, 
+ * pois estas devem ser carregadas via console-cleaner.js e utils.js.
  */
 
 // --- 1. LÓGICA DO MENU (DELEGAÇÃO DE EVENTOS) ---
 /**
- * Esta secção utiliza delegação de eventos no "document". 
- * O HeaderController gere o Mega-Menu Desktop, abas internas e Menu Mobile.
+ * O HeaderController gerencia o Mega-Menu Desktop, abas internas e Menu Mobile.
+ * Utiliza delegação de eventos para funcionar mesmo com injeção dinâmica de HTML.
  */
 const HeaderController = {
     init: function() {
@@ -66,7 +66,7 @@ const HeaderController = {
                     const icon = trigger.querySelector('.fa-chevron-down');
                     if (icon) icon.style.transform = 'rotate(180deg)';
                     
-                    // Executa animação se o Utils global estiver disponível
+                    // Executa animação se o Utils global estiver disponível (carregado via utils.js)
                     if (window.Utils && window.Utils.animate && window.Utils.animate.fadeIn) {
                         window.Utils.animate.fadeIn(targetPanel, 200);
                     }
@@ -150,8 +150,10 @@ window.addEventListener('templateEngineReady', startHeaderServices);
 
 // Fallback para carregamento padrão do DOM
 document.addEventListener('DOMContentLoaded', () => {
-    if (!window.templateEngineActive) {
+    // Verifica se o serviço já não foi iniciado pelo evento do template engine
+    if (typeof window.headerInitialized === 'undefined') {
         startHeaderServices();
+        window.headerInitialized = true;
     }
 });
 
