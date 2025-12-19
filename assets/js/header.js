@@ -22,16 +22,48 @@ const HeaderController = {
             return;
         }
 
+        this.applySavedPreferences();
         this.bindEvents();
         this.isInitialized = true;
         console.log('✅ [Menu Debug] Sistema de Header estabilizado e inicializado.');
     },
 
     /**
+     * Aplica as preferências de tema e fonte salvas no localStorage
+     */
+    applySavedPreferences: function() {
+        // Tema
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            this.updateThemeUI(true);
+        }
+
+        // Tamanho da Fonte
+        const savedFontSize = localStorage.getItem('fontSizeScale');
+        if (savedFontSize) {
+            document.documentElement.style.fontSize = savedFontSize + '%';
+        }
+    },
+
+    /**
+     * Atualiza os ícones e textos do botão de tema
+     */
+    updateThemeUI: function(isDark) {
+        const themeBtn = document.querySelector('#theme-toggle');
+        if (!themeBtn) return;
+
+        const icon = themeBtn.querySelector('i');
+        const span = themeBtn.querySelector('span');
+        
+        if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        if (span) span.innerText = isDark ? 'Modo Claro' : 'Modo Escuro';
+    },
+
+    /**
      * Fecha todos os painéis do Mega-Menu de forma robusta.
      */
     closeAllPanels: function() {
-        // Consultamos o DOM no momento da execução para garantir que pegamos elementos injetados
         const panels = document.querySelectorAll('.mega-panel');
         const triggers = document.querySelectorAll('.nav-trigger');
         
@@ -50,10 +82,9 @@ const HeaderController = {
 
     bindEvents: function() {
         // --- DELEGAÇÃO DE EVENTOS GLOBAL ---
-        // Usamos delegação no document para garantir que elementos dinâmicos sejam capturados
         document.addEventListener('click', (e) => {
+            // 1. Mega Menu Triggers
             const trigger = e.target.closest('.nav-trigger');
-            
             if (trigger) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -67,61 +98,30 @@ const HeaderController = {
                 }
 
                 const isOpen = targetPanel.classList.contains('active') && targetPanel.style.display === 'block';
-
                 this.closeAllPanels();
 
                 if (!isOpen) {
                     targetPanel.classList.remove('hidden');
                     targetPanel.classList.add('active');
-                    // Força display block com prioridade absoluta
                     targetPanel.style.setProperty('display', 'block', 'important');
                     
                     trigger.setAttribute('aria-expanded', 'true');
                     const icon = trigger.querySelector('.fa-chevron-down');
                     if (icon) icon.style.transform = 'rotate(180deg)';
                     
-                    // Executa animação se o Utils global estiver disponível
                     if (window.Utils?.animate?.fadeIn) {
                         window.Utils.animate.fadeIn(targetPanel, 200);
                     }
-                    console.log('✅ [Menu Debug] Painel expandido:', targetId);
                 }
-            } else if (!e.target.closest('.mega-panel')) {
-                // Se clicar em qualquer lugar que não seja o menu ou um painel, fecha tudo
+                return;
+            }
+
+            // 2. Fechar ao clicar fora
+            if (!e.target.closest('.mega-panel') && !e.target.closest('header')) {
                 this.closeAllPanels();
             }
-        });
 
-        // --- COMPORTAMENTO DE ABAS INTERNAS ---
-        document.addEventListener('mouseover', (e) => {
-            const tabTrigger = e.target.closest('.menu-tab-trigger');
-            if (tabTrigger) {
-                const parent = tabTrigger.closest('.mega-panel');
-                if (!parent) return;
-
-                const targetId = tabTrigger.getAttribute('data-target');
-                const targetContent = document.getElementById(targetId);
-
-                // Reset local de abas irmãs
-                parent.querySelectorAll('.menu-tab-trigger').forEach(t => {
-                    t.classList.remove('active', 'bg-gray-100', 'dark:bg-gray-800');
-                });
-                parent.querySelectorAll('.tab-content').forEach(c => {
-                    c.classList.add('hidden');
-                    c.style.display = 'none';
-                });
-
-                // Ativa aba atual
-                tabTrigger.classList.add('active', 'bg-gray-100', 'dark:bg-gray-800');
-                if (targetContent) {
-                    targetContent.classList.remove('hidden');
-                    targetContent.style.display = 'block';
-                }
-            }
-        });
-
-        // --- CONTROLO MOBILE (DRAWERS E ACCORDIONS) ---
-        document.addEventListener('click', (e) => {
+            // 3. Controlo Mobile
             const mobileBtn = e.target.closest('#mobile-menu-trigger');
             const closeBtn = e.target.closest('#close-mobile-menu');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -141,7 +141,7 @@ const HeaderController = {
                 }, 300);
             }
 
-            // Accordion Mobile
+            // 4. Accordion Mobile
             const accordionTrigger = e.target.closest('.mobile-accordion-trigger');
             if (accordionTrigger) {
                 const sub = accordionTrigger.nextElementSibling;
@@ -151,25 +151,42 @@ const HeaderController = {
                 }
             }
         });
+
+        // --- COMPORTAMENTO DE ABAS INTERNAS ---
+        document.addEventListener('mouseover', (e) => {
+            const tabTrigger = e.target.closest('.menu-tab-trigger');
+            if (tabTrigger) {
+                const parent = tabTrigger.closest('.mega-panel');
+                if (!parent) return;
+
+                const targetId = tabTrigger.getAttribute('data-target');
+                const targetContent = document.getElementById(targetId);
+
+                parent.querySelectorAll('.menu-tab-trigger').forEach(t => {
+                    t.classList.remove('active', 'bg-gray-100', 'dark:bg-gray-800');
+                });
+                parent.querySelectorAll('.tab-content').forEach(c => {
+                    c.classList.add('hidden');
+                    c.style.display = 'none';
+                });
+
+                tabTrigger.classList.add('active', 'bg-gray-100', 'dark:bg-gray-800');
+                if (targetContent) {
+                    targetContent.classList.remove('hidden');
+                    targetContent.style.display = 'block';
+                }
+            }
+        });
     }
 };
 
 // --- 2. ORQUESTRAÇÃO DE INICIALIZAÇÃO ---
-
-/**
- * Tenta iniciar o HeaderController. 
- * É chamado tanto pelo evento do Template Engine quanto pelo carregamento do DOM.
- */
 function attemptInitialization() {
-    // Usamos um timeout de 0ms para empurrar a execução para o final da fila de eventos,
-    // garantindo que o DOM tenha tempo de processar as injeções do Template Engine.
     setTimeout(() => HeaderController.init(), 0);
 }
 
-// Ouve o evento disparado pelo template-engine.js
 window.addEventListener('templateEngineReady', attemptInitialization);
 
-// Fallback de segurança para o carregamento padrão
 if (document.readyState === 'complete') {
     attemptInitialization();
 } else {
@@ -178,23 +195,23 @@ if (document.readyState === 'complete') {
 
 /**
  * FUNÇÕES GLOBAIS (ACESSIBILIDADE E TEMA)
+ * Disponíveis no escopo window para chamadas via onclick
  */
 window.toggleTheme = function() {
     const isDark = document.documentElement.classList.toggle('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    const icon = document.querySelector('#theme-toggle i');
-    if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    HeaderController.updateThemeUI(isDark);
 };
 
 window.changeFontSize = function(action) {
+    // Busca o valor atual direto do estilo computado ou do inline para evitar NaN
     let current = parseInt(document.documentElement.style.fontSize) || 100;
+    
     if (action === 'increase' && current < 130) current += 5;
     if (action === 'decrease' && current > 85) current -= 5;
     if (action === 'reset') current = 100;
-    document.documentElement.style.fontSize = current + '%';
+    
+    const newValue = current + '%';
+    document.documentElement.style.fontSize = newValue;
+    localStorage.setItem('fontSizeScale', current);
 };
-
-// Aplica tema inicial
-if (localStorage.getItem('theme') === 'dark') {
-    document.documentElement.classList.add('dark');
-}
