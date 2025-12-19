@@ -1,4 +1,9 @@
-/* Variáveis Locais */
+/**
+ * global-main-index.css
+ * Estilos específicos para a página de índice (Portal).
+ * Versão atualizada com prefixo global-main.
+ */
+
 :root {
     --nurse-primary: #1A3E74;
     --nurse-secondary: #00bcd4;

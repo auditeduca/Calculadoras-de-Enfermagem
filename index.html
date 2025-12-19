@@ -55,7 +55,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
 
-    <!-- Scripts de utilidade e limpeza carregados primeiro -->
+    <!-- Scripts de utilidade e limpeza -->
     <script src="assets/js/console-cleaner.js"></script>
     <script src="assets/js/utils.js"></script>
 
@@ -73,15 +73,7 @@
 
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
         
-        <!-- Breadcrumb (Incluso para padrão institucional) -->
-        <nav class="flex text-sm text-gray-500 dark:text-gray-400 mb-8" aria-label="Breadcrumb">
-            <ol class="flex items-center space-x-2">
-                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
-                <li class="flex items-center gap-2"><span>/</span> <span class="text-nurse-primary dark:text-nurse-secondary font-medium">Ferramentas de Apoio</span></li>
-            </ol>
-        </nav>
-
-        <!-- Cabeçalho do Portal -->
+        <!-- Cabeçalho -->
         <header class="mb-12 text-center md:text-left">
             <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 font-display tracking-tight leading-tight">
                 Calculadoras de <span class="text-nurse-secondary">Enfermagem</span>
@@ -97,9 +89,7 @@
             <h2 class="text-2xl font-bold text-nurse-primary dark:text-nurse-secondary mb-8 font-display flex items-center gap-3">
                 <i class="fa-solid fa-bolt text-nurse-accent"></i> Atalhos Rápidos
             </h2>
-            <div id="quick-access-container" class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <!-- Injetado via global-main-index.js -->
-            </div>
+            <div id="quick-access-container" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
         </div>
 
         <!-- Barra de Busca -->
@@ -110,7 +100,7 @@
                         <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
                             <i class="fas fa-search text-gray-400 text-lg"></i>
                         </div>
-                        <input type="text" id="search-input" placeholder="Pesquisar escalas, medicamentos ou termos..." 
+                        <input type="text" id="search-input" placeholder="Pesquisar ferramentas..." 
                                class="w-full h-16 pl-16 pr-6 py-4 border-2 border-gray-100 dark:border-slate-600 dark:bg-slate-700 rounded-2xl text-lg focus:outline-none focus:ring-4 focus:ring-nurse-secondary/20 focus:border-nurse-secondary transition-all outline-none">
                     </div>
                     <button id="clear-search" class="bg-white dark:bg-slate-700 text-gray-500 px-6 h-16 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-600 hover:bg-gray-50 transition-all">
@@ -122,11 +112,8 @@
 
         <!-- Área de Ferramentas -->
         <div id="tools-card" class="bg-white dark:bg-slate-800 p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-gray-100 dark:border-slate-700">
-            
-            <!-- Controles de Visualização -->
             <div id="controls-container" class="mb-10 flex flex-col md:flex-row justify-between items-center gap-6 pb-6 border-b border-gray-100 dark:border-slate-700"></div>
 
-            <!-- Seções Dinâmicas -->
             <section id="calculators-section" class="mb-16">
                 <h3 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary mb-8 font-display inline-flex items-center gap-3 border-b-4 border-nurse-primary pb-2" data-anchor-id="calculadoras">
                     <i class="fa-solid fa-calculator"></i> Cálculos e Dosagens
@@ -148,22 +135,15 @@
                 <div id="vaccines-container"></div>
             </section>
 
-            <!-- Estado Vazio -->
             <div id="no-results" class="hidden text-center py-24">
-                <div class="bg-gray-50 dark:bg-slate-700/50 inline-flex p-12 rounded-full mb-6">
-                    <i class="fas fa-search-minus text-6xl text-gray-300"></i>
-                </div>
                 <h4 class="text-2xl font-bold text-gray-400">Nenhuma ferramenta encontrada</h4>
-                <p class="text-gray-500 mt-2">Tente outros termos ou remova os filtros.</p>
             </div>
         </div>
     </main>
 
-    <!-- Injeção de Footer e Modais -->
     <div id="footer-container"></div>
     <div id="modals-container"></div>
 
-    <!-- Scripts Externos Modulares -->
     <script src="assets/js/template-engine.js"></script>
     <script src="assets/js/global-main-index.js"></script>
 </body>

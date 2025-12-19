@@ -1,6 +1,7 @@
 /**
- * global-index.js
+ * global-main-index.js
  * Gerencia os dados, estado e renderização da página principal.
+ * Versão atualizada com prefixo global-main.
  */
 
 const BASE_URL = 'https://www.calculadorasdeenfermagem.com.br/';
@@ -129,12 +130,10 @@ function render() {
     });
 
     filtered.forEach(tool => {
-        // Usa o TemplateEngine carregado externamente
         const html = typeof TemplateEngine !== 'undefined' ? TemplateEngine.renderCard(tool, state) : '';
         if (containers[tool.type]) containers[tool.type].innerHTML += html;
     });
 
-    // Controla visibilidade das seções
     document.getElementById('calculators-section').style.display = filtered.some(t => t.type === 'calculator') ? 'block' : 'none';
     document.getElementById('scales-section').style.display = filtered.some(t => t.type === 'scale') ? 'block' : 'none';
     document.getElementById('vaccines-section').style.display = filtered.some(t => t.type === 'vaccine') ? 'block' : 'none';
@@ -198,7 +197,6 @@ function initQuickAccess() {
 
 // INITIALIZATION
 window.onload = () => {
-    // Carregamento de componentes dinâmicos (simulação)
     if (typeof Utils !== 'undefined') {
         Utils.injectComponent('header-container', 'assets/components/header.html');
         Utils.injectComponent('footer-container', 'assets/components/footer.html');
@@ -219,7 +217,5 @@ window.onload = () => {
 
     renderControls();
     render();
-    
-    // Dispara evento para sinalizar prontidão (útil para outros módulos)
     window.dispatchEvent(new CustomEvent('portalReady'));
 };
