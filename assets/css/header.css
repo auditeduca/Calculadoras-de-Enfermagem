@@ -4,6 +4,11 @@
     flex-direction: column;
 }
 
+/* Compensação para o conteúdo não ficar por baixo do cabeçalho fixo */
+body {
+    padding-top: 100px; /* Altura total: Top Bar (36px) + Navbar (64px) */
+}
+
 .top-bar-faixa {
     height: 36px;
     background-color: #f9fafb; /* Gray 50 */
@@ -148,6 +153,14 @@
 @keyframes fadeIn {
     from { opacity: 0; transform: translateX(5px); }
     to { opacity: 1; transform: translateX(0); }
+}
+
+/* --- RESPONSIVIDADE E AJUSTES DE ESPAÇAMENTO --- */
+@media (max-width: 1024px) {
+    /* No mobile/tablet o Top Bar costuma ser escondido ou muda de tamanho */
+    body {
+        padding-top: 64px; /* Ajustado para apenas a altura da Navbar principal */
+    }
 }
 
 /* --- MOBILE DRAWER --- */
