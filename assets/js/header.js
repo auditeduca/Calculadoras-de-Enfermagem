@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- MEGA MENU DESKTOP ---
+    // --- 1. LÓGICA DO MEGA MENU DESKTOP (CLIQUE) ---
     const navTriggers = document.querySelectorAll('.nav-trigger');
     const megaPanels = document.querySelectorAll('.mega-panel');
 
@@ -15,12 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     navTriggers.forEach(trigger => {
         trigger.addEventListener('click', (e) => {
-            e.stopPropagation();
+            e.stopPropagation(); 
+            
             const targetId = trigger.dataset.panel;
             const targetPanel = document.getElementById(targetId);
             const isAlreadyOpen = targetPanel && targetPanel.classList.contains('active');
 
-            closeAllPanels();
+            closeAllPanels(); 
 
             if (!isAlreadyOpen && targetPanel) {
                 targetPanel.classList.add('active');
@@ -31,16 +32,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Fechar ao clicar fora
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('header')) closeAllPanels();
+        if (!e.target.closest('header')) {
+            closeAllPanels();
+        }
     });
 
-    // --- ABAS INTERNAS (HOVER) ---
+    megaPanels.forEach(panel => {
+        panel.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    });
+
+
+    // --- 2. LÓGICA DE ABAS INTERNAS (TABS) ---
     const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
 
     tabTriggers.forEach(trigger => {
-        trigger.addEventListener('mouseenter', () => {
+        trigger.addEventListener('mouseenter', () => { 
             const parentPanel = trigger.closest('.mega-panel');
             if (!parentPanel) return;
 
@@ -61,16 +70,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const targetContentId = trigger.dataset.target;
             const targetContent = document.getElementById(targetContentId);
-            if (targetContent) targetContent.classList.add('active');
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
         });
     });
 
-    // --- MENU MOBILE ---
+
+    // --- 3. LÓGICA DO MENU MOBILE (APENAS UM SIMULACRO DA LÓGICA, O HTML ESTÁ OMITIDO) ---
+    // Esta seção é apenas para garantir que a lógica JS não quebre se os elementos do menu mobile existirem.
     const mobileBtn = document.getElementById('mobile-menu-trigger');
     const closeMobileBtn = document.getElementById('close-mobile-menu');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileDrawer = document.getElementById('mobile-menu-drawer');
     const mobileBackdrop = document.getElementById('mobile-menu-backdrop');
+    const accordionTriggers = document.querySelectorAll('.mobile-accordion-trigger');
 
     function openMobileMenu() {
         if (mobileMenu) mobileMenu.classList.remove('hidden');
@@ -84,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeMobileMenu() {
         if (mobileBackdrop) mobileBackdrop.classList.add('opacity-0');
         if (mobileDrawer) mobileDrawer.classList.add('-translate-x-full');
+        
         setTimeout(() => {
             if (mobileMenu) mobileMenu.classList.add('hidden');
         }, 300);
@@ -94,31 +109,70 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeMobileBtn) closeMobileBtn.addEventListener('click', closeMobileMenu);
     if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenu);
 
-    // Acordeões Mobile
-    document.querySelectorAll('.mobile-accordion-trigger').forEach(acc => {
+    // Acordeões principais (menus)
+    accordionTriggers.forEach(acc => {
         acc.addEventListener('click', () => {
             const submenu = acc.nextElementSibling;
             const icon = acc.querySelector('.fa-chevron-down');
             
             if (submenu && submenu.classList.contains('open')) {
+                // Fecha o menu e todos os sub-acordeões internos
                 submenu.classList.remove('open');
                 if(icon) icon.style.transform = 'rotate(0deg)';
+                submenu.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
+                    sub.classList.remove('open');
+                    const subIcon = sub.previousElementSibling.querySelector('.fa-chevron-down');
+                    if(subIcon) subIcon.style.transform = 'rotate(0deg)';
+                });
             } else if (submenu) {
+                // Fecha outros menus principais
+                document.querySelectorAll('.mobile-submenu.open').forEach(el => {
+                    if(el !== submenu) {
+                        el.classList.remove('open');
+                        const prevIcon = el.previousElementSibling.querySelector('.fa-chevron-down');
+                        if(prevIcon) prevIcon.style.transform = 'rotate(0deg)';
+                        // Fecha sub-acordeões do menu fechado
+                        el.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
+                            sub.classList.remove('open');
+                            const subIcon = sub.previousElementSibling.querySelector('.fa-chevron-down');
+                            if(subIcon) subIcon.style.transform = 'rotate(0deg)';
+                        });
+                    }
+                });
+                
                 submenu.classList.add('open');
                 if(icon) icon.style.transform = 'rotate(180deg)';
             }
         });
     });
 
-    // Sub-acordeões Mobile
-    document.querySelectorAll('.mobile-sub-trigger').forEach(trigger => {
+    // Sub-acordeões internos
+    const subTriggers = document.querySelectorAll('.mobile-sub-trigger');
+    subTriggers.forEach(trigger => {
         trigger.addEventListener('click', () => {
             const subAccordion = trigger.nextElementSibling;
             const icon = trigger.querySelector('.fa-chevron-down');
-            if (subAccordion) {
-                subAccordion.classList.toggle('open');
-                if(icon) icon.style.transform = subAccordion.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+            const parentSubmenu = trigger.closest('.mobile-submenu');
+
+            if (subAccordion && subAccordion.classList.contains('open')) {
+                subAccordion.classList.remove('open');
+                if(icon) icon.style.transform = 'rotate(0deg)';
+            } else if (subAccordion) {
+                // Fecha outros sub-acordeões no mesmo menu
+                if (parentSubmenu) {
+                    parentSubmenu.querySelectorAll('.mobile-sub-accordion.open').forEach(el => {
+                        if(el !== subAccordion) {
+                            el.classList.remove('open');
+                            const prevIcon = el.previousElementSibling.querySelector('.fa-chevron-down');
+                            if(prevIcon) prevIcon.style.transform = 'rotate(0deg)';
+                        }
+                    });
+                }
+                
+                subAccordion.classList.add('open');
+                if(icon) icon.style.transform = 'rotate(180deg)';
             }
         });
     });
+
 });
