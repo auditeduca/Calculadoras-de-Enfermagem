@@ -37,6 +37,8 @@ const HeaderController = {
         if (savedTheme === 'dark') {
             document.documentElement.classList.add('dark');
             this.updateThemeUI(true);
+        } else {
+            this.updateThemeUI(false);
         }
 
         // Tamanho da Fonte
@@ -116,12 +118,30 @@ const HeaderController = {
                 return;
             }
 
-            // 2. Fechar ao clicar fora
+            // 2. Botões de Acessibilidade (Fonte e Tema) via Delegação
+            const fontIncrease = e.target.closest('[aria-label="Aumentar fonte"]');
+            const fontDecrease = e.target.closest('[aria-label="Diminuir fonte"]');
+            const themeToggle = e.target.closest('#theme-toggle');
+
+            if (fontIncrease) {
+                window.changeFontSize('increase');
+                return;
+            }
+            if (fontDecrease) {
+                window.changeFontSize('decrease');
+                return;
+            }
+            if (themeToggle) {
+                window.toggleTheme();
+                return;
+            }
+
+            // 3. Fechar ao clicar fora
             if (!e.target.closest('.mega-panel') && !e.target.closest('header')) {
                 this.closeAllPanels();
             }
 
-            // 3. Controlo Mobile
+            // 4. Controlo Mobile
             const mobileBtn = e.target.closest('#mobile-menu-trigger');
             const closeBtn = e.target.closest('#close-mobile-menu');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -141,7 +161,7 @@ const HeaderController = {
                 }, 300);
             }
 
-            // 4. Accordion Mobile
+            // 5. Accordion Mobile
             const accordionTrigger = e.target.closest('.mobile-accordion-trigger');
             if (accordionTrigger) {
                 const sub = accordionTrigger.nextElementSibling;
@@ -195,7 +215,6 @@ if (document.readyState === 'complete') {
 
 /**
  * FUNÇÕES GLOBAIS (ACESSIBILIDADE E TEMA)
- * Disponíveis no escopo window para chamadas via onclick
  */
 window.toggleTheme = function() {
     const isDark = document.documentElement.classList.toggle('dark');
@@ -204,7 +223,6 @@ window.toggleTheme = function() {
 };
 
 window.changeFontSize = function(action) {
-    // Busca o valor atual direto do estilo computado ou do inline para evitar NaN
     let current = parseInt(document.documentElement.style.fontSize) || 100;
     
     if (action === 'increase' && current < 130) current += 5;
