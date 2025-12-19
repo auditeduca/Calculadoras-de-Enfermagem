@@ -1,0 +1,83 @@
+/* Variáveis Locais */
+:root {
+    --nurse-primary: #1A3E74;
+    --nurse-secondary: #00bcd4;
+}
+
+/* Tool Cards */
+.tool-card {
+    background: white;
+    border-radius: 1.5rem;
+    border: 2px solid transparent;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.dark .tool-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.tool-card:hover {
+    border-color: var(--nurse-secondary);
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* Icon Wrappers */
+.card-icon-wrapper {
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    background: #f1f5f9;
+    color: var(--nurse-primary);
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+}
+
+.dark .card-icon-wrapper {
+    background: #334155;
+    color: var(--nurse-secondary);
+}
+
+.tool-card:hover .card-icon-wrapper {
+    background: var(--nurse-primary);
+    color: white;
+    transform: scale(1.1) rotate(5deg);
+}
+
+.icon-size-xl .card-icon-wrapper {
+    width: 90px;
+    height: 90px;
+    font-size: 2.8rem;
+    margin: 0 auto 1.5rem auto;
+}
+
+/* Utilitários de Texto */
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Select Customizado */
+.native-select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%236B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cpolyline points="6 9 12 15 18 9"%3E%3C/polyline%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.2em;
+}
+
+/* Scrollbar Customizada */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+.dark ::-webkit-scrollbar-track { background: #0f172a; }
+.dark ::-webkit-scrollbar-thumb { background: #334155; }
