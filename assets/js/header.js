@@ -1,13 +1,6 @@
-/**
- * Calculadoras de Enfermagem - Header JavaScript
- * Versão: 1.1 (Modular Ready)
- * Atualização: Correção de ciclo de vida para TemplateEngine
- */
-
-function initHeader() {
-    console.log('%c[Header] Inicializando componentes...', 'color: #10b981; font-weight: bold;');
-
-    // ===== 1. LÓGICA DO MEGA MENU DESKTOP (CLIQUE) =====
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 1. LÓGICA DO MEGA MENU DESKTOP (CLIQUE) ---
     const navTriggers = document.querySelectorAll('.nav-trigger');
     const megaPanels = document.querySelectorAll('.mega-panel');
 
@@ -21,14 +14,10 @@ function initHeader() {
     }
 
     navTriggers.forEach(trigger => {
-        // Removemos listeners antigos para evitar duplicação em re-renderizações
-        const newTrigger = trigger.cloneNode(true);
-        trigger.parentNode.replaceChild(newTrigger, trigger);
-
-        newTrigger.addEventListener('click', (e) => {
+        trigger.addEventListener('click', (e) => {
             e.stopPropagation(); 
             
-            const targetId = newTrigger.dataset.panel;
+            const targetId = trigger.dataset.panel;
             const targetPanel = document.getElementById(targetId);
             const isAlreadyOpen = targetPanel && targetPanel.classList.contains('active');
 
@@ -36,8 +25,8 @@ function initHeader() {
 
             if (!isAlreadyOpen && targetPanel) {
                 targetPanel.classList.add('active');
-                newTrigger.setAttribute('aria-expanded', 'true');
-                const icon = newTrigger.querySelector('.fa-chevron-down');
+                trigger.setAttribute('aria-expanded', 'true');
+                const icon = trigger.querySelector('.fa-chevron-down');
                 if(icon) icon.style.transform = 'rotate(180deg)';
             }
         });
@@ -49,20 +38,31 @@ function initHeader() {
         }
     });
 
-    // ===== 2. LÓGICA DE ABAS INTERNAS (TABS) =====
+    megaPanels.forEach(panel => {
+        panel.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    });
+
+
+    // --- 2. LÓGICA DE ABAS INTERNAS (TABS) ---
     const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
+
     tabTriggers.forEach(trigger => {
         trigger.addEventListener('mouseenter', () => { 
             const parentPanel = trigger.closest('.mega-panel');
             if (!parentPanel) return;
 
-            parentPanel.querySelectorAll('.menu-tab-trigger').forEach(t => {
+            const panelTriggers = parentPanel.querySelectorAll('.menu-tab-trigger');
+            const panelContents = parentPanel.querySelectorAll('.tab-content');
+
+            panelTriggers.forEach(t => {
                 t.classList.remove('active');
                 const icon = t.querySelector('.fa-chevron-right');
                 if(icon) icon.style.opacity = '0';
             });
             
-            parentPanel.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            panelContents.forEach(c => c.classList.remove('active'));
 
             trigger.classList.add('active');
             const icon = trigger.querySelector('.fa-chevron-right');
@@ -70,16 +70,21 @@ function initHeader() {
 
             const targetContentId = trigger.dataset.target;
             const targetContent = document.getElementById(targetContentId);
-            if (targetContent) targetContent.classList.add('active');
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
         });
     });
 
-    // ===== 3. LÓGICA DO MENU MOBILE =====
+
+    // --- 3. LÓGICA DO MENU MOBILE (APENAS UM SIMULACRO DA LÓGICA, O HTML ESTÁ OMITIDO) ---
+    // Esta seção é apenas para garantir que a lógica JS não quebre se os elementos do menu mobile existirem.
     const mobileBtn = document.getElementById('mobile-menu-trigger');
     const closeMobileBtn = document.getElementById('close-mobile-menu');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileDrawer = document.getElementById('mobile-menu-drawer');
     const mobileBackdrop = document.getElementById('mobile-menu-backdrop');
+    const accordionTriggers = document.querySelectorAll('.mobile-accordion-trigger');
 
     function openMobileMenu() {
         if (mobileMenu) mobileMenu.classList.remove('hidden');
@@ -100,39 +105,74 @@ function initHeader() {
         document.body.style.overflow = '';
     }
 
-    if (mobileBtn) mobileBtn.onclick = openMobileMenu;
-    if (closeMobileBtn) closeMobileBtn.onclick = closeMobileMenu;
-    if (mobileBackdrop) mobileBackdrop.onclick = closeMobileMenu;
+    if (mobileBtn) mobileBtn.addEventListener('click', openMobileMenu);
+    if (closeMobileBtn) closeMobileBtn.addEventListener('click', closeMobileMenu);
+    if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenu);
 
-    // Acordeões Mobile
-    const accordionTriggers = document.querySelectorAll('.mobile-accordion-trigger');
+    // Acordeões principais (menus)
     accordionTriggers.forEach(acc => {
-        acc.onclick = () => {
+        acc.addEventListener('click', () => {
             const submenu = acc.nextElementSibling;
             const icon = acc.querySelector('.fa-chevron-down');
             
             if (submenu && submenu.classList.contains('open')) {
+                // Fecha o menu e todos os sub-acordeões internos
                 submenu.classList.remove('open');
                 if(icon) icon.style.transform = 'rotate(0deg)';
+                submenu.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
+                    sub.classList.remove('open');
+                    const subIcon = sub.previousElementSibling.querySelector('.fa-chevron-down');
+                    if(subIcon) subIcon.style.transform = 'rotate(0deg)';
+                });
             } else if (submenu) {
+                // Fecha outros menus principais
+                document.querySelectorAll('.mobile-submenu.open').forEach(el => {
+                    if(el !== submenu) {
+                        el.classList.remove('open');
+                        const prevIcon = el.previousElementSibling.querySelector('.fa-chevron-down');
+                        if(prevIcon) prevIcon.style.transform = 'rotate(0deg)';
+                        // Fecha sub-acordeões do menu fechado
+                        el.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
+                            sub.classList.remove('open');
+                            const subIcon = sub.previousElementSibling.querySelector('.fa-chevron-down');
+                            if(subIcon) subIcon.style.transform = 'rotate(0deg)';
+                        });
+                    }
+                });
+                
                 submenu.classList.add('open');
                 if(icon) icon.style.transform = 'rotate(180deg)';
             }
-        };
+        });
     });
-}
 
-/**
- * Ponto de entrada inteligente:
- * Verifica se o DOM já está pronto ou se o script foi injetado via TemplateEngine
- */
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    // Se o motor de templates injetou o script, o DOM já está "interativo" ou "completo"
-    initHeader();
-} else {
-    // Se for um carregamento de página normal
-    document.addEventListener('DOMContentLoaded', initHeader);
-}
+    // Sub-acordeões internos
+    const subTriggers = document.querySelectorAll('.mobile-sub-trigger');
+    subTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            const subAccordion = trigger.nextElementSibling;
+            const icon = trigger.querySelector('.fa-chevron-down');
+            const parentSubmenu = trigger.closest('.mobile-submenu');
 
-// Exportar para que o TemplateEngine possa chamar manualmente se necessário
-window.reinitHeader = initHeader;
+            if (subAccordion && subAccordion.classList.contains('open')) {
+                subAccordion.classList.remove('open');
+                if(icon) icon.style.transform = 'rotate(0deg)';
+            } else if (subAccordion) {
+                // Fecha outros sub-acordeões no mesmo menu
+                if (parentSubmenu) {
+                    parentSubmenu.querySelectorAll('.mobile-sub-accordion.open').forEach(el => {
+                        if(el !== subAccordion) {
+                            el.classList.remove('open');
+                            const prevIcon = el.previousElementSibling.querySelector('.fa-chevron-down');
+                            if(prevIcon) prevIcon.style.transform = 'rotate(0deg)';
+                        }
+                    });
+                }
+                
+                subAccordion.classList.add('open');
+                if(icon) icon.style.transform = 'rotate(180deg)';
+            }
+        });
+    });
+
+});
