@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- 1. LÓGICA DO MEGA MENU DESKTOP (CLIQUE) ---
+
     const navTriggers = document.querySelectorAll('.nav-trigger');
     const megaPanels = document.querySelectorAll('.mega-panel');
 
@@ -44,8 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
-    // --- 2. LÓGICA DE ABAS INTERNAS (TABS) ---
     const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
 
     tabTriggers.forEach(trigger => {
@@ -76,9 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
-    // --- 3. LÓGICA DO MENU MOBILE (APENAS UM SIMULACRO DA LÓGICA, O HTML ESTÁ OMITIDO) ---
-    // Esta seção é apenas para garantir que a lógica JS não quebre se os elementos do menu mobile existirem.
     const mobileBtn = document.getElementById('mobile-menu-trigger');
     const closeMobileBtn = document.getElementById('close-mobile-menu');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -109,14 +103,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeMobileBtn) closeMobileBtn.addEventListener('click', closeMobileMenu);
     if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenu);
 
-    // Acordeões principais (menus)
     accordionTriggers.forEach(acc => {
         acc.addEventListener('click', () => {
             const submenu = acc.nextElementSibling;
             const icon = acc.querySelector('.fa-chevron-down');
             
             if (submenu && submenu.classList.contains('open')) {
-                // Fecha o menu e todos os sub-acordeões internos
+                
                 submenu.classList.remove('open');
                 if(icon) icon.style.transform = 'rotate(0deg)';
                 submenu.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
@@ -125,13 +118,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     if(subIcon) subIcon.style.transform = 'rotate(0deg)';
                 });
             } else if (submenu) {
-                // Fecha outros menus principais
+                
                 document.querySelectorAll('.mobile-submenu.open').forEach(el => {
                     if(el !== submenu) {
                         el.classList.remove('open');
                         const prevIcon = el.previousElementSibling.querySelector('.fa-chevron-down');
                         if(prevIcon) prevIcon.style.transform = 'rotate(0deg)';
-                        // Fecha sub-acordeões do menu fechado
+                        
                         el.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
                             sub.classList.remove('open');
                             const subIcon = sub.previousElementSibling.querySelector('.fa-chevron-down');
@@ -146,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Sub-acordeões internos
     const subTriggers = document.querySelectorAll('.mobile-sub-trigger');
     subTriggers.forEach(trigger => {
         trigger.addEventListener('click', () => {
@@ -158,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 subAccordion.classList.remove('open');
                 if(icon) icon.style.transform = 'rotate(0deg)';
             } else if (subAccordion) {
-                // Fecha outros sub-acordeões no mesmo menu
+                
                 if (parentSubmenu) {
                     parentSubmenu.querySelectorAll('.mobile-sub-accordion.open').forEach(el => {
                         if(el !== subAccordion) {
