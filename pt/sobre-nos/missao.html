@@ -10,6 +10,7 @@
 </head>
 <body>
 
+    <!-- Container para injeção do Header -->
     <div id="header-container"></div>
 
     <svg class="bg-lines-decorative" width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; z-index: -1; pointer-events: none;">
@@ -138,14 +139,31 @@
         </div>
     </section>
 
+    <!-- Containers para injeção de Footer e Modais -->
     <div id="footer-container"></div>
     <div id="modals-container"></div>
     <div id="specific-page-modals"></div>
 
+    <!-- Template Engine - Carrega Header, Footer, Modais e Assets -->
+    <script src="../../assets/js/template-engine.js"></script>
+
+    <!-- Script específico da página (se necessário) -->
     <script>
-        (function bootstrapPage() {
-            document.title = "Missão, Visão e Valores - Calculadoras de Enfermagem";
+        // Aguardar o Template Engine estar pronto
+        window.addEventListener('templateEngineReady', function() {
+            console.log('Template Engine pronto! Componentes carregados com sucesso.');
             
+            // Aqui você pode adicionar lógica específica da página
+            // que dependa dos componentes do template engine
+        });
+
+        // Tratar erros do Template Engine
+        window.addEventListener('templateEngineError', function(event) {
+            console.error('Erro ao carregar Template Engine:', event.detail.error);
+        });
+
+        // Adicionar hreflangs para SEO (alternativas de idioma)
+        (function addHreflangs() {
             const hreflangs = [
                 { lang: "pt-br", href: "https://www.calculadorasdeenfermagem.com.br/missao.html" },
                 { lang: "en", href: "https://www.calculadorasdeenfermagem.com.br/en/missao.html" },
@@ -171,62 +189,12 @@
 
             const head = document.head || document.getElementsByTagName('head')[0];
             hreflangs.forEach(item => {
-                let link = document.createElement('link');
+                const link = document.createElement('link');
                 link.rel = 'alternate';
                 link.hreflang = item.lang;
                 link.href = item.href;
                 head.appendChild(link);
             });
-
-            function injectModuleAsset(type, path, id) {
-                if (document.getElementById(id)) return;
-                const target = document.head || document.documentElement;
-
-                if (type === 'css') {
-                    const link = document.createElement('link');
-                    link.id = id;
-                    link.rel = 'stylesheet';
-                    link.href = path;
-                    target.appendChild(link);
-                } else if (type === 'js') {
-                    const script = document.createElement('script');
-                    script.id = id;
-                    script.src = path;
-                    script.defer = true;
-                    if (document.body) {
-                        document.body.appendChild(script);
-                    } else {
-                        target.appendChild(script);
-                    }
-                }
-            }
-
-            injectModuleAsset('css', '../../assets/css/header.css', 'asset-header-css');
-            injectModuleAsset('css', '../../assets/css/footer.css', 'asset-footer-css');
-            injectModuleAsset('css', '../../assets/css/modals.css', 'asset-modals-css');
-            injectModuleAsset('css', '../../assets/css/global-main.css', 'module-main-css');
-
-            injectModuleAsset('js', '../../assets/js/header.js', 'asset-header-js');
-            injectModuleAsset('js', '../../assets/js/footer.js', 'asset-footer-js');        
-            injectModuleAsset('js', '../../assets/js/modals.js', 'asset-modals-js');
-            injectModuleAsset('js', '../../assets/js/utils.js', 'asset-utils-js');
-            injectModuleAsset('js', '../../assets/js/global-main.js', 'module-main-js');
-
-            function loadTemplates() {
-                if (window.TemplateEngine) {
-                    TemplateEngine.load('header-container', '../../assets/components/header.html');
-                    TemplateEngine.load('footer-container', '../../assets/components/footer.html');
-                    TemplateEngine.load('modals-container', '../../assets/components/modals-main.html');
-                } else {
-                    setTimeout(loadTemplates, 50);
-                }
-            }
-            
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', loadTemplates);
-            } else {
-                loadTemplates();
-            }
         })();
     </script>
 </body>
