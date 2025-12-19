@@ -118,7 +118,7 @@ const HeaderController = {
                 return;
             }
 
-            // 2. Botões de Acessibilidade (Fonte e Tema) via Delegação
+            // 2. Botões de Acessibilidade (Fonte e Tema)
             const fontIncrease = e.target.closest('[aria-label="Aumentar fonte"]');
             const fontDecrease = e.target.closest('[aria-label="Diminuir fonte"]');
             const themeToggle = e.target.closest('#theme-toggle');
@@ -136,12 +136,31 @@ const HeaderController = {
                 return;
             }
 
-            // 3. Fechar ao clicar fora
+            // 3. Skip Links (Pular para Conteúdo/Topo/Rodapé)
+            const skipLink = e.target.closest('a[href^="#"]');
+            if (skipLink && (skipLink.classList.contains('skip-link') || skipLink.getAttribute('href').includes('container'))) {
+                const targetId = skipLink.getAttribute('href').substring(1);
+                const targetEl = document.getElementById(targetId);
+                
+                if (targetEl) {
+                    e.preventDefault();
+                    // Garante que o elemento pode receber foco (essencial para acessibilidade)
+                    if (!/^(?:a|select|input|button|textarea)$/i.test(targetEl.tagName)) {
+                        targetEl.setAttribute('tabindex', '-1');
+                    }
+                    targetEl.focus();
+                    targetEl.scrollIntoView({ behavior: 'smooth' });
+                    console.log('✅ [Acessibilidade] Skip link para:', targetId);
+                }
+                return;
+            }
+
+            // 4. Fechar ao clicar fora
             if (!e.target.closest('.mega-panel') && !e.target.closest('header')) {
                 this.closeAllPanels();
             }
 
-            // 4. Controlo Mobile
+            // 5. Controlo Mobile
             const mobileBtn = e.target.closest('#mobile-menu-trigger');
             const closeBtn = e.target.closest('#close-mobile-menu');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -161,7 +180,7 @@ const HeaderController = {
                 }, 300);
             }
 
-            // 5. Accordion Mobile
+            // 6. Accordion Mobile
             const accordionTrigger = e.target.closest('.mobile-accordion-trigger');
             if (accordionTrigger) {
                 const sub = accordionTrigger.nextElementSibling;
