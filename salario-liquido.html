@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Salário Líquido 2024/2025 | Calculadoras de Enfermagem</title>
+    
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Calcule seu salário líquido de forma rápida e precisa. Ferramenta gratuita para profissionais de enfermagem com cálculos de INSS e IRRF atualizados.">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/calculadora-salario.html">
+
+    <!-- Tailwind CSS & Configuração -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos Globais -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/global-main.css">
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Console Cleaner -->
+    <script src="assets/js/console-cleaner.js"></script>
+
+    <!-- Injeção do Header -->
+    <div id="header-container"></div>
+
+    <!-- Background Decorativo -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-gray-500 dark:text-gray-400 mb-8" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
+                <li class="flex items-center gap-2"><span>/</span> <span class="text-nurse-primary dark:text-nurse-secondary font-medium">Financeiro</span></li>
+                <li class="flex items-center gap-2"><span>/</span> <span>Salário Líquido</span></li>
+            </ol>
+        </nav>
+
+        <header class="mb-12 text-center md:text-left">
+            <span class="inline-block px-3 py-1 text-xs font-bold tracking-wider text-white bg-nurse-secondary rounded-full mb-4 uppercase">Ferramenta Gratuita</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-nurse-primary dark:text-white mb-6 leading-tight">Calculadora de Salário Líquido</h1>
+            <div class="h-1.5 w-24 bg-nurse-accent mb-6 mx-auto md:mx-0"></div>
+            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
+                Descubra quanto você realmente recebe após os descontos obrigatórios de INSS e Imposto de Renda.
+            </p>
+        </header>
+
+        <div class="grid lg:grid-cols-3 gap-12">
+            <!-- Coluna da Calculadora -->
+            <div class="lg:col-span-2">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-slate-700">
+                    <!-- Abas/Header da Calculadora -->
+                    <div class="bg-nurse-primary p-6 text-white flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-calculator text-2xl text-nurse-secondary"></i>
+                            <h2 class="text-xl font-bold">Simulação de Salário</h2>
+                        </div>
+                        <button onclick="resetCalc()" class="text-sm bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-colors">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Limpar
+                        </button>
+                    </div>
+
+                    <!-- Formulário -->
+                    <div class="p-8">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Salário Bruto (R$)</label>
+                                    <input type="number" id="bruto" placeholder="Ex: 4500.00" step="0.01" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary focus:ring-0 outline-none transition-all text-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Nº de Dependentes</label>
+                                    <input type="number" id="dependentes" value="0" min="0" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary focus:ring-0 outline-none transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Outros Descontos (R$)</label>
+                                    <input type="number" id="outros" placeholder="Ex: Convênio, VR" step="0.01" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary focus:ring-0 outline-none transition-all">
+                                </div>
+                                <button onclick="calcular()" class="w-full bg-nurse-secondary hover:bg-nurse-primary text-white font-bold py-4 rounded-xl shadow-lg transition-all transform active:scale-[0.98] flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-equals"></i> Calcular Salário Líquido
+                                </button>
+                            </div>
+
+                            <!-- Resultados -->
+                            <div id="results" class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-700 flex flex-col justify-center opacity-40 transition-opacity">
+                                <h3 class="text-gray-500 dark:text-gray-400 font-bold text-center mb-6 uppercase tracking-widest text-xs">Detalhamento</h3>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-gray-600 dark:text-gray-400">Salário Bruto</span>
+                                        <span id="res-bruto" class="font-bold">R$ 0,00</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm text-red-500">
+                                        <span class="flex items-center gap-2">INSS <i class="fa-solid fa-circle-info text-[10px] cursor-help" title="Previdência Social"></i></span>
+                                        <span id="res-inss" class="font-bold">- R$ 0,00</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm text-red-500">
+                                        <span class="flex items-center gap-2">IRRF <i class="fa-solid fa-circle-info text-[10px] cursor-help" title="Imposto de Renda"></i></span>
+                                        <span id="res-irrf" class="font-bold">- R$ 0,00</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm text-red-500">
+                                        <span>Outros</span>
+                                        <span id="res-outros" class="font-bold">- R$ 0,00</span>
+                                    </div>
+                                    <div class="pt-6 mt-6 border-t-2 border-slate-200 dark:border-slate-700">
+                                        <p class="text-center text-xs text-gray-500 dark:text-gray-400 mb-1 font-bold uppercase">Líquido a Receber</p>
+                                        <p id="res-liquido" class="text-3xl md:text-4xl font-extrabold text-nurse-primary dark:text-nurse-secondary text-center">R$ 0,00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="mt-12 space-y-8">
+                    <section>
+                        <h2 class="text-2xl font-bold text-nurse-primary dark:text-nurse-secondary mb-4 flex items-center gap-3">
+                            <i class="fa-solid fa-circle-info"></i> Como funciona o cálculo?
+                        </h2>
+                        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
+                            <p>O salário líquido é o valor que efetivamente cai na sua conta após todas as deduções legais e facultativas. Nossa calculadora utiliza os seguintes parâmetros:</p>
+                            <ul class="list-disc pl-5 space-y-2 mt-4">
+                                <li><strong>INSS:</strong> Cálculo progressivo com alíquotas de 7,5% a 14% (tabela 2024).</li>
+                                <li><strong>IRRF:</strong> Calculado sobre a base reduzida (Bruto - INSS - Dedução por dependentes).</li>
+                                <li><strong>Dependentes:</strong> Valor de dedução de R$ 189,59 por dependente.</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="space-y-6">
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-gray-100 dark:border-slate-700">
+                    <h3 class="font-bold text-nurse-primary dark:text-nurse-secondary mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved"></i> Segurança e Dados
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Esta calculadora processa os dados localmente no seu navegador. Nenhuma informação pessoal ou valor salarial é enviado ou armazenado em nossos servidores.
+                    </p>
+                </div>
+
+                <div class="p-6 bg-nurse-primary text-white rounded-2xl shadow-lg border border-nurse-primary overflow-hidden relative group">
+                    <div class="relative z-10">
+                        <h3 class="font-bold mb-2">Apoie este Portal</h3>
+                        <p class="text-xs text-blue-100 mb-4">Gostou da ferramenta? Nos ajude a manter o site livre de anúncios.</p>
+                        <a href="doacoes.html" class="inline-block bg-nurse-secondary hover:bg-white hover:text-nurse-primary text-white font-bold py-2 px-4 rounded-lg text-xs transition-all">
+                            Saiba como ajudar
+                        </a>
+                    </div>
+                    <i class="fa-solid fa-heart absolute -bottom-4 -right-4 text-7xl text-white/10 group-hover:scale-125 transition-transform duration-500"></i>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Injeção de Footer e Modais -->
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
+
+    <!-- Scripts Externos -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
+    <script>
+        function calcular() {
+            const bruto = parseFloat(document.getElementById('bruto').value) || 0;
+            const dependentes = parseInt(document.getElementById('dependentes').value) || 0;
+            const outros = parseFloat(document.getElementById('outros').value) || 0;
+
+            if (bruto <= 0) return;
+
+            // --- CÁLCULO INSS 2024 (Progressivo) ---
+            let inss = 0;
+            if (bruto <= 1412.00) {
+                inss = bruto * 0.075;
+            } else if (bruto <= 2666.68) {
+                inss = (1412.00 * 0.075) + ((bruto - 1412.00) * 0.09);
+            } else if (bruto <= 4000.03) {
+                inss = (1412.00 * 0.075) + ((2666.68 - 1412.00) * 0.09) + ((bruto - 2666.68) * 0.12);
+            } else if (bruto <= 7786.02) {
+                inss = (1412.00 * 0.075) + ((2666.68 - 1412.00) * 0.09) + ((4000.03 - 2666.68) * 0.12) + ((bruto - 4000.03) * 0.14);
+            } else {
+                inss = 908.85; // Teto INSS 2024
+            }
+
+            // --- CÁLCULO IRRF ---
+            const baseIRRF = bruto - inss - (dependentes * 189.59);
+            let irrf = 0;
+            
+            if (baseIRRF <= 2259.20) {
+                irrf = 0;
+            } else if (baseIRRF <= 2826.65) {
+                irrf = (baseIRRF * 0.075) - 169.44;
+            } else if (baseIRRF <= 3751.05) {
+                irrf = (baseIRRF * 0.15) - 381.44;
+            } else if (baseIRRF <= 4664.68) {
+                irrf = (baseIRRF * 0.225) - 662.77;
+            } else {
+                irrf = (baseIRRF * 0.275) - 896.00;
+            }
+
+            if (irrf < 0) irrf = 0;
+
+            const liquido = bruto - inss - irrf - outros;
+
+            // Atualizar UI
+            const format = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            
+            document.getElementById('res-bruto').innerText = format(bruto);
+            document.getElementById('res-inss').innerText = `- ${format(inss)}`;
+            document.getElementById('res-irrf').innerText = `- ${format(irrf)}`;
+            document.getElementById('res-outros').innerText = `- ${format(outros)}`;
+            document.getElementById('res-liquido').innerText = format(liquido);
+
+            document.getElementById('results').classList.remove('opacity-40');
+        }
+
+        function resetCalc() {
+            document.getElementById('bruto').value = '';
+            document.getElementById('dependentes').value = '0';
+            document.getElementById('outros').value = '';
+            document.getElementById('results').classList.add('opacity-40');
+            document.getElementById('res-bruto').innerText = 'R$ 0,00';
+            document.getElementById('res-inss').innerText = '- R$ 0,00';
+            document.getElementById('res-irrf').innerText = '- R$ 0,00';
+            document.getElementById('res-outros').innerText = '- R$ 0,00';
+            document.getElementById('res-liquido').innerText = 'R$ 0,00';
+        }
+
+        window.addEventListener('templateEngineReady', function() {
+            console.log('Ambiente modular carregado: Calculadora de Salário.');
+        });
+    </script>
+</body>
+</html>

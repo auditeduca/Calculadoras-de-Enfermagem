@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Férias CLT 2024/2025 | Calculadoras de Enfermagem</title>
+    
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Calcule o valor exato das suas férias com 1/3 constitucional, abono pecuniário e descontos de INSS e IRRF. Ferramenta gratuita e precisa para enfermagem.">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/calculadora-ferias.html">
+
+    <!-- Tailwind CSS & Configuração -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos Globais -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/global-main.css">
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Console Cleaner -->
+    <script src="assets/js/console-cleaner.js"></script>
+
+    <!-- Injeção do Header -->
+    <div id="header-container"></div>
+
+    <!-- Background Decorativo -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-gray-500 dark:text-gray-400 mb-8" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
+                <li class="flex items-center gap-2"><span>/</span> <span class="text-nurse-primary dark:text-nurse-secondary font-medium">Financeiro</span></li>
+                <li class="flex items-center gap-2"><span>/</span> <span>Calculadora de Férias</span></li>
+            </ol>
+        </nav>
+
+        <header class="mb-12 text-center md:text-left">
+            <span class="inline-block px-3 py-1 text-xs font-bold tracking-wider text-white bg-nurse-secondary rounded-full mb-4 uppercase">Planeamento Financeiro</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-nurse-primary dark:text-white mb-6 leading-tight">Calculadora de Férias</h1>
+            <div class="h-1.5 w-24 bg-nurse-accent mb-6 mx-auto md:mx-0"></div>
+            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
+                Calcule o valor bruto e líquido do seu descanso anual, incluindo terço constitucional e opções de abono.
+            </p>
+        </header>
+
+        <div class="grid lg:grid-cols-3 gap-12">
+            <!-- Coluna Principal -->
+            <div class="lg:col-span-2 space-y-8">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-slate-700">
+                    <div class="bg-nurse-primary p-6 text-white flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-umbrella-beach text-2xl text-nurse-secondary"></i>
+                            <h2 class="text-xl font-bold">Simular Férias</h2>
+                        </div>
+                        <button onclick="resetCalc()" class="text-sm bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-colors">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reiniciar
+                        </button>
+                    </div>
+
+                    <div class="p-8">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <!-- Painel de Inputs -->
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Salário Bruto (R$)</label>
+                                    <input type="number" id="salarioBruto" placeholder="Ex: 4500,00" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary focus:ring-0 outline-none transition-all font-bold text-lg">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Média de Horas Extras/Adicionais (R$)</label>
+                                    <input type="number" id="mediaVariavel" placeholder="Média dos últimos 12 meses" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary focus:ring-0 outline-none transition-all">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Dias de Férias</label>
+                                        <input type="number" id="diasFerias" value="30" min="10" max="30" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary focus:ring-0 outline-none transition-all">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Dependentes</label>
+                                        <input type="number" id="dependentes" value="0" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary focus:ring-0 outline-none transition-all">
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-3 pt-2">
+                                    <label class="flex items-center gap-3 cursor-pointer group">
+                                        <input type="checkbox" id="abonoPecuniario" class="w-5 h-5 rounded border-gray-300 text-nurse-secondary focus:ring-nurse-secondary">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-nurse-secondary transition-colors font-medium">Vender 10 dias (Abono Pecuniário)</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer group">
+                                        <input type="checkbox" id="adianta13" class="w-5 h-5 rounded border-gray-300 text-nurse-secondary focus:ring-nurse-secondary">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-nurse-secondary transition-colors font-medium">Adiantar 1ª parcela do 13º salário</span>
+                                    </label>
+                                </div>
+
+                                <button onclick="calcularFerias()" class="w-full bg-nurse-secondary hover:bg-nurse-primary text-white font-bold py-4 rounded-xl shadow-lg transition-all transform active:scale-[0.98] flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-calculator"></i> Calcular Valor das Férias
+                                </button>
+                            </div>
+
+                            <!-- Painel de Resultados -->
+                            <div id="resultBox" class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-700 opacity-40 transition-opacity">
+                                <h3 class="text-gray-500 dark:text-gray-400 font-bold text-center mb-6 uppercase tracking-widest text-[10px]">Detalhamento de Verbas</h3>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-600 dark:text-gray-400">Valor das Férias</span>
+                                        <span id="res-feriasBase" class="font-bold">R$ 0,00</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-600 dark:text-gray-400">1/3 Constitucional</span>
+                                        <span id="res-terco" class="font-bold">R$ 0,00</span>
+                                    </div>
+                                    <div id="rowAbono" class="hidden flex justify-between text-sm text-emerald-600 font-bold">
+                                        <span>Abono Pecuniário</span>
+                                        <span id="res-abono">R$ 0,00</span>
+                                    </div>
+                                    <div id="row13" class="hidden flex justify-between text-sm text-emerald-600 font-bold">
+                                        <span>Adiantamento 13º</span>
+                                        <span id="res-13">R$ 0,00</span>
+                                    </div>
+                                    
+                                    <div class="pt-3 border-t border-slate-200 dark:border-slate-700 space-y-2">
+                                        <div class="flex justify-between text-sm text-red-500">
+                                            <span>INSS</span>
+                                            <span id="res-inss">- R$ 0,00</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm text-red-500">
+                                            <span>IRRF</span>
+                                            <span id="res-irrf">- R$ 0,00</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-6 mt-6 border-t-2 border-slate-200 dark:border-slate-700">
+                                        <p class="text-center text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase mb-1">Total Líquido a Receber</p>
+                                        <p id="res-total" class="text-3xl font-extrabold text-nurse-primary dark:text-nurse-secondary text-center">R$ 0,00</p>
+                                        <p class="text-[9px] text-center text-gray-400 mt-2 uppercase tracking-tighter italic">Líquido de férias + adiantamentos</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Artigo Educativo -->
+                <section class="space-y-6">
+                    <h2 class="text-2xl font-bold text-nurse-primary dark:text-nurse-secondary flex items-center gap-3">
+                        <i class="fa-solid fa-book-open"></i> Guia Prático de Férias na Enfermagem
+                    </h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700">
+                            <h4 class="font-bold text-nurse-primary dark:text-white mb-2 text-sm">O que é o 1/3 Constitucional?</h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                                É um direito garantido pela Constituição Federal que soma 33,33% ao valor total bruto das suas férias. Este valor é tributado normalmente por INSS e IRRF.
+                            </p>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700">
+                            <h4 class="font-bold text-nurse-primary dark:text-white mb-2 text-sm">Abono Pecuniário (Venda)</h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                                O trabalhador pode converter 1/3 do seu período de férias em dinheiro. A vantagem é que este valor do abono é <strong>isento de impostos</strong> (não incide INSS nem IRRF).
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="space-y-6">
+                <!-- Regras Gerais -->
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-3xl shadow-md border border-gray-100 dark:border-slate-700">
+                    <h3 class="font-bold text-nurse-primary dark:text-nurse-secondary mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-gavel"></i> Regras da CLT
+                    </h3>
+                    <ul class="text-[11px] space-y-3 text-gray-600 dark:text-gray-400">
+                        <li class="flex gap-2"><i class="fa-solid fa-check text-nurse-secondary mt-1"></i> <span>As férias não podem começar nos 2 dias que antecedem feriado ou descanso semanal remunerado.</span></li>
+                        <li class="flex gap-2"><i class="fa-solid fa-check text-nurse-secondary mt-1"></i> <span>O pagamento deve cair na conta até 2 dias antes do início do descanso.</span></li>
+                        <li class="flex gap-2"><i class="fa-solid fa-check text-nurse-secondary mt-1"></i> <span>A divisão pode ser em até 3 períodos, desde que um não seja inferior a 14 dias.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Call to Action Doações -->
+                <div class="relative overflow-hidden bg-nurse-secondary p-6 rounded-3xl text-white shadow-lg group">
+                    <i class="fa-solid fa-heart absolute -right-4 -bottom-4 text-7xl opacity-20 group-hover:scale-125 transition-transform duration-500"></i>
+                    <h3 class="font-bold mb-2 relative z-10">Este site é útil?</h3>
+                    <p class="text-[11px] mb-4 relative z-10">Mantenha as nossas ferramentas clínicas e financeiras gratuitas para toda a enfermagem.</p>
+                    <a href="doacoes.html" class="inline-block bg-white text-nurse-primary font-bold py-2 px-6 rounded-xl text-xs hover:bg-nurse-primary hover:text-white transition-all relative z-10">Apoiar Projeto</a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Injeção de Footer e Modais -->
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
+
+    <!-- Scripts Externos -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
+    <script>
+        // Lógica de Impostos
+        function calcINSS(bruto) {
+            if (bruto <= 1412) return bruto * 0.075;
+            if (bruto <= 2666.68) return (1412 * 0.075) + ((bruto - 1412) * 0.09);
+            if (bruto <= 4000.03) return (1412 * 0.075) + ((2666.68 - 1412) * 0.09) + ((bruto - 2666.68) * 0.12);
+            if (bruto <= 7786.02) return (1412 * 0.075) + ((2666.68 - 1412) * 0.09) + ((4000.03 - 2666.68) * 0.12) + ((bruto - 4000.03) * 0.14);
+            return 908.85;
+        }
+
+        function calcIRRF(base, dep) {
+            const baseCalc = base - (dep * 189.59);
+            if (baseCalc <= 2259.20) return 0;
+            if (baseCalc <= 2826.65) return (baseCalc * 0.075) - 169.44;
+            if (baseCalc <= 3751.05) return (baseCalc * 0.15) - 381.44;
+            if (baseCalc <= 4664.68) return (baseCalc * 0.225) - 662.77;
+            return (baseCalc * 0.275) - 896.00;
+        }
+
+        function calcularFerias() {
+            const salario = parseFloat(document.getElementById('salarioBruto').value) || 0;
+            const media = parseFloat(document.getElementById('mediaVariavel').value) || 0;
+            const dias = parseInt(document.getElementById('diasFerias').value) || 0;
+            const dependentes = parseInt(document.getElementById('dependentes').value) || 0;
+            const isAbono = document.getElementById('abonoPecuniario').checked;
+            const is13 = document.getElementById('adianta13').checked;
+
+            if (salario <= 0) return;
+
+            const baseRemuneracao = salario + media;
+            
+            // 1. Valor dos dias de férias
+            const valorFerias = (baseRemuneracao / 30) * dias;
+            
+            // 2. Terço constitucional
+            const terço = valorFerias / 3;
+            
+            // 3. Abono Pecuniário (10 dias de venda) - Isento de impostos
+            let valorAbono = 0;
+            if (isAbono) {
+                valorAbono = (baseRemuneracao / 30) * 10;
+                valorAbono += (valorAbono / 3); // 1/3 sobre o abono
+                document.getElementById('rowAbono').classList.remove('hidden');
+            } else {
+                document.getElementById('rowAbono').classList.add('hidden');
+            }
+
+            // 4. Adiantamento 13º (50% do salário bruto) - Isento de impostos na 1ª parcela
+            let valor13 = 0;
+            if (is13) {
+                valor13 = salario / 2;
+                document.getElementById('row13').classList.remove('hidden');
+            } else {
+                document.getElementById('row13').classList.add('hidden');
+            }
+
+            // 5. Impostos (Incidem sobre Férias + Terço)
+            const baseTributavel = valorFerias + terço;
+            const inss = calcINSS(baseTributavel);
+            const irrf = calcIRRF(baseTributavel - inss, dependentes);
+
+            // 6. Total Líquido
+            const liquidoTotal = (valorFerias + terço + valorAbono + valor13) - (inss + irrf);
+
+            // Renderização
+            const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            
+            document.getElementById('res-feriasBase').innerText = fmt(valorFerias);
+            document.getElementById('res-terco').innerText = fmt(terço);
+            document.getElementById('res-abono').innerText = fmt(valorAbono);
+            document.getElementById('res-13').innerText = fmt(valor13);
+            document.getElementById('res-inss').innerText = `- ${fmt(inss)}`;
+            document.getElementById('res-irrf').innerText = `- ${fmt(irrf)}`;
+            document.getElementById('res-total').innerText = fmt(liquidoTotal);
+
+            document.getElementById('resultBox').classList.remove('opacity-40');
+        }
+
+        function resetCalc() {
+            document.getElementById('salarioBruto').value = '';
+            document.getElementById('mediaVariavel').value = '';
+            document.getElementById('diasFerias').value = '30';
+            document.getElementById('dependentes').value = '0';
+            document.getElementById('abonoPecuniario').checked = false;
+            document.getElementById('adianta13').checked = false;
+            document.getElementById('resultBox').classList.add('opacity-40');
+            document.getElementById('rowAbono').classList.add('hidden');
+            document.getElementById('row13').classList.add('hidden');
+        }
+
+        window.addEventListener('templateEngineReady', function() {
+            console.log('Módulo Calculadora de Férias carregado.');
+        });
+    </script>
+</body>
+</html>

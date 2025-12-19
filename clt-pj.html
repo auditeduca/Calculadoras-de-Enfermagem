@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora CLT vs PJ 2024/2025 | Calculadoras de Enfermagem</title>
+    
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Compare o salário CLT com o contrato PJ. Descubra qual modelo de contratação é mais vantajoso para a sua carreira na enfermagem com cálculos detalhados de impostos e benefícios.">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/calculadora-clt-pj.html">
+
+    <!-- Tailwind CSS & Configuração -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos Globais -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/global-main.css">
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Console Cleaner -->
+    <script src="assets/js/console-cleaner.js"></script>
+
+    <!-- Injeção do Header -->
+    <div id="header-container"></div>
+
+    <!-- Background Decorativo -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-gray-500 dark:text-gray-400 mb-8" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
+                <li class="flex items-center gap-2"><span>/</span> <span class="text-nurse-primary dark:text-nurse-secondary font-medium">Financeiro</span></li>
+                <li class="flex items-center gap-2"><span>/</span> <span>Comparativo CLT x PJ</span></li>
+            </ol>
+        </nav>
+
+        <header class="mb-12 text-center md:text-left">
+            <span class="inline-block px-3 py-1 text-xs font-bold tracking-wider text-white bg-nurse-secondary rounded-full mb-4 uppercase">Ferramenta de Carreira</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-nurse-primary dark:text-white mb-6 leading-tight">CLT ou PJ: Qual vale mais a pena?</h1>
+            <div class="h-1.5 w-24 bg-nurse-accent mb-6 mx-auto md:mx-0"></div>
+            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
+                Compare as duas modalidades considerando impostos, 13º, férias, FGTS e benefícios mensais.
+            </p>
+        </header>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Coluna de Inputs -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Card CLT -->
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-lg border-t-4 border-blue-600 overflow-hidden transition-all hover:shadow-xl">
+                        <div class="p-6 bg-blue-50 dark:bg-blue-900/20 border-b border-blue-100 dark:border-blue-800 flex items-center gap-3">
+                            <i class="fa-solid fa-address-card text-blue-600"></i>
+                            <h2 class="font-bold text-blue-900 dark:text-blue-100 uppercase tracking-tight">Dados CLT</h2>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Salário Bruto Mensal</label>
+                                <input type="number" id="cltBruto" placeholder="R$ 0,00" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-blue-500 font-bold">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">VA / VR (Mês)</label>
+                                    <input type="number" id="cltBeneficios" placeholder="R$ 0,00" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Dependentes</label>
+                                    <input type="number" id="cltDep" value="0" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-blue-500">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card PJ -->
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-lg border-t-4 border-emerald-500 overflow-hidden transition-all hover:shadow-xl">
+                        <div class="p-6 bg-emerald-50 dark:bg-emerald-900/20 border-b border-emerald-100 dark:border-emerald-800 flex items-center gap-3">
+                            <i class="fa-solid fa-briefcase text-emerald-500"></i>
+                            <h2 class="font-bold text-emerald-900 dark:text-emerald-100 uppercase tracking-tight">Dados PJ</h2>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Valor da Nota Fiscal (Faturamento)</label>
+                                <input type="number" id="pjBruto" placeholder="R$ 0,00" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-emerald-500 font-bold">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Alíquota Imposto (%)</label>
+                                    <input type="number" id="pjImposto" value="6" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-emerald-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Contador/Custos</label>
+                                    <input type="number" id="pjCustos" placeholder="R$ 0,00" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-emerald-500">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="comparar()" class="w-full bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-5 rounded-2xl shadow-xl transition-all transform active:scale-95 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> Realizar Comparação Anualizada
+                </button>
+
+                <!-- Área de Resultado Visual -->
+                <div id="resultadoVisual" class="hidden animate-in fade-in zoom-in duration-500">
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-inner border border-gray-100 dark:border-slate-700">
+                        <h3 class="text-center font-bold text-gray-400 uppercase tracking-widest text-sm mb-8">Veredito Mensal Equivalente</h3>
+                        
+                        <div class="flex flex-col md:flex-row items-stretch gap-8">
+                            <!-- Coluna CLT Resumo -->
+                            <div class="flex-1 p-6 rounded-2xl bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 text-center">
+                                <span class="text-blue-600 font-bold uppercase text-[10px]">CLT Real (Mês)</span>
+                                <p id="finalCLT" class="text-3xl font-black text-blue-900 dark:text-blue-100 mt-2">R$ 0,00</p>
+                                <p class="text-[10px] text-gray-500 mt-2">Incluso: 13º + Férias + FGTS proporcionalizados</p>
+                            </div>
+
+                            <div class="flex items-center justify-center">
+                                <span class="bg-gray-200 dark:bg-slate-700 px-3 py-1 rounded-full text-xs font-bold text-gray-500">VS</span>
+                            </div>
+
+                            <!-- Coluna PJ Resumo -->
+                            <div class="flex-1 p-6 rounded-2xl bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/30 text-center">
+                                <span class="text-emerald-600 font-bold uppercase text-[10px]">PJ Real (Mês)</span>
+                                <p id="finalPJ" class="text-3xl font-black text-emerald-900 dark:text-emerald-100 mt-2">R$ 0,00</p>
+                                <p class="text-[10px] text-gray-500 mt-2">Líquido após impostos e custos fixos</p>
+                            </div>
+                        </div>
+
+                        <!-- Badge de Vantagem -->
+                        <div id="badgeVantagem" class="mt-8 text-center p-4 rounded-xl bg-nurse-accent/10 border border-nurse-accent/30 hidden">
+                            <p class="text-nurse-primary dark:text-nurse-accent font-bold">
+                                <i class="fa-solid fa-trophy mr-2"></i> No modelo <span id="modeloVencedor">---</span>, você ganha <span id="valorDiferenca">---</span> a mais por mês.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Informativa -->
+            <aside class="space-y-6">
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-3xl shadow-md border border-gray-100 dark:border-slate-700">
+                    <h3 class="font-bold text-nurse-primary dark:text-nurse-secondary mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-question"></i> O que é "Anualizado"?
+                    </h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed space-y-2">
+                        Comparar o salário do mês da CLT com o PJ é um erro comum. Na CLT, você recebe 13,3 salários no ano (devido ao 13º e ao terço de férias) mais 8% de FGTS. <br><br>
+                        Nossa calculadora soma tudo isso e divide por 12, para que você saiba quanto o seu "eu do futuro" realmente terá de patrimônio mensal em cada modelo.
+                    </p>
+                </div>
+
+                <div class="p-6 bg-slate-100 dark:bg-slate-800/50 rounded-3xl border border-dashed border-gray-300 dark:border-slate-600">
+                    <h4 class="text-xs font-bold uppercase text-gray-500 mb-3">Vantagens CLT</h4>
+                    <ul class="text-[11px] space-y-2 text-gray-600 dark:text-gray-400">
+                        <li><i class="fa-solid fa-check text-blue-500"></i> Seguro Desemprego</li>
+                        <li><i class="fa-solid fa-check text-blue-500"></i> Estabilidade em Licenças</li>
+                        <li><i class="fa-solid fa-check text-blue-500"></i> Fundo de Garantia (FGTS)</li>
+                    </ul>
+                    <h4 class="text-xs font-bold uppercase text-gray-500 mt-5 mb-3">Vantagens PJ</h4>
+                    <ul class="text-[11px] space-y-2 text-gray-600 dark:text-gray-400">
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> Maior Poder de Negociação</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> Menor Carga Tributária</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> Gestão do próprio dinheiro</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Injeção de Footer e Modais -->
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
+
+    <!-- Scripts Externos -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
+    <script>
+        function calcINSS(bruto) {
+            if (bruto <= 1412) return bruto * 0.075;
+            if (bruto <= 2666.68) return (1412 * 0.075) + ((bruto - 1412) * 0.09);
+            if (bruto <= 4000.03) return (1412 * 0.075) + ((2666.68 - 1412) * 0.09) + ((bruto - 2666.68) * 0.12);
+            if (bruto <= 7786.02) return (1412 * 0.075) + ((2666.68 - 1412) * 0.09) + ((4000.03 - 2666.68) * 0.12) + ((bruto - 4000.03) * 0.14);
+            return 908.85;
+        }
+
+        function calcIRRF(base, dep) {
+            const baseCalc = base - (dep * 189.59);
+            if (baseCalc <= 2259.20) return 0;
+            if (baseCalc <= 2826.65) return (baseCalc * 0.075) - 169.44;
+            if (baseCalc <= 3751.05) return (baseCalc * 0.15) - 381.44;
+            if (baseCalc <= 4664.68) return (baseCalc * 0.225) - 662.77;
+            return (baseCalc * 0.275) - 896.00;
+        }
+
+        function comparar() {
+            // Inputs CLT
+            const cltBruto = parseFloat(document.getElementById('cltBruto').value) || 0;
+            const cltBeneficios = parseFloat(document.getElementById('cltBeneficios').value) || 0;
+            const cltDep = parseInt(document.getElementById('cltDep').value) || 0;
+
+            // Inputs PJ
+            const pjBruto = parseFloat(document.getElementById('pjBruto').value) || 0;
+            const pjImposto = (parseFloat(document.getElementById('pjImposto').value) || 0) / 100;
+            const pjCustos = parseFloat(document.getElementById('pjCustos').value) || 0;
+
+            if (cltBruto <= 0 && pjBruto <= 0) return;
+
+            // --- LÓGICA CLT ---
+            const inss = calcINSS(cltBruto);
+            const irrf = calcIRRF(cltBruto - inss, cltDep);
+            const cltLiquidoMensal = cltBruto - inss - irrf + cltBeneficios;
+            
+            // Anualizando benefícios: 13º (1 mês) + Férias (1/3 mês) + FGTS (8% * 12 meses)
+            const decimoTerceiroLíquido = (cltBruto - calcINSS(cltBruto) - calcIRRF(cltBruto - calcINSS(cltBruto), cltDep));
+            const feriasUmTercoLíquido = (cltBruto * 0.33) * 0.925; // Aproximação de impostos sobre 1/3
+            const fgtsAnual = (cltBruto * 0.08) * 12;
+            
+            const totalAnualCLT = (cltLiquidoMensal * 12) + decimoTerceiroLíquido + feriasUmTercoLíquido + fgtsAnual;
+            const cltRealMes = totalAnualCLT / 12;
+
+            // --- LÓGICA PJ ---
+            const pjLiquidoMes = (pjBruto * (1 - pjImposto)) - pjCustos;
+
+            // --- EXIBIÇÃO ---
+            const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            
+            document.getElementById('resultadoVisual').classList.remove('hidden');
+            document.getElementById('finalCLT').innerText = fmt(cltRealMes);
+            document.getElementById('finalPJ').innerText = fmt(pjLiquidoMes);
+
+            const badge = document.getElementById('badgeVantagem');
+            badge.classList.remove('hidden');
+            
+            const diff = Math.abs(cltRealMes - pjLiquidoMes);
+            document.getElementById('valorDiferenca').innerText = fmt(diff);
+
+            if (pjLiquidoMes > cltRealMes) {
+                document.getElementById('modeloVencedor').innerText = "PJ";
+                document.getElementById('badgeVantagem').className = "mt-8 text-center p-4 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 border border-emerald-500/30";
+            } else {
+                document.getElementById('modeloVencedor').innerText = "CLT";
+                document.getElementById('badgeVantagem').className = "mt-8 text-center p-4 rounded-xl bg-blue-100 dark:bg-blue-900/30 border border-blue-500/30";
+            }
+        }
+
+        window.addEventListener('templateEngineReady', function() {
+            console.log('Ambiente modular carregado: Calculadora CLT x PJ.');
+        });
+    </script>
+</body>
+</html>
