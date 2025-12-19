@@ -1,11 +1,16 @@
 /**
- * HEADER-SCRIPTS.JS - Versão Final Consolidada
- * Inclui: Utils, ConsoleCleaner (Corrigido), ModalsManager e Lógica do Header
+ * HEADER-SCRIPTS.JS - Versão Final Consolidada e Blindada
+ * Foco: Delegação de Eventos para compatibilidade com Template Engines
  */
 
 // --- 1. UTILS (Ferramentas de Animação e DOM) ---
 window.Utils = {
     animate: {
+        /**
+         * Efeito de aparecimento gradual
+         * @param {HTMLElement} element 
+         * @param {number} duration 
+         */
         fadeIn: function(element, duration = 300) {
             element.style.opacity = '0';
             element.style.display = 'block';
@@ -14,6 +19,11 @@ window.Utils = {
                 element.style.opacity = '1';
             });
         },
+        /**
+         * Efeito de desaparecimento gradual
+         * @param {HTMLElement} element 
+         * @param {number} duration 
+         */
         fadeOut: function(element, duration = 300) {
             element.style.opacity = '1';
             element.style.transition = `opacity ${duration}ms ease-in-out`;
@@ -24,32 +34,20 @@ window.Utils = {
                 element.style.display = 'none';
             }, duration);
         }
-    },
-    debounce: function(func, wait) {
-        let timeout;
-        return function(...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), wait);
-        };
     }
 };
 
-// --- 2. CONSOLE CLEANER (Ajustado para permitir manutenção do Menu) ---
+// --- 2. CONSOLE CLEANER (Filtro Inteligente) ---
 class ConsoleCleaner {
     constructor() {
         this.originalConsole = { ...console };
         this.init();
     }
     init() {
-        this.overrideConsole();
-        this.originalConsole.log('🧹 Console Cleaner: Ativo. Filtros de "mega-menu" desativados para debug.');
-    }
-    overrideConsole() {
         const filter = (args, type) => {
             const msg = args.join(' ');
-            // Padrões de ruído que ainda queremos filtrar
             const patterns = [/Failed to load resource/, /404/, /CORS/, /Template Engine/];
-            // Se a mensagem for de debug do menu, deixamos passar sempre
+            // Permite logs de debug do menu para facilitar a manutenção
             if (msg.includes('[Menu Debug]') || msg.includes('✅')) {
                 this.originalConsole[type](...args);
                 return;
@@ -60,200 +58,199 @@ class ConsoleCleaner {
         console.log = (...args) => filter(args, 'log');
         console.warn = (...args) => filter(args, 'warn');
         console.error = (...args) => filter(args, 'error');
+        this.originalConsole.log('🧹 Console Cleaner: Ativo (Debug de Menu Liberado)');
     }
 }
 new ConsoleCleaner();
 
-// --- 3. MODALS MANAGER (Gestão de Diálogos) ---
+// --- 3. LÓGICA DO MENU (DELEGAÇÃO DE EVENTOS) ---
+/**
+ * Esta secção utiliza delegação de eventos no "document". 
+ * Garante o funcionamento mesmo que o HTML seja injetado após o script.
+ */
+const HeaderController = {
+    init: function() {
+        this.bindEvents();
+        console.log('✅ [Menu Debug] Sistema de Delegação Inicializado');
+    },
+
+    /**
+     * Fecha todos os painéis abertos e reseta ícones
+     */
+    closeAllPanels: function() {
+        const panels = document.querySelectorAll('.mega-panel');
+        const triggers = document.querySelectorAll('.nav-trigger');
+        
+        panels.forEach(p => {
+            p.classList.add('hidden');
+            p.classList.remove('active');
+            p.style.display = 'none';
+        });
+
+        triggers.forEach(t => {
+            t.setAttribute('aria-expanded', 'false');
+            const icon = t.querySelector('.fa-chevron-down');
+            if (icon) icon.style.transform = 'rotate(0deg)';
+        });
+    },
+
+    bindEvents: function() {
+        // 1. Clique nos Nav Triggers (Mega Menu Desktop)
+        document.addEventListener('click', (e) => {
+            const trigger = e.target.closest('.nav-trigger');
+            if (trigger) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const targetId = trigger.getAttribute('data-panel');
+                const targetPanel = document.getElementById(targetId);
+                
+                if (!targetPanel) {
+                    console.error('❌ [Menu Debug] Painel não encontrado:', targetId);
+                    return;
+                }
+
+                const isOpen = targetPanel.classList.contains('active') && targetPanel.style.display === 'block';
+
+                this.closeAllPanels();
+
+                if (!isOpen) {
+                    targetPanel.classList.remove('hidden');
+                    targetPanel.classList.add('active');
+                    // Força display block para sobrepor classes do Tailwind
+                    targetPanel.style.setProperty('display', 'block', 'important');
+                    
+                    trigger.setAttribute('aria-expanded', 'true');
+                    const icon = trigger.querySelector('.fa-chevron-down');
+                    if (icon) icon.style.transform = 'rotate(180deg)';
+                    
+                    if (window.Utils.animate.fadeIn) window.Utils.animate.fadeIn(targetPanel, 200);
+                    console.log('✅ [Menu Debug] Expandido:', targetId);
+                }
+            } else if (!e.target.closest('.mega-panel')) {
+                // Clique fora do header ou painel fecha tudo
+                this.closeAllPanels();
+            }
+        });
+
+        // 2. Mouseover nas Tabs Internas (Mega Menu)
+        document.addEventListener('mouseover', (e) => {
+            const tabTrigger = e.target.closest('.menu-tab-trigger');
+            if (tabTrigger) {
+                const parent = tabTrigger.closest('.mega-panel');
+                if (!parent) return;
+
+                const targetId = tabTrigger.getAttribute('data-target');
+                const targetContent = document.getElementById(targetId);
+
+                // Reset de abas irmãs dentro do mesmo painel
+                parent.querySelectorAll('.menu-tab-trigger').forEach(t => t.classList.remove('active', 'bg-gray-100'));
+                parent.querySelectorAll('.tab-content').forEach(c => {
+                    c.classList.add('hidden');
+                    c.style.display = 'none';
+                });
+
+                // Ativa a aba atual
+                tabTrigger.classList.add('active', 'bg-gray-100');
+                if (targetContent) {
+                    targetContent.classList.remove('hidden');
+                    targetContent.style.display = 'block';
+                }
+            }
+        });
+
+        // 3. Menu Mobile
+        document.addEventListener('click', (e) => {
+            const mobileBtn = e.target.closest('#mobile-menu-trigger');
+            const closeBtn = e.target.closest('#close-mobile-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileDrawer = document.getElementById('mobile-menu-drawer');
+
+            if (mobileBtn) {
+                mobileMenu?.classList.remove('hidden');
+                setTimeout(() => mobileDrawer?.classList.add('open'), 10);
+                document.body.style.overflow = 'hidden';
+            }
+
+            if (closeBtn || e.target.matches('#mobile-menu-backdrop')) {
+                mobileDrawer?.classList.remove('open');
+                setTimeout(() => {
+                    mobileMenu?.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+
+            // Accordion Mobile (Submenus)
+            const accordionTrigger = e.target.closest('.mobile-accordion-trigger');
+            if (accordionTrigger) {
+                const sub = accordionTrigger.nextElementSibling;
+                if (sub) {
+                    sub.classList.toggle('open');
+                    sub.style.maxHeight = sub.classList.contains('open') ? sub.scrollHeight + "px" : "0px";
+                }
+            }
+        });
+    }
+};
+
+// --- 4. MODALS MANAGER ---
 class ModalsManager {
     constructor() {
-        this.modals = new Map();
-        this.modalConfigs = {
-            'accessibility-menu': { id: 'accessibility-menu', activeClass: 'open' },
-            'cookie-prefs-modal': { id: 'cookie-prefs-modal', activeClass: 'show' },
-            'suggestion-modal': { id: 'suggestion-modal', activeClass: 'show' }
+        this.configs = {
+            'accessibility-menu': 'open',
+            'cookie-prefs-modal': 'show',
+            'suggestion-modal': 'show'
         };
         this.init();
     }
     init() {
-        this.refresh();
-        this.bindEvents();
-    }
-    refresh() {
-        Object.entries(this.modalConfigs).forEach(([key, config]) => {
-            const el = document.getElementById(config.id);
-            if (el) this.modals.set(key, { element: el, config: config });
-        });
-    }
-    bindEvents() {
         document.addEventListener('click', (e) => {
-            const target = e.target;
-            if (target.closest('.accessibility-menu-trigger')) this.openModal('accessibility-menu');
-            if (target.closest('.modal-close') || target.matches('.modal-backdrop')) this.closeAll();
+            if (e.target.closest('.accessibility-menu-trigger')) this.toggle('accessibility-menu', true);
+            if (e.target.closest('.modal-close') || e.target.matches('.modal-backdrop')) this.closeAll();
         });
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') this.closeAll(); });
     }
-    openModal(id) {
-        const modal = this.modals.get(id);
-        if (modal) {
-            modal.element.classList.add(modal.config.activeClass);
-            document.body.style.overflow = 'hidden';
+    toggle(id, force) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.toggle(this.configs[id], force);
+            document.body.style.overflow = el.classList.contains(this.configs[id]) ? 'hidden' : '';
         }
     }
     closeAll() {
-        this.modals.forEach(m => m.element.classList.remove(m.config.activeClass));
-        document.body.style.overflow = '';
+        Object.keys(this.configs).forEach(id => this.toggle(id, false));
     }
 }
-window.modalsManager = new ModalsManager();
 
-// --- 4. LÓGICA DO HEADER E MEGA MENU ---
+// --- 5. INICIALIZAÇÃO ---
+function startAll() {
+    HeaderController.init();
+    window.modalsManager = new ModalsManager();
+}
+
+// Escuta o evento do seu template-engine ou carregamento do DOM
+window.addEventListener('templateEngineReady', startAll);
 document.addEventListener('DOMContentLoaded', () => {
-    const navTriggers = document.querySelectorAll('.nav-trigger');
-    const megaPanels = document.querySelectorAll('.mega-panel');
-
-    function closeAllPanels() {
-        megaPanels.forEach(panel => {
-            panel.classList.remove('active');
-            panel.classList.add('hidden');
-            panel.style.display = 'none'; // Garante o fecho absoluto
-        });
-        navTriggers.forEach(trigger => {
-            trigger.setAttribute('aria-expanded', 'false');
-            const icon = trigger.querySelector('.fa-chevron-down');
-            if (icon) icon.style.transform = 'rotate(0deg)';
-        });
-    }
-
-    navTriggers.forEach(trigger => {
-        trigger.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            const targetId = this.getAttribute('data-panel');
-            const targetPanel = document.getElementById(targetId);
-
-            if (!targetPanel) {
-                console.error('❌ [Menu Debug] Painel não encontrado para o ID:', targetId);
-                return;
-            }
-
-            const isAlreadyOpen = targetPanel.classList.contains('active') && targetPanel.style.display === 'block';
-
-            closeAllPanels();
-
-            if (!isAlreadyOpen) {
-                // Remove classes de ocultação do Tailwind e aplica ativação
-                targetPanel.classList.remove('hidden');
-                targetPanel.classList.add('active');
-                
-                // Força o display block via style inline para vencer qualquer CSS !important
-                targetPanel.style.setProperty('display', 'block', 'important');
-                
-                if (window.Utils.animate.fadeIn) {
-                    window.Utils.animate.fadeIn(targetPanel, 200);
-                }
-
-                this.setAttribute('aria-expanded', 'true');
-                const icon = this.querySelector('.fa-chevron-down');
-                if (icon) icon.style.transform = 'rotate(180deg)';
-                
-                console.log('✅ [Menu Debug] Painel expandido com sucesso:', targetId);
-            }
-        });
-    });
-
-    // Fecha o menu ao clicar fora do header
-    document.addEventListener('click', (e) => {
-        const header = document.querySelector('header');
-        if (header && !header.contains(e.target)) closeAllPanels();
-    });
-
-    // --- 5. TABS INTERNAS (MEGA MENU) ---
-    const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
-    tabTriggers.forEach(trigger => {
-        trigger.addEventListener('mouseenter', function() {
-            const parent = this.closest('.mega-panel');
-            if (!parent) return;
-
-            const targetId = this.getAttribute('data-target');
-            const targetContent = document.getElementById(targetId);
-
-            // Reset de todas as abas no painel atual
-            parent.querySelectorAll('.menu-tab-trigger').forEach(t => {
-                t.classList.remove('active', 'bg-gray-100', 'dark:bg-gray-800');
-            });
-            parent.querySelectorAll('.tab-content').forEach(c => {
-                c.classList.add('hidden');
-                c.style.display = 'none';
-            });
-
-            // Ativa a aba selecionada
-            this.classList.add('active', 'bg-gray-100', 'dark:bg-gray-800');
-            if (targetContent) {
-                targetContent.classList.remove('hidden');
-                targetContent.style.display = 'block';
-            }
-        });
-    });
-
-    // --- 6. MENU MOBILE ---
-    const mobileBtn = document.getElementById('mobile-menu-trigger');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileDrawer = document.getElementById('mobile-menu-drawer');
-    const closeMobile = document.getElementById('close-mobile-menu');
-
-    if (mobileBtn && mobileMenu) {
-        mobileBtn.onclick = () => {
-            mobileMenu.classList.remove('hidden');
-            setTimeout(() => mobileDrawer?.classList.add('open'), 10);
-            document.body.style.overflow = 'hidden';
-        };
-    }
-
-    if (closeMobile) {
-        closeMobile.onclick = () => {
-            mobileDrawer?.classList.remove('open');
-            setTimeout(() => {
-                mobileMenu?.classList.add('hidden');
-                document.body.style.overflow = '';
-            }, 300);
-        };
-    }
-
-    // Accordions no Mobile (Submenus)
-    document.querySelectorAll('.mobile-accordion-trigger').forEach(btn => {
-        btn.onclick = function() {
-            const sub = this.nextElementSibling;
-            if (sub) {
-                sub.classList.toggle('open');
-                if (sub.classList.contains('open')) {
-                    sub.style.maxHeight = sub.scrollHeight + "px";
-                } else {
-                    sub.style.maxHeight = "0px";
-                }
-            }
-        };
-    });
+    // Caso o template engine não esteja ativo ou já tenha terminado, inicia manualmente
+    if (!window.templateEngineActive) startAll(); 
 });
 
 /**
- * ACESSIBILIDADE E TEMA (Globais)
+ * FUNÇÕES GLOBAIS DE ACESSIBILIDADE
  */
-function toggleTheme() {
+window.toggleTheme = function() {
     const isDark = document.documentElement.classList.toggle('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     const icon = document.querySelector('#theme-toggle i');
     if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-}
+};
 
-function changeFontSize(action) {
+window.changeFontSize = function(action) {
     let current = parseInt(document.documentElement.style.fontSize) || 100;
     if (action === 'increase' && current < 130) current += 5;
     if (action === 'decrease' && current > 85) current -= 5;
     if (action === 'reset') current = 100;
     document.documentElement.style.fontSize = current + '%';
-}
+};
 
-// Inicialização automática do tema guardado
+// Aplica tema preferido ao carregar
 if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
