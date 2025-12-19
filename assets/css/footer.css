@@ -1,150 +1,184 @@
-/* ========================================= */
-/* 1. FOCO DE ALTA VISIBILIDADE (AAA)        */
-/* ========================================= */
-/* Garante que o foco seja visível em fundos claros e escuros */
-button:focus-visible, 
-a:focus-visible, 
-input:focus-visible, 
-.toggle-switch input:focus-visible + .slider {
-    outline: 3px solid #f59e0b !important;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 2px #000000, 0 0 0 4px #ffffff;
-}
+        /* ========================================= */
+        /* 1. FOCO DE ALTA VISIBILIDADE (AAA)        */
+        /* ========================================= */
+        button:focus-visible, 
+        a:focus-visible, 
+        input:focus-visible, 
+        .toggle-switch input:focus-visible + .slider {
+            outline: 3px solid #f59e0b !important;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 2px #000000, 0 0 0 4px #ffffff;
+        }
 
-/* ========================================= */
-/* 2. ACESSIBILIDADE: REDUÇÃO DE MOVIMENTO   */
-/* ========================================= */
-@media (prefers-reduced-motion: reduce) {
-    *, ::before, ::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
+        /* ========================================= */
+        /* 2. ACESSIBILIDADE: REDUÇÃO DE MOVIMENTO   */
+        /* ========================================= */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
 
-/* ========================================= */
-/* 3. COMPONENTE: SWITCH (TOGGLE)            */
-/* ========================================= */
-.toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 48px; /* Aumentado para acessibilidade de toque */
-    height: 28px;
-    flex-shrink: 0;
-}
+        /* ========================================= */
+        /* 3. COMPONENTE: SWITCH (TOGGLE)            */
+        /* ========================================= */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 28px;
+            flex-shrink: 0;
+        }
 
-.toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
 
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #525252;
-    transition: .4s;
-    border: 1px solid #737373; /* Contraste em High Contrast Mode */
-}
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #525252;
+            transition: .4s;
+            border: 1px solid #737373;
+        }
 
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 20px; width: 20px;
-    left: 3px; bottom: 3px;
-    background-color: white;
-    transition: .4s;
-}
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px; width: 20px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .4s;
+        }
 
-input:checked + .slider { background-color: #1d4ed8; border-color: #1d4ed8; }
-input:checked + .slider:before { transform: translateX(20px); }
+        input:checked + .slider { background-color: #1d4ed8; border-color: #1d4ed8; }
+        input:checked + .slider:before { transform: translateX(20px); }
 
-.slider.round { border-radius: 34px; }
-.slider.round:before { border-radius: 50%; }
+        .slider.round { border-radius: 34px; }
+        .slider.round:before { border-radius: 50%; }
 
-input:disabled + .slider {
-    background-color: #525252;
-    opacity: 0.8;
-    cursor: not-allowed;
-}
+        input:disabled + .slider {
+            background-color: #525252;
+            opacity: 0.8;
+            cursor: not-allowed;
+        }
 
-/* ========================================= */
-/* 4. POSICIONAMENTO DINÂMICO DOS FABs       */
-/* ========================================= */
-:root {
-    --fab-cookie-bottom-base: 20px;
-    --fab-top-bottom-base: 80px;
-    --banner-height: 220px;
-}
+        /* ========================================= */
+        /* 4. POSICIONAMENTO DINÂMICO DOS FABs       */
+        /* ========================================= */
+        :root {
+            --fab-cookie-bottom-base: 20px;
+            --fab-top-bottom-base: 82px; /* Ajustado para não sobrepor o Volante */
+            --banner-height: 0px; /* Será atualizado via JS ou manter valor fixo */
+        }
 
-#backToTop, #cookie-fab {
-    position: fixed;
-    right: 20px;
-    width: 52px; height: 52px; /* 44px+ para WCAG AAA */
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s, visibility 0.3s, transform 0.1s;
-    z-index: 90;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem;
-    color: white;
-    border: 2px solid transparent;
-    padding: 0;
-}
+        #backToTop, #cookie-fab {
+            position: fixed;
+            right: 20px;
+            width: 52px; height: 52px;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s, visibility 0.3s, transform 0.2s;
+            z-index: 9999; /* Z-index alto para garantir que fique acima de tudo */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.1);
+            padding: 0;
+        }
 
-#backToTop {
-    bottom: var(--fab-top-bottom-base);
-    background-color: #1d4ed8;
-    opacity: 0; visibility: hidden; pointer-events: none;
-}
+        #backToTop {
+            bottom: var(--fab-top-bottom-base);
+            background-color: #1d4ed8;
+            opacity: 0; 
+            visibility: hidden; 
+            pointer-events: none;
+        }
 
-#backToTop.is-visible {
-    opacity: 1 !important; visibility: visible !important; pointer-events: auto !important;
-}
+        #backToTop.is-visible {
+            opacity: 1 !important; 
+            visibility: visible !important; 
+            pointer-events: auto !important;
+        }
 
-#backToTop:hover { transform: translateY(-2px); background-color: #1e40af; }
+        #backToTop:hover { transform: scale(1.1); background-color: #1e40af; }
 
-#cookie-fab {
-    bottom: var(--fab-cookie-bottom-base);
-    background-color: #b45309;
-    color: #ffffff;
-    opacity: 1; visibility: visible;
-}
+        #cookie-fab {
+            bottom: var(--fab-cookie-bottom-base);
+            background-color: #b45309;
+            color: #ffffff;
+            opacity: 1; 
+            visibility: visible;
+        }
 
-#cookie-fab:hover { transform: translateY(-2px); background-color: #92400e; }
+        #cookie-fab:hover { transform: scale(1.1); background-color: #92400e; }
 
-/* Ajuste quando o banner está ativo */
-body.cookie-banner-active #backToTop {
-    bottom: calc(var(--fab-top-bottom-base) + var(--banner-height));
-}
+        /* Banner de Cookies Simulado */
+        #cookie-banner {
+            position: fixed;
+            bottom: -300px; /* Escondido inicialmente */
+            left: 0;
+            width: 100%;
+            background: #171717;
+            color: white;
+            padding: 2rem;
+            z-index: 10000;
+            transition: bottom 0.5s ease;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+        }
 
-body.cookie-banner-active #cookie-fab {
-    bottom: calc(var(--fab-cookie-bottom-base) + var(--banner-height));
-}
+        /* Ajuste quando o banner está ativo */
+        body.cookie-banner-active {
+            --banner-height: 220px; /* Altura aproximada do banner */
+        }
 
-/* ========================================= */
-/* 5. UTILITÁRIOS GERAIS                     */
-/* ========================================= */
-.aaa-touch-target {
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-}
+        body.cookie-banner-active #backToTop {
+            bottom: calc(var(--fab-top-bottom-base) + var(--banner-height));
+        }
 
-.custom-scrollbar::-webkit-scrollbar { width: 6px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        body.cookie-banner-active #cookie-fab {
+            bottom: calc(var(--fab-cookie-bottom-base) + var(--banner-height));
+        }
 
-/* ========================================= */
-/* 6. ESTILOS DE IMPRESSÃO                   */
-/* ========================================= */
-@media print {
-    #cookie-banner, #cookie-fab, #backToTop, #cookie-overlay { display: none !important; }
-    footer {
-        background-color: white !important;
-        color: black !important;
-        margin-top: 0 !important;
-        border-top: 2px solid #000;
-        padding-top: 1rem !important;
-    }
-    .social-icons-area { display: none; }
-}
+        body.cookie-banner-active #cookie-banner {
+            bottom: 0;
+        }
+
+        /* ========================================= */
+        /* 5. UTILITÁRIOS GERAIS                     */
+        /* ========================================= */
+        .aaa-touch-target {
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+
+        /* Conteúdo dummy para scroll */
+        .content-spacer {
+            height: 200vh;
+            background: linear-gradient(to bottom, #ffffff, #e5e5e5);
+            padding: 20px;
+        }
+
+        /* ========================================= */
+        /* 6. ESTILOS DE IMPRESSÃO                   */
+        /* ========================================= */
+        @media print {
+            #cookie-banner, #cookie-fab, #backToTop, #cookie-overlay { display: none !important; }
+            footer {
+                background-color: white !important;
+                color: black !important;
+                margin-top: 0 !important;
+                border-top: 2px solid #000;
+                padding-top: 1rem !important;
+            }
+        }
