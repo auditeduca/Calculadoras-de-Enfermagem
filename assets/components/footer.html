@@ -1,6 +1,4 @@
-<!-- ======================================================= -->
-<!-- BOTÕES FLUTUANTES (FABs)                                -->
-<!-- ======================================================= -->
+<!-- ELEMENTOS FLUTUANTES (FABs) -->
 <button id="backToTop" class="transition-all duration-300" aria-label="Voltar ao topo da página">
     <i class="fas fa-arrow-up" aria-hidden="true"></i>
 </button>
@@ -9,203 +7,185 @@
     <i class="fas fa-cookie-bite" aria-hidden="true"></i>
 </button>
 
-<!-- ======================================================= -->
-<!-- MODAL DE PREFERÊNCIAS (Acessibilidade + LGPD)           -->
-<!-- ======================================================= -->
-<div id="cookie-overlay" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title" class="fixed inset-0 z-[110] bg-black/70 flex justify-center items-end md:items-center opacity-0 invisible transition-all duration-300 backdrop-blur-md">
-    <div class="bg-white dark:bg-gray-900 w-full max-w-lg rounded-t-2xl md:rounded-2xl shadow-2xl flex flex-col max-h-[90vh] md:max-h-[85vh] transform translate-y-full transition-transform duration-300" id="cookie-modal-content">
+<!-- MODAL DE PREFERÊNCIAS DE COOKIES -->
+<div id="cookie-overlay" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title" class="fixed inset-0 z-[110] bg-black/60 flex justify-center items-end md:items-center opacity-0 invisible transition-all duration-300 backdrop-blur-sm">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-lg rounded-t-2xl md:rounded-2xl shadow-2xl flex flex-col max-h-[90vh] md:max-h-[85vh] transform translate-y-full transition-transform duration-300" id="cookie-modal-content">
         
-        <header class="flex justify-between items-center p-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t-2xl">
-            <h2 id="cookie-modal-title" class="text-xl font-bold text-audit-navy dark:text-white">Preferências de Cookies</h2>
-            <button id="modal-close-x" class="text-gray-600 hover:text-audit-navy dark:text-gray-300 dark:hover:text-white w-[44px] h-[44px] flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition" aria-label="Fechar Modal">
-                <i class="fas fa-times text-xl" aria-hidden="true"></i>
-            </button>
+        <header class="flex justify-between items-center p-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-t-2xl">
+            <h2 id="cookie-modal-title" class="text-lg font-bold text-audit-navy dark:text-white">Preferências de Cookies</h2>
+            <button id="modal-close-x" class="text-gray-400 dark:text-gray-500 hover:text-audit-navy dark:hover:text-white text-2xl leading-none w-10 h-10 flex items-center justify-center rounded focus:outline-none focus:ring-2 focus:ring-audit-blue" aria-label="Fechar Modal">&times;</button>
         </header>
 
         <div class="p-5 overflow-y-auto flex-grow space-y-6 custom-scrollbar">
-            <p class="text-base text-gray-800 dark:text-gray-200 mb-4 leading-relaxed">
-                Gerencie suas preferências de privacidade. Selecione os cookies que deseja autorizar.
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                Gerencie suas preferências de privacidade. Algumas funcionalidades podem depender de cookies para funcionar corretamente.
             </p>
 
             <!-- Item 1: Essenciais -->
-            <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-4 shadow-sm bg-gray-50 dark:bg-gray-800">
-                <div class="flex justify-between items-center mb-3">
+            <div class="border border-gray-100 dark:border-gray-700 rounded-lg p-3 shadow-sm bg-gray-50/50 dark:bg-gray-700/20">
+                <div class="flex justify-between items-center mb-2">
                     <div class="flex items-center gap-3">
-                        <div class="bg-gray-200 dark:bg-gray-700 p-2 rounded-full">
-                            <i class="fas fa-shield-alt text-gray-700 dark:text-gray-200 text-lg" aria-hidden="true"></i>
+                        <div class="bg-gray-200 dark:bg-gray-600 p-2 rounded-full">
+                            <i class="fas fa-shield-alt text-gray-600 dark:text-gray-300 text-sm"></i>
                         </div>
-                        <span class="font-bold text-audit-navy dark:text-white text-base">Tecnicamente Necessário</span>
+                        <span class="font-bold text-audit-navy dark:text-gray-100 text-sm">Tecnicamente Necessário</span>
                     </div>
                     <label class="toggle-switch">
-                        <input type="checkbox" checked disabled aria-label="Cookies Necessários (Sempre ativo)">
+                        <input type="checkbox" checked disabled>
                         <span class="slider round"></span>
                     </label>
                 </div>
-                <button class="w-full min-h-[44px] flex items-center justify-between px-2 text-sm font-bold text-audit-blueText dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition cookie-desc-toggle" data-target="desc-1" aria-expanded="false" aria-controls="desc-1">
+                <button class="text-xs font-bold text-gray-600 dark:text-gray-300 hover:text-audit-blue flex items-center gap-1 mt-1 cookie-desc-toggle w-full justify-between group rounded p-1" data-target="desc-1" aria-expanded="false" aria-controls="desc-1">
                     <span>Ver detalhes técnicos</span>
-                    <i class="fas fa-chevron-down text-xs transform transition-transform" aria-hidden="true"></i>
+                    <i class="fas fa-chevron-down text-[10px] transform transition-transform group-hover:text-audit-blue"></i>
                 </button>
-                <div id="desc-1" class="item-desc hidden mt-3 pt-3 border-t border-gray-300 dark:border-gray-600">
-                    <h4 class="text-sm font-bold text-audit-blueText dark:text-audit-gold mb-2">Google Tag Manager | BR</h4>
-                    <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">Essencial para o carregamento e segurança do site.</p>
-                    <a href="https://business.safety.google/privacy/?hl=en" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[44px] text-audit-blueText font-semibold hover:underline decoration-2">Política Google</a>
+                <div id="desc-1" class="item-desc hidden mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                    <h4 class="text-xs font-bold text-audit-blue dark:text-audit-gold mb-2">Google Tag Manager | BR</h4>
+                    <table class="cookie-data-table w-full text-[11px] text-left border-separate border-spacing-y-1">
+                        <tr><td class="font-bold pr-2 align-top w-20">Empresa</td><td class="text-gray-600 dark:text-gray-400">Google Ireland Limited<br>Gordon House, 4 Barrow St, Dublin, Ireland</td></tr>
+                        <tr><td class="font-bold pr-2 align-top">Finalidade</td><td class="text-gray-600 dark:text-gray-400">Gestão de tags</td></tr>
+                        <tr><td class="font-bold pr-2 align-top">Base Legal</td><td class="text-gray-600 dark:text-gray-400">Interesses legítimos, Art. 7(9) LGPD</td></tr>
+                        <tr><td class="font-bold pr-2 align-top">Links</td><td><a href="https://business.safety.google/privacy/?hl=en" target="_blank" class="text-audit-blue underline">Privacidade</a></td></tr>
+                    </table>
                 </div>
             </div>
 
             <!-- Item 2: Análise -->
-            <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-4 shadow-sm bg-white dark:bg-gray-900">
-                <div class="flex justify-between items-center mb-3">
+            <div class="border border-gray-100 dark:border-gray-700 rounded-lg p-3 shadow-sm bg-white dark:bg-gray-800">
+                <div class="flex justify-between items-center mb-2">
                     <div class="flex items-center gap-3">
-                        <div class="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-full">
-                            <i class="fas fa-chart-bar text-audit-blue dark:text-blue-300 text-lg" aria-hidden="true"></i>
+                        <div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full">
+                            <i class="fas fa-chart-bar text-blue-600 dark:text-blue-400 text-sm"></i>
                         </div>
-                        <span class="font-bold text-audit-navy dark:text-white text-base">Análise e Estatísticas</span>
+                        <span class="font-bold text-audit-navy dark:text-gray-100 text-sm">Análise e Estatísticas</span>
                     </div>
                     <label class="toggle-switch">
-                        <input type="checkbox" id="check-stats" aria-label="Ativar cookies de estatísticas">
+                        <input type="checkbox" id="check-stats">
                         <span class="slider round"></span>
                     </label>
                 </div>
-                <button class="w-full min-h-[44px] flex items-center justify-between px-2 text-sm font-bold text-audit-blueText dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition cookie-desc-toggle" data-target="desc-2" aria-expanded="false" aria-controls="desc-2">
+                <button class="text-xs font-bold text-gray-600 dark:text-gray-300 hover:text-audit-blue flex items-center gap-1 mt-1 cookie-desc-toggle w-full justify-between group rounded p-1" data-target="desc-2" aria-expanded="false" aria-controls="desc-2">
                     <span>Ver detalhes técnicos</span>
-                    <i class="fas fa-chevron-down text-xs transform transition-transform" aria-hidden="true"></i>
+                    <i class="fas fa-chevron-down text-[10px] transform transition-transform group-hover:text-audit-blue"></i>
                 </button>
-                <div id="desc-2" class="item-desc hidden mt-3 pt-3 border-t border-gray-300 dark:border-gray-600">
-                    <h4 class="text-sm font-bold text-audit-blueText dark:text-audit-gold mb-2">Google Analytics | BR</h4>
-                    <p class="text-sm text-gray-700 dark:text-gray-300">Coleta dados anônimos de uso para melhoria contínua.</p>
+                <div id="desc-2" class="item-desc hidden mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                    <h4 class="text-xs font-bold text-audit-blue dark:text-audit-gold mb-2">Google Analytics | BR</h4>
+                    <table class="cookie-data-table w-full text-[11px] text-left border-separate border-spacing-y-1">
+                        <tr><td class="font-bold pr-2 align-top w-20">Finalidade</td><td class="text-gray-600 dark:text-gray-400">Análise, ROI, Comportamento do usuário</td></tr>
+                        <tr><td class="font-bold pr-2 align-top">Dados</td><td class="text-gray-600 dark:text-gray-400">Trajeto de cliques, IP, Dispositivo, Páginas visitadas.</td></tr>
+                        <tr><td class="font-bold pr-2 align-top">Base Legal</td><td class="text-gray-600 dark:text-gray-400">Art. 6, par. 1 RGPD</td></tr>
+                    </table>
                 </div>
             </div>
 
             <!-- Item 3: Marketing -->
-            <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-4 shadow-sm bg-white dark:bg-gray-900">
-                <div class="flex justify-between items-center mb-3">
+            <div class="border border-gray-100 dark:border-gray-700 rounded-lg p-3 shadow-sm bg-white dark:bg-gray-800">
+                <div class="flex justify-between items-center mb-2">
                     <div class="flex items-center gap-3">
-                        <div class="bg-yellow-100 dark:bg-yellow-900/50 p-2 rounded-full">
-                            <i class="fas fa-bullhorn text-audit-gold dark:text-yellow-300 text-lg" aria-hidden="true"></i>
+                        <div class="bg-yellow-100 dark:bg-yellow-900/30 p-2 rounded-full">
+                            <i class="fas fa-bullhorn text-yellow-600 dark:text-yellow-400 text-sm"></i>
                         </div>
-                        <span class="font-bold text-audit-navy dark:text-white text-base">Marketing</span>
+                        <span class="font-bold text-audit-navy dark:text-gray-100 text-sm">Marketing</span>
                     </div>
                     <label class="toggle-switch">
-                        <input type="checkbox" id="check-mkt" aria-label="Ativar cookies de marketing">
+                        <input type="checkbox" id="check-mkt">
                         <span class="slider round"></span>
                     </label>
                 </div>
-                <button class="w-full min-h-[44px] flex items-center justify-between px-2 text-sm font-bold text-audit-blueText dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition cookie-desc-toggle" data-target="desc-3" aria-expanded="false" aria-controls="desc-3">
+                <button class="text-xs font-bold text-gray-600 dark:text-gray-300 hover:text-audit-blue flex items-center gap-1 mt-1 cookie-desc-toggle w-full justify-between group rounded p-1" data-target="desc-3" aria-expanded="false" aria-controls="desc-3">
                     <span>Ver detalhes técnicos</span>
-                    <i class="fas fa-chevron-down text-xs transform transition-transform" aria-hidden="true"></i>
+                    <i class="fas fa-chevron-down text-[10px] transform transition-transform group-hover:text-audit-blue"></i>
                 </button>
-                <div id="desc-3" class="item-desc hidden mt-3 pt-3 border-t border-gray-300 dark:border-gray-600">
-                    <h4 class="text-sm font-bold text-audit-blueText dark:text-audit-gold mb-2">Google Ads | BR</h4>
-                    <p class="text-sm text-gray-700 dark:text-gray-300">Publicidade relevante baseada em interesses.</p>
+                <div id="desc-3" class="item-desc hidden mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                    <h4 class="text-xs font-bold text-audit-blue dark:text-audit-gold mb-2">Google Analytics Advertising | BR</h4>
+                    <table class="cookie-data-table w-full text-[11px] text-left border-separate border-spacing-y-1">
+                        <tr><td class="font-bold pr-2 align-top w-20">Finalidade</td><td class="text-gray-600 dark:text-gray-400">Anúncio, Marketing, Remarketing, Segmentação</td></tr>
+                        <tr><td class="font-bold pr-2 align-top">Base Legal</td><td class="text-gray-600 dark:text-gray-400">Consentimento, Art. 7(1) LGPD</td></tr>
+                    </table>
                 </div>
             </div>
         </div>
 
-        <footer class="p-5 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-b-2xl flex flex-col sm:flex-row gap-4">
-            <button id="modal-reject-all" class="flex-1 min-h-[44px] px-4 rounded-full border-2 border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200 font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition text-sm">Rejeitar Tudo</button>
-            <button id="modal-save" class="flex-1 min-h-[44px] px-4 rounded-full bg-audit-blue dark:bg-blue-700 text-white font-bold shadow-lg hover:bg-blue-800 transition text-sm">Salvar Opções</button>
+        <footer class="p-5 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 rounded-b-2xl flex flex-col sm:flex-row gap-3">
+            <button id="modal-reject-all" class="flex-1 px-4 py-3 rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-bold hover:bg-gray-100 dark:hover:bg-gray-700 transition text-sm">Rejeitar Tudo</button>
+            <button id="modal-save" class="flex-1 px-4 py-3 rounded-full bg-audit-blue dark:bg-audit-gold text-white dark:text-audit-navy font-bold shadow-lg hover:opacity-90 transition text-sm">Salvar Minhas Opções</button>
         </footer>
     </div>
 </div>
 
-<!-- ======================================================= -->
-<!-- BANNER DE COOKIES (ALERT)                               -->
-<!-- ======================================================= -->
-<div id="cookie-banner" role="alert" class="fixed bottom-0 left-0 w-full bg-white dark:bg-gray-900 shadow-[0_-5px_20px_rgba(0,0,0,0.2)] z-[100] transform translate-y-full transition-transform duration-500 border-t border-gray-200 dark:border-gray-700 p-5 md:px-10 md:py-6 flex flex-col lg:flex-row items-center justify-between gap-6">
+<!-- BANNER DE COOKIES -->
+<div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-white dark:bg-audit-cardDark shadow-[0_-5px_20px_rgba(0,0,0,0.15)] z-[100] transform translate-y-full transition-transform duration-500 border-t border-gray-200 dark:border-gray-700 p-5 md:px-10 md:py-6 flex flex-col lg:flex-row items-center justify-between gap-6">
     <div class="flex-1 space-y-3 text-center lg:text-left">
-        <p class="text-base text-gray-800 dark:text-gray-100 leading-relaxed">
+        <p class="text-sm text-gray-700 dark:text-gray-200 leading-relaxed">
             <strong class="text-audit-navy dark:text-blue-300">Privacidade e Transparência.</strong><br>
-            Nós da Calculadoras de Enfermagem utilizamos cookies para melhorar sua experiência.
+            Nós do Audit Educa utilizamos cookies para aprimorar sua experiência de navegação e analisar nosso tráfego. Queremos assegurar-lhe a melhor utilização possível e a melhoria contínua do nosso website. Assim, podemos também apresentar-lhe conteúdo e publicidade baseados no seu perfil de utilização, e, para isso, trabalhamos em conjunto com parceiro selecionado (Google).
         </p>
-        <div class="flex flex-wrap justify-center lg:justify-start gap-4 text-sm font-bold text-audit-blueText dark:text-blue-300">
-            <a href="/politica.html" class="hover:underline aaa-touch-target">Privacidade</a>
-            <span class="hidden md:inline text-gray-400 self-center" aria-hidden="true">|</span>
-            <a href="/termos.html" class="hover:underline aaa-touch-target">Termos</a>
+        <div class="flex flex-wrap justify-center lg:justify-start gap-4 text-xs font-semibold text-audit-blue dark:text-audit-gold">
+            <a href="/politica.html" class="hover:underline focus:outline-none focus:ring-2 focus:ring-audit-blue rounded">Privacidade</a>
+            <span class="text-gray-300 dark:text-gray-600">|</span>
+            <a href="/termos.html" class="hover:underline focus:outline-none focus:ring-2 focus:ring-audit-blue rounded">Termos e Condições</a>
+            <span class="text-gray-300 dark:text-gray-600">|</span>
+            <a href="/notificacoes-legais.html" class="hover:underline focus:outline-none focus:ring-2 focus:ring-audit-blue rounded">Notificações Legais</a>
         </div>        
     </div>
-    <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto shrink-0">
-        <button id="banner-options" class="px-6 min-h-[48px] rounded-full border-2 border-dashed border-audit-blue text-audit-blue font-bold text-base hover:bg-blue-50 transition whitespace-nowrap">Personalizar</button>
-        <button id="banner-accept" class="px-8 min-h-[48px] rounded-full bg-audit-blue text-white font-bold text-base shadow-md hover:bg-blue-800 transition whitespace-nowrap">Aceitar Todos</button>
+    <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto shrink-0">
+        <button id="banner-options" class="px-6 py-2.5 rounded-full border-2 border-dashed border-audit-blue dark:border-audit-gold text-audit-blue dark:text-audit-gold font-bold text-sm hover:bg-audit-blue/5 dark:hover:bg-audit-gold/10 transition whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-audit-blue">Personalizar</button>
+        <button id="banner-accept" class="px-8 py-2.5 rounded-full bg-audit-blue dark:bg-audit-gold text-white dark:text-audit-navy font-bold text-sm shadow-md hover:opacity-90 transition whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-audit-blue">Aceitar</button>
     </div>
 </div>
 
-<!-- ======================================================= -->
-<!-- FOOTER PRINCIPAL                                        -->
-<!-- ======================================================= -->
-<footer class="bg-gray-900 text-gray-300 pt-12 pb-8 mt-12" role="contentinfo">
+<!-- FOOTER PRINCIPAL -->
+<footer class="bg-gray-800 text-gray-300 pt-12 pb-8 mt-12" role="contentinfo">
     <div class="container mx-auto px-8">
-        <!-- Logo -->
         <div class="mb-8">
             <img src="https://www.calculadorasdeenfermagem.com.br/iconrodape1.webp" 
                  alt="Logotipo Calculadoras de Enfermagem" class="h-12 w-auto mb-6" width="200" height="48"
-                 onerror="this.onerror=null;this.src='https://placehold.co/200x48/111827/FFFFFF?text=LOGO+ENFERMAGEM'">
+                 onerror="this.onerror=null;this.src='https://placehold.co/200x48/111827/FFFFFF?text=LOGO'">
             <hr class="border-gray-700">
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <!-- Coluna 1 -->
             <nav aria-label="Institucional">
-                <h4 class="font-bold text-white mb-4 font-nunito-sans text-lg tracking-wide">Institucional</h4>
+                <h4 class="font-bold text-white mb-4 font-nunito-sans text-lg">Institucional</h4>
                 <ul class="space-y-0">
-                    <li><a href="https://www.calculadorasdeenfermagem.com.br/" class="aaa-touch-target hover:text-white transition-colors">Início</a></li>
-                    <li><a href="https://www.calculadorasdeenfermagem.com.br/missao.html" class="aaa-touch-target hover:text-white transition-colors">Sobre Nós</a></li>
-                    <li><a href="https://www.calculadorasdeenfermagem.com.br/mapa-do-site.html" class="aaa-touch-target hover:text-white transition-colors">Mapa do Site</a></li>
-                    <li><a href="https://www.calculadorasdeenfermagem.com.br/politica.html" class="aaa-touch-target hover:text-white transition-colors">Políticas do Site</a></li>
-                    <li><a href="https://www.calculadorasdeenfermagem.com.br/termos.html" class="aaa-touch-target hover:text-white transition-colors">Termos e Condições</a></li>
+                    <li><a href="/" class="aaa-touch-target hover:text-white transition-colors">Início</a></li>
+                    <li><a href="/missao.html" class="aaa-touch-target hover:text-white transition-colors">Sobre Nós</a></li>
+                    <li><a href="/mapa-do-site.html" class="aaa-touch-target hover:text-white transition-colors">Mapa do Site</a></li>
                 </ul>
             </nav>
 
-            <!-- Coluna 2 -->
-            <nav aria-label="Sustentabilidade e Acessibilidade">
-                <h4 class="font-bold text-white mb-4 font-nunito-sans text-lg tracking-wide">Sustentabilidade Digital</h4>
-                <ul class="space-y-0 mb-6">
-                    <li><a href="https://www.calculadorasdeenfermagem.com.br/nossocompromisso.html" class="aaa-touch-target hover:text-white transition-colors">Nosso Compromisso</a></li>
-                    <li><a href="https://www.calculadorasdeenfermagem.com.br/impactodigital.html" class="aaa-touch-target hover:text-white transition-colors">Relatório de Impacto</a></li>
-                    <li><a href="https://www.calculadorasdeenfermagem.com.br/tecnologiaverde.html" class="aaa-touch-target hover:text-white transition-colors">Tecnologia Verde</a></li>
-                </ul>
-
-                <h4 class="font-bold text-white mb-4 font-nunito-sans text-lg tracking-wide">Acessibilidade</h4>
+            <nav aria-label="Sustentabilidade">
+                <h4 class="font-bold text-white mb-4 font-nunito-sans text-lg">Sustentabilidade</h4>
                 <ul class="space-y-0">
-                    <li><a href="https://www.calculadorasdeenfermagem.com.br/politicadeacessibilidade.html" class="aaa-touch-target hover:text-white transition-colors">Política de Acessibilidade</a></li>
-                    <li><a href="https://www.calculadorasdeenfermagem.com.br/recursos-assistivos.html" class="aaa-touch-target hover:text-white transition-colors">Recursos</a></li>
+                    <li><a href="/impacto.html" class="aaa-touch-target hover:text-white transition-colors">Relatório de Impacto</a></li>
+                    <li><a href="/tecnologia-verde.html" class="aaa-touch-target hover:text-white transition-colors">Tecnologia Verde</a></li>
                 </ul>
             </nav>
 
-            <!-- Coluna 3 -->
-            <div>
-                <h4 class="font-bold text-white mb-4 font-nunito-sans text-lg tracking-wide">Nosso Compromisso</h4>
-                <p class="text-sm mb-4 leading-relaxed text-gray-300">
-                    Nosso site adota como princípio de governança, o comprometimento com elevados padrões de acessibilidade digital, sustentabilidade digital e proteção de dados.
-                </p>
+            <!-- COLUNA RESTRUTURADA COM TEXTO DE GOVERNANÇA -->
+            <div class="md:col-span-2">
+                <h4 class="font-bold text-white mb-4 font-nunito-sans text-lg">Nosso Compromisso</h4>
+                <p class="text-sm mb-4 leading-relaxed">Nosso site adota como princípio de governança, o comprometimento com elevados padrões de acessibilidade digital, sustentabilidade digital e proteção de dados.</p>
                 <div class="flex items-center space-x-4 pt-2">
-                    <img src="https://www.calculadorasdeenfermagem.com.br/seloacessibilidade.webp" alt="Selo: Acessibilidade Digital" class="h-16 w-auto" width="64" height="64" onerror="this.style.display='none'">
-                    <img src="https://www.calculadorasdeenfermagem.com.br/selosustentabilidade.webp" alt="Selo: Sustentabilidade Digital" class="h-16 w-auto" width="64" height="64" onerror="this.style.display='none'">
-                    <img src="https://www.calculadorasdeenfermagem.com.br/selolgpd.webp" alt="Selo: LGPD" class="h-16 w-auto" width="64" height="64" onerror="this.onerror=null;this.src='https://placehold.co/64x64/1A3E74/FFFFFF?text=Selo'">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/seloacessibilidade.webp" alt="Selo Acessibilidade" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/selosustentabilidade.webp" alt="Selo Sustentabilidade" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/selolgpd.webp" alt="Selo LGPD" class="h-14 w-auto" onerror="this.style.display='none'">
                 </div>
             </div>
         </div>
         
-        <!-- Barra Inferior -->
         <div class="border-t border-gray-700 pt-6 text-sm">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-                <!-- Esquerda -->
-                <div class="flex flex-col space-y-2 text-left">
-                    <p class="text-left py-2">&copy; <span id="current-year">2025</span> Calculadoras de Enfermagem. Todos os direitos reservados.</p>
-                    <div class="flex flex-wrap gap-x-4 gap-y-2 justify-start mt-1">
-                        <a href="/termos.html" id="footer-config-btn" class="aaa-touch-target hover:text-white transition-colors" aria-label="Abrir Configurações">Configurações</a>
+                <div class="flex flex-col space-y-2">
+                    <p>&copy; <span id="current-year">2025</span> Calculadoras de Enfermagem. Todos os direitos reservados.</p>
+                    <div class="flex flex-wrap gap-4 mt-1">
+                        <a href="/termos.html" id="footer-config-btn" class="aaa-touch-target hover:text-white transition-colors" aria-label="Configurações">Configurações</a>
                         <a href="/politica.html" class="aaa-touch-target hover:text-white transition-colors">Privacidade</a>
-                        <a href="/notificacoes-legais.html" class="aaa-touch-target hover:text-white transition-colors">Legal</a>
                     </div>
                 </div>
-                
-                <!-- Direita (Ícones) -->
-                <div class="social-icons-area flex flex-col space-y-3 items-start md:items-end md:pr-20">
-                    <div class="flex space-x-4 text-2xl text-white">
-                        <a href="https://www.linkedin.com/company/calculadoras-de-enfermagem" target="_blank" rel="noopener noreferrer" class="hover:text-gray-300 transition-colors w-[44px] h-[44px] flex items-center justify-center" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                        <a href="https://www.instagram.com/calculadorasdeenfermagem/" target="_blank" rel="noopener noreferrer" class="hover:text-gray-300 transition-colors w-[44px] h-[44px] flex items-center justify-center" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                        <a href="https://www.tiktok.com/@calculadorasdeenf" target="_blank" rel="noopener noreferrer" class="hover:text-gray-300 transition-colors w-[44px] h-[44px] flex items-center justify-center" aria-label="TikTok"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
-                        <a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" target="_blank" rel="noopener noreferrer" class="hover:text-gray-300 transition-colors w-[44px] h-[44px] flex items-center justify-center" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
-                    </div>
+                <div class="social-icons-area flex space-x-4 text-2xl text-white">
+                    <a href="#" aria-label="LinkedIn" class="w-11 h-11 flex items-center justify-center hover:text-gray-300 transition-colors"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Instagram" class="w-11 h-11 flex items-center justify-center hover:text-gray-300 transition-colors"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>

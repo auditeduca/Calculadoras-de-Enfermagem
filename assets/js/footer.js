@@ -1,5 +1,5 @@
 /**
- * FooterManager - Gerencia Cookies, LGPD/GTM e UX do Rodapé.
+ * FooterManager - Otimizado e Modular
  */
 class FooterManager {
     constructor() {
@@ -32,10 +32,8 @@ class FooterManager {
         const fab = document.getElementById('cookie-fab');
         let lastFocusedElement = null;
 
-        // Se os elementos não existirem, aborta silenciosamente
         if (!banner || !overlay) return;
 
-        // Verifica estado inicial dos cookies
         setTimeout(() => {
             try {
                 if (!localStorage.getItem('cookiesAccepted')) {
@@ -43,13 +41,11 @@ class FooterManager {
                     document.body.classList.add('cookie-banner-active');
                     if (fab) fab.classList.add('opacity-0', 'pointer-events-none');
                 }
-            } catch(e) {} // Proteção contra bloqueadores de armazenamento
+            } catch(e) {}
         }, 500);
 
-        // Envia atualização para o Google Consent Mode v2
         const updateConsentToGoogle = () => {
             if (typeof gtag !== 'function') return;
-
             const adStorage = document.getElementById('check-mkt')?.checked ? 'granted' : 'denied';
             const analyticsStorage = document.getElementById('check-stats')?.checked ? 'granted' : 'denied';
             
@@ -60,9 +56,7 @@ class FooterManager {
                 'ad_personalization': adStorage
             });
             
-            if (window.dataLayer) {
-                window.dataLayer.push({'event': 'cookie_consent_update'});
-            }
+            window.dataLayer.push({'event': 'cookie_consent_update'});
         };
 
         const openModal = () => {
@@ -73,130 +67,85 @@ class FooterManager {
             modalContent.classList.remove('translate-y-full');
             if (fab) fab.classList.add('opacity-0', 'pointer-events-none');
             document.body.classList.add('overflow-hidden');
-            
-            // Foco acessível
-            setTimeout(() => {
-                const first = modalContent.querySelector('button, [href], input, select, textarea');
-                if (first) first.focus();
-            }, 300);
+            setTimeout(() => modalContent.querySelector('button')?.focus(), 300);
         };
 
         const closeAll = () => {
             overlay.classList.add('opacity-0', 'invisible');
             modalContent.classList.add('translate-y-full');
             banner.classList.add('translate-y-full');
-            document.body.classList.remove('overflow-hidden');
-            document.body.classList.remove('cookie-banner-active');
-            
+            document.body.classList.remove('overflow-hidden', 'cookie-banner-active');
             updateConsentToGoogle();
-
             setTimeout(() => {
                 if (fab) fab.classList.remove('opacity-0', 'pointer-events-none');
                 if (lastFocusedElement) lastFocusedElement.focus();
             }, 300);
-            
             try { localStorage.setItem('cookiesAccepted', 'true'); } catch(e) {}
         };
 
-        // Focus Trap para Acessibilidade (Modal)
         const handleFocusTrap = (e) => {
             if (e.key === 'Tab' && !overlay.classList.contains('invisible')) {
-                const focusable = modalContent.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                if (focusable.length === 0) return;
-                const first = focusable[0];
-                const last = focusable[focusable.length - 1];
-
-                if (e.shiftKey) { 
-                    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-                } else { 
-                    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-                }
+                const focusable = modalContent.querySelectorAll('button, [href], input, select, textarea');
+                const first = focusable[0], last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
             }
         };
 
-        // Event Listeners Globais
         document.addEventListener('keydown', (e) => {
             if (overlay.classList.contains('invisible')) return;
             if (e.key === 'Escape') closeAll();
             if (e.key === 'Tab') handleFocusTrap(e);
         });
 
-        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeAll(); });
+        overlay.addEventListener('click', (e) => e.target === overlay && closeAll());
 
-        // Helper para bind seguro
-        const bind = (id, event, fn) => {
-            const el = document.getElementById(id);
-            if (el) el.addEventListener(event, fn);
-        };
-
-        // Ações dos Botões
-        bind('banner-accept', 'click', () => {
-            const chkMkt = document.getElementById('check-mkt');
-            const chkStats = document.getElementById('check-stats');
-            if(chkMkt) chkMkt.checked = true;
-            if(chkStats) chkStats.checked = true;
+        const bind = (id, fn) => document.getElementById(id)?.addEventListener('click', fn);
+        bind('banner-accept', () => {
+            const m = document.getElementById('check-mkt'), s = document.getElementById('check-stats');
+            if(m) m.checked = true; if(s) s.checked = true;
             closeAll();
         });
-        
-        bind('banner-options', 'click', openModal);
-        bind('modal-save', 'click', closeAll);
-        bind('modal-close-x', 'click', closeAll);
-        bind('modal-reject-all', 'click', () => {
-            const chkMkt = document.getElementById('check-mkt');
-            const chkStats = document.getElementById('check-stats');
-            if(chkMkt) chkMkt.checked = false;
-            if(chkStats) chkStats.checked = false;
+        bind('banner-options', openModal);
+        bind('modal-save', closeAll);
+        bind('modal-close-x', closeAll);
+        bind('modal-reject-all', () => {
+            const m = document.getElementById('check-mkt'), s = document.getElementById('check-stats');
+            if(m) m.checked = false; if(s) s.checked = false;
             closeAll();
         });
 
         if (fab) fab.addEventListener('click', openModal);
 
-        // Accordion (Detalhes Técnicos)
         document.querySelectorAll('.cookie-desc-toggle').forEach(btn => {
             btn.addEventListener('click', () => {
-                const targetId = btn.getAttribute('data-target');
-                const targetEl = document.getElementById(targetId);
+                const target = document.getElementById(btn.getAttribute('data-target'));
                 const icon = btn.querySelector('.fa-chevron-down');
-                const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-                if (targetEl) {
-                    targetEl.classList.toggle('hidden');
-                    btn.setAttribute('aria-expanded', !isExpanded);
-                    if (icon) icon.style.transform = targetEl.classList.contains('hidden') ? "rotate(0deg)" : "rotate(180deg)";
+                if (target) {
+                    target.classList.toggle('hidden');
+                    if (icon) icon.style.transform = target.classList.contains('hidden') ? "rotate(0deg)" : "rotate(180deg)";
                 }
             });
         });
-        
-        // Expor método para uso externo
         this.openCookieModal = openModal;
     }
 
     initBackToTop() {
-        const backToTopBtn = document.getElementById('backToTop');
-        if (!backToTopBtn) return;
-        
-        let isScrolling;
+        const btn = document.getElementById('backToTop');
+        if (!btn) return;
         window.addEventListener('scroll', () => {
-            window.cancelAnimationFrame(isScrolling);
-            isScrolling = window.requestAnimationFrame(() => {
-                if (window.scrollY > 300) backToTopBtn.classList.add('is-visible');
-                else backToTopBtn.classList.remove('is-visible');
-            });
+            if (window.scrollY > 300) btn.classList.add('is-visible');
+            else btn.classList.remove('is-visible');
         }, { passive: true });
-        
-        backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
     initFooterConfigBtn() {
-        const configBtn = document.getElementById('footer-config-btn');
-        if (configBtn) {
-            configBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (this.openCookieModal) this.openCookieModal();
-            });
-        }
+        document.getElementById('footer-config-btn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (this.openCookieModal) this.openCookieModal();
+        });
     }
 }
 
-// Inicializa a classe automaticamente
 window.footerManager = new FooterManager();
