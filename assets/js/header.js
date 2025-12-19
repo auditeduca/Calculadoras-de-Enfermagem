@@ -1,6 +1,12 @@
+/**
+ * Calculadoras de Enfermagem - Header JavaScript
+ * Versão: 1.0
+ * Data: 2025-12-19
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. LÓGICA DO MEGA MENU DESKTOP (CLIQUE) ---
+    // ===== 1. LÓGICA DO MEGA MENU DESKTOP (CLIQUE) =====
     const navTriggers = document.querySelectorAll('.nav-trigger');
     const megaPanels = document.querySelectorAll('.mega-panel');
 
@@ -44,8 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
-    // --- 2. LÓGICA DE ABAS INTERNAS (TABS) ---
+    // ===== 2. LÓGICA DE ABAS INTERNAS (TABS) =====
     const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
 
     tabTriggers.forEach(trigger => {
@@ -76,9 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
-    // --- 3. LÓGICA DO MENU MOBILE (APENAS UM SIMULACRO DA LÓGICA, O HTML ESTÁ OMITIDO) ---
-    // Esta seção é apenas para garantir que a lógica JS não quebre se os elementos do menu mobile existirem.
+    // ===== 3. LÓGICA DO MENU MOBILE =====
     const mobileBtn = document.getElementById('mobile-menu-trigger');
     const closeMobileBtn = document.getElementById('close-mobile-menu');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -172,6 +175,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 subAccordion.classList.add('open');
                 if(icon) icon.style.transform = 'rotate(180deg)';
             }
+        });
+    });
+
+    // ===== 4. UTILITÁRIOS ADICIONAIS =====
+    
+    // Tema toggle (se existir)
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            // Implementação do toggle de tema
+            document.body.classList.toggle('dark-theme');
+        });
+    }
+
+    // Controles de fonte (se existirem)
+    const fontSizeBtns = document.querySelectorAll('[aria-label*="fonte"], [aria-label*="font"]');
+    fontSizeBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Implementação dos controles de fonte
         });
     });
 

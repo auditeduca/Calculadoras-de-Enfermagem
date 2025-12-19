@@ -1,3 +1,5 @@
+/* Calculadoras de Enfermagem - Header Styles */
+/* ===== VARIÁVEIS CSS ===== */
 :root {
     --primary-color: #1A3E74;
     --primary-hover: #143260;
@@ -7,10 +9,16 @@
     --scroll-thumb-hover: #1A3E74;
 }
 
-body { font-family: 'Inter', sans-serif; }
-h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
+/* ===== TIPOGRAFIA ===== */
+body { 
+    font-family: 'Inter', sans-serif; 
+}
 
-/* --- ESTILOS DO MEGA MENU --- */
+h1, h2, h3 { 
+    font-family: 'Nunito Sans', sans-serif; 
+}
+
+/* ===== ESTILOS DO MEGA MENU ===== */
 .mega-panel {
     display: none;
     position: absolute;
@@ -36,11 +44,17 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { 
+        opacity: 0; 
+        transform: translateY(-10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
 
-/* --- EFEITO BORDA AZUL RELUZENTE --- */
+/* ===== EFEITO BORDA AZUL RELUZENTE ===== */
 .glowing-frame {
     background-color: white;
     padding: 1rem;
@@ -62,19 +76,20 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     transform: translateY(-2px); /* Pequeno lift */
 }
 
-
-/* --- ABAS LATERAIS (TABS) --- */
+/* ===== ABAS LATERAIS (TABS) ===== */
 .menu-tab-trigger {
     cursor: pointer;
     transition: all 0.2s;
     border-left: 3px solid transparent;
 }
+
 .menu-tab-trigger.active {
     background-color: #f8fafc; /* Slate 50 */
     color: var(--primary-color);
     border-left: 3px solid var(--primary-color);
     font-weight: 700;
 }
+
 .menu-tab-trigger:hover:not(.active) {
     background-color: #f1f5f9;
 }
@@ -83,16 +98,23 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     display: none;
     animation: fadeIn 0.3s ease;
 }
+
 .tab-content.active {
     display: block;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateX(5px); }
-    to { opacity: 1; transform: translateX(0); }
+    from { 
+        opacity: 0; 
+        transform: translateX(5px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
 }
 
-/* --- BARRA DE ROLAGEM PROFISSIONAL (Custom-Scroll) --- */
+/* ===== BARRA DE ROLAGEM PROFISSIONAL (Custom-Scroll) ===== */
 /* Webkit (Chrome, Edge, Safari) */
 .custom-scroll::-webkit-scrollbar {
     width: 8px;
@@ -119,16 +141,21 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     scrollbar-color: var(--scroll-thumb) var(--scroll-track);
 }
 
-/* --- GRID PARA LISTAS LONGAS --- */
+/* ===== GRID PARA LISTAS LONGAS ===== */
 .link-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem 2rem;
 }
 
-/* --- MENU MOBILE --- */
-.mobile-menu-drawer { transition: transform 0.3s ease-in-out; }
-.mobile-menu-backdrop { transition: opacity 0.3s ease-in-out; }
+/* ===== MENU MOBILE ===== */
+.mobile-menu-drawer { 
+    transition: transform 0.3s ease-in-out; 
+}
+
+.mobile-menu-backdrop { 
+    transition: opacity 0.3s ease-in-out; 
+}
 
 /* Submenus principais */
 .mobile-submenu {
@@ -138,6 +165,7 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     visibility: hidden;
     transition: max-height 0.4s ease-out, opacity 0.3s ease, visibility 0.3s ease;
 }
+
 .mobile-submenu.open { 
     max-height: 2000px; 
     opacity: 1;
@@ -151,9 +179,12 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     opacity: 0;
     transition: max-height 0.3s ease-out, opacity 0.2s ease;
 }
+
 .mobile-sub-accordion.open {
     max-height: 500px;
     opacity: 1;
 }
 
-.rotate-180 { transform: rotate(180deg); }
+.rotate-180 { 
+    transform: rotate(180deg); 
+}
