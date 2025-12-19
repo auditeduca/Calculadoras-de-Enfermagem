@@ -1,81 +1,23 @@
 /**
- * HEADER-SCRIPTS.JS - Versão Final Consolidada e Blindada
- * Foco: Delegação de Eventos para compatibilidade com Template Engines
+ * HEADER-SCRIPTS.JS - Lógica de Interação e Menu (Mega-Menu)
+ * Foco: Delegação de Eventos para compatibilidade com Template Engines.
+ * Nota: Requer utils.js e console-cleaner.js carregados previamente.
+ * A lógica de Modais foi removida para segregação no ficheiro modals.js.
  */
 
-// --- 1. UTILS (Ferramentas de Animação e DOM) ---
-window.Utils = {
-    animate: {
-        /**
-         * Efeito de aparecimento gradual
-         * @param {HTMLElement} element 
-         * @param {number} duration 
-         */
-        fadeIn: function(element, duration = 300) {
-            element.style.opacity = '0';
-            element.style.display = 'block';
-            element.style.transition = `opacity ${duration}ms ease-in-out`;
-            requestAnimationFrame(() => {
-                element.style.opacity = '1';
-            });
-        },
-        /**
-         * Efeito de desaparecimento gradual
-         * @param {HTMLElement} element 
-         * @param {number} duration 
-         */
-        fadeOut: function(element, duration = 300) {
-            element.style.opacity = '1';
-            element.style.transition = `opacity ${duration}ms ease-in-out`;
-            requestAnimationFrame(() => {
-                element.style.opacity = '0';
-            });
-            setTimeout(() => {
-                element.style.display = 'none';
-            }, duration);
-        }
-    }
-};
-
-// --- 2. CONSOLE CLEANER (Filtro Inteligente) ---
-class ConsoleCleaner {
-    constructor() {
-        this.originalConsole = { ...console };
-        this.init();
-    }
-    init() {
-        const filter = (args, type) => {
-            const msg = args.join(' ');
-            const patterns = [/Failed to load resource/, /404/, /CORS/, /Template Engine/];
-            // Permite logs de debug do menu para facilitar a manutenção
-            if (msg.includes('[Menu Debug]') || msg.includes('✅')) {
-                this.originalConsole[type](...args);
-                return;
-            }
-            if (patterns.some(p => p.test(msg))) return;
-            this.originalConsole[type](...args);
-        };
-        console.log = (...args) => filter(args, 'log');
-        console.warn = (...args) => filter(args, 'warn');
-        console.error = (...args) => filter(args, 'error');
-        this.originalConsole.log('🧹 Console Cleaner: Ativo (Debug de Menu Liberado)');
-    }
-}
-new ConsoleCleaner();
-
-// --- 3. LÓGICA DO MENU (DELEGAÇÃO DE EVENTOS) ---
+// --- 1. LÓGICA DO MENU (DELEGAÇÃO DE EVENTOS) ---
 /**
  * Esta secção utiliza delegação de eventos no "document". 
- * Garante o funcionamento mesmo que o HTML seja injetado após o script.
+ * O HeaderController gere o Mega-Menu Desktop, abas internas e Menu Mobile.
  */
 const HeaderController = {
     init: function() {
         this.bindEvents();
-        console.log('✅ [Menu Debug] Sistema de Delegação Inicializado');
+        console.log('✅ [Menu Debug] Sistema de Delegação do Header Inicializado');
     },
 
     /**
-     * Fecha todos os painéis abertos e reseta ícones
+     * Fecha todos os painéis do Mega-Menu e reseta os ícones de seta
      */
     closeAllPanels: function() {
         const panels = document.querySelectorAll('.mega-panel');
@@ -95,7 +37,7 @@ const HeaderController = {
     },
 
     bindEvents: function() {
-        // 1. Clique nos Nav Triggers (Mega Menu Desktop)
+        // 1. Clique nos Nav Triggers (Gatilhos do Mega Menu Desktop)
         document.addEventListener('click', (e) => {
             const trigger = e.target.closest('.nav-trigger');
             if (trigger) {
@@ -106,7 +48,7 @@ const HeaderController = {
                 const targetPanel = document.getElementById(targetId);
                 
                 if (!targetPanel) {
-                    console.error('❌ [Menu Debug] Painel não encontrado:', targetId);
+                    console.error('❌ [Menu Debug] Painel do Mega-Menu não encontrado:', targetId);
                     return;
                 }
 
@@ -117,23 +59,26 @@ const HeaderController = {
                 if (!isOpen) {
                     targetPanel.classList.remove('hidden');
                     targetPanel.classList.add('active');
-                    // Força display block para sobrepor classes do Tailwind
+                    // Força display block para sobrepor classes utilitárias de ocultação
                     targetPanel.style.setProperty('display', 'block', 'important');
                     
                     trigger.setAttribute('aria-expanded', 'true');
                     const icon = trigger.querySelector('.fa-chevron-down');
                     if (icon) icon.style.transform = 'rotate(180deg)';
                     
-                    if (window.Utils.animate.fadeIn) window.Utils.animate.fadeIn(targetPanel, 200);
-                    console.log('✅ [Menu Debug] Expandido:', targetId);
+                    // Executa animação se o Utils global estiver disponível
+                    if (window.Utils && window.Utils.animate && window.Utils.animate.fadeIn) {
+                        window.Utils.animate.fadeIn(targetPanel, 200);
+                    }
+                    console.log('✅ [Menu Debug] Mega-Menu Expandido:', targetId);
                 }
             } else if (!e.target.closest('.mega-panel')) {
-                // Clique fora do header ou painel fecha tudo
+                // Fechar ao clicar fora do menu ou do painel
                 this.closeAllPanels();
             }
         });
 
-        // 2. Mouseover nas Tabs Internas (Mega Menu)
+        // 2. Comportamento de Abas Internas (Hover no Mega Menu)
         document.addEventListener('mouseover', (e) => {
             const tabTrigger = e.target.closest('.menu-tab-trigger');
             if (tabTrigger) {
@@ -143,15 +88,17 @@ const HeaderController = {
                 const targetId = tabTrigger.getAttribute('data-target');
                 const targetContent = document.getElementById(targetId);
 
-                // Reset de abas irmãs dentro do mesmo painel
-                parent.querySelectorAll('.menu-tab-trigger').forEach(t => t.classList.remove('active', 'bg-gray-100'));
+                // Reset de abas e conteúdos no painel atual
+                parent.querySelectorAll('.menu-tab-trigger').forEach(t => {
+                    t.classList.remove('active', 'bg-gray-100', 'dark:bg-gray-800');
+                });
                 parent.querySelectorAll('.tab-content').forEach(c => {
                     c.classList.add('hidden');
                     c.style.display = 'none';
                 });
 
-                // Ativa a aba atual
-                tabTrigger.classList.add('active', 'bg-gray-100');
+                // Ativar a aba e o conteúdo correspondente
+                tabTrigger.classList.add('active', 'bg-gray-100', 'dark:bg-gray-800');
                 if (targetContent) {
                     targetContent.classList.remove('hidden');
                     targetContent.style.display = 'block';
@@ -159,7 +106,7 @@ const HeaderController = {
             }
         });
 
-        // 3. Menu Mobile
+        // 3. Controlo do Menu Mobile (Drawer e Accordions)
         document.addEventListener('click', (e) => {
             const mobileBtn = e.target.closest('#mobile-menu-trigger');
             const closeBtn = e.target.closest('#close-mobile-menu');
@@ -180,7 +127,7 @@ const HeaderController = {
                 }, 300);
             }
 
-            // Accordion Mobile (Submenus)
+            // Submenus (Accordions) no Mobile
             const accordionTrigger = e.target.closest('.mobile-accordion-trigger');
             if (accordionTrigger) {
                 const sub = accordionTrigger.nextElementSibling;
@@ -193,49 +140,23 @@ const HeaderController = {
     }
 };
 
-// --- 4. MODALS MANAGER ---
-class ModalsManager {
-    constructor() {
-        this.configs = {
-            'accessibility-menu': 'open',
-            'cookie-prefs-modal': 'show',
-            'suggestion-modal': 'show'
-        };
-        this.init();
-    }
-    init() {
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('.accessibility-menu-trigger')) this.toggle('accessibility-menu', true);
-            if (e.target.closest('.modal-close') || e.target.matches('.modal-backdrop')) this.closeAll();
-        });
-    }
-    toggle(id, force) {
-        const el = document.getElementById(id);
-        if (el) {
-            el.classList.toggle(this.configs[id], force);
-            document.body.style.overflow = el.classList.contains(this.configs[id]) ? 'hidden' : '';
-        }
-    }
-    closeAll() {
-        Object.keys(this.configs).forEach(id => this.toggle(id, false));
-    }
-}
-
-// --- 5. INICIALIZAÇÃO ---
-function startAll() {
+// --- 2. INICIALIZAÇÃO DO HEADER ---
+function startHeaderServices() {
     HeaderController.init();
-    window.modalsManager = new ModalsManager();
 }
 
-// Escuta o evento do seu template-engine ou carregamento do DOM
-window.addEventListener('templateEngineReady', startAll);
+// Suporte para Template Engines (dispara quando o HTML é injetado)
+window.addEventListener('templateEngineReady', startHeaderServices);
+
+// Fallback para carregamento padrão do DOM
 document.addEventListener('DOMContentLoaded', () => {
-    // Caso o template engine não esteja ativo ou já tenha terminado, inicia manualmente
-    if (!window.templateEngineActive) startAll(); 
+    if (!window.templateEngineActive) {
+        startHeaderServices();
+    }
 });
 
 /**
- * FUNÇÕES GLOBAIS DE ACESSIBILIDADE
+ * FUNÇÕES GLOBAIS DE ACESSIBILIDADE E TEMA
  */
 window.toggleTheme = function() {
     const isDark = document.documentElement.classList.toggle('dark');
@@ -252,5 +173,7 @@ window.changeFontSize = function(action) {
     document.documentElement.style.fontSize = current + '%';
 };
 
-// Aplica tema preferido ao carregar
-if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+// Aplicação de tema persistente
+if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+}
