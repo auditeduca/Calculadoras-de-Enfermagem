@@ -1,42 +1,103 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadoras de Enfermagem - Ferramentas Práticas para a Prática Clínica</title>
-    <meta name="description" content="Plataforma de apoio para enfermagem com calculadoras de medicamentos, escalas e diretrizes atualizadas.">
-    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Calculadoras de Enfermagem</title>
+    
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Calculadoras de Enfermagem">
+    <meta name="keywords" content="Calculadoras,Escalas">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/index.html" />
+
+    <link rel="icon" type="image/webp" href="assets/images/audit-educa-favicon.webp">
+
+    <!-- Hreflang Atualizados -->
+    <link rel="alternate" hreflang="pt-BR" href="https://www.calculadorasdeenfermagem.com.br/inicio.html" />
+    <link rel="alternate" hreflang="en" href="https://www.calculadorasdeenfermagem.com.br/" />
+    <link rel="alternate" hreflang="es" href="https://www.calculadorasdeenfermagem.com.br/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/" />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'audit-gold': '#D4AF37',
+                        'audit-navy': '#1E3A8A',
+                        'audit-blue': '#3B82F6',
+                        'audit-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome e Fontes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Externos -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+
+    <!-- Animações -->
+    <style>
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-down {
+            animation: fadeInDown 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in-up {
+            animation: slideInUp 0.8s ease-out;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800 dark:bg-audit-bgDark dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-300 selection:bg-audit-gold selection:text-audit-navy">
 
-    <div id="header-container"></div>
+    <!-- CONTAINER HEADER -->
+    <div id="header-container">
+    </div>
 
-    <main id="main-content">
-        <!-- O conteúdo da Home aqui -->
-        <section class="hero-section">
-            <div class="content-container">
-                <h1>Segurança e Precisão na Enfermagem</h1>
-                <p>Ferramentas projetadas para mitigar erros e apoiar a decisão clínica.</p>
-                <div class="cta-group">
-                    <a href="pt/ferramentas/calculo-medicamentos.html" class="btn-primary">Aceder Calculadoras</a>
-                    <a href="pt/sobre-nos/missao.html" class="btn-secondary">Conhecer Nossa Missão</a>
-                </div>
-            </div>
-        </section>
-    </main>
+    <!-- MAIN CONTENT -->
+    <div id="main-container">
+       
+        </main>
+    </div>
 
-    <div id="footer-container"></div>
+    <!-- CONTAINER FOOTER -->
+    <div id="footer-container">
+    </div>
+
+    <!-- CONTAINER MODAIS -->
     <div id="modals-container"></div>
 
-    <!-- Scripts em Ordem de Hierarquia (Raiz) -->
+    <!-- SCRIPTS -->
     <script src="assets/js/console-cleaner.js"></script>
+    <script src="assets/js/utils.js"></script>
     <script src="assets/js/template-engine.js"></script>
 
-    <script>
-        window.addEventListener('templateEngineReady', function() {
-            console.log('✓ Home: Sistema carregado com Template Engine V3.2.');
-        });
-    </script>
 </body>
 </html>
