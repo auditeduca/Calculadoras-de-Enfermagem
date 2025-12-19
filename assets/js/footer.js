@@ -1,151 +1,112 @@
-/**
- * FooterManager - Otimizado e Modular
- */
-class FooterManager {
-    constructor() {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.init());
-        } else {
-            this.init();
-        }
-    }
+        document.addEventListener('DOMContentLoaded', () => {
+            const banner = document.getElementById('cookie-banner');
+            const overlay = document.getElementById('cookie-overlay');
+            const modalContent = document.getElementById('cookie-modal-content');
+            const backToTop = document.getElementById('backToTop');
+            const body = document.body;
+            let lastFocusedElement;
 
-    init() {
-        this.initCookieSystem();
-        this.initBackToTop();
-        this.initFooterConfigBtn();
-        this.updateYear();
-    }
+            const CONSENT_KEY = 'ce_cookie_consent_v4_2025';
+            
+            const saveConsent = (all = false) => {
+                const prefs = {
+                    date: new Date().toISOString(),
+                    analytics: all || document.getElementById('check-stats')?.checked,
+                    adsense: all || document.getElementById('check-adsense')?.checked
+                };
+                localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs));
+                hideBanner();
+            };
 
-    updateYear() {
-        const yearEl = document.getElementById('current-year');
-        if (yearEl) {
-            const year = new Date().getFullYear();
-            yearEl.textContent = year > 2025 ? `2025-${year}` : year;
-        }
-    }
-
-    initCookieSystem() {
-        const banner = document.getElementById('cookie-banner');
-        const overlay = document.getElementById('cookie-overlay');
-        const modalContent = document.getElementById('cookie-modal-content');
-        const fab = document.getElementById('cookie-fab');
-        let lastFocusedElement = null;
-
-        if (!banner || !overlay) return;
-
-        setTimeout(() => {
-            try {
-                if (!localStorage.getItem('cookiesAccepted')) {
-                    banner.classList.remove('translate-y-full');
-                    document.body.classList.add('cookie-banner-active');
-                    if (fab) fab.classList.add('opacity-0', 'pointer-events-none');
+            const checkExistingConsent = () => {
+                if (!localStorage.getItem(CONSENT_KEY)) {
+                    setTimeout(showBanner, 1500);
                 }
-            } catch(e) {}
-        }, 500);
+            };
 
-        const updateConsentToGoogle = () => {
-            if (typeof gtag !== 'function') return;
-            const adStorage = document.getElementById('check-mkt')?.checked ? 'granted' : 'denied';
-            const analyticsStorage = document.getElementById('check-stats')?.checked ? 'granted' : 'denied';
-            
-            gtag('consent', 'update', {
-                'ad_storage': adStorage,
-                'analytics_storage': analyticsStorage,
-                'ad_user_data': adStorage,
-                'ad_personalization': adStorage
+            const updateFabsPosition = () => {
+                if (banner.classList.contains('visible')) {
+                    const bannerHeight = banner.offsetHeight;
+                    body.style.setProperty('--banner-height', `${bannerHeight}px`);
+                    body.classList.add('fabs-above-banner');
+                } else {
+                    body.classList.remove('fabs-above-banner');
+                }
+            };
+
+            const showBanner = () => {
+                banner.classList.add('visible');
+                updateFabsPosition();
+            };
+
+            const hideBanner = () => {
+                banner.classList.remove('visible');
+                updateFabsPosition();
+            };
+
+            const openModal = () => {
+                lastFocusedElement = document.activeElement;
+                overlay.classList.remove('invisible', 'opacity-0');
+                overlay.classList.add('opacity-100');
+                modalContent.classList.remove('translate-y-full');
+                modalContent.classList.add('translate-y-0');
+                setTimeout(() => modalContent.querySelector('button, input')?.focus(), 300);
+            };
+
+            const closeModal = () => {
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('invisible', 'opacity-0');
+                modalContent.classList.remove('translate-y-0');
+                modalContent.classList.add('translate-y-full');
+                lastFocusedElement?.focus();
+            };
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !overlay.classList.contains('invisible')) closeModal();
+                if (e.key === 'Tab' && !overlay.classList.contains('invisible')) {
+                    const focusable = modalContent.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])');
+                    const first = focusable[0];
+                    const last = focusable[focusable.length - 1];
+                    if (e.shiftKey) { if (document.activeElement === first) { last.focus(); e.preventDefault(); } }
+                    else { if (document.activeElement === last) { first.focus(); e.preventDefault(); } }
+                }
             });
-            
-            window.dataLayer.push({'event': 'cookie_consent_update'});
-        };
 
-        const openModal = () => {
-            lastFocusedElement = document.activeElement;
-            banner.classList.add('translate-y-full');
-            document.body.classList.remove('cookie-banner-active');
-            overlay.classList.remove('opacity-0', 'invisible');
-            modalContent.classList.remove('translate-y-full');
-            if (fab) fab.classList.add('opacity-0', 'pointer-events-none');
-            document.body.classList.add('overflow-hidden');
-            setTimeout(() => modalContent.querySelector('button')?.focus(), 300);
-        };
+            overlay.addEventListener('click', (e) => e.target === overlay && closeModal());
 
-        const closeAll = () => {
-            overlay.classList.add('opacity-0', 'invisible');
-            modalContent.classList.add('translate-y-full');
-            banner.classList.add('translate-y-full');
-            document.body.classList.remove('overflow-hidden', 'cookie-banner-active');
-            updateConsentToGoogle();
-            setTimeout(() => {
-                if (fab) fab.classList.remove('opacity-0', 'pointer-events-none');
-                if (lastFocusedElement) lastFocusedElement.focus();
-            }, 300);
-            try { localStorage.setItem('cookiesAccepted', 'true'); } catch(e) {}
-        };
+            document.getElementById('banner-options')?.addEventListener('click', openModal);
+            document.getElementById('cookie-fab')?.addEventListener('click', openModal);
+            document.getElementById('modal-close-x')?.addEventListener('click', closeModal);
+            document.getElementById('banner-accept')?.addEventListener('click', () => saveConsent(true));
+            document.getElementById('modal-save')?.addEventListener('click', () => { saveConsent(false); closeModal(); });
+            document.getElementById('modal-reject-all')?.addEventListener('click', () => { 
+                document.querySelectorAll('.consent-check').forEach(i => i.checked = false);
+                saveConsent(false); 
+                closeModal(); 
+            });
 
-        const handleFocusTrap = (e) => {
-            if (e.key === 'Tab' && !overlay.classList.contains('invisible')) {
-                const focusable = modalContent.querySelectorAll('button, [href], input, select, textarea');
-                const first = focusable[0], last = focusable[focusable.length - 1];
-                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-                else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-            }
-        };
-
-        document.addEventListener('keydown', (e) => {
-            if (overlay.classList.contains('invisible')) return;
-            if (e.key === 'Escape') closeAll();
-            if (e.key === 'Tab') handleFocusTrap(e);
-        });
-
-        overlay.addEventListener('click', (e) => e.target === overlay && closeAll());
-
-        const bind = (id, fn) => document.getElementById(id)?.addEventListener('click', fn);
-        bind('banner-accept', () => {
-            const m = document.getElementById('check-mkt'), s = document.getElementById('check-stats');
-            if(m) m.checked = true; if(s) s.checked = true;
-            closeAll();
-        });
-        bind('banner-options', openModal);
-        bind('modal-save', closeAll);
-        bind('modal-close-x', closeAll);
-        bind('modal-reject-all', () => {
-            const m = document.getElementById('check-mkt'), s = document.getElementById('check-stats');
-            if(m) m.checked = false; if(s) s.checked = false;
-            closeAll();
-        });
-
-        if (fab) fab.addEventListener('click', openModal);
-
-        document.querySelectorAll('.cookie-desc-toggle').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const target = document.getElementById(btn.getAttribute('data-target'));
-                const icon = btn.querySelector('.fa-chevron-down');
-                if (target) {
+            document.querySelectorAll('.cookie-desc-toggle').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = document.getElementById(btn.dataset.target);
+                    const isHidden = target.classList.contains('hidden');
                     target.classList.toggle('hidden');
-                    if (icon) icon.style.transform = target.classList.contains('hidden') ? "rotate(0deg)" : "rotate(180deg)";
+                    btn.querySelector('i').style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+                    btn.setAttribute('aria-expanded', !isHidden);
+                });
+            });
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTop.classList.remove('opacity-0', 'pointer-events-none');
+                    backToTop.classList.add('opacity-100');
+                } else {
+                    backToTop.classList.add('opacity-0', 'pointer-events-none');
+                    backToTop.classList.remove('opacity-100');
                 }
             });
+
+            backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            window.addEventListener('resize', updateFabsPosition);
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            checkExistingConsent();
         });
-        this.openCookieModal = openModal;
-    }
-
-    initBackToTop() {
-        const btn = document.getElementById('backToTop');
-        if (!btn) return;
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) btn.classList.add('is-visible');
-            else btn.classList.remove('is-visible');
-        }, { passive: true });
-        btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    }
-
-    initFooterConfigBtn() {
-        document.getElementById('footer-config-btn')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (this.openCookieModal) this.openCookieModal();
-        });
-    }
-}
-
-window.footerManager = new FooterManager();

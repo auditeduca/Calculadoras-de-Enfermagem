@@ -1,35 +1,315 @@
-/* ESTILOS AAA E MODULARES */
-button:focus-visible, a:focus-visible, input:focus-visible {
-    outline: 3px solid #f59e0b !important;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 2px #000, 0 0 0 4px #fff;
-}
+        body { font-family: 'Inter', sans-serif; font-display: swap; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Nunito Sans', sans-serif; font-weight: 700; }
+        :focus-visible { outline: 3px solid #D4AF37; outline-offset: 2px; }
 
-@media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-}
+        .toggle-switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #1A3E74; }
+        input:checked + .slider:before { transform: translateX(22px); }
+        
+        #backToTop, #cookie-fab {
+            position: fixed;
+            right: 20px;
+            z-index: 105;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            cursor: pointer;
+            border: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #backToTop { bottom: 80px; background-color: #1A3E74; color: white; }
+        #cookie-fab { bottom: 20px; background-color: #D4AF37; color: #111827; }
 
-.toggle-switch { position: relative; display: inline-block; width: 48px; height: 28px; flex-shrink: 0; }
-.toggle-switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #525252; transition: .4s; border: 1px solid #737373; border-radius: 34px; }
-.slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-input:checked + .slider { background-color: #1d4ed8; border-color: #1d4ed8; }
-input:checked + .slider:before { transform: translateX(20px); }
+        .fabs-above-banner #backToTop { bottom: calc(var(--banner-height, 180px) + 80px); }
+        .fabs-above-banner #cookie-fab { bottom: calc(var(--banner-height, 180px) + 20px); }
 
-:root { --fab-cookie-bottom-base: 20px; --fab-top-bottom-base: 80px; --banner-height: 220px; }
-#backToTop, #cookie-fab {
-    position: fixed; right: 20px; width: 52px; height: 52px; border-radius: 9999px; cursor: pointer;
-    transition: bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s; z-index: 90;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem; color: white; border: 2px solid transparent;
-}
-#backToTop { bottom: var(--fab-top-bottom-base); background-color: #1d4ed8; opacity: 0; visibility: hidden; pointer-events: none; }
-#backToTop.is-visible { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
-#cookie-fab { bottom: var(--fab-cookie-bottom-base); background-color: #b45309; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-body.cookie-banner-active #backToTop { bottom: calc(var(--fab-top-bottom-base) + var(--banner-height)); }
-body.cookie-banner-active #cookie-fab { bottom: calc(var(--fab-cookie-bottom-base) + var(--banner-height)); }
+        .detail-table td { padding: 6px 0; font-size: 11px; line-height: 1.4; vertical-align: top; }
+        .detail-label { font-weight: 700; width: 40%; padding-right: 12px !important; color: #4b5563; }
+        .dark .detail-label { color: #9ca3af; }
 
-.aaa-touch-target { min-height: 44px; display: flex; align-items: center; }
-.custom-scrollbar::-webkit-scrollbar { width: 6px; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        #cookie-banner.visible { transform: translateY(0); }
+        .seal-img { height: 56px; width: auto; object-fit: contain; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300 text-gray-800 dark:text-gray-200">
+
+    <button id="backToTop" class="opacity-0 pointer-events-none hover:scale-110 active:scale-95 focus:ring-2 focus:ring-audit-gold" aria-label="Voltar ao topo da página">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <button id="cookie-fab" class="hover:scale-110 active:scale-95 focus:ring-2 focus:ring-audit-blue" aria-label="Gerenciar Preferências de Privacidade">
+        <i class="fas fa-cookie-bite" aria-hidden="true"></i>
+    </button>
+
+    <div id="cookie-overlay" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title" class="fixed inset-0 z-[120] bg-black/60 flex justify-center items-end md:items-center opacity-0 invisible transition-all duration-300 backdrop-blur-sm">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-2xl rounded-t-2xl md:rounded-2xl shadow-2xl flex flex-col max-h-[90vh] md:max-h-[85vh] transform translate-y-full transition-transform duration-300" id="cookie-modal-content">
+            
+            <header class="flex justify-between items-center p-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-t-2xl shrink-0">
+                <h2 id="cookie-modal-title" class="text-lg font-bold text-audit-navy dark:text-white font-nunito">Preferências de Privacidade</h2>
+                <button id="modal-close-x" class="text-gray-400 dark:text-gray-500 hover:text-red-500 text-2xl leading-none w-10 h-10 flex items-center justify-center rounded-full transition-colors focus:ring-2 focus:ring-audit-blue" aria-label="Fechar Modal">&times;</button>
+            </header>
+
+            <div id="modal-scroll-area" class="p-5 overflow-y-auto flex-grow space-y-6 custom-scrollbar">
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                    Respeitamos a sua privacidade. Abaixo, pode personalizar quais tecnologias de terceiros deseja permitir em nossa plataforma.
+                </p>
+
+                <section class="border border-gray-100 dark:border-gray-700 rounded-lg p-4 shadow-sm bg-gray-50/50 dark:bg-gray-700/20">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-gray-200 dark:bg-gray-600 p-2 rounded-full">
+                                <i class="fas fa-shield-alt text-gray-600 dark:text-gray-300 text-sm"></i>
+                            </div>
+                            <div>
+                                <span class="block font-bold text-audit-navy dark:text-gray-100 text-sm">Tecnicamente Necessário</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">Google Tag Manager | BR</span>
+                            </div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked disabled aria-label="Tecnicamente necessário sempre ativo">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    
+                    <button class="text-xs font-bold text-audit-blue dark:text-audit-gold hover:underline flex items-center gap-1 mt-2 cookie-desc-toggle w-full justify-between group" data-target="desc-gtm" aria-expanded="false" aria-controls="desc-gtm">
+                        <span>Ver detalhes técnicos completos</span>
+                        <i class="fas fa-chevron-down text-[10px] transform transition-transform"></i>
+                    </button>
+
+                    <div id="desc-gtm" class="item-desc hidden mt-4 pt-4 border-t border-gray-200 dark:border-gray-600 space-y-4 text-[11px]">
+                        <div>
+                            <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-1 font-nunito">Descrição do Serviço</h4>
+                            <p>Este é um sistema de gerenciamento de tags. Com isso, o utilizador pode atualizar códigos de medição e fragmentos de código relacionados, conhecidos coletivamente como tags no site ou aplicação móvel do utilizador.</p>
+                        </div>
+                        <table class="detail-table w-full">
+                            <tr><td class="detail-label">Empresa de processamento</td><td>Google Ireland Limited<br>Google Building Gordon House, 4 Barrow St, Dublin, D04 E5W5, Ireland</td></tr>
+                            <tr><td class="detail-label">Finalidades dos dados</td><td>Gestão de tags</td></tr>
+                            <tr><td class="detail-label">Tecnologias utilizadas</td><td>Pixel</td></tr>
+                            <tr><td class="detail-label">Dados recolhidos</td><td>Dados agregados sobre disparo de tags</td></tr>
+                            <tr><td class="detail-label">Base jurídica</td><td>Interesses legítimos, Art. 7(9) LGPD</td></tr>
+                            <tr><td class="detail-label">Local de processamento</td><td>União Europeia</td></tr>
+                            <tr><td class="detail-label">Período de retenção</td><td>Os dados serão eliminados após 14 dias da recuperação.</td></tr>
+                            <tr><td class="detail-label">Transferência</td><td>Taiwan, Chile, Singapura, Estados Unidos da América</td></tr>
+                            <tr><td class="detail-label">Destinatários</td><td>Alphabet Inc., Google LLC, Google Ireland Limited</td></tr>
+                        </table>
+                        <div class="flex flex-col gap-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+                            <a href="https://support.google.com/policies/contact/general_privacy_form" target="_blank" class="text-audit-blue underline">Agente de proteção de dados da empresa</a>
+                            <a href="https://business.safety.google/privacy/?hl=en" target="_blank" class="text-audit-blue underline">Clique aqui para ler a política de privacidade do processador de dados</a>
+                            <a href="https://www.google.com/intl/de/tagmanager/use-policy.html" target="_blank" class="text-audit-blue underline">Clique aqui para ler a política de cookies do processador de dados</a>
+                            <a href="https://safety.google/privacy/privacy-controls/" target="_blank" class="text-red-500 font-bold underline">Clique aqui para desativar este processador em todos os domínios</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="border border-gray-100 dark:border-gray-700 rounded-lg p-4 shadow-sm bg-white dark:bg-gray-800">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full">
+                                <i class="fas fa-chart-line text-blue-600 dark:text-blue-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <span class="block font-bold text-audit-navy dark:text-gray-100 text-sm">Marketing</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">Google Analytics Advertising | BR</span>
+                            </div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="check-stats" class="consent-check" data-service="analytics">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <button class="text-xs font-bold text-audit-blue dark:text-audit-gold hover:underline flex items-center gap-1 mt-2 cookie-desc-toggle w-full justify-between group" data-target="desc-mkt" aria-expanded="false" aria-controls="desc-mkt">
+                        <span>Ver detalhes técnicos completos</span>
+                        <i class="fas fa-chevron-down text-[10px] transform transition-transform"></i>
+                    </button>
+
+                    <div id="desc-mkt" class="item-desc hidden mt-4 pt-4 border-t border-gray-200 dark:border-gray-600 space-y-4 text-[11px]">
+                        <div>
+                            <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-1 font-nunito">Descrição do Serviço</h4>
+                            <p>Este é um serviço de análise da web e publicidade. É utilizado para permitir a criação de grupos-alvo para produtos publicitários do Google e também pode ser utilizado para a personalização de campanhas publicitárias.</p>
+                        </div>
+                        <table class="detail-table w-full">
+                            <tr><td class="detail-label">Empresa de processamento</td><td>Google Ireland Limited<br>Google Building Gordon House, 4 Barrow St, Dublin, D04 E5W5, Ireland</td></tr>
+                            <tr><td class="detail-label">Finalidades dos dados</td><td>Anúncio, Análise, Marketing, Remarketing, Relatórios, Segmentação</td></tr>
+                            <tr><td class="detail-label">Tecnologias utilizadas</td><td>Cookies, Pixel, JavaScript</td></tr>
+                            <tr><td class="detail-label">Dados recolhidos</td><td>Anúncios visualizados, Trajeto de cliques, Identificador do cookie, Data e hora da visita, Sistema operativo do dispositivo, Localização geográfica, Endereço IP, Resolução do ecrã, Dados de utilização, Sites visitados, Páginas visualizadas, Informações do dispositivo, URL de referência, Nome de anfitrião, Idioma do navegador, Tipo de navegador, Dados de interação, Comportamento do utilizador, URL visitado.</td></tr>
+                            <tr><td class="detail-label">Base jurídica</td><td>Consentimento, Art. 7(1) LGPD</td></tr>
+                            <tr><td class="detail-label">Local de processamento</td><td>União Europeia</td></tr>
+                            <tr><td class="detail-label">Período de retenção</td><td>Os dados serão apagados assim que deixarem de ser necessários para as finalidades de processamento.</td></tr>
+                            <tr><td class="detail-label">Transferência</td><td>Singapura, Chile, Taiwan, Estados Unidos da América</td></tr>
+                            <tr><td class="detail-label">Destinatários</td><td>Google LLC, Google Ireland Limited, Alphabet Inc</td></tr>
+                        </table>
+                        <div class="flex flex-col gap-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+                            <a href="https://support.google.com/policies/troubleshooter/7575787?hl=en" target="_blank" class="text-audit-blue underline">Agente de proteção de dados da empresa de processamento</a>
+                            <a href="https://business.safety.google/privacy/?hl=en" target="_blank" class="text-audit-blue underline">Clique aqui para ler a política de privacidade do processador de dados</a>
+                            <a href="https://policies.google.com/technologies/cookies?hl=en" target="_blank" class="text-audit-blue underline">Clique aqui para ler a política de cookies do processador de dados</a>
+                            <a href="https://safety.google/privacy/privacy-controls/" target="_blank" class="text-red-500 font-bold underline">Clique aqui para desativar este processador em todos os domínios</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="border border-gray-100 dark:border-gray-700 rounded-lg p-4 shadow-sm bg-white dark:bg-gray-800">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-yellow-100 dark:bg-yellow-900/30 p-2 rounded-full">
+                                <i class="fas fa-bullhorn text-yellow-600 dark:text-yellow-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <span class="block font-bold text-audit-navy dark:text-gray-100 text-sm">Publicidade Personalizada</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">Google AdSense | BR</span>
+                            </div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="check-adsense" class="consent-check" data-service="adsense">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <button class="text-xs font-bold text-audit-blue dark:text-audit-gold hover:underline flex items-center gap-1 mt-2 cookie-desc-toggle w-full justify-between group" data-target="desc-adsense" aria-expanded="false" aria-controls="desc-adsense">
+                        <span>Ver detalhes técnicos completos</span>
+                        <i class="fas fa-chevron-down text-[10px] transform transition-transform"></i>
+                    </button>
+
+                    <div id="desc-adsense" class="item-desc hidden mt-4 pt-4 border-t border-gray-200 dark:border-gray-600 space-y-4 text-[11px]">
+                        <div>
+                            <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-1 font-nunito">Descrição do Serviço</h4>
+                            <p>Serviço de rede de publicidade online para exibição de anúncios relevantes baseados no conteúdo visitado e no perfil do utilizador.</p>
+                        </div>
+                        <table class="detail-table w-full">
+                            <tr><td class="detail-label">Empresa de processamento</td><td>Google Ireland Limited (Dublin, Ireland)</td></tr>
+                            <tr><td class="detail-label">Finalidades dos dados</td><td>Anúncio, Medição, Personalização, Marketing, Segmentação, Relatórios</td></tr>
+                            <tr><td class="detail-label">Tecnologias utilizadas</td><td>Cookies, Pixel, JavaScript, Local Storage</td></tr>
+                            <tr><td class="detail-label">Dados recolhidos</td><td>Identificador do cookie, IP, Data e hora da visita, Sistema operativo do dispositivo, Localização geográfica, Resolução do ecrã, Dados de utilização, Sites visitados, Informações do dispositivo.</td></tr>
+                            <tr><td class="detail-label">Base jurídica</td><td>Consentimento, Art. 7(1) LGPD</td></tr>
+                            <tr><td class="detail-label">Local de processamento</td><td>União Europeia</td></tr>
+                            <tr><td class="detail-label">Período de retenção</td><td>Os dados serão apagados assim que deixarem de ser necessários para as finalidades de processamento.</td></tr>
+                            <tr><td class="detail-label">Transferência</td><td>Singapura, Chile, Taiwan, Estados Unidos da América</td></tr>
+                            <tr><td class="detail-label">Destinatários</td><td>Alphabet Inc., Google LLC, Google Ireland Limited</td></tr>
+                        </table>
+                        <div class="flex flex-col gap-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+                            <a href="https://business.safety.google/privacy/?hl=en" target="_blank" class="text-audit-blue underline">Clique aqui para ler a política de privacidade do processador de dados</a>
+                            <a href="https://policies.google.com/technologies/cookies?hl=en" target="_blank" class="text-audit-blue underline">Clique aqui para ler a política de cookies do processador de dados</a>
+                            <a href="https://safety.google/privacy/privacy-controls/" target="_blank" class="text-red-500 font-bold underline">Clique aqui para desativar este processador em todos os domínios</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <footer class="p-5 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 rounded-b-2xl flex flex-col sm:flex-row gap-3 shrink-0">
+                <button id="modal-reject-all" class="flex-1 px-4 py-3 rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-bold hover:bg-gray-100 transition text-sm focus:ring-2 focus:ring-red-400">Rejeitar Tudo</button>
+                <button id="modal-save" class="flex-1 px-4 py-3 rounded-full bg-audit-blue dark:bg-audit-gold text-white dark:text-audit-navy font-bold shadow-lg hover:opacity-90 transition text-sm focus:ring-2 focus:ring-audit-blue">Salvar Preferências</button>
+            </footer>
+        </div>
+    </div>
+
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-white dark:bg-audit-cardDark shadow-[0_-5px_30px_rgba(0,0,0,0.2)] z-[110] transform translate-y-full transition-transform duration-700 border-t border-gray-200 dark:border-gray-700 p-6 lg:px-12 lg:py-8 flex flex-col lg:flex-row items-center justify-between gap-6" role="alert">
+        <div class="flex-1 space-y-4 text-center lg:text-left">
+            <p class="text-sm text-gray-700 dark:text-gray-200 leading-relaxed">
+                <strong class="text-audit-navy dark:text-audit-gold block mb-1 lg:inline lg:mr-1">Seu conhecimento importa e sua privacidade também:</strong>
+                Nós da <strong class="text-audit-navy dark:text-audit-gold">Calculadoras de Enfermagem</strong> utilizamos cookies para aprimorar sua experiência de navegação e analisar nosso tráfego. Queremos assegurar-lhe a melhor utilização possível e a melhoria contínua do nosso website. Assim, podemos também apresentar-lhe conteúdo e publicidade baseados no seu perfil de utilização, e, para isso, trabalhamos em conjunto com parceiro selecionado (Google).
+            </p>
+            <nav class="flex flex-wrap justify-center lg:justify-start gap-4 text-xs font-semibold text-audit-blue dark:text-audit-gold">
+                <a href="https://www.calculadorasdeenfermagem.com.br/politica.html" class="hover:underline focus:ring-1 focus:ring-audit-blue rounded p-1">Privacidade</a>
+                <span class="text-gray-300 dark:text-gray-600" aria-hidden="true">|</span>
+                <a href="https://www.calculadorasdeenfermagem.com.br/termos.html" class="hover:underline focus:ring-1 focus:ring-audit-blue rounded p-1">Termos de Uso</a>
+                <span class="text-gray-300 dark:text-gray-600" aria-hidden="true">|</span>
+                <a href="https://www.calculadorasdeenfermagem.com.br/notificacoes-legais.html" class="hover:underline focus:ring-1 focus:ring-audit-blue rounded p-1">Notificações Legais</a>
+            </nav>        
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto shrink-0">
+            <button id="banner-options" class="px-6 py-3 rounded-full border-2 border-audit-blue dark:border-audit-gold text-audit-blue dark:text-audit-gold font-bold text-sm hover:bg-audit-blue/5 transition whitespace-nowrap focus:ring-2 focus:ring-audit-blue">Personalizar</button>
+            <button id="banner-accept" class="px-10 py-3 rounded-full bg-audit-blue dark:bg-audit-gold text-white dark:text-audit-navy font-bold text-sm shadow-md hover:scale-105 transition whitespace-nowrap focus:ring-2 focus:ring-audit-blue">Aceitar Todos</button>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 pt-16 pb-12 mt-12" role="contentinfo">
+        <div class="container mx-auto px-6">
+            <div class="mb-12 flex flex-col items-start">
+                <img src="https://www.calculadorasdeenfermagem.com.br/iconrodape1.webp" 
+                     alt="Logotipo Calculadoras de Enfermagem" class="h-12 w-auto mb-6" width="200" height="48"
+                     onerror="this.onerror=null;this.src='https://placehold.co/200x48/111827/FFFFFF?text=LOGO'">
+                <hr class="border-gray-700 w-full">
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12 text-left">
+                <nav aria-label="Menu Institucional">
+                    <h4 class="font-bold text-white mb-6 text-lg font-nunito uppercase tracking-wide">Institucional</h4>
+                    <ul class="space-y-3">
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/" class="hover:text-audit-gold transition-colors py-1 inline-block">Início</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/missao.html" class="hover:text-audit-gold transition-colors py-1 inline-block">Sobre Nós</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/mapa-do-site.html" class="hover:text-audit-gold transition-colors py-1 inline-block">Mapa do Site</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/politica.html" class="hover:text-audit-gold transition-colors py-1 inline-block">Políticas do Site</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/termos.html" class="hover:text-audit-gold transition-colors py-1 inline-block">Termos e Condições</a></li>
+                    </ul>
+                </nav>
+
+                <nav aria-label="Sustentabilidade Digital">
+                    <h4 class="font-bold text-white mb-6 text-lg font-nunito uppercase tracking-wide">Sustentabilidade</h4>
+                    <ul class="space-y-3">
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/nossocompromisso.html" class="hover:text-audit-gold transition-colors py-1 inline-block">Nosso Compromisso</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/impactodigital.html" class="hover:text-audit-gold transition-colors py-1 inline-block">Relatório de Impacto</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/tecnologiaverde.html" class="hover:text-audit-gold transition-colors py-1 inline-block">Tecnologia Verde</a></li>
+                    </ul>
+                </nav>
+
+                <nav aria-label="Acessibilidade Digital">
+                    <h4 class="font-bold text-white mb-6 text-lg font-nunito uppercase tracking-wide">Acessibilidade</h4>
+                    <ul class="space-y-3">
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/politica-acessibilidade.html" class="hover:text-audit-gold transition-colors py-1 inline-block">Política de Acessibilidade</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/recursos-acessibilidade.html" class="hover:text-audit-gold transition-colors py-1 inline-block">Recursos de Acessibilidade</a></li>
+                    </ul>
+                </nav>
+
+                <section aria-label="Compromisso de Governança">
+                    <h4 class="font-bold text-white mb-6 text-lg font-nunito uppercase tracking-wide text-left">Nosso Compromisso</h4>
+                    <p class="text-sm mb-6 leading-relaxed text-gray-400 text-left">Nosso site adota como princípio de governança, o comprometimento com elevados padrões de acessibilidade digital, sustentabilidade digital e proteção de dados.</p>
+                    <div class="flex flex-wrap items-center justify-start gap-4">
+                        <img src="https://www.calculadorasdeenfermagem.com.br/seloacessibilidade.webp" alt="Selo: Certificado de Acessibilidade Digital" class="seal-img transition-transform hover:scale-110">
+                        <img src="https://www.calculadorasdeenfermagem.com.br/selosustentabilidade.webp" alt="Selo: Certificado de Sustentabilidade Digital" class="seal-img transition-transform hover:scale-110">
+                        <img src="https://www.calculadorasdeenfermagem.com.br/selolgpd.webp" alt="Selo: Certificado de Proteção de Dados e LGPD" class="seal-img transition-transform hover:scale-110">
+                    </div>
+                </section>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-10">
+                <div class="flex flex-col lg:flex-row justify-between items-center lg:items-start gap-10">
+                    <div class="flex flex-col items-center lg:items-start space-y-5 w-full lg:w-auto text-left">
+                        <p class="text-sm text-gray-400">&copy; <span id="current-year"></span> Calculadoras de Enfermagem. Todos os Direitos Reservados.</p>
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-8 text-xs sm:text-sm font-medium">
+                            <a href="https://www.calculadorasdeenfermagem.com.br/termos.html" class="hover:text-white transition-colors border-b border-transparent hover:border-audit-gold py-1">Configurações</a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/politica.html" class="hover:text-white transition-colors border-b border-transparent hover:border-audit-gold py-1">Central de Privacidade</a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/notificacoes-legais.html" class="hover:text-white transition-colors border-b border-transparent hover:border-audit-gold py-1">Notificações Legais</a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center lg:items-end lg:mr-32 xl:mr-40">
+                        <div class="flex space-x-6 text-2xl text-white">
+                            <a href="https://www.linkedin.com/company/calculadoras-de-enfermagem" target="_blank" rel="noopener" class="hover:text-audit-gold transition-all transform hover:-translate-y-1" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://www.instagram.com/calculadorasdeenfermagem/" target="_blank" rel="noopener" class="hover:text-audit-gold transition-all transform hover:-translate-y-1" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@calculadorasdeenf" target="_blank" rel="noopener" class="hover:text-audit-gold transition-all transform hover:-translate-y-1" aria-label="TikTok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                            <a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" target="_blank" rel="noopener" class="hover:text-audit-gold transition-all transform hover:-translate-y-1" aria-label="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                        <span class="text-[10px] mt-4 uppercase tracking-widest text-gray-500 font-bold">Conecte-se Conosco</span>
+                    </div>
+                </div>
+            </div>
+        </div>
