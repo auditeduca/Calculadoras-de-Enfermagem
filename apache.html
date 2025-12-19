@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APACHE II | Calculadoras de Enfermagem</title>
+    
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Calculadora APACHE II online para profissionais de UTI. Avalie a gravidade clínica e o risco de mortalidade hospitalar com base em parâmetros fisiológicos agudos e saúde crônica.">
+    <meta name="keywords" content="apache ii, escore de gravidade, uti, enfermagem intensiva, medicina intensiva, prognóstico hospitalar, calculadora enfermagem">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/calculadora-apache-ii.html">
+
+    <!-- Tailwind CSS & Configuração -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-primary-light': '#2E5A9C',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Externos Modulares -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/global-main.css">
+
+    <style>
+        :root {
+            --color-primary: #1A3E74;
+            --color-primary-light: #2E5A9C;
+            --color-text-light: #666666;
+        }
+        /* Estilos Padronizados */
+        .content-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        .sidebar-card { padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .sidebar-card h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; padding-bottom: 0.5rem; }
+        .toc-list { list-style: none; padding: 0; }
+        .toc-list li { margin-bottom: 0.75rem; font-size: 0.875rem; transition: transform 0.2s; }
+        .toc-list li:hover { transform: translateX(5px); }
+        .toc-list a { text-decoration: none; transition: opacity 0.2s; }
+        
+        .share-buttons { display: flex; gap: 0.75rem; margin-top: 1rem; }
+        .share-btn { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); color: white; transition: all 0.3s; }
+        .share-btn:hover { background: white; color: var(--color-primary); transform: translateY(-3px); }
+
+        .author-box { background: white; border-radius: 1.5rem; padding: 2rem; margin-top: 3rem; display: flex; gap: 1.5rem; border: 1px solid #f0f0f0; align-items: center; }
+        .dark .author-box { background: #1e293b; border-color: #334155; }
+        .author-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
+        .author-info h3 { font-size: 1.25rem; font-weight: 700; color: var(--color-primary); margin-bottom: 0.5rem; }
+        .author-info p { font-size: 0.875rem; line-height: 1.6; color: #4b5563; }
+        .dark .author-info p { color: #94a3b8; }
+
+        .references-section { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e5e7eb; }
+        .references-section h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; color: var(--color-primary); }
+        .reference-item { font-size: 0.875rem; margin-bottom: 1rem; color: #4b5563; line-height: 1.6; }
+        .dark .reference-item { color: #94a3b8; }
+
+        .tag { display: inline-block; background: #f3f4f6; color: #4b5563; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 600; margin-right: 0.5rem; margin-bottom: 0.5rem; transition: all 0.2s; }
+        .tag:hover { background: var(--color-primary); color: white; }
+        .dark .tag { background: #334155; color: #cbd5e1; }
+
+        .tab-active { border-color: #00bcd4 !important; color: #00bcd4 !important; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300 font-sans">
+
+    <!-- Script de Limpeza de Console -->
+    <script src="assets/js/console-cleaner.js"></script>
+
+    <!-- Injeção do Header -->
+    <div id="header-container"></div>
+
+    <!-- Background Decorativo -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-gray-500 dark:text-gray-400 mb-8" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
+                <li class="flex items-center gap-2"><span>/</span> <span class="text-nurse-primary dark:text-nurse-secondary font-medium">Escalas Clínicas</span></li>
+                <li class="flex items-center gap-2"><span>/</span> <span>APACHE II Score</span></li>
+            </ol>
+        </nav>
+
+        <!-- Cabeçalho -->
+        <header class="mb-12 text-center md:text-left">
+            <span class="inline-block px-3 py-1 text-xs font-bold tracking-wider text-white bg-nurse-secondary rounded-full mb-4 uppercase">Escalas Clínicas</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-nurse-primary dark:text-white mb-2">APACHE II</h1>
+            <p class="text-nurse-secondary font-bold text-lg mb-6 uppercase tracking-tight italic">Use os piores dados fisiológicos das primeiras 24h.</p>
+            <div class="h-1.5 w-24 bg-nurse-accent mb-6 mx-auto md:mx-0"></div>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
+                Acute Physiology and Chronic Health Evaluation II - Sistema de classificação de gravidade para predição de mortalidade hospitalar.
+            </p>
+        </header>
+
+        <div class="grid lg:grid-cols-4 gap-12">
+            <!-- Área Principal -->
+            <div class="lg:col-span-3">
+                
+                <!-- Abas -->
+                <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-10">
+                    <button onclick="showTab('calc')" id="btn-tab-calc" class="px-6 py-3 border-b-2 border-nurse-secondary text-nurse-secondary font-bold flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-calculator"></i> Escala
+                    </button>
+                    <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-book-medical"></i> Sobre a Escala
+                    </button>
+                    <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-clipboard-list"></i> Como usar a Escala?
+                    </button>
+                    <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-microscope"></i> Informações Técnicas
+                    </button>
+                </div>
+
+                <!-- Painéis de Conteúdo -->
+                <section id="pane-calc" class="space-y-8 animate-in fade-in duration-500">
+                    <div class="flex justify-end mb-4">
+                        <div class="inline-flex bg-gray-200 dark:bg-slate-800 p-1 rounded-xl border border-gray-300 dark:border-slate-700">
+                            <button onclick="setUnit('si')" id="unit-si" class="px-6 py-2 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 shadow-sm text-nurse-primary">SI (°C, µmol/L)</button>
+                            <button onclick="setUnit('us')" id="unit-us" class="px-6 py-2 rounded-lg text-xs font-bold transition-all text-gray-500">US (°F, mg/dL)</button>
+                        </div>
+                    </div>
+
+                    <form id="apache-form" class="space-y-10">
+                        <!-- 1. Fisiologia Aguda -->
+                        <div class="bg-white dark:bg-slate-900/50 p-6 md:p-8 rounded-3xl border border-gray-100 dark:border-slate-800 shadow-sm">
+                            <h2 class="text-xl font-bold text-nurse-primary dark:text-nurse-secondary mb-8 flex items-center gap-3"><i class="fa-solid fa-heart-pulse text-nurse-secondary"></i> 1. Fisiologia Aguda</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">Temp. Retal (<span id="label-temp">°C</span>)</label>
+                                    <input type="number" id="temp" step="0.1" value="37.0" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none transition-all">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">PAM (mmHg)</label>
+                                    <input type="number" id="pam" value="90" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none transition-all">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">FC (bpm)</label>
+                                    <input type="number" id="fc" value="80" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none transition-all">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">FR (irpm)</label>
+                                    <input type="number" id="fr" value="16" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none transition-all">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">pH Arterial</label>
+                                    <input type="number" id="ph" step="0.01" value="7.40" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none transition-all">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">Sódio (mEq/L)</label>
+                                    <input type="number" id="na" value="140" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none transition-all">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">Creatinina (<span id="label-crea">µmol/L</span>)</label>
+                                    <input type="number" id="crea" step="0.1" value="88.4" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none transition-all">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">Hematócrito (%)</label>
+                                    <input type="number" id="ht" value="40" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none transition-all">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">Leucócitos (mil/mm³)</label>
+                                    <input type="number" id="leu" step="0.1" value="7.0" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none transition-all">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">PaO₂ (mmHg)</label>
+                                    <input type="number" id="pao2" value="90" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none transition-all">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">Escala de Glasgow (GCS)</label>
+                                    <input type="number" id="gcs" min="3" max="15" value="15" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none transition-all">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ajustes Adicionais -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-10 border-t border-gray-100 dark:border-slate-800">
+                            <div class="space-y-4">
+                                <h2 class="text-xl font-bold text-nurse-primary dark:text-nurse-secondary flex items-center gap-3"><i class="fa-solid fa-user-clock text-nurse-secondary"></i> 2. Ajuste por Idade</h2>
+                                <select id="idade" class="w-full p-5 rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary transition-all">
+                                    <option value="0">≤ 44 anos (0 pts)</option>
+                                    <option value="2">45-54 anos (2 pts)</option>
+                                    <option value="3">55-64 anos (3 pts)</option>
+                                    <option value="5">65-74 anos (5 pts)</option>
+                                    <option value="6">≥ 75 anos (6 pts)</option>
+                                </select>
+                            </div>
+                            <div class="space-y-4">
+                                <h2 class="text-xl font-bold text-nurse-primary dark:text-nurse-secondary flex items-center gap-3"><i class="fa-solid fa-notes-medical text-nurse-secondary"></i> 3. Saúde Crônica</h2>
+                                <select id="cronico" class="w-full p-5 rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary transition-all">
+                                    <option value="0">Sem comorbidades graves</option>
+                                    <option value="5">Não-cirúrgico / Emergência (5 pts)</option>
+                                    <option value="2">Cirurgia Eletiva (2 pts)</option>
+                                </select>
+                                <div class="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30">
+                                    <input type="checkbox" id="ira" class="w-6 h-6 accent-nurse-secondary cursor-pointer">
+                                    <label for="ira" class="text-xs font-black text-red-700 dark:text-red-400 cursor-pointer uppercase tracking-tighter">Insuficiência Renal Aguda (IRA)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-6 pt-10 justify-center">
+                            <button type="button" onclick="calcularApache()" class="bg-nurse-primary hover:bg-nurse-primary/90 text-white px-16 py-5 rounded-[2rem] font-bold shadow-2xl shadow-nurse-primary/30 transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-sm">
+                                <i class="fa-solid fa-bolt"></i> Calcular Agora
+                            </button>
+                            <button type="reset" onclick="resetCalc()" class="bg-gray-200 dark:bg-slate-800 hover:bg-gray-300 dark:hover:bg-slate-700 px-16 py-5 rounded-[2rem] font-bold transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-gray-500 text-sm">
+                                <i class="fa-solid fa-eraser"></i> Limpar Dados
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Resultado -->
+                    <div id="resultado-container" class="hidden animate-in slide-in-from-bottom-12 duration-1000">
+                        <div class="bg-gradient-to-br from-nurse-primary to-[#0A1A33] text-white p-10 md:p-14 rounded-[3rem] shadow-2xl relative overflow-hidden group">
+                            <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                                <div class="relative flex-shrink-0">
+                                    <svg class="w-40 h-40 transform -rotate-90">
+                                        <circle cx="80" cy="80" r="75" stroke="currentColor" stroke-width="10" fill="transparent" class="text-white/10" />
+                                        <circle id="progress-ring" cx="80" cy="80" r="75" stroke="currentColor" stroke-width="10" fill="transparent" stroke-dasharray="471" stroke-dashoffset="471" class="text-nurse-secondary transition-all duration-1000 ease-out" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                        <span id="res-score" class="text-5xl font-black">0</span>
+                                        <span class="text-[12px] uppercase font-bold tracking-widest opacity-60">Score</span>
+                                    </div>
+                                </div>
+                                <div class="text-center md:text-left space-y-6">
+                                    <h3 class="text-3xl md:text-4xl font-black italic">Risco <span id="res-risco" class="text-nurse-secondary">...</span></h3>
+                                    <p class="text-xl text-blue-100 font-medium">Mortalidade Hospitalar Estimada: <span id="res-morte" class="text-white font-black text-3xl">0%</span></p>
+                                    <p class="text-xs text-white/50 max-w-sm leading-relaxed uppercase tracking-tighter">O score fornece uma estimativa de risco populacional e não substitui o julgamento clínico individualizado.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Outras Abas (Conteúdo Teórico) -->
+                <section id="pane-teoria" class="hidden space-y-8 animate-in fade-in">
+                    <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter">
+                        <h2 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary">O Sistema APACHE II</h2>
+                        <p>O <strong>APACHE II</strong> (Acute Physiology and Chronic Health Evaluation II) é um dos sistemas de pontuação mais validados para medir a gravidade da doença em pacientes adultos em UTIs.</p>
+                    </div>
+                </section>
+
+                <section id="pane-instrucoes" class="hidden space-y-8 animate-in fade-in">
+                    <h2 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary font-inter">Guia de Preenchimento</h2>
+                </section>
+
+                <section id="pane-tecnica" class="hidden space-y-8 animate-in fade-in">
+                    <h2 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary font-inter">Informações Técnicas</h2>
+                </section>
+
+                <!-- Author Box (Padronizado) -->
+                <div class="author-box">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" 
+                         alt="Calculadoras de Enfermagem" 
+                         class="author-avatar"
+                         onerror="this.src='assets/img/logo-placeholder.webp'">
+                    <div class="author-info">
+                        <h3>Calculadoras de Enfermagem</h3>
+                        <p>
+                            Ferramentas essenciais para profissionais e estudantes de enfermagem, oferecendo calculadoras de escalas clínicas e dosagem de medicamentos para otimizar a prática diária.
+                        </p>
+                        <blockquote style="margin-top: 1rem; font-style: italic; color: var(--color-text-light); border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                            "Conhecer e ter domínio em escalas clínicas é fundamental para o enfermeiro, auxilia na tomada de decisões e empodera!"
+                        </blockquote>
+                    </div>
+                </div>
+
+                <!-- Referências -->
+                <section class="references-section">
+                    <h2><i class="fa-solid fa-book"></i> Referências</h2>
+                    <div class="reference-item">
+                        1. Knaus, W. A. et al. (1985). APACHE II: a severity of disease classification system. <em>Critical Care Medicine</em>, 13(10), 818-829.
+                    </div>
+                </section>
+                
+                <!-- Tags -->
+                <div style="margin-top: 2rem;">
+                    <h4 style="color: var(--color-text-light); font-size: 0.875rem; margin-bottom: 1rem;">TAGS</h4>
+                    <div class="tags-list">
+                        <a href="#" class="tag">Enfermagem</a>
+                        <a href="#" class="tag">Escalas Clínicas</a>
+                        <a href="#" class="tag">APACHE II</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Padronizada -->
+            <aside class="content-sidebar">
+                <div class="sidebar-card" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: white;">
+                    <h3 style="color: white; border-bottom: 1px solid rgba(255,255,255,0.2);"><i class="fas fa-list"></i> Índice</h3>
+                    <ul class="toc-list" style="color: rgba(255,255,255,0.95);">
+                        <li><a href="#pane-calc" onclick="showTab('calc');" style="color: rgba(255,255,255,0.95);">1. Escala APACHE II</a></li>
+                        <li><a href="#pane-teoria" onclick="showTab('teoria');" style="color: rgba(255,255,255,0.95);">2. Sobre a Escala</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-card" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: white;">
+                    <h3 style="color: white; border-bottom: 1px solid rgba(255,255,255,0.2);"><i class="fas fa-share-nodes"></i> Compartilhar</h3>
+                    <div class="share-buttons">
+                        <a href="#" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Seção de Conteúdo e Ferramentas Relacionadas (Mantendo apenas 3 cards) -->
+    <section class="related-section bg-slate-100 dark:bg-slate-900/50 py-20 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 style="text-align: center; margin-bottom: 4rem; color: var(--color-primary);" class="text-3xl md:text-4xl font-black flex items-center justify-center gap-4">
+                <i class="fa-solid fa-toolbox text-nurse-secondary" aria-hidden="true"></i>
+                Conteúdos e Ferramentas Relacionadas
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                
+                <!-- Card 1: SOFA Score -->
+                <a href="/sofa" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600" 
+                             alt="SOFA Score" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute top-6 left-6 px-4 py-1.5 bg-nurse-secondary text-white text-[10px] font-black uppercase rounded-full shadow-lg">Terapia Intensiva</span>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold text-nurse-primary dark:text-white mb-3 group-hover:text-nurse-secondary transition-colors">SOFA Score</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-4">Avalie a disfunção orgânica sequencial e prediga desfechos clínicos em pacientes críticos.</p>
+                        <span class="text-nurse-secondary font-bold text-xs uppercase tracking-widest flex items-center gap-2">Acessar Escala <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
+
+                <!-- Card 2: SAPS III -->
+                <a href="/saps-iii" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600" 
+                             alt="SAPS III" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute top-6 left-6 px-4 py-1.5 bg-nurse-secondary text-white text-[10px] font-black uppercase rounded-full shadow-lg">Prognóstico</span>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold text-nurse-primary dark:text-white mb-3 group-hover:text-nurse-secondary transition-colors">SAPS III Predictor</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-4">Modelo simplificado de fisiologia aguda para estimar o risco de mortalidade hospitalar na admissão.</p>
+                        <span class="text-nurse-secondary font-bold text-xs uppercase tracking-widest flex items-center gap-2">Acessar Escala <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
+                
+                <!-- Card 3: Escala de Glasgow -->
+                <a href="/glasgow" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600" 
+                             alt="Escala de Glasgow" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute top-6 left-6 px-4 py-1.5 bg-nurse-secondary text-white text-[10px] font-black uppercase rounded-full shadow-lg">Neurologia</span>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold text-nurse-primary dark:text-white mb-3 group-hover:text-nurse-secondary transition-colors">Escala de Glasgow</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-4">Padronização do nível de consciência e profundidade do coma de forma rápida e objetiva.</p>
+                        <span class="text-nurse-secondary font-bold text-xs uppercase tracking-widest flex items-center gap-2">Acessar Escala <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Injeção de Footer -->
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
+
+    <!-- Scripts -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
+    <script>
+        let unitSystem = 'si';
+
+        function showTab(id) {
+            ['calc', 'teoria', 'instrucoes', 'tecnica'].forEach(t => {
+                const pane = document.getElementById('pane-' + t);
+                const btn = document.getElementById('btn-tab-' + t);
+                if(pane) pane.classList.add('hidden');
+                if(btn) {
+                    btn.classList.remove('border-nurse-secondary', 'text-nurse-secondary', 'font-bold');
+                    btn.classList.add('border-transparent', 'text-gray-500');
+                }
+            });
+            const targetPane = document.getElementById('pane-' + id);
+            const targetBtn = document.getElementById('btn-tab-' + id);
+            if(targetPane) targetPane.classList.remove('hidden');
+            if(targetBtn) {
+                targetBtn.classList.remove('border-transparent', 'text-gray-500');
+                targetBtn.classList.add('border-nurse-secondary', 'text-nurse-secondary', 'font-bold');
+            }
+        }
+
+        function setUnit(u) {
+            unitSystem = u;
+            const btnSi = document.getElementById('unit-si');
+            const btnUs = document.getElementById('unit-us');
+            if(u === 'si') {
+                btnSi.classList.add('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-nurse-primary');
+                btnUs.classList.remove('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-nurse-primary');
+                btnUs.classList.add('text-gray-500');
+                document.getElementById('label-temp').innerText = '°C';
+                document.getElementById('label-crea').innerText = 'µmol/L';
+            } else {
+                btnUs.classList.add('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-nurse-primary');
+                btnSi.classList.remove('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-nurse-primary');
+                btnSi.classList.add('text-gray-500');
+                document.getElementById('label-temp').innerText = '°F';
+                document.getElementById('label-crea').innerText = 'mg/dL';
+            }
+        }
+
+        function getPts(val, faixas) {
+            for (let f of faixas) { if (val >= f.min && val <= f.max) return f.p; }
+            return 0;
+        }
+
+        function calcularApache() {
+            let aps = 0;
+            const t = parseFloat(document.getElementById('temp').value);
+            const pam = parseFloat(document.getElementById('pam').value);
+            const fc = parseFloat(document.getElementById('fc').value);
+            const fr = parseFloat(document.getElementById('fr').value);
+            const ph = parseFloat(document.getElementById('ph').value);
+            const na = parseFloat(document.getElementById('na').value);
+            const crea = parseFloat(document.getElementById('crea').value);
+            const ht = parseFloat(document.getElementById('ht').value);
+            const leu = parseFloat(document.getElementById('leu').value);
+            const pao2 = parseFloat(document.getElementById('pao2').value);
+            const gcs = parseInt(document.getElementById('gcs').value);
+            const idadePts = parseInt(document.getElementById('idade').value);
+            const cronicoPts = parseInt(document.getElementById('cronico').value);
+            const dobrarCrea = document.getElementById('ira').checked;
+
+            let tc = (unitSystem === 'us') ? (t - 32) * 5/9 : t;
+            let creaMg = (unitSystem === 'si') ? crea * 0.0113 : crea;
+
+            // Pontuação Temperatura
+            aps += getPts(tc, [{min: 41, max: Infinity, p: 4}, {min: 39, max: 40.9, p: 3}, {min: 38.5, max: 38.9, p: 1}, {min: 36, max: 38.4, p: 0}, {min: 34, max: 35.9, p: 1}, {min: 32, max: 33.9, p: 2}, {min: 30, max: 31.9, p: 3}, {min: -Infinity, max: 29.9, p: 4}]);
+            
+            // Pontuação PAM
+            aps += getPts(pam, [{min: 160, max: Infinity, p: 4}, {min: 130, max: 159, p: 3}, {min: 110, max: 129, p: 2}, {min: 70, max: 109, p: 0}, {min: 50, max: 69, p: 2}, {min: -Infinity, max: 49, p: 4}]);
+            
+            // Pontuação FC
+            aps += getPts(fc, [{min: 180, max: Infinity, p: 4}, {min: 140, max: 179, p: 3}, {min: 110, max: 139, p: 2}, {min: 70, max: 109, p: 0}, {min: 55, max: 69, p: 2}, {min: 40, max: 54, p: 3}, {min: -Infinity, max: 39, p: 4}]);
+            
+            // Pontuação FR
+            aps += getPts(fr, [{min: 50, max: Infinity, p: 4}, {min: 35, max: 49, p: 3}, {min: 25, max: 34, p: 1}, {min: 12, max: 24, p: 0}, {min: 10, max: 11, p: 1}, {min: 6, max: 9, p: 2}, {min: -Infinity, max: 5, p: 4}]);
+            
+            // Pontuação pH
+            aps += getPts(ph, [{min: 7.7, max: Infinity, p: 4}, {min: 7.6, max: 7.69, p: 3}, {min: 7.5, max: 7.59, p: 1}, {min: 7.33, max: 7.49, p: 0}, {min: 7.25, max: 7.32, p: 2}, {min: 7.15, max: 7.24, p: 3}, {min: -Infinity, max: 7.14, p: 4}]);
+            
+            // Pontuação Sódio
+            aps += getPts(na, [{min: 160, max: Infinity, p: 4}, {min: 155, max: 159, p: 3}, {min: 150, max: 154, p: 2}, {min: 130, max: 149, p: 0}, {min: 120, max: 129, p: 2}, {min: 111, max: 119, p: 3}, {min: -Infinity, max: 110, p: 4}]);
+            
+            // Pontuação Hematócrito
+            aps += getPts(ht, [{min: 60, max: Infinity, p: 4}, {min: 50, max: 59.9, p: 2}, {min: 46, max: 49.9, p: 1}, {min: 30, max: 45.9, p: 0}, {min: 20, max: 29.9, p: 2}, {min: -Infinity, max: 19.9, p: 4}]);
+            
+            // Pontuação Leucócitos
+            aps += getPts(leu, [{min: 40, max: Infinity, p: 4}, {min: 20, max: 39.9, p: 2}, {min: 15, max: 19.9, p: 1}, {min: 3, max: 14.9, p: 0}, {min: 1, max: 2.9, p: 2}, {min: -Infinity, max: 0.9, p: 4}]);
+            
+            // Pontuação PaO2
+            aps += getPts(pao2, [{min: 70, max: Infinity, p: 0}, {min: 61, max: 70, p: 1}, {min: 55, max: 60, p: 3}, {min: -Infinity, max: 55, p: 4}]);
+            
+            // Pontuação Creatinina
+            let pc = getPts(creaMg, [{min: 3.5, max: Infinity, p: 4}, {min: 2, max: 3.4, p: 3}, {min: 1.5, max: 1.9, p: 2}, {min: 0.6, max: 1.4, p: 0}, {min: -Infinity, max: 0.5, p: 2}]);
+            if(dobrarCrea) pc *= 2; aps += pc;
+            
+            // Pontuação Glasgow
+            aps += (15 - gcs);
+
+            const total = aps + idadePts + cronicoPts;
+            
+            document.getElementById('resultado-container').classList.remove('hidden');
+            document.getElementById('res-score').innerText = total;
+            
+            const ring = document.getElementById('progress-ring');
+            const perc = Math.min((total / 40) * 100, 100);
+            ring.style.strokeDashoffset = 471 - (perc / 100) * 471;
+
+            document.getElementById('resultado-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function resetCalc() {
+            document.getElementById('resultado-container').classList.add('hidden');
+            document.getElementById('progress-ring').style.strokeDashoffset = 471;
+        }
+
+        window.addEventListener('templateEngineReady', function() {
+            console.log('Ambiente modular carregado: APACHE II.');
+        });
+    </script>
+</body>
+</html>
