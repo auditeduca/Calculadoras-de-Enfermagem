@@ -1,61 +1,164 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemplo - Header Segregado</title>
+    <title>Calculadoras de Enfermagem</title>
+    
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Calculadoras de Enfermagem">
+    <meta name="keywords" content="Calculadoras,Escalas">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/index.html" />
+
+    <link rel="icon" type="image/webp" href="assets/images/audit-educa-favicon.webp">
+
+    <!-- Hreflang Atualizados -->
+    <link rel="alternate" hreflang="pt-BR" href="https://www.calculadorasdeenfermagem.com.br/inicio.html" />
+    <link rel="alternate" hreflang="en" href="https://www.calculadorasdeenfermagem.com.br/" />
+    <link rel="alternate" hreflang="es" href="https://www.calculadorasdeenfermagem.com.br/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/" />
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="header.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'audit-gold': '#D4AF37',
+                        'audit-navy': '#1E3A8A',
+                        'audit-blue': '#3B82F6',
+                        'audit-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome e Fontes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Externos -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+
+    <!-- Animações -->
+    <style>
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-down {
+            animation: fadeInDown 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in-up {
+            animation: slideInUp 0.8s ease-out;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100 text-gray-800 dark:bg-audit-bgDark dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-300 selection:bg-audit-gold selection:text-audit-navy">
 
-    <!-- Incluindo o Header Segregado -->
-    <iframe src="header.html" style="width: 100%; border: none; height: 500px;"></iframe>
+    <!-- CONTAINER HEADER -->
+    <div id="header-container">
+    </div>
 
-    <!-- Conteúdo Principal de Exemplo -->
-    <main class="pt-20 pb-20 px-4 max-w-7xl mx-auto">
-        <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100 text-center">
-            <h2 class="text-3xl font-bold text-[#1A3E74] mb-4">Código Segregado com Sucesso!</h2>
-            <p class="text-lg text-gray-600 mb-8">O código foi dividido em três arquivos separados, mantendo toda a funcionalidade original:</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 text-left">
-                <div class="p-6 bg-gray-50 rounded-lg border border-gray-100">
-                    <h3 class="font-bold text-[#1A3E74] mb-2">header.html</h3>
-                    <p class="text-sm text-gray-600">Contém a estrutura HTML completa do header, incluindo o menu mobile e desktop.</p>
+    <!-- MAIN CONTENT -->
+    <div id="main-container">
+        <main id="main-content" class="flex-grow">
+            <!-- SEÇÃO 1: Início -->
+            <section id="inicio" class="relative bg-audit-blue text-white py-20"> 
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h1 class="text-4xl md:text-5xl font-extrabold mb-4 animate-fade-in-down">Bem-vindo ao Audit Educa</h1>
+                    <p class="text-xl md:text-2xl animate-fade-in">Sua plataforma de conhecimento sem fronteiras.</p>
                 </div>
-                 <div class="p-6 bg-gray-50 rounded-lg border border-gray-100">
-                    <h3 class="font-bold text-[#1A3E74] mb-2">header.css</h3>
-                    <p class="text-sm text-gray-600">Todos os estilos CSS extraídos, incluindo animações e efeitos visuais.</p>
+                
+                <!-- Divisor Ondulado -->
+                <div class="absolute bottom-0 left-0 w-full h-auto z-10" style="height: 100px;">
+                    <svg class="absolute bottom-0 left-0 w-full h-full fill-current text-audit-gold" viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M1440,50 C1200,85 960,95 720,95 C480,95 240,85 0,50 L0,100 L1440,100 Z"></path>
+                    </svg>
+                    <svg class="absolute bottom-0 left-0 w-full h-full fill-current text-gray-100 dark:text-audit-bgDark z-20" viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M1440,60 C1200,90 960,100 720,100 C480,100 240,90 0,60 L0,100 L1440,100 Z"></path>
+                    </svg>
                 </div>
-                 <div class="p-6 bg-gray-50 rounded-lg border border-gray-100">
-                    <h3 class="font-bold text-[#1A3E74] mb-2">header.js</h3>
-                    <p class="text-sm text-gray-600">Todo o JavaScript para funcionalidade de mega menus, tabs e mobile.</p>
+            </section>
+
+            <!-- SEÇÃO 2: Acesso Rápido -->
+            <section id="acesso-rapido" class="relative bg-gray-100 dark:bg-audit-bgDark py-20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-12 text-audit-blue dark:text-audit-gold animate-slide-in-up text-center">Acesso Rápido</h2>
+                    <div class="grid md:grid-cols-5 gap-6 text-audit-navy/90 dark:text-gray-300">
+                        
+                        <!-- Item 1: Papéis de Trabalho -->
+                        <div class="p-6 rounded-xl shadow-xl dark:bg-audit-cardDark/80 hover:shadow-2xl transition-shadow border border-audit-blue/10 dark:border-audit-gold/20 text-center flex flex-col items-center">
+                            <i class="fas fa-file-alt text-4xl text-audit-gold mb-3"></i>
+                            <h3 class="font-semibold text-lg text-audit-blue dark:text-white mb-2">Papéis de Trabalho</h3>
+                            <a href="#" class="text-sm text-audit-blue/70 dark:text-gray-400 hover:text-audit-gold font-medium mt-auto">Acessar Modelos</a>
+                        </div>
+                        
+                        <!-- Item 2: Carta de Circularização -->
+                        <div class="p-6 rounded-xl shadow-xl dark:bg-audit-cardDark/80 hover:shadow-2xl transition-shadow border border-audit-blue/10 dark:border-audit-gold/20 text-center flex flex-col items-center">
+                            <i class="fas fa-envelope-open-text text-4xl text-audit-gold mb-3"></i>
+                            <h3 class="font-semibold text-lg text-audit-blue dark:text-white mb-2">Carta de Circularização</h3>
+                            <a href="#" class="text-sm text-audit-blue/70 dark:text-gray-400 hover:text-audit-gold font-medium mt-auto">Acessar Modelos</a>
+                        </div>
+
+                        <!-- Item 3: Exame de Suficiência -->
+                        <div class="p-6 rounded-xl shadow-xl dark:bg-audit-cardDark/80 hover:shadow-2xl transition-shadow border border-audit-blue/10 dark:border-audit-gold/20 text-center flex flex-col items-center">
+                            <i class="fas fa-balance-scale text-4xl text-audit-gold mb-3"></i>
+                            <h3 class="font-semibold text-lg text-audit-blue dark:text-white mb-2">Exame de Suficiência</h3>
+                            <a href="#" class="text-sm text-audit-blue/70 dark:text-gray-400 hover:text-audit-gold font-medium mt-auto">Acesse nosso simulado</a>
+                        </div>
+                        
+                        <!-- Item 4: Exame de Qualificação Técnica -->
+                        <div class="p-6 rounded-xl shadow-xl dark:bg-audit-cardDark/80 hover:shadow-2xl transition-shadow border border-audit-blue/10 dark:border-audit-gold/20 text-center flex flex-col items-center">
+                            <i class="fas fa-laptop-code text-4xl text-audit-gold mb-3"></i>
+                            <h3 class="font-semibold text-lg text-audit-blue dark:text-white mb-2">Exame de Qualificação Técnica (CNAI)</h3>
+                            <a href="#" class="text-sm text-audit-blue/70 dark:text-gray-400 hover:text-audit-gold font-medium mt-auto">Acesse nosso simulado</a>
+                        </div>
+
+                        <!-- Item 5: Guia de Bolso -->
+                        <div class="p-6 rounded-xl shadow-xl dark:bg-audit-cardDark/80 hover:shadow-2xl transition-shadow border border-audit-blue/10 dark:border-audit-gold/20 text-center flex flex-col items-center">
+                            <i class="fas fa-book-reader text-4xl text-audit-gold mb-3"></i>
+                            <h3 class="font-semibold text-lg text-audit-blue dark:text-white mb-2">Guia de Bolso</h3>
+                            <a href="#" class="text-sm text-audit-blue/70 dark:text-gray-400 hover:text-audit-gold font-medium mt-auto">Acessar Conteúdo</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
+        </main>
+    </div>
 
-            <div class="mt-12 p-6 bg-blue-50 rounded-lg border border-blue-200">
-                <h3 class="font-bold text-[#1A3E74] mb-2">Características Mantidas:</h3>
-                <ul class="text-sm text-gray-600 text-left space-y-1">
-                    <li>✅ Mega menus funcionais com animações</li>
-                    <li>✅ Sistema de abas interno (tabs)</li>
-                    <li>✅ Menu mobile responsivo</li>
-                    <li>✅ Efeitos visuais e transições</li>
-                    <li>✅ Acessibilidade (ARIA labels)</li>
-                    <li>✅ Scroll personalizado</li>
-                </ul>
-            </div>
-        </div>
-    </main>
+    <!-- CONTAINER FOOTER -->
+    <div id="footer-container">
+    </div>
 
-    <!-- Rodapé de Exemplo -->
-    <footer class="bg-[#1A3E74] text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-sm opacity-80">&copy; 2025 Exemplo de Header Segregado. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+    <!-- CONTAINER MODAIS -->
+    <div id="modals-container"></div>
 
-    <script src="header.js"></script>
+    <!-- SCRIPTS -->
+    <script src="assets/js/console-cleaner.js"></script>
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+
 </body>
 </html>
