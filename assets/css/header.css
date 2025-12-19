@@ -1,119 +1,85 @@
-/* ==================================== */
-/* 1. ESTRUTURA DO HEADER (DUAS FAIXAS) */
-/* ==================================== */
-
-header {
-    width: 100%;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background-color: white;
-    box-shadow: var(--shadow-sm);
+/* --- CONFIGURAÇÃO DO HEADER DUAS FAIXAS --- */
+#header {
+    display: flex;
+    flex-direction: column;
 }
 
-/* --- FAIXA 1: TOP BAR (UTILIDADES) --- */
-.top-bar {
+.top-bar-faixa {
     height: 36px;
-    background-color: var(--slate-900); /* Faixa escura superior */
+    background-color: #f9fafb; /* Gray 50 */
+    border-bottom: 1px solid #e5e7eb;
     display: flex;
     align-items: center;
+}
+
+.top-bar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 24px;
+    background-color: #1A3E74;
     color: white;
-    font-size: 0.75rem;
-    padding: 0 2rem;
-}
-
-.top-bar-container {
-    max-width: 1280px;
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end; /* Alinha utilitários à direita */
-    gap: 1.5rem;
-}
-
-.top-bar-link {
-    color: var(--slate-200);
     text-decoration: none;
-    transition: color 0.2s;
+    border-radius: 4px;
+    transition: background 0.2s;
 }
 
-.top-bar-link:hover {
-    color: white;
-}
+.top-bar-btn:hover { background-color: #143260; }
 
-/* --- FAIXA 2: NAVBAR PRINCIPAL --- */
-.navbar-container {
-    height: 74px; /* Altura da segunda faixa */
-    background-color: white;
-    border-bottom: 1px solid var(--slate-100);
-    display: flex;
-    align-items: center;
-    padding: 0 2rem;
-}
-
-.nav-content {
-    max-width: 1280px;
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.nav-links-wrapper {
-    display: flex;
-    height: 74px; /* Casar com a altura da faixa */
-    align-items: center;
+/* --- NAVBAR PRINCIPAL --- */
+.navbar-main-faixa {
+    height: 64px; /* Casar com o h-16 do Tailwind no HTML */
 }
 
 .nav-link-main {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--slate-600);
-    padding: 0 1.25rem;
-    height: 100%; /* Ocupa toda a altura da faixa */
+    height: 64px; /* Mesma altura da faixa para alinhamento da borda */
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    position: relative;
+    padding: 0 1rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #374151;
     text-decoration: none;
-    transition: all 0.2s ease;
+    position: relative;
+    transition: color 0.2s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-.nav-link-main:hover { color: var(--primary-color); }
+.nav-link-main:hover { color: #1A3E74; }
 
-/* Indicador de linha inferior ajustado */
+/* Indicador de linha (Ajuste para zerar o 'risco vermelho') */
 .nav-link-main::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: 0; /* Colado na borda inferior do header */
     left: 0;
     right: 0;
     height: 3px;
-    background-color: var(--primary-color);
+    background-color: #1A3E74;
     transform: scaleX(0);
     transition: transform 0.2s ease;
+    z-index: 10;
 }
 
 .nav-link-main:hover::after,
-.nav-link-main.active::after {
+.nav-trigger.active::after {
     transform: scaleX(1);
 }
 
-/* ==================================== */
-/* 2. MEGA MENU (ALINHADO ÀS FAIXAS)    */
-/* ==================================== */
-
+/* --- MEGA MENU AJUSTADO --- */
 .mega-panel {
     display: none;
     position: absolute;
     left: 0;
     right: 0;
-    top: 110px; /* Soma da Faixa 1 (36px) + Faixa 2 (74px) */
+    top: 100%; /* Isso faz ele colar exatamente onde a navbar-main-faixa termina */
     width: 100%;
     background-color: white;
-    border-top: 1px solid var(--slate-200);
-    box-shadow: var(--shadow-md);
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     z-index: 90;
     animation: slideDown 0.2s ease-out forwards;
 }
@@ -121,51 +87,59 @@ header {
 .mega-panel.active { display: block; }
 
 .panel-standard-height {
-    height: 380px;
+    height: 400px; /* Padronizado para 1/4, 1/2, 1/4 */
     display: flex;
 }
 
-.mega-grid-container {
-    max-width: 1280px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    width: 100%;
-}
-
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
+    from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Sidebar de Abas Internas */
-.menu-tab-sidebar {
-    background-color: var(--slate-50);
-    border-right: 1px solid var(--slate-200);
-    padding: 1rem 0;
+/* --- CARDS E GLOWING FRAME --- */
+.glowing-frame {
+    background-color: white;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border: 3px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    text-decoration: none;
+    width: 100%;
 }
 
+.glowing-frame:hover {
+    border-color: #1A3E74;
+    box-shadow: 0 0 15px rgba(26, 62, 116, 0.3);
+    transform: translateY(-3px);
+}
+
+.glowing-frame img:hover {
+    border-color: #1A3E74;
+    box-shadow: 0 0 15px rgba(26, 62, 116, 0.4);
+}
+
+/* --- TABS INTERNAS --- */
 .menu-tab-trigger {
     padding: 0.75rem 1.5rem;
     cursor: pointer;
-    transition: all 0.2s;
-    border-left: 3px solid transparent;
     font-size: 0.875rem;
-    color: var(--slate-600);
     font-weight: 600;
+    color: #4b5563;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
 }
 
 .menu-tab-trigger.active {
     background-color: white;
-    color: var(--primary-color);
-    border-left: 3px solid var(--primary-color);
+    color: #1A3E74;
+    border-left: 3px solid #1A3E74;
     font-weight: 800;
 }
 
 .tab-content {
     display: none;
-    padding: 2rem;
-    overflow-y: auto;
     animation: fadeIn 0.3s ease;
 }
 
@@ -176,77 +150,6 @@ header {
     to { opacity: 1; transform: translateX(0); }
 }
 
-/* ==================================== */
-/* 3. CARDS RELUZENTES (GLOWING FRAMES) */
-/* ==================================== */
-
-.link-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-}
-
-.glowing-frame {
-    background-color: white;
-    padding: 1.25rem;
-    border-radius: 0.75rem;
-    box-shadow: var(--shadow-sm);
-    border: 3px solid transparent;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    display: block;
-    text-decoration: none;
-    width: 100%;
-}
-
-.glowing-frame:hover {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 18px rgba(26, 62, 116, 0.4), 0 0 8px rgba(26, 62, 116, 0.2);
-    transform: translateY(-3px);
-}
-
-.icon-wrapper {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    background-color: var(--slate-100);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-color);
-    margin-bottom: 0.75rem;
-    font-size: 1.25rem;
-}
-
-.mega-card-title {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 0.25rem;
-}
-
-.mega-card-description {
-    font-size: 0.8125rem;
-    color: var(--slate-500);
-    line-height: 1.4;
-}
-
-/* ==================================== */
-/* 4. RESPONSIVIDADE DO HEADER          */
-/* ==================================== */
-
-@media (max-width: 1024px) {
-    .top-bar { display: none; } /* Esconde faixa superior em tablets/mobile */
-    .mega-panel { top: 74px; }
-    .mega-grid-container { grid-template-columns: 1fr; }
-    .menu-tab-sidebar { display: none; }
-    .panel-standard-height { height: auto; max-height: 80vh; }
-}
-
-@media (max-width: 768px) {
-    header, .navbar-container { height: 70px; }
-    .nav-links-wrapper { height: 70px; }
-    .link-grid { grid-template-columns: 1fr; }
-    .nav-link-main { padding: 0 0.5rem; font-size: 0.85rem; }
-}
+/* --- MOBILE DRAWER --- */
+.mobile-menu-drawer { transition: transform 0.3s ease-in-out; }
+.mobile-menu-backdrop { transition: opacity 0.3s ease-in-out; }
