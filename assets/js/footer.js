@@ -1,178 +1,202 @@
 /**
- * FOOTER-MANAGER.JS - Gerencia Cookies (LGPD), UX do Rodapé e Comportamentos Globais
- * Versão: 2.0 - Integrado com TemplateEngine e ModalsManager
+ * FooterManager - Gerencia Cookies, LGPD/GTM e UX do Rodapé.
  */
 class FooterManager {
     constructor() {
-        // IDs dos elementos esperados no componente footer.html e modals-main.html
-        this.elements = {
-            year: 'current-year',
-            cookieBanner: 'cookie-banner',
-            cookieOverlay: 'cookie-overlay',
-            cookieModal: 'cookie-modal-content',
-            cookieFab: 'cookie-fab',
-            backToTop: 'backToTop',
-            configBtn: 'footer-config-btn'
-        };
-
-        this.lastFocusedElement = null;
-        this.init();
-    }
-
-    /**
-     * Inicialização segura: Verifica se o DOM está pronto ou se foi injetado pelo motor
-     */
-    init() {
-        // Se o DOM ainda está carregando, aguarda. Caso contrário, executa.
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.setup());
+            document.addEventListener('DOMContentLoaded', () => this.init());
         } else {
-            this.setup();
+            this.init();
         }
     }
 
-    setup() {
-        this.updateYear();
-        this.initCookieBanner();
+    init() {
+        this.initCookieSystem();
         this.initBackToTop();
         this.initFooterConfigBtn();
-        console.log("%c[FooterManager] 🛠️ Funcionalidades de UX e LGPD carregadas.", "color: #10b981; font-weight: bold;");
+        this.updateYear();
     }
 
-    /**
-     * Atualiza o ano de copyright dinamicamente
-     * Lógica: Se o ano atual for 2025, exibe apenas 2025. Se for posterior, exibe 2025-20XX.
-     */
     updateYear() {
-        const yearEl = document.getElementById(this.elements.year);
+        const yearEl = document.getElementById('current-year');
         if (yearEl) {
-            const currentYear = new Date().getFullYear();
-            yearEl.textContent = currentYear > 2025 ? `2025-${currentYear}` : "2025";
+            const year = new Date().getFullYear();
+            yearEl.textContent = year > 2025 ? `2025-${year}` : year;
         }
     }
 
-    /**
-     * Gerencia o Banner de Cookies e o Modal de Preferências (LGPD)
-     */
-    initCookieBanner() {
-        const banner = document.getElementById(this.elements.cookieBanner);
-        const overlay = document.getElementById(this.elements.cookieOverlay);
-        const modalContent = document.getElementById(this.elements.cookieModal);
-        const fab = document.getElementById(this.elements.cookieFab);
+    initCookieSystem() {
+        const banner = document.getElementById('cookie-banner');
+        const overlay = document.getElementById('cookie-overlay');
+        const modalContent = document.getElementById('cookie-modal-content');
+        const fab = document.getElementById('cookie-fab');
+        let lastFocusedElement = null;
 
+        // Se os elementos não existirem, aborta silenciosamente
         if (!banner || !overlay) return;
 
-        // 1. Exibição Inicial: Verifica se o usuário já aceitou os cookies
+        // Verifica estado inicial dos cookies
         setTimeout(() => {
             try {
-                const consent = localStorage.getItem('cookiesAccepted');
-                if (!consent) {
+                if (!localStorage.getItem('cookiesAccepted')) {
                     banner.classList.remove('translate-y-full');
                     document.body.classList.add('cookie-banner-active');
+                    if (fab) fab.classList.add('opacity-0', 'pointer-events-none');
                 }
-            } catch (e) {
-                console.warn("[FooterManager] LocalStorage inacessível para cookies.");
-            }
-        }, 1500);
+            } catch(e) {} // Proteção contra bloqueadores de armazenamento
+        }, 500);
 
-        // 2. Lógica de Abertura do Modal de Preferências
+        // Envia atualização para o Google Consent Mode v2
+        const updateConsentToGoogle = () => {
+            if (typeof gtag !== 'function') return;
+
+            const adStorage = document.getElementById('check-mkt')?.checked ? 'granted' : 'denied';
+            const analyticsStorage = document.getElementById('check-stats')?.checked ? 'granted' : 'denied';
+            
+            gtag('consent', 'update', {
+                'ad_storage': adStorage,
+                'analytics_storage': analyticsStorage,
+                'ad_user_data': adStorage,
+                'ad_personalization': adStorage
+            });
+            
+            if (window.dataLayer) {
+                window.dataLayer.push({'event': 'cookie_consent_update'});
+            }
+        };
+
         const openModal = () => {
-            this.lastFocusedElement = document.activeElement;
+            lastFocusedElement = document.activeElement;
             banner.classList.add('translate-y-full');
+            document.body.classList.remove('cookie-banner-active');
             overlay.classList.remove('opacity-0', 'invisible');
             modalContent.classList.remove('translate-y-full');
-            document.body.style.overflow = 'hidden';
+            if (fab) fab.classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.add('overflow-hidden');
             
-            // Foco inicial para acessibilidade
+            // Foco acessível
             setTimeout(() => {
-                const first = modalContent.querySelector('button, input');
+                const first = modalContent.querySelector('button, [href], input, select, textarea');
                 if (first) first.focus();
             }, 300);
         };
 
-        // 3. Lógica de Fechamento e Salvamento
-        const closeAll = (accepted = true) => {
+        const closeAll = () => {
             overlay.classList.add('opacity-0', 'invisible');
             modalContent.classList.add('translate-y-full');
             banner.classList.add('translate-y-full');
-            document.body.style.overflow = '';
+            document.body.classList.remove('overflow-hidden');
             document.body.classList.remove('cookie-banner-active');
             
-            if (accepted) {
-                try { 
-                    localStorage.setItem('cookiesAccepted', 'true');
-                    localStorage.setItem('cookieDate', new Date().toISOString());
-                } catch (e) {}
-            }
+            updateConsentToGoogle();
 
-            if (this.lastFocusedElement) this.lastFocusedElement.focus();
+            setTimeout(() => {
+                if (fab) fab.classList.remove('opacity-0', 'pointer-events-none');
+                if (lastFocusedElement) lastFocusedElement.focus();
+            }, 300);
+            
+            try { localStorage.setItem('cookiesAccepted', 'true'); } catch(e) {}
         };
 
-        // 4. Atribuição de Eventos aos Botões
-        const btnAccept = document.getElementById('banner-accept');
-        const btnOptions = document.getElementById('banner-options');
-        const btnSave = document.getElementById('modal-save');
-        const btnCloseX = document.getElementById('modal-close-x');
+        // Focus Trap para Acessibilidade (Modal)
+        const handleFocusTrap = (e) => {
+            if (e.key === 'Tab' && !overlay.classList.contains('invisible')) {
+                const focusable = modalContent.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusable.length === 0) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
 
-        if (btnAccept) btnAccept.onclick = () => closeAll(true);
-        if (btnOptions) btnOptions.onclick = openModal;
-        if (btnSave) btnSave.onclick = () => closeAll(true);
-        if (btnCloseX) btnCloseX.onclick = () => closeAll(false);
-        if (fab) fab.onclick = openModal;
-
-        // 5. Accordion das descrições de cookies no modal
-        document.querySelectorAll('.cookie-desc-toggle').forEach(btn => {
-            btn.onclick = () => {
-                const target = document.getElementById(btn.dataset.target);
-                if (target) {
-                    const isHidden = target.classList.contains('hidden');
-                    target.classList.toggle('hidden');
-                    btn.querySelector('i')?.classList.toggle('fa-chevron-up', isHidden);
-                    btn.querySelector('i')?.classList.toggle('fa-chevron-down', !isHidden);
+                if (e.shiftKey) { 
+                    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+                } else { 
+                    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
                 }
-            };
+            }
+        };
+
+        // Event Listeners Globais
+        document.addEventListener('keydown', (e) => {
+            if (overlay.classList.contains('invisible')) return;
+            if (e.key === 'Escape') closeAll();
+            if (e.key === 'Tab') handleFocusTrap(e);
         });
 
-        // Expondo o método de abertura globalmente
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeAll(); });
+
+        // Helper para bind seguro
+        const bind = (id, event, fn) => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener(event, fn);
+        };
+
+        // Ações dos Botões
+        bind('banner-accept', 'click', () => {
+            const chkMkt = document.getElementById('check-mkt');
+            const chkStats = document.getElementById('check-stats');
+            if(chkMkt) chkMkt.checked = true;
+            if(chkStats) chkStats.checked = true;
+            closeAll();
+        });
+        
+        bind('banner-options', 'click', openModal);
+        bind('modal-save', 'click', closeAll);
+        bind('modal-close-x', 'click', closeAll);
+        bind('modal-reject-all', 'click', () => {
+            const chkMkt = document.getElementById('check-mkt');
+            const chkStats = document.getElementById('check-stats');
+            if(chkMkt) chkMkt.checked = false;
+            if(chkStats) chkStats.checked = false;
+            closeAll();
+        });
+
+        if (fab) fab.addEventListener('click', openModal);
+
+        // Accordion (Detalhes Técnicos)
+        document.querySelectorAll('.cookie-desc-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                const targetEl = document.getElementById(targetId);
+                const icon = btn.querySelector('.fa-chevron-down');
+                const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+                if (targetEl) {
+                    targetEl.classList.toggle('hidden');
+                    btn.setAttribute('aria-expanded', !isExpanded);
+                    if (icon) icon.style.transform = targetEl.classList.contains('hidden') ? "rotate(0deg)" : "rotate(180deg)";
+                }
+            });
+        });
+        
+        // Expor método para uso externo
         this.openCookieModal = openModal;
     }
 
-    /**
-     * Botão Voltar ao Topo: Aparece após 300px de scroll
-     */
     initBackToTop() {
-        const btn = document.getElementById(this.elements.backToTop);
-        if (!btn) return;
-
+        const backToTopBtn = document.getElementById('backToTop');
+        if (!backToTopBtn) return;
+        
+        let isScrolling;
         window.addEventListener('scroll', () => {
-            // Usa window.scrollY para navegadores modernos
-            const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollPos > 300) {
-                btn.classList.add('is-visible');
-            } else {
-                btn.classList.remove('is-visible');
-            }
+            window.cancelAnimationFrame(isScrolling);
+            isScrolling = window.requestAnimationFrame(() => {
+                if (window.scrollY > 300) backToTopBtn.classList.add('is-visible');
+                else backToTopBtn.classList.remove('is-visible');
+            });
         }, { passive: true });
-
-        btn.onclick = (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
+        
+        backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
-    /**
-     * Link de Configurações no rodapé: Abre o modal de cookies
-     */
     initFooterConfigBtn() {
-        const btn = document.getElementById(this.elements.configBtn);
-        if (btn) {
-            btn.onclick = (e) => {
+        const configBtn = document.getElementById('footer-config-btn');
+        if (configBtn) {
+            configBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 if (this.openCookieModal) this.openCookieModal();
-            };
+            });
         }
     }
 }
 
-// Instanciação Global para que outros scripts possam interagir com o Manager
+// Inicializa a classe automaticamente
 window.footerManager = new FooterManager();
