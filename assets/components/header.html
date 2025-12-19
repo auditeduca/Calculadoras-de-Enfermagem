@@ -1,1005 +1,1043 @@
-<!-- INÍCIO DO HEADER - FRAGMENTO MODULAR -->
-<header id="header" class="fixed w-full top-0 z-[100] bg-white transition-all duration-300 font-sans shadow-md">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadoras de Enfermagem — Escalas Clínicas e Ferramentas</title>
     
-    <!-- Barra de Topo -->
-    <div class="bg-gray-50 border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 py-1 flex justify-between items-center text-xs">
-            <div class="flex items-center gap-2 text-gray-500">
-                <button class="hover:text-blue-600 font-bold px-1" aria-label="Diminuir fonte">A-</button>
-                <button class="hover:text-blue-600 font-bold px-1" aria-label="Aumentar fonte">A+</button>
-                <button id="theme-toggle" class="hover:text-blue-600 ml-2" aria-label="Alternar tema"><i class="fas fa-moon"></i></button>
-                <span class="hidden lg:inline mx-2 text-gray-300">|</span>
-                <a href="#header" class="hidden lg:inline-flex items-center justify-center w-16 h-6 bg-[#1A3E74] text-white text-[10px] font-bold rounded hover:bg-blue-800 transition">Topo</a>
-                <a href="#main-content" class="hidden lg:inline-flex items-center justify-center w-16 h-6 bg-[#1A3E74] text-white text-[10px] font-bold rounded hover:bg-blue-800 transition">Conteúdo</a>
-                <a href="#footer" class="hidden lg:inline-flex items-center justify-center w-16 h-6 bg-[#1A3E74] text-white text-[10px] font-bold rounded hover:bg-blue-800 transition">Rodapé</a>
-            </div>
-        </div>
-    </div>
+    <!-- Scripts e Estilos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Arquivos Segregados -->
+    <link rel="stylesheet" href="header.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
 
-    <!-- Barra de Navegação -->
-    <div class="relative bg-white z-[101]">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+    <!-- MENU MOBILE (OFF-CANVAS) -->
+    <div id="mobile-menu" class="fixed inset-0 z-[200] hidden lg:hidden">
+        <!-- Backdrop -->
+        <div id="mobile-menu-backdrop" class="mobile-menu-backdrop absolute inset-0 bg-black/50 opacity-0"></div>
+        
+        <!-- Drawer -->
+        <div id="mobile-menu-drawer" class="mobile-menu-drawer absolute top-0 left-0 w-[85%] max-w-sm h-full bg-white shadow-2xl -translate-x-full flex flex-col">
             
-            <!-- Logo -->
-            <div class="flex items-center shrink-0">
+            <!-- Header do Menu Mobile -->
+            <div class="bg-[#1A3E74] p-4 flex items-center justify-between">
                 <a href="/">
-                    <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="h-10 w-auto">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="h-8 w-auto brightness-0 invert">
                 </a>
+                <button id="close-mobile-menu" class="text-white text-2xl p-2 hover:bg-white/10 rounded-lg transition">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
 
-            <!-- Menu Desktop (Triggers) -->
-            <nav class="hidden lg:flex items-center gap-1 h-full">
-                <a href="/" class="px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition">Início</a>
-                
-                <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition flex items-center gap-1 focus:outline-none" data-panel="panel-sobre" aria-expanded="false">
-                    Sobre Nós <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
-                </button>
+            <!-- Campo de Busca Mobile -->
+            <div class="p-4 border-b border-gray-200">
+                <div class="relative">
+                    <input type="text" placeholder="Buscar calculadoras..." class="w-full p-3 pl-10 bg-gray-100 border border-gray-200 rounded-lg text-sm focus:border-[#1A3E74] focus:outline-none transition">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
 
-                <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition flex items-center gap-1 focus:outline-none" data-panel="panel-calculadoras" aria-expanded="false">
-                    Ferramentas <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
-                </button>
+            <!-- Navegação Mobile -->
+            <nav class="flex-1 overflow-y-auto custom-scroll p-4">
+                <ul class="space-y-1">
+                    <li>
+                        <a href="/" class="flex items-center px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
+                            Início
+                        </a>
+                    </li>
+                    
+                    <!-- Sobre Nós -->
+                    <li>
+                        <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
+                            <span>Sobre Nós</span>
+                            <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="mobile-submenu">
+                            <div class="bg-gray-50 rounded-lg mx-2 mt-1 overflow-hidden">
+                                <!-- Institucional -->
+                                <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
+                                    <span>Institucional</span>
+                                    <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
+                                </button>
+                                <div class="mobile-sub-accordion bg-white">
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/missao.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Missão, Visão e Valores</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/objetivo.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Objetivo do Site</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/institucional/acessorestrito.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Acesso Administrativo</a>
+                                </div>
+                                <!-- Políticas -->
+                                <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
+                                    <span>Políticas do Site</span>
+                                    <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
+                                </button>
+                                <div class="mobile-sub-accordion bg-white">
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/politica.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Política de Privacidade</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/termos.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Termos e Condições</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/politicadeacessibilidade.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Política de Acessibilidade</a>
+                                </div>
+                                <!-- Mapa do Site -->
+                                <a href="https://www.calculadorasdeenfermagem.com.br/mapa-do-site.html" class="block px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 transition">
+                                    Mapa do Site
+                                </a>
+                            </div>
+                        </div>
+                    </li>
 
-                <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition flex items-center gap-1 focus:outline-none" data-panel="panel-biblioteca" aria-expanded="false">
-                    Biblioteca <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
-                </button>
+                    <!-- Ferramentas -->
+                    <li>
+                        <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
+                            <span>Ferramentas</span>
+                            <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="mobile-submenu">
+                            <div class="bg-gray-50 rounded-lg mx-2 mt-1 overflow-hidden">
+                                <!-- Calculadoras Clínicas -->
+                                <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
+                                    <span>Calculadoras Clínicas</span>
+                                    <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
+                                </button>
+                                <div class="mobile-sub-accordion bg-white">
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/heparina.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Aspiração de Heparina</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/insulina.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Aspiração de Insulina</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/gotejamento.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Cálculo de Gotejamento</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/medicamentos.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Cálculo de Medicamentos</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/imc.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Índice de Massa Corporal</a>
+                                </div>
+                                <!-- Escalas Clínicas -->
+                                <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
+                                    <span>Escalas Clínicas</span>
+                                    <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
+                                </button>
+                                <div class="mobile-sub-accordion bg-white">
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/glasgow.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Coma de Glasgow</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/braden.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Braden (Lesão por Pressão)</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/morse.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Morse (Quedas)</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/apgar.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Apgar</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/escalas.html" class="block px-6 py-2 text-sm text-[#1A3E74] font-semibold hover:bg-gray-50 transition">Ver Todas as Escalas →</a>
+                                </div>
+                                <!-- Calendário Vacinal -->
+                                <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
+                                    <span>Calendário Vacinal</span>
+                                    <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
+                                </button>
+                                <div class="mobile-sub-accordion bg-white">
+                                    <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Crianças</a>
+                                    <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Adultos</a>
+                                    <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Gestantes</a>
+                                </div>
+                                <!-- Plano de Enfermagem -->
+                                <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100">
+                                    <span>Plano de Enfermagem</span>
+                                    <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
+                                </button>
+                                <div class="mobile-sub-accordion bg-white">
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/plano-de-enfermagem.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Sistematização (SAE)</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/diagnosticos.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Diagnósticos de Enfermagem</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
 
-                <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition flex items-center gap-1 focus:outline-none" data-panel="panel-carreiras" aria-expanded="false">
-                    Carreiras <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
-                </button>
+                    <!-- Biblioteca -->
+                    <li>
+                        <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
+                            <span>Biblioteca</span>
+                            <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="mobile-submenu">
+                            <div class="bg-gray-50 rounded-lg mx-2 mt-1 overflow-hidden">
+                                <!-- Downloads -->
+                                <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
+                                    <span>Downloads</span>
+                                    <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
+                                </button>
+                                <div class="mobile-sub-accordion bg-white">
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Todos os Downloads</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html#tabelas" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Tabelas e Fichas</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html#checklist" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Checklists</a>
+                                </div>
+                                <!-- Protocolos -->
+                                <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
+                                    <span>Protocolos</span>
+                                    <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
+                                </button>
+                                <div class="mobile-sub-accordion bg-white">
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/protocolos.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Protocolos Assistenciais</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/pops.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">POPs de Enfermagem</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/fluxogramas.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Fluxogramas</a>
+                                </div>
+                                <!-- Materiais Educativos -->
+                                <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100">
+                                    <span>Materiais Educativos</span>
+                                    <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
+                                </button>
+                                <div class="mobile-sub-accordion bg-white">
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/ebooks.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">E-books</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/infograficos.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Infográficos</a>
+                                    <a href="https://www.calculadorasdeenfermagem.com.br/apresentacoes.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Apresentações</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
 
-                 <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition flex items-center gap-1 focus:outline-none" data-panel="panel-fale" aria-expanded="false">
-                    Fale Conosco <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
-                </button>
+                    <!-- Carreiras -->
+                    <li>
+                        <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
+                            <span>Carreiras</span>
+                            <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="mobile-submenu">
+                            <div class="bg-gray-50 rounded-lg mx-2 mt-1 overflow-hidden">
+                                <a href="https://www.calculadorasdeenfermagem.com.br/curriculos.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200 transition">Banco de Currículos</a>
+                                <a href="https://www.calculadorasdeenfermagem.com.br/cursos.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200 transition">Buscar Cursos</a>
+                                <a href="https://www.calculadorasdeenfermagem.com.br/concursos-publicos.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200 transition">Concursos Públicos</a>
+                                <a href="https://www.calculadorasdeenfermagem.com.br/site-de-vagas.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 transition">Vagas de Emprego</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Fale Conosco -->
+                    <li>
+                        <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
+                            <span>Fale Conosco</span>
+                            <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="mobile-submenu">
+                            <div class="bg-gray-50 rounded-lg mx-2 mt-1 overflow-hidden">
+                                <a href="https://www.calculadorasdeenfermagem.com.br/fale.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200 transition">Contate-nos</a>
+                                <a href="https://www.calculadorasdeenfermagem.com.br/forum.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200 transition">Fórum da Comunidade</a>
+                                <a href="https://www.calculadorasdeenfermagem.com.br/doacoes.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 transition">Apoie o Projeto</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </nav>
 
-            <!-- Ações Direita -->
-            <div class="flex items-center gap-3">
-                <button class="nav-trigger hidden lg:flex items-center gap-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition" data-panel="panel-busca" aria-expanded="false">
-                    <i class="fas fa-search text-gray-600"></i>
+            <!-- Seletor de Idiomas Mobile (Acordeão) -->
+            <div class="border-t border-gray-200">
+                <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition">
+                    <span class="flex items-center gap-3">
+                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-brasil.webp" alt="PT" class="w-6 h-auto rounded border border-gray-200">
+                        <span class="text-sm font-semibold text-gray-700">Português (Brasil)</span>
+                    </span>
+                    <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
                 </button>
-                <button class="nav-trigger hidden lg:flex items-center gap-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition" data-panel="panel-idiomas" aria-expanded="false">
-                    <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-brasil.webp" alt="PT" class="w-6 h-auto rounded-sm" onerror="this.src='https://placehold.co/24x16/cccccc/333333?text=PT'">
-                    <span class="text-sm font-semibold text-gray-700">PT</span>
-                    <i class="fas fa-chevron-down text-xs text-gray-500"></i>
-                </button>
-
-                <a href="https://www.calculadorasdeenfermagem.com.br/curriculos.html" class="hidden lg:flex bg-[#1A3E74] text-white font-bold py-2 px-5 rounded-lg text-sm hover:bg-blue-800 transition shadow-sm items-center">
-                    <i class="fas fa-user-circle mr-2"></i> Área do Usuário
-                </a>
-
-                <button id="mobile-menu-trigger" class="lg:hidden p-2 text-[#1A3E74] text-xl">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Linha Decorativa -->
-    <div class="h-[2px] w-full bg-gradient-to-r from-[#1A3E74] via-blue-400 to-[#1A3E74]"></div>
-
-    <!-- MEGA PANELS (PADRONIZADOS) -->
-    
-    <!-- 1. PAINEL SOBRE NÓS -->
-    <div id="panel-sobre" class="mega-panel">
-        <div class="max-w-7xl mx-auto panel-standard-height">
-            <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
-                <ul class="space-y-1 px-4">
-                    <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="sobre-inst">
-                        Institucional <i class="fas fa-chevron-right text-xs text-blue-600"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="sobre-pol">
-                        Políticas do Site <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="sobre-aces">
-                        Acessibilidade Digital <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="sobre-sust">
-                        Sustentabilidade Digital <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="sobre-mapa">
-                        Mapa do Site <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                </ul>
-            </div>
-            <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
-                <div id="sobre-inst" class="tab-content active">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Quem Somos</h3>
-                    <div class="space-y-2">
-                        <a href="https://www.calculadorasdeenfermagem.com.br/missao.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Missão, Visão e Valores</strong>
-                            <span class="text-sm text-gray-500">Nossa base ética e objetivos.</span>
+                <div class="mobile-submenu px-4 py-3 bg-gray-50">
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <a href="?lang=pt-BR" class="p-1 rounded-lg border-2 border-[#1A3E74] bg-blue-50" title="Português (Brasil)">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-brasil.webp" alt="PT" class="w-8 h-auto rounded">
                         </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/objetivo.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Objetivo do Site</strong>
-                            <span class="text-sm text-gray-500">Por que criamos esta ferramenta.</span>
+                        <a href="?lang=en" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="English">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-eua.webp" alt="EN" class="w-8 h-auto rounded">
                         </a>
-                         <a href="https://www.calculadorasdeenfermagem.com.br/institucional/acessorestrito.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Acesso Administrativo</strong>
-                            <span class="text-sm text-gray-500">Área restrita para colaboradores.</span>
+                        <a href="?lang=es" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="Español">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-espanha.webp" alt="ES" class="w-8 h-auto rounded">
                         </a>
-                    </div>
-                </div>
-                <div id="sobre-pol" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Documentação Legal</h3>
-                    <div class="space-y-2">
-                        <a href="https://www.calculadorasdeenfermagem.com.br/politica.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Política de Privacidade</strong>
-                            <span class="text-sm text-gray-500">Como seus dados são protegidos.</span>
+                        <a href="?lang=fr" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="Français">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-franca.webp" alt="FR" class="w-8 h-auto rounded">
                         </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/termos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Termos e Condições de Uso</strong>
-                            <span class="text-sm text-gray-500">Regras para utilização das ferramentas.</span>
+                        <a href="?lang=de" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="Deutsch">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/de/bandeira-alemanha.webp" alt="DE" class="w-8 h-auto rounded">
                         </a>
-                    </div>
-                </div>
-                <div id="sobre-aces" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Acessibilidade Digital</h3>
-                    <a href="https://www.calculadorasdeenfermagem.com.br/politicadeacessibilidade.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                        <strong class="block text-gray-800 mb-1">Política de Acessibilidade</strong>
-                        <span class="text-sm text-gray-500">Diretrizes para um design inclusivo.</span>
-                    </a>
-                </div>
-                <div id="sobre-sust" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Sustentabilidade Digital</h3>
-                    <div class="space-y-2">
-                         <a href="https://www.calculadorasdeenfermagem.com.br/nossocompromisso.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Nosso Compromisso</strong>
-                            <span class="text-sm text-gray-500">Saiba como reduzimos nossa pegada de carbono.</span>
+                        <a href="?lang=it" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="Italiano">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/it/bandeira-italia.webp" alt="IT" class="w-8 h-auto rounded">
                         </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/impactodigital.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Relatório de Impacto</strong>
-                            <span class="text-sm text-gray-500">Resultados da nossa performance ESG.</span>
+                        <a href="?lang=zh" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="中文">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-china.webp" alt="ZH" class="w-8 h-auto rounded">
                         </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/tecnologiaverde.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Tecnologia Verde</strong>
-                            <span class="text-sm text-gray-500">Ferramentas e práticas que utilizamos.</span>
+                        <a href="?lang=ja" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="日本語">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-japao.webp" alt="JA" class="w-8 h-auto rounded">
                         </a>
-                    </div>
-                </div>
-                 <div id="sobre-mapa" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Organização de Conteúdo</h3>
-                    <div class="space-y-2">
-                         <a href="https://www.calculadorasdeenfermagem.com.br/mapa-do-site.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Visualizar Estrutura Completa</strong>
-                            <span class="text-sm text-gray-500">Acesse a lista completa de todas as páginas e calculadoras.</span>
+                        <a href="?lang=ko" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="한국어">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-coreia.webp" alt="KO" class="w-8 h-auto rounded">
                         </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/categorias.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Navegar por Categorias</strong>
-                            <span class="text-sm text-gray-500">Encontre ferramentas agrupadas por áreas clínicas.</span>
+                        <a href="?lang=ru" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="Русский">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-russia.webp" alt="RU" class="w-8 h-auto rounded">
                         </a>
-                    </div>
-                </div>
-            </div>
-            <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100"> 
-                 <a href="/missao.html" class="glowing-frame text-center transition">
-                    <img src="assets/images/mega-menu-sobre-nos.png" alt="Imagem institucional sobre nós" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
-                    <h4 class="font-bold text-[#1A3E74] text-lg">Nossa Instituição</h4>
-                    <p class="text-xs text-gray-600 mt-2">Saiba mais sobre a equipe e o propósito do site.</p>
-                 </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. PAINEL CALCULADORAS (FERRAMENTAS) -->
-    <div id="panel-calculadoras" class="mega-panel">
-        <div class="max-w-7xl mx-auto panel-standard-height">
-            <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2 overflow-y-auto custom-scroll">
-                <ul class="space-y-1 px-4">
-                    <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="calc-gerais">
-                        Calculadoras Clínicas <i class="fas fa-chevron-right text-xs text-blue-600"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="calc-escalas">
-                        Escalas Clínicas <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="calc-vacinas">
-                        Calendário Vacinal <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="calc-plano">
-                        Plano de Enfermagem <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
-                <div id="calc-gerais" class="tab-content active">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Calculadoras Clínicas</h3>
-                    <div class="space-y-2">
-                        <a href="https://www.calculadorasdeenfermagem.com.br/heparina.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Aspiração de Heparina</strong>
-                            <span class="text-sm text-gray-500">Cálculo de dose e diluição de heparina.</span>
+                        <a href="?lang=ar" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="العربية">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-arabia.webp" alt="AR" class="w-8 h-auto rounded">
                         </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/insulina.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Aspiração de Insulina</strong>
-                            <span class="text-sm text-gray-500">Conversão de unidades e preparo.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/balancohidrico.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Balanço Hídrico</strong>
-                            <span class="text-sm text-gray-500">Controle de entradas e saídas de líquidos.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/gotejamento.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Cálculo de Gotejamento</strong>
-                            <span class="text-sm text-gray-500">Gotas por minuto e microgotas.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/medicamentos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Cálculo de Medicamentos</strong>
-                            <span class="text-sm text-gray-500">Dosagem segura e diluições.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/imc.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Índice de Massa Corporal (IMC)</strong>
-                            <span class="text-sm text-gray-500">Avaliação do estado nutricional.</span>
-                        </a>
-                    </div>
-                </div>
-
-                <div id="calc-escalas" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Escalas Clínicas</h3>
-                    <div class="space-y-2">
-                        <a href="https://www.calculadorasdeenfermagem.com.br/glasgow.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Coma de Glasgow</strong>
-                            <span class="text-sm text-gray-500">Avaliação do nível de consciência.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/braden.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Braden (Lesão por Pressão)</strong>
-                            <span class="text-sm text-gray-500">Risco de úlcera por pressão.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/morse.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Morse (Quedas)</strong>
-                            <span class="text-sm text-gray-500">Avaliação de risco de queda.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/apgar.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Apgar</strong>
-                            <span class="text-sm text-gray-500">Vitalidade do recém-nascido.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/manchester.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Manchester</strong>
-                            <span class="text-sm text-gray-500">Classificação de risco em emergência.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/escalas.html" class="block p-4 bg-blue-100 rounded-lg hover:bg-blue-200 hover:shadow-sm transition border border-blue-200 hover:border-blue-300">
-                            <strong class="block text-[#1A3E74] mb-1">Ver Todas as Escalas</strong>
-                            <span class="text-sm text-blue-700">Acesse a lista completa com +50 escalas.</span>
-                        </a>
-                    </div>
-                </div>
-
-                <div id="calc-vacinas" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Calendário Vacinal</h3>
-                    <div class="space-y-2">
-                        <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Prematuro</strong>
-                            <span class="text-sm text-gray-500">Esquema especial para prematuros.</span>
-                        </a>
-                        <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Crianças (0 a 10 anos)</strong>
-                            <span class="text-sm text-gray-500">Esquema básico de imunização infantil.</span>
-                        </a>
-                        <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Adolescentes (10 a 19 anos)</strong>
-                            <span class="text-sm text-gray-500">Vacinas recomendadas para adolescentes.</span>
-                        </a>
-                        <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Adultos (20 a 59 anos)</strong>
-                            <span class="text-sm text-gray-500">Imunização para a fase adulta.</span>
-                        </a>
-                        <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Idosos (60 anos ou mais)</strong>
-                            <span class="text-sm text-gray-500">Proteção na terceira idade.</span>
-                        </a>
-                        <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Gestantes</strong>
-                            <span class="text-sm text-gray-500">Proteção materna e fetal.</span>
-                        </a>
-                    </div>
-                </div>
-
-                <div id="calc-plano" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Plano de Enfermagem</h3>
-                    <div class="space-y-2">
-                        <a href="https://www.calculadorasdeenfermagem.com.br/plano-de-enfermagem.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Sistematização da Assistência (SAE)</strong>
-                            <span class="text-sm text-gray-500">Ferramentas para implementação do processo de enfermagem.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/diagnosticos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Diagnósticos de Enfermagem</strong>
-                            <span class="text-sm text-gray-500">Taxonomia NANDA-I e classificações.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/intervencoes.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Intervenções de Enfermagem</strong>
-                            <span class="text-sm text-gray-500">NIC e prescrições baseadas em evidências.</span>
+                        <a href="?lang=hi" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="हिन्दी">
+                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-india.webp" alt="HI" class="w-8 h-auto rounded">
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100"> 
-                 <a href="/calculadoras" class="glowing-frame text-center transition">
-                    <img src="assets/images/mega-menu-ferramentas.png" alt="Ferramentas e calculadoras de enfermagem" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
-                    <h4 class="font-bold text-[#1A3E74] text-lg">Precisão e Segurança</h4>
-                    <p class="text-xs text-gray-600 mt-2">Ferramentas para reduzir erros de dosagem e avaliação.</p>
-                 </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. PAINEL BIBLIOTECA DE ENFERMAGEM -->
-    <div id="panel-biblioteca" class="mega-panel">
-        <div class="max-w-7xl mx-auto panel-standard-height">
-            <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
-                <ul class="space-y-1 px-4">
-                    <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="bib-downloads">
-                        Downloads <i class="fas fa-chevron-right text-xs text-blue-600"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="bib-protocolos">
-                        Protocolos <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="bib-materiais">
-                        Materiais Educativos <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                </ul>
-            </div>
-            <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
-                <div id="bib-downloads" class="tab-content active">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Área de Downloads</h3>
-                    <div class="space-y-2">
-                        <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Todos os Downloads</strong>
-                            <span class="text-sm text-gray-500">Acesse todos os materiais disponíveis para download.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html#tabelas" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Tabelas e Fichas</strong>
-                            <span class="text-sm text-gray-500">Tabelas de referência rápida para uso clínico.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html#checklist" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Checklists</strong>
-                            <span class="text-sm text-gray-500">Listas de verificação para procedimentos.</span>
-                        </a>
-                    </div>
-                </div>
-                <div id="bib-protocolos" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Protocolos Clínicos</h3>
-                    <div class="space-y-2">
-                        <a href="https://www.calculadorasdeenfermagem.com.br/protocolos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Protocolos Assistenciais</strong>
-                            <span class="text-sm text-gray-500">Diretrizes padronizadas para atendimento.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/pops.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">POPs de Enfermagem</strong>
-                            <span class="text-sm text-gray-500">Procedimentos operacionais padrão.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/fluxogramas.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Fluxogramas</strong>
-                            <span class="text-sm text-gray-500">Algoritmos de decisão clínica.</span>
-                        </a>
-                    </div>
-                </div>
-                <div id="bib-materiais" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Materiais Educativos</h3>
-                    <div class="space-y-2">
-                        <a href="https://www.calculadorasdeenfermagem.com.br/ebooks.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">E-books</strong>
-                            <span class="text-sm text-gray-500">Livros digitais gratuitos sobre enfermagem.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/infograficos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Infográficos</strong>
-                            <span class="text-sm text-gray-500">Resumos visuais de temas importantes.</span>
-                        </a>
-                        <a href="https://www.calculadorasdeenfermagem.com.br/apresentacoes.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                            <strong class="block text-gray-800 mb-1">Apresentações</strong>
-                            <span class="text-sm text-gray-500">Slides para aulas e treinamentos.</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100">
-                <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html" class="glowing-frame text-center transition">
-                    <img src="assets/images/mega-menu-biblioteca.png" alt="Biblioteca de Enfermagem" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
-                    <h4 class="font-bold text-[#1A3E74] text-lg">Biblioteca Digital</h4>
-                    <p class="text-xs text-gray-600 mt-2">Materiais gratuitos para apoiar sua prática profissional.</p>
+            <!-- Botão Área do Usuário Mobile -->
+            <div class="p-4 border-t border-gray-200">
+                <a href="https://www.calculadorasdeenfermagem.com.br/curriculos.html" class="flex items-center justify-center gap-2 w-full bg-[#1A3E74] text-white font-bold py-3 px-5 rounded-lg hover:bg-blue-800 transition">
+                    <i class="fas fa-user-circle"></i> Área do Usuário
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- 4. PAINEL CARREIRAS -->
-    <div id="panel-carreiras" class="mega-panel">
-        <div class="max-w-7xl mx-auto panel-standard-height">
-             <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
-                <ul class="space-y-1 px-4">
-                    <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center">
-                        Oportunidades <i class="fas fa-chevron-right text-xs text-blue-600"></i>
-                    </li>
-                </ul>
-             </div>
-             <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
-                <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Desenvolvimento Profissional</h3>
-                <div class="space-y-2">
-                    <a href="https://www.calculadorasdeenfermagem.com.br/curriculos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                        <strong class="block text-gray-800 mb-1">Banco de Currículos</strong>
-                        <span class="text-sm text-gray-500">Cadastre seu currículo e seja visto por recrutadores.</span>
-                    </a>
-                    <a href="https://www.calculadorasdeenfermagem.com.br/cursos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                        <strong class="block text-gray-800 mb-1">Buscar Cursos</strong>
-                        <span class="text-sm text-gray-500">Especializações e cursos livres.</span>
-                    </a>
-                    <a href="https://www.calculadorasdeenfermagem.com.br/concursos-publicos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                        <strong class="block text-gray-800 mb-1">Concursos Públicos</strong>
-                        <span class="text-sm text-gray-500">Editais abertos e previstos em todo o país.</span>
-                    </a>
-                    <a href="https://www.calculadorasdeenfermagem.com.br/site-de-vagas.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                        <strong class="block text-gray-800 mb-1">Vagas de Emprego</strong>
-                        <span class="text-sm text-gray-500">Oportunidades em hospitais e clínicas.</span>
-                    </a>
-                </div>
-             </div>
-             <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100"> 
-                 <a href="/curriculos.html" class="glowing-frame text-center transition">
-                    <img src="assets/images/mega-menu-carreiras.png" alt="Carreiras e oportunidades em enfermagem" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
-                    <h4 class="font-bold text-[#1A3E74] text-lg">Avance na Sua Profissão</h4>
-                    <p class="text-xs text-gray-600 mt-2">Encontre o próximo passo para o seu sucesso na enfermagem.</p>
-                 </a>
-             </div>
-        </div>
-    </div>
-
-    <!-- 5. PAINEL FALE CONOSCO -->
-    <div id="panel-fale" class="mega-panel">
-         <div class="max-w-7xl mx-auto panel-standard-height">
-             <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
-                <ul class="space-y-1 px-4">
-                    <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center">
-                        Atendimento <i class="fas fa-chevron-right text-xs text-blue-600"></i>
-                    </li>
-                </ul>
-             </div>
-             <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
-                <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Canais de Atendimento</h3>
-                <div class="space-y-2">
-                    <a href="https://www.calculadorasdeenfermagem.com.br/fale.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                        <strong class="block text-gray-800 mb-1">Contate-nos</strong>
-                        <span class="text-sm text-gray-500">Envie suas dúvidas, sugestões ou propostas de parcerias.</span>
-                    </a>
-                    <a href="https://www.calculadorasdeenfermagem.com.br/forum.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                        <strong class="block text-gray-800 mb-1">Fórum da Comunidade</strong>
-                        <span class="text-sm text-gray-500">Participe de discussões com outros profissionais da área.</span>
-                    </a>
-                    <a href="https://www.calculadorasdeenfermagem.com.br/doacoes.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
-                        <strong class="block text-gray-800 mb-1">Apoie o Projeto</strong>
-                        <span class="text-sm text-gray-500">Contribua para manter o site gratuito e acessível.</span>
-                    </a>
-                </div>
-             </div>
-             <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100"> 
-                 <a href="/fale.html" class="glowing-frame text-center transition">
-                    <img src="assets/images/mega-menu-fale-conosco.png" alt="Fale conosco e comunidade" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
-                    <h4 class="font-bold text-[#1A3E74] text-lg">Fale Conosco</h4>
-                    <p class="text-xs text-gray-600 mt-2">Entre em contato com nossa equipe para dúvidas e sugestões.</p>
-                 </a>
-             </div>
-         </div>
-    </div>
-
-    <!-- 6. PAINEL IDIOMAS -->
-    <div id="panel-idiomas" class="mega-panel">
-        <div class="max-w-7xl mx-auto panel-standard-height">
-            <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
-                <ul class="space-y-1 px-4">
-                    <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="idioma-americas">
-                        Américas <i class="fas fa-chevron-right text-xs text-blue-600"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="idioma-europa">
-                        Europa <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="idioma-asia">
-                        Ásia e Oceania <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                </ul>
-            </div>
-            <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
-                <div id="idioma-americas" class="tab-content active">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-4 border-b pb-2">Selecione seu idioma de preferência</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <a href="?lang=pt-BR" class="flex items-center gap-3 p-4 bg-blue-50 rounded-lg border-2 border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-brasil.webp" alt="Brasil" class="w-8 h-auto rounded" onerror="this.src='https://placehold.co/32x24/009c3b/ffffff?text=BR'">
-                            <div>
-                                <strong class="block text-gray-800">Português (Brasil)</strong>
-                                <span class="text-xs text-green-600 font-semibold">Idioma atual</span>
-                            </div>
-                        </a>
-                        <a href="?lang=es" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-espanha.webp" alt="Español" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Español</strong>
-                                <span class="text-xs text-gray-500">Spanish</span>
-                            </div>
-                        </a>
-                        <a href="?lang=en" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-eua.webp" alt="English" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">English</strong>
-                                <span class="text-xs text-gray-500">Inglês</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div id="idioma-europa" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-4 border-b pb-2">Selecione seu idioma de preferência</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <a href="?lang=fr" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-franca.webp" alt="Français" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Français</strong>
-                                <span class="text-xs text-gray-500">Francês</span>
-                            </div>
-                        </a>
-                        <a href="?lang=de" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/de/bandeira-alemanha.webp" alt="Deutsch" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Deutsch</strong>
-                                <span class="text-xs text-gray-500">Alemão</span>
-                            </div>
-                        </a>
-                        <a href="?lang=it" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/it/bandeira-italia.webp" alt="Italiano" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Italiano</strong>
-                                <span class="text-xs text-gray-500">Italian</span>
-                            </div>
-                        </a>
-                        <a href="?lang=nl" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-holanda.webp" alt="Nederlands" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Nederlands</strong>
-                                <span class="text-xs text-gray-500">Holandês</span>
-                            </div>
-                        </a>
-                        <a href="?lang=pl" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-polonia.webp" alt="Polski" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Polski</strong>
-                                <span class="text-xs text-gray-500">Polonês</span>
-                            </div>
-                        </a>
-                        <a href="?lang=ru" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-russia.webp" alt="Русский" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Русский</strong>
-                                <span class="text-xs text-gray-500">Russo</span>
-                            </div>
-                        </a>
-                        <a href="?lang=sv" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-suecia.webp" alt="Svenska" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Svenska</strong>
-                                <span class="text-xs text-gray-500">Sueco</span>
-                            </div>
-                        </a>
-                        <a href="?lang=tr" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-turquia.webp" alt="Türkçe" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Türkçe</strong>
-                                <span class="text-xs text-gray-500">Turco</span>
-                            </div>
-                        </a>
-                        <a href="?lang=uk" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-ucrania.webp" alt="Українська" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Українська</strong>
-                                <span class="text-xs text-gray-500">Ucraniano</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div id="idioma-asia" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-4 border-b pb-2">Selecione seu idioma de preferência</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <a href="?lang=zh" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-china.webp" alt="中文" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">中文</strong>
-                                <span class="text-xs text-gray-500">Chinês</span>
-                            </div>
-                        </a>
-                        <a href="?lang=ja" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-japao.webp" alt="日本語" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">日本語</strong>
-                                <span class="text-xs text-gray-500">Japonês</span>
-                            </div>
-                        </a>
-                        <a href="?lang=ko" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-coreia.webp" alt="한국어" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">한국어</strong>
-                                <span class="text-xs text-gray-500">Coreano</span>
-                            </div>
-                        </a>
-                        <a href="?lang=hi" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-india.webp" alt="हिन्दी" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">हिन्दी</strong>
-                                <span class="text-xs text-gray-500">Hindi</span>
-                            </div>
-                        </a>
-                        <a href="?lang=ar" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-arabia.webp" alt="العربية" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">العربية</strong>
-                                <span class="text-xs text-gray-500">Árabe</span>
-                            </div>
-                        </a>
-                        <a href="?lang=id" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-indonesia.webp" alt="Bahasa Indonesia" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Bahasa Indonesia</strong>
-                                <span class="text-xs text-gray-500">Indonésio</span>
-                            </div>
-                        </a>
-                        <a href="?lang=vi" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-vietna.webp" alt="Tiếng Việt" class="w-8 h-auto rounded">
-                            <div>
-                                <strong class="block text-gray-800">Tiếng Việt</strong>
-                                <span class="text-xs text-gray-500">Vietnamita</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100">
-                <div class="glowing-frame text-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/World_map_blank_without_borders.svg/2000px-World_map_blank_without_borders.svg.png" alt="Mapa mundial" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
-                    <h4 class="font-bold text-[#1A3E74] text-lg">Alcance Global</h4>
-                    <p class="text-xs text-gray-600 mt-2">Nossas calculadoras estão disponíveis em múltiplos idiomas para profissionais de saúde ao redor do mundo.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 7. PAINEL BUSCA -->
-    <div id="panel-busca" class="mega-panel">
-        <div class="max-w-7xl mx-auto panel-standard-height">
-            <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
-                <ul class="space-y-1 px-4">
-                    <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="busca-todas">
-                        Todas as Ferramentas <i class="fas fa-chevron-right text-xs text-blue-600"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="busca-escalas">
-                        Escalas Clínicas <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="busca-calculos">
-                        Cálculos <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                    <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="busca-artigos">
-                        Artigos e Guias <i class="fas fa-chevron-right text-xs opacity-0"></i>
-                    </li>
-                </ul>
-            </div>
-            <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
-                <div id="busca-todas" class="tab-content active">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-4">Buscar em Todo o Site</h3>
-                    <div class="relative mb-6">
-                        <input type="text" id="search-input" placeholder="Digite sua busca..." class="w-full p-4 pl-12 border-2 border-gray-200 rounded-xl text-lg focus:border-[#1A3E74] focus:outline-none transition">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
-                    </div>
-                    <div class="mb-4">
-                        <h4 class="text-sm font-semibold text-gray-500 mb-3">Buscas Populares</h4>
-                        <div class="flex flex-wrap gap-2">
-                            <a href="/glasgow.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">Glasgow</a>
-                            <a href="/braden.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">Braden</a>
-                            <a href="/morse.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">Morse</a>
-                            <a href="/gotejamento.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">Gotejamento</a>
-                            <a href="/imc.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">IMC</a>
-                            <a href="/medicamentos.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">Medicamentos</a>
-                        </div>
-                    </div>
-                </div>
-                <div id="busca-escalas" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-4">Buscar Escalas Clínicas</h3>
-                    <div class="relative mb-6">
-                        <input type="text" placeholder="Buscar escalas..." class="w-full p-4 pl-12 border-2 border-gray-200 rounded-xl text-lg focus:border-[#1A3E74] focus:outline-none transition">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2 text-sm">
-                        <a href="/glasgow.html" class="p-2 hover:bg-blue-50 rounded">Escala de Glasgow</a>
-                        <a href="/braden.html" class="p-2 hover:bg-blue-50 rounded">Escala de Braden</a>
-                        <a href="/morse.html" class="p-2 hover:bg-blue-50 rounded">Escala de Morse</a>
-                        <a href="/norton.html" class="p-2 hover:bg-blue-50 rounded">Escala de Norton</a>
-                        <a href="/apgar.html" class="p-2 hover:bg-blue-50 rounded">Escala de Apgar</a>
-                        <a href="/ramsay.html" class="p-2 hover:bg-blue-50 rounded">Escala de Ramsay</a>
-                    </div>
-                </div>
-                <div id="busca-calculos" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-4">Buscar Calculadoras</h3>
-                    <div class="relative mb-6">
-                        <input type="text" placeholder="Buscar cálculos..." class="w-full p-4 pl-12 border-2 border-gray-200 rounded-xl text-lg focus:border-[#1A3E74] focus:outline-none transition">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2 text-sm">
-                        <a href="/gotejamento.html" class="p-2 hover:bg-blue-50 rounded">Gotejamento</a>
-                        <a href="/medicamentos.html" class="p-2 hover:bg-blue-50 rounded">Medicamentos</a>
-                        <a href="/imc.html" class="p-2 hover:bg-blue-50 rounded">IMC</a>
-                        <a href="/insulina.html" class="p-2 hover:bg-blue-50 rounded">Insulina</a>
-                        <a href="/heparina.html" class="p-2 hover:bg-blue-50 rounded">Heparina</a>
-                        <a href="/balancohidrico.html" class="p-2 hover:bg-blue-50 rounded">Balanço Hídrico</a>
-                    </div>
-                </div>
-                <div id="busca-artigos" class="tab-content">
-                    <h3 class="text-xl font-bold text-[#1A3E74] mb-4">Buscar Artigos e Guias</h3>
-                    <div class="relative mb-6">
-                        <input type="text" placeholder="Buscar conteúdo educativo..." class="w-full p-4 pl-12 border-2 border-gray-200 rounded-xl text-lg focus:border-[#1A3E74] focus:outline-none transition">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
-                    </div>
-                    <p class="text-gray-500 text-sm">Em breve: artigos e guias sobre enfermagem clínica.</p>
-                </div>
-            </div>
-            <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100">
-                <div class="glowing-frame text-center">
-                    <div class="text-5xl mb-4"><i class="fas fa-search text-[#1A3E74]"></i></div>
-                    <h4 class="font-bold text-[#1A3E74] text-lg">Busca Inteligente</h4>
-                    <p class="text-xs text-gray-600 mt-2">Encontre rapidamente qualquer calculadora, escala ou conteúdo do site.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</header>
-
-<!-- MENU MOBILE (OFF-CANVAS) -->
-<div id="mobile-menu" class="fixed inset-0 z-[200] hidden lg:hidden">
-    <!-- Backdrop -->
-    <div id="mobile-menu-backdrop" class="mobile-menu-backdrop absolute inset-0 bg-black/50 opacity-0"></div>
-    
-    <!-- Drawer -->
-    <div id="mobile-menu-drawer" class="mobile-menu-drawer absolute top-0 left-0 w-[85%] max-w-sm h-full bg-white shadow-2xl -translate-x-full flex flex-col">
+    <!-- HEADER PRINCIPAL DESKTOP -->
+    <header id="header" class="fixed w-full top-0 z-[100] bg-white transition-all duration-300 font-sans shadow-md">
         
-        <!-- Header do Menu Mobile -->
-        <div class="bg-[#1A3E74] p-4 flex items-center justify-between">
-            <a href="/">
-                <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="h-8 w-auto brightness-0 invert">
-            </a>
-            <button id="close-mobile-menu" class="text-white text-2xl p-2 hover:bg-white/10 rounded-lg transition">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
+        <!-- Barra de Topo -->
+        <div class="bg-gray-50 border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 py-1 flex justify-between items-center text-xs">
+                <div class="flex items-center gap-2 text-gray-500">
+                    <button class="hover:text-blue-600 font-bold px-1" aria-label="Diminuir fonte">A-</button>
+                    <button class="hover:text-blue-600 font-bold px-1" aria-label="Aumentar fonte">A+</button>
+                    <button id="theme-toggle" class="hover:text-blue-600 ml-2" aria-label="Alternar tema"><i class="fas fa-moon"></i></button>
+                    <span class="hidden lg:inline mx-2 text-gray-300">|</span>
+                    <a href="#header" class="hidden lg:inline-flex items-center justify-center w-16 h-6 bg-[#1A3E74] text-white text-[10px] font-bold rounded hover:bg-blue-800 transition">Topo</a>
+                    <a href="#main-content" class="hidden lg:inline-flex items-center justify-center w-16 h-6 bg-[#1A3E74] text-white text-[10px] font-bold rounded hover:bg-blue-800 transition">Conteúdo</a>
+                    <a href="#footer" class="hidden lg:inline-flex items-center justify-center w-16 h-6 bg-[#1A3E74] text-white text-[10px] font-bold rounded hover:bg-blue-800 transition">Rodapé</a>
+                </div>
 
-        <!-- Campo de Busca Mobile -->
-        <div class="p-4 border-b border-gray-200">
-            <div class="relative">
-                <input type="text" placeholder="Buscar calculadoras..." class="w-full p-3 pl-10 bg-gray-100 border border-gray-200 rounded-lg text-sm focus:border-[#1A3E74] focus:outline-none transition">
-                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
             </div>
         </div>
 
-        <!-- Navegação Mobile -->
-        <nav class="flex-1 overflow-y-auto custom-scroll p-4">
-            <ul class="space-y-1">
-                <li>
-                    <a href="/" class="flex items-center px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
-                        Início
-                    </a>
-                </li>
+        <!-- Barra de Navegação -->
+        <div class="relative bg-white z-[101]">
+            <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
                 
-                <!-- Sobre Nós -->
-                <li>
-                    <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
-                        <span>Sobre Nós</span>
-                        <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
+                <!-- Logo -->
+                <div class="flex items-center shrink-0">
+                    <a href="/">
+                        <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="h-10 w-auto">
+                    </a>
+                </div>
+
+                <!-- Menu Desktop (Triggers) -->
+                <nav class="hidden lg:flex items-center gap-1 h-full">
+                    <a href="/" class="px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition">Início</a>
+                    
+                    <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition flex items-center gap-1 focus:outline-none" data-panel="panel-sobre" aria-expanded="false">
+                        Sobre Nós <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
                     </button>
-                    <div class="mobile-submenu">
-                        <div class="bg-gray-50 rounded-lg mx-2 mt-1 overflow-hidden">
-                            <!-- Institucional -->
-                            <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
-                                <span>Institucional</span>
-                                <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
-                            </button>
-                            <div class="mobile-sub-accordion bg-white">
-                                <a href="https://www.calculadorasdeenfermagem.com.br/missao.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Missão, Visão e Valores</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/objetivo.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Objetivo do Site</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/institucional/acessorestrito.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Acesso Administrativo</a>
-                            </div>
-                            <!-- Políticas -->
-                            <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
-                                <span>Políticas do Site</span>
-                                <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
-                            </button>
-                            <div class="mobile-sub-accordion bg-white">
-                                <a href="https://www.calculadorasdeenfermagem.com.br/politica.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Política de Privacidade</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/termos.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Termos e Condições</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/politicadeacessibilidade.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Política de Acessibilidade</a>
-                            </div>
-                            <!-- Mapa do Site -->
-                            <a href="https://www.calculadorasdeenfermagem.com.br/mapa-do-site.html" class="block px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 transition">
-                                Mapa do Site
+
+                    <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition flex items-center gap-1 focus:outline-none" data-panel="panel-calculadoras" aria-expanded="false">
+                        Ferramentas <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
+                    </button>
+
+                    <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition flex items-center gap-1 focus:outline-none" data-panel="panel-biblioteca" aria-expanded="false">
+                        Biblioteca <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
+                    </button>
+
+                    <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition flex items-center gap-1 focus:outline-none" data-panel="panel-carreiras" aria-expanded="false">
+                        Carreiras <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
+                    </button>
+
+                     <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#1A3E74] transition flex items-center gap-1 focus:outline-none" data-panel="panel-fale" aria-expanded="false">
+                        Fale Conosco <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
+                    </button>
+                </nav>
+
+                <!-- Ações Direita -->
+                <div class="flex items-center gap-3">
+                    <button class="nav-trigger hidden lg:flex items-center gap-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition" data-panel="panel-busca" aria-expanded="false">
+                        <i class="fas fa-search text-gray-600"></i>
+                    </button>
+                    <button class="nav-trigger hidden lg:flex items-center gap-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition" data-panel="panel-idiomas" aria-expanded="false">
+                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-brasil.webp" alt="PT" class="w-6 h-auto rounded-sm" onerror="this.src='https://placehold.co/24x16/cccccc/333333?text=PT'">
+                        <span class="text-sm font-semibold text-gray-700">PT</span>
+                        <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+                    </button>
+
+                    <a href="https://www.calculadorasdeenfermagem.com.br/curriculos.html" class="hidden lg:flex bg-[#1A3E74] text-white font-bold py-2 px-5 rounded-lg text-sm hover:bg-blue-800 transition shadow-sm items-center">
+                        <i class="fas fa-user-circle mr-2"></i> Área do Usuário
+                    </a>
+
+                    <button id="mobile-menu-trigger" class="lg:hidden p-2 text-[#1A3E74] text-xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Linha Decorativa -->
+        <div class="h-[2px] w-full bg-gradient-to-r from-[#1A3E74] via-blue-400 to-[#1A3E74]"></div>
+
+        <!-- MEGA PANELS (PADRONIZADOS) -->
+        
+        <!-- 1. PAINEL SOBRE NÓS -->
+        <div id="panel-sobre" class="mega-panel">
+            <div class="max-w-7xl mx-auto panel-standard-height"> <!-- CLASSE PADRONIZADA AQUI -->
+                <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
+                    <ul class="space-y-1 px-4">
+                        <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="sobre-inst">
+                            Institucional <i class="fas fa-chevron-right text-xs text-blue-600"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="sobre-pol">
+                            Políticas do Site <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="sobre-aces">
+                            Acessibilidade Digital <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="sobre-sust">
+                            Sustentabilidade Digital <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                        <!-- NOVO SUB-MENU: Mapa do Site -->
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="sobre-mapa">
+                            Mapa do Site <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                        <!-- FIM NOVO SUB-MENU -->
+                    </ul>
+                </div>
+                <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
+                    <div id="sobre-inst" class="tab-content active">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Quem Somos</h3>
+                        <div class="space-y-2">
+                            <a href="https://www.calculadorasdeenfermagem.com.br/missao.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Missão, Visão e Valores</strong>
+                                <span class="text-sm text-gray-500">Nossa base ética e objetivos.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/objetivo.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Objetivo do Site</strong>
+                                <span class="text-sm text-gray-500">Por que criamos esta ferramenta.</span>
+                            </a>
+                             <a href="https://www.calculadorasdeenfermagem.com.br/institucional/acessorestrito.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Acesso Administrativo</strong>
+                                <span class="text-sm text-gray-500">Área restrita para colaboradores.</span>
                             </a>
                         </div>
                     </div>
-                </li>
-
-                <!-- Ferramentas -->
-                <li>
-                    <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
-                        <span>Ferramentas</span>
-                        <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
-                    </button>
-                    <div class="mobile-submenu">
-                        <div class="bg-gray-50 rounded-lg mx-2 mt-1 overflow-hidden">
-                            <!-- Calculadoras Clínicas -->
-                            <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
-                                <span>Calculadoras Clínicas</span>
-                                <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
-                            </button>
-                            <div class="mobile-sub-accordion bg-white">
-                                <a href="https://www.calculadorasdeenfermagem.com.br/heparina.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Aspiração de Heparina</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/insulina.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Aspiração de Insulina</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/gotejamento.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Cálculo de Gotejamento</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/medicamentos.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Cálculo de Medicamentos</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/imc.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Índice de Massa Corporal</a>
-                            </div>
-                            <!-- Escalas Clínicas -->
-                            <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
-                                <span>Escalas Clínicas</span>
-                                <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
-                            </button>
-                            <div class="mobile-sub-accordion bg-white">
-                                <a href="https://www.calculadorasdeenfermagem.com.br/glasgow.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Coma de Glasgow</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/braden.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Braden (Lesão por Pressão)</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/morse.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Morse (Quedas)</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/apgar.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Apgar</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/escalas.html" class="block px-6 py-2 text-sm text-[#1A3E74] font-semibold hover:bg-gray-50 transition">Ver Todas as Escalas →</a>
-                            </div>
-                            <!-- Calendário Vacinal -->
-                            <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
-                                <span>Calendário Vacinal</span>
-                                <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
-                            </button>
-                            <div class="mobile-sub-accordion bg-white">
-                                <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Crianças</a>
-                                <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Adultos</a>
-                                <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Gestantes</a>
-                            </div>
-                            <!-- Plano de Enfermagem -->
-                            <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100">
-                                <span>Plano de Enfermagem</span>
-                                <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
-                            </button>
-                            <div class="mobile-sub-accordion bg-white">
-                                <a href="https://www.calculadorasdeenfermagem.com.br/plano-de-enfermagem.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Sistematização (SAE)</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/diagnosticos.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Diagnósticos de Enfermagem</a>
-                            </div>
+                    <div id="sobre-pol" class="tab-content">
+                        <!-- Título e formatação ajustados -->
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Documentação Legal</h3>
+                        <div class="space-y-2">
+                            <a href="https://www.calculadorasdeenfermagem.com.br/politica.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Política de Privacidade</strong>
+                                <span class="text-sm text-gray-500">Como seus dados são protegidos.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/termos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Termos e Condições de Uso</strong>
+                                <span class="text-sm text-gray-500">Regras para utilização das ferramentas.</span>
+                            </a>
                         </div>
                     </div>
-                </li>
-
-                <!-- Biblioteca -->
-                <li>
-                    <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
-                        <span>Biblioteca</span>
-                        <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
-                    </button>
-                    <div class="mobile-submenu">
-                        <div class="bg-gray-50 rounded-lg mx-2 mt-1 overflow-hidden">
-                            <!-- Downloads -->
-                            <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
-                                <span>Downloads</span>
-                                <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
-                            </button>
-                            <div class="mobile-sub-accordion bg-white">
-                                <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Todos os Downloads</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html#tabelas" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Tabelas e Fichas</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html#checklist" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Checklists</a>
-                            </div>
-                            <!-- Protocolos -->
-                            <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200">
-                                <span>Protocolos</span>
-                                <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
-                            </button>
-                            <div class="mobile-sub-accordion bg-white">
-                                <a href="https://www.calculadorasdeenfermagem.com.br/protocolos.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Protocolos Assistenciais</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/pops.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">POPs de Enfermagem</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/fluxogramas.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Fluxogramas</a>
-                            </div>
-                            <!-- Materiais Educativos -->
-                            <button class="mobile-sub-trigger w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-[#1A3E74] hover:bg-gray-100">
-                                <span>Materiais Educativos</span>
-                                <i class="fas fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300"></i>
-                            </button>
-                            <div class="mobile-sub-accordion bg-white">
-                                <a href="https://www.calculadorasdeenfermagem.com.br/ebooks.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">E-books</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/infograficos.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Infográficos</a>
-                                <a href="https://www.calculadorasdeenfermagem.com.br/apresentacoes.html" class="block px-6 py-2 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-50 transition">Apresentações</a>
-                            </div>
+                    <div id="sobre-aces" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Acessibilidade Digital</h3>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/politicadeacessibilidade.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                            <strong class="block text-gray-800 mb-1">Política de Acessibilidade</strong>
+                            <span class="text-sm text-gray-500">Diretrizes para um design inclusivo.</span>
+                        </a>
+                    </div>
+                    <div id="sobre-sust" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Sustentabilidade Digital</h3>
+                        <div class="space-y-2">
+                             <a href="https://www.calculadorasdeenfermagem.com.br/nossocompromisso.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Nosso Compromisso</strong>
+                                <span class="text-sm text-gray-500">Saiba como reduzimos nossa pegada de carbono.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/impactodigital.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Relatório de Impacto</strong>
+                                <span class="text-sm text-gray-500">Resultados da nossa performance ESG.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/tecnologiaverde.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Tecnologia Verde</strong>
+                                <span class="text-sm text-gray-500">Ferramentas e práticas que utilizamos.</span>
+                            </a>
                         </div>
                     </div>
-                </li>
-
-                <!-- Carreiras -->
-                <li>
-                    <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
-                        <span>Carreiras</span>
-                        <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
-                    </button>
-                    <div class="mobile-submenu">
-                        <div class="bg-gray-50 rounded-lg mx-2 mt-1 overflow-hidden">
-                            <a href="https://www.calculadorasdeenfermagem.com.br/curriculos.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200 transition">Banco de Currículos</a>
-                            <a href="https://www.calculadorasdeenfermagem.com.br/cursos.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200 transition">Buscar Cursos</a>
-                            <a href="https://www.calculadorasdeenfermagem.com.br/concursos-publicos.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200 transition">Concursos Públicos</a>
-                            <a href="https://www.calculadorasdeenfermagem.com.br/site-de-vagas.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 transition">Vagas de Emprego</a>
+                    <!-- NOVO CONTEÚDO: Mapa do Site -->
+                     <div id="sobre-mapa" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Organização de Conteúdo</h3>
+                        <div class="space-y-2">
+                             <a href="https://www.calculadorasdeenfermagem.com.br/mapa-do-site.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Visualizar Estrutura Completa</strong>
+                                <span class="text-sm text-gray-500">Acesse a lista completa de todas as páginas e calculadoras.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/categorias.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Navegar por Categorias</strong>
+                                <span class="text-sm text-gray-500">Encontre ferramentas agrupadas por áreas clínicas.</span>
+                            </a>
                         </div>
                     </div>
-                </li>
+                    <!-- FIM NOVO CONTEÚDO -->
+                </div>
+                <!-- AJUSTE AQUI: O padding mudou de p-6 para py-6 pr-8, garantindo o espaçamento à direita -->
+                <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100"> 
+                     <a href="/missao.html" class="glowing-frame text-center transition">
+                        <img src="mega-menu-sobre-nos.png" alt="Imagem institucional sobre nós" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
+                        <h4 class="font-bold text-[#1A3E74] text-lg">Nossa Instituição</h4>
+                        <p class="text-xs text-gray-600 mt-2">Saiba mais sobre a equipe e o propósito do site.</p>
+                     </a>
+                </div>
+            </div>
+        </div>
 
-                <!-- Fale Conosco -->
-                <li>
-                    <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition">
-                        <span>Fale Conosco</span>
-                        <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
-                    </button>
-                    <div class="mobile-submenu">
-                        <div class="bg-gray-50 rounded-lg mx-2 mt-1 overflow-hidden">
-                            <a href="https://www.calculadorasdeenfermagem.com.br/fale.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200 transition">Contate-nos</a>
-                            <a href="https://www.calculadorasdeenfermagem.com.br/forum.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 border-b border-gray-200 transition">Fórum da Comunidade</a>
-                            <a href="https://www.calculadorasdeenfermagem.com.br/doacoes.html" class="block px-4 py-3 text-sm text-gray-600 hover:text-[#1A3E74] hover:bg-gray-100 transition">Apoie o Projeto</a>
+        <!-- 2. PAINEL CALCULADORAS (FERRAMENTAS) - Layout ajustado para 1/4, 1/2, 1/4 -->
+        <div id="panel-calculadoras" class="mega-panel">
+            <div class="max-w-7xl mx-auto panel-standard-height"> <!-- CLASSE PADRONIZADA AQUI -->
+                <!-- Tabs -->
+                <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2 overflow-y-auto custom-scroll">
+                    <ul class="space-y-1 px-4">
+                        <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="calc-gerais">
+                            Calculadoras Clínicas <i class="fas fa-chevron-right text-xs text-blue-600"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="calc-escalas">
+                            Escalas Clínicas <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="calc-vacinas">
+                            Calendário Vacinal <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="calc-plano">
+                            Plano de Enfermagem <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Content (50% de largura) -->
+                <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
+                    
+                    <!-- Gerais -->
+                    <div id="calc-gerais" class="tab-content active">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Calculadoras Clínicas</h3>
+                        <div class="space-y-2">
+                            <a href="https://www.calculadorasdeenfermagem.com.br/heparina.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Aspiração de Heparina</strong>
+                                <span class="text-sm text-gray-500">Cálculo de dose e diluição de heparina.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/insulina.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Aspiração de Insulina</strong>
+                                <span class="text-sm text-gray-500">Conversão de unidades e preparo.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/balancohidrico.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Balanço Hídrico</strong>
+                                <span class="text-sm text-gray-500">Controle de entradas e saídas de líquidos.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/gotejamento.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Cálculo de Gotejamento</strong>
+                                <span class="text-sm text-gray-500">Gotas por minuto e microgotas.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/medicamentos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Cálculo de Medicamentos</strong>
+                                <span class="text-sm text-gray-500">Dosagem segura e diluições.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/imc.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Índice de Massa Corporal (IMC)</strong>
+                                <span class="text-sm text-gray-500">Avaliação do estado nutricional.</span>
+                            </a>
                         </div>
                     </div>
-                </li>
-            </ul>
-        </nav>
 
-        <!-- Seletor de Idiomas Mobile (Acordeão) -->
-        <div class="border-t border-gray-200">
-            <button class="mobile-accordion-trigger w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition">
-                <span class="flex items-center gap-3">
-                    <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-brasil.webp" alt="PT" class="w-6 h-auto rounded border border-gray-200">
-                    <span class="text-sm font-semibold text-gray-700">Português (Brasil)</span>
-                </span>
-                <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
-            </button>
-            <div class="mobile-submenu px-4 py-3 bg-gray-50">
-                <div class="flex flex-wrap gap-2 justify-center">
-                    <a href="?lang=pt-BR" class="p-1 rounded-lg border-2 border-[#1A3E74] bg-blue-50" title="Português (Brasil)">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-brasil.webp" alt="PT" class="w-8 h-auto rounded">
-                    </a>
-                    <a href="?lang=en" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="English">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-eua.webp" alt="EN" class="w-8 h-auto rounded">
-                    </a>
-                    <a href="?lang=es" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="Español">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-espanha.webp" alt="ES" class="w-8 h-auto rounded">
-                    </a>
-                    <a href="?lang=fr" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="Français">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-franca.webp" alt="FR" class="w-8 h-auto rounded">
-                    </a>
-                    <a href="?lang=de" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="Deutsch">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/de/bandeira-alemanha.webp" alt="DE" class="w-8 h-auto rounded">
-                    </a>
-                    <a href="?lang=it" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="Italiano">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/it/bandeira-italia.webp" alt="IT" class="w-8 h-auto rounded">
-                    </a>
-                    <a href="?lang=zh" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="中文">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-china.webp" alt="ZH" class="w-8 h-auto rounded">
-                    </a>
-                    <a href="?lang=ja" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="日本語">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-japao.webp" alt="JA" class="w-8 h-auto rounded">
-                    </a>
-                    <a href="?lang=ko" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="한국어">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-coreia.webp" alt="KO" class="w-8 h-auto rounded">
-                    </a>
-                    <a href="?lang=ru" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="Русский">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-russia.webp" alt="RU" class="w-8 h-auto rounded">
-                    </a>
-                    <a href="?lang=ar" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="العربية">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-arabia.webp" alt="AR" class="w-8 h-auto rounded">
-                    </a>
-                    <a href="?lang=hi" class="p-1 rounded-lg border border-gray-200 hover:border-[#1A3E74] transition" title="हिन्दी">
-                        <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-india.webp" alt="HI" class="w-8 h-auto rounded">
+                    <!-- Escalas (Lista Longa) -->
+                    <div id="calc-escalas" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Escalas Clínicas</h3>
+                        <div class="space-y-2">
+                            <a href="https://www.calculadorasdeenfermagem.com.br/glasgow.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Coma de Glasgow</strong>
+                                <span class="text-sm text-gray-500">Avaliação do nível de consciência.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/braden.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Braden (Lesão por Pressão)</strong>
+                                <span class="text-sm text-gray-500">Risco de úlcera por pressão.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/morse.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Morse (Quedas)</strong>
+                                <span class="text-sm text-gray-500">Avaliação de risco de queda.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/apgar.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Apgar</strong>
+                                <span class="text-sm text-gray-500">Vitalidade do recém-nascido.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/manchester.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Manchester</strong>
+                                <span class="text-sm text-gray-500">Classificação de risco em emergência.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/escalas.html" class="block p-4 bg-blue-100 rounded-lg hover:bg-blue-200 hover:shadow-sm transition border border-blue-200 hover:border-blue-300">
+                                <strong class="block text-[#1A3E74] mb-1">Ver Todas as Escalas</strong>
+                                <span class="text-sm text-blue-700">Acesse a lista completa com +50 escalas.</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Vacinas -->
+                    <div id="calc-vacinas" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Calendário Vacinal</h3>
+                        <div class="space-y-2">
+                            <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Prematuro</strong>
+                                <span class="text-sm text-gray-500">Esquema especial para prematuros.</span>
+                            </a>
+                            <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Crianças (0 a 10 anos)</strong>
+                                <span class="text-sm text-gray-500">Esquema básico de imunização infantil.</span>
+                            </a>
+                            <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Adolescentes (10 a 19 anos)</strong>
+                                <span class="text-sm text-gray-500">Vacinas recomendadas para adolescentes.</span>
+                            </a>
+                            <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Adultos (20 a 59 anos)</strong>
+                                <span class="text-sm text-gray-500">Imunização para a fase adulta.</span>
+                            </a>
+                            <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Idosos (60 anos ou mais)</strong>
+                                <span class="text-sm text-gray-500">Proteção na terceira idade.</span>
+                            </a>
+                            <a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Gestantes</strong>
+                                <span class="text-sm text-gray-500">Proteção materna e fetal.</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Plano -->
+                    <div id="calc-plano" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Plano de Enfermagem</h3>
+                        <div class="space-y-2">
+                            <a href="https://www.calculadorasdeenfermagem.com.br/plano-de-enfermagem.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Sistematização da Assistência (SAE)</strong>
+                                <span class="text-sm text-gray-500">Ferramentas para implementação do processo de enfermagem.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/diagnosticos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Diagnósticos de Enfermagem</strong>
+                                <span class="text-sm text-gray-500">Taxonomia NANDA-I e classificações.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/intervencoes.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Intervenções de Enfermagem</strong>
+                                <span class="text-sm text-gray-500">NIC e prescrições baseadas em evidências.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual CTA (25% de largura) -->
+                <!-- AJUSTE AQUI: O padding mudou de p-6 para py-6 pr-8, garantindo o espaçamento à direita -->
+                <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100"> 
+                     <a href="/calculadoras" class="glowing-frame text-center transition">
+                        <img src="mega-menu-ferramentas.png" alt="Ferramentas e calculadoras de enfermagem" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
+                        <h4 class="font-bold text-[#1A3E74] text-lg">Precisão e Segurança</h4>
+                        <p class="text-xs text-gray-600 mt-2">Ferramentas para reduzir erros de dosagem e avaliação.</p>
+                     </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. PAINEL BIBLIOTECA DE ENFERMAGEM -->
+        <div id="panel-biblioteca" class="mega-panel">
+            <div class="max-w-7xl mx-auto panel-standard-height">
+                <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
+                    <ul class="space-y-1 px-4">
+                        <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="bib-downloads">
+                            Downloads <i class="fas fa-chevron-right text-xs text-blue-600"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="bib-protocolos">
+                            Protocolos <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="bib-materiais">
+                            Materiais Educativos <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                    </ul>
+                </div>
+                <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
+                    <div id="bib-downloads" class="tab-content active">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Área de Downloads</h3>
+                        <div class="space-y-2">
+                            <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Todos os Downloads</strong>
+                                <span class="text-sm text-gray-500">Acesse todos os materiais disponíveis para download.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html#tabelas" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Tabelas e Fichas</strong>
+                                <span class="text-sm text-gray-500">Tabelas de referência rápida para uso clínico.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html#checklist" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Checklists</strong>
+                                <span class="text-sm text-gray-500">Listas de verificação para procedimentos.</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="bib-protocolos" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Protocolos Clínicos</h3>
+                        <div class="space-y-2">
+                            <a href="https://www.calculadorasdeenfermagem.com.br/protocolos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Protocolos Assistenciais</strong>
+                                <span class="text-sm text-gray-500">Diretrizes padronizadas para atendimento.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/pops.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">POPs de Enfermagem</strong>
+                                <span class="text-sm text-gray-500">Procedimentos operacionais padrão.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/fluxogramas.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Fluxogramas</strong>
+                                <span class="text-sm text-gray-500">Algoritmos de decisão clínica.</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="bib-materiais" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Materiais Educativos</h3>
+                        <div class="space-y-2">
+                            <a href="https://www.calculadorasdeenfermagem.com.br/ebooks.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">E-books</strong>
+                                <span class="text-sm text-gray-500">Livros digitais gratuitos sobre enfermagem.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/infograficos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Infográficos</strong>
+                                <span class="text-sm text-gray-500">Resumos visuais de temas importantes.</span>
+                            </a>
+                            <a href="https://www.calculadorasdeenfermagem.com.br/apresentacoes.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                                <strong class="block text-gray-800 mb-1">Apresentações</strong>
+                                <span class="text-sm text-gray-500">Slides para aulas e treinamentos.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100">
+                    <a href="https://www.calculadorasdeenfermagem.com.br/downloads.html" class="glowing-frame text-center transition">
+                        <img src="mega-menu-biblioteca.png" alt="Biblioteca de Enfermagem" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
+                        <h4 class="font-bold text-[#1A3E74] text-lg">Biblioteca Digital</h4>
+                        <p class="text-xs text-gray-600 mt-2">Materiais gratuitos para apoiar sua prática profissional.</p>
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- Botão Área do Usuário Mobile -->
-        <div class="p-4 border-t border-gray-200">
-            <a href="https://www.calculadorasdeenfermagem.com.br/curriculos.html" class="flex items-center justify-center gap-2 w-full bg-[#1A3E74] text-white font-bold py-3 px-5 rounded-lg hover:bg-blue-800 transition">
-                <i class="fas fa-user-circle"></i> Área do Usuário
-            </a>
+        <!-- 4. PAINEL CARREIRAS -->
+        <div id="panel-carreiras" class="mega-panel">
+            <div class="max-w-7xl mx-auto panel-standard-height"> <!-- CLASSE PADRONIZADA AQUI -->
+                 <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
+                    <ul class="space-y-1 px-4">
+                        <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center">
+                            Oportunidades <i class="fas fa-chevron-right text-xs text-blue-600"></i>
+                        </li>
+                    </ul>
+                 </div>
+                 <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
+                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Desenvolvimento Profissional</h3>
+                    <div class="space-y-2">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/curriculos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                            <strong class="block text-gray-800 mb-1">Banco de Currículos</strong>
+                            <span class="text-sm text-gray-500">Cadastre seu currículo e seja visto por recrutadores.</span>
+                        </a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/cursos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                            <strong class="block text-gray-800 mb-1">Buscar Cursos</strong>
+                            <span class="text-sm text-gray-500">Especializações e cursos livres.</span>
+                        </a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/concursos-publicos.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                            <strong class="block text-gray-800 mb-1">Concursos Públicos</strong>
+                            <span class="text-sm text-gray-500">Editais abertos e previstos em todo o país.</span>
+                        </a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/site-de-vagas.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                            <strong class="block text-gray-800 mb-1">Vagas de Emprego</strong>
+                            <span class="text-sm text-gray-500">Oportunidades em hospitais e clínicas.</span>
+                        </a>
+                    </div>
+                 </div>
+                 <!-- AJUSTE AQUI: O padding mudou de p-6 para py-6 pr-8, garantindo o espaçamento à direita -->
+                 <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100"> 
+                     <a href="/curriculos.html" class="glowing-frame text-center transition">
+                        <img src="mega-menu-carreiras.png" alt="Carreiras e oportunidades em enfermagem" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
+                        <h4 class="font-bold text-[#1A3E74] text-lg">Avance na Sua Profissão</h4>
+                        <p class="text-xs text-gray-600 mt-2">Encontre o próximo passo para o seu sucesso na enfermagem.</p>
+                     </a>
+                 </div>
+            </div>
         </div>
-    </div>
-</div>
-<!-- FIM DO HEADER -->
+
+        <!-- 4. PAINEL FALE CONOSCO -->
+        <div id="panel-fale" class="mega-panel">
+             <div class="max-w-7xl mx-auto panel-standard-height"> <!-- CLASSE PADRONIZADA AQUI -->
+                 <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
+                    <ul class="space-y-1 px-4">
+                        <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center">
+                            Atendimento <i class="fas fa-chevron-right text-xs text-blue-600"></i>
+                        </li>
+                    </ul>
+                 </div>
+                 <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
+                    <h3 class="text-xl font-bold text-[#1A3E74] mb-3">Canais de Atendimento</h3>
+                    <div class="space-y-2">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/fale.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                            <strong class="block text-gray-800 mb-1">Contate-nos</strong>
+                            <span class="text-sm text-gray-500">Envie suas dúvidas, sugestões ou propostas de parcerias.</span>
+                        </a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/forum.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                            <strong class="block text-gray-800 mb-1">Fórum da Comunidade</strong>
+                            <span class="text-sm text-gray-500">Participe de discussões com outros profissionais da área.</span>
+                        </a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/doacoes.html" class="block p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-sm transition border border-transparent hover:border-blue-100">
+                            <strong class="block text-gray-800 mb-1">Apoie o Projeto</strong>
+                            <span class="text-sm text-gray-500">Contribua para manter o site gratuito e acessível.</span>
+                        </a>
+                    </div>
+                 </div>
+                 <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100"> 
+                     <a href="/fale.html" class="glowing-frame text-center transition">
+                        <img src="mega-menu-fale-conosco.png" alt="Fale conosco e comunidade" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
+                        <h4 class="font-bold text-[#1A3E74] text-lg">Fale Conosco</h4>
+                        <p class="text-xs text-gray-600 mt-2">Entre em contato com nossa equipe para dúvidas e sugestões.</p>
+                     </a>
+                 </div>
+             </div>
+        </div>
+
+        <!-- 5. PAINEL IDIOMAS -->
+        <div id="panel-idiomas" class="mega-panel">
+            <div class="max-w-7xl mx-auto panel-standard-height">
+                <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
+                    <ul class="space-y-1 px-4">
+                        <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="idioma-americas">
+                            Américas <i class="fas fa-chevron-right text-xs text-blue-600"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="idioma-europa">
+                            Europa <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="idioma-asia">
+                            Ásia e Oceania <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                    </ul>
+                </div>
+                <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
+                    <div id="idioma-americas" class="tab-content active">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-4 border-b pb-2">Selecione seu idioma de preferência</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="?lang=pt-BR" class="flex items-center gap-3 p-4 bg-blue-50 rounded-lg border-2 border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-brasil.webp" alt="Brasil" class="w-8 h-auto rounded" onerror="this.src='https://placehold.co/32x24/009c3b/ffffff?text=BR'">
+                                <div>
+                                    <strong class="block text-gray-800">Português (Brasil)</strong>
+                                    <span class="text-xs text-green-600 font-semibold">Idioma atual</span>
+                                </div>
+                            </a>
+                            <a href="?lang=es" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-espanha.webp" alt="Español" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Español</strong>
+                                    <span class="text-xs text-gray-500">Spanish</span>
+                                </div>
+                            </a>
+                            <a href="?lang=en" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-eua.webp" alt="English" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">English</strong>
+                                    <span class="text-xs text-gray-500">Inglês</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="idioma-europa" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-4 border-b pb-2">Selecione seu idioma de preferência</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="?lang=fr" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-franca.webp" alt="Français" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Français</strong>
+                                    <span class="text-xs text-gray-500">Francês</span>
+                                </div>
+                            </a>
+                            <a href="?lang=de" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/de/bandeira-alemanha.webp" alt="Deutsch" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Deutsch</strong>
+                                    <span class="text-xs text-gray-500">Alemão</span>
+                                </div>
+                            </a>
+                            <a href="?lang=it" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/it/bandeira-italia.webp" alt="Italiano" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Italiano</strong>
+                                    <span class="text-xs text-gray-500">Italian</span>
+                                </div>
+                            </a>
+                            <a href="?lang=nl" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-holanda.webp" alt="Nederlands" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Nederlands</strong>
+                                    <span class="text-xs text-gray-500">Holandês</span>
+                                </div>
+                            </a>
+                            <a href="?lang=pl" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-polonia.webp" alt="Polski" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Polski</strong>
+                                    <span class="text-xs text-gray-500">Polonês</span>
+                                </div>
+                            </a>
+                            <a href="?lang=ru" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-russia.webp" alt="Русский" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Русский</strong>
+                                    <span class="text-xs text-gray-500">Russo</span>
+                                </div>
+                            </a>
+                            <a href="?lang=sv" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-suecia.webp" alt="Svenska" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Svenska</strong>
+                                    <span class="text-xs text-gray-500">Sueco</span>
+                                </div>
+                            </a>
+                            <a href="?lang=tr" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-turquia.webp" alt="Türkçe" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Türkçe</strong>
+                                    <span class="text-xs text-gray-500">Turco</span>
+                                </div>
+                            </a>
+                            <a href="?lang=uk" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-ucrania.webp" alt="Українська" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Українська</strong>
+                                    <span class="text-xs text-gray-500">Ucraniano</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="idioma-asia" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-4 border-b pb-2">Selecione seu idioma de preferência</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="?lang=zh" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-china.webp" alt="中文" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">中文</strong>
+                                    <span class="text-xs text-gray-500">Chinês</span>
+                                </div>
+                            </a>
+                            <a href="?lang=ja" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-japao.webp" alt="日本語" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">日本語</strong>
+                                    <span class="text-xs text-gray-500">Japonês</span>
+                                </div>
+                            </a>
+                            <a href="?lang=ko" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-coreia.webp" alt="한국어" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">한국어</strong>
+                                    <span class="text-xs text-gray-500">Coreano</span>
+                                </div>
+                            </a>
+                            <a href="?lang=hi" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-india.webp" alt="हिन्दी" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">हिन्दी</strong>
+                                    <span class="text-xs text-gray-500">Hindi</span>
+                                </div>
+                            </a>
+                            <a href="?lang=ar" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-arabia.webp" alt="العربية" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">العربية</strong>
+                                    <span class="text-xs text-gray-500">Árabe</span>
+                                </div>
+                            </a>
+                            <a href="?lang=id" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-indonesia.webp" alt="Bahasa Indonesia" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Bahasa Indonesia</strong>
+                                    <span class="text-xs text-gray-500">Indonésio</span>
+                                </div>
+                            </a>
+                            <a href="?lang=vi" class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition">
+                                <img src="https://www.calculadorasdeenfermagem.com.br/bandeira-vietna.webp" alt="Tiếng Việt" class="w-8 h-auto rounded">
+                                <div>
+                                    <strong class="block text-gray-800">Tiếng Việt</strong>
+                                    <span class="text-xs text-gray-500">Vietnamita</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100">
+                    <div class="glowing-frame text-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/World_map_blank_without_borders.svg/2000px-World_map_blank_without_borders.svg.png" alt="Mapa mundial" class="w-full h-auto rounded-lg object-cover mb-4 shadow-md border-2 border-blue-200 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(26,62,116,0.4)] transition-all duration-300">
+                        <h4 class="font-bold text-[#1A3E74] text-lg">Alcance Global</h4>
+                        <p class="text-xs text-gray-600 mt-2">Nossas calculadoras estão disponíveis em múltiplos idiomas para profissionais de saúde ao redor do mundo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. PAINEL BUSCA -->
+        <div id="panel-busca" class="mega-panel">
+            <div class="max-w-7xl mx-auto panel-standard-height">
+                <div class="w-1/4 border-r border-gray-100 bg-gray-50 py-6 pr-2">
+                    <ul class="space-y-1 px-4">
+                        <li class="menu-tab-trigger active px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="busca-todas">
+                            Todas as Ferramentas <i class="fas fa-chevron-right text-xs text-blue-600"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="busca-escalas">
+                            Escalas Clínicas <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="busca-calculos">
+                            Cálculos <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                        <li class="menu-tab-trigger px-4 py-3 rounded-lg text-sm text-gray-700 flex justify-between items-center" data-target="busca-artigos">
+                            Artigos e Guias <i class="fas fa-chevron-right text-xs opacity-0"></i>
+                        </li>
+                    </ul>
+                </div>
+                <div class="w-1/2 p-8 overflow-y-auto custom-scroll">
+                    <div id="busca-todas" class="tab-content active">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-4">Buscar em Todo o Site</h3>
+                        <div class="relative mb-6">
+                            <input type="text" id="search-input" placeholder="Digite sua busca..." class="w-full p-4 pl-12 border-2 border-gray-200 rounded-xl text-lg focus:border-[#1A3E74] focus:outline-none transition">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="text-sm font-semibold text-gray-500 mb-3">Buscas Populares</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <a href="/glasgow.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">Glasgow</a>
+                                <a href="/braden.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">Braden</a>
+                                <a href="/morse.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">Morse</a>
+                                <a href="/gotejamento.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">Gotejamento</a>
+                                <a href="/imc.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">IMC</a>
+                                <a href="/medicamentos.html" class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition">Medicamentos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="busca-escalas" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-4">Buscar Escalas Clínicas</h3>
+                        <div class="relative mb-6">
+                            <input type="text" placeholder="Buscar escalas..." class="w-full p-4 pl-12 border-2 border-gray-200 rounded-xl text-lg focus:border-[#1A3E74] focus:outline-none transition">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <a href="/glasgow.html" class="p-2 hover:bg-blue-50 rounded">Escala de Glasgow</a>
+                            <a href="/braden.html" class="p-2 hover:bg-blue-50 rounded">Escala de Braden</a>
+                            <a href="/morse.html" class="p-2 hover:bg-blue-50 rounded">Escala de Morse</a>
+                            <a href="/norton.html" class="p-2 hover:bg-blue-50 rounded">Escala de Norton</a>
+                            <a href="/apgar.html" class="p-2 hover:bg-blue-50 rounded">Escala de Apgar</a>
+                            <a href="/ramsay.html" class="p-2 hover:bg-blue-50 rounded">Escala de Ramsay</a>
+                        </div>
+                    </div>
+                    <div id="busca-calculos" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-4">Buscar Calculadoras</h3>
+                        <div class="relative mb-6">
+                            <input type="text" placeholder="Buscar cálculos..." class="w-full p-4 pl-12 border-2 border-gray-200 rounded-xl text-lg focus:border-[#1A3E74] focus:outline-none transition">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <a href="/gotejamento.html" class="p-2 hover:bg-blue-50 rounded">Gotejamento</a>
+                            <a href="/medicamentos.html" class="p-2 hover:bg-blue-50 rounded">Medicamentos</a>
+                            <a href="/imc.html" class="p-2 hover:bg-blue-50 rounded">IMC</a>
+                            <a href="/insulina.html" class="p-2 hover:bg-blue-50 rounded">Insulina</a>
+                            <a href="/heparina.html" class="p-2 hover:bg-blue-50 rounded">Heparina</a>
+                            <a href="/balancohidrico.html" class="p-2 hover:bg-blue-50 rounded">Balanço Hídrico</a>
+                        </div>
+                    </div>
+                    <div id="busca-artigos" class="tab-content">
+                        <h3 class="text-xl font-bold text-[#1A3E74] mb-4">Buscar Artigos e Guias</h3>
+                        <div class="relative mb-6">
+                            <input type="text" placeholder="Buscar conteúdo educativo..." class="w-full p-4 pl-12 border-2 border-gray-200 rounded-xl text-lg focus:border-[#1A3E74] focus:outline-none transition">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
+                        </div>
+                        <p class="text-gray-500 text-sm">Em breve: artigos e guias sobre enfermagem clínica.</p>
+                    </div>
+                </div>
+                <div class="w-1/4 bg-gray-50 flex items-center justify-center py-6 pr-8 border-l border-gray-100">
+                    <div class="glowing-frame text-center">
+                        <div class="text-5xl mb-4"><i class="fas fa-search text-[#1A3E74]"></i></div>
+                        <h4 class="font-bold text-[#1A3E74] text-lg">Busca Inteligente</h4>
+                        <p class="text-xs text-gray-600 mt-2">Encontre rapidamente qualquer calculadora, escala ou conteúdo do site.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- JavaScript -->
+    <script src="header.js"></script>
+</body>
+</html>

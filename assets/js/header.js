@@ -1,304 +1,178 @@
-/**
- * HEADER.JS - Gerenciador do Header
- * Calculadoras de Enfermagem
- * 
- * Baseado no código de referência funcional
- * Integra correções do sistema atual
- */
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 1. LÓGICA DO MEGA MENU DESKTOP (CLIQUE) ---
+    const navTriggers = document.querySelectorAll('.nav-trigger');
+    const megaPanels = document.querySelectorAll('.mega-panel');
 
-class HeaderManager {
-    constructor() {
-        this.currentFontSize = 100; // Porcentagem (100%)
-        this.initialized = false;
-        
-        console.log('HeaderManager: Script carregado.');
-        this.attemptInitialization();
+    function closeAllPanels() {
+        megaPanels.forEach(panel => panel.classList.remove('active'));
+        navTriggers.forEach(trigger => {
+            trigger.setAttribute('aria-expanded', 'false');
+            const icon = trigger.querySelector('.fa-chevron-down');
+            if(icon) icon.style.transform = 'rotate(0deg)';
+        });
     }
 
-    attemptInitialization() {
-        // Usa a flag global do Template Engine ou espera pelo evento
-        if (window.__COMPONENTS_LOADED__) {
-            this.init();
-        } else {
-            document.addEventListener('componentsLoaded', () => this.init());
+    navTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation(); 
             
-            // Fallback de polling caso o evento não dispare a tempo
-            const checkInterval = setInterval(() => {
-                if (document.getElementById('header')) {
-                    clearInterval(checkInterval);
-                    if (!this.initialized) this.init();
-                }
-            }, 500);
-        }
-    }
+            const targetId = trigger.dataset.panel;
+            const targetPanel = document.getElementById(targetId);
+            const isAlreadyOpen = targetPanel && targetPanel.classList.contains('active');
 
-    init() {
-        if (this.initialized) return; 
-        
-        console.log('HeaderManager: Inicializando controles...');
-        
-        // Garante que o Header HTML foi injetado
-        if (!document.getElementById('header')) {
-             setTimeout(() => this.init(), 500); // Tenta novamente
-             return;
-        }
+            closeAllPanels(); 
 
-        this.attachEventListeners();
-        this.loadThemePreference();
-        this.loadLangPreference();
-        this.initialized = true;
-        
-        console.log('✅ HeaderManager inicializado com sucesso');
-    }
-
-    // Função utilitária para adicionar listener com verificação de elemento
-    safeAddListener(id, callback) {
-        const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('click', callback);
-        } else {
-            console.warn(`HeaderManager: Elemento '${id}' não encontrado.`);
-        }
-    }
-
-    attachEventListeners() {
-        console.log('HeaderManager: Anexando eventos de clique...');
-
-        // --- 1. Acessibilidade (Fonte e Tema) ---
-        this.safeAddListener('btn-font-decrease', () => this.adjustFontSize(-10));
-        this.safeAddListener('btn-font-increase', () => this.adjustFontSize(10));
-        this.safeAddListener('theme-toggle', () => this.toggleTheme());
-
-        // --- 2. Painéis Desktop (Busca, Idioma, Mega Menus) ---
-        const panelMap = {
-            'desktop-search-trigger': 'desktop-search-panel',
-            'desktop-lang-trigger': 'desktop-lang-panel',
-            'desktop-sobre-trigger': 'desktop-sobre-panel',
-            'desktop-conteudo-trigger': 'desktop-conteudo-panel',
-            'desktop-ferramentas-trigger': 'desktop-ferramentas-panel',
-            'desktop-carreiras-trigger': 'desktop-carreiras-panel'
-        };
-
-        Object.entries(panelMap).forEach(([btnId, panelId]) => {
-            this.safeAddListener(btnId, (e) => {
-                e.stopPropagation();
-                this.toggleDesktopPanel(panelId, btnId);
-            });
-        });
-
-        // --- 3. Menu Mobile (Hamburguer, Busca, Accordions) ---
-        this.safeAddListener('mobile-menu-btn', () => this.toggleMobileMenu());
-        this.safeAddListener('mobile-search-trigger', () => this.toggleMobileSearch());
-        
-        // Mobile Accordions (Abre/Fecha submenus)
-        document.querySelectorAll('.mobile-accordion-trigger').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const targetId = btn.getAttribute('data-target');
-                this.toggleMobileAccordion(targetId, btn);
-            });
-        });
-
-        // Mobile Idioma
-        this.safeAddListener('mobile-lang-pt', () => this.selectLang('pt'));
-        this.safeAddListener('mobile-lang-en', () => this.selectLang('en'));
-        this.safeAddListener('mobile-lang-es', () => this.selectLang('es'));
-
-        // --- 4. Fechar Painéis ao clicar fora ---
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('#header')) {
-                this.closeAllPanels();
+            if (!isAlreadyOpen && targetPanel) {
+                targetPanel.classList.add('active');
+                trigger.setAttribute('aria-expanded', 'true');
+                const icon = trigger.querySelector('.fa-chevron-down');
+                if(icon) icon.style.transform = 'rotate(180deg)';
             }
         });
+    });
 
-        // --- 5. Mega Menu Hover (Flyout Dinâmico) ---
-        this.initializeMegaMenuHover();
-    }
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('header')) {
+            closeAllPanels();
+        }
+    });
 
-    // =======================================================
-    // Lógica Desktop e Mega Menus
-    // =======================================================
+    megaPanels.forEach(panel => {
+        panel.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    });
 
-    toggleDesktopPanel(targetPanelId, triggerId) {
-        const targetPanel = document.getElementById(targetPanelId);
-        if (!targetPanel) return;
 
-        const isHidden = targetPanel.classList.contains('hidden');
-        this.closeAllPanels(); // Fecha todos os outros
+    // --- 2. LÓGICA DE ABAS INTERNAS (TABS) ---
+    const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
 
-        if (isHidden) {
-            targetPanel.classList.remove('hidden');
-            this.rotateIcon(triggerId, true);
-            // Ativa o primeiro item da lista de detalhes ao abrir
-            if (targetPanelId.includes('-panel')) {
-                 const firstItem = targetPanel.querySelector('.menu-item-primary[data-area]');
-                 if (firstItem) {
-                    const area = firstItem.getAttribute('data-area');
-                    const detailPaneId = targetPanel.querySelector('[id$="-detail-pane"]').id;
-                    this.activateDetail(detailPaneId, area);
-                 }
+    tabTriggers.forEach(trigger => {
+        trigger.addEventListener('mouseenter', () => { 
+            const parentPanel = trigger.closest('.mega-panel');
+            if (!parentPanel) return;
+
+            const panelTriggers = parentPanel.querySelectorAll('.menu-tab-trigger');
+            const panelContents = parentPanel.querySelectorAll('.tab-content');
+
+            panelTriggers.forEach(t => {
+                t.classList.remove('active');
+                const icon = t.querySelector('.fa-chevron-right');
+                if(icon) icon.style.opacity = '0';
+            });
+            
+            panelContents.forEach(c => c.classList.remove('active'));
+
+            trigger.classList.add('active');
+            const icon = trigger.querySelector('.fa-chevron-right');
+            if(icon) icon.style.opacity = '1';
+
+            const targetContentId = trigger.dataset.target;
+            const targetContent = document.getElementById(targetContentId);
+            if (targetContent) {
+                targetContent.classList.add('active');
             }
-        }
+        });
+    });
+
+
+    // --- 3. LÓGICA DO MENU MOBILE (APENAS UM SIMULACRO DA LÓGICA, O HTML ESTÁ OMITIDO) ---
+    // Esta seção é apenas para garantir que a lógica JS não quebre se os elementos do menu mobile existirem.
+    const mobileBtn = document.getElementById('mobile-menu-trigger');
+    const closeMobileBtn = document.getElementById('close-mobile-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileDrawer = document.getElementById('mobile-menu-drawer');
+    const mobileBackdrop = document.getElementById('mobile-menu-backdrop');
+    const accordionTriggers = document.querySelectorAll('.mobile-accordion-trigger');
+
+    function openMobileMenu() {
+        if (mobileMenu) mobileMenu.classList.remove('hidden');
+        setTimeout(() => {
+            if (mobileBackdrop) mobileBackdrop.classList.remove('opacity-0');
+            if (mobileDrawer) mobileDrawer.classList.remove('-translate-x-full');
+        }, 10);
+        document.body.style.overflow = 'hidden';
     }
 
-    closeAllPanels() {
-        document.querySelectorAll('.desktop-panel').forEach(panel => panel.classList.add('hidden'));
-        document.querySelectorAll('.menu-trigger .fa-chevron-down').forEach(icon => icon.style.transform = 'rotate(0deg)');
-    }
-
-    rotateIcon(triggerId, shouldRotate) {
-        const trigger = document.getElementById(triggerId);
-        if (!trigger) return;
-
-        // Primeiro reseta todos os ícones de menu
-        document.querySelectorAll('.menu-trigger .fa-chevron-down').forEach(icon => icon.style.transform = 'rotate(0deg)');
+    function closeMobileMenu() {
+        if (mobileBackdrop) mobileBackdrop.classList.add('opacity-0');
+        if (mobileDrawer) mobileDrawer.classList.add('-translate-x-full');
         
-        // Rotaciona o ícone do trigger atual
-        const icon = trigger.querySelector('.fa-chevron-down');
-        if (icon && shouldRotate) {
-            icon.style.transform = 'rotate(180deg)';
-        }
+        setTimeout(() => {
+            if (mobileMenu) mobileMenu.classList.add('hidden');
+        }, 300);
+        document.body.style.overflow = '';
     }
 
-    initializeMegaMenuHover() {
-        document.querySelectorAll('[id$="-menu-list"]').forEach(menuList => {
-            const detailPane = menuList.closest('.max-w-7xl').querySelector('[id$="-detail-pane"]');
-            if (!detailPane) return;
+    if (mobileBtn) mobileBtn.addEventListener('click', openMobileMenu);
+    if (closeMobileBtn) closeMobileBtn.addEventListener('click', closeMobileMenu);
+    if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenu);
 
-            menuList.querySelectorAll('.menu-item-primary').forEach(item => {
-                item.addEventListener('mouseenter', function() {
-                    const area = this.getAttribute('data-area');
-                    if (area) {
-                        this.activateDetail(detailPane.id, area);
+    // Acordeões principais (menus)
+    accordionTriggers.forEach(acc => {
+        acc.addEventListener('click', () => {
+            const submenu = acc.nextElementSibling;
+            const icon = acc.querySelector('.fa-chevron-down');
+            
+            if (submenu && submenu.classList.contains('open')) {
+                // Fecha o menu e todos os sub-acordeões internos
+                submenu.classList.remove('open');
+                if(icon) icon.style.transform = 'rotate(0deg)';
+                submenu.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
+                    sub.classList.remove('open');
+                    const subIcon = sub.previousElementSibling.querySelector('.fa-chevron-down');
+                    if(subIcon) subIcon.style.transform = 'rotate(0deg)';
+                });
+            } else if (submenu) {
+                // Fecha outros menus principais
+                document.querySelectorAll('.mobile-submenu.open').forEach(el => {
+                    if(el !== submenu) {
+                        el.classList.remove('open');
+                        const prevIcon = el.previousElementSibling.querySelector('.fa-chevron-down');
+                        if(prevIcon) prevIcon.style.transform = 'rotate(0deg)';
+                        // Fecha sub-acordeões do menu fechado
+                        el.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
+                            sub.classList.remove('open');
+                            const subIcon = sub.previousElementSibling.querySelector('.fa-chevron-down');
+                            if(subIcon) subIcon.style.transform = 'rotate(0deg)';
+                        });
                     }
-                }.bind(this));
-            });
-        });
-    }
-    
-    activateDetail(detailPaneId, area) {
-        const detailPane = document.getElementById(detailPaneId);
-        if (!detailPane) return;
-
-        // Esconde todos os conteúdos do painel de detalhes
-        detailPane.querySelectorAll('.detail-content').forEach(content => content.classList.add('hidden', 'active'));
-
-        // Ativa o alvo
-        const prefix = detailPaneId.split('-')[0]; // Ex: sobre, conteudo, ferramentas...
-        const targetId = `${prefix}-${area}`; 
-        const targetDetail = document.getElementById(targetId);
-        
-        if (targetDetail) {
-            targetDetail.classList.remove('hidden');
-        }
-    }
-
-    // =======================================================
-    // Lógica Mobile
-    // =======================================================
-
-    toggleMobileMenu() {
-        const menu = document.getElementById('mobile-menu');
-        if (!menu) return;
-        
-        menu.classList.toggle('hidden');
-        document.body.classList.toggle('overflow-hidden', !menu.classList.contains('hidden'));
-    }
-
-    toggleMobileSearch() {
-        const searchBar = document.getElementById('mobile-search-bar');
-        searchBar.classList.toggle('search-slide-active');
-        searchBar.classList.toggle('search-slide-enter', !searchBar.classList.contains('search-slide-active'));
-        if(searchBar.classList.contains('search-slide-active')) {
-             searchBar.querySelector('input').focus();
-        }
-    }
-
-    toggleMobileAccordion(targetId, triggerBtn) {
-        const targetEl = document.getElementById(targetId);
-        const icon = triggerBtn.querySelector('.icon-chevron');
-        
-        if (!targetEl || !icon) return;
-
-        const isVisible = targetEl.classList.contains('submenu-visible');
-
-        // Fecha todos os outros submenus (apenas do nível principal)
-        document.querySelectorAll('.mobile-submenu-content').forEach(el => {
-            if (el.id !== targetId) {
-                el.classList.remove('submenu-visible');
-                el.classList.add('submenu-hidden');
-                document.querySelector(`[data-target="${el.id}"]`).querySelector('.icon-chevron').classList.remove('rotate-chevron');
+                });
+                
+                submenu.classList.add('open');
+                if(icon) icon.style.transform = 'rotate(180deg)';
             }
         });
+    });
 
-        // Alterna o submenu atual
-        if (!isVisible) {
-            targetEl.classList.remove('submenu-hidden');
-            targetEl.classList.add('submenu-visible');
-            icon.classList.add('rotate-chevron');
-        } else {
-            targetEl.classList.remove('submenu-visible');
-            targetEl.classList.add('submenu-hidden');
-            icon.classList.remove('rotate-chevron');
-        }
-    }
+    // Sub-acordeões internos
+    const subTriggers = document.querySelectorAll('.mobile-sub-trigger');
+    subTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            const subAccordion = trigger.nextElementSibling;
+            const icon = trigger.querySelector('.fa-chevron-down');
+            const parentSubmenu = trigger.closest('.mobile-submenu');
 
-    selectLang(lang) {
-        const flags = { 'pt': '🇧🇷', 'en': '🇺🇸', 'es': '🇪🇸' };
-        
-        // Desktop
-        const desktopTrigger = document.getElementById('current-lang-flag');
-        if(desktopTrigger) desktopTrigger.textContent = flags[lang];
-        this.closeAllPanels();
-        
-        // Mobile
-        document.querySelectorAll('.lang-btn-mobile').forEach(btn => {
-            if (btn.getAttribute('data-lang') === lang) {
-                btn.classList.remove('grayscale', 'opacity-50');
-                btn.classList.add('ring-2', 'ring-audit-gold', 'shadow-lg');
-            } else {
-                btn.classList.add('grayscale', 'opacity-50');
-                btn.classList.remove('ring-2', 'ring-audit-gold', 'shadow-lg');
+            if (subAccordion && subAccordion.classList.contains('open')) {
+                subAccordion.classList.remove('open');
+                if(icon) icon.style.transform = 'rotate(0deg)';
+            } else if (subAccordion) {
+                // Fecha outros sub-acordeões no mesmo menu
+                if (parentSubmenu) {
+                    parentSubmenu.querySelectorAll('.mobile-sub-accordion.open').forEach(el => {
+                        if(el !== subAccordion) {
+                            el.classList.remove('open');
+                            const prevIcon = el.previousElementSibling.querySelector('.fa-chevron-down');
+                            if(prevIcon) prevIcon.style.transform = 'rotate(0deg)';
+                        }
+                    });
+                }
+                
+                subAccordion.classList.add('open');
+                if(icon) icon.style.transform = 'rotate(180deg)';
             }
         });
-        
-        localStorage.setItem('selectedLang', lang);
-    }
-    
-    loadLangPreference() {
-        const savedLang = localStorage.getItem('selectedLang') || 'pt';
-        this.selectLang(savedLang); // Aplica no desktop e mobile
-    }
+    });
 
-    // =======================================================
-    // Lógica Acessibilidade
-    // =======================================================
-
-    adjustFontSize(amount) {
-        this.currentFontSize += amount;
-        if (this.currentFontSize < 80) this.currentFontSize = 80;
-        if (this.currentFontSize > 130) this.currentFontSize = 130;
-        
-        document.documentElement.style.fontSize = `${this.currentFontSize}%`;
-        localStorage.setItem('fontSize', this.currentFontSize.toString());
-    }
-
-    toggleTheme() {
-        document.documentElement.classList.toggle('dark');
-        const isDark = document.documentElement.classList.contains('dark');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    }
-
-    loadThemePreference() {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        }
-    }
-}
-
-// Instanciar automaticamente
-const headerManager = new HeaderManager();
-
-// Disponibilizar globalmente
-window.HeaderManager = HeaderManager;
+});
