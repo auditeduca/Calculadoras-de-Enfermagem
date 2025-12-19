@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajude a manter este site gratuito | Calculadoras de Enfermagem</title>
+    
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Seja um apoiador! Sua contribuição é essencial para manter as Calculadoras de Enfermagem gratuitas, sem anúncios e sempre atualizadas. Contribua via PIX.">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/doacoes.html">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    <!-- Tailwind CSS & Configuração -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos Globais -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/global-main.css">
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Console Cleaner para ambiente de produção -->
+    <script src="assets/js/console-cleaner.js"></script>
+
+    <!-- Injeção do Header -->
+    <div id="header-container"></div>
+
+    <!-- Background Decorativo -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-200,800 C200,750 500,850 1400,780" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-gray-500 dark:text-gray-400 mb-8" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
+                <li class="flex items-center gap-2"><span>/</span> <span class="text-nurse-primary dark:text-nurse-secondary font-medium">Institucional</span></li>
+                <li class="flex items-center gap-2"><span>/</span> <span>Doações</span></li>
+            </ol>
+        </nav>
+
+        <!-- Cabeçalho -->
+        <header class="mb-12 text-center md:text-left">
+            <span class="inline-block px-3 py-1 text-xs font-bold tracking-wider text-white bg-nurse-secondary rounded-full mb-4 uppercase">Apoie o Projeto</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-nurse-primary dark:text-white mb-6 leading-tight">Ajude a manter este site gratuito</h1>
+            <div class="h-1.5 w-24 bg-nurse-accent mb-6 mx-auto md:mx-0"></div>
+            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
+                Sua contribuição é essencial para garantir a continuidade, o desenvolvimento e a ausência de anúncios em nossa plataforma.
+            </p>
+            
+            <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-6 text-sm text-gray-500 dark:text-gray-400">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-calendar text-nurse-secondary"></i> Junho, 2025</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-clock text-nurse-secondary"></i> Leitura: 2 min</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-sync text-nurse-secondary"></i> Atualizado em 18/10/2025</div>
+            </div>
+        </header>
+
+        <!-- Imagem de Destaque -->
+        <div class="rounded-3xl overflow-hidden shadow-2xl mb-16 border-4 border-white dark:border-slate-800">
+            <img src="https://placehold.co/1200x400/1A3E74/ffffff?text=Apoie+Nosso+Projeto" alt="Apoie nosso projeto" class="w-full h-[300px] md:h-[400px] object-cover">
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-12">
+            <!-- Conteúdo Principal -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <section>
+                    <h2 id="por-que-apoiar" class="text-2xl font-bold text-nurse-primary dark:text-nurse-secondary mb-4 flex items-center gap-3">
+                        <i class="fa-solid fa-heart"></i> Por que apoiar?
+                    </h2>
+                    <div class="prose prose-lg dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 space-y-4">
+                        <p>Este projeto nasceu com a missão de oferecer ferramentas clínicas de Enfermagem precisas e acessíveis, de forma totalmente gratuita. Acreditamos que o conhecimento e a segurança do paciente não devem ter barreiras.</p>
+                        <p>Para manter o site no ar, sem anúncios invasivos que atrapalham a navegação, temos custos fixos com servidores, domínio, segurança de dados e desenvolvimento contínuo de novas calculadoras e escalas.</p>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 id="como-contribuir" class="text-2xl font-bold text-nurse-primary dark:text-nurse-secondary mb-4 flex items-center gap-3">
+                        <i class="fa-solid fa-hand-holding-dollar"></i> Como Contribuir
+                    </h2>
+                    <p class="text-gray-700 dark:text-gray-300 mb-6">Se o conteúdo e as ferramentas deste site têm sido úteis em sua prática profissional ou estudos, considere fazer uma doação de qualquer valor. É simples, rápido e seguro via PIX.</p>
+
+                    <!-- Caixa do PIX -->
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl border-2 border-dashed border-nurse-secondary shadow-lg text-center">
+                        <p class="text-nurse-primary dark:text-nurse-secondary font-bold uppercase tracking-wider mb-2">Chave PIX (CPF)</p>
+                        <div class="flex flex-col items-center gap-4">
+                            <span id="pixKeyDisplay" class="text-2xl md:text-3xl font-mono font-bold text-slate-700 dark:text-white bg-slate-100 dark:bg-slate-900 px-6 py-3 rounded-xl">386.728.938-75</span>
+                            <button onclick="copyPixKey()" class="flex items-center gap-2 bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-3 px-8 rounded-full transition-all active:scale-95 shadow-md">
+                                <i class="fa-solid fa-copy"></i> Copiar Chave PIX
+                            </button>
+                            <p id="copyStatus" class="text-sm font-medium text-green-600 dark:text-green-400 opacity-0 transition-opacity">Copiado com sucesso!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-400 rounded-r-lg">
+                        <p class="text-amber-800 dark:text-amber-200 text-sm">
+                            <strong>Importante:</strong> Todo valor arrecadado é reinvestido integralmente na manutenção e melhoria do portal para a comunidade de Enfermagem.
+                        </p>
+                    </div>
+
+                    <p class="text-xl font-bold text-nurse-primary dark:text-nurse-secondary mt-10 text-center md:text-left">
+                        Muito obrigado pelo seu apoio! 💙
+                    </p>
+                </section>
+
+                <!-- Box do Autor -->
+                <div class="mt-16 p-8 bg-slate-100 dark:bg-slate-800/50 rounded-3xl flex flex-col md:flex-row items-center gap-6 border border-gray-200 dark:border-slate-700">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="w-24 h-24 rounded-full shadow-md object-cover border-2 border-nurse-secondary" onerror="this.src = 'https://placehold.co/100x100/1A3E74/ffffff?text=CD' ">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl font-bold text-nurse-primary dark:text-white">Calculadoras de Enfermagem</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">Ferramentas essenciais para profissionais e estudantes de enfermagem.</p>
+                        <blockquote class="italic text-gray-500 dark:text-gray-300 border-l-2 border-nurse-accent pl-4 text-sm">
+                            "A precisão é crucial. Nossas ferramentas oferecem suporte, mas a decisão final é sempre do profissional."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="space-y-6">
+                <!-- Índice -->
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-gray-100 dark:border-slate-700 sticky top-24">
+                    <h3 class="font-bold text-nurse-primary dark:text-nurse-secondary mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-list-ul"></i> Sumário
+                    </h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#por-que-apoiar" class="text-gray-600 dark:text-gray-400 hover:text-nurse-secondary flex items-center gap-2 transition-all"><i class="fa-solid fa-chevron-right text-[10px]"></i> Por que apoiar?</a></li>
+                        <li><a href="#como-contribuir" class="text-gray-600 dark:text-gray-400 hover:text-nurse-secondary flex items-center gap-2 transition-all"><i class="fa-solid fa-chevron-right text-[10px]"></i> Como Contribuir</a></li>
+                        <li><a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-nurse-secondary flex items-center gap-2 transition-all"><i class="fa-solid fa-house text-[10px]"></i> Voltar ao Início</a></li>
+                    </ul>
+                </div>
+
+                <!-- Compartilhamento -->
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-gray-100 dark:border-slate-700">
+                    <h3 class="font-bold text-nurse-primary dark:text-nurse-secondary mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-share-nodes"></i> Compartilhar
+                    </h3>
+                    <div class="flex gap-3">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.calculadorasdeenfermagem.com.br/doacoes.html" target="_blank" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:scale-110 transition-transform"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/intent/tweet?url=https://www.calculadorasdeenfermagem.com.br/doacoes.html&text=Apoie%20o%20Calculadoras%20de%20Enfermagem" target="_blank" class="w-10 h-10 rounded-full bg-sky-500 text-white flex items-center justify-center hover:scale-110 transition-transform"><i class="fab fa-twitter"></i></a>
+                        <a href="whatsapp://send?text=Ajude%20a%20manter%20este%20site%20gratuito:%20https://www.calculadorasdeenfermagem.com.br/doacoes.html" class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center hover:scale-110 transition-transform"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Conteúdo Relacionado -->
+        <section class="mt-24 pt-16 border-t border-gray-200 dark:border-slate-700">
+            <h2 class="text-3xl font-bold text-center text-nurse-primary dark:text-white mb-12">Conteúdo Relacionado</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <a href="sobre-nos.html" class="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-gray-100 dark:border-slate-700">
+                    <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=400" alt="Sobre Nós" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="p-5">
+                        <span class="text-[10px] font-bold text-nurse-secondary uppercase tracking-widest">Institucional</span>
+                        <h3 class="text-lg font-bold text-nurse-primary dark:text-white mt-1">Sobre Nós</h3>
+                    </div>
+                </a>
+                <a href="tecnologiaverde.html" class="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-gray-100 dark:border-slate-700">
+                    <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=400" alt="Tecnologia Verde" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="p-5">
+                        <span class="text-[10px] font-bold text-nurse-secondary uppercase tracking-widest">Sustentabilidade</span>
+                        <h3 class="text-lg font-bold text-nurse-primary dark:text-white mt-1">Tecnologia Verde</h3>
+                    </div>
+                </a>
+                <a href="fale.html" class="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-gray-100 dark:border-slate-700">
+                    <img src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?w=400" alt="Fale Conosco" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="p-5">
+                        <span class="text-[10px] font-bold text-nurse-secondary uppercase tracking-widest">Contato</span>
+                        <h3 class="text-lg font-bold text-nurse-primary dark:text-white mt-1">Fale Conosco</h3>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Injeção de Footer e Modais -->
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
+
+    <!-- Scripts Externos -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
+    <script>
+        // Função para copiar a chave PIX
+        function copyPixKey() {
+            const pixKey = "386.728.938-75";
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = pixKey;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            // Feedback visual
+            const status = document.getElementById('copyStatus');
+            status.style.opacity = '1';
+            setTimeout(() => {
+                status.style.opacity = '0';
+            }, 2000);
+        }
+
+        window.addEventListener('templateEngineReady', function() {
+            console.log('Ambiente modular carregado: Página de Doações.');
+        });
+    </script>
+</body>
+</html>
