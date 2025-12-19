@@ -20,7 +20,7 @@
 
     <main class="content-container">
         <nav class="breadcrumb">
-            <a href="index.html">Início</a>
+            <a href="../../index.html">Início</a>
             <span class="breadcrumb-separator">›</span>
             <a href="#">Sobre Nós</a>
             <span class="breadcrumb-separator">›</span>
@@ -113,21 +113,21 @@
         <div class="content-container">
             <h2 class="section-title">Veja Também</h2>
             <div class="related-grid">
-                <a href="acessibilidade.html" class="related-card">
+                <a href="../../acessibilidade.html" class="related-card">
                     <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-acessibilidade.webp" alt="Acessibilidade">
                     <div class="related-content">
                         <h3>Acessibilidade</h3>
                         <p>Inclusão digital plena.</p>
                     </div>
                 </a>
-                <a href="politica.html" class="related-card">
+                <a href="../../politica.html" class="related-card">
                     <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-privacidade.webp" alt="Privacidade">
                     <div class="related-content">
                         <h3>Privacidade</h3>
                         <p>Segurança de dados.</p>
                     </div>
                 </a>
-                <a href="termos.html" class="related-card">
+                <a href="../../termos.html" class="related-card">
                     <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-cookies.webp" alt="Termos">
                     <div class="related-content">
                         <h3>Termos de Uso</h3>
@@ -201,22 +201,22 @@
                 }
             }
 
-            injectModuleAsset('css', 'assets/css/header.css', 'asset-header-css');
-            injectModuleAsset('css', 'assets/css/footer.css', 'asset-footer-css');
-            injectModuleAsset('css', 'assets/css/modals.css', 'asset-modals-css');
-            injectModuleAsset('css', 'assets/css/global-main.css', 'module-main-css');
+            injectModuleAsset('css', '../../assets/css/header.css', 'asset-header-css');
+            injectModuleAsset('css', '../../assets/css/footer.css', 'asset-footer-css');
+            injectModuleAsset('css', '../../assets/css/modals.css', 'asset-modals-css');
+            injectModuleAsset('css', '../../assets/css/global-main.css', 'module-main-css');
 
-            injectModuleAsset('js', 'assets/js/header.js', 'asset-header-js');
-            injectModuleAsset('js', 'assets/js/footer.js', 'asset-footer-js');        
-            injectModuleAsset('js', 'assets/js/modals.js', 'asset-modals-js');
-            injectModuleAsset('js', 'assets/js/utils.js', 'asset-utils-js');
-            injectModuleAsset('js', 'assets/js/global-main.js', 'module-main-js');
+            injectModuleAsset('js', '../../assets/js/header.js', 'asset-header-js');
+            injectModuleAsset('js', '../../assets/js/footer.js', 'asset-footer-js');        
+            injectModuleAsset('js', '../../assets/js/modals.js', 'asset-modals-js');
+            injectModuleAsset('js', '../../assets/js/utils.js', 'asset-utils-js');
+            injectModuleAsset('js', '../../assets/js/global-main.js', 'module-main-js');
 
             function loadTemplates() {
                 if (window.TemplateEngine) {
-                    TemplateEngine.load('header-container', 'assets/components/header.html');
-                    TemplateEngine.load('footer-container', 'assets/components/footer.html');
-                    TemplateEngine.load('modals-container', 'assets/components/modals-main.html');
+                    TemplateEngine.load('header-container', '../../assets/components/header.html');
+                    TemplateEngine.load('footer-container', '../../assets/components/footer.html');
+                    TemplateEngine.load('modals-container', '../../assets/components/modals-main.html');
                 } else {
                     setTimeout(loadTemplates, 50);
                 }
