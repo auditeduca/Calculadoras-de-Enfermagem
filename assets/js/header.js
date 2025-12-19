@@ -1,6 +1,6 @@
 /**
  * Script de Controle do Header, Mega Menu, Mobile e Acessibilidade
- * Garante o funcionamento de menus interativos, troca de temas e escalas de fonte.
+ * Versão Otimizada com Debugging e Reforço de Visibilidade
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeAllPanels() {
         megaPanels.forEach(panel => {
             panel.classList.remove('active');
-            panel.classList.add('hidden'); // Garante que saia do fluxo se necessário
+            // Removemos 'block' e voltamos para 'hidden' para compatibilidade com Tailwind
+            panel.classList.add('hidden');
+            panel.style.display = ''; // Limpa o estilo inline
         });
         navTriggers.forEach(trigger => {
             trigger.setAttribute('aria-expanded', 'false');
@@ -29,16 +31,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetId = trigger.getAttribute('data-panel');
             const targetPanel = document.getElementById(targetId);
             
-            if (!targetPanel) return;
+            console.log('Trigger clicado:', targetId); // Debug: Verifica se o clique funciona
+
+            if (!targetPanel) {
+                console.error('Erro: Painel com ID "' + targetId + '" não encontrado.');
+                return;
+            }
 
             const isAlreadyOpen = targetPanel.classList.contains('active');
 
-            // Fecha outros antes de abrir o atual
             closeAllPanels(); 
 
             if (!isAlreadyOpen) {
+                console.log('A abrir painel:', targetId);
                 targetPanel.classList.remove('hidden');
                 targetPanel.classList.add('active');
+                
+                // Força a visibilidade caso o CSS .active não tenha display: block
+                targetPanel.style.display = 'block'; 
+                
                 trigger.setAttribute('aria-expanded', 'true');
                 const icon = trigger.querySelector('.fa-chevron-down');
                 if (icon) icon.style.transform = 'rotate(180deg)';
@@ -46,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Fecha o menu ao clicar fora do header
+    // Fecha o menu ao clicar em qualquer lugar fora do header
     document.addEventListener('click', (e) => {
         const header = document.querySelector('header');
         if (header && !header.contains(e.target)) {
@@ -54,26 +65,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 2. TABS INTERNAS (MEGA MENU) ---
+    // --- 2. TABS INTERNAS (DENTRO DO MEGA MENU) ---
     const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
     
     tabTriggers.forEach(trigger => {
-        // Mudança para 'mouseenter' conforme solicitado para comportamento de abas
         trigger.addEventListener('mouseenter', () => { 
             const parentPanel = trigger.closest('.mega-panel');
             if (!parentPanel) return;
 
-            // Remove estado ativo de todas as abas deste painel
+            // Reset de abas
             parentPanel.querySelectorAll('.menu-tab-trigger').forEach(t => {
                 t.classList.remove('active', 'bg-gray-100', 'dark:bg-gray-800');
                 const icon = t.querySelector('.fa-chevron-right');
                 if (icon) icon.style.opacity = '0';
             });
             
-            // Esconde todos os conteúdos de abas
             parentPanel.querySelectorAll('.tab-content').forEach(c => {
                 c.classList.add('hidden');
                 c.classList.remove('active');
+                c.style.display = 'none';
             });
 
             // Ativa a aba atual
@@ -86,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetContent) {
                 targetContent.classList.remove('hidden');
                 targetContent.classList.add('active');
+                targetContent.style.display = 'block';
             }
         });
     });
@@ -100,7 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function openMobileMenu() {
         if (!mobileMenu) return;
         mobileMenu.classList.remove('hidden');
-        // Pequeno delay para permitir que o navegador processe a remoção do 'hidden' antes da transição
+        document.body.style.overflow = 'hidden';
+        
         setTimeout(() => {
             if (mobileBackdrop) {
                 mobileBackdrop.classList.remove('opacity-0');
@@ -108,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (mobileDrawer) mobileDrawer.classList.add('open');
         }, 10);
-        document.body.style.overflow = 'hidden';
     }
 
     function closeMobileMenuFunc() {
@@ -119,60 +130,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (mobileDrawer) mobileDrawer.classList.remove('open');
         
-        // Aguarda a transição terminar para esconder o container
         setTimeout(() => {
             mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
         }, 300);
-        document.body.style.overflow = '';
     }
 
     if (mobileBtn) mobileBtn.addEventListener('click', openMobileMenu);
     if (closeMobileBtn) closeMobileBtn.addEventListener('click', closeMobileMenuFunc);
     if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenuFunc);
 
-    // Accordion Mobile (Submenus)
+    // Accordion Mobile
     document.querySelectorAll('.mobile-accordion-trigger').forEach(btn => {
         btn.addEventListener('click', () => {
             const sub = btn.nextElementSibling;
             if (!sub) return;
             
             const icon = btn.querySelector('.fa-chevron-down');
-            const isOpen = sub.classList.contains('open');
-
-            // Opcional: fechar outros accordions abertos
-            // document.querySelectorAll('.mobile-submenu.open').forEach(s => s.classList.remove('open'));
-
-            if (isOpen) {
-                sub.classList.remove('open');
-                if (icon) icon.style.transform = 'rotate(0deg)';
-            } else {
-                sub.classList.add('open');
+            sub.classList.toggle('open');
+            
+            if (sub.classList.contains('open')) {
+                sub.style.maxHeight = sub.scrollHeight + "px"; // Suporte para transição suave
                 if (icon) icon.style.transform = 'rotate(180deg)';
+            } else {
+                sub.style.maxHeight = "0px";
+                if (icon) icon.style.transform = 'rotate(0deg)';
             }
         });
     });
 });
 
-// --- 4. TEMA E ACESSIBILIDADE (Globais) ---
+/**
+ * Funções de Acessibilidade e Tema
+ */
 function toggleTheme() {
-    const body = document.body;
-    const themeBtn = document.getElementById('theme-toggle');
-    if (!themeBtn) return;
-
-    const icon = themeBtn.querySelector('i');
-    const span = themeBtn.querySelector('span');
-    
     document.documentElement.classList.toggle('dark');
     const isDark = document.documentElement.classList.contains('dark');
-
-    if (isDark) {
-        if (icon) icon.className = 'fas fa-sun';
-        if (span) span.innerText = 'Modo Claro';
-        localStorage.setItem('theme', 'dark');
-    } else {
-        if (icon) icon.className = 'fas fa-moon';
-        if (span) span.innerText = 'Modo Escuro';
-        localStorage.setItem('theme', 'light');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    
+    const themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+        const icon = themeBtn.querySelector('i');
+        const span = themeBtn.querySelector('span');
+        if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        if (span) span.innerText = isDark ? 'Modo Claro' : 'Modo Escuro';
     }
 }
 
@@ -182,12 +183,10 @@ function changeFontSize(action) {
     if (action === 'decrease' && currentScale > 85) currentScale -= 5;
     if (action === 'reset') currentScale = 100;
     
-    document.documentElement.style.setProperty('--font-scale', currentScale + '%');
-    // Aplica no estilo inline do root para garantir prioridade
     document.documentElement.style.fontSize = currentScale + '%';
 }
 
-// Inicialização de tema persistente (Opcional)
+// Auto-init tema
 if (localStorage.getItem('theme') === 'dark') {
     document.documentElement.classList.add('dark');
 }
