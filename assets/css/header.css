@@ -1,16 +1,56 @@
-:root {
-    --primary-color: #1A3E74;
-    --primary-hover: #143260;
-    --audit-gold: #D4AF37; 
-    --scroll-track: #f1f5f9;
-    --scroll-thumb: #cbd5e1;
-    --scroll-thumb-hover: #1A3E74;
+/* ==================================== */
+/* 1. ESTRUTURA DO HEADER               */
+/* ==================================== */
+
+header, .navbar-container {
+    height: 80px;
+    background-color: white;
+    border-bottom: 1px solid var(--slate-100);
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    white-space: nowrap; /* Garante que os itens do menu não quebrem linha */
 }
 
-body { font-family: 'Inter', sans-serif; }
-h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
+.nav-link-main {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--slate-600);
+    padding: 1.5rem 1rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    text-decoration: none;
+}
 
-/* --- ESTILOS DO MEGA MENU --- */
+.nav-link-main:hover { color: var(--primary-color); }
+
+/* Indicador de linha inferior */
+.nav-link-main::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 3px;
+    background-color: var(--primary-color);
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+}
+
+.nav-link-main:hover::after,
+.nav-link-main.active::after {
+    transform: scaleX(1);
+}
+
+/* ==================================== */
+/* 2. MEGA MENU E TABS                  */
+/* ==================================== */
+
 .mega-panel {
     display: none;
     position: absolute;
@@ -19,20 +59,25 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     top: 100%;
     width: 100%;
     background-color: white;
-    border-top: 1px solid #e5e7eb;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid var(--slate-200);
+    box-shadow: var(--shadow-md);
     z-index: 90;
     animation: slideDown 0.2s ease-out forwards;
 }
 
-.mega-panel.active {
-    display: block;
+.mega-panel.active { display: block; }
+
+.panel-standard-height {
+    height: 380px;
+    display: flex;
 }
 
-/* Classe utilitária para altura padronizada dos painéis */
-.panel-standard-height {
-    height: 380px; /* Altura fixa para todos os menus */
-    display: flex;
+.mega-grid-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    width: 100%;
 }
 
 @keyframes slideDown {
@@ -40,120 +85,112 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- EFEITO BORDA AZUL RELUZENTE --- */
-.glowing-frame {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 0.75rem; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Sombra suave de folha */
-    
-    /* Efeito reluzente */
-    border: 3px solid transparent; 
-    transition: all 0.3s ease-in-out;
-    position: relative;
-    overflow: hidden;
-    display: block; /* Para garantir que o link ocupe o espaço */
-    width: 100%; /* Garante que o frame use toda a largura disponível no padding */
+/* Sidebar de Abas Internas */
+.menu-tab-sidebar {
+    background-color: var(--slate-50);
+    border-right: 1px solid var(--slate-200);
+    padding: 1rem 0;
 }
 
-.glowing-frame:hover {
-    border-color: #1A3E74; /* Borda Primária */
-    box-shadow: 0 0 18px rgba(26, 62, 116, 0.7), 0 0 8px rgba(26, 62, 116, 0.3); /* Efeito de brilho */
-    transform: translateY(-2px); /* Pequeno lift */
-}
-
-
-/* --- ABAS LATERAIS (TABS) --- */
 .menu-tab-trigger {
+    padding: 0.75rem 1.5rem;
     cursor: pointer;
     transition: all 0.2s;
     border-left: 3px solid transparent;
+    font-size: 0.875rem;
+    color: var(--slate-600);
+    font-weight: 600;
 }
+
 .menu-tab-trigger.active {
-    background-color: #f8fafc; /* Slate 50 */
+    background-color: white;
     color: var(--primary-color);
     border-left: 3px solid var(--primary-color);
-    font-weight: 700;
-}
-.menu-tab-trigger:hover:not(.active) {
-    background-color: #f1f5f9;
+    font-weight: 800;
 }
 
 .tab-content {
     display: none;
+    padding: 2rem;
+    overflow-y: auto;
     animation: fadeIn 0.3s ease;
 }
-.tab-content.active {
-    display: block;
-}
+
+.tab-content.active { display: block; }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateX(5px); }
     to { opacity: 1; transform: translateX(0); }
 }
 
-/* --- BARRA DE ROLAGEM PROFISSIONAL (Custom-Scroll) --- */
-/* Webkit (Chrome, Edge, Safari) */
-.custom-scroll::-webkit-scrollbar {
-    width: 8px;
-}
+/* ==================================== */
+/* 3. CARDS RELUZENTES (GLOWING FRAMES) */
+/* ==================================== */
 
-.custom-scroll::-webkit-scrollbar-track {
-    background: var(--scroll-track);
-    border-radius: 4px;
-}
-
-.custom-scroll::-webkit-scrollbar-thumb {
-    background-color: var(--scroll-thumb);
-    border-radius: 4px;
-    border: 2px solid var(--scroll-track);
-}
-
-.custom-scroll::-webkit-scrollbar-thumb:hover {
-    background-color: var(--scroll-thumb-hover);
-}
-
-/* Firefox */
-.custom-scroll {
-    scrollbar-width: thin;
-    scrollbar-color: var(--scroll-thumb) var(--scroll-track);
-}
-
-/* --- GRID PARA LISTAS LONGAS --- */
 .link-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem 2rem;
+    gap: 1.25rem;
 }
 
-/* --- MENU MOBILE --- */
-.mobile-menu-drawer { transition: transform 0.3s ease-in-out; }
-.mobile-menu-backdrop { transition: opacity 0.3s ease-in-out; }
-
-/* Submenus principais */
-.mobile-submenu {
-    max-height: 0;
+.glowing-frame {
+    background-color: white;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-sm);
+    border: 3px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
     overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    transition: max-height 0.4s ease-out, opacity 0.3s ease, visibility 0.3s ease;
-}
-.mobile-submenu.open { 
-    max-height: 2000px; 
-    opacity: 1;
-    visibility: visible;
+    display: block;
+    text-decoration: none;
+    width: 100%;
 }
 
-/* Sub-acordeões internos */
-.mobile-sub-accordion {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.3s ease-out, opacity 0.2s ease;
-}
-.mobile-sub-accordion.open {
-    max-height: 500px;
-    opacity: 1;
+.glowing-frame:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 18px rgba(26, 62, 116, 0.4), 0 0 8px rgba(26, 62, 116, 0.2);
+    transform: translateY(-3px);
 }
 
-.rotate-180 { transform: rotate(180deg); }
+.icon-wrapper {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background-color: var(--slate-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+}
+
+.mega-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.mega-card-description {
+    font-size: 0.8125rem;
+    color: var(--slate-500);
+    line-height: 1.4;
+}
+
+/* ==================================== */
+/* 4. RESPONSIVIDADE DO HEADER          */
+/* ==================================== */
+
+@media (max-width: 1024px) {
+    .mega-grid-container { grid-template-columns: 1fr; }
+    .menu-tab-sidebar { display: none; }
+    .panel-standard-height { height: auto; max-height: 80vh; }
+}
+
+@media (max-width: 768px) {
+    header { height: 70px; }
+    .link-grid { grid-template-columns: 1fr; }
+    .nav-link-main { padding: 1rem 0.5rem; font-size: 0.85rem; }
+}
