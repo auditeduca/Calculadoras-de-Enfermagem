@@ -82,8 +82,11 @@ body {
     right: 0;
     top: 100%; /* Isso faz ele colar exatamente onde a navbar-main-faixa termina */
     width: 100%;
+    /* 1. MESMA COR DE FUNDO: Mantido como branco para uniformidade,
+       assumindo que o container principal é branco. */
     background-color: white;
-    border-top: 1px solid #e2e8f0;
+    /* Linha divisória superior removida para uniformidade de cor de fundo */
+    border-top: none; /* Alterado de 1px solid #e2e8f0 para none */
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     z-index: 90;
     animation: slideDown 0.2s ease-out forwards;
@@ -101,13 +104,29 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* 2. SEM LINHA DIVISÓRIA NA 3ª COLUNA */
+/* Regra para remover a borda da 3ª coluna.
+   Assumindo que o container das colunas tem a classe 'mega-menu-columns'
+   e que a linha divisória é uma 'border-right' ou 'border-left' nos elementos.
+   O usuário deve aplicar a classe 'mega-menu-columns' ao container das colunas. */
+.mega-menu-columns > div:nth-child(3) {
+    border-right: none !important;
+    border-left: none !important;
+}
+
 /* --- CARDS E GLOWING FRAME --- */
+/* 3. ESTILO DE IMAGEM DE CONTAINER ESTILO FOLHA COM BORDA AZUL RELUZENTE */
 .glowing-frame {
     background-color: white;
     padding: 1.25rem;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    border: 3px solid transparent;
+    /* NOVO: Estilo "folha" mais pronunciado */
+    border-radius: 2rem 0.5rem 2rem 0.5rem;
+    
+    /* NOVO: Contorno dourado/bege como estilo padrão */
+    box-shadow: 0 0 0 2px #D4AF37, /* Contorno dourado/bege */
+                0 4px 10px rgba(0,0,0,0.05); /* Sombra padrão */
+    
+    border: 3px solid transparent; /* Mantido para o hover */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: block;
     text-decoration: none;
@@ -115,14 +134,25 @@ body {
 }
 
 .glowing-frame:hover {
+    /* Borda azul reluzente: box-shadow mais forte e azul vibrante */
     border-color: #1A3E74;
-    box-shadow: 0 0 15px rgba(26, 62, 116, 0.3);
+    box-shadow: 0 0 20px 5px rgba(26, 62, 116, 0.7), /* Sombra azul reluzente */
+                0 0 10px 2px rgba(26, 62, 116, 0.4) inset; /* Brilho interno sutil */
     transform: translateY(-3px);
 }
 
+.glowing-frame img {
+    /* Garante que a imagem dentro do container também tenha o estilo folha */
+    border-radius: 2rem 0.5rem 2rem 0.5rem;
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 .glowing-frame img:hover {
-    border-color: #1A3E74;
-    box-shadow: 0 0 15px rgba(26, 62, 116, 0.4);
+    /* Removido o hover da imagem para evitar conflito com o hover do container */
+    border-color: initial;
+    box-shadow: initial;
 }
 
 /* --- TABS INTERNAS --- */
