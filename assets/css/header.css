@@ -1,41 +1,94 @@
 /* ==================================== */
-/* 1. ESTRUTURA DO HEADER               */
+/* 1. ESTRUTURA DO HEADER (DUAS FAIXAS) */
 /* ==================================== */
 
-header, .navbar-container {
-    height: 80px;
+header {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+/* --- FAIXA 1: TOP BAR (UTILIDADES) --- */
+.top-bar {
+    height: 36px;
+    background-color: var(--slate-900); /* Faixa escura superior */
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 0.75rem;
+    padding: 0 2rem;
+}
+
+.top-bar-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; /* Alinha utilitários à direita */
+    gap: 1.5rem;
+}
+
+.top-bar-link {
+    color: var(--slate-200);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.top-bar-link:hover {
+    color: white;
+}
+
+/* --- FAIXA 2: NAVBAR PRINCIPAL --- */
+.navbar-container {
+    height: 74px; /* Altura da segunda faixa */
     background-color: white;
     border-bottom: 1px solid var(--slate-100);
     display: flex;
     align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    white-space: nowrap; /* Garante que os itens do menu não quebrem linha */
+    padding: 0 2rem;
+}
+
+.nav-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links-wrapper {
+    display: flex;
+    height: 74px; /* Casar com a altura da faixa */
+    align-items: center;
 }
 
 .nav-link-main {
     font-size: 0.9375rem;
     font-weight: 600;
     color: var(--slate-600);
-    padding: 1.5rem 1rem;
-    transition: all 0.2s ease;
+    padding: 0 1.25rem;
+    height: 100%; /* Ocupa toda a altura da faixa */
     display: flex;
     align-items: center;
     gap: 0.5rem;
     position: relative;
     text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .nav-link-main:hover { color: var(--primary-color); }
 
-/* Indicador de linha inferior */
+/* Indicador de linha inferior ajustado */
 .nav-link-main::after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 1rem;
-    right: 1rem;
+    left: 0;
+    right: 0;
     height: 3px;
     background-color: var(--primary-color);
     transform: scaleX(0);
@@ -48,7 +101,7 @@ header, .navbar-container {
 }
 
 /* ==================================== */
-/* 2. MEGA MENU E TABS                  */
+/* 2. MEGA MENU (ALINHADO ÀS FAIXAS)    */
 /* ==================================== */
 
 .mega-panel {
@@ -56,7 +109,7 @@ header, .navbar-container {
     position: absolute;
     left: 0;
     right: 0;
-    top: 100%;
+    top: 110px; /* Soma da Faixa 1 (36px) + Faixa 2 (74px) */
     width: 100%;
     background-color: white;
     border-top: 1px solid var(--slate-200);
@@ -184,13 +237,16 @@ header, .navbar-container {
 /* ==================================== */
 
 @media (max-width: 1024px) {
+    .top-bar { display: none; } /* Esconde faixa superior em tablets/mobile */
+    .mega-panel { top: 74px; }
     .mega-grid-container { grid-template-columns: 1fr; }
     .menu-tab-sidebar { display: none; }
     .panel-standard-height { height: auto; max-height: 80vh; }
 }
 
 @media (max-width: 768px) {
-    header { height: 70px; }
+    header, .navbar-container { height: 70px; }
+    .nav-links-wrapper { height: 70px; }
     .link-grid { grid-template-columns: 1fr; }
-    .nav-link-main { padding: 1rem 0.5rem; font-size: 0.85rem; }
+    .nav-link-main { padding: 0 0.5rem; font-size: 0.85rem; }
 }
