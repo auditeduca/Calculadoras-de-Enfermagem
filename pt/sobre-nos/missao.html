@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Missão, Visão e Valores - Calculadoras de Enfermagem</title>
     <meta name="description" content="Conheça a missão, visão e valores da Calculadoras de Enfermagem - ferramentas práticas e confiáveis para profissionais e estudantes.">
-    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/missao.html">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/pt/sobre-nos/missao.html">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Container para injeção do Header (global) -->
+    <!-- Containers para injeção dinâmica pelo Template Engine V3.2 -->
     <div id="header-container"></div>
 
     <svg class="bg-lines-decorative" width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; z-index: -1; pointer-events: none;">
@@ -35,7 +35,7 @@
             <p class="article-subtitle">Nossa missão é oferecer ferramentas práticas e confiáveis para profissionais e estudantes de enfermagem, promovendo segurança e precisão clínica na prática assistencial.</p>
         </header>
 
-        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-missao.webp" alt="Equipe de enfermagem" class="featured-image">
+        <img src="../../assets/images/featured-missao.webp" alt="Equipe de enfermagem" class="featured-image">
 
         <div class="content-layout">
             <article class="article-content">
@@ -96,7 +96,7 @@
         </div>
 
         <div class="author-box">
-            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Autor" class="author-avatar">
+            <img src="../../assets/images/author-info.webp" alt="Autor" class="author-avatar">
             <div class="author-info">
                 <h3>Conselho Editorial</h3>
                 <p>Conteúdo revisto por especialistas em enfermagem e segurança do paciente.</p>
@@ -114,246 +114,76 @@
         <div class="content-container">
             <h2 class="section-title">Veja Também</h2>
             <div class="related-grid">
-                <a href="../../acessibilidade.html" class="related-card">
-                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-acessibilidade.webp" alt="Acessibilidade">
+                <a href="../acessibilidade.html" class="related-card">
+                    <img src="../../assets/images/featured-acessibilidade.webp" alt="Acessibilidade">
                     <div class="related-content">
                         <h3>Acessibilidade</h3>
                         <p>Inclusão digital plena.</p>
-                    </div>
-                </a>
-                <a href="../../politica.html" class="related-card">
-                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-privacidade.webp" alt="Privacidade">
-                    <div class="related-content">
-                        <h3>Privacidade</h3>
-                        <p>Segurança de dados.</p>
-                    </div>
-                </a>
-                <a href="../../termos.html" class="related-card">
-                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-cookies.webp" alt="Termos">
-                    <div class="related-content">
-                        <h3>Termos de Uso</h3>
-                        <p>Regras da plataforma.</p>
                     </div>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Containers para injeção de componentes globais -->
     <div id="footer-container"></div>
     <div id="modals-container"></div>
-    
-    <!-- Container para modais específicos desta página -->
     <div id="specific-page-modals"></div>
 
-    <!-- Template Engine v2.1 - Carrega Header, Footer, Modais Globais e Assets -->
-    <script src="../../assets/js/template-engine-v2.1.js"></script>
+    <!-- Scripts em Ordem de Hierarquia (Subindo 2 níveis para raiz) -->
+    <script src="../../assets/js/console-cleaner.js"></script>
+    <script src="../../assets/js/template-engine.js"></script>
 
-    <!-- Script específico da página com modais customizados -->
     <script>
-        // ============================================================
-        // EVENTO: Template Engine Pronto
-        // ============================================================
-        window.addEventListener('templateEngineReady', function() {
-            console.log('✓ Template Engine pronto!');
-            
-            // Mostrar informações de debug
-            const debug = TemplateEngine.getDebugInfo();
-            console.log('📊 Debug Info:', debug);
-            
-            // Carregar modais específicos desta página
-            loadPageSpecificModals();
-            
-            // Inicializar funcionalidades específicas da página
-            initPageFeatures();
-        });
-
-        // ============================================================
-        // EVENTO: Erro no Template Engine
-        // ============================================================
-        window.addEventListener('templateEngineError', function(event) {
-            console.error('❌ Erro ao carregar Template Engine:', event.detail.error);
-            showErrorNotification('Erro ao carregar componentes da página');
-        });
-
-        // ============================================================
-        // FUNÇÃO: Carregar Modais Específicos da Página
-        // ============================================================
-        async function loadPageSpecificModals() {
-            try {
-                // Exemplo: carregar modais específicos para a página missao.html
-                // Você pode ter um arquivo como: assets/components/modals-missao.html
-                
-                // Opção 1: Se tiver um arquivo de modais específicos
-                // await TemplateEngine.loadPageSpecificModals('modals-missao.html');
-                
-                // Opção 2: Se os modais estão integrados diretamente no HTML
-                // (neste caso, não precisa fazer nada)
-                
-                console.log('✓ Modais específicos da página carregados');
-            } catch (error) {
-                console.warn('⚠️ Modais específicos não encontrados:', error);
-            }
-        }
-
-        // ============================================================
-        // FUNÇÃO: Inicializar Funcionalidades da Página
-        // ============================================================
-        function initPageFeatures() {
-            // Inicializar botões de compartilhamento
-            initShareButtons();
-            
-            // Inicializar links de navegação
-            initNavigation();
-            
-            // Adicionar event listeners customizados
-            addCustomEventListeners();
-        }
-
-        // ============================================================
-        // FUNÇÃO: Inicializar Botões de Compartilhamento
-        // ============================================================
-        function initShareButtons() {
-            const shareButtons = document.querySelectorAll('.share-btn');
-            
-            shareButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const platform = this.getAttribute('data-platform');
-                    const url = window.location.href;
-                    const title = document.title;
-                    
-                    shareOnPlatform(platform, url, title);
-                });
-            });
-            
-            console.log('✓ Botões de compartilhamento inicializados');
-        }
-
-        // ============================================================
-        // FUNÇÃO: Compartilhar em Plataformas Sociais
-        // ============================================================
-        function shareOnPlatform(platform, url, title) {
-            let shareUrl = '';
-            
-            switch(platform) {
-                case 'facebook':
-                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                    break;
-                case 'twitter':
-                    shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
-                    break;
-                case 'linkedin':
-                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-                    break;
-                case 'whatsapp':
-                    shareUrl = `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`;
-                    break;
-            }
-            
-            if (shareUrl) {
-                window.open(shareUrl, '_blank', 'width=600,height=400');
-            }
-        }
-
-        // ============================================================
-        // FUNÇÃO: Inicializar Navegação
-        // ============================================================
-        function initNavigation() {
-            // Adicionar active state aos links de navegação
-            const currentPath = window.location.pathname;
-            const navLinks = document.querySelectorAll('nav a, .sidebar-card a');
-            
-            navLinks.forEach(link => {
-                if (link.href === window.location.href) {
-                    link.classList.add('active');
-                }
-            });
-            
-            console.log('✓ Navegação inicializada');
-        }
-
-        // ============================================================
-        // FUNÇÃO: Adicionar Event Listeners Customizados
-        // ============================================================
-        function addCustomEventListeners() {
-            // Exemplo: adicionar listeners para elementos específicos
-            
-            // Smooth scroll para links internos
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-            
-            console.log('✓ Event listeners customizados adicionados');
-        }
-
-        // ============================================================
-        // FUNÇÃO: Mostrar Notificação de Erro
-        // ============================================================
-        function showErrorNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'error-notification';
-            notification.textContent = message;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background-color: #f8d7da;
-                color: #721c24;
-                padding: 15px 20px;
-                border-radius: 4px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                z-index: 9999;
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Remover após 5 segundos
-            setTimeout(() => {
-                notification.remove();
-            }, 5000);
-        }
-
-        // ============================================================
-        // FUNÇÃO: Adicionar hreflangs para SEO (alternativas de idioma)
-        // ============================================================
-        (function addHreflangs() {
-            const hreflangs = [
-                { lang: "pt-br", href: "https://www.calculadorasdeenfermagem.com.br/missao.html" },
-                { lang: "en", href: "https://www.calculadorasdeenfermagem.com.br/en/missao.html" },
-                { lang: "es", href: "https://www.calculadorasdeenfermagem.com.br/es/missao.html" },
-                { lang: "fr", href: "https://www.calculadorasdeenfermagem.com.br/fr/missao.html" },
-                { lang: "de", href: "https://www.calculadorasdeenfermagem.com.br/de/missao.html" },
-                { lang: "it", href: "https://www.calculadorasdeenfermagem.com.br/it/missao.html" },
-                { lang: "ja", href: "https://www.calculadorasdeenfermagem.com.br/ja/missao.html" },
-                { lang: "zh", href: "https://www.calculadorasdeenfermagem.com.br/zh/missao.html" },
-                { lang: "hi", href: "https://www.calculadorasdeenfermagem.com.br/hi/missao.html" },
-                { lang: "ar", href: "https://www.calculadorasdeenfermagem.com.br/ar/missao.html" },
-                { lang: "ru", href: "https://www.calculadorasdeenfermagem.com.br/ru/missao.html" },
-                { lang: "tr", href: "https://www.calculadorasdeenfermagem.com.br/tr/missao.html" },
-                { lang: "ko", href: "https://www.calculadorasdeenfermagem.com.br/ko/missao.html" },
-                { lang: "nl", href: "https://www.calculadorasdeenfermagem.com.br/nl/missao.html" },
-                { lang: "pl", href: "https://www.calculadorasdeenfermagem.com.br/pl/missao.html" },
-                { lang: "sv", href: "https://www.calculadorasdeenfermagem.com.br/sv/missao.html" },
-                { lang: "id", href: "https://www.calculadorasdeenfermagem.com.br/id/missao.html" },
-                { lang: "vi", href: "https://www.calculadorasdeenfermagem.com.br/vi/missao.html" },
-                { lang: "uk", href: "https://www.calculadorasdeenfermagem.com.br/uk/missao.html" },
-                { lang: "x-default", href: "https://www.calculadorasdeenfermagem.com.br/missao.html" }
-            ];
-
-            const head = document.head || document.getElementsByTagName('head')[0];
-            hreflangs.forEach(item => {
+        (function() {
+            // hreflangs Dinâmicos para SEO
+            const languages = ["en", "es", "fr", "de", "it", "ja", "zh", "hi", "ar", "ru", "tr", "ko", "nl", "pl", "sv", "id", "vi", "uk"];
+            const head = document.head;
+            languages.forEach(lang => {
                 const link = document.createElement('link');
                 link.rel = 'alternate';
-                link.hreflang = item.lang;
-                link.href = item.href;
+                link.hreflang = lang;
+                link.href = `https://www.calculadorasdeenfermagem.com.br/${lang}/sobre-nos/missao.html`;
                 head.appendChild(link);
             });
+
+            // Inicialização pós-carregamento do motor
+            window.addEventListener('templateEngineReady', function() {
+                console.log('✓ Missão: Componentes Modulares Carregados.');
+                initPageScripts();
+            });
+
+            function initPageScripts() {
+                // Smooth Scroll para o Sumário
+                document.querySelectorAll('.toc-list a').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            window.scrollTo({
+                                top: target.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                });
+
+                // Compartilhamento
+                document.querySelectorAll('.share-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const platform = this.dataset.platform;
+                        const url = window.location.href;
+                        const title = document.title;
+                        const shareUrls = {
+                            facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+                            twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+                            linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+                            whatsapp: `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`
+                        };
+                        if (shareUrls[platform]) window.open(shareUrls[platform], '_blank', 'width=600,height=400');
+                    });
+                });
+            }
         })();
     </script>
 </body>
