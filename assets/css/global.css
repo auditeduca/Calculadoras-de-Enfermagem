@@ -1,85 +1,84 @@
-/* ==================================== /
-/ 1. RESET E VARIÁVEIS GLOBAIS         /
-/ ==================================== */
+/* ==================================== */
+/* 1. RESET E VARIÁVEIS GLOBAIS         */
+/* ==================================== */
 
 :root {
---primary-color: #1A3E74;  /* Contraste AAA: 8.59:1 com branco /
---primary-color-hover: #15325e;  / Contraste AAA: 11.89:1 com branco /
---accessibility-active: #CC6600;  / Otimizado de #FFA500 para contraste AAA: 7.04:1 /
---focus-outline-color: #0066CC; / Contraste AAA: 8.59:1 com branco */
+    --primary-color: #1A3E74;  /* Contraste AAA: 8.59:1 com branco */
+    --primary-color-hover: #15325e;  /* Contraste AAA: 11.89:1 com branco */
+    --accessibility-active: #CC6600;  /* Otimizado de #FFA500 para contraste AAA: 7.04:1 */
+    --focus-outline-color: #0066CC; /* Contraste AAA: 8.59:1 com branco */
 }
 
 /* Correção Global de Box Model */
-
-{
-box-sizing: border-box;
-margin: 0;
-padding: 0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html {
-scroll-behavior: smooth;
-font-size: 16px;
+    scroll-behavior: smooth;
+    font-size: 16px;
 }
 
 body {
-font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-line-height: 1.5;
--webkit-font-smoothing: antialiased;
-overflow-x: hidden;
+    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
 }
 
-/* ==================================== /
-/ 2. TIPOGRAFIA E ELEMENTOS BASE       /
-/ ==================================== */
+/* ==================================== */
+/* 2. TIPOGRAFIA E ELEMENTOS BASE       */
+/* ==================================== */
 
 .main-title {
-font-family: 'Nunito Sans', sans-serif;
-font-weight: 800;
-color: var(--primary-color);
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 800;
+    color: var(--primary-color);
 }
 
 .section-title {
-font-family: 'Nunito Sans', sans-serif;
-font-weight: 700;
-color: var(--primary-color);
-padding-bottom: 0.5rem;
-border-bottom: 3px solid var(--primary-color);
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    color: var(--primary-color);
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--primary-color);
 }
 
 /* Navegação */
 .nav-link {
-transition: color 0.2s;
-text-decoration: none;
+    transition: color 0.2s;
+    text-decoration: none;
 }
 
 .nav-link:hover {
-color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 /* Botões */
 .btn-primary {
-background-color: var(--primary-color);
-color: white;
-padding: 0.75rem 1.5rem;
-border-radius: 0.5rem;
-border: none;
-cursor: pointer;
-transition: background-color 0.2s;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .btn-primary:hover {
-background-color: var(--primary-color-hover);
+    background-color: var(--primary-color-hover);
 }
 
 /* Animações */
 .fade-in {
-animation: fadeIn 0.5s ease-in-out;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 @keyframes fadeIn {
-from { opacity: 0; transform: translateY(10px); }
-to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Foco visível para acessibilidade */
@@ -88,42 +87,42 @@ button:focus,
 input:focus,
 select:focus,
 textarea:focus {
-outline: 3px solid var(--focus-outline-color);
-outline-offset: 2px;
-box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.3);
+    outline: 3px solid var(--focus-outline-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.3);
 }
 
-/* ==================================== /
-/ 3. BOTÕES FLUTUANTES E WIDGETS      /
-/ ==================================== */
+/* ==================================== */
+/* 3. BOTÕES FLUTUANTES E WIDGETS      */
+/* ==================================== */
 
 .floating-buttons {
-position: fixed;
-right: 20px;
-bottom: 20px;
-display: flex;
-flex-direction: column;
-gap: 12px;
-z-index: 100;
-pointer-events: none;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 100;
+    pointer-events: none;
 }
 
 .floating-buttons button {
-pointer-events: auto;
-width: 56px;
-height: 56px;
-border: none;
-border-radius: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
-color: white;
-font-size: 1.25rem;
-cursor: pointer;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-position: relative;
-overflow: hidden;
+    pointer-events: auto;
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 #back-to-top-btn { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
@@ -131,119 +130,117 @@ overflow: hidden;
 #libras-btn { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
 
 .side-widgets-container {
-position: fixed;
-left: 0;
-top: 50%;
-transform: translateY(-50%);
-z-index: 100;
-display: flex;
-flex-direction: column;
-gap: 8px;
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .accessibility-widget button {
-background: linear-gradient(135deg, #1a3e74, #15325e);
-color: white;
-border: none;
-padding: 12px;
-width: 50px;
-height: 50px;
-cursor: pointer;
-border-top-right-radius: 8px;
-border-bottom-right-radius: 8px;
+    background: linear-gradient(135deg, #1a3e74, #15325e);
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
-/* ==================================== /
-/ 4. MODAIS E MENUS                   /
-/ ==================================== */
+/* ==================================== */
+/* 4. MODAIS E MENUS                   */
+/* ==================================== */
 
 #accessibility-menu {
-position: fixed;
-right: -400px;
-top: 0;
-width: 350px;
-height: 100%;
-background-color: white;
-box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-transition: right 0.3s ease-in-out;
-z-index: 9999;
-overflow-y: auto;
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 350px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 9999;
+    overflow-y: auto;
 }
 
 #accessibility-menu.open { right: 0; }
 
 .modal.hidden { display: none !important; }
 
-/* ==================================== /
-/ 5. COMPONENTES E UTILITÁRIOS        /
-/ ==================================== */
+/* ==================================== */
+/* 5. COMPONENTES E UTILITÁRIOS        */
+/* ==================================== */
 
 /* Breadcrumb */
 .breadcrumb-container {
-background-color: #f9fafb;
-border-bottom: 1px solid #e5e7eb;
-padding: 0.75rem 0;
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.75rem 0;
 }
 
 .breadcrumb {
-max-width: 1280px;
-margin: 0 auto;
-padding: 0 1rem;
-display: flex;
-list-style: none;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    list-style: none;
 }
 
 .breadcrumb-item:not(:last-child)::after {
-content: '/';
-margin: 0 0.5rem;
-color: #6b7280;
+    content: '/';
+    margin: 0 0.5rem;
+    color: #6b7280;
 }
 
 /* Text Break Logic */
 p, h1, h2, h3, h4, h5, h6, span, div {
-word-wrap: break-word;
-overflow-wrap: break-word;
-hyphens: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 /* Exceções para Header para evitar quebra de layout */
 header, header *, nav, nav *, #langButton {
-word-wrap: normal !important;
-overflow-wrap: normal !important;
-hyphens: none !important;
-white-space: nowrap;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
+    white-space: nowrap;
 }
 
-/* ==================================== /
-/ 6. RESPONSIVIDADE E CORREÇÃO DE ERRO /
-/ ==================================== */
+/* ==================================== */
+/* 6. RESPONSIVIDADE E CORREÇÃO DE ERRO */
+/* ==================================== */
 
 @media (max-width: 768px) {
-.floating-buttons { right: 16px; bottom: 16px; }
-.floating-buttons button { width: 48px; height: 48px; }
+    .floating-buttons { right: 16px; bottom: 16px; }
+    .floating-buttons button { width: 48px; height: 48px; }
 }
 
 @media (max-width: 480px) {
-.breadcrumb { font-size: 0.8rem; }
+    .breadcrumb { font-size: 0.8rem; }
 
-/* CORREÇÃO DO ERRO 'GLOBAL' DETECTADO: */
-.content-loading,
-.content-error {
-    min-height: 150px;
-}
+    /* CORREÇÃO DO ERRO 'GLOBAL' DETECTADO: */
+    .content-loading,
+    .content-error {
+        min-height: 150px;
+    }
 
-.error-message {
-    max-width: 300px;
-    margin: 0 auto;
-}
-
-
+    .error-message {
+        max-width: 300px;
+        margin: 0 auto;
+    }
 }
 
 /* Dark Mode */
 body.dark-theme {
-background-color: #1f2937;
-color: #f9fafb;
+    background-color: #1f2937;
+    color: #f9fafb;
 }
 
 body.dark-theme .bg-white { background-color: #374151 !important; }
@@ -252,7 +249,7 @@ body.dark-theme .bg-white { background-color: #374151 !important; }
 .custom-scroll::-webkit-scrollbar { width: 8px; }
 .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
 .custom-scroll::-webkit-scrollbar-thumb {
-background-color: #cbd5e1;
-border-radius: 4px;
+    background-color: #cbd5e1;
+    border-radius: 4px;
 }
 .custom-scroll::-webkit-scrollbar-thumb:hover { background-color: var(--primary-color); }
