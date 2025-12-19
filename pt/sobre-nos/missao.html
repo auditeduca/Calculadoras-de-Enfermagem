@@ -1,223 +1,233 @@
-<script>
-    (function updatePageContext() {
-        // 1. ATUALIZAÇÃO DINÂMICA DE SEO E METADADOS
-        document.title = "Missão, Visão e Valores - Calculadoras de Enfermagem";
-        
-        const metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc) {
-            metaDesc.setAttribute("content", "Conheça a missão, visão e valores da Calculadoras de Enfermagem - ferramentas práticas e confiáveis para profissionais e estudantes.");
-        }
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão, Visão e Valores - Calculadoras de Enfermagem</title>
+    <meta name="description" content="Conheça a missão, visão e valores da Calculadoras de Enfermagem - ferramentas práticas e confiáveis para profissionais e estudantes.">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/missao.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
 
-        const canonical = document.querySelector('link[rel="canonical"]');
-        if (canonical) {
-            canonical.setAttribute("href", "https://www.calculadorasdeenfermagem.com.br/missao.html");
-        }
+    <div id="header-container"></div>
 
-        // 2. INTERNACIONALIZAÇÃO (HREFLANG)
-        document.querySelectorAll('link[rel="alternate"]').forEach(el => el.remove());
-        
-        const hreflangs = [
-            { lang: "pt-br", href: "https://www.calculadorasdeenfermagem.com.br/missao.html" },
-            { lang: "en", href: "https://www.calculadorasdeenfermagem.com.br/en/missao.html" },
-            { lang: "es", href: "https://www.calculadorasdeenfermagem.com.br/es/missao.html" },
-            { lang: "fr", href: "https://www.calculadorasdeenfermagem.com.br/fr/missao.html" },
-            { lang: "de", href: "https://www.calculadorasdeenfermagem.com.br/de/missao.html" },
-            { lang: "it", href: "https://www.calculadorasdeenfermagem.com.br/it/missao.html" },
-            { lang: "ja", href: "https://www.calculadorasdeenfermagem.com.br/ja/missao.html" },
-            { lang: "zh", href: "https://www.calculadorasdeenfermagem.com.br/zh/missao.html" },
-            { lang: "hi", href: "https://www.calculadorasdeenfermagem.com.br/hi/missao.html" },
-            { lang: "ar", href: "https://www.calculadorasdeenfermagem.com.br/ar/missao.html" },
-            { lang: "ru", href: "https://www.calculadorasdeenfermagem.com.br/ru/missao.html" },
-            { lang: "tr", href: "https://www.calculadorasdeenfermagem.com.br/tr/missao.html" },
-            { lang: "ko", href: "https://www.calculadorasdeenfermagem.com.br/ko/missao.html" },
-            { lang: "nl", href: "https://www.calculadorasdeenfermagem.com.br/nl/missao.html" },
-            { lang: "pl", href: "https://www.calculadorasdeenfermagem.com.br/pl/missao.html" },
-            { lang: "sv", href: "https://www.calculadorasdeenfermagem.com.br/sv/missao.html" },
-            { lang: "id", href: "https://www.calculadorasdeenfermagem.com.br/id/missao.html" },
-            { lang: "vi", href: "https://www.calculadorasdeenfermagem.com.br/vi/missao.html" },
-            { lang: "uk", href: "https://www.calculadorasdeenfermagem.com.br/uk/missao.html" },
-            { lang: "x-default", href: "https://www.calculadorasdeenfermagem.com.br/missao.html" }
-        ];
+    <svg class="bg-lines-decorative" width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; z-index: -1; pointer-events: none;">
+        <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="1.5" />
+        <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#00bcd4" stroke-width="1.5" />
+        <path d="M-200,800 C200,750 500,850 1400,780" fill="none" stroke="#1A3E74" stroke-width="1" opacity="0.5" />
+    </svg>
 
-        const head = document.head || document.getElementsByTagName('head')[0];
-        hreflangs.forEach(item => {
-            let link = document.createElement('link');
-            link.rel = 'alternate';
-            link.hreflang = item.lang;
-            link.href = item.href;
-            head.appendChild(link);
-        });
+    <main class="content-container">
+        <nav class="breadcrumb">
+            <a href="index.html">Início</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="#">Sobre Nós</a>
+            <span class="breadcrumb-separator">›</span>
+            <span>Missão, Visão e Valores</span>
+        </nav>
 
-        // 3. INJEÇÃO DE ASSETS (CSS E JS)
-        function injectModuleAsset(type, path, id) {
-            if (document.getElementById(id)) return;
-            const target = document.head || document.documentElement;
+        <header class="article-header">
+            <span class="article-category">INSTITUCIONAL</span>
+            <h1>Missão, Visão e Valores</h1>
+            <div class="header-divider"></div>
+            <p class="article-subtitle">Nossa missão é oferecer ferramentas práticas e confiáveis para profissionais e estudantes de enfermagem, promovendo segurança e precisão clínica na prática assistencial.</p>
+        </header>
 
-            if (type === 'css') {
-                const link = document.createElement('link');
-                link.id = id;
-                link.rel = 'stylesheet';
-                link.href = path;
-                target.appendChild(link);
-            } else if (type === 'js') {
-                const script = document.createElement('script');
-                script.id = id;
-                script.src = path;
-                script.defer = true;
-                if (document.body) {
-                    document.body.appendChild(script);
-                } else {
-                    target.appendChild(script);
+        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-missao.webp" alt="Equipe de enfermagem" class="featured-image">
+
+        <div class="content-layout">
+            <article class="article-content">
+                <h2 id="missao"><i class="fa-solid fa-bullseye"></i> Missão</h2>
+                <div class="highlight-box">
+                    <p>Oferecer ferramentas práticas e educativas para o cálculo de medicamentos e escalas, promovendo a segurança do paciente e o raciocínio clínico.</p>
+                </div>
+                
+                <h2 id="visao"><i class="fa-solid fa-eye"></i> Visão</h2>
+                <div class="highlight-box">
+                    <p>Ser a plataforma líder em apoio à prática da enfermagem no Brasil, contribuindo para uma assistência baseada em evidências.</p>
+                </div>
+                
+                <h2 id="valores"><i class="fa-solid fa-heart"></i> Nossos Valores</h2>
+                <section class="values-grid">
+                    <div class="value-item">
+                        <h3><i class="fa-solid fa-shield-halved"></i> Segurança</h3>
+                        <p>Foco na mitigação de erros através de conferências e cálculos precisos.</p>
+                    </div>
+                    
+                    <div class="alert-info">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <div><strong>Compromisso:</strong> Ferramentas revisadas conforme protocolos do COFEN e OMS.</div>
+                    </div>
+
+                    <div class="value-item">
+                        <h3><i class="fa-solid fa-graduation-cap"></i> Educação</h3>
+                        <p>Estimular o aprendizado contínuo através de referências científicas.</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <h3><i class="fa-solid fa-scale-balanced"></i> Ética</h3>
+                        <p>Transparência e responsabilidade no fornecimento de suporte clínico.</p>
+                    </div>
+                </section>
+            </article>
+            
+            <aside class="content-sidebar">
+                <div class="sidebar-card">
+                    <h3><i class="fa-solid fa-list-ul"></i> Sumário</h3>
+                    <ul class="toc-list">
+                        <li><a href="#missao">Nossa Missão</a></li>
+                        <li><a href="#visao">Nossa Visão</a></li>
+                        <li><a href="#valores">Nossos Valores</a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-card">
+                    <h3><i class="fa-solid fa-share-nodes"></i> Partilhar</h3>
+                    <div class="share-buttons">
+                        <button class="share-btn" data-platform="facebook" title="Facebook"><i class="fab fa-facebook-f"></i></button>
+                        <button class="share-btn" data-platform="twitter" title="Twitter"><i class="fab fa-twitter"></i></button>
+                        <button class="share-btn" data-platform="linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></button>
+                        <button class="share-btn" data-platform="whatsapp" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div class="author-box">
+            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Autor" class="author-avatar">
+            <div class="author-info">
+                <h3>Conselho Editorial</h3>
+                <p>Conteúdo revisto por especialistas em enfermagem e segurança do paciente.</p>
+            </div>
+        </div>
+
+        <section class="references-section">
+            <h2>Referências</h2>
+            <div class="reference-item">1. COFEN (2017). Código de Ética dos Profissionais.</div>
+            <div class="reference-item">2. OMS (2020). State of the world's nursing report.</div>
+        </section>
+    </main>
+
+    <section class="related-section">
+        <div class="content-container">
+            <h2 class="section-title">Veja Também</h2>
+            <div class="related-grid">
+                <a href="acessibilidade.html" class="related-card">
+                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-acessibilidade.webp" alt="Acessibilidade">
+                    <div class="related-content">
+                        <h3>Acessibilidade</h3>
+                        <p>Inclusão digital plena.</p>
+                    </div>
+                </a>
+                <a href="politica.html" class="related-card">
+                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-privacidade.webp" alt="Privacidade">
+                    <div class="related-content">
+                        <h3>Privacidade</h3>
+                        <p>Segurança de dados.</p>
+                    </div>
+                </a>
+                <a href="termos.html" class="related-card">
+                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-cookies.webp" alt="Termos">
+                    <div class="related-content">
+                        <h3>Termos de Uso</h3>
+                        <p>Regras da plataforma.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
+    <div id="specific-page-modals"></div>
+
+    <script>
+        (function bootstrapPage() {
+            document.title = "Missão, Visão e Valores - Calculadoras de Enfermagem";
+            
+            const hreflangs = [
+                { lang: "pt-br", href: "https://www.calculadorasdeenfermagem.com.br/missao.html" },
+                { lang: "en", href: "https://www.calculadorasdeenfermagem.com.br/en/missao.html" },
+                { lang: "es", href: "https://www.calculadorasdeenfermagem.com.br/es/missao.html" },
+                { lang: "fr", href: "https://www.calculadorasdeenfermagem.com.br/fr/missao.html" },
+                { lang: "de", href: "https://www.calculadorasdeenfermagem.com.br/de/missao.html" },
+                { lang: "it", href: "https://www.calculadorasdeenfermagem.com.br/it/missao.html" },
+                { lang: "ja", href: "https://www.calculadorasdeenfermagem.com.br/ja/missao.html" },
+                { lang: "zh", href: "https://www.calculadorasdeenfermagem.com.br/zh/missao.html" },
+                { lang: "hi", href: "https://www.calculadorasdeenfermagem.com.br/hi/missao.html" },
+                { lang: "ar", href: "https://www.calculadorasdeenfermagem.com.br/ar/missao.html" },
+                { lang: "ru", href: "https://www.calculadorasdeenfermagem.com.br/ru/missao.html" },
+                { lang: "tr", href: "https://www.calculadorasdeenfermagem.com.br/tr/missao.html" },
+                { lang: "ko", href: "https://www.calculadorasdeenfermagem.com.br/ko/missao.html" },
+                { lang: "nl", href: "https://www.calculadorasdeenfermagem.com.br/nl/missao.html" },
+                { lang: "pl", href: "https://www.calculadorasdeenfermagem.com.br/pl/missao.html" },
+                { lang: "sv", href: "https://www.calculadorasdeenfermagem.com.br/sv/missao.html" },
+                { lang: "id", href: "https://www.calculadorasdeenfermagem.com.br/id/missao.html" },
+                { lang: "vi", href: "https://www.calculadorasdeenfermagem.com.br/vi/missao.html" },
+                { lang: "uk", href: "https://www.calculadorasdeenfermagem.com.br/uk/missao.html" },
+                { lang: "x-default", href: "https://www.calculadorasdeenfermagem.com.br/missao.html" }
+            ];
+
+            const head = document.head || document.getElementsByTagName('head')[0];
+            hreflangs.forEach(item => {
+                let link = document.createElement('link');
+                link.rel = 'alternate';
+                link.hreflang = item.lang;
+                link.href = item.href;
+                head.appendChild(link);
+            });
+
+            function injectModuleAsset(type, path, id) {
+                if (document.getElementById(id)) return;
+                const target = document.head || document.documentElement;
+
+                if (type === 'css') {
+                    const link = document.createElement('link');
+                    link.id = id;
+                    link.rel = 'stylesheet';
+                    link.href = path;
+                    target.appendChild(link);
+                } else if (type === 'js') {
+                    const script = document.createElement('script');
+                    script.id = id;
+                    script.src = path;
+                    script.defer = true;
+                    if (document.body) {
+                        document.body.appendChild(script);
+                    } else {
+                        target.appendChild(script);
+                    }
                 }
             }
-        }
 
-        // Injeção de CSS (Layout e Geral)
-        injectModuleAsset('css', 'assets/css/header.css', 'asset-header-css');
-        injectModuleAsset('css', 'assets/css/footer.css', 'asset-footer-css');
-        injectModuleAsset('css', 'assets/css/modals.css', 'asset-modals-css');
-        injectModuleAsset('css', 'assets/css/global-main.css', 'module-main-css');
+            injectModuleAsset('css', 'assets/css/header.css', 'asset-header-css');
+            injectModuleAsset('css', 'assets/css/footer.css', 'asset-footer-css');
+            injectModuleAsset('css', 'assets/css/modals.css', 'asset-modals-css');
+            injectModuleAsset('css', 'assets/css/global-main.css', 'module-main-css');
 
-        // Injeção de JS (Lógica de Layout e Geral)
-        injectModuleAsset('js', 'assets/js/header.js', 'asset-header-js');
-        injectModuleAsset('js', 'assets/js/footer.js', 'asset-footer-js');        
-        injectModuleAsset('js', 'assets/js/modals.js', 'asset-modals-js');
-        injectModuleAsset('js', 'assets/js/utils.js', 'asset-utils-js');
-        injectModuleAsset('js', 'assets/js/global-main.js', 'module-main-js');
+            injectModuleAsset('js', 'assets/js/header.js', 'asset-header-js');
+            injectModuleAsset('js', 'assets/js/footer.js', 'asset-footer-js');        
+            injectModuleAsset('js', 'assets/js/modals.js', 'asset-modals-js');
+            injectModuleAsset('js', 'assets/js/utils.js', 'asset-utils-js');
+            injectModuleAsset('js', 'assets/js/global-main.js', 'module-main-js');
 
-        // 4. CHAMADA DOS COMPONENTES ESTRUTURAIS
-        if (window.TemplateEngine) {
-            TemplateEngine.load('header-container', 'assets/components/header.html');
-            TemplateEngine.load('footer-container', 'assets/components/footer.html');
-            TemplateEngine.load('modals-container', 'assets/components/modals-main.html');
-        }
-    })();
-</script>
-
-<svg class="bg-lines-decorative" width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; z-index: -1; pointer-events: none;">
-    <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="1.5" />
-    <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#00bcd4" stroke-width="1.5" />
-    <path d="M-200,800 C200,750 500,850 1400,780" fill="none" stroke="#1A3E74" stroke-width="1" opacity="0.5" />
-</svg>
-
-<div class="content-container">
-    <nav class="breadcrumb">
-        <a href="index.html">Início</a>
-        <span class="breadcrumb-separator">›</span>
-        <a href="#">Sobre Nós</a>
-        <span class="breadcrumb-separator">›</span>
-        <span>Missão, Visão e Valores</span>
-    </nav>
-
-    <header class="article-header">
-        <span class="article-category">INSTITUCIONAL</span>
-        <h1>Missão, Visão e Valores</h1>
-        <div class="header-divider"></div>
-        <p class="article-subtitle">Nossa missão é oferecer ferramentas práticas e confiáveis para profissionais e estudantes de enfermagem, promovendo segurança e precisão clínica na prática assistencial.</p>
-    </header>
-
-    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-missao.webp" alt="Equipe de enfermagem" class="featured-image">
-
-    <div class="content-layout">
-        <article class="article-content">
-            <h2 id="missao"><i class="fa-solid fa-bullseye"></i> Missão</h2>
-            <div class="highlight-box">
-                <p>Oferecer ferramentas práticas e educativas para o cálculo de medicamentos e escalas, promovendo a segurança do paciente e o raciocínio clínico.</p>
-            </div>
+            function loadTemplates() {
+                if (window.TemplateEngine) {
+                    TemplateEngine.load('header-container', 'assets/components/header.html');
+                    TemplateEngine.load('footer-container', 'assets/components/footer.html');
+                    TemplateEngine.load('modals-container', 'assets/components/modals-main.html');
+                } else {
+                    setTimeout(loadTemplates, 50);
+                }
+            }
             
-            <h2 id="visao"><i class="fa-solid fa-eye"></i> Visão</h2>
-            <div class="highlight-box">
-                <p>Ser a plataforma líder em apoio à prática da enfermagem no Brasil, contribuindo para uma assistência baseada em evidências.</p>
-            </div>
-            
-            <h2 id="valores"><i class="fa-solid fa-heart"></i> Nossos Valores</h2>
-            <section class="values-grid">
-                <div class="value-item">
-                    <h3><i class="fa-solid fa-shield-halved"></i> Segurança</h3>
-                    <p>Foco na mitigação de erros através de conferências e cálculos precisos.</p>
-                </div>
-                
-                <div class="alert-info">
-                    <i class="fa-solid fa-circle-info"></i>
-                    <div><strong>Compromisso:</strong> Ferramentas revisadas conforme protocolos do COFEN e OMS.</div>
-                </div>
-
-                <div class="value-item">
-                    <h3><i class="fa-solid fa-graduation-cap"></i> Educação</h3>
-                    <p>Estimular o aprendizado contínuo através de referências científicas.</p>
-                </div>
-                
-                <div class="value-item">
-                    <h3><i class="fa-solid fa-scale-balanced"></i> Ética</h3>
-                    <p>Transparência e responsabilidade no fornecimento de suporte clínico.</p>
-                </div>
-            </section>
-        </article>
-        
-        <aside class="content-sidebar">
-            <div class="sidebar-card">
-                <h3><i class="fa-solid fa-list-ul"></i> Sumário</h3>
-                <ul class="toc-list">
-                    <li><a href="#missao">Nossa Missão</a></li>
-                    <li><a href="#visao">Nossa Visão</a></li>
-                    <li><a href="#valores">Nossos Valores</a></li>
-                </ul>
-            </div>
-            
-            <div class="sidebar-card">
-                <h3><i class="fa-solid fa-share-nodes"></i> Partilhar</h3>
-                <div class="share-buttons">
-                    <button class="share-btn" data-platform="facebook" title="Facebook"><i class="fab fa-facebook-f"></i></button>
-                    <button class="share-btn" data-platform="twitter" title="Twitter"><i class="fab fa-twitter"></i></button>
-                    <button class="share-btn" data-platform="linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></button>
-                    <button class="share-btn" data-platform="whatsapp" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
-                </div>
-            </div>
-        </aside>
-    </div>
-
-    <div class="author-box">
-        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Autor" class="author-avatar">
-        <div class="author-info">
-            <h3>Conselho Editorial</h3>
-            <p>Conteúdo revisto por especialistas em enfermagem e segurança do paciente.</p>
-        </div>
-    </div>
-
-    <section class="references-section">
-        <h2>Referências</h2>
-        <div class="reference-item">1. COFEN (2017). Código de Ética dos Profissionais.</div>
-        <div class="reference-item">2. OMS (2020). State of the world's nursing report.</div>
-    </section>
-</div>
-
-<section class="related-section">
-    <div class="content-container">
-        <h2 class="section-title">Veja Também</h2>
-        <div class="related-grid">
-            <a href="acessibilidade.html" class="related-card">
-                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-acessibilidade.webp" alt="Acessibilidade">
-                <div class="related-content">
-                    <h3>Acessibilidade</h3>
-                    <p>Inclusão digital plena.</p>
-                </div>
-            </a>
-            <a href="politica.html" class="related-card">
-                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-privacidade.webp" alt="Privacidade">
-                <div class="related-content">
-                    <h3>Privacidade</h3>
-                    <p>Segurança de dados.</p>
-                </div>
-            </a>
-            <a href="termos.html" class="related-card">
-                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-cookies.webp" alt="Termos">
-                <div class="related-content">
-                    <h3>Termos de Uso</h3>
-                    <p>Regras da plataforma.</p>
-                </div>
-            </a>
-        </div>
-    </div>
-</section>
-
-<div id="specific-page-modals"></div>
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadTemplates);
+            } else {
+                loadTemplates();
+            }
+        })();
+    </script>
+</body>
+</html>
