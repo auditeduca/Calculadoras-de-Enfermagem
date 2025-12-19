@@ -1,206 +1,150 @@
-/* ==================================== */
-/* FOOTER CSS - ESTILOS ESPECÍFICOS DO FOOTER E ELEMENTOS RELACIONADOS */
-/* ==================================== */
-
-/* Footer Specific Styles */
-footer {
-    background-color: #1f2937;
-    color: white;
-    padding: 3rem 0;
-    margin-top: 4rem;
+/* ========================================= */
+/* 1. FOCO DE ALTA VISIBILIDADE (AAA)        */
+/* ========================================= */
+/* Garante que o foco seja visível em fundos claros e escuros */
+button:focus-visible, 
+a:focus-visible, 
+input:focus-visible, 
+.toggle-switch input:focus-visible + .slider {
+    outline: 3px solid #f59e0b !important;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #000000, 0 0 0 4px #ffffff;
 }
 
-footer .container {
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-footer .grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-}
-
-@media (min-width: 768px) {
-    footer .grid {
-        grid-template-columns: repeat(4, 1fr);
+/* ========================================= */
+/* 2. ACESSIBILIDADE: REDUÇÃO DE MOVIMENTO   */
+/* ========================================= */
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
 
-@media (min-width: 1024px) {
-    footer .grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
+/* ========================================= */
+/* 3. COMPONENTE: SWITCH (TOGGLE)            */
+/* ========================================= */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px; /* Aumentado para acessibilidade de toque */
+    height: 28px;
+    flex-shrink: 0;
 }
 
-/* Social Media Icons */
-footer .fab {
-    font-size: 1.5rem;
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #525252;
+    transition: .4s;
+    border: 1px solid #737373; /* Contraste em High Contrast Mode */
 }
 
-/* Links list styles */
-footer ul li a {
-    color: #d1d5db;
-    font-size: 0.875rem;
-    text-decoration: none;
-    transition: color 0.2s;
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px; width: 20px;
+    left: 3px; bottom: 3px;
+    background-color: white;
+    transition: .4s;
 }
 
-footer ul li a:hover {
-    color: white;
+input:checked + .slider { background-color: #1d4ed8; border-color: #1d4ed8; }
+input:checked + .slider:before { transform: translateX(20px); }
+
+.slider.round { border-radius: 34px; }
+.slider.round:before { border-radius: 50%; }
+
+input:disabled + .slider {
+    background-color: #525252;
+    opacity: 0.8;
+    cursor: not-allowed;
 }
 
-/* Footer Bottom */
-footer .border-t {
-    border-top: 1px solid #374151;
-    margin-top: 2rem;
-    padding-top: 2rem;
-}
-
-/* ==================================== */
-/* ESTILOS DOS BOTÕES FAB */
-/* ==================================== */
-
-/* Variáveis CSS para Posição Base dos FABs */
+/* ========================================= */
+/* 4. POSICIONAMENTO DINÂMICO DOS FABs       */
+/* ========================================= */
 :root {
-    --fab-cookie-bottom-base: 100px;
-    --fab-top-bottom-base: 160px;
-    --banner-height: 96px; /* Altura de segurança para o banner */
+    --fab-cookie-bottom-base: 20px;
+    --fab-top-bottom-base: 80px;
+    --banner-height: 220px;
 }
 
-#back-to-top-btn, #manage-cookies-fab-btn {
+#backToTop, #cookie-fab {
     position: fixed;
     right: 20px;
-    width: 48px;
-    height: 48px; 
+    width: 52px; height: 52px; /* 44px+ para WCAG AAA */
     border-radius: 9999px;
     cursor: pointer;
-    transition: bottom 0.5s ease-out, opacity 0.3s, visibility 0.3s, transform 0.1s;
-    z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
+    transition: bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s, visibility 0.3s, transform 0.1s;
+    z-index: 90;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
     color: white;
-    border: none;
+    border: 2px solid transparent;
     padding: 0;
 }
 
-/* Back to Top Button (FAB Superior) */
-#back-to-top-btn {
+#backToTop {
     bottom: var(--fab-top-bottom-base);
-    background-color: #3b82f6; /* Azul Primário */
-    opacity: 0; /* Começa invisível, JS controla */
-    visibility: hidden;
-}
-#back-to-top-btn:hover {
-    background-color: #2563eb;
-    transform: translateY(-2px);
+    background-color: #1d4ed8;
+    opacity: 0; visibility: hidden; pointer-events: none;
 }
 
-/* Cookie Management FAB Button (FAB Inferior) */
-#manage-cookies-fab-btn {
-    bottom: var(--fab-cookie-bottom-base); 
-    background-color: #f59e0b; /* Amarelo/Âmbar para aviso */
-    opacity: 1; 
-    visibility: visible;
-}
-#manage-cookies-fab-btn:hover {
-    background-color: #d97706;
-    transform: translateY(-2px);
+#backToTop.is-visible {
+    opacity: 1 !important; visibility: visible !important; pointer-events: auto !important;
 }
 
-/* Ajuste de Posição quando o Banner está visível */
-body.cookie-banner-active #back-to-top-btn {
+#backToTop:hover { transform: translateY(-2px); background-color: #1e40af; }
+
+#cookie-fab {
+    bottom: var(--fab-cookie-bottom-base);
+    background-color: #b45309;
+    color: #ffffff;
+    opacity: 1; visibility: visible;
+}
+
+#cookie-fab:hover { transform: translateY(-2px); background-color: #92400e; }
+
+/* Ajuste quando o banner está ativo */
+body.cookie-banner-active #backToTop {
     bottom: calc(var(--fab-top-bottom-base) + var(--banner-height));
 }
-body.cookie-banner-active #manage-cookies-fab-btn {
+
+body.cookie-banner-active #cookie-fab {
     bottom: calc(var(--fab-cookie-bottom-base) + var(--banner-height));
 }
 
-/* ==================================== */
-/* ESTILOS ADICIONAIS: Banner e Modal de Cookies */
-/* ==================================== */
-
-/* Cookie Banner */
-#cookie-banner {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 2000; /* Acima de FABs */
-    transform: translateY(100%); /* Inicialmente escondido */
-    transition: transform 0.5s ease-out;
-    max-width: 100vw;
-}
-#cookie-banner.show {
-    transform: translateY(0);
-}
-
-/* Modal Overlay */
-#cookie-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
-    z-index: 3000;
-    display: none; /* Controlado por JS */
+/* ========================================= */
+/* 5. UTILITÁRIOS GERAIS                     */
+/* ========================================= */
+.aaa-touch-target {
+    min-height: 44px;
+    display: flex;
     align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(8px);
 }
 
-/* Modal Content */
-#cookie-modal-content {
-    background-color: white;
-    color: #1f2937;
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-    max-width: 95%;
-    width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-}
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
 
-/* Alternância para Dark Mode (Contraste) */
-.contrast-dark #cookie-modal-content {
-    background-color: #1a1a1a !important;
-    color: #f3f4f6 !important;
-    filter: invert(1) hue-rotate(180deg) !important;
-}
-
-/* Limpeza de filtro para o footer */
-.contrast-dark footer, 
-.contrast-inverted footer, 
-.contrast-light footer {
-    filter: none !important;
-    /* Recarregar as cores originais, se necessário, para garantir consistência */
-    background-color: #1f2937 !important;
-    color: #ffffff !important;
-}
-
-/* Outras Correções Críticas de Acessibilidade */
-.contrast-inverted footer a, .contrast-inverted footer p {
-    color: #1a1a1a !important;
-}
-.contrast-inverted footer {
-    background-color: #ffffff !important;
-    border-top: 1px solid #ddd !important;
-}
-
-/* Footer Links Focus States */
-footer a:focus,
-footer button:focus {
-    outline: 3px solid #3b82f6; 
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
-    border-radius: 0.25rem;
+/* ========================================= */
+/* 6. ESTILOS DE IMPRESSÃO                   */
+/* ========================================= */
+@media print {
+    #cookie-banner, #cookie-fab, #backToTop, #cookie-overlay { display: none !important; }
+    footer {
+        background-color: white !important;
+        color: black !important;
+        margin-top: 0 !important;
+        border-top: 2px solid #000;
+        padding-top: 1rem !important;
+    }
+    .social-icons-area { display: none; }
 }
