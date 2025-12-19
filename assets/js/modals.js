@@ -1,13 +1,10 @@
 /**
- * MODALS.JS - JavaScript para Modais e Funcionalidades de Compatibilidade
- * Calculadoras de Enfermagem - Arquitetura Modular
- * 
- * Responsabilidades:
- * - Gerenciamento de modais de acessibilidade
- * - Funções globais de compatibilidade
- * - Sistema de debugging
- * - Funções de espera por componentes
- * - Inicialização de funcionalidades auxiliares
+ * MODALS.JS - Gerenciador de Modais Otimizado
+ * Versão: 3.1.0 (Compatível com TemplateEngine v3.0)
+ * * Responsabilidades:
+ * - Escuta o evento 'templateEngineReady' para inicialização
+ * - Monitora o '#modals-container' para injeções dinâmicas via MutationObserver
+ * - Gerencia estados de abertura/fecho e acessibilidade (Aria e Focus)
  */
 
 class ModalsManager {
@@ -17,263 +14,190 @@ class ModalsManager {
         this.init();
     }
 
+    /**
+     * Inicialização segura: evita múltiplas instâncias e prepara eventos globais
+     */
     init() {
-        this.setupModals();
-        this.bindEvents();
+        if (this.isInitialized) return;
+        
+        this.bindGlobalEvents();
+        this.refresh();
+        this.setupObserver();
+        
         this.isInitialized = true;
-        console.log('✅ ModalsManager inicializado');
+        this._debug('Sistema de modais integrado e pronto.');
     }
 
-    setupModals() {
-        // Configurar todos os modais disponíveis
+    /**
+     * Sincroniza o estado interno com o que existe no DOM atualmente.
+     * Mapeia os IDs dos modais configurados.
+     */
+    refresh() {
         const modalConfigs = {
-            'accessibility-menu': {
-                trigger: '.accessibility-menu-trigger',
-                close: '.accessibility-menu-close',
-                overlay: '.accessibility-menu'
-            },
-            'cookie-prefs-modal': {
-                trigger: '.cookie-btn-tertiary',
-                close: '.modal-close',
-                overlay: '.modal'
-            },
-            'suggestion-modal': {
-                trigger: '.suggestion-btn',
-                close: '.modal-close',
-                overlay: '.modal'
-            }
+            'accessibility-menu': { id: 'accessibility-menu' },
+            'cookie-prefs-modal': { id: 'cookie-prefs-modal' },
+            'suggestion-modal': { id: 'suggestion-modal' }
         };
 
-        Object.entries(modalConfigs).forEach(([modalId, config]) => {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                this.modals.set(modalId, {
-                    element: modal,
+        Object.entries(modalConfigs).forEach(([key, config]) => {
+            const el = document.getElementById(config.id);
+            if (el) {
+                this.modals.set(key, {
+                    element: el,
                     config: config,
-                    isOpen: false
+                    isOpen: el.classList.contains('modal-open')
                 });
             }
         });
+        
+        if (this.modals.size > 0) {
+            this._debug(`Modais vinculados: ${Array.from(this.modals.keys()).join(', ')}`);
+        }
     }
 
-    bindEvents() {
-        // Event delegation para modais
+    /**
+     * Observa mudanças no DOM para capturar modais injetados dinamicamente
+     * pelo TemplateEngine após o carregamento inicial.
+     */
+    setupObserver() {
+        const target = document.getElementById('modals-container') || document.body;
+        
+        const observer = new MutationObserver((mutations) => {
+            let shouldRefresh = false;
+            for (const mutation of mutations) {
+                if (mutation.addedNodes.length > 0) {
+                    shouldRefresh = true;
+                    break;
+                }
+            }
+            if (shouldRefresh) this.refresh();
+        });
+
+        observer.observe(target, { childCode: true, subtree: true, childList: true });
+    }
+
+    /**
+     * Configura ouvintes de eventos globais (cliques e teclado)
+     */
+    bindGlobalEvents() {
+        // Event Delegation: Captura cliques em gatilhos e botões de fechar
         document.addEventListener('click', (e) => {
-            // Abrir modal de acessibilidade
-            if (e.target.matches('.accessibility-menu-trigger') || 
-                e.target.closest('.accessibility-menu-trigger')) {
+            const target = e.target;
+
+            // Gatilhos de Abertura (suporta cliques em ícones internos via closest)
+            if (target.closest('.accessibility-menu-trigger')) {
                 e.preventDefault();
                 this.openModal('accessibility-menu');
             }
-
-            // Fechar modais
-            if (e.target.matches('.accessibility-menu-close') ||
-                e.target.matches('.modal-close') ||
-                e.target.matches('.modal-backdrop')) {
-                this.closeAllModals();
-            }
-
-            // Abrir modal de cookies
-            if (e.target.matches('.cookie-btn-tertiary') ||
-                e.target.closest('.cookie-btn-tertiary')) {
+            
+            if (target.closest('.cookie-btn-tertiary')) {
                 e.preventDefault();
                 this.openModal('cookie-prefs-modal');
             }
 
-            // Abrir modal de sugestão
-            if (e.target.matches('.suggestion-btn') ||
-                e.target.closest('.suggestion-btn')) {
+            if (target.closest('.suggestion-btn')) {
                 e.preventDefault();
                 this.openModal('suggestion-modal');
             }
-        });
 
-        // Fechar modal com ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
+            // Gatilhos de Fecho (Backdrop, X, ou botão cancelar)
+            if (
+                target.matches('.modal-close') || 
+                target.closest('.modal-close') || 
+                target.matches('.modal-backdrop') ||
+                target.matches('.accessibility-menu-close')
+            ) {
                 this.closeAllModals();
             }
+        }, true);
+
+        // Tecla ESC para fechar modais abertos
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') this.closeAllModals();
         });
     }
 
+    /**
+     * Abre um modal específico pelo ID interno
+     */
     openModal(modalId) {
+        // Se o modal não estiver mapeado, tenta um refresh rápido
+        if (!this.modals.has(modalId)) this.refresh();
+
         const modal = this.modals.get(modalId);
-        if (modal && !modal.isOpen) {
+        if (modal) {
+            // Trava o scroll do fundo
+            document.body.style.overflow = 'hidden';
+            
             modal.element.classList.add('modal-open');
             modal.isOpen = true;
             modal.element.setAttribute('aria-hidden', 'false');
             
-            // Focar no primeiro elemento focável
-            const focusable = modal.element.querySelector('input, button, select, textarea, [tabindex]:not([tabindex="-1"])');
+            // Foco inicial para acessibilidade
+            const focusable = modal.element.querySelector('input, button, select, [tabindex]:not([tabindex="-1"])');
             if (focusable) {
-                focusable.focus();
+                setTimeout(() => focusable.focus(), 50);
             }
             
-            console.log(`📱 Modal ${modalId} aberto`);
+            this._debug(`Modal "${modalId}" aberto.`);
+        } else {
+            console.warn(`[ModalsManager] Modal "${modalId}" não encontrado no DOM.`);
         }
     }
 
+    /**
+     * Fecha um modal específico
+     */
     closeModal(modalId) {
         const modal = this.modals.get(modalId);
         if (modal && modal.isOpen) {
             modal.element.classList.remove('modal-open');
             modal.isOpen = false;
             modal.element.setAttribute('aria-hidden', 'true');
-            console.log(`📱 Modal ${modalId} fechado`);
+            
+            // Verifica se ainda existem outros modais abertos para restaurar o scroll
+            const anyOpen = Array.from(this.modals.values()).some(m => m.isOpen);
+            if (!anyOpen) {
+                document.body.style.overflow = '';
+            }
         }
     }
 
+    /**
+     * Fecha todos os modais ativos
+     */
     closeAllModals() {
-        this.modals.forEach((modal, modalId) => {
-            if (modal.isOpen) {
-                this.closeModal(modalId);
-            }
-        });
+        this.modals.forEach((_, id) => this.closeModal(id));
+    }
+
+    /**
+     * Helper de log integrado ao debug do TemplateEngine
+     */
+    _debug(msg) {
+        const isDebug = window.TemplateEngine && window.TemplateEngine.config && window.TemplateEngine.config.debug;
+        if (isDebug || true) { // 'true' forçado para desenvolvimento inicial
+            console.log(`%c[ModalsManager] ${msg}`, 'color: #3b82f6; font-weight: bold;');
+        }
     }
 }
 
-// =================================================================================
-// FUNÇÕES GLOBAIS DE COMPATIBILIDADE (MOVIDAS DO INDEX.JS)
-// =================================================================================
-
-// Função para re-inicializar componentes (chamada após carregamento de conteúdo)
-window.reinitializeComponents = function() {
-    // Re-inicializar event listeners específicos da página
-    console.log('Re-inicializando componentes da página...');
-};
-
-// Função para carregar página via JavaScript
-window.loadPage = function(pageName, options = {}) {
-    const path = options.path || `/${pageName}`;
-    if (window.app) {
-        window.app.navigate(path);
-    }
-};
-
-// Função para obter componente
-window.getComponent = function(name) {
-    return window.app ? window.app.getComponent(name) : null;
-};
-
-// Template Engine convenience functions
-window.loadPageByName = function(pageName, options = {}) {
-    if (window.app) {
-        window.app.loadPageByName(pageName, options);
-    }
-};
-
-window.renderToElement = function(elementId, templateName, data = {}) {
-    if (window.app) {
-        window.app.renderToElement(elementId, templateName, data);
-    }
-};
-
-window.registerAppTemplate = function(name, template) {
-    if (window.app) {
-        window.app.registerAppTemplate(name, template);
-    }
-};
-
-window.registerAppPartial = function(name, partial) {
-    if (window.app) {
-        window.app.registerAppPartial(name, partial);
-    }
-};
-
-// Wait for template engine to be ready
-window.whenTemplateEngineReady = function(callback) {
-    if (window.templateEngine) {
-        callback(window.templateEngine);
+/**
+ * PONTO DE ENTRADA INTEGRADO
+ */
+function initializeModals() {
+    if (!window.modalsManager) {
+        window.modalsManager = new ModalsManager();
     } else {
-        // Wait for template engine to load
-        const checkEngine = setInterval(() => {
-            if (window.templateEngine) {
-                clearInterval(checkEngine);
-                callback(window.templateEngine);
-            }
-        }, 100);
-        
-        // Timeout after 5 seconds
-        setTimeout(() => {
-            clearInterval(checkEngine);
-            console.warn('Template Engine não carregou em 5 segundos');
-        }, 5000);
+        window.modalsManager.refresh();
     }
-};
+}
 
-// Safety check for Utils availability
-window.waitForUtils = function(callback) {
-    if (window.Utils) {
-        callback();
-    } else {
-        const checkUtils = setInterval(() => {
-            if (window.Utils) {
-                clearInterval(checkUtils);
-                callback();
-            }
-        }, 50);
-        
-        // Timeout after 3 seconds
-        setTimeout(() => {
-            clearInterval(checkUtils);
-            console.warn('Utils não carregou em 3 segundos');
-        }, 3000);
-    }
-};
+// Escuta o evento disparado pelo seu TemplateEngine.js
+window.addEventListener('templateEngineReady', initializeModals);
 
-// =================================================================================
-// SISTEMA DE DEBUGGING AVANÇADO (MOVIDO DO INDEX.JS)
-// =================================================================================
-
-window.debugApp = function() {
-    console.log('=== Application Debug Info ===');
-    console.log('Initialized:', window.app ? window.app.isInitialized : false);
-    console.log('Current Route:', window.app ? window.app.currentRoute : null);
-    console.log('Components:', window.app ? window.app.components : {});
-    console.log('Routes:', window.app ? Array.from(window.app.routes.keys()) : []);
-    console.log('Utils Available:', !!window.Utils);
-    console.log('TemplateEngine Available:', !!window.templateEngine);
-    console.log('ModalsManager Available:', !!window.modalsManager);
-    console.log('DOM Elements:');
-    console.log('  - header-container:', !!document.getElementById('header-container'));
-    console.log('  - footer-container:', !!document.getElementById('footer-container'));
-    console.log('  - modals-container:', !!document.getElementById('modals-container'));
-    console.log('  - main-content:', !!document.getElementById('main-content'));
-    console.log('  - accessibility-menu:', !!document.getElementById('accessibility-menu'));
-    console.log('  - cookie-prefs-modal:', !!document.getElementById('cookie-prefs-modal'));
-    console.log('  - suggestion-modal:', !!document.getElementById('suggestion-modal'));
-};
-
-// Função de debugging específica para modais
-window.debugModals = function() {
-    if (window.modalsManager) {
-        console.log('=== Modals Debug Info ===');
-        window.modalsManager.modals.forEach((modal, modalId) => {
-            console.log(`Modal ${modalId}:`, {
-                isOpen: modal.isOpen,
-                hasConfig: !!modal.config,
-                elementExists: !!modal.element
-            });
-        });
-    } else {
-        console.warn('ModalsManager não disponível');
-    }
-};
-
-// =================================================================================
-// INICIALIZAÇÃO
-// =================================================================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar ModalsManager
-    window.modalsManager = new ModalsManager();
-    
-    console.log('🚀 Sistema de modais carregado');
-    console.log('💡 Use debugModals() para informações de debug dos modais');
-    console.log('💡 Use debugApp() para informações gerais da aplicação');
-});
-
-// Export para uso em módulos
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ModalsManager };
+// Fallback caso o script seja carregado após o evento ou em páginas estáticas
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initializeModals();
+} else {
+    window.addEventListener('DOMContentLoaded', initializeModals);
 }
