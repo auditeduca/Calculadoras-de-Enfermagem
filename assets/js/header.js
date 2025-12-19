@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-
+    
+    // --- MEGA MENU DESKTOP ---
     const navTriggers = document.querySelectorAll('.nav-trigger');
     const megaPanels = document.querySelectorAll('.mega-panel');
 
@@ -14,13 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     navTriggers.forEach(trigger => {
         trigger.addEventListener('click', (e) => {
-            e.stopPropagation(); 
-            
+            e.stopPropagation();
             const targetId = trigger.dataset.panel;
             const targetPanel = document.getElementById(targetId);
             const isAlreadyOpen = targetPanel && targetPanel.classList.contains('active');
 
-            closeAllPanels(); 
+            closeAllPanels();
 
             if (!isAlreadyOpen && targetPanel) {
                 targetPanel.classList.add('active');
@@ -31,22 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Fechar ao clicar fora
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('header')) {
-            closeAllPanels();
-        }
+        if (!e.target.closest('header')) closeAllPanels();
     });
 
-    megaPanels.forEach(panel => {
-        panel.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-    });
-
+    // --- ABAS INTERNAS (HOVER) ---
     const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
 
     tabTriggers.forEach(trigger => {
-        trigger.addEventListener('mouseenter', () => { 
+        trigger.addEventListener('mouseenter', () => {
             const parentPanel = trigger.closest('.mega-panel');
             if (!parentPanel) return;
 
@@ -67,18 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const targetContentId = trigger.dataset.target;
             const targetContent = document.getElementById(targetContentId);
-            if (targetContent) {
-                targetContent.classList.add('active');
-            }
+            if (targetContent) targetContent.classList.add('active');
         });
     });
 
+    // --- MENU MOBILE ---
     const mobileBtn = document.getElementById('mobile-menu-trigger');
     const closeMobileBtn = document.getElementById('close-mobile-menu');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileDrawer = document.getElementById('mobile-menu-drawer');
     const mobileBackdrop = document.getElementById('mobile-menu-backdrop');
-    const accordionTriggers = document.querySelectorAll('.mobile-accordion-trigger');
 
     function openMobileMenu() {
         if (mobileMenu) mobileMenu.classList.remove('hidden');
@@ -92,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeMobileMenu() {
         if (mobileBackdrop) mobileBackdrop.classList.add('opacity-0');
         if (mobileDrawer) mobileDrawer.classList.add('-translate-x-full');
-        
         setTimeout(() => {
             if (mobileMenu) mobileMenu.classList.add('hidden');
         }, 300);
@@ -103,68 +94,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeMobileBtn) closeMobileBtn.addEventListener('click', closeMobileMenu);
     if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenu);
 
-    accordionTriggers.forEach(acc => {
+    // Acordeões Mobile
+    document.querySelectorAll('.mobile-accordion-trigger').forEach(acc => {
         acc.addEventListener('click', () => {
             const submenu = acc.nextElementSibling;
             const icon = acc.querySelector('.fa-chevron-down');
             
             if (submenu && submenu.classList.contains('open')) {
-                
                 submenu.classList.remove('open');
                 if(icon) icon.style.transform = 'rotate(0deg)';
-                submenu.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
-                    sub.classList.remove('open');
-                    const subIcon = sub.previousElementSibling.querySelector('.fa-chevron-down');
-                    if(subIcon) subIcon.style.transform = 'rotate(0deg)';
-                });
             } else if (submenu) {
-                
-                document.querySelectorAll('.mobile-submenu.open').forEach(el => {
-                    if(el !== submenu) {
-                        el.classList.remove('open');
-                        const prevIcon = el.previousElementSibling.querySelector('.fa-chevron-down');
-                        if(prevIcon) prevIcon.style.transform = 'rotate(0deg)';
-                        
-                        el.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
-                            sub.classList.remove('open');
-                            const subIcon = sub.previousElementSibling.querySelector('.fa-chevron-down');
-                            if(subIcon) subIcon.style.transform = 'rotate(0deg)';
-                        });
-                    }
-                });
-                
                 submenu.classList.add('open');
                 if(icon) icon.style.transform = 'rotate(180deg)';
             }
         });
     });
 
-    const subTriggers = document.querySelectorAll('.mobile-sub-trigger');
-    subTriggers.forEach(trigger => {
+    // Sub-acordeões Mobile
+    document.querySelectorAll('.mobile-sub-trigger').forEach(trigger => {
         trigger.addEventListener('click', () => {
             const subAccordion = trigger.nextElementSibling;
             const icon = trigger.querySelector('.fa-chevron-down');
-            const parentSubmenu = trigger.closest('.mobile-submenu');
-
-            if (subAccordion && subAccordion.classList.contains('open')) {
-                subAccordion.classList.remove('open');
-                if(icon) icon.style.transform = 'rotate(0deg)';
-            } else if (subAccordion) {
-                
-                if (parentSubmenu) {
-                    parentSubmenu.querySelectorAll('.mobile-sub-accordion.open').forEach(el => {
-                        if(el !== subAccordion) {
-                            el.classList.remove('open');
-                            const prevIcon = el.previousElementSibling.querySelector('.fa-chevron-down');
-                            if(prevIcon) prevIcon.style.transform = 'rotate(0deg)';
-                        }
-                    });
-                }
-                
-                subAccordion.classList.add('open');
-                if(icon) icon.style.transform = 'rotate(180deg)';
+            if (subAccordion) {
+                subAccordion.classList.toggle('open');
+                if(icon) icon.style.transform = subAccordion.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
             }
         });
     });
-
 });
