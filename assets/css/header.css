@@ -1,4 +1,14 @@
-/* --- CONFIGURAÇÃO DO HEADER DUAS FAIXAS --- */
+/* ============================================================================
+   HEADER.CSS - Estilos Completos do Header Modular
+   ============================================================================
+   Versão Final com Todas as Correções:
+   - Mega-menus com fundo padronizado em todas as colunas
+   - Borda azul nas extremidades das imagens
+   - Terceira coluna sem texto (apenas imagens)
+   - Responsividade completa
+   - Suporte a dark mode
+   ============================================================================ */
+
 #header {
     display: flex;
     flex-direction: column;
@@ -8,6 +18,10 @@
 body {
     padding-top: 100px; /* Altura total: Top Bar (36px) + Navbar (64px) */
 }
+
+/* ============================================================================
+   TOP BAR - BARRA DE ACESSIBILIDADE
+   ============================================================================ */
 
 .top-bar-faixa {
     height: 36px;
@@ -28,11 +42,25 @@ body {
     text-decoration: none;
     border-radius: 4px;
     transition: background 0.2s;
+    font-size: 10px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
 }
 
-.top-bar-btn:hover { background-color: #143260; }
+.top-bar-btn:hover { 
+    background-color: #143260; 
+}
 
-/* --- NAVBAR PRINCIPAL --- */
+.top-bar-btn:focus {
+    outline: 2px solid #1A3E74;
+    outline-offset: 2px;
+}
+
+/* ============================================================================
+   NAVBAR PRINCIPAL
+   ============================================================================ */
+
 .navbar-main-faixa {
     height: 64px; /* Casar com o h-16 do Tailwind no HTML */
 }
@@ -53,9 +81,16 @@ body {
     cursor: pointer;
 }
 
-.nav-link-main:hover { color: #1A3E74; }
+.nav-link-main:hover { 
+    color: #1A3E74; 
+}
 
-/* Indicador de linha (Ajuste para zerar o 'risco vermelho') */
+.nav-link-main:focus {
+    outline: 2px solid #1A3E74;
+    outline-offset: -2px;
+}
+
+/* Indicador de linha */
 .nav-link-main::after {
     content: '';
     position: absolute;
@@ -74,25 +109,28 @@ body {
     transform: scaleX(1);
 }
 
-/* --- MEGA MENU AJUSTADO --- */
+/* ============================================================================
+   MEGA MENU - PAINÉIS PRINCIPAIS
+   ============================================================================ */
+
 .mega-panel {
     display: none;
     position: absolute;
     left: 0;
     right: 0;
-    top: 100%; /* Isso faz ele colar exatamente onde a navbar-main-faixa termina */
+    top: 100%; /* Colado exatamente onde a navbar termina */
     width: 100%;
-    /* 1. MESMA COR DE FUNDO: Mantido como branco para uniformidade,
-       assumindo que o container principal é branco. */
-    background-color: white;
-    /* Linha divisória superior removida para uniformidade de cor de fundo */
-    border-top: none; /* Alterado de 1px solid #e2e8f0 para none */
+    /* Fundo padronizado: cinza claro em todas as colunas */
+    background-color: #f9fafb; /* Gray 50 para consistência */
+    border-top: none;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     z-index: 90;
     animation: slideDown 0.2s ease-out forwards;
 }
 
-.mega-panel.active { display: block; }
+.mega-panel.active { 
+    display: block; 
+}
 
 .panel-standard-height {
     height: 400px; /* Padronizado para 1/4, 1/2, 1/4 */
@@ -100,33 +138,67 @@ body {
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { 
+        opacity: 0; 
+        transform: translateY(-5px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
 
-/* 2. SEM LINHA DIVISÓRIA NA 3ª COLUNA */
-/* Regra para remover a borda da 3ª coluna.
-   Assumindo que o container das colunas tem a classe 'mega-menu-columns'
-   e que a linha divisória é uma 'border-right' ou 'border-left' nos elementos.
-   O usuário deve aplicar a classe 'mega-menu-columns' ao container das colunas. */
+/* ============================================================================
+   COLUNAS DO MEGA MENU - FUNDO PADRONIZADO
+   ============================================================================ */
+
+.mega-menu-columns {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.mega-menu-columns > div {
+    flex: 1;
+    background-color: #f9fafb; /* Mesmo fundo para todas as colunas */
+    padding: 1.5rem;
+    overflow-y: auto;
+    border-right: 1px solid #e5e7eb;
+}
+
+/* Remover borda da última coluna */
+.mega-menu-columns > div:last-child {
+    border-right: none;
+}
+
+/* Terceira coluna - apenas imagens, sem texto */
 .mega-menu-columns > div:nth-child(3) {
     border-right: none !important;
-    border-left: none !important;
+    border-left: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-/* --- CARDS E GLOWING FRAME --- */
-/* 3. ESTILO DE IMAGEM DE CONTAINER ESTILO FOLHA COM BORDA AZUL RELUZENTE */
+.mega-menu-columns > div:nth-child(3) h4,
+.mega-menu-columns > div:nth-child(3) p {
+    display: none; /* Ocultar texto na terceira coluna */
+}
+
+/* ============================================================================
+   CARDS E GLOWING FRAME - BORDA AZUL NAS EXTREMIDADES
+   ============================================================================ */
+
 .glowing-frame {
     background-color: white;
     padding: 1.25rem;
-    /* NOVO: Estilo "folha" mais pronunciado */
+    /* Estilo "folha" pronunciado */
     border-radius: 2rem 0.5rem 2rem 0.5rem;
     
-    /* NOVO: Contorno dourado/bege como estilo padrão */
-    box-shadow: 0 0 0 2px #D4AF37, /* Contorno dourado/bege */
-                0 4px 10px rgba(0,0,0,0.05); /* Sombra padrão */
+    /* Sem borda dourada - apenas sombra padrão */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     
-    border: 3px solid transparent; /* Mantido para o hover */
+    border: 3px solid transparent;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: block;
     text-decoration: none;
@@ -134,28 +206,36 @@ body {
 }
 
 .glowing-frame:hover {
-    /* Borda azul reluzente: box-shadow mais forte e azul vibrante */
+    /* Borda azul reluzente nas extremidades */
     border-color: #1A3E74;
-    box-shadow: 0 0 20px 5px rgba(26, 62, 116, 0.7), /* Sombra azul reluzente */
-                0 0 10px 2px rgba(26, 62, 116, 0.4) inset; /* Brilho interno sutil */
+    box-shadow: 0 0 20px 5px rgba(26, 62, 116, 0.7),
+                0 0 10px 2px rgba(26, 62, 116, 0.4) inset;
     transform: translateY(-3px);
 }
 
 .glowing-frame img {
-    /* Garante que a imagem dentro do container também tenha o estilo folha */
+    /* Imagem com estilo folha e borda azul nas extremidades */
     border-radius: 2rem 0.5rem 2rem 0.5rem;
     display: block;
     width: 100%;
     height: auto;
+    border: 3px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.glowing-frame:hover img {
+    /* Borda azul na extremidade da imagem */
+    border-color: #1A3E74;
 }
 
 .glowing-frame img:hover {
-    /* Removido o hover da imagem para evitar conflito com o hover do container */
-    border-color: initial;
-    box-shadow: initial;
+    border-color: #1A3E74;
 }
 
-/* --- TABS INTERNAS --- */
+/* ============================================================================
+   TABS INTERNAS
+   ============================================================================ */
+
 .menu-tab-trigger {
     padding: 0.75rem 1.5rem;
     cursor: pointer;
@@ -164,6 +244,14 @@ body {
     color: #4b5563;
     border-left: 3px solid transparent;
     transition: all 0.2s;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+.menu-tab-trigger:hover {
+    background-color: #f3f4f6;
 }
 
 .menu-tab-trigger.active {
@@ -178,21 +266,217 @@ body {
     animation: fadeIn 0.3s ease;
 }
 
-.tab-content.active { display: block; }
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateX(5px); }
-    to { opacity: 1; transform: translateX(0); }
+.tab-content.active { 
+    display: block; 
 }
 
-/* --- RESPONSIVIDADE E AJUSTES DE ESPAÇAMENTO --- */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateX(5px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+/* ============================================================================
+   RESPONSIVIDADE
+   ============================================================================ */
+
 @media (max-width: 1024px) {
     /* No mobile/tablet o Top Bar costuma ser escondido ou muda de tamanho */
     body {
         padding-top: 64px; /* Ajustado para apenas a altura da Navbar principal */
     }
+    
+    .mega-menu-columns {
+        flex-direction: column;
+    }
+    
+    .mega-menu-columns > div {
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .mega-menu-columns > div:last-child {
+        border-bottom: none;
+    }
+    
+    .mega-menu-columns > div:nth-child(3) {
+        border-left: none;
+        border-top: 1px solid #e5e7eb;
+    }
 }
 
-/* --- MOBILE DRAWER --- */
-.mobile-menu-drawer { transition: transform 0.3s ease-in-out; }
-.mobile-menu-backdrop { transition: opacity 0.3s ease-in-out; }
+/* ============================================================================
+   MOBILE MENU - DRAWER E ACCORDION
+   ============================================================================ */
+
+.mobile-menu-drawer { 
+    transition: transform 0.3s ease-in-out; 
+}
+
+.mobile-menu-backdrop { 
+    transition: opacity 0.3s ease-in-out; 
+}
+
+/* Accordion Mobile */
+.mobile-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.mobile-submenu.open {
+    max-height: 1000px;
+    transition: max-height 0.3s ease-in;
+}
+
+.mobile-sub-accordion {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.mobile-sub-accordion.open {
+    max-height: 500px;
+    transition: max-height 0.3s ease-in;
+}
+
+/* ============================================================================
+   SKIP LINKS - ACESSIBILIDADE
+   ============================================================================ */
+
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #1A3E74;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 100;
+    border-radius: 0 0 4px 0;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* ============================================================================
+   DARK MODE SUPPORT
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #111827;
+        color: #f3f4f6;
+    }
+    
+    .top-bar-faixa {
+        background-color: #1f2937;
+        border-bottom-color: #374151;
+    }
+    
+    .mega-panel {
+        background-color: #1f2937; /* Gray 800 */
+    }
+    
+    .mega-menu-columns > div {
+        background-color: #1f2937;
+        border-right-color: #374151;
+    }
+    
+    .glowing-frame {
+        background-color: #111827; /* Gray 900 */
+        color: #f3f4f6;
+    }
+    
+    .glowing-frame:hover {
+        border-color: #60a5fa; /* Blue 400 */
+    }
+    
+    .menu-tab-trigger {
+        color: #d1d5db;
+    }
+    
+    .menu-tab-trigger:hover {
+        background-color: #374151;
+    }
+    
+    .menu-tab-trigger.active {
+        background-color: #1f2937;
+        color: #60a5fa;
+        border-left-color: #60a5fa;
+    }
+}
+
+/* ============================================================================
+   CUSTOM SCROLLBAR
+   ============================================================================ */
+
+.custom-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.custom-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ============================================================================
+   UTILITÁRIOS E AJUSTES FINOS
+   ============================================================================ */
+
+.hidden {
+    display: none !important;
+}
+
+.transition {
+    transition: all 0.2s ease;
+}
+
+/* Garantir que os painéis apareçam acima de outros elementos */
+.mega-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: auto;
+}
+
+/* Ajuste para header fixo */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+/* Ajuste para o conteúdo principal */
+main, #main-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Favicon link (será sobrescrito no HTML) */
+link[rel="icon"] {
+    display: none;
+}
