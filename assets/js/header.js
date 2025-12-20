@@ -1,24 +1,20 @@
 /**
- * HEADER-SCRIPTS.JS - Lógica de Interação e Menu (Mega-Menu)
+ * HEADER.JS - Lógica de Interação e Menu (Mega-Menu)
  * Foco: Resiliência na inicialização e compatibilidade com Template Engines.
- * Nota: Requer utils.js e console-cleaner.js carregados previamente.
  */
 
-// --- 1. CONTROLADOR DO HEADER ---
 const HeaderController = {
     isInitialized: false,
 
-    /**
-     * Inicializa o controlador com verificações de estabilidade do DOM.
-     */
     init: function() {
         if (this.isInitialized) return;
 
-        // Verifica se o container do header já possui conteúdo injetado
-        const headerContainer = document.getElementById('header-container');
-        if (!headerContainer || headerContainer.children.length === 0) {
-            // Se ainda não houver conteúdo, tenta novamente no próximo frame
-            requestAnimationFrame(() => this.init());
+        // Verifica se o container do header existe. 
+        // Removida a verificação restritiva de children.length para permitir inicialização mais rápida.
+        const headerContainer = document.getElementById('header-container') || document.querySelector('header');
+        if (!headerContainer) {
+            // Tenta novamente em breve se o header ainda não estiver no DOM
+            setTimeout(() => this.init(), 100);
             return;
         }
 
@@ -28,11 +24,7 @@ const HeaderController = {
         console.log('✅ [Menu Debug] Sistema de Header estabilizado e inicializado.');
     },
 
-    /**
-     * Aplica as preferências de tema e fonte salvas no localStorage
-     */
     applySavedPreferences: function() {
-        // Tema
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
             document.documentElement.classList.add('dark');
@@ -41,16 +33,12 @@ const HeaderController = {
             this.updateThemeUI(false);
         }
 
-        // Tamanho da Fonte
         const savedFontSize = localStorage.getItem('fontSizeScale');
         if (savedFontSize) {
             document.documentElement.style.fontSize = savedFontSize + '%';
         }
     },
 
-    /**
-     * Atualiza os ícones e textos do botão de tema
-     */
     updateThemeUI: function(isDark) {
         const themeBtn = document.querySelector('#theme-toggle');
         if (!themeBtn) return;
@@ -62,9 +50,6 @@ const HeaderController = {
         if (span) span.innerText = isDark ? 'Modo Claro' : 'Modo Escuro';
     },
 
-    /**
-     * Fecha todos os painéis do Mega-Menu de forma robusta.
-     */
     closeAllPanels: function() {
         const panels = document.querySelectorAll('.mega-panel');
         const triggers = document.querySelectorAll('.nav-trigger');
@@ -83,21 +68,17 @@ const HeaderController = {
     },
 
     bindEvents: function() {
-        // --- DELEGAÇÃO DE EVENTOS GLOBAL ---
+        // Usamos uma única delegação de evento no document para maior eficiência
         document.addEventListener('click', (e) => {
+            
             // 1. Mega Menu Triggers
             const trigger = e.target.closest('.nav-trigger');
             if (trigger) {
                 e.preventDefault();
-                e.stopPropagation();
-                
                 const targetId = trigger.getAttribute('data-panel');
                 const targetPanel = document.getElementById(targetId);
                 
-                if (!targetPanel) {
-                    console.error('❌ [Menu Debug] Painel alvo não encontrado:', targetId);
-                    return;
-                }
+                if (!targetPanel) return;
 
                 const isOpen = targetPanel.classList.contains('active') && targetPanel.style.display === 'block';
                 this.closeAllPanels();
@@ -106,92 +87,86 @@ const HeaderController = {
                     targetPanel.classList.remove('hidden');
                     targetPanel.classList.add('active');
                     targetPanel.style.setProperty('display', 'block', 'important');
-                    
                     trigger.setAttribute('aria-expanded', 'true');
                     const icon = trigger.querySelector('.fa-chevron-down');
                     if (icon) icon.style.transform = 'rotate(180deg)';
-                    
-                    if (window.Utils?.animate?.fadeIn) {
-                        window.Utils.animate.fadeIn(targetPanel, 200);
-                    }
                 }
                 return;
             }
 
-            // 2. Botões de Acessibilidade (Fonte e Tema)
-            const fontIncrease = e.target.closest('[aria-label="Aumentar fonte"]');
-            const fontDecrease = e.target.closest('[aria-label="Diminuir fonte"]');
-            const themeToggle = e.target.closest('#theme-toggle');
+            // 2. Acessibilidade (Fonte e Tema)
+            if (e.target.closest('[aria-label*="Aumentar fonte"]')) return window.changeFontSize('increase');
+            if (e.target.closest('[aria-label*="Diminuir fonte"]')) return window.changeFontSize('decrease');
+            if (e.target.closest('#theme-toggle')) return window.toggleTheme();
 
-            if (fontIncrease) {
-                window.changeFontSize('increase');
-                return;
-            }
-            if (fontDecrease) {
-                window.changeFontSize('decrease');
-                return;
-            }
-            if (themeToggle) {
-                window.toggleTheme();
-                return;
-            }
-
-            // 3. Skip Links (Pular para Conteúdo/Topo/Rodapé)
+            // 3. CORREÇÃO: Skip Links (Pular para Conteúdo/Topo/Rodapé)
+            // Melhorada a detecção para aceitar qualquer link interno que aponte para IDs comuns de estrutura
             const skipLink = e.target.closest('a[href^="#"]');
-            if (skipLink && (skipLink.classList.contains('skip-link') || skipLink.getAttribute('href').includes('container'))) {
-                const targetId = skipLink.getAttribute('href').substring(1);
-                const targetEl = document.getElementById(targetId);
+            if (skipLink) {
+                const href = skipLink.getAttribute('href');
+                // Lista de IDs comuns para skip links caso a classe não esteja presente
+                const commonIds = ['topo', 'conteudo', 'rodape', 'main', 'content', 'footer', 'header'];
+                const targetId = href.substring(1);
                 
-                if (targetEl) {
-                    e.preventDefault();
-                    // Garante que o elemento pode receber foco (essencial para acessibilidade)
-                    if (!/^(?:a|select|input|button|textarea)$/i.test(targetEl.tagName)) {
+                if (skipLink.classList.contains('skip-link') || commonIds.some(id => targetId.toLowerCase().includes(id))) {
+                    const targetEl = document.getElementById(targetId);
+                    if (targetEl) {
+                        e.preventDefault();
+                        // Garante foco para leitores de tela
                         targetEl.setAttribute('tabindex', '-1');
+                        targetEl.focus();
+                        targetEl.scrollIntoView({ behavior: 'smooth' });
+                        console.log('✅ [Acessibilidade] Navegando para:', targetId);
+                        return;
                     }
-                    targetEl.focus();
-                    targetEl.scrollIntoView({ behavior: 'smooth' });
-                    console.log('✅ [Acessibilidade] Skip link para:', targetId);
                 }
-                return;
             }
 
-            // 4. Fechar ao clicar fora
-            if (!e.target.closest('.mega-panel') && !e.target.closest('header')) {
-                this.closeAllPanels();
-            }
-
-            // 5. Controlo Mobile
-            const mobileBtn = e.target.closest('#mobile-menu-trigger');
-            const closeBtn = e.target.closest('#close-mobile-menu');
+            // 4. CORREÇÃO: Menu Mobile (Hambúrguer)
+            const mobileBtn = e.target.closest('#mobile-menu-trigger') || e.target.closest('.mobile-menu-toggle');
+            const closeBtn = e.target.closest('#close-mobile-menu') || e.target.closest('.close-menu');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileDrawer = document.getElementById('mobile-menu-drawer');
 
             if (mobileBtn) {
-                mobileMenu?.classList.remove('hidden');
-                setTimeout(() => mobileDrawer?.classList.add('open'), 10);
+                console.log('📱 [Menu Mobile] Abrindo...');
+                if (mobileMenu) mobileMenu.classList.remove('hidden');
+                // Pequeno delay para garantir que a transição CSS ocorra
+                setTimeout(() => {
+                    if (mobileDrawer) mobileDrawer.classList.add('open');
+                }, 10);
                 document.body.style.overflow = 'hidden';
+                return;
             }
 
-            if (closeBtn || e.target.matches('#mobile-menu-backdrop')) {
-                mobileDrawer?.classList.remove('open');
+            if (closeBtn || e.target.matches('#mobile-menu-backdrop') || e.target.closest('.mobile-backdrop')) {
+                console.log('📱 [Menu Mobile] Fechando...');
+                if (mobileDrawer) mobileDrawer.classList.remove('open');
                 setTimeout(() => {
-                    mobileMenu?.classList.add('hidden');
+                    if (mobileMenu) mobileMenu.classList.add('hidden');
                     document.body.style.overflow = '';
                 }, 300);
+                return;
             }
 
-            // 6. Accordion Mobile
+            // 5. Accordion Mobile
             const accordionTrigger = e.target.closest('.mobile-accordion-trigger');
             if (accordionTrigger) {
                 const sub = accordionTrigger.nextElementSibling;
                 if (sub) {
-                    sub.classList.toggle('open');
-                    sub.style.maxHeight = sub.classList.contains('open') ? sub.scrollHeight + "px" : "0px";
+                    const isOpen = sub.classList.toggle('open');
+                    sub.style.maxHeight = isOpen ? sub.scrollHeight + "px" : "0px";
                 }
+                return;
+            }
+
+            // 6. Fechar ao clicar fora (Mega Menu)
+            if (!e.target.closest('.mega-panel') && !e.target.closest('header')) {
+                this.closeAllPanels();
             }
         });
 
-        // --- COMPORTAMENTO DE ABAS INTERNAS ---
+        // Hover para abas internas do Mega Menu
         document.addEventListener('mouseover', (e) => {
             const tabTrigger = e.target.closest('.menu-tab-trigger');
             if (tabTrigger) {
@@ -201,9 +176,7 @@ const HeaderController = {
                 const targetId = tabTrigger.getAttribute('data-target');
                 const targetContent = document.getElementById(targetId);
 
-                parent.querySelectorAll('.menu-tab-trigger').forEach(t => {
-                    t.classList.remove('active', 'bg-gray-100', 'dark:bg-gray-800');
-                });
+                parent.querySelectorAll('.menu-tab-trigger').forEach(t => t.classList.remove('active', 'bg-gray-100', 'dark:bg-gray-800'));
                 parent.querySelectorAll('.tab-content').forEach(c => {
                     c.classList.add('hidden');
                     c.style.display = 'none';
@@ -219,22 +192,22 @@ const HeaderController = {
     }
 };
 
-// --- 2. ORQUESTRAÇÃO DE INICIALIZAÇÃO ---
-function attemptInitialization() {
-    setTimeout(() => HeaderController.init(), 0);
+// Inicialização robusta
+function startApp() {
+    HeaderController.init();
 }
 
-window.addEventListener('templateEngineReady', attemptInitialization);
-
-if (document.readyState === 'complete') {
-    attemptInitialization();
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startApp);
 } else {
-    window.addEventListener('load', attemptInitialization);
+    startApp();
 }
 
-/**
- * FUNÇÕES GLOBAIS (ACESSIBILIDADE E TEMA)
- */
+// Fallback para garantir inicialização em sistemas com carregamento dinâmico
+window.addEventListener('load', startApp);
+window.addEventListener('templateEngineReady', startApp);
+
+// Funções Globais
 window.toggleTheme = function() {
     const isDark = document.documentElement.classList.toggle('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
@@ -243,12 +216,10 @@ window.toggleTheme = function() {
 
 window.changeFontSize = function(action) {
     let current = parseInt(document.documentElement.style.fontSize) || 100;
-    
     if (action === 'increase' && current < 130) current += 5;
-    if (action === 'decrease' && current > 85) current -= 5;
-    if (action === 'reset') current = 100;
+    else if (action === 'decrease' && current > 85) current -= 5;
+    else if (action === 'reset') current = 100;
     
-    const newValue = current + '%';
-    document.documentElement.style.fontSize = newValue;
+    document.documentElement.style.fontSize = current + '%';
     localStorage.setItem('fontSizeScale', current);
 };
