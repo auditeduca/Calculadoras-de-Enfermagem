@@ -1,4 +1,11 @@
+/**
+ * UTILS.JS - Biblioteca de utilitários globais
+ * Contém funções auxiliares para manipulação de DOM, cálculos, animações e armazenamento.
+ */
+
 const Utils = {
+    // --- FUNÇÕES DE CONTROLE DE FLUXO ---
+    
     debounce: function(func, wait) {
         let timeout;
         return function executedFunction(...args) {
@@ -24,6 +31,8 @@ const Utils = {
         };
     },
 
+    // --- CÁLCULOS E FORMATAÇÃO ---
+
     formatNumber: function(number, decimals = 2) {
         return parseFloat(number).toFixed(decimals);
     },
@@ -46,12 +55,10 @@ const Utils = {
         return { text: 'Obesidade grau III', color: '#7F1D1D' };
     },
 
-
     calculateBSA: function(weight, height) {
         const bsa = Math.sqrt((height * weight) / 3600);
         return this.formatNumber(bsa, 2);
     },
-
 
     calculateDripRate: function(volume, time, dripFactor) {
         const timeInMinutes = time * 60;
@@ -59,19 +66,18 @@ const Utils = {
         return Math.round(dripRate);
     },
 
-
     calculateDosage: function(totalDose, weight, dosePerKg) {
         const calculatedDose = weight * dosePerKg;
         const finalDose = Math.min(calculatedDose, totalDose);
         return this.formatNumber(finalDose, 2);
     },
 
+    // --- VALIDAÇÃO E SEGURANÇA ---
 
     isValidEmail: function(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     },
-
 
     sanitizeHTML: function(str) {
         const temp = document.createElement('div');
@@ -79,6 +85,24 @@ const Utils = {
         return temp.innerHTML;
     },
 
+    /**
+     * [NOVO] Injeta conteúdo HTML em um elemento alvo.
+     * Corrige o erro: "Utils.injectComponent is not a function"
+     * @param {string} targetId - O ID do elemento onde o conteúdo será inserido.
+     * @param {string} content - O conteúdo HTML a ser inserido.
+     */
+    injectComponent: function(targetId, content) {
+        const element = document.getElementById(targetId);
+        if (element) {
+            element.innerHTML = content;
+            return true;
+        } else {
+            console.warn(`[Utils] injectComponent falhou: Elemento #${targetId} não encontrado.`);
+            return false;
+        }
+    },
+
+    // --- ARMAZENAMENTO (LOCALSTORAGE) ---
 
     storage: {
         set: function(key, value) {
@@ -122,6 +146,7 @@ const Utils = {
         }
     },
 
+    // --- COOKIES ---
 
     cookies: {
         set: function(name, value, days = 30) {
@@ -146,9 +171,11 @@ const Utils = {
         }
     },
 
+    // --- ANIMAÇÕES ---
 
     animate: {
         fadeIn: function(element, duration = 300) {
+            if (!element) return;
             element.style.opacity = '0';
             element.style.transition = `opacity ${duration}ms ease-in-out`;
             
@@ -158,6 +185,7 @@ const Utils = {
         },
 
         fadeOut: function(element, duration = 300) {
+            if (!element) return;
             element.style.opacity = '1';
             element.style.transition = `opacity ${duration}ms ease-in-out`;
             
@@ -167,6 +195,7 @@ const Utils = {
         },
 
         slideDown: function(element, duration = 300) {
+            if (!element) return;
             element.style.height = '0';
             element.style.overflow = 'hidden';
             element.style.transition = `height ${duration}ms ease-in-out`;
@@ -181,6 +210,7 @@ const Utils = {
         },
 
         slideUp: function(element, duration = 300) {
+            if (!element) return;
             const height = element.scrollHeight;
             element.style.height = height + 'px';
             element.style.overflow = 'hidden';
@@ -197,6 +227,7 @@ const Utils = {
         },
 
         scaleIn: function(element, duration = 300) {
+            if (!element) return;
             element.style.transform = 'scale(0.8)';
             element.style.opacity = '0';
             element.style.transition = `all ${duration}ms ease-in-out`;
@@ -208,6 +239,7 @@ const Utils = {
         },
 
         scaleOut: function(element, duration = 300) {
+            if (!element) return;
             element.style.transform = 'scale(1)';
             element.style.opacity = '1';
             element.style.transition = `all ${duration}ms ease-in-out`;
@@ -219,6 +251,7 @@ const Utils = {
         },
 
         slideInRight: function(element, duration = 300) {
+            if (!element) return;
             element.style.transform = 'translateX(100%)';
             element.style.opacity = '0';
             element.style.transition = `all ${duration}ms ease-in-out`;
@@ -230,6 +263,7 @@ const Utils = {
         },
 
         slideOutRight: function(element, duration = 300) {
+            if (!element) return;
             element.style.transform = 'translateX(0)';
             element.style.opacity = '1';
             element.style.transition = `all ${duration}ms ease-in-out`;
@@ -241,6 +275,7 @@ const Utils = {
         }
     },
 
+    // --- URL E NAVEGAÇÃO ---
 
     url: {
         getParameter: function(name) {
@@ -261,6 +296,7 @@ const Utils = {
         }
     },
 
+    // --- DATAS ---
 
     date: {
         format: function(date, format = 'DD/MM/YYYY') {
@@ -296,6 +332,7 @@ const Utils = {
         }
     },
 
+    // --- ARRAYS ---
 
     array: {
         unique: function(array) {
@@ -341,6 +378,7 @@ const Utils = {
         }
     },
 
+    // --- DOM HELPER ---
 
     dom: {
         createElement: function(tag, className = '', innerHTML = '') {
@@ -351,21 +389,20 @@ const Utils = {
         },
 
         removeClass: function(element, className) {
-            element.classList.remove(className);
+            if(element) element.classList.remove(className);
         },
 
         addClass: function(element, className) {
-            element.classList.add(className);
+            if(element) element.classList.add(className);
         },
 
         toggleClass: function(element, className) {
-            element.classList.toggle(className);
+            if(element) element.classList.toggle(className);
         },
 
         hasClass: function(element, className) {
-            return element.classList.contains(className);
+            return element && element.classList.contains(className);
         },
-
 
         safeCreate: function(tag, textContent = '', className = '') {
             const element = document.createElement(tag);
@@ -374,25 +411,22 @@ const Utils = {
             return element;
         },
 
-
         byId: function(id) {
             const element = document.getElementById(id);
             if (!element) {
-                console.warn(`Element with ID '${id}' not found`);
+                // Silenciado para não poluir log, use apenas em debug se necessário
+                // console.warn(`Element with ID '${id}' not found`);
             }
             return element;
         },
-
 
         all: function(selector, parent = document) {
             return Array.from(parent.querySelectorAll(selector));
         },
 
-
         exists: function(element) {
             return element && element.nodeType === Node.ELEMENT_NODE;
         },
-
 
         scrollTo: function(element, offset = 0) {
             if (element && element.scrollIntoView) {
@@ -404,8 +438,8 @@ const Utils = {
             }
         },
 
-
         focusFirst: function(container) {
+            if(!container) return;
             const focusableElements = container.querySelectorAll(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             );
@@ -414,11 +448,13 @@ const Utils = {
             }
         },
 
-
         trapFocus: function(container) {
+            if(!container) return;
             const focusableElements = container.querySelectorAll(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             );
+            if (focusableElements.length === 0) return;
+
             const firstElement = focusableElements[0];
             const lastElement = focusableElements[focusableElements.length - 1];
 
@@ -440,6 +476,7 @@ const Utils = {
         }
     },
 
+    // --- MATEMÁTICA E CONVERSÕES ---
 
     math: {
         clamp: function(value, min, max) {
@@ -451,37 +488,14 @@ const Utils = {
         },
 
         convertUnits: {
-            kgToLbs: function(kg) {
-                return kg * 2.20462;
-            },
-
-            lbsToKg: function(lbs) {
-                return lbs / 2.20462;
-            },
-
-            cmToInches: function(cm) {
-                return cm / 2.54;
-            },
-
-            inchesToCm: function(inches) {
-                return inches * 2.54;
-            },
-
-            mlToOunces: function(ml) {
-                return ml / 29.5735;
-            },
-
-            ouncesToMl: function(ounces) {
-                return ounces * 29.5735;
-            },
-
-            celsiusToFahrenheit: function(celsius) {
-                return (celsius * 9/5) + 32;
-            },
-
-            fahrenheitToCelsius: function(fahrenheit) {
-                return (fahrenheit - 32) * 5/9;
-            }
+            kgToLbs: function(kg) { return kg * 2.20462; },
+            lbsToKg: function(lbs) { return lbs / 2.20462; },
+            cmToInches: function(cm) { return cm / 2.54; },
+            inchesToCm: function(inches) { return inches * 2.54; },
+            mlToOunces: function(ml) { return ml / 29.5735; },
+            ouncesToMl: function(ounces) { return ounces * 29.5735; },
+            celsiusToFahrenheit: function(celsius) { return (celsius * 9/5) + 32; },
+            fahrenheitToCelsius: function(fahrenheit) { return (fahrenheit - 32) * 5/9; }
         },
 
         calculatePercentage: function(value, total) {
@@ -499,9 +513,9 @@ const Utils = {
         }
     },
 
+    // --- ACESSIBILIDADE ---
 
     accessibility: {
-
         announce: function(message, priority = 'polite') {
             const announcement = document.createElement('div');
             announcement.setAttribute('aria-live', priority);
@@ -518,31 +532,10 @@ const Utils = {
             }, 1000);
         },
 
-
+        // Redundância de trapFocus para compatibilidade
         trapFocus: function(container) {
-            const focusableElements = container.querySelectorAll(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-            );
-            const firstElement = focusableElements[0];
-            const lastElement = focusableElements[focusableElements.length - 1];
-
-            container.addEventListener('keydown', (e) => {
-                if (e.key === 'Tab') {
-                    if (e.shiftKey) {
-                        if (document.activeElement === firstElement) {
-                            e.preventDefault();
-                            lastElement.focus();
-                        }
-                    } else {
-                        if (document.activeElement === lastElement) {
-                            e.preventDefault();
-                            firstElement.focus();
-                        }
-                    }
-                }
-            });
+            return Utils.dom.trapFocus(container);
         },
-
 
         handleKeyboardNav: function(e, callback) {
             const keyHandlers = {
@@ -561,20 +554,18 @@ const Utils = {
             }
         },
 
-
         prefersReducedMotion: function() {
             return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         },
-
 
         prefersHighContrast: function() {
             return window.matchMedia('(prefers-contrast: high)').matches;
         }
     },
 
+    // --- PERFORMANCE ---
 
     performance: {
-
         measure: function(fn, label = 'Function') {
             const start = performance.now();
             const result = fn();
@@ -583,23 +574,28 @@ const Utils = {
             return result;
         },
 
-
         lazyLoadImages: function() {
             const images = document.querySelectorAll('img[data-src]');
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                        observer.unobserve(img);
-                    }
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            observer.unobserve(img);
+                        }
+                    });
                 });
-            });
-
-            images.forEach(img => imageObserver.observe(img));
+                images.forEach(img => imageObserver.observe(img));
+            } else {
+                // Fallback para navegadores antigos
+                images.forEach(img => {
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                });
+            }
         },
-
 
         debouncedResize: function(callback, delay = 250) {
             let resizeTimeout;
@@ -610,72 +606,59 @@ const Utils = {
         }
     },
 
+    // --- ERROS ---
 
     error: {
         handle: function(error, context = 'Unknown') {
             console.error(`Error in ${context}:`, error);
             
-
             if (window.gtag) {
                 window.gtag('event', 'exception', {
                     description: error.message,
                     fatal: false,
-                    custom_map: {
-                        context: context
-                    }
+                    custom_map: { context: context }
                 });
             }
         },
 
         showUserMessage: function(message, type = 'error') {
-
             const existing = document.querySelectorAll('.user-feedback');
             existing.forEach(el => el.remove());
-            
 
             const feedback = document.createElement('div');
             feedback.className = `user-feedback ${type}`;
             feedback.innerHTML = `
                 <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : 'info-circle'} mr-2"></i>
-                ${this.sanitizeHTML(message)}
+                ${Utils.sanitizeHTML(message)}
             `;
             
             document.body.appendChild(feedback);
             
             setTimeout(() => {
-                feedback.remove();
+                if(document.body.contains(feedback)) feedback.remove();
             }, 5000);
         }
     },
 
+    // --- MODAIS ---
 
     modal: {
-
         isOpen: function(modal) {
-            return modal.classList.contains('show') || modal.classList.contains('open');
+            return modal && (modal.classList.contains('show') || modal.classList.contains('open'));
         },
-
 
         getOpenModals: function() {
             return document.querySelectorAll('.modal.show, .accessibility-menu.open');
         },
 
-
         closeAll: function() {
             const openModals = this.getOpenModals();
-            openModals.forEach(modal => {
-                if (modal.id === 'accessibility-menu') {
-                    modal.classList.remove('open');
-                    modal.setAttribute('aria-hidden', 'true');
-                } else {
-                    modal.classList.remove('show');
-                    modal.setAttribute('aria-hidden', 'true');
-                }
-            });
+            openModals.forEach(modal => this.close(modal, null)); // Fecha sem animação para ser rápido
         },
 
-
         open: function(modal, animation = 'fadeIn') {
+            if (!modal) return;
+            
             if (modal.id === 'accessibility-menu') {
                 modal.classList.add('open');
                 modal.setAttribute('aria-hidden', 'false');
@@ -688,8 +671,9 @@ const Utils = {
             }
         },
 
-
         close: function(modal, animation = 'fadeOut') {
+            if (!modal) return;
+
             if (modal.id === 'accessibility-menu') {
                 modal.classList.remove('open');
                 modal.setAttribute('aria-hidden', 'true');
@@ -709,10 +693,8 @@ const Utils = {
     }
 };
 
-
+// Exportação universal
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = Utils;
 }
-
-
 window.Utils = Utils;
