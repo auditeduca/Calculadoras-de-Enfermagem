@@ -131,24 +131,51 @@ input:disabled + .slider {
     box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
+/* Estados de Visibilidade dos FABs */
+#backToTop.hidden,
+#cookie-fab.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#backToTop.visible,
+#cookie-fab.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease;
+}
+
 /* Reposicionamento adaptativo quando o banner de cookies está ativo */
-.fabs-above-banner #backToTop { 
+body.fabs-above-banner #backToTop { 
     bottom: calc(var(--banner-height) + 85px); 
 }
 
-.fabs-above-banner #cookie-fab { 
+body.fabs-above-banner #cookie-fab { 
     bottom: calc(var(--banner-height) + 20px); 
 }
 
 /* 4. COMPONENTES DE PRIVACIDADE (BANNER E MODAL)
    --------------------------------------------------------- */
+
+/* Banner de Cookies */
 #cookie-banner {
     transform: translateY(100%);
     transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    visibility: hidden;
 }
 
 #cookie-banner.visible { 
-    transform: translateY(0); 
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+#cookie-banner.hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    visibility: hidden;
 }
 
 /* Overlay do Modal */
@@ -158,14 +185,34 @@ input:disabled + .slider {
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Animações quando o modal está ativo */
-.modal-active #cookie-modal-content { 
-    transform: translateY(0); 
+#cookie-overlay.visible {
+    opacity: 1;
+    visibility: visible;
 }
 
-.modal-active #cookie-overlay { 
-    opacity: 1; 
-    visibility: visible; 
+#cookie-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Conteúdo do Modal */
+#cookie-modal-content {
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+#cookie-modal-content.visible {
+    transform: translateY(0);
+}
+
+#cookie-modal-content.hidden {
+    transform: translateY(100%);
+}
+
+/* Prevenir scroll quando modal está ativo */
+body.modal-open {
+    overflow: hidden;
 }
 
 /* 5. TABELAS DE DETALHES TÉCNICOS (DENTRO DO MODAL)
