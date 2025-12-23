@@ -1,482 +1,159 @@
-/* ============================================================================
-   HEADER.CSS - Estilos Completos do Header Modular
-   ============================================================================
-   Versão Final com Todas as Correções:
-   - Mega-menus com fundo padronizado em todas as colunas
-   - Borda azul nas extremidades das imagens
-   - Terceira coluna sem texto (apenas imagens)
-   - Responsividade completa
-   - Suporte a dark mode
-   ============================================================================ */
-
-#header {
-    display: flex;
-    flex-direction: column;
+:root {
+    --primary-color: #1A3E74;
+    --primary-hover: #143260;
+    --audit-gold: #D4AF37; 
+    --scroll-track: #f1f5f9;
+    --scroll-thumb: #cbd5e1;
+    --scroll-thumb-hover: #1A3E74;
 }
 
-/* Compensação para o conteúdo não ficar por baixo do cabeçalho fixo */
-body {
-    padding-top: 100px; /* Altura total: Top Bar (36px) + Navbar (64px) */
-}
+body { font-family: 'Inter', sans-serif; }
+h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
 
-/* ============================================================================
-   TOP BAR - BARRA DE ACESSIBILIDADE
-   ============================================================================ */
-
-.top-bar-faixa {
-    height: 36px;
-    background-color: #f9fafb; /* Gray 50 */
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-}
-
-.top-bar-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 64px;
-    height: 24px;
-    background-color: #1A3E74;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background 0.2s;
-    font-size: 10px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-}
-
-.top-bar-btn:hover { 
-    background-color: #143260; 
-}
-
-.top-bar-btn:focus {
-    outline: 2px solid #1A3E74;
-    outline-offset: 2px;
-}
-
-/* ============================================================================
-   NAVBAR PRINCIPAL
-   ============================================================================ */
-
-.navbar-main-faixa {
-    height: 64px; /* Casar com o h-16 do Tailwind no HTML */
-}
-
-.nav-link-main {
-    height: 64px; /* Mesma altura da faixa para alinhamento da borda */
-    display: flex;
-    align-items: center;
-    padding: 0 1rem;
-    font-weight: 700;
-    font-size: 0.875rem;
-    color: #374151;
-    text-decoration: none;
-    position: relative;
-    transition: color 0.2s;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-.nav-link-main:hover { 
-    color: #1A3E74; 
-}
-
-.nav-link-main:focus {
-    outline: 2px solid #1A3E74;
-    outline-offset: -2px;
-}
-
-/* Indicador de linha */
-.nav-link-main::after {
-    content: '';
-    position: absolute;
-    bottom: 0; /* Colado na borda inferior do header */
-    left: 0;
-    right: 0;
-    height: 3px;
-    background-color: #1A3E74;
-    transform: scaleX(0);
-    transition: transform 0.2s ease;
-    z-index: 10;
-}
-
-.nav-link-main:hover::after,
-.nav-trigger.active::after {
-    transform: scaleX(1);
-}
-
-/* ============================================================================
-   MEGA MENU - PAINÉIS PRINCIPAIS
-   ============================================================================ */
-
+/* --- ESTILOS DO MEGA MENU --- */
 .mega-panel {
     display: none;
     position: absolute;
     left: 0;
     right: 0;
-    top: 100%; /* Colado exatamente onde a navbar termina */
+    top: 100%;
     width: 100%;
-    /* Fundo padronizado: cinza claro em todas as colunas */
-    background-color: #f9fafb; /* Gray 50 para consistência */
-    border-top: none;
+    background-color: white;
+    border-top: 1px solid #e5e7eb;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     z-index: 90;
     animation: slideDown 0.2s ease-out forwards;
 }
 
-.mega-panel.active { 
-    display: block; 
+.mega-panel.active {
+    display: block;
 }
 
+/* Classe utilitária para altura padronizada dos painéis */
 .panel-standard-height {
-    height: 400px; /* Padronizado para 1/4, 1/2, 1/4 */
+    height: 380px; /* Altura fixa para todos os menus */
     display: flex;
 }
 
 @keyframes slideDown {
-    from { 
-        opacity: 0; 
-        transform: translateY(-5px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    }
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* ============================================================================
-   COLUNAS DO MEGA MENU - FUNDO PADRONIZADO
-   ============================================================================ */
-
-.mega-menu-columns {
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
-
-.mega-menu-columns > div {
-    flex: 1;
-    background-color: #f9fafb; /* Mesmo fundo para todas as colunas */
-    padding: 1.5rem;
-    overflow-y: auto;
-    border-right: 1px solid #e5e7eb;
-}
-
-/* Remover borda da última coluna */
-.mega-menu-columns > div:last-child {
-    border-right: none;
-}
-
-/* Terceira coluna - apenas imagens, sem texto */
-.mega-menu-columns > div:nth-child(3) {
-    border-right: none !important;
-    border-left: 1px solid #e5e7eb;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.mega-menu-columns > div:nth-child(3) h4,
-.mega-menu-columns > div:nth-child(3) p {
-    display: none; /* Ocultar texto na terceira coluna */
-}
-
-/* ============================================================================
-   CARDS E GLOWING FRAME - BORDA AZUL NAS EXTREMIDADES
-   ============================================================================ */
-
+/* --- EFEITO BORDA AZUL RELUZENTE --- */
 .glowing-frame {
     background-color: white;
-    padding: 1.25rem;
-    /* Estilo "folha" pronunciado */
-    border-radius: 2rem 0.5rem 2rem 0.5rem;
+    padding: 1rem;
+    border-radius: 0.75rem; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Sombra suave de folha */
     
-    /* Sem borda dourada - apenas sombra padrão */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    
-    border: 3px solid transparent;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: block;
-    text-decoration: none;
-    width: 100%;
+    /* Efeito reluzente */
+    border: 3px solid transparent; 
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    display: block; /* Para garantir que o link ocupe o espaço */
+    width: 100%; /* Garante que o frame use toda a largura disponível no padding */
 }
 
 .glowing-frame:hover {
-    /* Borda azul reluzente nas extremidades */
-    border-color: #1A3E74;
-    box-shadow: 0 0 20px 5px rgba(26, 62, 116, 0.7),
-                0 0 10px 2px rgba(26, 62, 116, 0.4) inset;
-    transform: translateY(-3px);
+    border-color: #1A3E74; /* Borda Primária */
+    box-shadow: 0 0 18px rgba(26, 62, 116, 0.7), 0 0 8px rgba(26, 62, 116, 0.3); /* Efeito de brilho */
+    transform: translateY(-2px); /* Pequeno lift */
 }
 
-.glowing-frame img {
-    /* Imagem com estilo folha e borda azul nas extremidades */
-    border-radius: 2rem 0.5rem 2rem 0.5rem;
-    display: block;
-    width: 100%;
-    height: auto;
-    border: 3px solid transparent;
-    transition: border-color 0.3s ease;
-}
 
-.glowing-frame:hover img {
-    /* Borda azul na extremidade da imagem */
-    border-color: #1A3E74;
-}
-
-.glowing-frame img:hover {
-    border-color: #1A3E74;
-}
-
-/* ============================================================================
-   TABS INTERNAS
-   ============================================================================ */
-
+/* --- ABAS LATERAIS (TABS) --- */
 .menu-tab-trigger {
-    padding: 0.75rem 1.5rem;
     cursor: pointer;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #4b5563;
-    border-left: 3px solid transparent;
     transition: all 0.2s;
-    background-color: transparent;
-    border: none;
-    width: 100%;
-    text-align: left;
+    border-left: 3px solid transparent;
 }
-
-.menu-tab-trigger:hover {
-    background-color: #f3f4f6;
-}
-
 .menu-tab-trigger.active {
-    background-color: white;
-    color: #1A3E74;
-    border-left: 3px solid #1A3E74;
-    font-weight: 800;
+    background-color: #f8fafc; /* Slate 50 */
+    color: var(--primary-color);
+    border-left: 3px solid var(--primary-color);
+    font-weight: 700;
+}
+.menu-tab-trigger:hover:not(.active) {
+    background-color: #f1f5f9;
 }
 
 .tab-content {
     display: none;
     animation: fadeIn 0.3s ease;
 }
-
-.tab-content.active { 
-    display: block; 
+.tab-content.active {
+    display: block;
 }
 
 @keyframes fadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateX(5px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateX(0); 
-    }
+    from { opacity: 0; transform: translateX(5px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
-/* ============================================================================
-   RESPONSIVIDADE
-   ============================================================================ */
-
-@media (max-width: 1024px) {
-    /* No mobile/tablet o Top Bar costuma ser escondido ou muda de tamanho */
-    body {
-        padding-top: 64px; /* Ajustado para apenas a altura da Navbar principal */
-    }
-    
-    .mega-menu-columns {
-        flex-direction: column;
-    }
-    
-    .mega-menu-columns > div {
-        border-right: none;
-        border-bottom: 1px solid #e5e7eb;
-    }
-    
-    .mega-menu-columns > div:last-child {
-        border-bottom: none;
-    }
-    
-    .mega-menu-columns > div:nth-child(3) {
-        border-left: none;
-        border-top: 1px solid #e5e7eb;
-    }
-}
-
-/* ============================================================================
-   MOBILE MENU - DRAWER E ACCORDION
-   ============================================================================ */
-
-.mobile-menu-drawer { 
-    transition: transform 0.3s ease-in-out; 
-}
-
-.mobile-menu-backdrop { 
-    transition: opacity 0.3s ease-in-out; 
-}
-
-/* Accordion Mobile */
-.mobile-submenu {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-}
-
-.mobile-submenu.open {
-    max-height: 1000px;
-    transition: max-height 0.3s ease-in;
-}
-
-.mobile-sub-accordion {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-}
-
-.mobile-sub-accordion.open {
-    max-height: 500px;
-    transition: max-height 0.3s ease-in;
-}
-
-/* ============================================================================
-   SKIP LINKS - ACESSIBILIDADE
-   ============================================================================ */
-
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: #1A3E74;
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-    z-index: 100;
-    border-radius: 0 0 4px 0;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.skip-link:focus {
-    top: 0;
-}
-
-/* ============================================================================
-   DARK MODE SUPPORT
-   ============================================================================ */
-
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #111827;
-        color: #f3f4f6;
-    }
-    
-    .top-bar-faixa {
-        background-color: #1f2937;
-        border-bottom-color: #374151;
-    }
-    
-    .mega-panel {
-        background-color: #1f2937; /* Gray 800 */
-    }
-    
-    .mega-menu-columns > div {
-        background-color: #1f2937;
-        border-right-color: #374151;
-    }
-    
-    .glowing-frame {
-        background-color: #111827; /* Gray 900 */
-        color: #f3f4f6;
-    }
-    
-    .glowing-frame:hover {
-        border-color: #60a5fa; /* Blue 400 */
-    }
-    
-    .menu-tab-trigger {
-        color: #d1d5db;
-    }
-    
-    .menu-tab-trigger:hover {
-        background-color: #374151;
-    }
-    
-    .menu-tab-trigger.active {
-        background-color: #1f2937;
-        color: #60a5fa;
-        border-left-color: #60a5fa;
-    }
-}
-
-/* ============================================================================
-   CUSTOM SCROLLBAR
-   ============================================================================ */
-
-.custom-scroll {
-    scrollbar-width: thin;
-    scrollbar-color: #cbd5e1 #f1f5f9;
-}
-
+/* --- BARRA DE ROLAGEM PROFISSIONAL (Custom-Scroll) --- */
+/* Webkit (Chrome, Edge, Safari) */
 .custom-scroll::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 
 .custom-scroll::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    background: var(--scroll-track);
+    border-radius: 4px;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 3px;
+    background-color: var(--scroll-thumb);
+    border-radius: 4px;
+    border: 2px solid var(--scroll-track);
 }
 
 .custom-scroll::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background-color: var(--scroll-thumb-hover);
 }
 
-/* ============================================================================
-   UTILITÁRIOS E AJUSTES FINOS
-   ============================================================================ */
-
-.hidden {
-    display: none !important;
+/* Firefox */
+.custom-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scroll-thumb) var(--scroll-track);
 }
 
-.transition {
-    transition: all 0.2s ease;
+/* --- GRID PARA LISTAS LONGAS --- */
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem 2rem;
 }
 
-/* Garantir que os painéis apareçam acima de outros elementos */
-.mega-panel {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: auto;
+/* --- MENU MOBILE --- */
+.mobile-menu-drawer { transition: transform 0.3s ease-in-out; }
+.mobile-menu-backdrop { transition: opacity 0.3s ease-in-out; }
+
+/* Submenus principais */
+.mobile-submenu {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.4s ease-out, opacity 0.3s ease, visibility 0.3s ease;
+}
+.mobile-submenu.open { 
+    max-height: 2000px; 
+    opacity: 1;
+    visibility: visible;
 }
 
-/* Ajuste para header fixo */
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
+/* Sub-acordeões internos */
+.mobile-sub-accordion {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease-out, opacity 0.2s ease;
+}
+.mobile-sub-accordion.open {
+    max-height: 500px;
+    opacity: 1;
 }
 
-/* Ajuste para o conteúdo principal */
-main, #main-content {
-    position: relative;
-    z-index: 1;
-}
-
-/* Favicon link (será sobrescrito no HTML) */
-link[rel="icon"] {
-    display: none;
-}
+.rotate-180 { transform: rotate(180deg); }
