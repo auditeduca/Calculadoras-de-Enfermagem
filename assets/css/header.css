@@ -10,7 +10,6 @@
 body { font-family: 'Inter', sans-serif; }
 h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
 
-/* --- ESTILOS DO MEGA MENU --- */
 .mega-panel {
     display: none;
     position: absolute;
@@ -29,9 +28,8 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     display: block;
 }
 
-/* Classe utilitária para altura padronizada dos painéis */
 .panel-standard-height {
-    height: 380px; /* Altura fixa para todos os menus */
+    height: 380px; 
     display: flex;
 }
 
@@ -40,37 +38,33 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- EFEITO BORDA AZUL RELUZENTE --- */
 .glowing-frame {
     background-color: white;
     padding: 1rem;
     border-radius: 0.75rem; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Sombra suave de folha */
-    
-    /* Efeito reluzente */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+
     border: 3px solid transparent; 
     transition: all 0.3s ease-in-out;
     position: relative;
     overflow: hidden;
-    display: block; /* Para garantir que o link ocupe o espaço */
-    width: 100%; /* Garante que o frame use toda a largura disponível no padding */
+    display: block; 
+    width: 100%; 
 }
 
 .glowing-frame:hover {
-    border-color: #1A3E74; /* Borda Primária */
-    box-shadow: 0 0 18px rgba(26, 62, 116, 0.7), 0 0 8px rgba(26, 62, 116, 0.3); /* Efeito de brilho */
-    transform: translateY(-2px); /* Pequeno lift */
+    border-color: #1A3E74; 
+    box-shadow: 0 0 18px rgba(26, 62, 116, 0.7), 0 0 8px rgba(26, 62, 116, 0.3); 
+    transform: translateY(-2px); 
 }
 
-
-/* --- ABAS LATERAIS (TABS) --- */
 .menu-tab-trigger {
     cursor: pointer;
     transition: all 0.2s;
     border-left: 3px solid transparent;
 }
 .menu-tab-trigger.active {
-    background-color: #f8fafc; /* Slate 50 */
+    background-color: #f8fafc; 
     color: var(--primary-color);
     border-left: 3px solid var(--primary-color);
     font-weight: 700;
@@ -92,8 +86,6 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     to { opacity: 1; transform: translateX(0); }
 }
 
-/* --- BARRA DE ROLAGEM PROFISSIONAL (Custom-Scroll) --- */
-/* Webkit (Chrome, Edge, Safari) */
 .custom-scroll::-webkit-scrollbar {
     width: 8px;
 }
@@ -113,24 +105,20 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     background-color: var(--scroll-thumb-hover);
 }
 
-/* Firefox */
 .custom-scroll {
     scrollbar-width: thin;
     scrollbar-color: var(--scroll-thumb) var(--scroll-track);
 }
 
-/* --- GRID PARA LISTAS LONGAS --- */
 .link-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem 2rem;
 }
 
-/* --- MENU MOBILE --- */
 .mobile-menu-drawer { transition: transform 0.3s ease-in-out; }
 .mobile-menu-backdrop { transition: opacity 0.3s ease-in-out; }
 
-/* Submenus principais */
 .mobile-submenu {
     max-height: 0;
     overflow: hidden;
@@ -144,7 +132,6 @@ h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
     visibility: visible;
 }
 
-/* Sub-acordeões internos */
 .mobile-sub-accordion {
     max-height: 0;
     overflow: hidden;
