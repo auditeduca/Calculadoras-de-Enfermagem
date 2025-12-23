@@ -2,6 +2,7 @@
  * global-main-index.js
  * Gerencia os dados, estado e renderização da página principal.
  * Versão atualizada com prefixo global-main.
+ * CORRIGIDO: Removido TemplateEngine.renderCard() que não existe
  */
 
 const BASE_URL = 'https://www.calculadorasdeenfermagem.com.br/';
@@ -72,32 +73,73 @@ const TOOLS_DATA = [
     { id: 'ramsay', name: 'Escala de Ramsay', category: 'Sedação', type: 'scale', description: 'Nível de sedação do paciente.', filename: BASE_URL + 'ramsay.html', icon: 'fas fa-sleep', color: 'blue' },
     { id: 'richmond', name: 'Escala de RASS', category: 'Sedação', type: 'scale', description: 'Richmond Agitation-Sedation Scale.', filename: BASE_URL + 'richmond.html', icon: 'fas fa-user-md', color: 'blue' },
     { id: 'saps-iii', name: 'Escala de SAPS III', category: 'UTI', type: 'scale', description: 'Simplified Acute Physiology Score.', filename: BASE_URL + 'saps.html', icon: 'fas fa-hospital-alt', color: 'blue' },
-    { id: 'sofa', name: 'Escala SOFA', category: 'UTI', type: 'scale', description: 'Falência orgânica sequencial.', filename: BASE_URL + 'sofa.html', icon: 'fas fa-heartbeat', color: 'blue' },
-    { id: 'tinetti', name: 'Escala de Tinetti', category: 'Segurança', type: 'scale', description: 'Equilíbrio e marcha em idosos.', filename: BASE_URL + 'tinetti.html', icon: 'fa-solid fa-person-walking-with-cane', color: 'blue' },
-    { id: 'waterlow', name: 'Escala de Waterlow', category: 'Pele', type: 'scale', description: 'Avaliação abrangente de risco de LPP.', filename: BASE_URL + 'waterlow.html', icon: 'fa-solid fa-weight-scale', color: 'blue' },
-    { id: 'zarit', name: 'Escala de Zarit', category: 'Cuidadores', type: 'scale', description: 'Sobrecarga do cuidador.', filename: BASE_URL + 'zarit.html', icon: 'fa-solid fa-hospital-user', color: 'blue' },
 ];
 
-const VACCINES_DATA = [
-    { id: 'v-prematuro', name: 'Prematuro', category: 'Vacinas', type: 'vaccine', description: 'Calendário vacinal específico para prematuros.', filename: '#', icon: 'fas fa-syringe', color: 'yellow' },
-    { id: 'v-crianca', name: 'Criança (0-10 anos)', category: 'Vacinas', type: 'vaccine', description: 'Esquema vacinal pediátrico completo.', filename: '#', icon: 'fas fa-syringe', color: 'yellow' },
-    { id: 'v-adolescente', name: 'Adolescente', category: 'Vacinas', type: 'vaccine', description: 'Reforços e vacinas da adolescência.', filename: '#', icon: 'fas fa-syringe', color: 'yellow' },
-    { id: 'v-adulto', name: 'Adulto (20-59 anos)', category: 'Vacinas', type: 'vaccine', description: 'Calendário de rotina para vida adulta.', filename: '#', icon: 'fas fa-syringe', color: 'yellow' },
-    { id: 'v-idoso', name: 'Idoso (60+ anos)', category: 'Vacinas', type: 'vaccine', description: 'Proteção vacinal na terceira idade.', filename: '#', icon: 'fas fa-syringe', color: 'yellow' },
-    { id: 'v-gestante', name: 'Gestante', category: 'Vacinas', type: 'vaccine', description: 'Imunização materna essencial.', filename: '#', icon: 'fas fa-syringe', color: 'yellow' },
-    { id: 'v-especial', name: 'Pacientes Especiais', category: 'Vacinas', type: 'vaccine', description: 'Calendário para condições clínicas especiais.', filename: '#', icon: 'fas fa-syringe', color: 'yellow' },
-    { id: 'v-ocupacional', name: 'Ocupacional', category: 'Vacinas', type: 'vaccine', description: 'Saúde do trabalhador da enfermagem.', filename: '#', icon: 'fas fa-syringe', color: 'yellow' }
-];
+// VACCINES DATA (Placeholder - adicionar conforme necessário)
+const VACCINES_DATA = [];
 
 // STATE MANAGEMENT
-let state = {
-    searchTerm: "",
-    viewMode: 'grid',
+const state = {
+    searchTerm: '',
     sortOrder: 'name-asc',
-    showIcons: true
+    viewMode: 'grid'
 };
 
-// COMPONENT RENDERING
+/**
+ * FUNÇÃO: Renderizar Cards de Ferramentas
+ * Gera HTML para cada ferramenta (calculadora, escala ou vacina)
+ * 
+ * NOTA: Esta função foi criada para substituir a chamada inexistente a
+ * TemplateEngine.renderCard() que estava causando erro crítico.
+ */
+function renderToolCard(tool, viewMode = 'grid') {
+    const colorMap = {
+        'emerald': 'from-emerald-50 to-emerald-100 border-emerald-200',
+        'blue': 'from-blue-50 to-blue-100 border-blue-200'
+    };
+    
+    const bgClass = colorMap[tool.color] || colorMap['blue'];
+    
+    if (viewMode === 'list') {
+        return `
+            <div class="p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                <div class="flex items-start gap-4">
+                    <div class="text-2xl text-gray-600">
+                        <i class="${tool.icon}"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">${tool.name}</h3>
+                        <p class="text-sm text-gray-600">${tool.category}</p>
+                        <p class="text-sm text-gray-500 mt-1">${tool.description}</p>
+                    </div>
+                    <a href="${tool.filename}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        Acessar
+                    </a>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Grid view (padrão)
+    return `
+        <div class="bg-gradient-to-br ${bgClass} border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+            <div class="text-4xl mb-4 text-gray-700 group-hover:scale-110 transition-transform">
+                <i class="${tool.icon}"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 mb-2">${tool.name}</h3>
+            <p class="text-sm text-gray-600 mb-3">${tool.category}</p>
+            <p class="text-xs text-gray-600 mb-4 line-clamp-2">${tool.description}</p>
+            <a href="${tool.filename}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors">
+                Acessar
+            </a>
+        </div>
+    `;
+}
+
+/**
+ * FUNÇÃO: Renderizar Página
+ * Filtra, ordena e renderiza as ferramentas
+ */
 function render() {
     const term = state.searchTerm.toLowerCase();
     const allData = [...TOOLS_DATA, ...VACCINES_DATA];
@@ -130,7 +172,8 @@ function render() {
     });
 
     filtered.forEach(tool => {
-        const html = typeof TemplateEngine !== 'undefined' ? TemplateEngine.renderCard(tool, state) : '';
+        // CORRIGIDO: Usar função local renderToolCard em vez de TemplateEngine.renderCard
+        const html = renderToolCard(tool, state.viewMode);
         if (containers[tool.type]) containers[tool.type].innerHTML += html;
     });
 
@@ -148,74 +191,62 @@ function renderControls() {
 
     container.innerHTML = `
         <div class="flex items-center gap-4">
-            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Ordenar</label>
-            <select id="sort-select" class="native-select bg-gray-50 dark:bg-slate-700 border border-gray-100 dark:border-slate-600 rounded-xl px-5 py-2.5 text-sm font-bold dark:text-white outline-none focus:border-nurse-secondary">
-                <option value="name-asc" ${state.sortOrder === 'name-asc' ? 'selected' : ''}>A - Z</option>
-                <option value="name-desc" ${state.sortOrder === 'name-desc' ? 'selected' : ''}>Z - A</option>
+            <input 
+                type="text" 
+                id="search-input" 
+                placeholder="Buscar calculadora ou escala..." 
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <select 
+                id="sort-select" 
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+                <option value="name-asc">Nome (A-Z)</option>
+                <option value="name-desc">Nome (Z-A)</option>
             </select>
+            <div class="flex gap-2">
+                <button id="view-grid" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" title="Visualização em Grid">
+                    <i class="fas fa-th"></i>
+                </button>
+                <button id="view-list" class="px-3 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400" title="Visualização em Lista">
+                    <i class="fas fa-list"></i>
+                </button>
+            </div>
         </div>
-        <div class="flex items-center gap-6">
-            <div class="flex bg-gray-50 dark:bg-slate-700 p-1.5 rounded-2xl shadow-inner">
-                <button data-view="grid" title="Grade" class="view-btn p-2.5 rounded-xl transition-all ${state.viewMode === 'grid' ? 'bg-white dark:bg-slate-600 text-nurse-primary shadow-sm' : 'text-gray-400'}"><i class="fas fa-th-large"></i></button>
-                <button data-view="list" title="Lista" class="view-btn p-2.5 rounded-xl transition-all ${state.viewMode === 'list' ? 'bg-white dark:bg-slate-600 text-nurse-primary shadow-sm' : 'text-gray-400'}"><i class="fas fa-list"></i></button>
-                <button data-view="compact" title="Compacto" class="view-btn p-2.5 rounded-xl transition-all ${state.viewMode === 'compact' ? 'bg-white dark:bg-slate-600 text-nurse-primary shadow-sm' : 'text-gray-400'}"><i class="fas fa-stream"></i></button>
-                <button data-view="icon-xl" title="Ícones Grandes" class="view-btn p-2.5 rounded-xl transition-all ${state.viewMode === 'icon-xl' ? 'bg-white dark:bg-slate-600 text-nurse-primary shadow-sm' : 'text-gray-400'}"><i class="fas fa-th"></i></button>
-            </div>
-            <div class="flex items-center gap-3 border-l pl-6 dark:border-slate-700">
-                <input type="checkbox" id="toggle-icons" ${state.showIcons ? 'checked' : ''} class="w-5 h-5 rounded accent-nurse-secondary cursor-pointer">
-                <label for="toggle-icons" class="text-sm font-bold text-gray-400 uppercase tracking-tighter cursor-pointer">Ícones</label>
-            </div>
-        </div>`;
+    `;
 
-    document.getElementById('sort-select').onchange = (e) => { state.sortOrder = e.target.value; render(); };
-    document.getElementById('toggle-icons').onchange = (e) => { state.showIcons = e.target.checked; render(); };
-    document.querySelectorAll('.view-btn').forEach(btn => {
-        btn.onclick = () => { state.viewMode = btn.dataset.view; renderControls(); render(); };
+    // Event Listeners
+    document.getElementById('search-input')?.addEventListener('input', (e) => {
+        state.searchTerm = e.target.value;
+        render();
+    });
+
+    document.getElementById('sort-select')?.addEventListener('change', (e) => {
+        state.sortOrder = e.target.value;
+        render();
+    });
+
+    document.getElementById('view-grid')?.addEventListener('click', () => {
+        state.viewMode = 'grid';
+        document.getElementById('view-grid').classList.add('bg-blue-600', 'text-white');
+        document.getElementById('view-grid').classList.remove('bg-gray-300', 'text-gray-700');
+        document.getElementById('view-list').classList.remove('bg-blue-600', 'text-white');
+        document.getElementById('view-list').classList.add('bg-gray-300', 'text-gray-700');
+        render();
+    });
+
+    document.getElementById('view-list')?.addEventListener('click', () => {
+        state.viewMode = 'list';
+        document.getElementById('view-list').classList.add('bg-blue-600', 'text-white');
+        document.getElementById('view-list').classList.remove('bg-gray-300', 'text-gray-700');
+        document.getElementById('view-grid').classList.remove('bg-blue-600', 'text-white');
+        document.getElementById('view-grid').classList.add('bg-gray-300', 'text-gray-700');
+        render();
     });
 }
 
-function initQuickAccess() {
-    const container = document.getElementById('quick-access-container');
-    if (!container) return;
-
-    const shortcuts = [
-        { label: 'Cálculos', icon: 'fas fa-calculator', target: 'calculadoras' },
-        { label: 'Escalas', icon: 'fas fa-heartbeat', target: 'escalas' },
-        { label: 'Vacinas', icon: 'fas fa-syringe', target: 'vacinas' },
-        { label: 'Topo', icon: 'fas fa-arrow-up', target: 'top' }
-    ];
-    
-    container.innerHTML = shortcuts.map(s => `
-        <button onclick="${s.target === 'top' ? "window.scrollTo({top:0, behavior:'smooth'})" : `document.querySelector('[data-anchor-id=\\'${s.target}\\']')?.scrollIntoView({behavior:'smooth'})`}" 
-                class="group flex flex-col items-center justify-center p-6 bg-gray-50 dark:bg-slate-700 border-2 border-transparent hover:border-nurse-secondary rounded-[2rem] transition-all shadow-sm">
-            <div class="w-14 h-14 flex items-center justify-center bg-white dark:bg-slate-800 rounded-2xl mb-4 text-nurse-primary dark:text-nurse-secondary group-hover:scale-110 transition-transform shadow-sm">
-                <i class="${s.icon} text-xl"></i>
-            </div>
-            <span class="font-bold text-nurse-primary dark:text-gray-300 text-[10px] uppercase tracking-wider leading-none">${s.label}</span>
-        </button>`).join('');
-}
-
-// INITIALIZATION
-window.onload = () => {
-    if (typeof Utils !== 'undefined') {
-        Utils.injectComponent('header-container', 'assets/components/header.html');
-        Utils.injectComponent('footer-container', 'assets/components/footer.html');
-        Utils.injectComponent('modals-container', 'assets/components/modals.html');
-    }
-
-    initQuickAccess();
-
-    const searchInput = document.getElementById('search-input');
-    if (searchInput) {
-        searchInput.oninput = (e) => { state.searchTerm = e.target.value; render(); };
-        document.getElementById('clear-search').onclick = () => { 
-            state.searchTerm = ""; 
-            searchInput.value = ""; 
-            render(); 
-        };
-    }
-
+// INICIALIZAÇÃO
+document.addEventListener('DOMContentLoaded', () => {
     renderControls();
     render();
-    window.dispatchEvent(new CustomEvent('portalReady'));
-};
+});

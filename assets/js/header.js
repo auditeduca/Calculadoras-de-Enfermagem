@@ -1,7 +1,9 @@
 /**
  * HEADER-SCRIPTS.JS - Lógica de Interação e Menu (Mega-Menu)
  * Foco: Resiliência na inicialização, performance e compatibilidade.
- * Versão: 2.0 (Corrigida e Otimizada)
+ * Versão: 2.1 (Corrigida com sincronização do TemplateEngine)
+ * 
+ * CORREÇÃO: Melhorada sincronização com TemplateEngine para evitar race condition
  */
 
 // --- 1. CONTROLADOR DO HEADER ---
@@ -226,20 +228,46 @@ const HeaderController = {
     }
 };
 
-// --- 2. ORQUESTRAÇÃO DE INICIALIZAÇÃO ---
+// --- 2. ORQUESTRAÇÃO DE INICIALIZAÇÃO COM SINCRONIZAÇÃO ---
+
+/**
+ * Tenta inicializar o HeaderController
+ * Aguarda o TemplateEngine estar pronto antes de inicializar
+ */
 function attemptInitialization() {
     // Usa setTimeout para garantir que a Call Stack esteja limpa
     setTimeout(() => HeaderController.init(), 0);
 }
 
-// Escuta evento customizado do seu Template Engine (se existir)
-window.addEventListener('templateEngineReady', attemptInitialization);
+/**
+ * SINCRONIZAÇÃO MELHORADA:
+ * Aguarda o evento 'templateEngineReady' do TemplateEngine
+ * Isso garante que o HTML do header foi injetado antes de tentar inicializar
+ */
+window.addEventListener('templateEngineReady', () => {
+    console.log('[Header Controller] TemplateEngine pronto, inicializando...');
+    // Pequeno delay para garantir que o DOM foi completamente atualizado
+    setTimeout(() => attemptInitialization(), 100);
+});
 
-// Fallback padrão de carregamento
+/**
+ * FALLBACK: Se o TemplateEngine não existir ou não disparar o evento,
+ * tenta inicializar no evento 'load' padrão
+ */
 if (document.readyState === 'complete') {
-    attemptInitialization();
+    // Página já carregou, mas verifica se TemplateEngine foi inicializado
+    if (!window.TemplateEngine) {
+        console.warn('[Header Controller] TemplateEngine não encontrado, usando fallback...');
+        attemptInitialization();
+    }
 } else {
-    window.addEventListener('load', attemptInitialization);
+    window.addEventListener('load', () => {
+        // Se TemplateEngine não foi inicializado, tenta mesmo assim
+        if (!window.TemplateEngine) {
+            console.warn('[Header Controller] TemplateEngine não encontrado no load, usando fallback...');
+            attemptInitialization();
+        }
+    });
 }
 
 /**
