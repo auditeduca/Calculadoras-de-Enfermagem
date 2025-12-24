@@ -161,7 +161,7 @@
 
         <!-- Título Específico da Ferramenta -->
         <header class="mb-12 text-center md:text-left">
-            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito">Protocolo Clínico</span>
+            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito">Calculadoras Clínicas</span>
             <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 leading-tight font-nunito tracking-tight">Cálculo de Insulina</h1>
             <div class="w-24 h-1.5 bg-nurse-secondary rounded-full mb-8 mx-auto md:mx-0"></div>
             <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium font-inter max-w-3xl">
@@ -192,7 +192,7 @@
                 <!-- Painel da Calculadora -->
                 <section id="pane-calc" class="space-y-8 animate-in fade-in duration-500">
                     
-                    <!-- Dados do Paciente (Padronizado) -->
+                    <!-- Dados do Paciente -->
                     <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
                         <h3 class="text-lg font-black text-nurse-primary dark:text-white mb-6 uppercase tracking-tight font-nunito">
                             Dados do Paciente
@@ -210,7 +210,7 @@
                         </div>
                     </div>
 
-                    <!-- Parâmetros (Padronizado) -->
+                    <!-- Parâmetros -->
                     <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
                         <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest border-b border-gray-100 dark:border-slate-800 pb-2 font-nunito">Parâmetros do Cálculo</h3>
                         
@@ -241,7 +241,6 @@
 
                     <!-- Resultados -->
                     <div id="results-section" class="hidden space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-                        <!-- Card Resultado Principal -->
                         <div id="result-card-container" class="p-8 rounded-[3rem] shadow-2xl transition-all duration-500 text-white font-nunito">
                             <div class="flex flex-col md:flex-row items-center gap-8">
                                 <div class="w-32 h-32 rounded-full border-4 border-white/20 flex flex-col items-center justify-center bg-black/10 backdrop-blur-md">
@@ -256,7 +255,6 @@
                             </div>
                         </div>
 
-                        <!-- Botões de Ação e Auditoria -->
                         <div class="flex flex-col gap-8">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-nunito">
                                 <button onclick="handleSearchNanda()" class="btn-action border-2 border-nurse-secondary text-nurse-secondary hover:bg-nurse-secondary hover:text-white">
@@ -267,7 +265,6 @@
                                 </button>
                             </div>
 
-                            <!-- Auditoria do Cálculo -->
                             <div class="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm font-inter">
                                 <h4 class="font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest border-b pb-2 font-nunito flex items-center gap-2">
                                     <i class="fa-solid fa-magnifying-glass-chart text-nurse-secondary"></i> Auditoria do Cálculo
@@ -299,9 +296,7 @@
                             </div>
                         </div>
 
-                        <!-- Checklists de Segurança -->
                         <div class="space-y-6">
-                            <!-- 9 Certos -->
                             <div class="bg-white dark:bg-slate-900/50 p-6 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
                                 <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-4 uppercase tracking-widest font-nunito flex items-center gap-2">
                                     <i class="fa-solid fa-list-check"></i> 9 Certos da Administração
@@ -309,7 +304,6 @@
                                 <div id="checklist-certos" class="grid grid-cols-1 sm:grid-cols-3 gap-2"></div>
                             </div>
                             
-                            <!-- Metas de Segurança -->
                             <div class="bg-white dark:bg-slate-900/50 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
                                 <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary p-6 uppercase tracking-widest font-nunito border-b border-gray-100 dark:border-slate-800 flex items-center gap-2">
                                     <i class="fa-solid fa-shield-halved"></i> Metas Internacionais de Segurança
@@ -345,7 +339,6 @@
                     </ul>
                 </div>
 
-                <!-- Compartilhar Ordenado -->
                 <div class="sidebar-card bg-nurse-primary-light text-white">
                     <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold font-nunito"><i class="fas fa-share-nodes mr-2"></i> Compartilhar</h3>
                     <div class="flex gap-3 justify-between">
@@ -361,7 +354,6 @@
             </aside>
         </div>
 
-        <!-- Ferramentas Relacionadas -->
         <section class="bg-slate-100 dark:bg-slate-900/40 py-24 border-t border-slate-200 dark:border-slate-800 mt-12 relative z-10 rounded-[3rem]">
             <div class="max-w-7xl mx-auto px-4">
                 <h2 class="text-3xl md:text-5xl font-black text-center text-nurse-primary dark:text-white mb-16 flex items-center justify-center gap-6 font-nunito">
@@ -409,7 +401,6 @@
         </section>
     </main>
 
-    <!-- Containers Modulares para Injeção -->
     <div id="footer-container"></div>
     <div id="modals-container"></div>
 
@@ -420,8 +411,6 @@
 
     <script>
         const ALL_NOVE_CERTOS = ['Paciente', 'Medicamento', 'Dose', 'Hora', 'Via', 'Registro', 'Orientação', 'Resposta', 'Validade'];
-        
-        // Definição Completa das Metas
         const MASTER_SAFETY_GOALS = [
             { id: 1, text: "Identificar corretamente o paciente", colorClass: "bg-red-100 border-red-500 text-red-800", related: true },
             { id: 2, text: "Melhorar a comunicação efetiva", colorClass: "bg-yellow-100 border-yellow-500 text-yellow-800", related: true },
@@ -459,14 +448,12 @@
         };
 
         const renderChecklists = () => {
-            // Render 9 Certos
             document.getElementById('checklist-certos').innerHTML = ALL_NOVE_CERTOS.map((item, idx) => `
                 <label class="flex items-center gap-3 p-2 bg-gray-50 dark:bg-slate-800 rounded-xl cursor-pointer text-[10px] font-bold hover:bg-nurse-secondary/10 transition-colors font-nunito">
                     <input type="checkbox" id="check-certo-${idx}" class="w-4 h-4 rounded accent-nurse-secondary"> ${item} Certo
                 </label>
             `).join('');
 
-            // Render Metas de Segurança Relacionadas
             const relatedGoals = MASTER_SAFETY_GOALS.filter(g => g.related);
             document.getElementById('checklist-metas').innerHTML = relatedGoals.map((meta, idx) => `
                 <label class="flex items-center p-3 rounded-xl border-l-4 shadow-sm cursor-pointer transition-all hover:brightness-95 ${meta.colorClass}">
@@ -537,6 +524,14 @@
             btn.disabled = true;
 
             try {
+                // Coleta de IP do dispositivo
+                let deviceIp = "Não detectado";
+                try {
+                    const ipResponse = await fetch('https://api.ipify.org?format=json');
+                    const ipData = await ipResponse.json();
+                    deviceIp = ipData.ip;
+                } catch (e) { console.error("Erro ao obter IP", e); }
+
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
                 const pName = document.getElementById('patient_name').value || "Não Identificado";
@@ -610,7 +605,7 @@
                     doc.text(`${checked} Meta ${m.id}: ${m.text}`, 25, y + (i * 5));
                 });
 
-                // QR Code e Footer
+                // QR Code e Footer Dinâmico
                 const qrUrl = "https://www.calculadorasdeenfermagem.com.br";
                 const qrContainer = document.getElementById('qrcode-source');
                 qrContainer.innerHTML = "";
@@ -622,8 +617,13 @@
                     doc.line(20, 275, 190, 275);
                     doc.setFontSize(8);
                     doc.setTextColor(150);
-                    doc.text("Gerado em: 24/12/2025, 04:27:55 (Horário local)", 105, 282, { align: "center" });
+                    
+                    const now = new Date();
+                    const timestamp = now.toLocaleString('pt-BR');
+                    
+                    doc.text(`Gerado em: ${timestamp} (Horário local) - IP: ${deviceIp}`, 105, 282, { align: "center" });
                     doc.text("www.calculadorasdeenfermagem.com.br", 105, 287, { align: "center" });
+                    
                     doc.save(`Calculo_Insulina_${pName.replace(/\s+/g, '_')}.pdf`);
                     btnText.innerText = "Gerar PDF";
                     btn.disabled = false;
