@@ -1,276 +1,199 @@
+/**
+ * CALCULADORAS DE ENFERMAGEM - CORE HEADER ENGINE
+ * Versão: 2.1 - Estável
+ */
 
-    // --- LÓGICA DE FONTE & TEMA (Mantida) ---
-    let currentZoom = 100;
-    function changeFontSize(action) {
-        if (action === 'increase') { if (currentZoom < 150) currentZoom += 10; } 
-        else if (action === 'decrease') { if (currentZoom > 90) currentZoom -= 10; }
-        document.documentElement.style.fontSize = currentZoom + '%';
-        localStorage.setItem('user-font-size', currentZoom);
+document.addEventListener('DOMContentLoaded', () => {
+    // --- 1. GERENCIAMENTO DOS MEGA PANELS (DESKTOP) ---
+    const navTriggers = document.querySelectorAll('.nav-trigger');
+    const megaPanels = document.querySelectorAll('.mega-panel');
+    let activePanelId = null;
+
+    function closeAllPanels() {
+        megaPanels.forEach(panel => {
+            panel.classList.remove('active');
+            panel.style.display = 'none';
+        });
+        navTriggers.forEach(t => t.setAttribute('aria-expanded', 'false'));
+        activePanelId = null;
     }
-    const savedZoom = localStorage.getItem('user-font-size');
-    if (savedZoom) { currentZoom = parseInt(savedZoom); document.documentElement.style.fontSize = currentZoom + '%'; }
 
-    function toggleTheme() {
-        document.body.classList.toggle('dark-theme');
-        const isDark = document.body.classList.contains('dark-theme');
-        localStorage.setItem('dark-theme', isDark);
-        const icon = document.querySelector('#theme-toggle i');
-        if(isDark) { icon.classList.remove('fa-moon'); icon.classList.add('fa-sun'); } 
-        else { icon.classList.remove('fa-sun'); icon.classList.add('fa-moon'); }
-    }
-    if (localStorage.getItem('dark-theme') === 'true') { toggleTheme(); }
+    navTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            const panelId = trigger.getAttribute('data-panel');
+            if (!panelId) return;
 
-    // --- MEGA MENUS & MOBILE LOGIC ---
-    document.addEventListener('DOMContentLoaded', () => {
-        
-        // 1. MEGA MENU DESKTOP
-        const navTriggers = document.querySelectorAll('.nav-trigger');
-        const panels = document.querySelectorAll('.mega-panel');
-        let activePanel = null;
+            const targetPanel = document.getElementById(panelId);
 
-        function closeAllPanels() {
-            panels.forEach(panel => {
-                panel.classList.remove('active');
-                panel.setAttribute('aria-hidden', 'true');
-            });
-            navTriggers.forEach(trigger => {
-                trigger.classList.remove('active-nav');
-                trigger.setAttribute('aria-expanded', 'false');
-            });
-            activePanel = null;
-        }
-
-        navTriggers.forEach(trigger => {
-            trigger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const targetId = trigger.dataset.panel;
-                if(!targetId) return; // Botões sem painel (Início)
-                const targetPanel = document.getElementById(targetId);
-
-                if (activePanel === targetPanel) {
-                    closeAllPanels();
-                } else {
-                    closeAllPanels();
+            if (activePanelId === panelId) {
+                closeAllPanels();
+            } else {
+                closeAllPanels();
+                if (targetPanel) {
                     targetPanel.classList.add('active');
-                    targetPanel.setAttribute('aria-hidden', 'false');
-                    trigger.classList.add('active-nav');
+                    targetPanel.style.display = 'block';
                     trigger.setAttribute('aria-expanded', 'true');
-                    activePanel = targetPanel;
-                    
-                    // Foco inteligente para acessibilidade (AA)
-                    if (targetId === 'panel-busca') {
-                        setTimeout(() => document.getElementById('panel-busca-input').focus(), 100);
-                    } else {
-                        // Tenta focar o primeiro elemento interativo do painel para navegação eficiente
-                        const firstFocusable = targetPanel.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                        if(firstFocusable) setTimeout(() => firstFocusable.focus(), 100);
-                    }
-                }
-            });
-        });
-
-        // Fechar ao clicar fora
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.mega-panel') && !e.target.closest('.nav-trigger')) {
-                closeAllPanels();
-            }
-        });
-
-        // --- ACESSIBILIDADE E NAVEGAÇÃO POR TECLADO ---
-
-        // 1. Fechar com ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeAllPanels();
-                closeMobileMenu(); // Fecha o mobile também
-            }
-        });
-
-        // 2. Fechar Mega Menu ao navegar com TAB para fora (Próximo Menu)
-        document.addEventListener('focusin', (e) => {
-            if (activePanel) {
-                const isInsidePanel = activePanel.contains(e.target);
-                const isTrigger = [...navTriggers].some(t => t.contains(e.target));
-                
-                // Se o foco saiu do painel e não foi para o botão que abriu, fecha
-                if (!isInsidePanel && !isTrigger) {
-                    closeAllPanels();
+                    activePanelId = panelId;
                 }
             }
+            e.stopPropagation();
         });
+    });
 
-        // 3. Navegação nas Abas Laterais (Setas e Enter/Space)
-        const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
-        
-        tabTriggers.forEach((trigger, index) => {
-            // Ativação com Enter/Space
-            trigger.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    activateTab(trigger);
-                }
-                
-                // Navegação com setas cima/baixo dentro do grupo
-                if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    const parentPanel = trigger.closest('.mega-panel');
-                    const siblings = Array.from(parentPanel.querySelectorAll('.menu-tab-trigger'));
-                    const currentIndex = siblings.indexOf(trigger);
-                    let nextIndex;
+    // Fechar ao clicar fora
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.mega-panel') && !e.target.closest('.nav-trigger')) {
+            closeAllPanels();
+        }
+    });
 
-                    if (e.key === 'ArrowDown') {
-                        nextIndex = (currentIndex + 1) % siblings.length;
-                    } else {
-                        nextIndex = (currentIndex - 1 + siblings.length) % siblings.length;
-                    }
-                    siblings[nextIndex].focus();
-                    activateTab(siblings[nextIndex]); // Opcional: ativar ao focar (comportamento Windows)
-                }
-            });
-
-            // Ativação com Mouse (Mantido)
-            trigger.addEventListener('mouseenter', () => activateTab(trigger));
-        });
-
-        function activateTab(trigger) {
+    // --- 2. LÓGICA DE TABS DENTRO DOS MEGA PANELS ---
+    const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
+    tabTriggers.forEach(trigger => {
+        const handleTabActivation = () => {
             const parentPanel = trigger.closest('.mega-panel');
-            const targetId = trigger.dataset.target;
-            
+            const targetId = trigger.getAttribute('data-target');
+
+            // Reset triggers no mesmo painel
             parentPanel.querySelectorAll('.menu-tab-trigger').forEach(t => {
                 t.classList.remove('active');
                 t.setAttribute('aria-selected', 'false');
             });
+            // Reset conteúdos no mesmo painel
             parentPanel.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
 
+            // Ativar atual
             trigger.classList.add('active');
             trigger.setAttribute('aria-selected', 'true');
             const targetContent = document.getElementById(targetId);
-            if(targetContent) targetContent.classList.add('active');
-        }
+            if (targetContent) targetContent.classList.add('active');
+        };
 
-        // --- FIM LÓGICA ACESSIBILIDADE ---
+        trigger.addEventListener('mouseenter', handleTabActivation);
+        trigger.addEventListener('click', handleTabActivation);
+    });
 
+    // --- 3. MENU MOBILE E ACORDEÕES ---
+    const mobileMenuTrigger = document.getElementById('mobile-menu-trigger');
+    const closeMobileMenu = document.getElementById('close-mobile-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileDrawer = document.getElementById('mobile-menu-drawer');
+    const mobileBackdrop = document.getElementById('mobile-menu-backdrop');
 
-        // 2. MENU MOBILE ACCORDION (Logica de fechar outros ao abrir um)
-        const mobileTrigger = document.getElementById('mobile-menu-trigger');
-        const closeMobileBtn = document.getElementById('close-mobile-menu');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileDrawer = document.getElementById('mobile-menu-drawer');
-        const mobileBackdrop = document.getElementById('mobile-menu-backdrop');
-        const accordionBtns = document.querySelectorAll('.mobile-accordion-btn');
-
-        function openMobileMenu() {
+    function toggleMobileMenu(isOpen) {
+        if (isOpen) {
             mobileMenu.classList.remove('hidden');
-            mobileMenu.setAttribute('aria-hidden', 'false');
-            mobileTrigger.setAttribute('aria-expanded', 'true');
             setTimeout(() => {
-                mobileBackdrop.classList.remove('opacity-0');
-                mobileDrawer.classList.remove('-translate-x-full');
+                mobileBackdrop.classList.replace('opacity-0', 'opacity-100');
+                mobileDrawer.classList.replace('-translate-x-full', 'translate-x-0');
             }, 10);
-        }
-
-        function closeMobileMenu() {
-            mobileBackdrop.classList.add('opacity-0');
-            mobileDrawer.classList.add('-translate-x-full');
-            mobileTrigger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = 'hidden';
+        } else {
+            mobileBackdrop.classList.replace('opacity-100', 'opacity-0');
+            mobileDrawer.classList.replace('translate-x-0', '-translate-x-full');
             setTimeout(() => {
                 mobileMenu.classList.add('hidden');
-                mobileMenu.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
             }, 300);
         }
+    }
 
-        if(mobileTrigger) {
-            mobileTrigger.addEventListener('click', openMobileMenu);
-            closeMobileBtn.addEventListener('click', closeMobileMenu);
-            mobileBackdrop.addEventListener('click', closeMobileMenu);
-        }
+    if (mobileMenuTrigger) mobileMenuTrigger.addEventListener('click', () => toggleMobileMenu(true));
+    if (closeMobileMenu) closeMobileMenu.addEventListener('click', () => toggleMobileMenu(false));
+    if (mobileBackdrop) mobileBackdrop.addEventListener('click', () => toggleMobileMenu(false));
 
-        accordionBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const content = this.nextElementSibling;
-                const icon = this.querySelector('i');
-                const isActive = this.classList.contains('active');
-
-                // Fechar todos os outros
-                accordionBtns.forEach(otherBtn => {
-                    if(otherBtn !== this) {
-                        otherBtn.classList.remove('active');
-                        otherBtn.setAttribute('aria-expanded', 'false');
-                        otherBtn.nextElementSibling.style.maxHeight = null;
-                        const otherIcon = otherBtn.querySelector('i');
-                        if(otherIcon) otherIcon.classList.remove('rotate-180');
-                    }
-                });
-
-                // Toggle atual
-                if(isActive) {
-                    this.classList.remove('active');
-                    this.setAttribute('aria-expanded', 'false');
-                    content.style.maxHeight = null;
-                    icon.classList.remove('rotate-180');
-                } else {
-                    this.classList.add('active');
-                    this.setAttribute('aria-expanded', 'true');
-                    content.style.maxHeight = content.scrollHeight + "px";
-                    icon.classList.add('rotate-180');
-                }
-            });
-        });
-
-        // 3. LÓGICA DE BUSCA
-        let searchIndex = [];
-        
-        function buildSearchIndex() {
-            const links = document.querySelectorAll('.mega-panel a');
-            links.forEach(link => {
-                if(link.textContent && link.href) {
-                    searchIndex.push({
-                        text: link.textContent.trim(),
-                        href: link.href
-                    });
-                }
-            });
-        }
-        buildSearchIndex();
-
-        window.performSearch = function(query) {
-            const resultsContainer = document.getElementById('active-search-results');
-            const defaultMsg = document.getElementById('default-search-msg');
+    // Acordeão Mobile
+    const accordionBtns = document.querySelectorAll('.mobile-accordion-btn');
+    accordionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', !isExpanded);
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
             
-            if (!query || query.length < 2) {
-                resultsContainer.classList.add('hidden');
-                defaultMsg.classList.remove('hidden');
-                return;
+            if (!isExpanded) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                if (icon) icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.style.maxHeight = '0px';
+                if (icon) icon.style.transform = 'rotate(0deg)';
             }
-
-            defaultMsg.classList.add('hidden');
-            resultsContainer.classList.remove('hidden');
-            resultsContainer.innerHTML = '';
-
-            const lowerQuery = query.toLowerCase();
-            const filtered = searchIndex.filter(item => item.text.toLowerCase().includes(lowerQuery)).slice(0, 10);
-
-            if (filtered.length === 0) {
-                resultsContainer.innerHTML = '<li class="p-4 text-gray-500 text-center">Nenhum resultado encontrado.</li>';
-                return;
-            }
-
-            filtered.forEach(item => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <a href="${item.href}" class="block p-3 hover:bg-blue-50 rounded border border-gray-100 transition flex justify-between items-center group">
-                        <span class="font-medium text-gray-700 group-hover:text-blue-700">${item.text}</span>
-                        <i class="fas fa-arrow-right text-gray-300 text-xs group-hover:text-blue-500" aria-hidden="true"></i>
-                    </a>
-                `;
-                resultsContainer.appendChild(li);
-            });
-        };
-
-        window.clearSearch = function() {
-            const input = document.getElementById('panel-busca-input');
-            input.value = '';
-            performSearch('');
-            input.focus();
-        };
+        });
     });
+});
+
+// --- 4. FUNÇÕES GLOBAIS (ACESSABILIDADE E BUSCA) ---
+// Anexadas ao window para funcionar com atributos onclick do HTML
+
+window.toggleTheme = function() {
+    const html = document.documentElement;
+    const isDark = html.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    
+    // Atualiza ícone se necessário
+    const icon = document.querySelector('#theme-toggle i');
+    if (icon) {
+        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    }
+};
+
+window.changeFontSize = function(action) {
+    const root = document.documentElement;
+    const currentSize = parseFloat(getComputedStyle(root).fontSize);
+    let newSize = action === 'increase' ? currentSize + 1 : currentSize - 1;
+    
+    // Limites de segurança
+    if (newSize >= 12 && newSize <= 22) {
+        root.style.fontSize = newSize + 'px';
+    }
+};
+
+window.performSearch = function(query) {
+    const resultsContainer = document.getElementById('active-search-results');
+    const defaultMsg = document.getElementById('default-search-msg');
+    
+    if (query.length < 2) {
+        resultsContainer.classList.add('hidden');
+        defaultMsg.classList.remove('hidden');
+        return;
+    }
+
+    resultsContainer.classList.remove('hidden');
+    defaultMsg.classList.add('hidden');
+
+    // Simulação de busca (Substitua pela sua lógica de API ou Index)
+    const mockData = [
+        { title: 'Cálculo de Heparina', url: 'heparina.html' },
+        { title: 'Escala de Glasgow', url: 'glasgow.html' },
+        { title: 'Calendário Vacinal', url: 'calendariovacinaladultos.html' }
+    ];
+
+    const filtered = mockData.filter(item => 
+        item.title.toLowerCase().includes(query.toLowerCase())
+    );
+
+    resultsContainer.innerHTML = filtered.length > 0 
+        ? filtered.map(item => `
+            <li>
+                <a href="${item.url}" class="block p-3 hover:bg-blue-50 rounded border-b border-gray-100 transition">
+                    <i class="fas fa-file-medical text-blue-600 mr-2"></i> ${item.title}
+                </a>
+            </li>
+        `).join('')
+        : `<li class="p-4 text-center text-gray-400">Nenhum resultado encontrado para "${query}"</li>`;
+};
+
+window.clearSearch = function() {
+    const input = document.getElementById('panel-busca-input');
+    if (input) {
+        input.value = '';
+        window.performSearch('');
+    }
+};
+
+// --- Inicialização de Preferências ---
+(function init() {
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+    }
+})();
