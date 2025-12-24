@@ -1,197 +1,276 @@
-/* COMPONENTE: header.js
-    Versão: 5.1 (Zero Inline - Integridade Total)
-    Contém: Gerenciamento de acessibilidade (fonte), temas, busca, mega-menus e menu mobile.
-*/
 
-// --- Variáveis Globais de Estado ---
-let currentZoom = 100;
-
-/**
- * Altera o tamanho da fonte do documento e salva no localStorage
- * @param {string} action - 'increase' ou 'decrease'
- */
-function changeFontSize(action) {
-    if (action === 'increase' && currentZoom < 150) currentZoom += 10;
-    else if (action === 'decrease' && currentZoom > 90) currentZoom -= 10;
-    
-    document.documentElement.style.fontSize = currentZoom + '%';
-    localStorage.setItem('user-font-size', currentZoom);
-}
-
-/**
- * Alterna entre o tema claro e escuro e salva a preferência
- */
-function toggleTheme() {
-    document.body.classList.toggle('dark-theme');
-    const isDark = document.body.classList.contains('dark-theme');
-    localStorage.setItem('dark-theme', isDark);
-    
-    const icon = document.querySelector('#theme-toggle i');
-    if (icon) {
-        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    // --- LÓGICA DE FONTE & TEMA (Mantida) ---
+    let currentZoom = 100;
+    function changeFontSize(action) {
+        if (action === 'increase') { if (currentZoom < 150) currentZoom += 10; } 
+        else if (action === 'decrease') { if (currentZoom > 90) currentZoom -= 10; }
+        document.documentElement.style.fontSize = currentZoom + '%';
+        localStorage.setItem('user-font-size', currentZoom);
     }
-}
+    const savedZoom = localStorage.getItem('user-font-size');
+    if (savedZoom) { currentZoom = parseInt(savedZoom); document.documentElement.style.fontSize = currentZoom + '%'; }
 
-/**
- * Inicializa todos os ouvintes de eventos do Header
- */
-function initHeaderEvents() {
-    // 1. Controles de Acessibilidade e Tema
-    const btnDecrease = document.getElementById('font-decrease');
-    const btnIncrease = document.getElementById('font-increase');
-    const btnTheme = document.getElementById('theme-toggle');
-
-    if (btnDecrease) btnDecrease.addEventListener('click', () => changeFontSize('decrease'));
-    if (btnIncrease) btnIncrease.addEventListener('click', () => changeFontSize('increase'));
-    if (btnTheme) btnTheme.addEventListener('click', toggleTheme);
-
-    // 2. Gerenciamento de Mega Menus Desktop
-    const navTriggers = document.querySelectorAll('.nav-trigger');
-    const panels = document.querySelectorAll('.mega-panel');
-    let activePanel = null;
-
-    function closeAllPanels() {
-        panels.forEach(p => p.classList.remove('active'));
-        navTriggers.forEach(t => t.classList.remove('active-nav'));
-        activePanel = null;
+    function toggleTheme() {
+        document.body.classList.toggle('dark-theme');
+        const isDark = document.body.classList.contains('dark-theme');
+        localStorage.setItem('dark-theme', isDark);
+        const icon = document.querySelector('#theme-toggle i');
+        if(isDark) { icon.classList.remove('fa-moon'); icon.classList.add('fa-sun'); } 
+        else { icon.classList.remove('fa-sun'); icon.classList.add('fa-moon'); }
     }
+    if (localStorage.getItem('dark-theme') === 'true') { toggleTheme(); }
 
-    navTriggers.forEach(trigger => {
-        trigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const panelId = trigger.dataset.panel;
-            if (!panelId) return;
-            
-            const targetPanel = document.getElementById(panelId);
+    // --- MEGA MENUS & MOBILE LOGIC ---
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // 1. MEGA MENU DESKTOP
+        const navTriggers = document.querySelectorAll('.nav-trigger');
+        const panels = document.querySelectorAll('.mega-panel');
+        let activePanel = null;
 
-            if (activePanel === targetPanel) {
+        function closeAllPanels() {
+            panels.forEach(panel => {
+                panel.classList.remove('active');
+                panel.setAttribute('aria-hidden', 'true');
+            });
+            navTriggers.forEach(trigger => {
+                trigger.classList.remove('active-nav');
+                trigger.setAttribute('aria-expanded', 'false');
+            });
+            activePanel = null;
+        }
+
+        navTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const targetId = trigger.dataset.panel;
+                if(!targetId) return; // Botões sem painel (Início)
+                const targetPanel = document.getElementById(targetId);
+
+                if (activePanel === targetPanel) {
+                    closeAllPanels();
+                } else {
+                    closeAllPanels();
+                    targetPanel.classList.add('active');
+                    targetPanel.setAttribute('aria-hidden', 'false');
+                    trigger.classList.add('active-nav');
+                    trigger.setAttribute('aria-expanded', 'true');
+                    activePanel = targetPanel;
+                    
+                    // Foco inteligente para acessibilidade (AA)
+                    if (targetId === 'panel-busca') {
+                        setTimeout(() => document.getElementById('panel-busca-input').focus(), 100);
+                    } else {
+                        // Tenta focar o primeiro elemento interativo do painel para navegação eficiente
+                        const firstFocusable = targetPanel.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                        if(firstFocusable) setTimeout(() => firstFocusable.focus(), 100);
+                    }
+                }
+            });
+        });
+
+        // Fechar ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.mega-panel') && !e.target.closest('.nav-trigger')) {
                 closeAllPanels();
-            } else {
+            }
+        });
+
+        // --- ACESSIBILIDADE E NAVEGAÇÃO POR TECLADO ---
+
+        // 1. Fechar com ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
                 closeAllPanels();
-                targetPanel.classList.add('active');
-                trigger.classList.add('active-nav');
-                activePanel = targetPanel;
+                closeMobileMenu(); // Fecha o mobile também
+            }
+        });
+
+        // 2. Fechar Mega Menu ao navegar com TAB para fora (Próximo Menu)
+        document.addEventListener('focusin', (e) => {
+            if (activePanel) {
+                const isInsidePanel = activePanel.contains(e.target);
+                const isTrigger = [...navTriggers].some(t => t.contains(e.target));
                 
-                // Foco automático no input de busca se o painel de busca for aberto
-                if (panelId === 'panel-busca') {
-                    const searchInput = document.getElementById('panel-busca-input');
-                    if (searchInput) setTimeout(() => searchInput.focus(), 100);
+                // Se o foco saiu do painel e não foi para o botão que abriu, fecha
+                if (!isInsidePanel && !isTrigger) {
+                    closeAllPanels();
                 }
             }
         });
-    });
 
-    // 3. Abas Laterais (Tabs) dentro dos Mega Painéis
-    document.querySelectorAll('.menu-tab-trigger').forEach(trigger => {
-        // Ativação por hover (mouseenter)
-        trigger.addEventListener('mouseenter', () => {
-            const parent = trigger.closest('.mega-panel');
+        // 3. Navegação nas Abas Laterais (Setas e Enter/Space)
+        const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
+        
+        tabTriggers.forEach((trigger, index) => {
+            // Ativação com Enter/Space
+            trigger.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    activateTab(trigger);
+                }
+                
+                // Navegação com setas cima/baixo dentro do grupo
+                if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    const parentPanel = trigger.closest('.mega-panel');
+                    const siblings = Array.from(parentPanel.querySelectorAll('.menu-tab-trigger'));
+                    const currentIndex = siblings.indexOf(trigger);
+                    let nextIndex;
+
+                    if (e.key === 'ArrowDown') {
+                        nextIndex = (currentIndex + 1) % siblings.length;
+                    } else {
+                        nextIndex = (currentIndex - 1 + siblings.length) % siblings.length;
+                    }
+                    siblings[nextIndex].focus();
+                    activateTab(siblings[nextIndex]); // Opcional: ativar ao focar (comportamento Windows)
+                }
+            });
+
+            // Ativação com Mouse (Mantido)
+            trigger.addEventListener('mouseenter', () => activateTab(trigger));
+        });
+
+        function activateTab(trigger) {
+            const parentPanel = trigger.closest('.mega-panel');
             const targetId = trigger.dataset.target;
             
-            if (!parent || !targetId) return;
+            parentPanel.querySelectorAll('.menu-tab-trigger').forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            parentPanel.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
 
-            parent.querySelectorAll('.menu-tab-trigger').forEach(t => t.classList.remove('active'));
-            parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            
             trigger.classList.add('active');
+            trigger.setAttribute('aria-selected', 'true');
             const targetContent = document.getElementById(targetId);
-            if (targetContent) targetContent.classList.add('active');
-        });
-        
-        // Ativação por teclado (Acessibilidade)
-        trigger.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                trigger.dispatchEvent(new Event('mouseenter'));
-            }
-        });
-    });
+            if(targetContent) targetContent.classList.add('active');
+        }
 
-    // 4. Menu Mobile (Hamburguer)
-    const mobileBtn = document.getElementById('mobile-menu-trigger');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const closeMobile = document.getElementById('close-mobile-menu');
-    const backdrop = document.getElementById('mobile-menu-backdrop');
-    const drawer = document.getElementById('mobile-menu-drawer');
+        // --- FIM LÓGICA ACESSIBILIDADE ---
 
-    if (mobileBtn && mobileMenu) {
-        mobileBtn.addEventListener('click', () => {
+
+        // 2. MENU MOBILE ACCORDION (Logica de fechar outros ao abrir um)
+        const mobileTrigger = document.getElementById('mobile-menu-trigger');
+        const closeMobileBtn = document.getElementById('close-mobile-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileDrawer = document.getElementById('mobile-menu-drawer');
+        const mobileBackdrop = document.getElementById('mobile-menu-backdrop');
+        const accordionBtns = document.querySelectorAll('.mobile-accordion-btn');
+
+        function openMobileMenu() {
             mobileMenu.classList.remove('hidden');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            mobileTrigger.setAttribute('aria-expanded', 'true');
             setTimeout(() => {
-                if (backdrop) backdrop.classList.remove('opacity-0');
-                if (drawer) drawer.classList.remove('-translate-x-full');
+                mobileBackdrop.classList.remove('opacity-0');
+                mobileDrawer.classList.remove('-translate-x-full');
             }, 10);
+        }
+
+        function closeMobileMenu() {
+            mobileBackdrop.classList.add('opacity-0');
+            mobileDrawer.classList.add('-translate-x-full');
+            mobileTrigger.setAttribute('aria-expanded', 'false');
+            setTimeout(() => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.setAttribute('aria-hidden', 'true');
+            }, 300);
+        }
+
+        if(mobileTrigger) {
+            mobileTrigger.addEventListener('click', openMobileMenu);
+            closeMobileBtn.addEventListener('click', closeMobileMenu);
+            mobileBackdrop.addEventListener('click', closeMobileMenu);
+        }
+
+        accordionBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                const isActive = this.classList.contains('active');
+
+                // Fechar todos os outros
+                accordionBtns.forEach(otherBtn => {
+                    if(otherBtn !== this) {
+                        otherBtn.classList.remove('active');
+                        otherBtn.setAttribute('aria-expanded', 'false');
+                        otherBtn.nextElementSibling.style.maxHeight = null;
+                        const otherIcon = otherBtn.querySelector('i');
+                        if(otherIcon) otherIcon.classList.remove('rotate-180');
+                    }
+                });
+
+                // Toggle atual
+                if(isActive) {
+                    this.classList.remove('active');
+                    this.setAttribute('aria-expanded', 'false');
+                    content.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    this.classList.add('active');
+                    this.setAttribute('aria-expanded', 'true');
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.classList.add('rotate-180');
+                }
+            });
         });
-    }
 
-    const closeHandler = () => {
-        if (backdrop) backdrop.classList.add('opacity-0');
-        if (drawer) drawer.classList.add('-translate-x-full');
-        setTimeout(() => {
-            if (mobileMenu) mobileMenu.classList.add('hidden');
-        }, 300);
-    };
+        // 3. LÓGICA DE BUSCA
+        let searchIndex = [];
+        
+        function buildSearchIndex() {
+            const links = document.querySelectorAll('.mega-panel a');
+            links.forEach(link => {
+                if(link.textContent && link.href) {
+                    searchIndex.push({
+                        text: link.textContent.trim(),
+                        href: link.href
+                    });
+                }
+            });
+        }
+        buildSearchIndex();
 
-    if (closeMobile) closeMobile.addEventListener('click', closeHandler);
-    if (backdrop) backdrop.addEventListener('click', closeHandler);
-
-    // Accordion Mobile
-    document.querySelectorAll('.mobile-accordion-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const content = this.nextElementSibling;
-            const icon = this.querySelector('i');
-            const isActive = this.classList.contains('active');
-
-            // Toggle atual
-            if (isActive) {
-                this.classList.remove('active');
-                content.style.maxHeight = null;
-                if (icon) icon.classList.remove('rotate-180');
-            } else {
-                this.classList.add('active');
-                content.style.maxHeight = content.scrollHeight + "px";
-                if (icon) icon.classList.add('rotate-180');
+        window.performSearch = function(query) {
+            const resultsContainer = document.getElementById('active-search-results');
+            const defaultMsg = document.getElementById('default-search-msg');
+            
+            if (!query || query.length < 2) {
+                resultsContainer.classList.add('hidden');
+                defaultMsg.classList.remove('hidden');
+                return;
             }
-        });
+
+            defaultMsg.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+            resultsContainer.innerHTML = '';
+
+            const lowerQuery = query.toLowerCase();
+            const filtered = searchIndex.filter(item => item.text.toLowerCase().includes(lowerQuery)).slice(0, 10);
+
+            if (filtered.length === 0) {
+                resultsContainer.innerHTML = '<li class="p-4 text-gray-500 text-center">Nenhum resultado encontrado.</li>';
+                return;
+            }
+
+            filtered.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="${item.href}" class="block p-3 hover:bg-blue-50 rounded border border-gray-100 transition flex justify-between items-center group">
+                        <span class="font-medium text-gray-700 group-hover:text-blue-700">${item.text}</span>
+                        <i class="fas fa-arrow-right text-gray-300 text-xs group-hover:text-blue-500" aria-hidden="true"></i>
+                    </a>
+                `;
+                resultsContainer.appendChild(li);
+            });
+        };
+
+        window.clearSearch = function() {
+            const input = document.getElementById('panel-busca-input');
+            input.value = '';
+            performSearch('');
+            input.focus();
+        };
     });
-
-    // 5. Fechar painéis ao clicar fora
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.mega-panel') && !e.target.closest('.nav-trigger')) {
-            closeAllPanels();
-        }
-    });
-
-    // 6. Fechar com tecla ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeAllPanels();
-            closeHandler();
-        }
-    });
-}
-
-/**
- * Carrega preferências do usuário e inicializa eventos
- */
-(function loadPrefsAndInit() {
-    // Restaurar Tamanho da Fonte
-    const savedZoom = localStorage.getItem('user-font-size');
-    if (savedZoom) {
-        currentZoom = parseInt(savedZoom);
-        document.documentElement.style.fontSize = currentZoom + '%';
-    }
-    
-    // Restaurar Tema
-    if (localStorage.getItem('dark-theme') === 'true') {
-        document.body.classList.add('dark-theme');
-        // Ícone será ajustado pelo toggleTheme ou lógica de init
-    }
-
-    // Inicialização segura
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        initHeaderEvents();
-    } else {
-        window.addEventListener('DOMContentLoaded', initHeaderEvents);
-    }
-})();
