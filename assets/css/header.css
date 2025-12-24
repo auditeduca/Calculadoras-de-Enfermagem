@@ -1,161 +1,91 @@
-<!-- 
-    SOLUÇÃO DEFINITIVA (CSS INTERNO):
-    
-    Substitua a linha do <link rel="stylesheet"...> antiga por todo este bloco <style> abaixo.
-    Isso garante que o menu funcione mesmo sem internet ou se o link externo quebrar.
--->
+/* COMPONENTE: header.css
+    Variáveis, Temas, Mega Menu e Responsividade.
+    Limpado de estilos inline.
+*/
 
-<style>
-    :root {
-        --primary-color: #1A3E74;
-        --primary-hover: #143260;
-        --audit-gold: #D4AF37; 
-        --scroll-track: #f1f5f9;
-        --scroll-thumb: #cbd5e1;
-        --scroll-thumb-hover: #1A3E74;
-    }
+:root {
+    --primary-color: #1A3E74; 
+    --primary-hover: #143260;
+    --accent-color: #1e40af; 
+    --accent-glow: #3b82f6;  
+    --scroll-track: #f1f5f9;
+    --scroll-thumb: #93c5fd;
+    --bg-body: #F9FAFB;
+    --text-body: #1f2937;
+    --bg-panel: #ffffff;
+    --border-panel: #e2e8f0;
+}
 
-    body { font-family: 'Inter', sans-serif; }
-    h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
+body.dark-theme {
+    --primary-color: #60a5fa;
+    --bg-body: #0f172a;
+    --text-body: #e2e8f0;
+    --bg-panel: #1e293b;
+    --border-panel: #334155;
+    background-color: var(--bg-body);
+    color: var(--text-body);
+}
 
-    /* --- MEGA PANEL BASE --- */
-    .mega-panel {
-        display: none;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 100%;
-        width: 100%;
-        background-color: white;
-        border-top: 1px solid #e5e7eb;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        z-index: 90;
-        animation: slideDown 0.2s ease-out forwards;
-    }
+/* Skip Links - Removido estilos inline do HTML */
+.skip-link {
+    position: absolute;
+    top: -9999px;
+    left: 1rem;
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    z-index: 10001;
+    font-weight: 700;
+    border-radius: 0 0 8px 8px;
+    transition: top 0.2s;
+}
+.skip-link:focus { top: 0; }
 
-    .mega-panel.active {
-        display: block;
-    }
+.skip-link-content { left: 6rem; }
+.skip-link-footer { left: 14rem; }
 
-    .panel-standard-height {
-        height: 380px; 
-        display: flex;
-    }
+/* Nav Buttons Custom */
+.nav-btn {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.nav-btn:hover { background: var(--primary-hover); }
 
-    @keyframes slideDown {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+/* Mega Menu */
+.mega-panel {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--bg-panel);
+    border-top: 1px solid var(--border-panel);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    z-index: 900;
+    animation: slideDown 0.2s ease-out;
+}
+.mega-panel.active { display: block; }
+.panel-standard-height { min-height: 400px; display: flex; }
 
-    /* --- CARDS E EFEITOS VISUAIS --- */
-    .glowing-frame {
-        background-color: white;
-        padding: 1rem;
-        border-radius: 0.75rem; 
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-        border: 3px solid transparent; 
-        transition: all 0.3s ease-in-out;
-        position: relative;
-        overflow: hidden;
-        display: block; 
-        width: 100%; 
-    }
+.panel-sidebar { background: #F8FAFC; border-right: 1px solid var(--border-panel); }
+.menu-tab-trigger { cursor: pointer; border-left: 4px solid transparent; transition: all 0.2s; }
+.menu-tab-trigger.active { background: var(--bg-panel); color: var(--accent-color); border-left-color: var(--accent-glow); font-weight: 700; }
 
-    .glowing-frame:hover {
-        border-color: #1A3E74; 
-        box-shadow: 0 0 18px rgba(26, 62, 116, 0.7), 0 0 8px rgba(26, 62, 116, 0.3); 
-        transform: translateY(-2px); 
-    }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
-    /* --- NAVEGAÇÃO INTERNA DO MENU --- */
-    .menu-tab-trigger {
-        cursor: pointer;
-        transition: all 0.2s;
-        border-left: 3px solid transparent;
-    }
-    .menu-tab-trigger.active {
-        background-color: #f8fafc; 
-        color: var(--primary-color);
-        border-left: 3px solid var(--primary-color);
-        font-weight: 700;
-    }
-    .menu-tab-trigger:hover:not(.active) {
-        background-color: #f1f5f9;
-    }
+.link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.link-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
 
-    .tab-content {
-        display: none;
-        animation: fadeIn 0.3s ease;
-    }
-    .tab-content.active {
-        display: block;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateX(5px); }
-        to { opacity: 1; transform: translateX(0); }
-    }
-
-    /* --- SCROLLBAR PERSONALIZADA --- */
-    .custom-scroll::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .custom-scroll::-webkit-scrollbar-track {
-        background: var(--scroll-track);
-        border-radius: 4px;
-    }
-
-    .custom-scroll::-webkit-scrollbar-thumb {
-        background-color: var(--scroll-thumb);
-        border-radius: 4px;
-        border: 2px solid var(--scroll-track);
-    }
-
-    .custom-scroll::-webkit-scrollbar-thumb:hover {
-        background-color: var(--scroll-thumb-hover);
-    }
-
-    .custom-scroll {
-        scrollbar-width: thin;
-        scrollbar-color: var(--scroll-thumb) var(--scroll-track);
-    }
-
-    /* --- LAYOUTS ESPECÍFICOS --- */
-    .link-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem 2rem;
-    }
-
-    /* --- MENU MOBILE --- */
-    .mobile-menu-drawer { transition: transform 0.3s ease-in-out; }
-    .mobile-menu-backdrop { transition: opacity 0.3s ease-in-out; }
-
-    .mobile-submenu {
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        visibility: hidden;
-        transition: max-height 0.4s ease-out, opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .mobile-submenu.open { 
-        max-height: 2000px; 
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .mobile-sub-accordion {
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        transition: max-height 0.3s ease-out, opacity 0.2s ease;
-    }
-    .mobile-sub-accordion.open {
-        max-height: 500px;
-        opacity: 1;
-    }
-
-    .rotate-180 { transform: rotate(180deg); }
-</style>
+/* Utils */
+.custom-scroll::-webkit-scrollbar { width: 6px; }
+.custom-scroll::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 10px; }

@@ -1,170 +1,152 @@
-document.addEventListener('DOMContentLoaded', () => {
+/* COMPONENTE: header.js
+    Limpado de eventos inline (onclick).
+    Contém: Gerenciamento de abas, temas, busca e menu mobile.
+*/
 
+// --- Variáveis Globais de Estado ---
+let currentZoom = 100;
+
+/**
+ * Altera o tamanho da fonte do documento
+ * @param {string} action - 'increase' ou 'decrease'
+ */
+function changeFontSize(action) {
+    if (action === 'increase' && currentZoom < 150) currentZoom += 10;
+    else if (action === 'decrease' && currentZoom > 90) currentZoom -= 10;
+    
+    document.documentElement.style.fontSize = currentZoom + '%';
+    localStorage.setItem('user-font-size', currentZoom);
+}
+
+/**
+ * Alterna entre o tema claro e escuro
+ */
+function toggleTheme() {
+    document.body.classList.toggle('dark-theme');
+    const isDark = document.body.classList.contains('dark-theme');
+    localStorage.setItem('dark-theme', isDark);
+    
+    const icon = document.querySelector('#theme-toggle i');
+    if (icon) {
+        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    }
+}
+
+/**
+ * Inicializa todos os eventos do Header
+ */
+function initHeaderEvents() {
+    // 1. Controles da Barra Superior (Removido inline onclick)
+    const btnDecrease = document.getElementById('font-decrease');
+    const btnIncrease = document.getElementById('font-increase');
+    const btnTheme = document.getElementById('theme-toggle');
+
+    if (btnDecrease) btnDecrease.addEventListener('click', () => changeFontSize('decrease'));
+    if (btnIncrease) btnIncrease.addEventListener('click', () => changeFontSize('increase'));
+    if (btnTheme) btnTheme.addEventListener('click', toggleTheme);
+
+    // 2. Mega Menus Desktop
     const navTriggers = document.querySelectorAll('.nav-trigger');
-    const megaPanels = document.querySelectorAll('.mega-panel');
+    const panels = document.querySelectorAll('.mega-panel');
+    let activePanel = null;
 
     function closeAllPanels() {
-        megaPanels.forEach(panel => panel.classList.remove('active'));
-        navTriggers.forEach(trigger => {
-            trigger.setAttribute('aria-expanded', 'false');
-            const icon = trigger.querySelector('.fa-chevron-down');
-            if(icon) icon.style.transform = 'rotate(0deg)';
-        });
+        panels.forEach(p => p.classList.remove('active'));
+        navTriggers.forEach(t => t.classList.remove('active-nav'));
+        activePanel = null;
     }
 
     navTriggers.forEach(trigger => {
         trigger.addEventListener('click', (e) => {
-            e.stopPropagation(); 
+            e.stopPropagation();
+            const panelId = trigger.dataset.panel;
+            if (!panelId) return;
             
-            const targetId = trigger.dataset.panel;
-            const targetPanel = document.getElementById(targetId);
-            const isAlreadyOpen = targetPanel && targetPanel.classList.contains('active');
+            const targetPanel = document.getElementById(panelId);
 
-            closeAllPanels(); 
-
-            if (!isAlreadyOpen && targetPanel) {
+            if (activePanel === targetPanel) {
+                closeAllPanels();
+            } else {
+                closeAllPanels();
                 targetPanel.classList.add('active');
-                trigger.setAttribute('aria-expanded', 'true');
-                const icon = trigger.querySelector('.fa-chevron-down');
-                if(icon) icon.style.transform = 'rotate(180deg)';
+                trigger.classList.add('active-nav');
+                activePanel = targetPanel;
             }
         });
     });
 
+    // 3. Abas Laterais dos Mega Painéis
+    document.querySelectorAll('.menu-tab-trigger').forEach(trigger => {
+        trigger.addEventListener('mouseenter', () => {
+            const parent = trigger.closest('.mega-panel');
+            const targetId = trigger.dataset.target;
+            
+            if (!parent || !targetId) return;
+
+            parent.querySelectorAll('.menu-tab-trigger').forEach(t => t.classList.remove('active'));
+            parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            trigger.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) targetContent.classList.add('active');
+        });
+    });
+
+    // 4. Menu Mobile
+    const mobileBtn = document.getElementById('mobile-menu-trigger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMobile = document.getElementById('close-mobile-menu');
+    const backdrop = document.getElementById('mobile-menu-backdrop');
+    const drawer = document.getElementById('mobile-menu-drawer');
+
+    if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            setTimeout(() => {
+                if (backdrop) backdrop.classList.remove('opacity-0');
+                if (drawer) drawer.classList.remove('-translate-x-full');
+            }, 10);
+        });
+    }
+
+    const closeHandler = () => {
+        if (backdrop) backdrop.classList.add('opacity-0');
+        if (drawer) drawer.classList.add('-translate-x-full');
+        setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+    };
+
+    if (closeMobile) closeMobile.addEventListener('click', closeHandler);
+    if (backdrop) backdrop.addEventListener('click', closeHandler);
+
+    // 5. Fechar ao clicar fora
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('header')) {
+        if (!e.target.closest('.mega-panel') && !e.target.closest('.nav-trigger')) {
             closeAllPanels();
         }
     });
 
-    megaPanels.forEach(panel => {
-        panel.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
+    // 6. Fechar com ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAllPanels();
     });
+}
 
-    const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
-
-    tabTriggers.forEach(trigger => {
-        trigger.addEventListener('mouseenter', () => { 
-            const parentPanel = trigger.closest('.mega-panel');
-            if (!parentPanel) return;
-
-            const panelTriggers = parentPanel.querySelectorAll('.menu-tab-trigger');
-            const panelContents = parentPanel.querySelectorAll('.tab-content');
-
-            panelTriggers.forEach(t => {
-                t.classList.remove('active');
-                const icon = t.querySelector('.fa-chevron-right');
-                if(icon) icon.style.opacity = '0';
-            });
-            
-            panelContents.forEach(c => c.classList.remove('active'));
-
-            trigger.classList.add('active');
-            const icon = trigger.querySelector('.fa-chevron-right');
-            if(icon) icon.style.opacity = '1';
-
-            const targetContentId = trigger.dataset.target;
-            const targetContent = document.getElementById(targetContentId);
-            if (targetContent) {
-                targetContent.classList.add('active');
-            }
-        });
-    });
-
-    const mobileBtn = document.getElementById('mobile-menu-trigger');
-    const closeMobileBtn = document.getElementById('close-mobile-menu');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileDrawer = document.getElementById('mobile-menu-drawer');
-    const mobileBackdrop = document.getElementById('mobile-menu-backdrop');
-    const accordionTriggers = document.querySelectorAll('.mobile-accordion-trigger');
-
-    function openMobileMenu() {
-        if (mobileMenu) mobileMenu.classList.remove('hidden');
-        setTimeout(() => {
-            if (mobileBackdrop) mobileBackdrop.classList.remove('opacity-0');
-            if (mobileDrawer) mobileDrawer.classList.remove('-translate-x-full');
-        }, 10);
-        document.body.style.overflow = 'hidden';
+// Carregar preferências e inicializar
+(function loadPrefsAndInit() {
+    const savedZoom = localStorage.getItem('user-font-size');
+    if (savedZoom) {
+        currentZoom = parseInt(savedZoom);
+        document.documentElement.style.fontSize = currentZoom + '%';
+    }
+    
+    if (localStorage.getItem('dark-theme') === 'true') {
+        document.body.classList.add('dark-theme');
     }
 
-    function closeMobileMenu() {
-        if (mobileBackdrop) mobileBackdrop.classList.add('opacity-0');
-        if (mobileDrawer) mobileDrawer.classList.add('-translate-x-full');
-        
-        setTimeout(() => {
-            if (mobileMenu) mobileMenu.classList.add('hidden');
-        }, 300);
-        document.body.style.overflow = '';
+    // Se o DOM já estiver carregado (para casos de injeção dinâmica)
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        initHeaderEvents();
+    } else {
+        window.addEventListener('DOMContentLoaded', initHeaderEvents);
     }
-
-    if (mobileBtn) mobileBtn.addEventListener('click', openMobileMenu);
-    if (closeMobileBtn) closeMobileBtn.addEventListener('click', closeMobileMenu);
-    if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenu);
-
-    accordionTriggers.forEach(acc => {
-        acc.addEventListener('click', () => {
-            const submenu = acc.nextElementSibling;
-            const icon = acc.querySelector('.fa-chevron-down');
-            
-            if (submenu && submenu.classList.contains('open')) {
-                
-                submenu.classList.remove('open');
-                if(icon) icon.style.transform = 'rotate(0deg)';
-                submenu.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
-                    sub.classList.remove('open');
-                    const subIcon = sub.previousElementSibling.querySelector('.fa-chevron-down');
-                    if(subIcon) subIcon.style.transform = 'rotate(0deg)';
-                });
-            } else if (submenu) {
-                
-                document.querySelectorAll('.mobile-submenu.open').forEach(el => {
-                    if(el !== submenu) {
-                        el.classList.remove('open');
-                        const prevIcon = el.previousElementSibling.querySelector('.fa-chevron-down');
-                        if(prevIcon) prevIcon.style.transform = 'rotate(0deg)';
-                        
-                        el.querySelectorAll('.mobile-sub-accordion.open').forEach(sub => {
-                            sub.classList.remove('open');
-                            const subIcon = sub.previousElementSibling.querySelector('.fa-chevron-down');
-                            if(subIcon) subIcon.style.transform = 'rotate(0deg)';
-                        });
-                    }
-                });
-                
-                submenu.classList.add('open');
-                if(icon) icon.style.transform = 'rotate(180deg)';
-            }
-        });
-    });
-
-    const subTriggers = document.querySelectorAll('.mobile-sub-trigger');
-    subTriggers.forEach(trigger => {
-        trigger.addEventListener('click', () => {
-            const subAccordion = trigger.nextElementSibling;
-            const icon = trigger.querySelector('.fa-chevron-down');
-            const parentSubmenu = trigger.closest('.mobile-submenu');
-
-            if (subAccordion && subAccordion.classList.contains('open')) {
-                subAccordion.classList.remove('open');
-                if(icon) icon.style.transform = 'rotate(0deg)';
-            } else if (subAccordion) {
-                
-                if (parentSubmenu) {
-                    parentSubmenu.querySelectorAll('.mobile-sub-accordion.open').forEach(el => {
-                        if(el !== subAccordion) {
-                            el.classList.remove('open');
-                            const prevIcon = el.previousElementSibling.querySelector('.fa-chevron-down');
-                            if(prevIcon) prevIcon.style.transform = 'rotate(0deg)';
-                        }
-                    });
-                }
-                
-                subAccordion.classList.add('open');
-                if(icon) icon.style.transform = 'rotate(180deg)';
-            }
-        });
-    });
-
-});
+})();
