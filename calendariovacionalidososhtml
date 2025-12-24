@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário Vacinal do Idoso (60 anos ou mais) - PNI | Enfermagem</title>
+    
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Confira o Calendário Nacional de Vacinação do Idoso (60 anos ou mais). Saiba as doses de Gripe, Pneumocócica 23, dT e Hepatite B conforme o PNI e orientações técnicas.">
+    <meta name="keywords" content="vacina idoso, calendário vacinal idoso, PNI idoso, vacina gripe idoso, pneumocócica 23 idoso, dupla adulta idoso, vacinação 60 anos">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/calendariovacionalidosos.html">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Calendário Vacinal do Idoso - Guia Completo PNI">
+    <meta property="og:description" content="Esquema vacinal atualizado para pessoas com 60 anos ou mais de idade conforme as diretrizes do Ministério da Saúde.">
+    <meta property="og:url" content="https://www.calculadorasdeenfermagem.com.br/calendariovacionalidosos.html">
+    <meta property="og:image" content="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+
+    <!-- Alternates Hreflang (Referências de Idiomas conforme padrão SEO) -->
+    <link rel="alternate" hreflang="pt-br" href="https://www.calculadorasdeenfermagem.com.br/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="en" href="https://www.calculadorasdeenfermagem.com.br/en/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="es" href="https://www.calculadorasdeenfermagem.com.br/es/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="fr" href="https://www.calculadorasdeenfermagem.com.br/fr/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="de" href="https://www.calculadorasdeenfermagem.com.br/de/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="it" href="https://www.calculadorasdeenfermagem.com.br/it/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="ja" href="https://www.calculadorasdeenfermagem.com.br/ja/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="zh" href="https://www.calculadorasdeenfermagem.com.br/zh/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="hi" href="https://www.calculadorasdeenfermagem.com.br/hi/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="ar" href="https://www.calculadorasdeenfermagem.com.br/ar/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="ru" href="https://www.calculadorasdeenfermagem.com.br/ru/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="tr" href="https://www.calculadorasdeenfermagem.com.br/tr/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="ko" href="https://www.calculadorasdeenfermagem.com.br/ko/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="nl" href="https://www.calculadorasdeenfermagem.com.br/nl/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="pl" href="https://www.calculadorasdeenfermagem.com.br/pl/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="sv" href="https://www.calculadorasdeenfermagem.com.br/sv/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="id" href="https://www.calculadorasdeenfermagem.com.br/id/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="vi" href="https://www.calculadorasdeenfermagem.com.br/vi/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="uk" href="https://www.calculadorasdeenfermagem.com.br/uk/calendariovacionalidosos.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/calendariovacionalidosos.html">
+
+    <!-- Google Tag Manager / Analytics -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=AW-952633102"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-952633102');
+        gtag('config', 'G-8FLJ59XXDK');
+    </script>
+
+    <!-- Tailwind CSS & Configuração -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito Sans', 'Open Sans', 'Roboto', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-primary-light': '#2E5A9C',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos Customizados Modulares -->
+    <style>
+        :root {
+            --color-primary: #1A3E74;
+            --color-primary-light: #2E5A9C;
+            --color-text-light: #666666;
+        }
+        .content-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        .sidebar-card { padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .sidebar-card h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; padding-bottom: 0.5rem; }
+        .toc-list { list-style: none; padding: 0; }
+        .toc-list li { margin-bottom: 0.75rem; font-size: 0.875rem; transition: transform 0.2s; }
+        .toc-list li:hover { transform: translateX(5px); }
+        .toc-list a { text-decoration: none; transition: opacity 0.2s; }
+        
+        .share-buttons { display: flex; gap: 0.75rem; margin-top: 1rem; }
+        .share-btn { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); color: white; transition: all 0.3s; border: none; cursor: pointer; }
+        .share-btn:hover { background: white; color: var(--color-primary); transform: translateY(-3px); }
+
+        .author-box { background: white; border-radius: 1.5rem; padding: 2rem; margin-top: 3rem; display: flex; gap: 1.5rem; border: 1px solid #f0f0f0; align-items: center; }
+        .dark .author-box { background: #1e293b; border-color: #334155; }
+        .author-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
+        .author-info h3 { font-size: 1.25rem; font-weight: 700; color: var(--color-primary); margin-bottom: 0.5rem; }
+
+        .tab-btn-active { border-color: #00bcd4 !important; color: #00bcd4 !important; font-weight: bold; }
+        
+        .alert-box { border-left: 4px solid; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; }
+        .alert-info { background-color: #EFF6FF; border-color: #3B82F6; color: #1E3A8A; }
+        .dark .alert-info { background-color: #172554; border-color: #3b82f6; color: #bfdbfe; }
+        
+        .vaccine-card { background: white; border-radius: 1.5rem; padding: 1.5rem; border: 1px solid #f0f0f0; transition: all 0.3s ease; height: 100%; }
+        .dark .vaccine-card { background: #1e293b; border-color: #334155; }
+        .vaccine-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300 font-sans">
+
+    <!-- Estrutura Modular: Header -->
+    <div id="header-container"></div>
+
+    <!-- Background Decorativo SVG -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-gray-500 dark:text-gray-400 mb-8" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors text-nurse-primary dark:text-nurse-secondary font-medium">Início</a></li>
+                <li class="flex items-center gap-2"><span>/</span> <a href="vacinas.html" class="hover:text-nurse-secondary transition-colors">Calendário Vacinal</a></li>
+                <li class="flex items-center gap-2"><span>/</span> <span>Calendário de Idosos</span></li>
+            </ol>
+        </nav>
+
+        <!-- Cabeçalho Principal -->
+        <header class="mb-10 text-center md:text-left">
+            <span class="inline-block px-3 py-1 text-xs font-bold tracking-wider text-white bg-nurse-secondary rounded-full mb-4 uppercase text-nurse-primary">Calendário Vacinal</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-nurse-primary dark:text-white mb-2 font-nunito leading-tight">Calendário Vacinal Idosos</h1>
+            <p class="text-nurse-secondary font-bold text-lg mb-6 uppercase tracking-tight italic">Proteção para 60 anos ou mais</p>
+            <div class="h-1.5 w-24 bg-nurse-accent mb-6 mx-auto md:mx-0"></div>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
+                A imunização do idoso é uma estratégia fundamental para reduzir a morbimortalidade por doenças infectocontagiosas e garantir a qualidade de vida durante o envelhecimento.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <!-- Coluna Principal de Conteúdo -->
+            <div class="lg:col-span-2">
+                
+                <!-- Abas de Navegação (Conforme solicitado) -->
+                <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-10">
+                    <button onclick="showTab('calc')" id="btn-tab-calc" class="px-6 py-3 border-b-2 tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-calculator"></i> Calculadora
+                    </button>
+                    <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-circle-info"></i> Sobre a Calculadora
+                    </button>
+                    <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-clipboard-list"></i> Como Usar?
+                    </button>
+                    <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-microscope"></i> Informações Técnicas
+                    </button>
+                </div>
+
+                <!-- Painel 1: Calculadora (Interactive List) -->
+                <section id="pane-calc" class="space-y-12 animate-in fade-in duration-500">
+                    <div class="alert-box alert-info flex items-start gap-4 shadow-sm">
+                        <i class="fa-solid fa-shield-virus text-2xl mt-1 text-nurse-primary"></i>
+                        <div>
+                            <h4 class="font-bold text-lg text-nurse-primary">Esquema Básico do Idoso</h4>
+                            <p class="text-sm mt-1">Clique nas vacinas abaixo para conferir as recomendações de dosagem e intervalos do Programa Nacional de Imunizações.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="vaccine-card">
+                            <h4 class="font-bold text-nurse-primary dark:text-white">Influenza (Gripe)</h4>
+                            <p class="text-xs text-gray-500 mb-2 italic leading-tight">Dose: Anual</p>
+                            <p class="text-sm">Oferecida em campanhas anuais. Essencial para prevenir complicações respiratórias graves e hospitalizações.</p>
+                        </div>
+                        <div class="vaccine-card">
+                            <h4 class="font-bold text-nurse-primary dark:text-white">Pneumocócica 23-valente</h4>
+                            <p class="text-xs text-gray-500 mb-2 italic leading-tight">Esquema: Dose Única + Reforço</p>
+                            <p class="text-sm">Indicada para idosos em situações específicas (acamados, instituições) ou via CRIE para doentes crônicos.</p>
+                        </div>
+                        <div class="vaccine-card">
+                            <h4 class="font-bold text-nurse-primary dark:text-white">Dupla Adulta (dT)</h4>
+                            <p class="text-xs text-gray-500 mb-2 italic leading-tight">Esquema: Reforço a cada 10 anos</p>
+                            <p class="text-sm">Protege contra Difteria e Tétano. Caso o idoso nunca tenha sido vacinado, inicia-se o esquema de 3 doses.</p>
+                        </div>
+                        <div class="vaccine-card">
+                            <h4 class="font-bold text-nurse-primary dark:text-white">Hepatite B</h4>
+                            <p class="text-xs text-gray-500 mb-2 italic leading-tight">Esquema: 3 Doses (0, 1 e 6 meses)</p>
+                            <p class="text-sm">Se não houver comprovação vacinal anterior, o esquema deve ser iniciado independentemente da idade.</p>
+                        </div>
+                        <div class="vaccine-card">
+                            <h4 class="font-bold text-nurse-primary dark:text-white">Febre Amarela</h4>
+                            <p class="text-xs text-gray-500 mb-2 italic leading-tight">Dose: Avaliação Individual</p>
+                            <p class="text-sm">Indicada apenas para quem nunca recebeu a dose, mediante criteriosa avaliação médica de risco-benefício após os 60 anos.</p>
+                        </div>
+                        <div class="vaccine-card">
+                            <h4 class="font-bold text-nurse-primary dark:text-white">Herpes Zóster</h4>
+                            <p class="text-xs text-gray-500 mb-2 italic leading-tight">Esquema: 2 Doses (Rede Privada)</p>
+                            <p class="text-sm">Recomendada para prevenir a neuralgia pós-herpética e complicações do vírus varicela-zóster.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Painel 2: Sobre a Calculadora -->
+                <section id="pane-teoria" class="hidden space-y-8 animate-in fade-in">
+                    <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
+                        <h2 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary font-nunito">Sobre o Calendário do Idoso</h2>
+                        <p>Esta ferramenta funciona como um guia interativo para facilitar a conferência do esquema vacinal de pessoas com 60 anos ou mais. O foco principal é a prevenção de doenças imunopreveníveis que tendem a ser mais severas nesta fase da vida.</p>
+                        <p>Diferente do calendário infantil, o do idoso foca em reforços e em vacinas sazonais, como a da Influenza, devido à diminuição natural da resposta imune (imunossenescência).</p>
+                    </div>
+                </section>
+
+                <!-- Painel 3: Como Usar? -->
+                <section id="pane-instrucoes" class="hidden space-y-8 animate-in fade-in">
+                    <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
+                        <h2 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary font-nunito">Como seguir as recomendações</h2>
+                        <ol class="space-y-6">
+                            <li><strong>Verifique o Histórico:</strong> Analise o cartão de vacinação antigo. Se não houver registros, considere o paciente como "não vacinado" para Hepatite B e Tétano.</li>
+                            <li><strong>Consulte a Aba "Calculadora":</strong> Identifique quais vacinas estão pendentes de acordo com a idade e os intervalos de reforço (ex: dT a cada 10 anos).</li>
+                            <li><strong>Observe Contraindicações:</strong> Antes de aplicar vacinas de vírus vivos (como Febre Amarela), verifique a condição clínica do idoso.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- Painel 4: Informações Técnicas -->
+                <section id="pane-tecnica" class="hidden space-y-8 animate-in fade-in">
+                    <div class="prose dark:prose-invert text-gray-600 dark:text-gray-300">
+                        <h2 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary font-nunito">Diretrizes de Imunização</h2>
+                        <div class="bg-gray-100 dark:bg-slate-800 p-6 rounded-2xl border border-gray-200 dark:border-slate-700 mt-6 text-sm">
+                            <ul class="space-y-3">
+                                <li><strong>Intervalos:</strong> Manter o intervalo mínimo de 15 a 30 dias entre vacinas de vírus vivos se não aplicadas no mesmo dia (dependendo da orientação local).</li>
+                                <li><strong>CRIE:</strong> Idosos com comorbidades (diabetes, cardiopatias, DPOC) têm direito a vacinas especiais como a Pneumo-13 e Pneumo-23 nos Centros de Referência para Imunobiológicos Especiais.</li>
+                                <li><strong>Tétano:</strong> Em caso de ferimentos comunicantes ou sujos, o reforço da dT deve ser feito se a última dose tiver mais de 5 anos.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Autor -->
+                <div class="author-box">
+                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Calculadoras de Enfermagem" class="author-avatar">
+                    <div class="author-info">
+                        <h3>Calculadoras de Enfermagem</h3>
+                        <p>Conteúdo técnico atualizado conforme o PNI 2024 para suporte à decisão clínica de enfermeiros e profissionais de saúde.</p>
+                    </div>
+                </div>
+
+                <!-- Referências -->
+                <section class="references-section mt-12 pt-8 border-t border-gray-200 dark:border-slate-800">
+                    <h2 class="text-lg font-bold text-nurse-primary dark:text-gray-400 mb-4"><i class="fa-solid fa-book"></i> Referências</h2>
+                    <div class="text-sm text-gray-500 leading-relaxed">
+                        1. Ministério da Saúde. Calendário Nacional de Vacinação 2024.<br>
+                        2. Sociedade Brasileira de Imunizações (SBIm). Guia de Vacinação do Idoso 2024/2025.
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sidebar (Índice conforme solicitado) -->
+            <aside class="content-sidebar">
+                <!-- Índice (TOC) -->
+                <div class="sidebar-card" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: white;">
+                    <h3 style="color: white; border-bottom: 1px solid rgba(255,255,255,0.2);"><i class="fas fa-list"></i> Índice</h3>
+                    <ul class="toc-list" style="color: rgba(255,255,255,0.95);">
+                        <li><a href="#pane-calc" onclick="showTab('calc');" style="color: white;">1. Calculadora</a></li>
+                        <li><a href="#pane-teoria" onclick="showTab('teoria');" style="color: white;">2. Sobre a Calculadora</a></li>
+                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes');" style="color: white;">3. Como Usar?</a></li>
+                        <li><a href="#pane-tecnica" onclick="showTab('tecnica');" style="color: white;">4. Informações Técnicas</a></li>
+                    </ul>
+                </div>
+
+                <!-- Compartilhamento Social -->
+                <div class="sidebar-card" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: white;">
+                    <h3 style="color: white; border-bottom: 1px solid rgba(255,255,255,0.2);"><i class="fas fa-share-nodes"></i> Compartilhar</h3>
+                    <div class="share-buttons">
+                        <button onclick="share('facebook')" class="share-btn" title="Facebook"><i class="fab fa-facebook-f"></i></button>
+                        <button onclick="share('instagram')" class="share-btn" title="Instagram"><i class="fab fa-instagram"></i></button>
+                        <button onclick="share('whatsapp')" class="share-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+                        <button onclick="share('linkedin')" class="share-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></button>
+                        <button onclick="share('twitter')" class="share-btn" title="Twitter"><i class="fab fa-x-twitter"></i></button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Ferramentas Relacionadas -->
+    <section class="related-section bg-slate-100 dark:bg-slate-900/50 py-20 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-black text-center mb-12 text-nurse-primary dark:text-white flex items-center justify-center gap-4">
+                <i class="fa-solid fa-toolbox text-nurse-secondary"></i> Ferramentas Relacionadas
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <a href="calendariovacionaladultos.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl transition-all border border-gray-100 dark:border-slate-700">
+                    <h3 class="text-xl font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors">Adultos</h3>
+                    <p class="text-sm text-gray-500 mb-4">Esquema para a faixa de 20 a 59 anos de idade.</p>
+                    <span class="text-nurse-secondary font-bold text-xs uppercase flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+                <a href="calendariovacionalcriancas.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl transition-all border border-gray-100 dark:border-slate-700">
+                    <h3 class="text-xl font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors">Crianças</h3>
+                    <p class="text-sm text-gray-500 mb-4">Calendário básico completo do nascimento aos 10 anos.</p>
+                    <span class="text-nurse-secondary font-bold text-xs uppercase flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+                <a href="calendariovacionaladolescentes.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl transition-all border border-gray-100 dark:border-slate-700">
+                    <h3 class="text-xl font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors">Adolescentes</h3>
+                    <p class="text-sm text-gray-500 mb-4">Vacinas essenciais para jovens e reforços escolares.</p>
+                    <span class="text-nurse-secondary font-bold text-xs uppercase flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Modular -->
+    <div id="footer-container"></div>
+
+    <script src="assets/js/template-engine.js"></script>
+    <script>
+        // Lógica de Troca de Abas
+        function showTab(id) {
+            ['calc', 'teoria', 'instrucoes', 'tecnica'].forEach(t => {
+                const p = document.getElementById('pane-' + t);
+                const b = document.getElementById('btn-tab-' + t);
+                if(p) p.classList.add('hidden');
+                if(b) { b.classList.remove('tab-btn-active'); b.classList.add('border-transparent', 'text-gray-500'); }
+            });
+            document.getElementById('pane-' + id).classList.remove('hidden');
+            const targetBtn = document.getElementById('btn-tab-' + id);
+            targetBtn.classList.add('tab-btn-active');
+            targetBtn.classList.remove('border-transparent', 'text-gray-500');
+        }
+
+        // Sistema de Compartilhamento
+        function share(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(document.title);
+            let shareUrl = "";
+            switch(platform) {
+                case 'facebook': shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`; break;
+                case 'twitter': shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`; break;
+                case 'whatsapp': shareUrl = `https://api.whatsapp.com/send?text=${text}%20${url}`; break;
+                case 'linkedin': shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`; break;
+                case 'instagram': 
+                    navigator.clipboard.writeText(window.location.href);
+                    alert("Link copiado! Agora você pode colar nos seus Stories ou Bio do Instagram.");
+                    return;
+            }
+            if(shareUrl) window.open(shareUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
