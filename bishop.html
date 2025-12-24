@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escala de Bishop Online | Avaliação Cervical | Calculadoras de Enfermagem</title>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9472305505608641" crossorigin="anonymous"></script>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Calcule a Escala de Bishop para avaliar a maturidade do colo do útero e prever o sucesso na indução do parto. Ferramenta profissional com relatório PDF.">
+    <meta name="keywords" content="escala de bishop, bishop score, indução de parto, obstetrícia, maturidade cervical, enfermagem obstétrica, ginecologia">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/bishop.html">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        nunito: ['Nunito Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-primary-light': '#2E5A9C',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Dependências PDF e QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root { --color-primary: #1A3E74; --color-primary-light: #2E5A9C; }
+        .tab-btn-active { border-color: #00bcd4 !important; color: #00bcd4 !important; font-weight: bold; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .sidebar-card { padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .toc-list li { margin-bottom: 0.75rem; font-size: 0.875rem; transition: transform 0.2s; font-family: 'Inter', sans-serif; }
+        .toc-list li:hover { transform: translateX(5px); }
+        .share-btn { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); color: white; transition: all 0.3s; }
+        .share-btn:hover { background: white; color: var(--color-primary); transform: translateY(-3px); }
+        .btn-action { height: 56px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; transition: all 0.3s; font-family: 'Nunito Sans', sans-serif; }
+        .criterion-row { border-left: 4px solid #00bcd4; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
+
+    <div id="header-container"></div>
+
+    <!-- Background Decorativo -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-slate-500 mb-8 font-inter text-[11px] uppercase tracking-widest font-bold">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors italic">Início</a></li>
+                <li><span>/</span></li>
+                <li><span>Obstetrícia</span></li>
+                <li><span>/</span></li>
+                <li class="text-nurse-primary dark:text-nurse-secondary font-black italic">Escala de Bishop</li>
+            </ol>
+        </nav>
+
+        <!-- Header -->
+        <header class="mb-12 text-center md:text-left">
+            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito italic tracking-tighter shadow-lg shadow-nurse-primary/20">Protocolo de Maturidade Cervical</span>
+            <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 leading-tight font-nunito tracking-tighter italic capitalize">Escala de Bishop</h1>
+            <div class="w-24 h-1.5 bg-nurse-secondary rounded-full mb-8 mx-auto md:mx-0"></div>
+            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium font-inter max-w-3xl">
+                Instrumento essencial para avaliação do colo do útero e predição do sucesso na indução do trabalho de parto.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+            <!-- Coluna Principal -->
+            <div class="lg:col-span-3 space-y-10">
+                
+                <!-- Abas -->
+                <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-8 font-nunito font-bold">
+                    <button onclick="showTab('calc')" id="btn-tab-calc" class="px-6 py-3 border-b-2 tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all italic tracking-tighter">
+                        <i class="fa-solid fa-calculator"></i> Escala
+                    </button>
+                    <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all italic tracking-tighter">
+                        <i class="fa-solid fa-book-medical"></i> Sobre
+                    </button>
+                    <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all italic tracking-tighter">
+                        <i class="fa-solid fa-clipboard-check"></i> Como Aplicar?
+                    </button>
+                    <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all italic tracking-tighter">
+                        <i class="fa-solid fa-vial"></i> Inf. Técnicas
+                    </button>
+                </div>
+
+                <!-- Painel da Escala -->
+                <section id="pane-calc" class="space-y-8 animate-in fade-in duration-500">
+                    
+                    <!-- Auditoria/Identificação -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-lg font-black text-nurse-primary dark:text-white mb-6 uppercase tracking-tight font-nunito italic tracking-tighter">
+                            Identificação da Paciente
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Nome Completo / Prontuário</label>
+                                <input type="text" id="patient_name" placeholder="Ex: Maria Oliveira (Pront: 9876)" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Avaliador (Obstetra/Enf. Obstetra)</label>
+                                <input type="text" id="evaluator_name" placeholder="Nome do Profissional" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculadora Bishop -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-8 uppercase tracking-widest border-b border-gray-100 dark:border-slate-800 pb-2 font-nunito flex items-center gap-2 italic">
+                            <i class="fa-solid fa-baby-carriage"></i> Parâmetros Cervicais
+                        </h3>
+                        
+                        <div id="bishop-items-container" class="space-y-8 font-inter">
+                            <!-- Injetado via JS -->
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-12 max-w-xl mx-auto font-nunito italic">
+                            <button onclick="handleCalculate()" class="btn-action bg-nurse-primary text-white hover:bg-nurse-primary/90 shadow-xl shadow-nurse-primary/20">
+                                <i class="fa-solid fa-calculator"></i> Calcular Bishop
+                            </button>
+                            <button onclick="handleReset()" class="btn-action bg-gray-100 dark:bg-slate-800 text-gray-500 hover:bg-gray-200">
+                                <i class="fa-solid fa-rotate-left"></i> Limpar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Resultados -->
+                    <div id="results-section" class="hidden space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                        <div id="result-card" class="p-10 rounded-[3.5rem] shadow-2xl transition-all duration-500 text-white font-nunito bg-nurse-primary relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-person-pregnant text-[140px]"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+                                <div class="relative w-48 h-48 flex flex-col items-center justify-center bg-white/10 rounded-full border-4 border-white/20 backdrop-blur-sm shadow-inner">
+                                    <span id="res-score-val" class="text-6xl font-black text-white italic tracking-tighter">00</span>
+                                    <span class="text-[10px] uppercase font-bold text-white/80 tracking-widest italic">Pontos</span>
+                                </div>
+                                <div class="text-center md:text-left flex-grow">
+                                    <h3 id="res-status" class="text-2xl font-black italic mb-2 text-white uppercase tracking-tighter">Maturidade do Colo</h3>
+                                    <div class="bg-white/10 p-6 rounded-3xl border border-white/20 mb-6 backdrop-blur-md">
+                                        <p class="text-sm font-medium mb-1 opacity-70">Interpretação Clínica</p>
+                                        <p id="res-desc" class="text-lg font-bold text-nurse-secondary">Aguardando dados...</p>
+                                    </div>
+                                    <p class="text-[10px] font-black text-white/60 bg-white/10 inline-block px-4 py-1.5 rounded-full uppercase tracking-widest italic">
+                                        <i class="fa-solid fa-shield-heart mr-2"></i> Predição de Sucesso na Indução
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-nunito italic">
+                            <button onclick="handleSearchNanda()" class="btn-action border-2 border-nurse-secondary text-nurse-secondary hover:bg-nurse-secondary hover:text-white">
+                                <i class="fa-solid fa-magnifying-glass-plus"></i> NANDA, NIC e NOC
+                            </button>
+                            <button onclick="generatePDF()" class="btn-action bg-nurse-primary text-white hover:opacity-90">
+                                <i class="fa-solid fa-file-pdf"></i> Gerar Relatório PDF
+                            </button>
+                        </div>
+
+                        <!-- Auditoria Clínica -->
+                        <div class="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm font-inter">
+                            <h4 class="font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest font-nunito flex items-center gap-2 italic">
+                                <i class="fa-solid fa-clipboard-list text-nurse-secondary"></i> Log de Auditoria Obstetral
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-xs font-medium text-slate-500">
+                                <div class="space-y-2">
+                                    <p class="text-[10px] font-black uppercase text-gray-400">Paciente:</p>
+                                    <p id="audit-patient" class="text-nurse-primary dark:text-white italic">-</p>
+                                </div>
+                                <div class="space-y-2">
+                                    <p class="text-[10px] font-black uppercase text-gray-400">Profissional:</p>
+                                    <p id="audit-evaluator" class="text-nurse-primary dark:text-white italic">-</p>
+                                </div>
+                                <div class="space-y-2 text-right">
+                                    <p class="text-[10px] font-black uppercase text-gray-400">Data/Hora:</p>
+                                    <p id="audit-time" class="text-nurse-primary dark:text-white">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Teoria -->
+                <section id="pane-teoria" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter italic">Entendendo a Escala de Bishop</h2>
+                    <p>A <strong>Escala de Bishop</strong> (Bishop Score) é um sistema de pontuação clínica utilizado para avaliar se o colo do útero está "favorável" para a indução do trabalho de parto. </p>
+                    <p>Um escore elevado sugere uma alta probabilidade de sucesso com a indução, enquanto um escore baixo indica um colo "imaturo", frequentemente necessitando de métodos de preparo cervical (como o uso de misoprostol ou métodos mecânicos) antes de se iniciar a ocitocina.</p>
+                </section>
+
+                <section id="pane-instrucoes" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter italic">Critérios de Avaliação</h2>
+                    <ul class="list-disc pl-5 space-y-4">
+                        <li><strong>Dilatação:</strong> Abertura do orifício interno do colo.</li>
+                        <li><strong>Apagamento:</strong> Encurtamento progressivo do canal cervical (em %).</li>
+                        <li><strong>Posição:</strong> Orientação do colo em relação ao eixo da pelve (Posterior para Anterior).</li>
+                        <li><strong>Consistência:</strong> Firmeza do tecido cervical ao toque vaginal.</li>
+                        <li><strong>Estação (Altura):</strong> Altura da apresentação fetal em relação às espinhas isquiáticas (De Lee).</li>
+                    </ul>
+                </section>
+
+                <section id="pane-tecnica" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter italic">Interpretação do Escore</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm font-inter">
+                            <thead class="bg-gray-100 dark:bg-slate-800 uppercase text-[10px] tracking-widest">
+                                <tr><th class="p-4 border text-left">Escore Total</th><th class="p-4 border text-left">Interpretação</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-red-50 dark:bg-red-900/10"><td class="p-4 border font-bold">≤ 5</td><td class="p-4 border italic">Colo Desfavorável (Imaturo). Chance reduzida de parto vaginal sem preparo cervical.</td></tr>
+                                <tr class="bg-yellow-50 dark:bg-yellow-900/10"><td class="p-4 border font-bold">6 - 7</td><td class="p-4 border italic">Zona Intermediária. Sucesso variável na indução imediata.</td></tr>
+                                <tr class="bg-blue-50 dark:bg-blue-900/10"><td class="p-4 border font-bold">≥ 8</td><td class="p-4 border italic font-black">Colo Favorável (Maduro). Alta probabilidade de sucesso no parto vaginal.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="space-y-6 font-nunito">
+                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white italic tracking-tighter font-bold">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-black italic"><i class="fas fa-list mr-2"></i> Navegação</h3>
+                    <ul class="toc-list font-inter font-normal not-italic text-sm">
+                        <li><a href="#pane-calc" onclick="showTab('calc')">1. Calculadora Bishop</a></li>
+                        <li><a href="#pane-teoria" onclick="showTab('teoria')">2. Definição</a></li>
+                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes')">3. Itens Avaliados</a></li>
+                        <li><a href="#pane-tecnica" onclick="showTab('tecnica')">4. Tabela de Escore</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-black italic"><i class="fas fa-share-nodes mr-2"></i> Partilhar</h3>
+                    <div class="flex flex-wrap gap-3 justify-between">
+                        <a href="#" class="share-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div id="qrcode-source" class="hidden"></div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        const BISHOP_ITEMS = [
+            { id: "dil", title: "Dilatação (cm)", opts: ["0 cm", "1-2 cm", "3-4 cm", "5+ cm"] },
+            { id: "apa", title: "Apagamento (%)", opts: ["0-30%", "40-50%", "60-70%", "80%+"] },
+            { id: "pos", title: "Posição do Colo", opts: ["Posterior", "Mediana", "Anterior", ""], count: 3 },
+            { id: "con", title: "Consistência", opts: ["Firme", "Média", "Amaciada", ""], count: 3 },
+            { id: "est", title: "Estação (Altura De Lee)", opts: ["-3", "-2", "-1 ou 0", "+1 ou +2"] }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById('bishop-items-container');
+            BISHOP_ITEMS.forEach(item => {
+                const row = document.createElement('div');
+                row.className = "criterion-row";
+                const maxOpts = item.count || 4;
+                row.innerHTML = `
+                    <label class="text-[11px] font-black text-nurse-primary dark:text-nurse-secondary mb-2 block uppercase tracking-tighter italic">${item.title}</label>
+                    <select id="sel-${item.id}" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm font-medium">
+                        ${item.opts.slice(0, maxOpts).map((o, idx) => `<option value="${idx}">${o} (Pontos: ${idx})</option>`).join('')}
+                    </select>
+                `;
+                container.appendChild(row);
+            });
+            loadFooter();
+        });
+
+        function showTab(id) {
+            ['calc', 'teoria', 'instrucoes', 'tecnica'].forEach(t => {
+                document.getElementById('pane-' + t).classList.add('hidden');
+                document.getElementById('btn-tab-' + t).classList.remove('tab-btn-active');
+            });
+            document.getElementById('pane-' + id).classList.remove('hidden');
+            document.getElementById('btn-tab-' + id).classList.add('tab-btn-active');
+        }
+
+        function handleCalculate() {
+            let total = 0;
+            BISHOP_ITEMS.forEach(item => {
+                total += parseInt(document.getElementById(`sel-${item.id}`).value);
+            });
+
+            const name = document.getElementById('patient_name').value || "Não informada";
+            const evaluator = document.getElementById('evaluator_name').value || "Não informado";
+
+            let status = "Colo Favorável";
+            let desc = "Alta probabilidade de sucesso na indução e parto vaginal.";
+            let color = "bg-nurse-primary";
+
+            if (total <= 5) {
+                status = "Colo Desfavorável";
+                desc = "Colo imaturo. Considere preparo cervical (farmacológico ou mecânico).";
+                color = "bg-red-600";
+            } else if (total <= 7) {
+                status = "Zona Intermediária";
+                desc = "Sucesso incerto. Avaliar condições clínicas adicionais.";
+                color = "bg-yellow-600";
+            }
+
+            document.getElementById('res-score-val').innerText = total;
+            document.getElementById('res-status').innerText = status;
+            document.getElementById('res-desc').innerText = desc;
+            document.getElementById('result-card').className = `p-10 rounded-[3.5rem] shadow-2xl transition-all duration-500 text-white font-nunito relative overflow-hidden group ${color}`;
+
+            document.getElementById('audit-patient').innerText = name;
+            document.getElementById('audit-evaluator').innerText = evaluator;
+            document.getElementById('audit-time').innerText = new Date().toLocaleString('pt-BR');
+
+            document.getElementById('results-section').classList.remove('hidden');
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleReset() {
+            document.querySelectorAll('input').forEach(i => i.value = '');
+            document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+            document.getElementById('results-section').classList.add('hidden');
+        }
+
+        function handleSearchNanda() {
+            const score = document.getElementById('res-score-val').innerText;
+            window.open(`https://www.google.com/search?q=NANDA+NIC+NOC+parto+preparação+cervical+bishop+escore+${score}`, '_blank');
+        }
+
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const name = document.getElementById('patient_name').value || "Não Identificada";
+            const score = document.getElementById('res-score-val').innerText;
+
+            doc.setFillColor(26, 62, 116); doc.rect(0, 0, 8, 297, 'F'); 
+            doc.setFont("helvetica", "bold"); doc.setFontSize(18); doc.setTextColor(26, 62, 116);
+            doc.text("RELATÓRIO CLÍNICO: ESCALA DE BISHOP", 105, 25, { align: "center" });
+
+            doc.setDrawColor(230); doc.line(20, 35, 195, 35);
+            doc.setFontSize(10); doc.setTextColor(80); doc.setFont("helvetica", "normal");
+            doc.text(`Paciente: ${name}`, 20, 48);
+            doc.text(`Avaliador: ${document.getElementById('evaluator_name').value}`, 20, 56);
+            doc.text(`Data: ${new Date().toLocaleString('pt-BR')}`, 20, 64);
+
+            doc.setFillColor(248, 250, 252); doc.roundedRect(20, 80, 175, 45, 4, 4, 'F');
+            doc.setFontSize(32); doc.setTextColor(26, 62, 116); doc.setFont("helvetica", "bold");
+            doc.text(`${score} Pontos`, 107, 105, { align: "center" });
+            doc.setFontSize(12); doc.text(document.getElementById('res-status').innerText, 107, 115, { align: "center" });
+
+            const qrContainer = document.getElementById('qrcode-source');
+            qrContainer.innerHTML = "";
+            new QRCode(qrContainer, { text: "https://www.calculadorasdeenfermagem.com.br/bishop.html", width: 100, height: 100 });
+            
+            setTimeout(() => {
+                const qrImg = qrContainer.querySelector('img').src;
+                doc.addImage(qrImg, 'PNG', 165, 250, 30, 30);
+                doc.setFontSize(8); doc.setTextColor(150);
+                doc.text("Calculadoras de Enfermagem - Relatório de Auditoria Clínica", 100, 285, { align: "center" });
+                doc.save(`Bishop_${name.replace(/\s+/g, '_')}.pdf`);
+            }, 500);
+        }
+
+        const loadFooter = () => {
+            const footerPlaceholder = document.getElementById("footer-placeholder");
+            if (!footerPlaceholder) return;
+            fetch("footer.html")
+                .then((r) => r.ok ? r.text() : Promise.reject())
+                .then((d) => footerPlaceholder.innerHTML = d)
+                .catch(() => {
+                    footerPlaceholder.innerHTML = `
+                        <footer class="py-12 mt-20 border-t border-gray-100 dark:border-slate-800 text-center font-nunito italic">
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+                                &copy; ${new Date().getFullYear()} Calculadoras de Enfermagem - Protocolos Premium
+                            </p>
+                        </footer>`;
+                });
+        };
+    </script>
+</body>
+</html>
