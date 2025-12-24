@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escala de Barthel Online – Avaliação de Dependência Funcional | Calculadoras de Enfermagem</title>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9472305505608641" crossorigin="anonymous"></script>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Avalie a dependência funcional do paciente com a Escala de Barthel. Ferramenta profissional para geriatria e reabilitação com relatório PDF e auditoria.">
+    <meta name="keywords" content="escala de barthel, dependência funcional, abvds, enfermagem geriátrica, reabilitação, fisioterapia, cuidados domiciliares, avc">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/barthel.html">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        nunito: ['Nunito Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-primary-light': '#2E5A9C',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Dependências PDF e QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root { --color-primary: #1A3E74; --color-primary-light: #2E5A9C; }
+        .tab-btn-active { border-color: #00bcd4 !important; color: #00bcd4 !important; font-weight: bold; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .sidebar-card { padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .toc-list li { margin-bottom: 0.75rem; font-size: 0.875rem; transition: transform 0.2s; font-family: 'Inter', sans-serif; }
+        .toc-list li:hover { transform: translateX(5px); }
+        .share-btn { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); color: white; transition: all 0.3s; }
+        .share-btn:hover { background: white; color: var(--color-primary); transform: translateY(-3px); }
+        .btn-action { height: 56px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; transition: all 0.3s; font-family: 'Nunito Sans', sans-serif; }
+        .tag { display: inline-block; background: #f3f4f6; color: #4b5563; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 600; margin-right: 0.5rem; margin-bottom: 0.5rem; transition: all 0.2s; cursor: pointer; }
+        .tag:hover { background: var(--color-primary); color: white; }
+        .criterion-row { border-left: 4px solid #00bcd4; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
+
+    <div id="header-container"></div>
+
+    <!-- Background Decorativo SVG -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-slate-500 mb-8 font-inter">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
+                <li><span>></span> <span>Geriatria / Reabilitação</span></li>
+                <li><span>></span> <span class="text-nurse-primary dark:text-nurse-secondary font-bold font-nunito">Escala de Barthel</span></li>
+            </ol>
+        </nav>
+
+        <!-- Header da Página -->
+        <header class="mb-12 text-center md:text-left">
+            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito italic tracking-tighter">Avaliação Funcional</span>
+            <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 leading-tight font-nunito tracking-tight italic tracking-tighter capitalize">Escala de Barthel</h1>
+            <div class="w-24 h-1.5 bg-nurse-secondary rounded-full mb-8 mx-auto md:mx-0"></div>
+            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium font-inter max-w-3xl">
+                Instrumento para avaliar o grau de independência em atividades básicas de vida diária. Fundamental para prognóstico e planejamento de cuidados em idosos e pacientes neurológicos.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+            <!-- Coluna Principal -->
+            <div class="lg:col-span-3 space-y-10">
+                
+                <!-- Sistema de Abas -->
+                <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-8 font-nunito font-bold">
+                    <button onclick="showTab('calc')" id="btn-tab-calc" class="px-6 py-3 border-b-2 tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-calculator"></i> Escala
+                    </button>
+                    <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-book-medical"></i> Sobre
+                    </button>
+                    <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-clipboard-check"></i> Como Avaliar?
+                    </button>
+                    <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-vial"></i> Inf. Técnicas
+                    </button>
+                </div>
+
+                <!-- Painel da Escala -->
+                <section id="pane-calc" class="space-y-8 animate-in fade-in duration-500">
+                    
+                    <!-- Dados do Paciente -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-lg font-black text-nurse-primary dark:text-white mb-6 uppercase tracking-tight font-nunito">
+                            Identificação do Paciente
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Nome Completo</label>
+                                <input type="text" id="patient_name" placeholder="Ex: Maria José da Silva" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Data de Nascimento</label>
+                                <input type="text" id="patient_dob" placeholder="dd/mm/aaaa" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculadora Barthel -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-8 uppercase tracking-widest border-b border-gray-100 dark:border-slate-800 pb-2 font-nunito">
+                            Atividades Básicas (ABVDs)
+                        </h3>
+                        
+                        <div id="barthel-items-container" class="space-y-6 font-inter">
+                            <!-- Items serão injetados via JS -->
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-12 max-w-xl mx-auto font-nunito">
+                            <button onclick="handleCalculate()" class="btn-action bg-nurse-primary text-white hover:bg-nurse-primary/90 shadow-xl shadow-nurse-primary/20">
+                                <i class="fa-solid fa-calculator"></i> Calcular
+                            </button>
+                            <button onclick="handleReset()" class="btn-action bg-gray-100 dark:bg-slate-800 text-gray-500 hover:bg-gray-200">
+                                <i class="fa-solid fa-rotate-left"></i> Limpar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Resultados -->
+                    <div id="results-section" class="hidden space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                        <div id="result-card" class="p-10 rounded-[3rem] shadow-2xl transition-all duration-500 text-white font-nunito bg-nurse-primary relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-person-walking text-[120px]"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+                                <div class="relative w-44 h-44 flex flex-col items-center justify-center bg-white/10 rounded-full border-4 border-white/20 backdrop-blur-sm">
+                                    <span id="res-score-val" class="text-6xl font-black text-white italic">00</span>
+                                    <span class="text-[10px] uppercase font-bold text-white/80 tracking-widest italic">Pontos</span>
+                                </div>
+                                <div class="text-center md:text-left flex-grow">
+                                    <h3 id="res-status" class="text-2xl font-black italic mb-2 text-white uppercase tracking-tight">Status Funcional</h3>
+                                    <div class="bg-white/10 p-6 rounded-2xl border border-white/20 mb-6">
+                                        <p class="text-sm font-medium mb-1 opacity-70">Grau de Dependência</p>
+                                        <p id="res-desc" class="text-lg font-bold text-nurse-secondary">Aguardando Avaliação...</p>
+                                    </div>
+                                    <p class="text-[10px] font-black text-white/60 bg-white/10 inline-block px-4 py-1.5 rounded-full uppercase tracking-widest">
+                                        <i class="fa-solid fa-shield-check mr-2"></i> Auditoria de Barthel (Protocolo 1965)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-nunito">
+                            <button onclick="handleSearchNanda()" class="btn-action border-2 border-nurse-secondary text-nurse-secondary hover:bg-nurse-secondary hover:text-white">
+                                <i class="fa-solid fa-book-medical"></i> Diagnóstico (NANDA, NIC e NOC)
+                            </button>
+                            <button onclick="generatePDF()" class="btn-action bg-nurse-primary text-white hover:opacity-90">
+                                <i class="fa-solid fa-file-pdf"></i> Gerar PDF
+                            </button>
+                        </div>
+
+                        <!-- Auditoria Clínica -->
+                        <div class="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm font-inter">
+                            <h4 class="font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest font-nunito flex items-center gap-2">
+                                <i class="fa-solid fa-magnifying-glass-chart text-nurse-secondary"></i> Auditoria de Registro
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-xs">
+                                <div class="space-y-2">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Paciente:</p>
+                                    <p id="audit-patient" class="font-bold text-gray-600 dark:text-gray-300 italic">-</p>
+                                    <p id="audit-dob" class="text-[10px] text-gray-400 font-bold italic">-</p>
+                                </div>
+                                <div class="space-y-2 text-center md:text-left">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Resultado Bruto:</p>
+                                    <p id="audit-score" class="font-bold text-gray-600 dark:text-gray-300">-</p>
+                                </div>
+                                <div class="space-y-2 text-right">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Data/Hora da Avaliação:</p>
+                                    <p id="audit-time" class="font-bold text-gray-600 dark:text-gray-300">-</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Metas de Segurança -->
+                        <div class="bg-white dark:bg-slate-900/50 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary p-6 uppercase tracking-widest font-nunito border-b border-gray-100 dark:border-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved"></i> Alertas de Segurança Hospitalar
+                            </h3>
+                            <div id="checklist-metas" class="p-6 space-y-3 font-inter"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Abas Teóricas -->
+                <section id="pane-teoria" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Sobre a Escala de Barthel</h2>
+                    <p>O <strong>Índice de Barthel</strong> avalia o desempenho do paciente em 10 atividades básicas de vida diária (ABVDs), com foco na independência funcional e necessidade de assistência.</p>
+                    <p>Introduzida em 1965, é uma das escalas mais validadas mundialmente para monitorar a evolução de pacientes em programas de reabilitação física e o declínio funcional na senescência.</p>
+                </section>
+
+                <section id="pane-instrucoes" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Como Realizar a Avaliação?</h2>
+                    <ul class="list-disc pl-5">
+                        <li>A avaliação deve ser baseada no que o paciente **realmente faz**, não no que ele seria capaz de fazer.</li>
+                        <li>O uso de órteses ou próteses (como andadores ou bengalas) deve ser levado em conta para a classificação de "independência com auxílio".</li>
+                        <li>Para pacientes em enfermaria, a observação direta pela equipe de enfermagem nas últimas 24-48h é o padrão ouro.</li>
+                    </ul>
+                </section>
+
+                <section id="pane-tecnica" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Informações Técnicas e Pontuação</h2>
+                    <p>A pontuação total varia de 0 a 100 pontos, em intervalos de 5 pontos. Um escore de 100 indica independência total, porém não necessariamente a capacidade de viver sozinho (pois não avalia atividades instrumentais como cozinhar ou gerir finanças).</p>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm font-inter">
+                            <thead class="bg-gray-100 dark:bg-slate-800">
+                                <tr><th class="p-2 border">Pontuação</th><th class="p-2 border">Classificação</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="p-2 border text-center">100</td><td class="p-2 border">Independência Total</td></tr>
+                                <tr><td class="p-2 border text-center">91 - 99</td><td class="p-2 border">Dependência Leve</td></tr>
+                                <tr><td class="p-2 border text-center">61 - 90</td><td class="p-2 border">Dependência Moderada</td></tr>
+                                <tr><td class="p-2 border text-center">21 - 60</td><td class="p-2 border">Dependência Grave</td></tr>
+                                <tr><td class="p-2 border text-center">0 - 20</td><td class="p-2 border">Dependência Total</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Tags -->
+                <div class="pt-10 border-t border-gray-100 dark:border-slate-800">
+                    <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Tags</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">#Geriatria</span>
+                        <span class="tag">#Reabilitacao</span>
+                        <span class="tag">#IndiceDeBarthel</span>
+                        <span class="tag">#CuidadosDomiciliares</span>
+                        <span class="tag">#EnfermagemClinica</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="space-y-6 font-nunito">
+                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold"><i class="fas fa-list mr-2"></i> Índice Rápido</h3>
+                    <ul class="toc-list font-inter">
+                        <li><a href="#pane-calc" onclick="showTab('calc')">1. Escala Barthel</a></li>
+                        <li><a href="#pane-teoria" onclick="showTab('teoria')">2. Sobre o Índice</a></li>
+                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes')">3. Guia de Avaliação</a></li>
+                        <li><a href="#pane-tecnica" onclick="showTab('tecnica')">4. Tabela de Escore</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold"><i class="fas fa-share-nodes mr-2"></i> Compartilhar</h3>
+                    <div class="flex flex-wrap gap-3 justify-between">
+                        <a href="#" class="share-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div id="qrcode-source" class="hidden"></div>
+            </aside>
+        </div>
+
+        <!-- Calculadoras Relacionadas -->
+        <section class="related-section bg-slate-100 dark:bg-slate-900/40 py-20 mt-16 rounded-[3rem]">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-black text-center mb-12 text-nurse-primary dark:text-white font-nunito flex items-center justify-center gap-4">
+                    <i class="fa-solid fa-toolbox text-nurse-secondary"></i> Ferramentas de Avaliação
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <a href="braden.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700 text-left">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600" alt="Braden" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <span class="absolute top-4 left-4 px-3 py-1 bg-nurse-secondary text-white text-[9px] font-black uppercase rounded-full tracking-widest font-nunito">Pele</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Escala de Braden</h3>
+                            <p class="text-xs text-gray-500 font-inter mb-4">Risco de lesão por pressão.</p>
+                            <span class="text-nurse-secondary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    <a href="katz.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700 text-left">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1516703094089-053b47bfef50?w=600" alt="Katz" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <span class="absolute top-4 left-4 px-3 py-1 bg-nurse-secondary text-white text-[9px] font-black uppercase rounded-full tracking-widest font-nunito">ABVD</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Índice de Katz</h3>
+                            <p class="text-xs text-gray-500 font-inter mb-4">Independência em atividades básicas.</p>
+                            <span class="text-nurse-secondary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
+    <script>
+        const BARTHEL_DATA = [
+            { id: "alim", title: "Alimentação", options: [
+                { val: 10, text: "Independente (capaz de usar talheres e comer sozinho)" },
+                { val: 5, text: "Necessita ajuda (ex: para cortar alimentos ou passar manteiga)" },
+                { val: 0, text: "Dependente (incapaz)" }
+            ]},
+            { id: "banh", title: "Banho", options: [
+                { val: 5, text: "Independente (lava-se totalmente sozinho no chuveiro/banheira)" },
+                { val: 0, text: "Dependente" }
+            ]},
+            { id: "higi", title: "Higiene Pessoal", options: [
+                { val: 5, text: "Independente (rosto, dentes, cabelo, barbear)" },
+                { val: 0, text: "Dependente" }
+            ]},
+            { id: "vest", title: "Vestir-se", options: [
+                { val: 10, text: "Independente (incluindo amarrar sapatos e fechar botões)" },
+                { val: 5, text: "Necessita de alguma ajuda" },
+                { val: 0, text: "Dependente" }
+            ]},
+            { id: "cint", title: "Controle Intestinal", options: [
+                { val: 10, text: "Continente (sem acidentes)" },
+                { val: 5, text: "Acidente ocasional (uma vez por semana ou menos)" },
+                { val: 0, text: "Incontinente (ou necessidade de enemas)" }
+            ]},
+            { id: "cves", title: "Controle Vesical", options: [
+                { val: 10, text: "Continente (ou capaz de cuidar de sonda sozinho)" },
+                { val: 5, text: "Acidente ocasional (máximo um em 24h)" },
+                { val: 0, text: "Incontinente (ou necessidade de ajuda com sonda/fralda)" }
+            ]},
+            { id: "vasi", title: "Uso do Vaso Sanitário", options: [
+                { val: 10, text: "Independente (entra, sai, limpa-se, veste-se)" },
+                { val: 5, text: "Necessita ajuda (para equilíbrio ou higiene)" },
+                { val: 0, text: "Dependente" }
+            ]},
+            { id: "tran", title: "Transferência (Cama-Cadeira)", options: [
+                { val: 15, text: "Independente (incluindo sentar e levantar)" },
+                { val: 10, text: "Ajuda mínima (uma pessoa auxiliando)" },
+                { val: 5, text: "Ajuda máxima (capaz de sentar, mas precisa de muita ajuda p/ levantar)" },
+                { val: 0, text: "Incapaz" }
+            ]},
+            { id: "mobi", title: "Mobilidade (Andar)", options: [
+                { val: 15, text: "Independente (pode usar bengala, > 50 metros)" },
+                { val: 10, text: "Auxílio de uma pessoa (> 50 metros)" },
+                { val: 5, text: "Independente em cadeira de rodas (propulsão própria, > 50 metros)" },
+                { val: 0, text: "Imóvel" }
+            ]},
+            { id: "esca", title: "Subir Escadas", options: [
+                { val: 10, text: "Independente (pode usar corrimão)" },
+                { val: 5, text: "Necessita ajuda (física ou supervisão)" },
+                { val: 0, text: "Incapaz" }
+            ]}
+        ];
+
+        const SAFETY_METAS = [
+            { id: 6, text: "Reduzir o risco de quedas (Monitorar mobilidade)", color: "bg-orange-50 text-orange-800" },
+            { id: 1, text: "Identificação Correta do Paciente", color: "bg-red-50 text-red-800" },
+            { id: 5, text: "Higienizar as mãos (Prevenção de Infecções)", color: "bg-green-50 text-green-800" }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById('barthel-items-container');
+            BARTHEL_DATA.forEach(item => {
+                const row = document.createElement('div');
+                row.className = "criterion-row";
+                row.innerHTML = `
+                    <label class="text-xs font-black text-nurse-primary dark:text-nurse-secondary mb-2 block uppercase tracking-tighter">${item.title}</label>
+                    <select id="sel-${item.id}" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                        ${item.options.map(o => `<option value="${o.val}">${o.text} (${o.val})</option>`).join('')}
+                    </select>
+                `;
+                container.appendChild(row);
+            });
+        });
+
+        function showTab(id) {
+            ['calc', 'teoria', 'instrucoes', 'tecnica'].forEach(t => {
+                document.getElementById('pane-' + t).classList.add('hidden');
+                document.getElementById('btn-tab-' + t).classList.remove('tab-btn-active');
+            });
+            document.getElementById('pane-' + id).classList.remove('hidden');
+            document.getElementById('btn-tab-' + id).classList.add('tab-btn-active');
+        }
+
+        function handleCalculate() {
+            let total = 0;
+            BARTHEL_DATA.forEach(item => {
+                total += parseInt(document.getElementById(`sel-${item.id}`).value);
+            });
+
+            const name = document.getElementById('patient_name').value || "Não informado";
+            const dob = document.getElementById('patient_dob').value || "-";
+
+            let desc = "";
+            let colorClass = "bg-nurse-primary";
+
+            if (total === 100) desc = "Independência Total";
+            else if (total >= 91) desc = "Dependência Leve";
+            else if (total >= 61) { desc = "Dependência Moderada"; colorClass = "bg-yellow-600"; }
+            else if (total >= 21) { desc = "Dependência Grave"; colorClass = "bg-orange-600"; }
+            else { desc = "Dependência Total (Acamado)"; colorClass = "bg-red-700"; }
+
+            document.getElementById('res-score-val').innerText = total;
+            document.getElementById('res-desc').innerText = desc;
+            document.getElementById('result-card').className = `p-10 rounded-[3rem] shadow-2xl transition-all duration-500 text-white font-nunito relative overflow-hidden group ${colorClass}`;
+
+            // Auditoria
+            document.getElementById('audit-patient').innerText = name;
+            document.getElementById('audit-dob').innerText = dob;
+            document.getElementById('audit-score').innerText = total + " / 100";
+            document.getElementById('audit-time').innerText = new Date().toLocaleString('pt-BR');
+
+            // Metas
+            document.getElementById('checklist-metas').innerHTML = SAFETY_METAS.map(m => `
+                <div class="flex items-center p-3 rounded-xl border-l-4 border-gray-200 ${m.color}">
+                    <input type="checkbox" checked class="mr-3 w-4 h-4 accent-nurse-primary">
+                    <span class="text-xs font-bold">Meta ${m.id}: ${m.text}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('results-section').classList.remove('hidden');
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleReset() {
+            document.querySelectorAll('input').forEach(i => i.value = '');
+            document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+            document.getElementById('results-section').classList.add('hidden');
+        }
+
+        function handleSearchNanda() {
+            const total = document.getElementById('res-score-val').innerText;
+            window.open(`https://www.google.com/search?q=diagnostico+enfermagem+NANDA+NIC+NOC+paciente+dependente+Barthel+${total}`, '_blank');
+        }
+
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const name = document.getElementById('patient_name').value || "Não Identificado";
+            const score = document.getElementById('res-score-val').innerText;
+            const desc = document.getElementById('res-desc').innerText;
+
+            doc.setFillColor(26, 62, 116);
+            doc.rect(0, 0, 8, 297, 'F'); 
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(18); doc.setTextColor(26, 62, 116);
+            doc.text("AUDITORIA CLÍNICA: ÍNDICE DE BARTHEL", 105, 25, { align: "center" });
+
+            doc.setDrawColor(230); doc.line(20, 35, 195, 35);
+
+            doc.setFontSize(10); doc.setTextColor(80); doc.setFont("helvetica", "normal");
+            doc.text(`Identificação do Paciente: ${name}`, 20, 48);
+            doc.text(`Data de Nascimento: ${document.getElementById('patient_dob').value || "-"}`, 20, 56);
+            doc.text(`Relatório gerado em: ${new Date().toLocaleString('pt-BR')}`, 20, 64);
+
+            doc.setFillColor(248, 250, 252); doc.roundedRect(20, 80, 175, 45, 4, 4, 'F');
+            doc.setFontSize(30); doc.setTextColor(26, 62, 116); doc.setFont("helvetica", "bold");
+            doc.text(`${score} PONTOS`, 107, 105, { align: "center" });
+            doc.setFontSize(14); doc.text(desc, 107, 115, { align: "center" });
+
+            const qrContainer = document.getElementById('qrcode-source');
+            qrContainer.innerHTML = "";
+            new QRCode(qrContainer, { text: "https://www.calculadorasdeenfermagem.com.br/barthel.html", width: 100, height: 100 });
+            
+            setTimeout(() => {
+                const qrImg = qrContainer.querySelector('img').src;
+                doc.addImage(qrImg, 'PNG', 165, 250, 30, 30);
+                doc.setFontSize(8); doc.setTextColor(150);
+                doc.text("Validado por Calculadoras de Enfermagem - Registro de Auditoria Funcional", 100, 285, { align: "center" });
+                doc.save(`Barthel_${name.replace(/\s+/g, '_')}.pdf`);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
