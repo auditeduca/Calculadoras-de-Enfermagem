@@ -172,28 +172,6 @@
                 Garanta a administração segura e precisa da heparina através do cálculo de dosagem e diluição. Selecione o padrão da medicação ou insira os dados manualmente.
             </p>
         </header>
-
-        <!-- Seletor de Padrão - Acima das Abas -->
-        <div class="mb-8 p-6 bg-white dark:bg-slate-900/50 rounded-3xl border border-gray-100 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center gap-6 animate-in slide-in-from-top duration-500">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-nurse-secondary/10 rounded-2xl flex items-center justify-center text-nurse-secondary">
-                    <i class="fa-solid fa-layer-group text-xl"></i>
-                </div>
-                <div>
-                    <label class="block text-[10px] font-black uppercase text-gray-400 tracking-widest">Padrão de Medicação</label>
-                    <p class="text-xs text-gray-500">Selecione uma apresentação comum</p>
-                </div>
-            </div>
-            <select id="selectPadrao" onchange="aplicarPadrao(this.value)" class="flex-grow p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-bold text-nurse-primary dark:text-nurse-secondary outline-none focus:ring-2 focus:ring-nurse-secondary transition-all cursor-pointer">
-                <option value="custom">Personalizado (Manual)</option>
-                <option value="sc_5000">Subcutânea (5.000 UI / 0,25 ml)</option>
-                <option value="iv_5000_1">Endovenosa (5.000 UI / 1 ml)</option>
-                <option value="iv_25000_5">Frasco-Ampola (25.000 UI / 5 ml)</option>
-            </select>
-        </div>
-
-        <div class="grid lg:grid-cols-4 gap-12">
-            <div class="lg:col-span-3">
                 
                 <!-- Abas Reorganizadas -->
                 <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-10">
