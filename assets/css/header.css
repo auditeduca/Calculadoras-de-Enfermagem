@@ -1,146 +1,161 @@
-:root {
-    --primary-color: #1A3E74;
-    --primary-hover: #143260;
-    --audit-gold: #D4AF37; 
-    --scroll-track: #f1f5f9;
-    --scroll-thumb: #cbd5e1;
-    --scroll-thumb-hover: #1A3E74;
-}
+<!-- 
+    SOLUÇÃO DEFINITIVA (CSS INTERNO):
+    
+    Substitua a linha do <link rel="stylesheet"...> antiga por todo este bloco <style> abaixo.
+    Isso garante que o menu funcione mesmo sem internet ou se o link externo quebrar.
+-->
 
-body { font-family: 'Inter', sans-serif; }
-h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
+<style>
+    :root {
+        --primary-color: #1A3E74;
+        --primary-hover: #143260;
+        --audit-gold: #D4AF37; 
+        --scroll-track: #f1f5f9;
+        --scroll-thumb: #cbd5e1;
+        --scroll-thumb-hover: #1A3E74;
+    }
 
-.mega-panel {
-    display: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    width: 100%;
-    background-color: white;
-    border-top: 1px solid #e5e7eb;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    z-index: 90;
-    animation: slideDown 0.2s ease-out forwards;
-}
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
 
-.mega-panel.active {
-    display: block;
-}
+    /* --- MEGA PANEL BASE --- */
+    .mega-panel {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        width: 100%;
+        background-color: white;
+        border-top: 1px solid #e5e7eb;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        z-index: 90;
+        animation: slideDown 0.2s ease-out forwards;
+    }
 
-.panel-standard-height {
-    height: 380px; 
-    display: flex;
-}
+    .mega-panel.active {
+        display: block;
+    }
 
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+    .panel-standard-height {
+        height: 380px; 
+        display: flex;
+    }
 
-.glowing-frame {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 0.75rem; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 
-    border: 3px solid transparent; 
-    transition: all 0.3s ease-in-out;
-    position: relative;
-    overflow: hidden;
-    display: block; 
-    width: 100%; 
-}
+    /* --- CARDS E EFEITOS VISUAIS --- */
+    .glowing-frame {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 0.75rem; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
 
-.glowing-frame:hover {
-    border-color: #1A3E74; 
-    box-shadow: 0 0 18px rgba(26, 62, 116, 0.7), 0 0 8px rgba(26, 62, 116, 0.3); 
-    transform: translateY(-2px); 
-}
+        border: 3px solid transparent; 
+        transition: all 0.3s ease-in-out;
+        position: relative;
+        overflow: hidden;
+        display: block; 
+        width: 100%; 
+    }
 
-.menu-tab-trigger {
-    cursor: pointer;
-    transition: all 0.2s;
-    border-left: 3px solid transparent;
-}
-.menu-tab-trigger.active {
-    background-color: #f8fafc; 
-    color: var(--primary-color);
-    border-left: 3px solid var(--primary-color);
-    font-weight: 700;
-}
-.menu-tab-trigger:hover:not(.active) {
-    background-color: #f1f5f9;
-}
+    .glowing-frame:hover {
+        border-color: #1A3E74; 
+        box-shadow: 0 0 18px rgba(26, 62, 116, 0.7), 0 0 8px rgba(26, 62, 116, 0.3); 
+        transform: translateY(-2px); 
+    }
 
-.tab-content {
-    display: none;
-    animation: fadeIn 0.3s ease;
-}
-.tab-content.active {
-    display: block;
-}
+    /* --- NAVEGAÇÃO INTERNA DO MENU --- */
+    .menu-tab-trigger {
+        cursor: pointer;
+        transition: all 0.2s;
+        border-left: 3px solid transparent;
+    }
+    .menu-tab-trigger.active {
+        background-color: #f8fafc; 
+        color: var(--primary-color);
+        border-left: 3px solid var(--primary-color);
+        font-weight: 700;
+    }
+    .menu-tab-trigger:hover:not(.active) {
+        background-color: #f1f5f9;
+    }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateX(5px); }
-    to { opacity: 1; transform: translateX(0); }
-}
+    .tab-content {
+        display: none;
+        animation: fadeIn 0.3s ease;
+    }
+    .tab-content.active {
+        display: block;
+    }
 
-.custom-scroll::-webkit-scrollbar {
-    width: 8px;
-}
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateX(5px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
 
-.custom-scroll::-webkit-scrollbar-track {
-    background: var(--scroll-track);
-    border-radius: 4px;
-}
+    /* --- SCROLLBAR PERSONALIZADA --- */
+    .custom-scroll::-webkit-scrollbar {
+        width: 8px;
+    }
 
-.custom-scroll::-webkit-scrollbar-thumb {
-    background-color: var(--scroll-thumb);
-    border-radius: 4px;
-    border: 2px solid var(--scroll-track);
-}
+    .custom-scroll::-webkit-scrollbar-track {
+        background: var(--scroll-track);
+        border-radius: 4px;
+    }
 
-.custom-scroll::-webkit-scrollbar-thumb:hover {
-    background-color: var(--scroll-thumb-hover);
-}
+    .custom-scroll::-webkit-scrollbar-thumb {
+        background-color: var(--scroll-thumb);
+        border-radius: 4px;
+        border: 2px solid var(--scroll-track);
+    }
 
-.custom-scroll {
-    scrollbar-width: thin;
-    scrollbar-color: var(--scroll-thumb) var(--scroll-track);
-}
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+        background-color: var(--scroll-thumb-hover);
+    }
 
-.link-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem 2rem;
-}
+    .custom-scroll {
+        scrollbar-width: thin;
+        scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+    }
 
-.mobile-menu-drawer { transition: transform 0.3s ease-in-out; }
-.mobile-menu-backdrop { transition: opacity 0.3s ease-in-out; }
+    /* --- LAYOUTS ESPECÍFICOS --- */
+    .link-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem 2rem;
+    }
 
-.mobile-submenu {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    transition: max-height 0.4s ease-out, opacity 0.3s ease, visibility 0.3s ease;
-}
-.mobile-submenu.open { 
-    max-height: 2000px; 
-    opacity: 1;
-    visibility: visible;
-}
+    /* --- MENU MOBILE --- */
+    .mobile-menu-drawer { transition: transform 0.3s ease-in-out; }
+    .mobile-menu-backdrop { transition: opacity 0.3s ease-in-out; }
 
-.mobile-sub-accordion {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.3s ease-out, opacity 0.2s ease;
-}
-.mobile-sub-accordion.open {
-    max-height: 500px;
-    opacity: 1;
-}
+    .mobile-submenu {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transition: max-height 0.4s ease-out, opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .mobile-submenu.open { 
+        max-height: 2000px; 
+        opacity: 1;
+        visibility: visible;
+    }
 
-.rotate-180 { transform: rotate(180deg); }
+    .mobile-sub-accordion {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.3s ease-out, opacity 0.2s ease;
+    }
+    .mobile-sub-accordion.open {
+        max-height: 500px;
+        opacity: 1;
+    }
+
+    .rotate-180 { transform: rotate(180deg); }
+</style>
