@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escala de Braden Online | Prevenção de LPP | Calculadoras de Enfermagem</title>
+    <title>Escala de Braden Online | Risco de Lesão por Pressão | Calculadoras de Enfermagem</title>
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847" crossorigin="anonymous"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9472305505608641" crossorigin="anonymous"></script>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Calcule a Escala de Braden para avaliação de risco de lesões por pressão (LPP). Ferramenta profissional para enfermagem com relatório PDF e metas de segurança.">
-    <meta name="keywords" content="escala de braden, braden score, lesão por pressão, lpp, prevenção de escaras, enfermagem, segurança do paciente, meta 6">
+    <meta name="description" content="Calcule o risco de lesão por pressão (LPP) com a Escala de Braden. Ferramenta para enfermagem com relatório PDF, metas de segurança e diagnóstico NANDA.">
+    <meta name="keywords" content="escala de braden, risco de lpp, lesão por pressão, segurança do paciente, enfermagem, dermatologia, cicatrização, feridas">
     <meta name="author" content="Calculadoras de Enfermagem">
     <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/braden.html">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -62,6 +61,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
 
+    <!-- Header Modular -->
     <div id="header-container"></div>
 
     <!-- Background Decorativo -->
@@ -78,19 +78,19 @@
             <ol class="flex items-center space-x-2">
                 <li><a href="index.html" class="hover:text-nurse-secondary transition-colors italic">Início</a></li>
                 <li><span>/</span></li>
-                <li><span>Pele & Curativos</span></li>
+                <li><span>Pele e Cicatrização</span></li>
                 <li><span>/</span></li>
                 <li class="text-nurse-primary dark:text-nurse-secondary font-black italic">Escala de Braden</li>
             </ol>
         </nav>
 
-        <!-- Header -->
+        <!-- Header da Página -->
         <header class="mb-12 text-center md:text-left">
-            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito italic tracking-tighter shadow-lg shadow-nurse-primary/20">Protocolo de Prevenção de Lesões</span>
+            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito italic tracking-tighter shadow-lg shadow-nurse-primary/20">Prevenção de LPP</span>
             <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 leading-tight font-nunito tracking-tighter italic capitalize">Escala de Braden</h1>
             <div class="w-24 h-1.5 bg-nurse-secondary rounded-full mb-8 mx-auto md:mx-0"></div>
             <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium font-inter max-w-3xl">
-                Instrumento padrão-ouro para triagem de risco de desenvolvimento de lesões por pressão (LPP) em pacientes hospitalizados.
+                Instrumento preditivo para avaliação do risco de desenvolvimento de Lesão por Pressão em pacientes hospitalizados.
             </p>
         </header>
 
@@ -101,52 +101,52 @@
                 <!-- Abas -->
                 <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-8 font-nunito font-bold">
                     <button onclick="showTab('calc')" id="btn-tab-calc" class="px-6 py-3 border-b-2 tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all italic tracking-tighter">
-                        <i class="fa-solid fa-calculator"></i> Escala
+                        <i class="fa-solid fa-calculator"></i> Avaliação
                     </button>
                     <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all italic tracking-tighter">
-                        <i class="fa-solid fa-book-medical"></i> Sobre
+                        <i class="fa-solid fa-book-medical"></i> Definição
                     </button>
                     <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all italic tracking-tighter">
-                        <i class="fa-solid fa-clipboard-check"></i> Como Aplicar?
+                        <i class="fa-solid fa-clipboard-check"></i> Como Avaliar?
                     </button>
                     <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all italic tracking-tighter">
-                        <i class="fa-solid fa-vial"></i> Inf. Técnicas
+                        <i class="fa-solid fa-vial"></i> Conduta
                     </button>
                 </div>
 
-                <!-- Painel da Escala -->
+                <!-- Painel da Calculadora -->
                 <section id="pane-calc" class="space-y-8 animate-in fade-in duration-500">
                     
-                    <!-- Auditoria/Identificação -->
+                    <!-- Identificação -->
                     <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
                         <h3 class="text-lg font-black text-nurse-primary dark:text-white mb-6 uppercase tracking-tight font-nunito italic tracking-tighter">
                             Identificação do Paciente
                         </h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
                             <div class="space-y-2">
-                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Nome Completo / Prontuário</label>
-                                <input type="text" id="patient_name" placeholder="Ex: João Silva (Pront: 1234)" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Nome Completo</label>
+                                <input type="text" id="patient_name" placeholder="Ex: Maria das Dores" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
                             </div>
                             <div class="space-y-2">
-                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Avaliador (Enfermeiro)</label>
-                                <input type="text" id="evaluator_name" placeholder="Nome do Profissional" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Profissional / Avaliador</label>
+                                <input type="text" id="evaluator_name" placeholder="Nome do Enfermeiro(a)" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Calculadora Braden -->
+                    <!-- Critérios de Braden -->
                     <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
                         <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-8 uppercase tracking-widest border-b border-gray-100 dark:border-slate-800 pb-2 font-nunito flex items-center gap-2 italic">
-                            <i class="fa-solid fa-hand-holding-medical"></i> Critérios de Braden (6 Itens)
+                            <i class="fa-solid fa-stethoscope"></i> Avaliação dos 6 Domínios
                         </h3>
                         
-                        <div id="braden-items-container" class="space-y-8 font-inter">
+                        <div id="braden-items-container" class="space-y-8 font-inter text-gray-700 dark:text-gray-200">
                             <!-- Injetado via JS -->
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-12 max-w-xl mx-auto font-nunito italic">
                             <button onclick="handleCalculate()" class="btn-action bg-nurse-primary text-white hover:bg-nurse-primary/90 shadow-xl shadow-nurse-primary/20">
-                                <i class="fa-solid fa-calculator"></i> Calcular Escore
+                                <i class="fa-solid fa-calculator"></i> Calcular Risco
                             </button>
                             <button onclick="handleReset()" class="btn-action bg-gray-100 dark:bg-slate-800 text-gray-500 hover:bg-gray-200">
                                 <i class="fa-solid fa-rotate-left"></i> Limpar
@@ -158,22 +158,22 @@
                     <div id="results-section" class="hidden space-y-8 animate-in slide-in-from-bottom-4 duration-500">
                         <div id="result-card" class="p-10 rounded-[3.5rem] shadow-2xl transition-all duration-500 text-white font-nunito bg-nurse-primary relative overflow-hidden group">
                             <div class="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform">
-                                <i class="fa-solid fa-shield-virus text-[140px]"></i>
+                                <i class="fa-solid fa-shield-heart text-[140px]"></i>
                             </div>
 
                             <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
                                 <div class="relative w-48 h-48 flex flex-col items-center justify-center bg-white/10 rounded-full border-4 border-white/20 backdrop-blur-sm shadow-inner">
                                     <span id="res-score-val" class="text-6xl font-black text-white italic tracking-tighter">00</span>
-                                    <span class="text-[10px] uppercase font-bold text-white/80 tracking-widest italic">/ 23 Pontos</span>
+                                    <span class="text-[10px] uppercase font-bold text-white/80 tracking-widest italic">Pontos</span>
                                 </div>
                                 <div class="text-center md:text-left flex-grow">
-                                    <h3 id="res-status" class="text-2xl font-black italic mb-2 text-white uppercase tracking-tighter">Risco de Lesão</h3>
+                                    <h3 id="res-status" class="text-2xl font-black italic mb-2 text-white uppercase tracking-tighter">Nível de Risco</h3>
                                     <div class="bg-white/10 p-6 rounded-3xl border border-white/20 mb-6 backdrop-blur-md">
-                                        <p class="text-sm font-medium mb-1 opacity-70">Nível de Risco Identificado</p>
-                                        <p id="res-desc" class="text-lg font-bold text-nurse-secondary">Aguardando dados...</p>
+                                        <p class="text-sm font-medium mb-1 opacity-70 font-inter">Classificação Clínica</p>
+                                        <p id="res-desc" class="text-lg font-bold text-nurse-secondary">Calculando risco...</p>
                                     </div>
-                                    <p class="text-[10px] font-black text-white/60 bg-white/10 inline-block px-4 py-1.5 rounded-full uppercase tracking-widest italic">
-                                        <i class="fa-solid fa-shield-check mr-2"></i> Auditoria Meta 6 (OMS/Ministério da Saúde)
+                                    <p class="text-[10px] font-black text-white/60 bg-white/10 inline-block px-4 py-1.5 rounded-full uppercase tracking-widest italic font-nunito">
+                                        <i class="fa-solid fa-circle-check mr-2"></i> Auditoria de Enfermagem (Pele & Tecidos)
                                     </p>
                                 </div>
                             </div>
@@ -188,31 +188,10 @@
                             </button>
                         </div>
 
-                        <!-- Auditoria Clínica -->
-                        <div class="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm font-inter">
-                            <h4 class="font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest font-nunito flex items-center gap-2 italic">
-                                <i class="fa-solid fa-clipboard-list text-nurse-secondary"></i> Registo de Auditoria
-                            </h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-xs font-medium text-slate-500">
-                                <div class="space-y-2">
-                                    <p class="text-[10px] font-black uppercase text-gray-400">Paciente:</p>
-                                    <p id="audit-patient" class="text-nurse-primary dark:text-white italic">-</p>
-                                </div>
-                                <div class="space-y-2">
-                                    <p class="text-[10px] font-black uppercase text-gray-400">Enfermeiro:</p>
-                                    <p id="audit-evaluator" class="text-nurse-primary dark:text-white italic">-</p>
-                                </div>
-                                <div class="space-y-2 text-right">
-                                    <p class="text-[10px] font-black uppercase text-gray-400">Timestamp:</p>
-                                    <p id="audit-time" class="text-nurse-primary dark:text-white">-</p>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Metas de Segurança -->
                         <div class="bg-white dark:bg-slate-900/50 rounded-[3rem] border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
                             <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary p-6 uppercase tracking-widest font-nunito border-b border-gray-100 dark:border-slate-800 flex items-center gap-2 italic">
-                                <i class="fa-solid fa-user-shield"></i> Metas de Segurança Relacionadas
+                                <i class="fa-solid fa-user-shield"></i> Prevenção de Eventos Adversos
                             </h3>
                             <div id="checklist-metas" class="p-6 space-y-3 font-inter"></div>
                         </div>
@@ -221,36 +200,35 @@
 
                 <!-- Teoria -->
                 <section id="pane-teoria" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
-                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter italic">Sobre a Escala de Braden</h2>
-                    <p>Desenvolvida em 1987 por Barbara Braden e Nancy Bergstrom, a <strong>Escala de Braden</strong> é uma das ferramentas mais validadas cientificamente para prever o risco de desenvolvimento de lesões por pressão (LPP).</p>
-                    <p>Ao contrário de outras escalas, a Braden foca em fatores extrínsecos (umidade, fricção) e intrínsecos (percepção sensorial, nutrição), permitindo que o enfermeiro planeie intervenções preventivas direcionadas.</p>
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter italic">O que é a Escala de Braden?</h2>
+                    <p>A <strong>Escala de Braden</strong> é um dos instrumentos mais validados e utilizados mundialmente para prever o risco de desenvolvimento de Lesões por Pressão (LPP). Ela foi desenvolvida por Barbara Braden e Nancy Bergstrom em 1987.</p>
                 </section>
 
                 <section id="pane-instrucoes" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
-                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter italic">Guia de Avaliação</h2>
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter italic">Como realizar a pontuação?</h2>
                     <ul class="list-disc pl-5 space-y-4">
-                        <li><strong>Percepção Sensorial:</strong> Capacidade de sentir e relatar dor ou desconforto.</li>
-                        <li><strong>Umidade:</strong> Frequência com que a pele é exposta a suor, urina ou exsudatos.</li>
-                        <li><strong>Atividade:</strong> Grau de deambulação ou confinamento ao leito/cadeira.</li>
-                        <li><strong>Mobilidade:</strong> Capacidade de mudar e controlar a posição do corpo.</li>
-                        <li><strong>Nutrição:</strong> Ingestão alimentar habitual e suplementação.</li>
-                        <li><strong>Fricção e Cisalhamento:</strong> Problemas de arraste da pele contra superfícies durante movimentos.</li>
+                        <li><strong>Percepção Sensorial:</strong> Capacidade de reagir à pressão.</li>
+                        <li><strong>Umidade:</strong> Grau em que a pele fica exposta à umidade.</li>
+                        <li><strong>Atividade:</strong> Grau de atividade física.</li>
+                        <li><strong>Mobilidade:</strong> Capacidade de mudar a posição do corpo.</li>
+                        <li><strong>Nutrição:</strong> Padrão de ingestão alimentar.</li>
+                        <li><strong>Fricção e Cisalhamento:</strong> Problemas relacionados ao arrasto ou deslizamento.</li>
                     </ul>
                 </section>
 
                 <section id="pane-tecnica" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
-                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter italic">Tabela de Pontuação</h2>
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter italic">Interpretação e Conduta</h2>
                     <div class="overflow-x-auto">
                         <table class="min-w-full text-sm font-inter">
                             <thead class="bg-gray-100 dark:bg-slate-800 uppercase text-[10px] tracking-widest">
-                                <tr><th class="p-4 border text-left">Escore Braden (Adulto)</th><th class="p-4 border text-left">Classificação</th></tr>
+                                <tr><th class="p-4 border text-left">Pontuação Total</th><th class="p-4 border text-left">Classificação do Risco</th></tr>
                             </thead>
                             <tbody>
-                                <tr class="bg-green-50 dark:bg-green-900/10"><td class="p-4 border font-bold">19 - 23</td><td class="p-4 border italic">Sem Risco</td></tr>
-                                <tr class="bg-blue-50 dark:bg-blue-900/10"><td class="p-4 border font-bold">15 - 18</td><td class="p-4 border italic">Risco Baixo (Leve)</td></tr>
-                                <tr class="bg-yellow-50 dark:bg-yellow-900/10"><td class="p-4 border font-bold">13 - 14</td><td class="p-4 border italic">Risco Moderado</td></tr>
-                                <tr class="bg-orange-50 dark:bg-orange-900/10"><td class="p-4 border font-bold">10 - 12</td><td class="p-4 border italic">Risco Alto</td></tr>
-                                <tr class="bg-red-50 dark:bg-red-900/10"><td class="p-4 border font-bold">≤ 9</td><td class="p-4 border italic font-black">Risco Elevado (Muito Alto)</td></tr>
+                                <tr class="bg-red-100 dark:bg-red-900/20"><td class="p-4 border font-bold">≤ 9</td><td class="p-4 border italic">Risco Muito Alto. Implementar protocolo intensivo.</td></tr>
+                                <tr class="bg-red-50 dark:bg-red-900/10"><td class="p-4 border font-bold">10 - 12</td><td class="p-4 border italic">Risco Alto. Mudança de decúbito e superfícies de apoio.</td></tr>
+                                <tr class="bg-yellow-50 dark:bg-yellow-900/10"><td class="p-4 border font-bold">13 - 14</td><td class="p-4 border italic">Risco Moderado. Atenção à nutrição e umidade.</td></tr>
+                                <tr class="bg-blue-50 dark:bg-blue-900/10"><td class="p-4 border font-bold">15 - 18</td><td class="p-4 border italic">Risco Baixo. Monitorização contínua.</td></tr>
+                                <tr class="bg-green-50 dark:bg-green-900/10"><td class="p-4 border font-bold">19 - 23</td><td class="p-4 border italic">Sem Risco / Risco Irrelevante.</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -260,12 +238,12 @@
             <!-- Sidebar -->
             <aside class="space-y-6 font-nunito">
                 <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white italic tracking-tighter font-bold">
-                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-black italic"><i class="fas fa-list mr-2"></i> Navegação</h3>
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-black italic"><i class="fas fa-list mr-2"></i> Sumário</h3>
                     <ul class="toc-list font-inter font-normal not-italic text-sm">
-                        <li><a href="#pane-calc" onclick="showTab('calc')">1. Calculadora Braden</a></li>
-                        <li><a href="#pane-teoria" onclick="showTab('teoria')">2. Histórico</a></li>
-                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes')">3. Guia de Aplicação</a></li>
-                        <li><a href="#pane-tecnica" onclick="showTab('tecnica')">4. Parâmetros</a></li>
+                        <li><a href="#pane-calc" onclick="showTab('calc')">1. Calculadora de Risco</a></li>
+                        <li><a href="#pane-teoria" onclick="showTab('teoria')">2. Definição Técnica</a></li>
+                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes')">3. Guia de Itens</a></li>
+                        <li><a href="#pane-tecnica" onclick="showTab('tecnica')">4. Tabela de Condutas</a></li>
                     </ul>
                 </div>
 
@@ -282,22 +260,25 @@
         </div>
     </main>
 
-    <div id="footer-placeholder"></div>
+    <!-- Footer e Modais Modulares -->
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
 
+    <!-- Lógica da Escala -->
     <script>
         const BRADEN_ITEMS = [
-            { id: "sen", title: "1. Percepção Sensorial", opts: ["Totalmente limitado", "Muito limitado", "Levemente limitado", "Nenhuma limitação"] },
-            { id: "umi", title: "2. Umidade", opts: ["Completamente molhado", "Muito molhado", "Ocasionalmente molhado", "Raramente molhado"] },
-            { id: "ati", title: "3. Atividade", opts: ["Acamado", "Confinado à cadeira", "Anda ocasionalmente", "Anda frequentemente"] },
-            { id: "mob", title: "4. Mobilidade", opts: ["Totalmente imóvel", "Bastante limitado", "Levemente limitado", "Sem limitações"] },
-            { id: "nut", title: "5. Nutrição", opts: ["Muito pobre", "Provavelmente inadequada", "Adequada", "Excelente"] },
-            { id: "fri", title: "6. Fricção e Cisalhamento", opts: ["Problema", "Problema em potencial", "Nenhum problema", ""], count: 3 }
+            { id: "sen", title: "1. Percepção Sensorial", opts: ["Totalmente limitado (1 pt)", "Muito limitado (2 pts)", "Levemente limitado (3 pts)", "Nenhuma limitação (4 pts)"] },
+            { id: "umi", title: "2. Umidade da Pele", opts: ["Constantemente úmida (1 pt)", "Muito úmida (2 pts)", "Ocasionalmente úmida (3 pts)", "Raramente úmida (4 pts)"] },
+            { id: "ati", title: "3. Atividade Física", opts: ["Acamado (1 pt)", "Confinado à cadeira (2 pts)", "Caminha ocasionalmente (3 pts)", "Caminha frequentemente (4 pts)"] },
+            { id: "mob", title: "4. Mobilidade", opts: ["Totalmente imóvel (1 pt)", "Muito limitado (2 pts)", "Levemente limitado (3 pts)", "Nenhuma limitação (4 pts)"] },
+            { id: "nut", title: "5. Nutrição (Padrão Ingestão)", opts: ["Muito pobre (1 pt)", "Provavelmente inadequada (2 pts)", "Adequada (3 pts)", "Excelente (4 pts)"] },
+            { id: "fri", title: "6. Fricção e Cisalhamento", opts: ["Problema (1 pt)", "Problema potencial (2 pts)", "Sem problema aparente (3 pts)"] }
         ];
 
         const SAFETY_METAS = [
-            { id: 6, text: "Reduzir o risco de lesões por pressão (Prevenção LPP)", color: "bg-orange-50 text-orange-700 border-orange-200" },
             { id: 1, text: "Identificação Correta do Paciente", color: "bg-blue-50 text-blue-700 border-blue-200" },
-            { id: 5, text: "Higienizar as mãos para prevenir infecções", color: "bg-green-50 text-green-700 border-green-200" }
+            { id: 6, text: "Prevenção de Lesão por Pressão (LPP)", color: "bg-red-50 text-red-700 border-red-200" },
+            { id: 5, text: "Redução do Risco de Infecções Associadas ao Cuidado", color: "bg-green-50 text-green-700 border-green-200" }
         ];
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -305,16 +286,14 @@
             BRADEN_ITEMS.forEach(item => {
                 const row = document.createElement('div');
                 row.className = "criterion-row";
-                const max = item.count || 4;
                 row.innerHTML = `
                     <label class="text-[11px] font-black text-nurse-primary dark:text-nurse-secondary mb-2 block uppercase tracking-tighter italic">${item.title}</label>
                     <select id="sel-${item.id}" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm font-medium">
-                        ${item.opts.slice(0, max).map((o, idx) => `<option value="${idx+1}">${o} (${idx+1})</option>`).reverse().join('')}
+                        ${item.opts.map((o, idx) => `<option value="${idx+1}">${o}</option>`).join('')}
                     </select>
                 `;
                 container.appendChild(row);
             });
-            loadFooter();
         });
 
         function showTab(id) {
@@ -336,35 +315,31 @@
             const evaluator = document.getElementById('evaluator_name').value || "Não informado";
 
             let status = "Sem Risco";
-            let desc = "Pele com boa integridade. Manter vigilância de rotina.";
-            let color = "bg-green-600";
+            let desc = "Pele íntegra e baixo potencial de desenvolvimento de lesão.";
+            let color = "bg-nurse-primary";
 
             if (total <= 9) {
-                status = "Risco Elevado (Muito Alto)";
-                desc = "Urgente: Implementar protocolo de colchão especial e mudança de decúbito 2/2h.";
+                status = "Risco Muito Alto";
+                desc = "URGENTE: Necessária proteção intensiva, colchão especial e rodízio rigoroso.";
                 color = "bg-red-700";
             } else if (total <= 12) {
                 status = "Risco Alto";
-                desc = "Implementar barreiras de proteção e monitorização rigorosa da nutrição.";
-                color = "bg-orange-600";
+                desc = "Atenção: Implementar medidas preventivas imediatas.";
+                color = "bg-red-500";
             } else if (total <= 14) {
                 status = "Risco Moderado";
-                desc = "Monitorar umidade e otimizar mobilidade do paciente.";
+                desc = "Monitorar e manter cuidados de hidratação e reposicionamento.";
                 color = "bg-yellow-600";
             } else if (total <= 18) {
-                status = "Risco Baixo (Leve)";
-                desc = "Paciente requer atenção pontual em critérios específicos.";
+                status = "Risco Baixo";
+                desc = "Manter vigilância constante da integridade cutânea.";
                 color = "bg-blue-600";
             }
 
-            document.getElementById('res-score-val').innerText = total;
+            document.getElementById('res-score-val').innerText = total.toString().padStart(2, '0');
             document.getElementById('res-status').innerText = status;
             document.getElementById('res-desc').innerText = desc;
             document.getElementById('result-card').className = `p-10 rounded-[3.5rem] shadow-2xl transition-all duration-500 text-white font-nunito relative overflow-hidden group ${color}`;
-
-            document.getElementById('audit-patient').innerText = name;
-            document.getElementById('audit-evaluator').innerText = evaluator;
-            document.getElementById('audit-time').innerText = new Date().toLocaleString('pt-BR');
 
             document.getElementById('checklist-metas').innerHTML = SAFETY_METAS.map(m => `
                 <div class="flex items-center p-3 rounded-2xl border-l-4 ${m.color} shadow-sm border-2">
@@ -384,9 +359,8 @@
         }
 
         function handleSearchNanda() {
-            const score = document.getElementById('res-score-val').innerText;
             const status = document.getElementById('res-status').innerText;
-            window.open(`https://www.google.com/search?q=NANDA+NIC+NOC+lesão+por+pressão+Braden+${score}+${status}`, '_blank');
+            window.open(`https://www.google.com/search?q=NANDA+NIC+NOC+Risco+de+Integridade+da+Pele+Prejudicada+Braden+${status}`, '_blank');
         }
 
         async function generatePDF() {
@@ -395,23 +369,18 @@
             const name = document.getElementById('patient_name').value || "Não Identificado";
             const score = document.getElementById('res-score-val').innerText;
 
-            doc.setFillColor(26, 62, 116);
-            doc.rect(0, 0, 8, 297, 'F'); 
-
+            doc.setFillColor(26, 62, 116); doc.rect(5, 5, 2, 287, 'F'); 
             doc.setFont("helvetica", "bold"); doc.setFontSize(18); doc.setTextColor(26, 62, 116);
-            doc.text("RELATÓRIO CLÍNICO: ESCALA DE BRADEN", 105, 25, { align: "center" });
-
-            doc.setDrawColor(230); doc.line(20, 35, 195, 35);
+            doc.text("AUDITORIA CLÍNICA: ESCALA DE BRADEN", 105, 25, { align: "center" });
 
             doc.setFontSize(10); doc.setTextColor(80); doc.setFont("helvetica", "normal");
-            doc.text(`Paciente: ${name}`, 20, 48);
-            doc.text(`Avaliador: ${document.getElementById('evaluator_name').value}`, 20, 56);
-            doc.text(`Data: ${new Date().toLocaleString('pt-BR')}`, 20, 64);
+            doc.text(`Paciente: ${name}`, 20, 45);
+            doc.text(`Data: ${new Date().toLocaleString('pt-BR')}`, 20, 52);
 
-            doc.setFillColor(248, 250, 252); doc.roundedRect(20, 80, 175, 45, 4, 4, 'F');
-            doc.setFontSize(32); doc.setTextColor(26, 62, 116); doc.setFont("helvetica", "bold");
-            doc.text(`${score} Pontos`, 107, 105, { align: "center" });
-            doc.setFontSize(12); doc.text(document.getElementById('res-status').innerText, 107, 115, { align: "center" });
+            doc.setFillColor(248, 250, 252); doc.roundedRect(20, 70, 170, 40, 5, 5, 'F');
+            doc.setFontSize(30); doc.setTextColor(26, 62, 116); doc.setFont("helvetica", "bold");
+            doc.text(`${score} / 23 Pontos`, 105, 90, { align: "center" });
+            doc.setFontSize(14); doc.text(document.getElementById('res-status').innerText, 105, 100, { align: "center" });
 
             const qrContainer = document.getElementById('qrcode-source');
             qrContainer.innerHTML = "";
@@ -419,28 +388,17 @@
             
             setTimeout(() => {
                 const qrImg = qrContainer.querySelector('img').src;
-                doc.addImage(qrImg, 'PNG', 165, 250, 30, 30);
-                doc.setFontSize(8); doc.setTextColor(150);
-                doc.text("Portal de Enfermagem - Auditoria de Integridade Cutânea", 100, 285, { align: "center" });
+                doc.addImage(qrImg, 'PNG', 165, 250, 25, 25);
+                doc.text("Calculadoras de Enfermagem", 105, 280, { align: "center" });
                 doc.save(`Braden_${name.replace(/\s+/g, '_')}.pdf`);
             }, 500);
         }
-
-        const loadFooter = () => {
-            const footerPlaceholder = document.getElementById("footer-placeholder");
-            if (!footerPlaceholder) return;
-            fetch("footer.html")
-                .then((response) => response.ok ? response.text() : Promise.reject())
-                .then((data) => footerPlaceholder.innerHTML = data)
-                .catch(() => {
-                    footerPlaceholder.innerHTML = `
-                        <footer class="py-12 mt-20 border-t border-gray-100 dark:border-slate-800 text-center font-nunito italic">
-                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
-                                &copy; ${new Date().getFullYear()} Calculadoras de Enfermagem - Protocolos de Alta Fidelidade
-                            </p>
-                        </footer>`;
-                });
-        };
     </script>
+
+    <!-- Scripts Modulares Globais -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
 </body>
 </html>
