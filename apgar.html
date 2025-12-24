@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escala de Apgar Online – Avaliação do Recém-Nascido | Calculadoras de Enfermagem</title>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9472305505608641" crossorigin="anonymous"></script>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Calcule a Escala de Apgar (1º e 5º minuto) com precisão clínica. Avalie a vitalidade do recém-nascido e gere relatórios em PDF com auditoria completa.">
+    <meta name="keywords" content="escala de apgar, apgar neonatal, avaliação recém-nascido, enfermagem obstétrica, pediatria, vitalidade neonatal">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/apgar.html">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        nunito: ['Nunito Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-primary-light': '#2E5A9C',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Dependências PDF e QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root { --color-primary: #1A3E74; --color-primary-light: #2E5A9C; }
+        .tab-btn-active { border-color: #00bcd4 !important; color: #00bcd4 !important; font-weight: bold; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .sidebar-card { padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .toc-list li { margin-bottom: 0.75rem; font-size: 0.875rem; transition: transform 0.2s; font-family: 'Inter', sans-serif; }
+        .toc-list li:hover { transform: translateX(5px); }
+        .share-btn { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); color: white; transition: all 0.3s; }
+        .share-btn:hover { background: white; color: var(--color-primary); transform: translateY(-3px); }
+        .btn-action { height: 56px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; transition: all 0.3s; font-family: 'Nunito Sans', sans-serif; }
+        .tag { display: inline-block; background: #f3f4f6; color: #4b5563; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 600; margin-right: 0.5rem; margin-bottom: 0.5rem; transition: all 0.2s; cursor: pointer; }
+        .tag:hover { background: var(--color-primary); color: white; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
+
+    <div id="header-container"></div>
+
+    <!-- Elemento Decorativo SVG -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-slate-500 mb-8 font-inter">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
+                <li><span>></span> <span>Neonatologia</span></li>
+                <li><span>></span> <span class="text-nurse-primary dark:text-nurse-secondary font-bold font-nunito">Escala de Apgar</span></li>
+            </ol>
+        </nav>
+
+        <!-- Cabeçalho -->
+        <header class="mb-12 text-center md:text-left">
+            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito tracking-tighter">Pediatria / Obstetrícia</span>
+            <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 leading-tight font-nunito tracking-tight italic tracking-tighter capitalize">Escala de Apgar</h1>
+            <div class="w-24 h-1.5 bg-nurse-secondary rounded-full mb-8 mx-auto md:mx-0"></div>
+            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium font-inter max-w-3xl">
+                Avaliação imediata da vitalidade do recém-nascido nos primeiros minutos de vida. Essencial para decisões clínicas em sala de parto.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+            <!-- Conteúdo Principal -->
+            <div class="lg:col-span-3 space-y-10">
+                
+                <!-- Sistema de Abas -->
+                <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-8 font-nunito font-bold">
+                    <button onclick="showTab('calc')" id="btn-tab-calc" class="px-6 py-3 border-b-2 tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-calculator"></i> Escala
+                    </button>
+                    <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-book-medical"></i> Sobre
+                    </button>
+                    <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-clipboard-list"></i> Como Usar?
+                    </button>
+                    <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-microscope"></i> Informações Técnicas
+                    </button>
+                </div>
+
+                <!-- Painel da Escala -->
+                <section id="pane-calc" class="space-y-8 animate-in fade-in duration-500">
+                    
+                    <!-- Dados do Recém-Nascido -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-lg font-black text-nurse-primary dark:text-white mb-6 uppercase tracking-tight font-nunito">
+                            Dados de Auditoria
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Nome do RN / Mãe</label>
+                                <input type="text" id="patient_name" placeholder="Ex: RN de Maria Silva" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Data e Hora do Parto</label>
+                                <input type="datetime-local" id="parto_time" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parâmetros Apgar -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-8 uppercase tracking-widest border-b border-gray-100 dark:border-slate-800 pb-2 font-nunito">
+                            Critérios de Avaliação
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Frequência Cardíaca</label>
+                                <select id="sel_fc" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
+                                    <option value="0">Ausente (0 pts)</option>
+                                    <option value="1">&lt; 100 batimentos por minuto (1 pt)</option>
+                                    <option value="2">≥ 100 batimentos por minuto (2 pts)</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Esforço Respiratório</label>
+                                <select id="sel_resp" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
+                                    <option value="0">Ausente / Apneia (0 pts)</option>
+                                    <option value="1">Fraco, irregular ou gemência (1 pt)</option>
+                                    <option value="2">Forte, choro vigoroso (2 pts)</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tônus Muscular</label>
+                                <select id="sel_tonus" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
+                                    <option value="0">Flácido (0 pts)</option>
+                                    <option value="1">Alguma flexão de extremidades (1 pt)</option>
+                                    <option value="2">Movimentação ativa (2 pts)</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Irritabilidade Reflexa</label>
+                                <select id="sel_reflexo" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
+                                    <option value="0">Sem resposta (0 pts)</option>
+                                    <option value="1">Careta / Choro fraco (1 pt)</option>
+                                    <option value="2">Espirros, tosse ou choro forte (2 pts)</option>
+                                </select>
+                            </div>
+                            <div class="md:col-span-2 space-y-2">
+                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Cor da Pele</label>
+                                <select id="sel_cor" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
+                                    <option value="0">Cianose central ou palidez (0 pts)</option>
+                                    <option value="1">Corpo rosado, extremidades azuladas (1 pt)</option>
+                                    <option value="2">Totalmente rosado (2 pts)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-12 max-w-xl mx-auto font-nunito">
+                            <button onclick="handleCalculate()" class="btn-action bg-nurse-primary text-white hover:bg-nurse-primary/90 shadow-xl shadow-nurse-primary/20">
+                                <i class="fa-solid fa-calculator"></i> Calcular
+                            </button>
+                            <button onclick="handleReset()" class="btn-action bg-gray-100 dark:bg-slate-800 text-gray-500 hover:bg-gray-200">
+                                <i class="fa-solid fa-rotate-left"></i> Limpar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Resultados -->
+                    <div id="results-section" class="hidden space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                        <div id="result-card" class="p-10 rounded-[3rem] shadow-2xl transition-all duration-500 text-white font-nunito bg-nurse-primary relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-baby text-[120px]"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+                                <div class="relative w-44 h-44 flex items-center justify-center">
+                                    <svg class="w-full h-full transform -rotate-90">
+                                        <circle cx="88" cy="88" r="80" stroke="currentColor" stroke-width="8" fill="transparent" class="text-white/10" />
+                                        <circle id="progress-ring" cx="88" cy="88" r="80" stroke="#00bcd4" stroke-width="12" fill="transparent" stroke-dasharray="502" stroke-dashoffset="502" class="transition-all duration-1000 ease-out" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                        <span id="res-score-val" class="text-5xl font-black text-white">0</span>
+                                        <span class="text-[10px] uppercase font-bold text-white/80 tracking-widest">Apgar</span>
+                                    </div>
+                                </div>
+                                <div class="text-center md:text-left flex-grow">
+                                    <h3 id="res-status" class="text-2xl font-black italic mb-2 text-white uppercase tracking-tight">Status de Vitalidade</h3>
+                                    <div class="bg-white/10 p-6 rounded-2xl border border-white/20 mb-6">
+                                        <p class="text-sm font-medium mb-1 opacity-70">Conduta Clínica Sugerida</p>
+                                        <p id="res-conduta" class="text-xl font-bold text-nurse-secondary italic">Aguardando Avaliação...</p>
+                                    </div>
+                                    <p class="text-[10px] font-black text-white/60 bg-white/10 inline-block px-4 py-1.5 rounded-full uppercase tracking-widest">
+                                        <i class="fa-solid fa-shield-check mr-2"></i> Auditoria de Vitalidade (Virginia Apgar)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-nunito">
+                            <button onclick="handleSearchNanda()" class="btn-action border-2 border-nurse-secondary text-nurse-secondary hover:bg-nurse-secondary hover:text-white">
+                                <i class="fa-solid fa-book-medical"></i> Diagnóstico (NANDA, NIC e NOC)
+                            </button>
+                            <button onclick="generatePDF()" class="btn-action bg-nurse-primary text-white hover:opacity-90">
+                                <i class="fa-solid fa-file-pdf"></i> Gerar PDF
+                            </button>
+                        </div>
+
+                        <!-- Auditoria Clínica -->
+                        <div class="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm font-inter">
+                            <h4 class="font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest font-nunito flex items-center gap-2">
+                                <i class="fa-solid fa-magnifying-glass-chart text-nurse-secondary"></i> Auditoria do Cálculo
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div class="space-y-2">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Identificação:</p>
+                                    <p id="audit-patient" class="text-xs font-bold text-gray-600 dark:text-gray-300 italic">-</p>
+                                    <p id="audit-parto" class="text-[10px] text-gray-400 font-bold italic">-</p>
+                                </div>
+                                <div class="space-y-2 text-center md:text-left">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Pontuação:</p>
+                                    <p id="audit-score" class="text-xs font-bold text-gray-600 dark:text-gray-300">-</p>
+                                </div>
+                                <div class="space-y-2 text-right">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Hora da Avaliação:</p>
+                                    <p id="audit-time" class="text-xs font-bold text-gray-600 dark:text-gray-300">-</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Metas de Segurança -->
+                        <div class="bg-white dark:bg-slate-900/50 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary p-6 uppercase tracking-widest font-nunito border-b border-gray-100 dark:border-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved"></i> Segurança no Centro Obstétrico
+                            </h3>
+                            <div id="checklist-metas" class="p-6 space-y-3 font-inter"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Abas Teóricas -->
+                <section id="pane-teoria" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Sobre a Escala de Apgar</h2>
+                    <p>Criada pela <strong>Dra. Virginia Apgar</strong> em 1952, esta escala revolucionou a neonatologia ao fornecer um método padronizado para avaliar a vitalidade do recém-nascido.</p>
+                    <p>Originalmente desenvolvida para avaliar o impacto da anestesia materna no bebê, hoje é a ferramenta universal para determinar a necessidade de intervenções imediatas de reanimação.</p>
+                </section>
+
+                <section id="pane-instrucoes" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Como Usar?</h2>
+                    <ol>
+                        <li>A primeira avaliação deve ser feita exatamente aos <strong>1 minuto</strong> de vida.</li>
+                        <li>A segunda avaliação ocorre aos <strong>5 minutos</strong> de vida.</li>
+                        <li>Se o escore for &lt; 7 aos 5 minutos, repita a cada 5 minutos até 20 minutos de vida.</li>
+                        <li>Observe simultaneamente os 5 critérios: Frequência Cardíaca, Respiração, Tônus, Reflexo e Cor.</li>
+                    </ol>
+                </section>
+
+                <section id="pane-tecnica" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Interpretação Técnica</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose">
+                        <div class="p-6 bg-green-50 rounded-2xl border border-green-100">
+                            <h4 class="font-bold text-green-700 mb-2">8 a 10 Pontos</h4>
+                            <p class="text-sm text-green-600"> RN saudável com boa vitalidade. Cuidados de rotina.</p>
+                        </div>
+                        <div class="p-6 bg-yellow-50 rounded-2xl border border-yellow-100">
+                            <h4 class="font-bold text-yellow-700 mb-2">4 a 7 Pontos</h4>
+                            <p class="text-sm text-yellow-600"> Asfixia leve a moderada. Necessita suporte e monitoração.</p>
+                        </div>
+                        <div class="p-6 bg-red-50 rounded-2xl border border-red-100">
+                            <h4 class="font-bold text-red-700 mb-2">0 a 3 Pontos</h4>
+                            <p class="text-sm text-red-600"> Asfixia grave. Necessidade de reanimação imediata.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tags -->
+                <div class="pt-10 border-t border-gray-100 dark:border-slate-800">
+                    <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Tags</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">#Neonatologia</span>
+                        <span class="tag">#RN</span>
+                        <span class="tag">#Parto</span>
+                        <span class="tag">#Apgar</span>
+                        <span class="tag">#EnfermagemObstetrica</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="space-y-6 font-nunito">
+                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold"><i class="fas fa-list mr-2"></i> Índice</h3>
+                    <ul class="toc-list font-inter">
+                        <li><a href="#pane-calc" onclick="showTab('calc')">1. Escala</a></li>
+                        <li><a href="#pane-teoria" onclick="showTab('teoria')">2. Sobre</a></li>
+                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes')">3. Como Usar</a></li>
+                        <li><a href="#pane-tecnica" onclick="showTab('tecnica')">4. Informações Técnicas</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold"><i class="fas fa-share-nodes mr-2"></i> Compartilhar</h3>
+                    <div class="flex flex-wrap gap-3 justify-between">
+                        <a href="#" class="share-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="share-btn"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+                <div id="qrcode-source" class="hidden"></div>
+            </aside>
+        </div>
+
+        <!-- Ferramentas Relacionadas -->
+        <section class="related-section bg-slate-100 dark:bg-slate-900/40 py-20 mt-16 rounded-[3rem]">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-black text-center mb-12 text-nurse-primary dark:text-white font-nunito flex items-center justify-center gap-4">
+                    <i class="fa-solid fa-toolbox text-nurse-secondary"></i> Ferramentas Relacionadas
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Balanço Hídrico -->
+                    <a href="balancohidrico.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600" alt="Balanço" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <span class="absolute top-4 left-4 px-3 py-1 bg-nurse-secondary text-white text-[9px] font-black uppercase rounded-full tracking-widest">Monitoração</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Balanço Hídrico</h3>
+                            <p class="text-xs text-gray-500 font-inter mb-4">Controle rigoroso de perdas e ganhos.</p>
+                            <span class="text-nurse-secondary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    <!-- Gotejamento -->
+                    <a href="gotejamento.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1584017947476-83a6e957723b?w=600" alt="Soro" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <span class="absolute top-4 left-4 px-3 py-1 bg-nurse-secondary text-white text-[9px] font-black uppercase rounded-full tracking-widest">Infusão</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Gotejamento de Soro</h3>
+                            <p class="text-xs text-gray-500 font-inter mb-4">Cálculo de gotas e microgotas.</p>
+                            <span class="text-nurse-secondary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    <!-- Glasgow -->
+                    <a href="glasgow.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600" alt="Glasgow" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <span class="absolute top-4 left-4 px-3 py-1 bg-nurse-secondary text-white text-[9px] font-black uppercase rounded-full tracking-widest">Neurologia</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Escala de Glasgow</h3>
+                            <p class="text-xs text-gray-500 font-inter mb-4">Avaliação do nível de consciência.</p>
+                            <span class="text-nurse-secondary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
+    <script>
+        const SAFETY_GOALS = [
+            { id: 1, text: "Identificação Correta da Mãe e do RN", color: "bg-red-50 border-red-500 text-red-800" },
+            { id: 2, text: "Passagem de Plantão Estruturada (SBAR)", color: "bg-yellow-50 border-yellow-500 text-yellow-800" },
+            { id: 5, text: "Higiene das Mãos Antes de Manipular o RN", color: "bg-blue-50 border-blue-500 text-blue-800" }
+        ];
+
+        function showTab(id) {
+            ['calc', 'teoria', 'instrucoes', 'tecnica'].forEach(t => {
+                document.getElementById('pane-' + t).classList.add('hidden');
+                document.getElementById('btn-tab-' + t).classList.remove('tab-btn-active');
+            });
+            document.getElementById('pane-' + id).classList.remove('hidden');
+            document.getElementById('btn-tab-' + id).classList.add('tab-btn-active');
+        }
+
+        function handleCalculate() {
+            const name = document.getElementById('patient_name').value || "RN Não Identificado";
+            const partoTime = document.getElementById('parto_time').value;
+
+            const fc = parseInt(document.getElementById('sel_fc').value);
+            const resp = parseInt(document.getElementById('sel_resp').value);
+            const tonus = parseInt(document.getElementById('sel_tonus').value);
+            const ref = parseInt(document.getElementById('sel_reflexo').value);
+            const cor = parseInt(document.getElementById('sel_cor').value);
+
+            const total = fc + resp + tonus + ref + cor;
+
+            let status = "";
+            let conduta = "";
+            
+            if (total >= 8) {
+                status = "Boa Vitalidade";
+                conduta = "Vitalidade preservada. Realizar cuidados imediatos de rotina.";
+            } else if (total >= 4) {
+                status = "Depressão Moderada";
+                conduta = "Necessita monitoração e suporte respiratório imediato.";
+            } else {
+                status = "Depressão Grave";
+                conduta = "Iniciado protocolo de Reanimação Neonatal imediata.";
+            }
+
+            document.getElementById('res-score-val').innerText = total;
+            document.getElementById('res-status').innerText = status;
+            document.getElementById('res-conduta').innerText = conduta;
+            document.getElementById('progress-ring').style.strokeDashoffset = 502 - (total / 10) * 502;
+
+            document.getElementById('audit-patient').innerText = name;
+            document.getElementById('audit-parto').innerText = partoTime ? new Date(partoTime).toLocaleString('pt-BR') : "Não informada";
+            document.getElementById('audit-score').innerText = total + " / 10 PONTOS";
+            document.getElementById('audit-time').innerText = new Date().toLocaleString('pt-BR');
+
+            document.getElementById('checklist-metas').innerHTML = SAFETY_GOALS.map(m => `
+                <div class="flex items-center p-3 rounded-xl border-l-4 ${m.color}">
+                    <input type="checkbox" checked class="mr-3 w-4 h-4 accent-nurse-primary">
+                    <span class="text-xs font-bold">Meta ${m.id}: ${m.text}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('results-section').classList.remove('hidden');
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleReset() {
+            document.querySelectorAll('input').forEach(i => i.value = '');
+            document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+            document.getElementById('results-section').classList.add('hidden');
+        }
+
+        function handleSearchNanda() {
+            const score = document.getElementById('res-score-val').innerText;
+            window.open(`https://www.google.com/search?q=NANDA+NIC+NOC+enfermagem+neonatal+apgar+${score}`, '_blank');
+        }
+
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const name = document.getElementById('patient_name').value || "RN Não Identificado";
+            const score = document.getElementById('res-score-val').innerText;
+            const conduta = document.getElementById('res-conduta').innerText;
+
+            doc.setFillColor(26, 62, 116);
+            doc.rect(0, 0, 8, 297, 'F'); 
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(18); doc.setTextColor(26, 62, 116);
+            doc.text("RELATÓRIO DE AVALIAÇÃO NEONATAL: APGAR", 105, 25, { align: "center" });
+
+            doc.setDrawColor(230); doc.line(20, 35, 195, 35);
+
+            doc.setFontSize(10); doc.setTextColor(80); doc.setFont("helvetica", "normal");
+            doc.text(`Identificação: ${name}`, 20, 48);
+            doc.text(`Data/Hora Parto: ${document.getElementById('parto_time').value || "-"}`, 20, 56);
+            doc.text(`Avaliação feita em: ${new Date().toLocaleString('pt-BR')}`, 20, 64);
+
+            doc.setFillColor(248, 250, 252); doc.roundedRect(20, 80, 175, 45, 4, 4, 'F');
+            doc.setFontSize(26); doc.setTextColor(26, 62, 116); doc.setFont("helvetica", "bold");
+            doc.text(`${score} / 10 PONTOS`, 107, 105, { align: "center" });
+            doc.setFontSize(11); doc.text(conduta, 107, 116, { align: "center", maxWidth: 160 });
+
+            const qrContainer = document.getElementById('qrcode-source');
+            qrContainer.innerHTML = "";
+            new QRCode(qrContainer, { text: "https://www.calculadorasdeenfermagem.com.br/apgar.html", width: 100, height: 100 });
+            
+            setTimeout(() => {
+                const qrImg = qrContainer.querySelector('img').src;
+                doc.addImage(qrImg, 'PNG', 165, 250, 30, 30);
+                doc.setFontSize(8); doc.setTextColor(150);
+                doc.text("Validado por Calculadoras de Enfermagem - Auditoria Neonatal", 100, 285, { align: "center" });
+                doc.save(`Apgar_${name.replace(/\s+/g, '_')}.pdf`);
+            }, 500);
+        }
+    </script>
+</body>
+</html>

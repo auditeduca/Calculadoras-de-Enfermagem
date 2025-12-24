@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escala de Ballard Online – Idade Gestacional | Calculadoras de Enfermagem</title>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9472305505608641" crossorigin="anonymous"></script>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Calcule a Idade Gestacional pelo New Ballard Score. Avaliação completa da maturidade neuromuscular e física do recém-nascido com relatório PDF.">
+    <meta name="keywords" content="escala de ballard, idade gestacional, neonatologia, maturidade neuromuscular, maturidade física, enfermagem neonatal, pediatria">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/ballard.html">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        nunito: ['Nunito Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-primary-light': '#2E5A9C',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Dependências PDF e QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root { --color-primary: #1A3E74; --color-primary-light: #2E5A9C; }
+        .tab-btn-active { border-color: #00bcd4 !important; color: #00bcd4 !important; font-weight: bold; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .sidebar-card { padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .toc-list li { margin-bottom: 0.75rem; font-size: 0.875rem; transition: transform 0.2s; font-family: 'Inter', sans-serif; }
+        .toc-list li:hover { transform: translateX(5px); }
+        .share-btn { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); color: white; transition: all 0.3s; }
+        .share-btn:hover { background: white; color: var(--color-primary); transform: translateY(-3px); }
+        .btn-action { height: 56px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; transition: all 0.3s; font-family: 'Nunito Sans', sans-serif; }
+        .tag { display: inline-block; background: #f3f4f6; color: #4b5563; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 600; margin-right: 0.5rem; margin-bottom: 0.5rem; transition: all 0.2s; cursor: pointer; }
+        .tag:hover { background: var(--color-primary); color: white; }
+        .criterion-group { border-left: 4px solid #00bcd4; padding-left: 1.5rem; margin-bottom: 2rem; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
+
+    <div id="header-container"></div>
+
+    <!-- Background Decorativo -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-slate-500 mb-8 font-inter">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
+                <li><span>></span> <span>Neonatologia</span></li>
+                <li><span>></span> <span class="text-nurse-primary dark:text-nurse-secondary font-bold font-nunito">Escala de Ballard</span></li>
+            </ol>
+        </nav>
+
+        <!-- Header da Página -->
+        <header class="mb-12 text-center md:text-left">
+            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito italic tracking-tighter">Maturidade Neonatal</span>
+            <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 leading-tight font-nunito tracking-tight italic tracking-tighter capitalize">Escala de Ballard</h1>
+            <div class="w-24 h-1.5 bg-nurse-secondary rounded-full mb-8 mx-auto md:mx-0"></div>
+            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium font-inter max-w-3xl">
+                Estimativa precisa da idade gestacional baseada em parâmetros físicos e neuromusculares. Essencial para o manejo de recém-nascidos pré-termo.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+            <!-- Conteúdo Principal -->
+            <div class="lg:col-span-3 space-y-10">
+                
+                <!-- Sistema de Abas -->
+                <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-8 font-nunito font-bold">
+                    <button onclick="showTab('calc')" id="btn-tab-calc" class="px-6 py-3 border-b-2 tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-calculator"></i> Escala
+                    </button>
+                    <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-book-medical"></i> Sobre
+                    </button>
+                    <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-clipboard-check"></i> Como Usar?
+                    </button>
+                    <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-vial"></i> Inf. Técnicas
+                    </button>
+                </div>
+
+                <!-- Painel da Escala -->
+                <section id="pane-calc" class="space-y-8 animate-in fade-in duration-500">
+                    
+                    <!-- Dados do RN -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-lg font-black text-nurse-primary dark:text-white mb-6 uppercase tracking-tight font-nunito">
+                            Identificação do Paciente
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Nome do RN / Prontuário</label>
+                                <input type="text" id="patient_name" placeholder="Ex: RN de Maria Silva" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Data da Avaliação</label>
+                                <input type="datetime-local" id="eval_time" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculadora Modular -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        
+                        <!-- Maturidade Neuromuscular -->
+                        <div class="criterion-group">
+                            <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest font-nunito">
+                                1. Maturidade Neuromuscular
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Postura</label>
+                                    <select id="neu_postura" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="0">Extensão total (0)</option>
+                                        <option value="1">Ligeira flexão de quadris/joelhos (1)</option>
+                                        <option value="2">Flexão de joelhos e quadris (2)</option>
+                                        <option value="3">Flexão de pernas e braços (3)</option>
+                                        <option value="4">Flexão total (4)</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Ângulo do Punho (Janela Quadrada)</label>
+                                    <select id="neu_punho" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="-1">> 90° (-1)</option>
+                                        <option value="0">90° (0)</option>
+                                        <option value="1">60° (1)</option>
+                                        <option value="2">45° (2)</option>
+                                        <option value="3">30° (3)</option>
+                                        <option value="4">0° (4)</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Recuo do Braço (Arm Recoil)</label>
+                                    <select id="neu_braco" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="0">180° (0)</option>
+                                        <option value="1">140° - 180° (1)</option>
+                                        <option value="2">110° - 140° (2)</option>
+                                        <option value="3">90° - 110° (3)</option>
+                                        <option value="4">< 90° (4)</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Ângulo Poplíteo</label>
+                                    <select id="neu_popliteo" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="-1">180° (-1)</option>
+                                        <option value="0">160° (0)</option>
+                                        <option value="1">140° (1)</option>
+                                        <option value="2">120° (2)</option>
+                                        <option value="3">100° (3)</option>
+                                        <option value="4">90° (4)</option>
+                                        <option value="5">< 90° (5)</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Sinal do Cachecol (Lençol)</label>
+                                    <select id="neu_cachecol" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="-1">Totalmente flácido (-1)</option>
+                                        <option value="0">Cruza linha média (0)</option>
+                                        <option value="1">Cotovelo na linha média (1)</option>
+                                        <option value="2">Não atinge linha média (2)</option>
+                                        <option value="3">Não cruza mamilo (3)</option>
+                                        <option value="4">Não cruza linha axilar anterior (4)</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Calcanhar - Orelha</label>
+                                    <select id="neu_calcanhar" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="-1">Flácido (-1)</option>
+                                        <option value="0">Orelha (0)</option>
+                                        <option value="1">Nariz (1)</option>
+                                        <option value="2">Queixo (2)</option>
+                                        <option value="3">Peito (3)</option>
+                                        <option value="4">Resistência total (4)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Maturidade Física -->
+                        <div class="criterion-group border-nurse-accent">
+                            <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest font-nunito">
+                                2. Maturidade Física
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Pele</label>
+                                    <select id="fis_pele" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="-1">Pegajosa, translúcida (-1)</option>
+                                        <option value="0">Gelatinosa, vermelha (0)</option>
+                                        <option value="1">Rosa, veias visíveis (1)</option>
+                                        <option value="2">Descamação superficial (2)</option>
+                                        <option value="3">Rachada, pálida (3)</option>
+                                        <option value="4">Pele de couro, fissuras profundas (4)</option>
+                                        <option value="5">Ressecada, fissuras (5)</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Lanugo (Pelos)</label>
+                                    <select id="fis_lanugo" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="-1">Nenhum (-1)</option>
+                                        <option value="0">Escasso (0)</option>
+                                        <option value="1">Abundante (1)</option>
+                                        <option value="2">Desbastado (2)</option>
+                                        <option value="3">Áreas lisas (3)</option>
+                                        <option value="4">Quase nenhum (4)</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Pregas Plantares</label>
+                                    <select id="fis_plantares" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="-1">Calcanhar a dedos < 40mm (-2)</option>
+                                        <option value="0">Mínimas (0)</option>
+                                        <option value="1">Marcas vermelhas (1)</option>
+                                        <option value="2">Sulcos anteriores (2)</option>
+                                        <option value="3">Sulcos nos 2/3 anteriores (3)</option>
+                                        <option value="4">Sulcos em toda planta (4)</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Mamas</label>
+                                    <select id="fis_mamas" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="-1">Imperceptível (-1)</option>
+                                        <option value="0">Mal visível (0)</option>
+                                        <option value="1">Aréola plana, sem botão (1)</option>
+                                        <option value="2">Aréola pontilhada, botão 1-2mm (2)</option>
+                                        <option value="3">Aréola elevada, botão 3-4mm (3)</option>
+                                        <option value="4">Aréola cheia, botão 5-10mm (4)</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Olhos e Orelhas</label>
+                                    <select id="fis_olhos" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="-1">Pálpebras fundidas (-1)</option>
+                                        <option value="0">Pavilhão plano (0)</option>
+                                        <option value="1">Pavilhão leve curvado (1)</option>
+                                        <option value="2">Pavilhão bem curvado (2)</option>
+                                        <option value="3">Firme, retorno imediato (3)</option>
+                                        <option value="4">Cartilagem grossa, firme (4)</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Genitália</label>
+                                    <select id="fis_genitalia" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary text-sm">
+                                        <option value="-1">Masc: Bolsa vazia / Fem: Lábios proeminentes (-1)</option>
+                                        <option value="0">Masc: Testículos altos / Fem: Lábios planos (0)</option>
+                                        <option value="1">Masc: Em descida / Fem: Lábios maiores visíveis (1)</option>
+                                        <option value="2">Masc: Testículos na bolsa / Fem: Lábios maiores cobrem menores (2)</option>
+                                        <option value="3">Masc: Rugosidade completa / Fem: Lábios maiores cobrem tudo (3)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botões de Ação -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-12 max-w-xl mx-auto font-nunito">
+                            <button onclick="handleCalculate()" class="btn-action bg-nurse-primary text-white hover:bg-nurse-primary/90 shadow-xl shadow-nurse-primary/20">
+                                <i class="fa-solid fa-calculator"></i> Calcular Escore
+                            </button>
+                            <button onclick="handleReset()" class="btn-action bg-gray-100 dark:bg-slate-800 text-gray-500 hover:bg-gray-200">
+                                <i class="fa-solid fa-rotate-left"></i> Limpar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Seção de Resultados -->
+                    <div id="results-section" class="hidden space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                        <div id="result-card" class="p-10 rounded-[3rem] shadow-2xl transition-all duration-500 text-white font-nunito bg-nurse-primary relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-baby-carriage text-[120px]"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+                                <div class="relative w-44 h-44 flex flex-col items-center justify-center bg-white/10 rounded-full border-4 border-white/20 backdrop-blur-sm">
+                                    <span id="res-weeks" class="text-5xl font-black text-white">00</span>
+                                    <span class="text-[10px] uppercase font-bold text-white/80 tracking-widest italic">Semanas</span>
+                                </div>
+                                <div class="text-center md:text-left flex-grow">
+                                    <h3 id="res-status" class="text-2xl font-black italic mb-2 text-white uppercase tracking-tight">Status Gestacional</h3>
+                                    <div class="bg-white/10 p-6 rounded-2xl border border-white/20 mb-6">
+                                        <p class="text-sm font-medium mb-1 opacity-70">Estimativa de Maturidade</p>
+                                        <p id="res-conduta" class="text-lg font-bold text-nurse-secondary">Aguardando Avaliação...</p>
+                                    </div>
+                                    <p class="text-[10px] font-black text-white/60 bg-white/10 inline-block px-4 py-1.5 rounded-full uppercase tracking-widest">
+                                        <i class="fa-solid fa-shield-check mr-2"></i> Auditoria Clínica (New Ballard Score)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-nunito">
+                            <button onclick="handleSearchNanda()" class="btn-action border-2 border-nurse-secondary text-nurse-secondary hover:bg-nurse-secondary hover:text-white">
+                                <i class="fa-solid fa-book-medical"></i> Diagnóstico (NANDA, NIC e NOC)
+                            </button>
+                            <button onclick="generatePDF()" class="btn-action bg-nurse-primary text-white hover:opacity-90">
+                                <i class="fa-solid fa-file-pdf"></i> Gerar PDF
+                            </button>
+                        </div>
+
+                        <!-- Auditoria e Metas -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
+                            <div class="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                                <h4 class="font-black text-nurse-primary dark:text-nurse-secondary mb-4 uppercase tracking-widest font-nunito flex items-center gap-2">
+                                    <i class="fa-solid fa-magnifying-glass-chart text-nurse-secondary"></i> Auditoria
+                                </h4>
+                                <div class="space-y-3">
+                                    <p class="text-xs font-bold text-gray-500">Paciente: <span id="audit-patient" class="text-gray-400 font-normal italic">-</span></p>
+                                    <p class="text-xs font-bold text-gray-500">Escore Bruto: <span id="audit-score" class="text-gray-400 font-normal">-</span></p>
+                                    <p class="text-xs font-bold text-gray-500">Data/Hora: <span id="audit-time" class="text-gray-400 font-normal">-</span></p>
+                                </div>
+                            </div>
+                            <div class="bg-white dark:bg-slate-900/50 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+                                <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary p-6 uppercase tracking-widest font-nunito border-b border-gray-100 dark:border-slate-800 flex items-center gap-2">
+                                    <i class="fa-solid fa-shield-halved"></i> Segurança Neonatal
+                                </h3>
+                                <div id="checklist-metas" class="p-4 space-y-2 text-xs"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Abas Teóricas -->
+                <section id="pane-teoria" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Sobre a Escala de Ballard</h2>
+                    <p>O <strong>New Ballard Score</strong> é uma ferramenta diagnóstica essencial na neonatologia, permitindo estimar a idade gestacional com uma margem de erro de apenas duas semanas, mesmo em recém-nascidos extremamente prematuros (a partir de 20 semanas).</p>
+                    <p>A escala expande os critérios originais de Ballard (1979) para incluir as características de bebês com baixíssima idade gestacional, tornando-se o padrão ouro para triagem em UTIs Neonatais quando a data da última menstruação (DUM) ou ultrassonografia precoce é desconhecida.</p>
+                </section>
+
+                <section id="pane-instrucoes" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Como Realizar a Avaliação?</h2>
+                    <ul class="space-y-4">
+                        <li><strong>Momento Ideal:</strong> Deve ser realizada nas primeiras 24 horas de vida. Em bebês < 26 semanas, a avaliação física deve ser imediata após a estabilização.</li>
+                        <li><strong>Ambiente:</strong> O bebê deve estar em repouso e em ambiente aquecido para não interferir no tônus muscular.</li>
+                        <li><strong>Maturidade Neuromuscular:</strong> Avalia o tônus passivo. O examinador deve realizar manobras suaves de flexão e extensão.</li>
+                        <li><strong>Maturidade Física:</strong> Observação direta de características anatômicas que se desenvolvem cronologicamente na gestação.</li>
+                    </ul>
+                </section>
+
+                <section id="pane-tecnica" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Conversão de Escore</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm">
+                            <thead class="bg-gray-100">
+                                <tr><th class="p-2 border">Escore</th><th class="p-2 border">Semanas</th><th class="p-2 border">Escore</th><th class="p-2 border">Semanas</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="p-2 border">-10</td><td class="p-2 border">20</td><td class="p-2 border">20</td><td class="p-2 border">32</td></tr>
+                                <tr><td class="p-2 border">-5</td><td class="p-2 border">22</td><td class="p-2 border">25</td><td class="p-2 border">34</td></tr>
+                                <tr><td class="p-2 border">0</td><td class="p-2 border">24</td><td class="p-2 border">30</td><td class="p-2 border">36</td></tr>
+                                <tr><td class="p-2 border">5</td><td class="p-2 border">26</td><td class="p-2 border">35</td><td class="p-2 border">38</td></tr>
+                                <tr><td class="p-2 border">10</td><td class="p-2 border">28</td><td class="p-2 border">40</td><td class="p-2 border">40</td></tr>
+                                <tr><td class="p-2 border">15</td><td class="p-2 border">30</td><td class="p-2 border">45</td><td class="p-2 border">42</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="space-y-6 font-nunito">
+                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold"><i class="fas fa-list mr-2"></i> Índice</h3>
+                    <ul class="toc-list font-inter">
+                        <li><a href="#pane-calc" onclick="showTab('calc')">1. Escala</a></li>
+                        <li><a href="#pane-teoria" onclick="showTab('teoria')">2. Sobre</a></li>
+                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes')">3. Como Usar</a></li>
+                        <li><a href="#pane-tecnica" onclick="showTab('tecnica')">4. Tabela Técnica</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold"><i class="fas fa-share-nodes mr-2"></i> Compartilhar</h3>
+                    <div class="flex flex-wrap gap-3 justify-between">
+                        <a href="#" class="share-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div id="qrcode-source" class="hidden"></div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
+    <script>
+        const SAFETY_METAS = [
+            { id: 1, text: "Conferir pulseira de identificação do RN e da Mãe", color: "bg-red-50 text-red-700" },
+            { id: 3, text: "Verificar administração de vitamina K e Credé", color: "bg-blue-50 text-blue-700" },
+            { id: 5, text: "Higienizar mãos antes de manipular a incubadora", color: "bg-green-50 text-green-700" }
+        ];
+
+        function showTab(id) {
+            ['calc', 'teoria', 'instrucoes', 'tecnica'].forEach(t => {
+                document.getElementById('pane-' + t).classList.add('hidden');
+                document.getElementById('btn-tab-' + t).classList.remove('tab-btn-active');
+            });
+            document.getElementById('pane-' + id).classList.remove('hidden');
+            document.getElementById('btn-tab-' + id).classList.add('tab-btn-active');
+        }
+
+        function handleCalculate() {
+            const neuIds = ['neu_postura', 'neu_punho', 'neu_braco', 'neu_popliteo', 'neu_cachecol', 'neu_calcanhar'];
+            const fisIds = ['fis_pele', 'fis_lanugo', 'fis_plantares', 'fis_mamas', 'fis_olhos', 'fis_genitalia'];
+            
+            let total = 0;
+            [...neuIds, ...fisIds].forEach(id => total += parseInt(document.getElementById(id).value));
+
+            // Fórmula Ballard: Semanas = (0.4 * Score) + 24 
+            // Porém a tabela oficial New Ballard é mais complexa. Vamos usar a progressão de 0.4x + 20
+            const semanasFloat = (total * 0.4) + 24;
+            const semanas = Math.floor(semanasFloat);
+            const dias = Math.round((semanasFloat - semanas) * 7);
+
+            let status = "";
+            if (semanas < 37) status = "Prematuro (Pré-termo)";
+            else if (semanas >= 42) status = "Pós-maturo (Pós-termo)";
+            else status = "A Termo";
+
+            document.getElementById('res-weeks').innerText = semanas;
+            document.getElementById('res-status').innerText = status;
+            document.getElementById('res-conduta').innerText = `Estimativa: ${semanas} semanas e ${dias} dias. Iniciar cuidados específicos para ${status.toLowerCase()}.`;
+
+            // Auditoria
+            document.getElementById('audit-patient').innerText = document.getElementById('patient_name').value || "Não identificado";
+            document.getElementById('audit-score').innerText = total + " pontos";
+            document.getElementById('audit-time').innerText = new Date().toLocaleString('pt-BR');
+
+            // Checklist
+            document.getElementById('checklist-metas').innerHTML = SAFETY_METAS.map(m => `
+                <div class="flex items-center gap-2 p-2 rounded-lg border-l-2 ${m.color}">
+                    <input type="checkbox" checked class="w-3 h-3">
+                    <span class="font-bold">Meta ${m.id}: ${m.text}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('results-section').classList.remove('hidden');
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleReset() {
+            document.querySelectorAll('input').forEach(i => i.value = '');
+            document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+            document.getElementById('results-section').classList.add('hidden');
+        }
+
+        function handleSearchNanda() {
+            const status = document.getElementById('res-status').innerText;
+            window.open(`https://www.google.com/search?q=diagnostico+enfermagem+NANDA+recem+nascido+${status.split(' ')[0]}`, '_blank');
+        }
+
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const name = document.getElementById('patient_name').value || "RN Não Identificado";
+            const score = document.getElementById('audit-score').innerText;
+            const weeks = document.getElementById('res-weeks').innerText;
+
+            doc.setFillColor(26, 62, 116);
+            doc.rect(0, 0, 8, 297, 'F'); 
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(18); doc.setTextColor(26, 62, 116);
+            doc.text("AUDITORIA NEONATAL: ESTIMATIVA BALLARD", 105, 25, { align: "center" });
+
+            doc.setDrawColor(230); doc.line(20, 35, 195, 35);
+
+            doc.setFontSize(10); doc.setTextColor(80); doc.setFont("helvetica", "normal");
+            doc.text(`Identificação: ${name}`, 20, 48);
+            doc.text(`Escore Bruto: ${score}`, 20, 56);
+            doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 20, 64);
+
+            doc.setFillColor(248, 250, 252); doc.roundedRect(20, 80, 175, 45, 4, 4, 'F');
+            doc.setFontSize(30); doc.setTextColor(26, 62, 116); doc.setFont("helvetica", "bold");
+            doc.text(`${weeks} SEMANAS`, 107, 105, { align: "center" });
+            doc.setFontSize(12); doc.text(document.getElementById('res-status').innerText, 107, 115, { align: "center" });
+
+            const qrContainer = document.getElementById('qrcode-source');
+            qrContainer.innerHTML = "";
+            new QRCode(qrContainer, { text: "https://www.calculadorasdeenfermagem.com.br/ballard.html", width: 100, height: 100 });
+            
+            setTimeout(() => {
+                const qrImg = qrContainer.querySelector('img').src;
+                doc.addImage(qrImg, 'PNG', 165, 250, 30, 30);
+                doc.setFontSize(8); doc.setTextColor(150);
+                doc.text("Validado por Calculadoras de Enfermagem - Auditoria Neonatal", 100, 285, { align: "center" });
+                doc.save(`Ballard_${name.replace(/\s+/g, '_')}.pdf`);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
