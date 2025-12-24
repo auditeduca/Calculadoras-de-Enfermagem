@@ -1,13 +1,13 @@
 /* COMPONENTE: header.js
-    Limpado de eventos inline (onclick).
-    Contém: Gerenciamento de abas, temas, busca e menu mobile.
+    Versão: 5.1 (Zero Inline - Integridade Total)
+    Contém: Gerenciamento de acessibilidade (fonte), temas, busca, mega-menus e menu mobile.
 */
 
 // --- Variáveis Globais de Estado ---
 let currentZoom = 100;
 
 /**
- * Altera o tamanho da fonte do documento
+ * Altera o tamanho da fonte do documento e salva no localStorage
  * @param {string} action - 'increase' ou 'decrease'
  */
 function changeFontSize(action) {
@@ -19,7 +19,7 @@ function changeFontSize(action) {
 }
 
 /**
- * Alterna entre o tema claro e escuro
+ * Alterna entre o tema claro e escuro e salva a preferência
  */
 function toggleTheme() {
     document.body.classList.toggle('dark-theme');
@@ -33,10 +33,10 @@ function toggleTheme() {
 }
 
 /**
- * Inicializa todos os eventos do Header
+ * Inicializa todos os ouvintes de eventos do Header
  */
 function initHeaderEvents() {
-    // 1. Controles da Barra Superior (Removido inline onclick)
+    // 1. Controles de Acessibilidade e Tema
     const btnDecrease = document.getElementById('font-decrease');
     const btnIncrease = document.getElementById('font-increase');
     const btnTheme = document.getElementById('theme-toggle');
@@ -45,7 +45,7 @@ function initHeaderEvents() {
     if (btnIncrease) btnIncrease.addEventListener('click', () => changeFontSize('increase'));
     if (btnTheme) btnTheme.addEventListener('click', toggleTheme);
 
-    // 2. Mega Menus Desktop
+    // 2. Gerenciamento de Mega Menus Desktop
     const navTriggers = document.querySelectorAll('.nav-trigger');
     const panels = document.querySelectorAll('.mega-panel');
     let activePanel = null;
@@ -71,12 +71,19 @@ function initHeaderEvents() {
                 targetPanel.classList.add('active');
                 trigger.classList.add('active-nav');
                 activePanel = targetPanel;
+                
+                // Foco automático no input de busca se o painel de busca for aberto
+                if (panelId === 'panel-busca') {
+                    const searchInput = document.getElementById('panel-busca-input');
+                    if (searchInput) setTimeout(() => searchInput.focus(), 100);
+                }
             }
         });
     });
 
-    // 3. Abas Laterais dos Mega Painéis
+    // 3. Abas Laterais (Tabs) dentro dos Mega Painéis
     document.querySelectorAll('.menu-tab-trigger').forEach(trigger => {
+        // Ativação por hover (mouseenter)
         trigger.addEventListener('mouseenter', () => {
             const parent = trigger.closest('.mega-panel');
             const targetId = trigger.dataset.target;
@@ -90,9 +97,17 @@ function initHeaderEvents() {
             const targetContent = document.getElementById(targetId);
             if (targetContent) targetContent.classList.add('active');
         });
+        
+        // Ativação por teclado (Acessibilidade)
+        trigger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                trigger.dispatchEvent(new Event('mouseenter'));
+            }
+        });
     });
 
-    // 4. Menu Mobile
+    // 4. Menu Mobile (Hamburguer)
     const mobileBtn = document.getElementById('mobile-menu-trigger');
     const mobileMenu = document.getElementById('mobile-menu');
     const closeMobile = document.getElementById('close-mobile-menu');
@@ -112,38 +127,68 @@ function initHeaderEvents() {
     const closeHandler = () => {
         if (backdrop) backdrop.classList.add('opacity-0');
         if (drawer) drawer.classList.add('-translate-x-full');
-        setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+        setTimeout(() => {
+            if (mobileMenu) mobileMenu.classList.add('hidden');
+        }, 300);
     };
 
     if (closeMobile) closeMobile.addEventListener('click', closeHandler);
     if (backdrop) backdrop.addEventListener('click', closeHandler);
 
-    // 5. Fechar ao clicar fora
+    // Accordion Mobile
+    document.querySelectorAll('.mobile-accordion-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('i');
+            const isActive = this.classList.contains('active');
+
+            // Toggle atual
+            if (isActive) {
+                this.classList.remove('active');
+                content.style.maxHeight = null;
+                if (icon) icon.classList.remove('rotate-180');
+            } else {
+                this.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + "px";
+                if (icon) icon.classList.add('rotate-180');
+            }
+        });
+    });
+
+    // 5. Fechar painéis ao clicar fora
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.mega-panel') && !e.target.closest('.nav-trigger')) {
             closeAllPanels();
         }
     });
 
-    // 6. Fechar com ESC
+    // 6. Fechar com tecla ESC
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeAllPanels();
+        if (e.key === 'Escape') {
+            closeAllPanels();
+            closeHandler();
+        }
     });
 }
 
-// Carregar preferências e inicializar
+/**
+ * Carrega preferências do usuário e inicializa eventos
+ */
 (function loadPrefsAndInit() {
+    // Restaurar Tamanho da Fonte
     const savedZoom = localStorage.getItem('user-font-size');
     if (savedZoom) {
         currentZoom = parseInt(savedZoom);
         document.documentElement.style.fontSize = currentZoom + '%';
     }
     
+    // Restaurar Tema
     if (localStorage.getItem('dark-theme') === 'true') {
         document.body.classList.add('dark-theme');
+        // Ícone será ajustado pelo toggleTheme ou lógica de init
     }
 
-    // Se o DOM já estiver carregado (para casos de injeção dinâmica)
+    // Inicialização segura
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
         initHeaderEvents();
     } else {
