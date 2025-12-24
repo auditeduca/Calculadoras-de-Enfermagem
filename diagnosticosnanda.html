@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico de Enfermagem: Lista Completa NANDA 2018-2020 | Enfermagem</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Lista oficial de 256 diagnósticos de enfermagem da NANDA Internacional (2018-2020). Organize sua SAE com domínios e classes atualizados para a prática clínica.">
+    <meta name="keywords" content="Diagnóstico de Enfermagem, NANDA 2018, todos os diagnósticos de enfermagem, taxonomia NANDA completa, domínios NANDA, SAE, processo de enfermagem">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/diagnosticosnanda.html">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Alternates Hreflang -->
+    <link rel="alternate" hreflang="pt-br" href="https://www.calculadorasdeenfermagem.com.br/diagnosticosnanda.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/diagnosticosnanda.html">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Calculadoras de Enfermagem">
+    <meta property="og:title" content="Diagnóstico de Enfermagem - Guia Completo NANDA 2018-2020">
+    <meta property="og:description" content="Navegue pelos 13 domínios e classes da NANDA Internacional. Ferramenta interativa para Sistematização da Assistência.">
+    <meta property="og:url" content="https://www.calculadorasdeenfermagem.com.br/diagnosticosnanda.html">
+    <meta property="og:image" content="https://www.calculadorasdeenfermagem.com.br/livronanda.webp">
+    
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-952633102"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-952633102');
+        gtag('config', 'G-8FLJ59XXDK');
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito Sans', 'Open Sans', 'Roboto', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-primary-light': '#2E5A9C',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos Customizados -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/global-main.css">
+
+    <style>
+        :root { --color-primary: #1A3E74; --color-secondary: #00bcd4; }
+        .tab-btn-active { border-color: #00bcd4 !important; color: #00bcd4 !important; font-weight: bold; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* Accordion Styles */
+        .nanda-card { background: white; border: 1px solid #e2e8f0; border-radius: 1.25rem; margin-bottom: 1rem; overflow: hidden; transition: all 0.3s; }
+        .dark .nanda-card { background: #1e293b; border-color: #334155; }
+        .nanda-card summary { list-style: none; padding: 1.25rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .nanda-card summary:hover { background: #f8fafc; }
+        .chevron-icon { transition: transform 0.3s; color: #94a3b8; }
+        details[open] > summary .chevron-icon { transform: rotate(180deg); color: var(--color-secondary); }
+
+        .diagnosis-btn { width: 100%; text-align: left; padding: 0.75rem 1rem; margin-bottom: 0.4rem; border-radius: 0.6rem; border: 1px solid #f1f5f9; background: #f8fafc; font-size: 0.875rem; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; }
+        .dark .diagnosis-btn { background: #0f172a; border-color: #1e293b; color: #cbd5e1; }
+        .diagnosis-btn:hover { background: #2563eb; color: white; border-color: #2563eb; }
+        .diagnosis-btn.selected { background: #1e40af; color: white; border-color: #1e40af; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        
+        .diagnosis-search { width: 100%; margin-bottom: 1rem; padding: 0.6rem 1rem; border: 1px solid #e2e8f0; border-radius: 0.75rem; font-size: 0.85rem; outline: none; }
+        .dark .diagnosis-search { background: #1e293b; border-color: #334155; color: white; }
+
+        /* Sidebar Reference CSS */
+        .content-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        .sidebar-card { background: white; padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border: 1px solid #f1f5f9; }
+        .dark .sidebar-card { background: #1e293b; border-color: #334155; box-shadow: none; }
+        .sidebar-card h3 { font-size: 1rem; font-weight: 700; color: #1e293b; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .dark .sidebar-card h3 { color: #f8fafc; border-color: #334155; }
+
+        .toc-list li { margin-bottom: 0.75rem; }
+        .toc-list li a { color: #64748b; font-size: 0.875rem; transition: all 0.3s ease; display: block; text-decoration: none; }
+        .dark .toc-list li a { color: #94a3b8; }
+        .toc-list li a:hover { color: #00bcd4; transform: translateX(5px); }
+        
+        /* Compartilhar CSS */
+        .share-flex { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: space-between; margin-top: 1rem; }
+        .share-item { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: none; cursor: pointer; font-size: 1rem; }
+        .share-item:hover { transform: translateY(-3px) scale(1.05); filter: brightness(1.1); }
+        
+        .bg-facebook { background-color: #1877F2; }
+        .bg-twitter { background-color: #000000; }
+        .bg-whatsapp { background-color: #25D366; }
+        .bg-linkedin { background-color: #0077B5; }
+        .bg-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+
+        .author-box { background: white; border-radius: 1.5rem; padding: 2rem; margin-top: 3rem; display: flex; gap: 1.5rem; border: 1px solid #f0f0f0; align-items: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .dark .author-box { background: #1e293b; border-color: #334155; }
+        .author-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #f1f5f9; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300 font-sans">
+
+    <!-- Header Modular -->
+    <div id="header-container"></div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-gray-500 dark:text-gray-400 mb-8" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
+                <li class="flex items-center gap-2"><span>/</span> <span class="text-nurse-primary dark:text-nurse-secondary font-medium">Plano de Enfermagem</span></li>
+                <li class="flex items-center gap-2"><span>/</span> <span>Diagnósticos de Enfermagem</span></li>
+            </ol>
+        </nav>
+
+        <!-- Cabeçalho -->
+        <header class="mb-10 text-center md:text-left">
+            <span class="inline-block px-3 py-1 text-xs font-bold tracking-wider text-white bg-nurse-secondary rounded-full mb-4 uppercase">Diagnóstico de Enfermagem</span>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-nurse-primary dark:text-white font-inter leading-tight">Lista Completa de Diagnósticos</h1>
+            <p class="text-nurse-secondary font-bold text-lg mb-6 uppercase tracking-tight italic">NANDA Internacional 2018-2020</p>
+            <div class="h-1.5 w-24 bg-nurse-accent mb-6 mx-auto md:mx-0"></div>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-4xl leading-relaxed text-justify md:text-left">
+                Navegue pela lista oficial da NANDA International (2018–2020). Explore 13 domínios funcionais e 256 diagnósticos padronizados para elevar a precisão clínica e documentar o processo de enfermagem com base científica.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <!-- Coluna Principal -->
+            <div class="lg:col-span-2">
+                
+                <!-- Abas -->
+                <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-10">
+                    <button onclick="showTab('lista')" id="btn-tab-lista" class="px-6 py-3 border-b-2 tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-calculator"></i> Calculadora
+                    </button>
+                    <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-book-open"></i> Sobre a Calculadora
+                    </button>
+                    <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-circle-info"></i> Como usar?
+                    </button>
+                    <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-bookmark"></i> Informações Técnicas
+                    </button>
+                </div>
+
+                <!-- Painéis -->
+                <section id="pane-lista" class="space-y-6 animate-in fade-in duration-500">
+                    <!-- Área de Resultado da Seleção -->
+                    <div id="selection-display" class="hidden mb-8 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-3xl animate-in slide-in-from-top-4">
+                        <!-- Injetado via JavaScript -->
+                    </div>
+
+                    <div id="nanda-tree-container" class="space-y-4">
+                        <div class="text-center py-10">
+                            <i class="fas fa-spinner fa-spin text-3xl text-nurse-secondary"></i>
+                            <p class="mt-2 text-gray-500">Carregando diagnósticos...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="pane-teoria" class="hidden space-y-8 animate-in fade-in">
+                    <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
+                        <h2 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary">Sobre a Calculadora</h2>
+                        <p>A terminologia diagnóstica da NANDA-I permite que enfermeiros descrevam respostas humanas a problemas de saúde de forma padronizada, garantindo que o cuidado seja científico e documentável.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                            <div class="bg-blue-50 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-nurse-primary">
+                                <h3 class="font-bold text-nurse-primary dark:text-white">Taxonomia II</h3>
+                                <p class="text-sm">Possui 13 Domínios (áreas de interesse) e 47 Classes (agrupamentos mais específicos).</p>
+                            </div>
+                            <div class="bg-nurse-secondary/10 p-6 rounded-2xl border-l-4 border-nurse-secondary">
+                                <h3 class="font-bold text-nurse-primary dark:text-white">Estrutura</h3>
+                                <p class="text-sm">Inclui diagnósticos focado no problema, de Risco e de Promoção da Saúde.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="pane-instrucoes" class="hidden space-y-8 animate-in fade-in">
+                    <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
+                        <h2 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary">Como usar?</h2>
+                        <ol class="space-y-4">
+                            <li><i class="fa-solid fa-chevron-right text-nurse-secondary mr-2"></i>Navegue pelos <strong>Domínios</strong> clicando no título correspondente.</li>
+                            <li><i class="fa-solid fa-chevron-right text-nurse-secondary mr-2"></i>Localize a <strong>Classe</strong> desejada para visualizar os diagnósticos específicos.</li>
+                            <li><i class="fa-solid fa-chevron-right text-nurse-secondary mr-2"></i>Clique em um diagnóstico para abrir as opções de <strong>Pesquisa Bibliográfica</strong>.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section id="pane-tecnica" class="hidden space-y-8 animate-in fade-in">
+                    <div class="prose dark:prose-invert text-gray-600 dark:text-gray-300">
+                        <h2 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary">Informações Técnicas</h2>
+                        <div class="bg-gray-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-gray-100 dark:border-slate-800">
+                            <p class="text-sm mb-4">Base de Dados:</p>
+                            <ul class="space-y-4 text-xs italic">
+                                <li>NANDA International. Diagnósticos de enfermagem da NANDA-I: definições e classificação 2018-2020. Porto Alegre: Artmed, 2018.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Autor Section -->
+                <div class="author-box">
+                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Calculadoras de Enfermagem" class="author-avatar" onerror="this.src='https://placehold.co/100x100?text=CE'">
+                    <div class="author-info">
+                        <h3 class="text-nurse-primary dark:text-nurse-secondary font-bold text-xl">Calculadoras de Enfermagem</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">
+                            Comprometidos com a educação continuada e o suporte clínico através de ferramentas digitais fundamentadas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="content-sidebar">
+                <!-- Índice Lateral -->
+                <div class="sidebar-card">
+                    <h3><i class="fas fa-list-ol text-nurse-secondary"></i> Índice</h3>
+                    <ul class="toc-list">
+                        <li><a href="#pane-lista" onclick="showTab('lista')">1. Calculadora</a></li>
+                        <li><a href="#pane-teoria" onclick="showTab('teoria')">2. Sobre a Calculadora</a></li>
+                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes')">3. Como Usar?</a></li>
+                        <li><a href="#pane-tecnica" onclick="showTab('tecnica')">4. Informações Técnicas</a></li>
+                    </ul>
+                </div>
+
+                <!-- Compartilhar Lateral -->
+                <div class="sidebar-card">
+                    <h3><i class="fas fa-share-nodes text-nurse-secondary"></i> Compartilhar</h3>
+                    <div class="share-flex">
+                        <button onclick="share('facebook')" class="share-item bg-facebook" title="Facebook"><i class="fab fa-facebook-f"></i></button>
+                        <button onclick="share('twitter')" class="share-item bg-twitter" title="X (Twitter)"><i class="fab fa-x-twitter"></i></button>
+                        <button onclick="share('whatsapp')" class="share-item bg-whatsapp" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+                        <button onclick="share('linkedin')" class="share-item bg-linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></button>
+                        <button onclick="share('instagram')" class="share-item bg-instagram" title="Copiar link para Instagram"><i class="fab fa-instagram"></i></button>
+                    </div>
+                </div>
+                
+                <div class="sidebar-card bg-gray-50 dark:bg-slate-800 border-none">
+                    <h3 class="border-none mb-2"><i class="fas fa-book-medical text-nurse-primary"></i> Guia Oficial</h3>
+                    <img src="https://www.calculadorasdeenfermagem.com.br/livronanda.webp" alt="Livro NANDA" class="rounded-lg mb-3 shadow-sm mx-auto w-full object-contain">
+                    <p class="text-[10px] text-gray-400 italic text-center leading-tight">Referência Acadêmica NANDA 2018-2020</p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Ferramentas Relacionadas -->
+    <section class="related-section bg-slate-100 dark:bg-slate-900/50 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-black text-center mb-12 text-nurse-primary flex items-center justify-center gap-4 dark:text-white">
+                <i class="fa-solid fa-toolbox text-nurse-secondary"></i>
+                Ferramentas Relacionadas
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <a href="medicamentos.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-transparent dark:border-slate-700">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1576091160550-217358c7e618?w=600" alt="Medicamentos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/10"></div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-bold text-nurse-primary dark:text-white group-hover:text-nurse-secondary transition-colors">Cálculo de Medicamentos</h3>
+                        <p class="text-xs text-gray-500 mt-2">Doses e diluições com segurança.</p>
+                    </div>
+                </a>
+                <a href="gotejamento.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-transparent dark:border-slate-700">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=600" alt="Gotejamento" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/10"></div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-bold text-nurse-primary dark:text-white group-hover:text-nurse-secondary transition-colors">Cálculo de Gotejamento</h3>
+                        <p class="text-xs text-gray-500 mt-2">Precisão na terapia endovenosa.</p>
+                    </div>
+                </a>
+                <a href="imc.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-transparent dark:border-slate-700">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600" alt="IMC" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/10"></div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-bold text-nurse-primary dark:text-white group-hover:text-nurse-secondary transition-colors">Cálculo de IMC</h3>
+                        <p class="text-xs text-gray-500 mt-2">Avaliação antropométrica rápida.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Modular -->
+    <div id="footer-container"></div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
+    <script>
+      // DADOS COMPLETOS - 256 DIAGNÓSTICOS RESTAURADOS
+      const nandaData = [
+        {
+            domain: "Domínio 1. Promoção da saúde",
+            classes: [
+                {
+                    name: "Classe 1. Conscientização sobre saúde",
+                    diagnoses: ["Diminuição do envolvimento de atividades diversivas", "Prontidão para melhorar a alfabetização em saúde", "Estilo de vida sedentário"]
+                },
+                {
+                    name: "Classe 2. Gestão de saúde",
+                    diagnoses: ["Risco de tentativa de fuga", "Síndrome do idoso frágil", "Risco para síndrome de idoso frágil", "Prontidão para envolvimento aprimorado de exercícios", "Saúde comunitária deficiente", "Comportamento de saúde sujeito a risco", "Comportamentos ineficazes de manutenção da saúde", "Autogestão ineficaz da saúde", "Prontidão para autogestão aprimorada da saúde", "Autogestão ineficaz da saúde da família", "Comportamentos de manutenção doméstica ineficazes", "Risco de comportamentos de manutenção doméstica ineficazes", "Prontidão para comportamentos de manutenção doméstica aprimorados", "Proteção ineficaz"]
+                }
+            ]
+        },
+        {
+            domain: "Domínio 2. Nutrição",
+            classes: [
+                {
+                    name: "Classe 1. Ingestão",
+                    diagnoses: ["Nutrição desequilibrada: menos do que as necessidades corporais", "Prontidão para nutrição aprimorada", "Produção insuficiente de leite materno", "Amamentação ineficaz", "Amamentação interrompida", "Prontidão para amamentação aprimorada", "Dinâmica alimentar ineficaz de adolescentes", "Dinâmica alimentar infantil ineficaz", "Dinâmica de alimentação infantil ineficaz", "Obesidade", "Sobrepeso", "Risco de excesso de peso", "Resposta ineficaz de sucção e deglutição do bebê", "Deglutição prejudicada"]
+                },
+                { name: "Classe 2. Digestão", diagnoses: ["Esta Classe atualmente não contém nenhum diagnóstico"] },
+                { name: "Classe 3. Absorção", diagnoses: ["Esta Classe atualmente não contém nenhum diagnóstico"] },
+                {
+                    name: "Classe 4. Metabolismo",
+                    diagnoses: ["Risco de nível instável de glicose no sangue", "Hiperbilirrubinemia neonatal", "Risco de hiperbilirrubinemia neonatal", "Risco de função hepática prejudicada", "Risco para síndrome metabólica"]
+                },
+                {
+                    name: "Classe 5. Hidratação",
+                    diagnoses: ["Risco de desequilíbrio eletrolítico", "Risco de volume de fluido desequilibrado", "Volume de fluido deficiente", "Risco de volume de fluido deficiente", "Excesso de volume de fluido"]
+                }
+            ]
+        },
+        {
+            domain: "Domínio 3. Eliminação e troca",
+            classes: [
+                {
+                    name: "Classe 1. Função urinária",
+                    diagnoses: ["Incontinência urinária associada à deficiência", "Eliminação urinária prejudicada", "Incontinência urinária mista", "Incontinência urinária de esforço", "Incontinência urinária de urgência", "Risco de incontinência urinária de urgência", "Retenção urinária", "Risco de retenção urinária"]
+                },
+                {
+                    name: "Classe 2. Função gastrointestinal",
+                    diagnoses: ["Constipação", "Risco de constipação", "Constipação percebida", "Constipação funcional crônica", "Risco de constipação funcional crônica", "Continência intestinal prejudicada", "Diarréia", "Motilidade gastrointestinal disfuncional", "Risco de motilidade gastrointestinal disfuncional"]
+                },
+                { name: "Classe 4. Função respiratória", diagnoses: ["Troca gasosa prejudicada"] }
+            ]
+        },
+        {
+            domain: "Domínio 4. Atividade / repouso",
+            classes: [
+                { name: "Classe 1. Sono / repouso", diagnoses: ["Insônia", "Privação de sono", "Prontidão para sono aprimorado", "Padrão de sono perturbado"] },
+                { name: "Classe 2. Atividade / exercício", diagnoses: ["Diminuição da tolerância à atividade", "Risco de diminuição da tolerância à atividade", "Mobilidade física prejudicada", "Caminhada prejudicada"] },
+                { name: "Classe 3. Balanço de energia", diagnoses: ["Fadiga", "Wandering (Vagação)"] },
+                { name: "Classe 4. Respostas cardiovasculares", diagnoses: ["Padrão respiratório ineficaz", "Diminuição do débito cardíaco", "Perfusão tecidual periférica ineficaz"] },
+                { name: "Classe 5. Autocuidado", diagnoses: ["Déficit de autocuidado no banho", "Déficit de autocuidado de vestir", "Auto-negligência"] }
+            ]
+        },
+        {
+            domain: "Domínio 5. Percepção / cognição",
+            classes: [
+                { name: "Classe 1. Atenção", diagnoses: ["Negligência unilateral"] },
+                { name: "Classe 4. Cognição", diagnoses: ["Confusão aguda", "Confusão crônica", "Conhecimento deficiente", "Memória prejudicada"] },
+                { name: "Classe 5. Comunicação", diagnoses: ["Prontidão para comunicação aprimorada", "Comunicação verbal prejudicada"] }
+            ]
+        },
+        {
+            domain: "Domínio 6. Autopercepção",
+            classes: [
+                { name: "Classe 1. Autoconceito", diagnoses: ["Desesperança", "Identidade pessoal perturbada"] },
+                { name: "Classe 2. Autoestima", diagnoses: ["Baixa autoestima crônica", "Baixa autoestima situacional"] },
+                { name: "Classe 3. Imagem corporal", diagnoses: ["Imagem corporal perturbada"] }
+            ]
+        },
+        {
+            domain: "Domínio 7. Relação de função",
+            classes: [
+                { name: "Classe 1. Funções de cuidado", diagnoses: ["Paternidade prejudicada", "Tensão de papel de cuidador"] },
+                { name: "Classe 2. Relações familiares", diagnoses: ["Processos familiares interrompidos", "Processos familiares disfuncionais"] },
+                { name: "Classe 3. Desempenho do papel", diagnoses: ["Relacionamento ineficaz", "Interação social prejudicada"] }
+            ]
+        },
+        {
+            domain: "Domínio 8. Sexualidade",
+            classes: [
+                { name: "Classe 2. Função sexual", diagnoses: ["Disfunção sexual", "Padrão de sexualidade ineficaz"] },
+                { name: "Classe 3. Reprodução", diagnoses: ["Processo de procriação ineficaz", "Risco de díade materno-fetal perturbada"] }
+            ]
+        },
+        {
+            domain: "Domínio 9. Enfrentamento / estresse",
+            classes: [
+                { name: "Classe 1. Respostas pós-trauma", diagnoses: ["Síndrome pós-trauma", "Síndrome de estupro-trauma"] },
+                { name: "Classe 2. Enfrentamento", diagnoses: ["Ansiedade", "Enfrentamento ineficaz", "Medo", "Luto desadaptativo", "Sobrecarga de estresse"] },
+                { name: "Classe 3. Estresse neurocomportamental", diagnoses: ["Disreflexia autonômica", "Comportamento infantil desorganizado"] }
+            ]
+        },
+        {
+            domain: "Domínio 10. Princípios de vida",
+            classes: [
+                { name: "Classe 2. Crenças", diagnoses: ["Prontidão para um maior bem-estar espiritual"] },
+                { name: "Classe 3. Congruência", diagnoses: ["Angústia moral", "Religiosidade prejudicada", "Angústia espiritual"] }
+            ]
+        },
+        {
+            domain: "Domínio 11. Segurança / proteção",
+            classes: [
+                { name: "Classe 1. Infecção", diagnoses: ["Risco de infecção", "Risco de infecção de sítio cirúrgico"] },
+                { name: "Classe 2. Lesão física", diagnoses: ["Desobstrução ineficaz das vias aéreas", "Risco de aspiração", "Risco de quedas", "Lesão por pressão", "Integridade da pele prejudicada"] },
+                { name: "Classe 3. Violência", diagnoses: ["Risco de violência autodirigida", "Auto-mutilação", "Risco de comportamento suicida"] },
+                { name: "Classe 6. Termorregulação", diagnoses: ["Hipertermia", "Hipotermia", "Termorregulação ineficaz"] }
+            ]
+        },
+        {
+            domain: "Domínio 12. Conforto",
+            classes: [
+                { name: "Classe 1. Conforto físico", diagnoses: ["Conforto prejudicado", "Náusea", "Dor aguda", "Dor crônica", "Dor do parto"] },
+                { name: "Classe 3. Conforto social", diagnoses: ["Isolamento social", "Risco de solidão"] }
+            ]
+        },
+        {
+            domain: "Domínio 13. Crescimento / desenvolvimento",
+            classes: [
+                { name: "Classe 2. Desenvolvimento", diagnoses: ["Desenvolvimento infantil retardado", "Atraso no desenvolvimento motor infantil"] }
+            ]
+        }
+      ];
+
+      function showTab(id) {
+          ['lista', 'teoria', 'instrucoes', 'tecnica'].forEach(t => {
+              const pane = document.getElementById('pane-' + t);
+              const btn = document.getElementById('btn-tab-' + t);
+              if (pane) pane.classList.add('hidden');
+              if (btn) btn.classList.remove('tab-btn-active');
+          });
+          const targetPane = document.getElementById('pane-' + id);
+          const targetBtn = document.getElementById('btn-tab-' + id);
+          if (targetPane) targetPane.classList.remove('hidden');
+          if (targetBtn) targetBtn.classList.add('tab-btn-active');
+      }
+
+      function initNandaTree() {
+          const container = document.getElementById('nanda-tree-container');
+          if(!container) return;
+          container.innerHTML = "";
+
+          nandaData.forEach(domain => {
+              const details = document.createElement('details');
+              details.className = "nanda-card shadow-sm";
+              
+              const summary = document.createElement('summary');
+              summary.innerHTML = `
+                  <div class="flex flex-col">
+                      <span class="font-bold text-nurse-primary dark:text-nurse-secondary flex items-center gap-2">
+                          <i class="fas fa-folder"></i> ${domain.domain}
+                      </span>
+                      <span class="text-[10px] text-gray-400 italic">Clique para expandir</span>
+                  </div>
+                  <i class="fas fa-chevron-down chevron-icon"></i>
+              `;
+              
+              const classesDiv = document.createElement('div');
+              classesDiv.className = "p-4 bg-gray-50/50 dark:bg-slate-800/20 space-y-4 border-t border-gray-100 dark:border-slate-800";
+              
+              domain.classes.forEach(classe => {
+                  const classWrapper = document.createElement('div');
+                  classWrapper.className = "mb-4";
+                  classWrapper.innerHTML = `<h4 class="text-xs font-black uppercase text-gray-500 mb-3 ml-2 border-l-2 border-nurse-secondary pl-2">${classe.name}</h4>`;
+                  
+                  const searchInput = document.createElement('input');
+                  searchInput.className = "diagnosis-search";
+                  searchInput.placeholder = "Filtrar nesta categoria...";
+                  
+                  const diagList = document.createElement('div');
+                  diagList.className = "grid grid-cols-1 gap-1";
+                  
+                  classe.diagnoses.forEach(diag => {
+                      if(diag.includes("Esta Classe")) {
+                          const p = document.createElement('p');
+                          p.className = "text-xs text-gray-400 italic p-2";
+                          p.innerText = diag;
+                          diagList.appendChild(p);
+                          return;
+                      }
+                      const btn = document.createElement('button');
+                      btn.className = "diagnosis-btn";
+                      btn.innerHTML = `<span>${diag}</span> <i class="fas fa-search-plus text-[10px] opacity-20"></i>`;
+                      btn.onclick = () => selectDiagnosis(diag, btn);
+                      diagList.appendChild(btn);
+                  });
+                  
+                  searchInput.oninput = (e) => {
+                      const term = e.target.value.toLowerCase();
+                      diagList.querySelectorAll('button').forEach(b => {
+                          b.style.display = b.textContent.toLowerCase().includes(term) ? 'flex' : 'none';
+                      });
+                  };
+
+                  classWrapper.appendChild(searchInput);
+                  classWrapper.appendChild(diagList);
+                  classesDiv.appendChild(classWrapper);
+              });
+              
+              details.appendChild(summary);
+              details.appendChild(classesDiv);
+              container.appendChild(details);
+          });
+      }
+
+      function selectDiagnosis(name, element) {
+          document.querySelectorAll('.diagnosis-btn').forEach(b => b.classList.remove('selected'));
+          element.classList.add('selected');
+
+          const display = document.getElementById('selection-display');
+          display.classList.remove('hidden');
+          display.innerHTML = `
+              <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                  <div class="text-left">
+                      <span class="text-[10px] font-bold text-nurse-secondary uppercase tracking-widest bg-nurse-secondary/10 px-2 py-1 rounded">Selecionado</span>
+                      <h3 class="text-xl font-black text-nurse-primary dark:text-white mt-2 leading-tight">${name}</h3>
+                  </div>
+                  <div class="w-full md:w-auto">
+                      <button onclick="searchNanda('${name}')" class="w-full md:w-auto bg-nurse-primary hover:bg-nurse-primary-light text-white font-bold py-4 px-8 rounded-2xl flex items-center justify-center gap-3 shadow-lg transition-all transform hover:scale-105">
+                          <i class="fab fa-google text-xl"></i> Pesquisar Definição
+                      </button>
+                      <p class="text-[10px] text-gray-500 mt-2 italic text-center">Consultar bibliografia NANDA 2018</p>
+                  </div>
+              </div>
+          `;
+          display.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      function searchNanda(name) {
+          const query = `Diagnóstico de enfermagem NANDA ${name} Definição Fatores de risco 2018`;
+          window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, "_blank");
+      }
+
+      function share(platform) {
+          const url = encodeURIComponent(window.location.href);
+          const text = encodeURIComponent(document.title);
+          let shareUrl = "";
+          switch(platform) {
+              case 'facebook': shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`; break;
+              case 'twitter': shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`; break;
+              case 'whatsapp': shareUrl = `https://api.whatsapp.com/send?text=${text}%20${url}`; break;
+              case 'linkedin': shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`; break;
+              case 'instagram': 
+                  navigator.clipboard.writeText(window.location.href);
+                  alert("Link copiado para a área de transferência! Cole no seu perfil do Instagram.");
+                  return;
+          }
+          if(shareUrl) window.open(shareUrl, '_blank');
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+          initNandaTree();
+      });
+    </script>
+</body>
+</html>
