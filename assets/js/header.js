@@ -1,6 +1,6 @@
 /**
  * CALCULADORAS DE ENFERMAGEM - CORE HEADER ENGINE
- * Versão: 2.2 - Revisada e Otimizada
+ * Versão: 2.3 - Corrigida e Otimizada para Interação Modular
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,11 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeAllPanels() {
         megaPanels.forEach(panel => {
             panel.classList.remove('active');
-            panel.style.display = 'none';
         });
         navTriggers.forEach(t => {
             t.setAttribute('aria-expanded', 'false');
-            t.classList.remove('text-blue-600'); // Feedback visual no trigger
+            t.classList.remove('active-nav'); // Feedback visual consistente com CSS
         });
         activePanelId = null;
     }
@@ -35,9 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeAllPanels();
                 if (targetPanel) {
                     targetPanel.classList.add('active');
-                    targetPanel.style.display = 'block';
                     trigger.setAttribute('aria-expanded', 'true');
-                    trigger.classList.add('text-blue-600');
+                    trigger.classList.add('active-nav');
                     activePanelId = panelId;
                 }
             }
@@ -77,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             parentPanel.querySelectorAll('.tab-content').forEach(c => {
                 c.classList.remove('active');
-                c.style.display = 'none';
             });
 
             // Ativar a tab e o conteúdo correspondente
@@ -89,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetContent = document.getElementById(targetId);
             if (targetContent) {
                 targetContent.classList.add('active');
-                targetContent.style.display = 'block';
             }
         };
 
@@ -173,8 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Definidas no window para compatibilidade com atributos inline (onclick/oninput)
 
 window.toggleTheme = function() {
-    const html = document.documentElement;
-    const isDark = html.classList.toggle('dark');
+    const body = document.body;
+    const isDark = body.classList.toggle('dark-theme'); // Corrigido para dark-theme no body
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     
     const icon = document.querySelector('#theme-toggle i');
@@ -267,7 +263,7 @@ window.clearSearch = function() {
     // Aplicar tema guardado
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark-theme'); // Corrigido para dark-theme no body
         const icon = document.querySelector('#theme-toggle i');
         if (icon) icon.className = 'fas fa-sun';
     }
