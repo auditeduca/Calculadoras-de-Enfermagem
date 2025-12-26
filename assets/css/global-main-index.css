@@ -1,34 +1,30 @@
 /**
- * global-main-index.css
- * Estilos específicos para a página de índice (Portal).
- * Versão atualizada com prefixo global-main.
+ * GLOBAL-MAIN-INDEX.CSS - REFATORADO
+ * Estilos específicos para a página de índice (Dashboard/Portal).
+ * Depende de global.css para cores.
  */
-
-:root {
-    --nurse-primary: #1A3E74;
-    --nurse-secondary: #00bcd4;
-}
 
 /* Tool Cards */
 .tool-card {
-    background: white;
+    background: var(--bg-panel);
     border-radius: 1.5rem;
-    border: 2px solid transparent;
+    border: 2px solid transparent; /* Prepara para hover */
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
 .dark .tool-card {
-    background: #1e293b;
-    border-color: #334155;
+    border-color: var(--border-color);
 }
 
 .tool-card:hover {
-    border-color: var(--nurse-secondary);
+    border-color: var(--secondary-color);
     transform: translateY(-8px);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-lg);
 }
 
 /* Icon Wrappers */
@@ -39,23 +35,25 @@
     align-items: center;
     justify-content: center;
     border-radius: 1rem;
-    background: #f1f5f9;
-    color: var(--nurse-primary);
+    background: var(--bg-body);
+    color: var(--primary-color);
     font-size: 1.4rem;
     transition: all 0.3s ease;
+    margin-bottom: 1rem;
 }
 
 .dark .card-icon-wrapper {
-    background: #334155;
-    color: var(--nurse-secondary);
+    background: #334155; /* Fallback específico para contraste no dark mode */
+    color: var(--secondary-color);
 }
 
 .tool-card:hover .card-icon-wrapper {
-    background: var(--nurse-primary);
+    background: var(--primary-color);
     color: white;
     transform: scale(1.1) rotate(5deg);
 }
 
+/* Variação de Tamanho de Ícone */
 .icon-size-xl .card-icon-wrapper {
     width: 90px;
     height: 90px;
@@ -74,15 +72,10 @@
 /* Select Customizado */
 .native-select {
     appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%236B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cpolyline points="6 9 12 15 18 9"%3E%3C/polyline%3E%3C/svg%3E');
+    /* Ícone via SVG inline mantido, mas cores ajustadas poderiam ser feitas via mask se necessário. Mantido original por compatibilidade */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cpolyline points="6 9 12 15 18 9"%3E%3C/polyline%3E%3C/svg%3E');
     background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 1.2em;
+    background-position: right 0.7rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
 }
-
-/* Scrollbar Customizada */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-.dark ::-webkit-scrollbar-track { background: #0f172a; }
-.dark ::-webkit-scrollbar-thumb { background: #334155; }

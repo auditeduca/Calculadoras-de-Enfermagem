@@ -1,26 +1,29 @@
 /**
  * global-main-index.js
- * Gerencia os dados, estado e renderização da página principal.
- * Versão atualizada com prefixo global-main.
- * CORRIGIDO: Removido TemplateEngine.renderCard() que não existe
+ * AUDITORIA 2025: Código Restaurado e Unificado
+ * * - DADOS: Restaurados do arquivo original (todas as calculadoras e escalas).
+ * - ENGINE: Atualizada para usar Utils.renderCard (evita duplicação).
+ * - UI: Suporte a Grid/List e Filtros de Categoria.
  */
 
 const BASE_URL = 'https://www.calculadorasdeenfermagem.com.br/';
 
-// DATA LAYER
+// ==========================================
+// 1. DATA LAYER (Restaurado do Original)
+// ==========================================
 const TOOLS_DATA = [
-    // CALCULADORAS
+    // --- CALCULADORAS ---
     { id: 'balanco-hidrico', name: 'Balanço Hídrico', category: 'Controle Hídrico', type: 'calculator', description: 'Controle preciso de líquidos e fluidos.', filename: BASE_URL + 'balancohidrico.html', icon: 'fas fa-tint', color: 'emerald' },
     { id: 'gasometria', name: 'Cálculo de Gasometria', category: 'Exames', type: 'calculator', description: 'Interpretação de gasometria arterial e distúrbios.', filename: BASE_URL + 'gasometria.html', icon: 'fas fa-vial', color: 'emerald' },
     { id: 'gotejamento', name: 'Cálculo de Gotejamento', category: 'Medicamentos', type: 'calculator', description: 'Velocidade de infusão de soluções parenterais.', filename: BASE_URL + 'gotejamento.html', icon: 'fas fa-hand-holding-water', color: 'emerald' },
-    { id: 'aspiracao-heparina', name: 'Cálculo de Heparina', category: 'Medicamentos', type: 'calculator', description: 'Cálculo para administração de heparina.', filename: BASE_URL + 'heparina.html', icon: 'fas fa-syringe', color: 'emerald' },
+    { id: 'aspiracao-heparina', name: 'Cálculo de Heparina', category: 'Medicamentos', type: 'calculator', description: 'Cálculo seguro de doses de heparina.', filename: BASE_URL + 'heparina.html', icon: 'fas fa-syringe', color: 'emerald' }, // Link corrigido conforme original: heparina.html
     { id: 'imc', name: 'Índice de Massa Corporal (IMC)', category: 'Nutrição', type: 'calculator', description: 'Avaliação nutricional e peso ideal.', filename: BASE_URL + 'imc.html', icon: 'fas fa-weight', color: 'emerald' },
     { id: 'aspiracao-insulina', name: 'Cálculo de Insulina', category: 'Medicamentos', type: 'calculator', description: 'Cálculo de doses e unidades de insulina.', filename: BASE_URL + 'insulina.html', icon: 'fas fa-syringe', color: 'emerald' },
     { id: 'medicamentos', name: 'Cálculo de Medicamentos', category: 'Medicamentos', type: 'calculator', description: 'Regra de três para doses e diluições.', filename: BASE_URL + 'medicamentos.html', icon: 'fas fa-pills', color: 'emerald' },
     { id: 'dimensionamento', name: 'Dimensionamento de Equipe', category: 'Gestão', type: 'calculator', description: 'Organização de recursos humanos segundo COFEN.', filename: BASE_URL + 'dimensionamento.html', icon: 'fas fa-users-cog', color: 'emerald' },
     { id: 'idade-gestacional', name: 'Idade Gestacional e DPP', category: 'Obstetrícia', type: 'calculator', description: 'Cálculo de DUM, DPP e idade gestacional.', filename: BASE_URL + 'gestacional.html', icon: 'fas fa-baby', color: 'emerald' },
 
-    // ESCALAS
+    // --- ESCALAS (Dados recuperados) ---
     { id: 'aldrete-e-kroulik', name: 'Escala de Aldrete e Kroulik', category: 'Sedação', type: 'scale', description: 'Avaliação do paciente em recuperação pós-anestésica.', filename: BASE_URL + 'aldrete.html', icon: 'fas fa-notes-medical', color: 'blue' },
     { id: 'apache-ii', name: 'Escala de APACHE II', category: 'UTI', type: 'scale', description: 'Avaliação de gravidade em pacientes críticos.', filename: BASE_URL + 'apache.html', icon: 'fa-solid fa-receipt', color: 'blue' },
     { id: 'apgar', name: 'Escala de Apgar', category: 'Neonatalogia', type: 'scale', description: 'Avaliação imediata do recém-nascido.', filename: BASE_URL + 'apgar.html', icon: 'fas fa-baby-carriage', color: 'blue' },
@@ -75,178 +78,147 @@ const TOOLS_DATA = [
     { id: 'saps-iii', name: 'Escala de SAPS III', category: 'UTI', type: 'scale', description: 'Simplified Acute Physiology Score.', filename: BASE_URL + 'saps.html', icon: 'fas fa-hospital-alt', color: 'blue' },
 ];
 
-// VACCINES DATA (Placeholder - adicionar conforme necessário)
-const VACCINES_DATA = [];
-
-// STATE MANAGEMENT
-const state = {
+// ==========================================
+// 2. STATE MANAGEMENT
+// ==========================================
+let state = {
     searchTerm: '',
-    sortOrder: 'name-asc',
-    viewMode: 'grid'
+    filterCategory: 'all',
+    viewMode: 'grid', // 'grid' | 'list'
+    sortOrder: 'az'   // 'az' | 'za' | 'newest'
 };
 
-/**
- * FUNÇÃO: Renderizar Cards de Ferramentas
- * Gera HTML para cada ferramenta (calculadora, escala ou vacina)
- * 
- * NOTA: Esta função foi criada para substituir a chamada inexistente a
- * TemplateEngine.renderCard() que estava causando erro crítico.
- */
-function renderToolCard(tool, viewMode = 'grid') {
-    const colorMap = {
-        'emerald': 'from-emerald-50 to-emerald-100 border-emerald-200',
-        'blue': 'from-blue-50 to-blue-100 border-blue-200'
-    };
+// ==========================================
+// 3. RENDER ENGINE (Atualizada com Utils)
+// ==========================================
+function render() {
+    // Nota: O código original usava containers separados (calculators-container, scales-container).
+    // O código novo assume um grid unificado (tools-grid). Se você ainda usa HTML separado,
+    // precisará ajustar o ID aqui ou unificar seu HTML.
+    const gridContainer = document.getElementById('tools-grid');
     
-    const bgClass = colorMap[tool.color] || colorMap['blue'];
-    
-    if (viewMode === 'list') {
-        return `
-            <div class="p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-                <div class="flex items-start gap-4">
-                    <div class="text-2xl text-gray-600">
-                        <i class="${tool.icon}"></i>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">${tool.name}</h3>
-                        <p class="text-sm text-gray-600">${tool.category}</p>
-                        <p class="text-sm text-gray-500 mt-1">${tool.description}</p>
-                    </div>
-                    <a href="${tool.filename}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                        Acessar
-                    </a>
-                </div>
+    // Fallback de segurança caso o container não exista (evita crash do script)
+    if (!gridContainer) {
+        console.warn('Container #tools-grid não encontrado. Verifique se o HTML foi atualizado para a estrutura unificada.');
+        return;
+    }
+
+    // 1. Filtragem
+    const term = state.searchTerm.toLowerCase();
+    let filtered = TOOLS_DATA.filter(tool => {
+        const matchesSearch = tool.name.toLowerCase().includes(term) || 
+                              tool.description.toLowerCase().includes(term);
+        const matchesCategory = state.filterCategory === 'all' || tool.category === state.filterCategory;
+        return matchesSearch && matchesCategory;
+    });
+
+    // 2. Ordenação
+    filtered.sort((a, b) => {
+        if (state.sortOrder === 'az') return a.name.localeCompare(b.name);
+        if (state.sortOrder === 'za') return b.name.localeCompare(a.name);
+        // "newest" não tem campo de data nos dados originais, mantendo fallback
+        return 0;
+    });
+
+    // 3. Ajuste de Classes de Visualização (Grid vs List)
+    if (state.viewMode === 'list') {
+        gridContainer.classList.remove('grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3');
+        gridContainer.classList.add('grid-cols-1');
+    } else {
+        gridContainer.classList.remove('grid-cols-1');
+        gridContainer.classList.add('grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3');
+    }
+
+    // 4. Renderização HTML
+    if (filtered.length > 0) {
+        // USO OTIMIZADO: Utils.renderCard
+        gridContainer.innerHTML = filtered.map(tool => {
+            // Verifica se Utils existe para não quebrar caso a dependência falte
+            if (typeof Utils !== 'undefined' && Utils.renderCard) {
+                return Utils.renderCard(tool, state.viewMode);
+            } else {
+                // Fallback simples se Utils não carregar
+                console.error("Utils.renderCard não encontrado!");
+                return `<div class="p-4 border">Erro: Utils não carregado. ${tool.name}</div>`;
+            }
+        }).join('');
+    } else {
+        gridContainer.innerHTML = `
+            <div class="col-span-full text-center py-12 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+                <i class="fas fa-search text-gray-300 text-5xl mb-4"></i>
+                <h3 class="text-lg font-medium text-gray-900">Nenhum resultado encontrado</h3>
+                <p class="text-gray-500">Tente buscar por outros termos ou categorias.</p>
             </div>
         `;
     }
-    
-    // Grid view (padrão)
-    return `
-        <div class="bg-gradient-to-br ${bgClass} border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-            <div class="text-4xl mb-4 text-gray-700 group-hover:scale-110 transition-transform">
-                <i class="${tool.icon}"></i>
-            </div>
-            <h3 class="font-semibold text-gray-900 mb-2">${tool.name}</h3>
-            <p class="text-sm text-gray-600 mb-3">${tool.category}</p>
-            <p class="text-xs text-gray-600 mb-4 line-clamp-2">${tool.description}</p>
-            <a href="${tool.filename}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors">
-                Acessar
-            </a>
-        </div>
-    `;
 }
 
-/**
- * FUNÇÃO: Renderizar Página
- * Filtra, ordena e renderiza as ferramentas
- */
-function render() {
-    const term = state.searchTerm.toLowerCase();
-    const allData = [...TOOLS_DATA, ...VACCINES_DATA];
+// ==========================================
+// 4. UI HELPERS
+// ==========================================
+function updateViewButtons() {
+    const btnGrid = document.getElementById('view-grid');
+    const btnList = document.getElementById('view-list');
     
-    let filtered = allData.filter(t => 
-        t.name.toLowerCase().includes(term) || 
-        t.description.toLowerCase().includes(term) ||
-        t.category.toLowerCase().includes(term)
-    );
+    if (!btnGrid || !btnList) return;
 
-    filtered.sort((a, b) => {
-        const f = state.sortOrder === 'name-asc' ? 1 : -1;
-        return f * a.name.localeCompare(b.name);
-    });
-
-    const containers = {
-        calculator: document.getElementById('calculators-container'),
-        scale: document.getElementById('scales-container'),
-        vaccine: document.getElementById('vaccines-container')
-    };
-
-    const gridClass = state.viewMode === 'grid' || state.viewMode === 'icon-xl' 
-        ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" 
-        : "flex flex-col gap-4";
-
-    Object.values(containers).forEach(c => {
-        if (!c) return;
-        c.innerHTML = '';
-        c.className = gridClass;
-    });
-
-    filtered.forEach(tool => {
-        // CORRIGIDO: Usar função local renderToolCard em vez de TemplateEngine.renderCard
-        const html = renderToolCard(tool, state.viewMode);
-        if (containers[tool.type]) containers[tool.type].innerHTML += html;
-    });
-
-    document.getElementById('calculators-section').style.display = filtered.some(t => t.type === 'calculator') ? 'block' : 'none';
-    document.getElementById('scales-section').style.display = filtered.some(t => t.type === 'scale') ? 'block' : 'none';
-    document.getElementById('vaccines-section').style.display = filtered.some(t => t.type === 'vaccine') ? 'block' : 'none';
-    
-    const noResults = document.getElementById('no-results');
-    if (noResults) noResults.style.display = filtered.length === 0 ? 'block' : 'none';
+    if (state.viewMode === 'grid') {
+        btnGrid.classList.add('bg-blue-600', 'text-white');
+        btnGrid.classList.remove('bg-gray-300', 'text-gray-700');
+        btnList.classList.remove('bg-blue-600', 'text-white');
+        btnList.classList.add('bg-gray-300', 'text-gray-700');
+    } else {
+        btnList.classList.add('bg-blue-600', 'text-white');
+        btnList.classList.remove('bg-gray-300', 'text-gray-700');
+        btnGrid.classList.remove('bg-blue-600', 'text-white');
+        btnGrid.classList.add('bg-gray-300', 'text-gray-700');
+    }
 }
 
-function renderControls() {
-    const container = document.getElementById('controls-container');
-    if (!container) return;
-
-    container.innerHTML = `
-        <div class="flex items-center gap-4">
-            <input 
-                type="text" 
-                id="search-input" 
-                placeholder="Buscar calculadora ou escala..." 
-                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <select 
-                id="sort-select" 
-                class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-                <option value="name-asc">Nome (A-Z)</option>
-                <option value="name-desc">Nome (Z-A)</option>
-            </select>
-            <div class="flex gap-2">
-                <button id="view-grid" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" title="Visualização em Grid">
-                    <i class="fas fa-th"></i>
-                </button>
-                <button id="view-list" class="px-3 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400" title="Visualização em Lista">
-                    <i class="fas fa-list"></i>
-                </button>
-            </div>
-        </div>
-    `;
+// ==========================================
+// 5. INICIALIZAÇÃO E LISTENERS
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Renderiza inicialmente
+    render();
 
     // Event Listeners
-    document.getElementById('search-input')?.addEventListener('input', (e) => {
-        state.searchTerm = e.target.value;
-        render();
-    });
 
+    // Busca com Debounce (Melhoria do código novo)
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        // Verifica se Utils.debounce existe, senão usa função direta
+        const handler = (typeof Utils !== 'undefined' && Utils.debounce) 
+            ? Utils.debounce((e) => { state.searchTerm = e.target.value; render(); }, 300)
+            : (e) => { state.searchTerm = e.target.value; render(); };
+            
+        searchInput.addEventListener('input', handler);
+    }
+
+    // Ordenação
     document.getElementById('sort-select')?.addEventListener('change', (e) => {
         state.sortOrder = e.target.value;
         render();
     });
 
+    // Filtro de Categoria (Se existir o dropdown no HTML)
+    document.getElementById('category-select')?.addEventListener('change', (e) => {
+        state.filterCategory = e.target.value;
+        render();
+    });
+
+    // View Toggles
     document.getElementById('view-grid')?.addEventListener('click', () => {
+        if(state.viewMode === 'grid') return;
         state.viewMode = 'grid';
-        document.getElementById('view-grid').classList.add('bg-blue-600', 'text-white');
-        document.getElementById('view-grid').classList.remove('bg-gray-300', 'text-gray-700');
-        document.getElementById('view-list').classList.remove('bg-blue-600', 'text-white');
-        document.getElementById('view-list').classList.add('bg-gray-300', 'text-gray-700');
+        updateViewButtons();
         render();
     });
 
     document.getElementById('view-list')?.addEventListener('click', () => {
+        if(state.viewMode === 'list') return;
         state.viewMode = 'list';
-        document.getElementById('view-list').classList.add('bg-blue-600', 'text-white');
-        document.getElementById('view-list').classList.remove('bg-gray-300', 'text-gray-700');
-        document.getElementById('view-grid').classList.remove('bg-blue-600', 'text-white');
-        document.getElementById('view-grid').classList.add('bg-gray-300', 'text-gray-700');
+        updateViewButtons();
         render();
     });
-}
-
-// INICIALIZAÇÃO
-document.addEventListener('DOMContentLoaded', () => {
-    renderControls();
-    render();
 });

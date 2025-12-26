@@ -1,284 +1,58 @@
 /**
- * ESTILOS GLOBAIS - CALCULADORAS DE ENFERMAGEM
- * ---------------------------------------------------------
- * Este ficheiro centraliza a identidade visual, componentes de 
- * governação de dados e elementos de interface interativos.
+ * FOOTER.CSS - REFATORADO
+ * Estrutura do rodapé. 
+ * Estilos de modal removidos e variáveis unificadas.
  */
 
-:root {
-    /* Identidade Visual (Cores da Marca) */
-    --audit-navy: #1A3E74;      /* Azul Marinho Principal */
-    --audit-blue: #2563eb;      /* Azul de Destaque/Links */
-    --audit-gold: #D4AF37;      /* Dourado para Elementos Premium/Alertas */
-    --audit-card-dark: #1f2937; /* Fundo para Cards em Modo Escuro */
-    
-    /* Tipografia */
-    --font-main: 'Inter', sans-serif;
-    --font-heading: 'Nunito Sans', sans-serif;
-
-    /* Configurações de Layout Dinâmico */
-    --banner-height: 120px;     /* Altura estimada do banner de consentimento */
-    --transition-speed: 0.4s;
-    --border-radius-lg: 12px;
+.site-footer {
+    background-color: var(--bg-panel);
+    border-top: 1px solid var(--border-color);
+    padding: 4rem 0 2rem;
+    color: var(--text-main);
+    margin-top: auto; /* Push footer down */
 }
 
-/* 1. RESET E TIPOGRAFIA BASE
-   --------------------------------------------------------- */
-body { 
-    font-family: var(--font-main); 
-    font-display: swap; 
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
 }
 
-h1, h2, h3, h4, h5, h6 { 
-    font-family: var(--font-heading); 
-    font-weight: 700; 
+.footer-heading {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
 }
 
-/* Foco de acessibilidade aprimorado para navegação via teclado */
-:focus-visible { 
-    outline: 3px solid var(--audit-gold); 
-    outline-offset: 2px; 
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-/* 2. INTERRUPTORES DE CONSENTIMENTO (TOGGLE SWITCHES)
-   --------------------------------------------------------- */
-.toggle-switch { 
-    position: relative; 
-    display: inline-block; 
-    width: 44px; 
-    height: 22px; 
+.footer-links li {
+    margin-bottom: 0.75rem;
 }
 
-.toggle-switch input { 
-    opacity: 0; 
-    width: 0; 
-    height: 0; 
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
-.slider { 
-    position: absolute; 
-    cursor: pointer; 
-    top: 0; left: 0; right: 0; bottom: 0; 
-    background-color: #cbd5e1; 
-    transition: var(--transition-speed); 
-    border-radius: 34px; 
+.footer-links a:hover {
+    color: var(--primary-color);
+    padding-left: 5px; /* Efeito visual sutil */
 }
 
-.slider:before { 
-    position: absolute; 
-    content: ""; 
-    height: 16px; 
-    width: 16px; 
-    left: 3px; 
-    bottom: 3px; 
-    background-color: white; 
-    transition: var(--transition-speed); 
-    border-radius: 50%; 
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-/* Estado Ativo do Toggle */
-input:checked + .slider { 
-    background-color: var(--audit-navy); 
-}
-
-input:checked + .slider:before { 
-    transform: translateX(22px); 
-}
-
-/* Estado Desativado (Disabled) */
-input:disabled + .slider {
-    background-color: #e2e8f0;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-/* 3. BOTÕES FLUTUANTES (FABS)
-   --------------------------------------------------------- */
-#backToTop, #cookie-fab {
-    position: fixed;
-    right: 20px;
-    z-index: 105;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    cursor: pointer;
-    border: none;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-#backToTop { 
-    bottom: 85px; 
-    background-color: var(--audit-navy); 
-    color: #ffffff; 
-}
-
-#cookie-fab { 
-    bottom: 20px; 
-    background-color: var(--audit-gold); 
-    color: #111827; 
-}
-
-/* Efeitos de Hover nos FABS */
-#backToTop:hover, #cookie-fab:hover {
-    transform: scale(1.1) translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-}
-
-/* Estados de Visibilidade dos FABs */
-#backToTop.hidden,
-#cookie-fab.hidden {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-#backToTop.visible,
-#cookie-fab.visible {
-    opacity: 1;
-    pointer-events: auto;
-    transition: opacity 0.3s ease;
-}
-
-/* Reposicionamento adaptativo quando o banner de cookies está ativo */
-body.fabs-above-banner #backToTop { 
-    bottom: calc(var(--banner-height) + 85px); 
-}
-
-body.fabs-above-banner #cookie-fab { 
-    bottom: calc(var(--banner-height) + 20px); 
-}
-
-/* 4. COMPONENTES DE PRIVACIDADE (BANNER E MODAL)
-   --------------------------------------------------------- */
-
-/* Banner de Cookies */
-#cookie-banner {
-    transform: translateY(100%);
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    opacity: 0;
-    visibility: hidden;
-}
-
-#cookie-banner.visible { 
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-}
-
-#cookie-banner.hidden {
-    transform: translateY(100%);
-    opacity: 0;
-    visibility: hidden;
-}
-
-/* Overlay do Modal */
-#cookie-overlay {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-#cookie-overlay.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-#cookie-overlay.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-/* Conteúdo do Modal */
-#cookie-modal-content {
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-}
-
-#cookie-modal-content.visible {
-    transform: translateY(0);
-}
-
-#cookie-modal-content.hidden {
-    transform: translateY(100%);
-}
-
-/* Prevenir scroll quando modal está ativo */
-body.modal-open {
-    overflow: hidden;
-}
-
-/* 5. TABELAS DE DETALHES TÉCNICOS (DENTRO DO MODAL)
-   --------------------------------------------------------- */
-.detail-table {
-    border-collapse: separate;
-    border-spacing: 0 4px;
-}
-
-.detail-table td { 
-    padding: 8px 0; 
-    font-size: 11px; 
-    line-height: 1.5; 
-    vertical-align: top; 
-}
-
-.detail-label { 
-    font-weight: 700; 
-    width: 35%; 
-    padding-right: 15px !important; 
-    color: #4b5563; /* Cinza médio para labels */
-}
-
-/* Ajustes para Modo Escuro */
-.dark .detail-label { 
-    color: #9ca3af; 
-}
-
-.dark .detail-table td {
-    color: #d1d5db;
-}
-
-/* 6. UTILITÁRIOS E SCROLLBARS
-   --------------------------------------------------------- */
-.custom-scrollbar::-webkit-scrollbar { 
-    width: 6px; 
-}
-
-.custom-scrollbar::-webkit-scrollbar-track { 
-    background: rgba(0,0,0,0.05); 
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb { 
-    background: #94a3b8; 
-    border-radius: 10px; 
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #64748b;
-}
-
-/* Selos de Governança */
-.seal-img { 
-    height: 56px; 
-    width: auto; 
-    object-fit: contain; 
-    filter: grayscale(20%);
-    transition: filter 0.3s ease, transform 0.3s ease;
-}
-
-.seal-img:hover {
-    filter: grayscale(0%);
-    transform: translateY(-3px);
-}
-
-/* Esconder conteúdo descritivo inicialmente */
-.item-desc.hidden {
-    display: none;
+/* Copyright Area */
+.footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
 }

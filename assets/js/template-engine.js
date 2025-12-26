@@ -1,9 +1,11 @@
 /**
- * Template Engine v3.1 - Calculadoras de Enfermagem
- * Gerencia a injeção de componentes globais (Header, Footer, Modais)
- * e o carregamento de seus respectivos recursos (JS e CSS).
- * 
- * CORREÇÃO: Adicionado método renderCard() para compatibilidade com global-main-index.js
+ * Template Engine v3.2.1 - Calculadoras de Enfermagem
+ * AUDITORIA 2025: Correção de Race Conditions, Logs Melhorados e Restauração de Funcionalidades.
+ * * Changelog:
+ * - Adicionado listener para DOMContentLoaded (evita injeção em null).
+ * - Melhorado tratamento de erro em _loadScript (reject explícito).
+ * - Restaurado renderCard() da v3.1 (compatibilidade legada) com Proxy para Utils.
+ * - Centralização do RootPath.
  */
 class TemplateEngine {
     constructor() {
@@ -16,110 +18,140 @@ class TemplateEngine {
             'modals': { js: 'modals.js', css: 'modals.css' }
         };
         
-        this.init();
+        this.initialized = false;
+        
+        // Garante que o DOM esteja pronto antes de iniciar
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this.init());
+        } else {
+            this.init();
+        }
     }
 
-    /**
-     * Define a raiz do projeto para garantir caminhos corretos em diferentes ambientes
-     */
     _calculateRootPath() {
         return window.location.hostname.includes('github.io') ? '/Calculadoras-de-Enfermagem/' : '/';
     }
 
-    /**
-     * Inicializa o carregamento dos componentes principais
-     */
     async init() {
+        if (this.initialized) return;
+        
         try {
-            // Carrega Header, Footer e Modais simultaneamente
+            console.time('TemplateEngine Load');
+            
+            // Carregamento paralelo de HTMLs e seus assets
+            // Usamos Promise.all para performance, pois Header/Footer são independentes entre si
             await Promise.all([
                 this._inject('header-container', 'header.html', 'header'),
                 this._inject('footer-container', 'footer.html', 'footer'),
                 this._inject('modals-container', 'modals-main.html', 'modals')
             ]);
+
+            this.initialized = true;
             
-            // Notifica outros scripts que o ambiente modular está pronto
-            window.dispatchEvent(new CustomEvent('templateEngineReady'));
-        } catch (e) {
-            console.error('[TemplateEngine] Erro crítico na inicialização:', e);
+            // Dispara evento para notificar o sistema (Legacy + Novo padrão)
+            window.dispatchEvent(new Event('templateEngineReady'));
+            window.dispatchEvent(new CustomEvent('TemplateEngine:Ready', { detail: { timestamp: Date.now() } }));
+            
+            console.timeEnd('TemplateEngine Load');
+
+        } catch (error) {
+            console.error('[TemplateEngine] Erro crítico na inicialização:', error);
+            // Em produção, aqui poderia haver um fallback para uma tela de erro amigável
         }
     }
 
-    /**
-     * Injeta o HTML em um container e carrega JS/CSS associados
-     */
-    async _inject(id, file, name) {
-        const container = document.getElementById(id);
-        if (!container) return;
+    async _inject(containerId, fileName, assetKey) {
+        const container = document.getElementById(containerId);
+        if (!container) {
+            // Log silencioso (debug) pois nem todas as páginas usam todos os containers
+            // console.debug(`[TemplateEngine] Container ignorado: ${containerId}`);
+            return; 
+        }
 
         try {
-            // 1. Busca e injeta o HTML
-            const response = await fetch(`${this.rootPath}assets/components/${file}`);
-            if (!response.ok) throw new Error(`Falha ao carregar ${file}`);
+            const url = `${this.rootPath}assets/components/${fileName}`;
+            const response = await fetch(url);
             
-            container.innerHTML = await response.text();
+            if (!response.ok) throw new Error(`Status ${response.status} ao carregar ${fileName}`);
+            
+            const html = await response.text();
+            
+            // Injeção do HTML
+            container.innerHTML = html;
 
-            // 2. Carrega Recursos (CSS e JS)
-            const assets = this.componentAssets[name];
-            if (assets) {
-                if (assets.css) this._loadStyle(assets.css);
-                if (assets.js) await this._loadScript(assets.js);
+            // Carregamento Sequencial de Assets para este componente específico
+            // Isso evita Race Condition onde o JS tenta manipular o DOM antes do CSS aplicar layout
+            if (this.componentAssets[assetKey]) {
+                const { js, css } = this.componentAssets[assetKey];
+                
+                // CSS primeiro (para evitar FOUC - Flash of Unstyled Content)
+                if (css) this._loadCSS(`${this.rootPath}assets/css/${css}`);
+                
+                // JS depois (espera o download do script para garantir execução correta)
+                if (js) await this._loadScript(`${this.rootPath}assets/js/${js}`);
             }
-            
+
         } catch (error) {
-            console.warn(`[TemplateEngine] Erro ao processar componente ${name}:`, error);
+            console.warn(`[TemplateEngine] Falha ao injetar componente '${assetKey}':`, error);
+            container.innerHTML = '<!-- Component load failed -->';
         }
     }
 
-    /**
-     * Carrega um arquivo CSS dinamicamente se ainda não existir no HEAD
-     */
-    _loadStyle(fileName) {
-        const id = `css-${fileName.replace(/\./g, '-')}`;
-        if (document.getElementById(id)) return;
-
+    _loadCSS(href) {
+        // Evita duplicidade
+        if (document.querySelector(`link[href="${href}"]`)) return;
+        
         const link = document.createElement('link');
-        link.id = id;
         link.rel = 'stylesheet';
-        link.href = `${this.rootPath}assets/css/${fileName}`;
+        link.href = href;
         document.head.appendChild(link);
     }
 
     /**
-     * Carrega um arquivo JS dinamicamente e retorna uma Promise
+     * Carregamento de script com Promise para garantir execução ordenada.
+     * @param {string} src - Caminho do script
      */
-    _loadScript(fileName) {
-        return new Promise((resolve) => {
-            const id = `js-${fileName.replace(/\./g, '-')}`;
-            if (document.getElementById(id)) {
+    _loadScript(src) {
+        return new Promise((resolve, reject) => {
+            // Verifica se já existe para evitar re-execução
+            if (document.querySelector(`script[src="${src}"]`)) {
                 resolve();
                 return;
             }
 
             const script = document.createElement('script');
-            script.id = id;
-            script.src = `${this.rootPath}assets/js/${fileName}`;
-            script.defer = true;
+            script.src = src;
+            script.async = true; // Permite download paralelo, mas execução controlada pelo await no _inject
+            
             script.onload = () => resolve();
+            
             script.onerror = () => {
-                console.warn(`[TemplateEngine] Falha ao carregar script: ${fileName}`);
-                resolve(); // Resolve para não travar o Promise.all
+                // AUDITORIA: Mudado para reject para permitir tratamento adequado no caller
+                const errorMsg = `[TemplateEngine] Falha crítica ao carregar script: ${src}`;
+                console.error(errorMsg);
+                reject(new Error(errorMsg)); 
             };
+            
             document.body.appendChild(script);
         });
     }
 
     /**
-     * NOVO: Renderiza um card de ferramenta (calculadora, escala ou vacina)
-     * 
-     * Esta função foi adicionada para compatibilidade com global-main-index.js
-     * que tentava chamar TemplateEngine.renderCard() que não existia.
-     * 
-     * @param {Object} tool - Objeto da ferramenta com propriedades: id, name, category, description, filename, icon, color, type
-     * @param {Object} state - Estado da aplicação com propriedades: viewMode
-     * @returns {string} HTML do card renderizado
+     * Renderiza um card de ferramenta (calculadora, escala ou vacina).
+     * * ESTRATÉGIA ANTI-DUPLICAÇÃO:
+     * Este método atua como um proxy. Se 'Utils.renderCard' existir (nova arquitetura),
+     * delegamos a renderização para lá. Caso contrário, usamos o fallback interno (legado).
+     * * @param {Object} tool - Objeto da ferramenta
+     * @param {Object} state - Estado da aplicação (viewMode)
+     * @returns {string} HTML do card
      */
     renderCard(tool, state = {}) {
+        // 1. Tenta delegar para Utils (Fonte única de verdade)
+        if (typeof window.Utils !== 'undefined' && typeof window.Utils.renderCard === 'function') {
+            return window.Utils.renderCard(tool, state);
+        }
+
+        // 2. Fallback: Implementação local para garantir funcionamento se Utils não carregar
         const viewMode = state.viewMode || 'grid';
         
         const colorMap = {
@@ -129,6 +161,7 @@ class TemplateEngine {
         
         const bgClass = colorMap[tool.color] || colorMap['blue'];
         
+        // List View
         if (viewMode === 'list') {
             return `
                 <div class="p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
@@ -149,7 +182,7 @@ class TemplateEngine {
             `;
         }
         
-        // Grid view (padrão)
+        // Grid View (Padrão)
         return `
             <div class="bg-gradient-to-br ${bgClass} border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer group">
                 <div class="text-4xl mb-4 text-gray-700 group-hover:scale-110 transition-transform">
@@ -166,5 +199,8 @@ class TemplateEngine {
     }
 }
 
-// Auto-inicialização
-window.TemplateEngine = new TemplateEngine();
+// Inicialização Global
+// Mantemos ambas as convenções para compatibilidade retroativa (v3.1 usava TemplateEngine, v3.2 sugeriu templateEngine)
+const instance = new TemplateEngine();
+window.TemplateEngine = instance; // Compatibilidade com v3.1
+window.templateEngine = instance; // Nova convenção camelCase

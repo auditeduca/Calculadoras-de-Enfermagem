@@ -1,174 +1,82 @@
-/* --- Variáveis & Configurações de Cores --- */
+/**
+ * GLOBAL-MAIN.CSS - REFATORADO
+ * Estilos específicos para layout de Artigos e Páginas de Conteúdo.
+ * Variáveis globais removidas em favor de global.css.
+ */
+
 :root {
-    --color-primary: #1A3E74;
-    --color-primary-light: #2E5A9C;
-    --color-cyan: #00bcd4;
-    --color-text-main: #333333;
-    --color-text-light: #666666;
-    --color-bg-light: #f8f9fa;
-    --color-white: #ffffff;
-    --color-border: #e0e0e0;
-    --border-radius-lg: 24px;
-    --border-radius-md: 12px;
-    --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.04);
-    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.06);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    /* Nova variável para controle de espaçamento do topo */
+    /* Apenas variáveis locais específicas deste contexto, se necessário */
     --header-height-offset: 100px; 
 }
 
-body {
-    font-family: 'Open Sans', 'Roboto', sans-serif;
-    color: var(--color-text-main);
-    background-color: var(--color-bg-light);
-    margin: 0;
-}
-
 /* --- Layout Principal --- */
-#main-content {
-    position: relative;
-    /* Aumentado de 40px para compensar cabeçalhos fixos e dar respiro */
-    padding: var(--header-height-offset) 0 0; 
-    overflow: hidden;
-    min-height: 100vh;
-}
-
-.content-container {
-    width: 100%;
+.main-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px; /* Conteúdo + Sidebar */
+    gap: 3rem;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-    position: relative;
-    z-index: 2;
+    padding: 2rem;
 }
-
-.content-layout {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 3rem;
-    margin-bottom: 5rem;
-}
-
-/* --- Elementos Decorativos --- */
-.bg-lines-decorative {
-    position: absolute;
-    top: 0; left: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.5;
-}
-
-/* --- Navegação Breadcrumb --- */
-.breadcrumb { 
-    font-size: 0.85rem; 
-    color: var(--color-text-light); 
-    margin-bottom: 3rem; /* Aumentado para separar melhor do título */
-    display: flex;
-    align-items: center;
-}
-.breadcrumb a { color: var(--color-primary); font-weight: 600; text-decoration: none; }
-.breadcrumb a:hover { color: var(--color-cyan); }
-.breadcrumb-separator { margin: 0 10px; color: #ccc; }
-
-/* --- Cabeçalho do Artigo --- */
-.article-header { 
-    text-align: center; 
-    max-width: 950px; 
-    margin: 0 auto 4rem; /* Margem inferior aumentada */
-}
-.article-category {
-    background: var(--color-primary);
-    color: white;
-    padding: 6px 18px;
-    border-radius: 30px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-bottom: 1.5rem;
-}
-.article-header h1 { 
-    font-size: 3.5rem; /* Leve aumento para impacto */
-    line-height: 1.1;
-    color: var(--color-primary); 
-    margin: 0; 
-    font-weight: 800; 
-}
-.article-subtitle { 
-    font-size: 1.25rem; 
-    color: var(--color-text-light); 
-    margin-top: 1.5rem; 
-    max-width: 750px; 
-    margin-left: auto; 
-    margin-right: auto; 
-    line-height: 1.6;
-}
-
-.header-divider {
-    width: 80px; /* Um pouco mais largo */
-    height: 6px;
-    background: var(--color-cyan);
-    border-radius: 10px;
-    margin: 2rem auto;
-}
-
-.article-meta {
-    display: flex; 
-    justify-content: center; 
-    flex-wrap: wrap; 
-    gap: 2.5rem;
-    font-size: 0.9rem; 
-    color: var(--color-text-light);
-    margin-top: 2.5rem;
-}
-.article-meta-item { display: flex; align-items: center; gap: 10px; }
-.article-meta-item i { color: var(--color-cyan); font-size: 1.1rem; }
 
 /* --- Imagem de Destaque --- */
-.featured-image {
+.featured-image-container img {
     width: 100%; 
-    height: 550px; /* Aumentado para preencher melhor a tela */
+    height: auto; /* Responsivo em vez de 550px fixo */
+    max-height: 550px;
     object-fit: cover;
     border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-soft);
-    margin-bottom: 5rem;
-    border: 10px solid white; /* Borda mais espessa para efeito "moldura" */
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 3rem;
+    border: 8px solid var(--bg-panel); /* Usa variável de painel */
 }
 
 /* --- Bloco de Conteúdo --- */
 .article-content {
-    background: var(--color-white);
-    padding: 4rem; /* Aumento de padding interno */
+    background: var(--bg-panel);
+    padding: 2.5rem; /* Reduzido levemente para mobile, ajustado via media query */
     border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-sm);
 }
 
-/* ... Resto dos estilos mantidos para brevidade ... */
-.article-content .lead { font-size: 1.25rem; color: #222; font-weight: 500; line-height: 1.8; margin-bottom: 2.5rem; }
-.article-content p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.8rem; color: #444; }
+.article-content .lead { 
+    font-size: 1.25rem; 
+    color: var(--text-main); 
+    font-weight: 500; 
+    line-height: 1.8; 
+    margin-bottom: 2rem; 
+}
 
-/* --- Sidebar Ajustada --- */
+.article-content p { 
+    font-size: 1.05rem; 
+    line-height: 1.8; 
+    margin-bottom: 1.5rem; 
+    color: var(--text-main); 
+    opacity: 0.9;
+}
+
+/* --- Sidebar --- */
 .content-sidebar { 
     position: sticky; 
-    top: calc(var(--header-height-offset) + 20px); /* Garante que a sidebar respeite o topo */
+    top: calc(var(--header-height-offset) + 20px);
     height: fit-content; 
     display: flex; 
-    flex-direction: column; 
-    gap: 2rem; 
+    flex-direction: column;
+    gap: 2rem;
 }
 
-/* Responsividade Refinada */
-@media (max-width: 1024px) {
-    :root { --header-height-offset: 60px; }
-    .content-layout { grid-template-columns: 1fr; gap: 2rem; }
-    .article-header h1 { font-size: 2.8rem; }
-}
-
-@media (max-width: 768px) {
-    #main-content { padding-top: 40px; }
-    .article-header h1 { font-size: 2.2rem; }
-    .featured-image { height: 350px; }
-    .article-content { padding: 2.5rem 1.5rem; }
+/* Responsividade do Layout Principal */
+@media (max-width: 960px) {
+    .main-layout {
+        grid-template-columns: 1fr; /* Empilha sidebar */
+    }
+    
+    .content-sidebar {
+        position: relative; /* Remove sticky no mobile */
+        top: 0;
+    }
+    
+    .article-content {
+        padding: 1.5rem;
+    }
 }
