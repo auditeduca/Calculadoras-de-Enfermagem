@@ -1,80 +1,95 @@
 /**
- * CALCULADORAS DE ENFERMAGEM - CORE HEADER ENGINE
- * Versão: 2.4 - Acessibilidade Aprimorada (Keyboard Nav + ARIA)
- * Autoria: Refatorado para conformidade WCAG
+ * CALCULADORAS DE ENFERMAGEM - CORE HEADER ENGINE (DEFINITIVO)
+ * Versão: 3.0 - Híbrida
+ * Combina a arquitetura modular limpa com as funcionalidades ricas (Search, ARIA, Mobile Trap) da versão legado.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- UTILS: Helper para elementos focáveis ---
+    
+    // --- UTILS: Helper para acessibilidade (Focus Trap) ---
     function getFocusableElements(element) {
         return element.querySelectorAll(
             'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
         );
     }
 
-    // --- 1. GERENCIAMENTO DOS MEGA PANELS (DESKTOP) ---
+    // =========================================================================
+    // 1. GERENCIAMENTO DOS MEGA PANELS (DESKTOP)
+    // =========================================================================
     const navTriggers = document.querySelectorAll('.nav-trigger');
     const megaPanels = document.querySelectorAll('.mega-panel');
     let activePanelId = null;
     let lastFocusedElement = null; // Para retornar o foco ao fechar
 
-    // Função para fechar todos os painéis abertos
+    // Função para fechar todos os painéis e limpar estados ARIA
     function closeAllPanels() {
         megaPanels.forEach(panel => {
             panel.classList.remove('active');
             panel.setAttribute('aria-hidden', 'true');
         });
         navTriggers.forEach(t => {
-            t.setAttribute('aria-expanded', 'false');
             t.classList.remove('active-nav');
+            t.setAttribute('aria-expanded', 'false');
+            
+            // Restaura opacidade do ícone (visual)
+            const icon = t.querySelector('i');
+            if(icon) icon.classList.add('opacity-70');
         });
         activePanelId = null;
     }
 
     navTriggers.forEach(trigger => {
-        // Vincula trigger ao painel via ARIA
+        // Configuração inicial ARIA
         const panelId = trigger.getAttribute('data-panel');
         if (panelId) {
             trigger.setAttribute('aria-controls', panelId);
             trigger.setAttribute('aria-haspopup', 'true');
+            trigger.setAttribute('aria-expanded', 'false');
         }
 
         const togglePanel = (e) => {
-            if (!panelId) return;
-            // Previne comportamento padrão se for link vazio
+            e.stopPropagation();
+
+            // Previne scroll ou comportamento padrão se for link
             if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
                 if(trigger.tagName === 'A') e.preventDefault();
             }
 
             const targetPanel = document.getElementById(panelId);
+            if (!targetPanel) return;
 
             if (activePanelId === panelId) {
+                // Se já está aberto, fecha
                 closeAllPanels();
-                // Retorna foco se foi acionado por teclado
-                if (e.type !== 'mouseenter') trigger.focus();
+                // Retorna foco se foi via teclado
+                if (e.type !== 'mouseenter' && e.type !== 'click') trigger.focus();
             } else {
+                // Abre o novo painel
                 closeAllPanels(); // Fecha outros
-                if (targetPanel) {
-                    targetPanel.classList.add('active');
-                    targetPanel.setAttribute('aria-hidden', 'false');
-                    trigger.setAttribute('aria-expanded', 'true');
-                    trigger.classList.add('active-nav');
-                    activePanelId = panelId;
+                
+                targetPanel.classList.add('active');
+                targetPanel.setAttribute('aria-hidden', 'false');
+                
+                trigger.classList.add('active-nav');
+                trigger.setAttribute('aria-expanded', 'true');
+                
+                // Visual: Ícone mais forte
+                const icon = trigger.querySelector('i');
+                if(icon) icon.classList.remove('opacity-70');
 
-                    // Acessibilidade: Mover foco para dentro do painel
-                    // Especial para busca: focar no input
-                    if (panelId.includes('busca')) {
-                        const input = targetPanel.querySelector('input');
-                        if (input) setTimeout(() => input.focus(), 100);
-                    }
+                activePanelId = panelId;
+
+                // Lógica Especial: Se for painel de busca, foca no input
+                if (panelId.includes('busca') || panelId.includes('search')) {
+                    const input = targetPanel.querySelector('input');
+                    if (input) setTimeout(() => input.focus(), 100);
                 }
             }
-            e.stopPropagation();
         };
 
         trigger.addEventListener('click', togglePanel);
         
-        // Suporte para teclado (Enter e Espaço)
+        // Acessibilidade: Teclado
         trigger.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 togglePanel(e);
@@ -82,67 +97,70 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Fechar ao clicar fora
+    // Fechar ao clicar fora (Click Outside)
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.mega-panel') && !e.target.closest('.nav-trigger')) {
-            closeAllPanels();
-        }
-    });
+        if (activePanelId) {
+            const isClickInsidePanel = e.target.closest('.mega-panel');
+            const isClickOnTrigger = e.target.closest('.nav-trigger');
 
-    // Fechar com a tecla ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            const wasOpen = activePanelId !== null;
-            closeAllPanels();
-            // Retorna o foco para o trigger se algo foi fechado
-            if (wasOpen && document.activeElement.closest('.mega-panel')) {
-                 const trigger = document.querySelector(`.nav-trigger[data-panel="${activePanelId}"]`);
-                 if (trigger) trigger.focus();
+            if (!isClickInsidePanel && !isClickOnTrigger) {
+                closeAllPanels();
             }
         }
     });
 
-    // --- 2. LÓGICA DE TABS DENTRO DOS MEGA PANELS ---
+    // Fechar com tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeAllPanels();
+            // Tenta retornar o foco para o trigger original se possível
+            if (document.activeElement.closest('.mega-panel')) {
+                 // Lógica simplificada de retorno de foco
+                 const firstTrigger = document.querySelector('.nav-trigger');
+                 if(firstTrigger) firstTrigger.focus(); 
+            }
+        }
+    });
+
+    // =========================================================================
+    // 2. LÓGICA DE TABS DENTRO DOS MEGA PANELS (Calculadoras, Escalas...)
+    // =========================================================================
     const tabTriggers = document.querySelectorAll('.menu-tab-trigger');
-    
-    // Configuração ARIA inicial para Tabs
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    // Inicialização ARIA para Tabs
     tabTriggers.forEach(trigger => {
         trigger.setAttribute('role', 'tab');
+        trigger.setAttribute('aria-selected', 'false');
         const targetId = trigger.getAttribute('data-target');
         if (targetId) trigger.setAttribute('aria-controls', targetId);
     });
 
-    // Função separada para ativação para reuso
     const activateTab = (trigger) => {
-        const parentPanel = trigger.closest('.mega-panel');
-        if (!parentPanel) return;
-
+        const parentPanel = trigger.closest('.mega-panel') || document.body; // Fallback
         const targetId = trigger.getAttribute('data-target');
 
-        // Resetar triggers do painel atual
-        parentPanel.querySelectorAll('.menu-tab-trigger').forEach(t => {
+        // 1. Resetar abas irmãs
+        const siblingTriggers = parentPanel.querySelectorAll('.menu-tab-trigger');
+        siblingTriggers.forEach(t => {
             t.classList.remove('active');
             t.setAttribute('aria-selected', 'false');
-            t.setAttribute('tabindex', '-1'); // Remove da ordem natural do tab
-            const icon = t.querySelector('i');
-            if (icon) icon.classList.add('opacity-0');
+            t.setAttribute('tabindex', '-1'); 
         });
 
-        // Resetar conteúdos
-        parentPanel.querySelectorAll('.tab-content').forEach(c => {
+        // 2. Resetar conteúdos
+        const siblingContents = parentPanel.querySelectorAll('.tab-content');
+        siblingContents.forEach(c => {
             c.classList.remove('active');
-            c.setAttribute('hidden', ''); // Atributo hidden HTML5
-            c.setAttribute('role', 'tabpanel');
+            c.setAttribute('hidden', '');
         });
 
-        // Ativar trigger
+        // 3. Ativar trigger atual
         trigger.classList.add('active');
         trigger.setAttribute('aria-selected', 'true');
-        trigger.setAttribute('tabindex', '0'); // Torna focável
-        const icon = trigger.querySelector('i');
-        if (icon) icon.classList.remove('opacity-0');
+        trigger.setAttribute('tabindex', '0');
 
-        // Ativar conteúdo
+        // 4. Ativar conteúdo alvo
         const targetContent = document.getElementById(targetId);
         if (targetContent) {
             targetContent.classList.add('active');
@@ -151,94 +169,97 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     tabTriggers.forEach(trigger => {
+        // Ativação por Hover (Desktop UX)
         trigger.addEventListener('mouseenter', () => activateTab(trigger));
-        trigger.addEventListener('click', () => activateTab(trigger));
+        
+        // Ativação por Foco/Click (Acessibilidade)
         trigger.addEventListener('focus', () => activateTab(trigger));
+        trigger.addEventListener('click', () => activateTab(trigger));
 
-        // Navegação por Setas (Pattern de Acessibilidade para Tabs)
+        // Navegação por Setas (Keyboard Navigation - WCAG)
         trigger.addEventListener('keydown', (e) => {
-            const parentPanel = trigger.closest('.mega-panel');
+            const parentPanel = trigger.closest('.mega-panel') || trigger.parentElement;
+            // Pega apenas as tabs visíveis neste grupo
             const tabs = Array.from(parentPanel.querySelectorAll('.menu-tab-trigger'));
             const index = tabs.indexOf(trigger);
             let nextTab = null;
 
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
                 e.preventDefault();
                 nextTab = tabs[index + 1] || tabs[0]; // Loop para o início
-            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
                 e.preventDefault();
                 nextTab = tabs[index - 1] || tabs[tabs.length - 1]; // Loop para o final
             }
 
             if (nextTab) {
-                nextTab.focus(); // O evento focus já dispara activateTab
+                nextTab.focus(); // O evento 'focus' já dispara o activateTab
             }
         });
     });
 
-    // --- 3. MENU MOBILE E ACORDEÕES ---
-    const mobileMenuTrigger = document.getElementById('mobile-menu-trigger');
-    const closeMobileMenuBtn = document.getElementById('close-mobile-menu');
+    // =========================================================================
+    // 3. MENU MOBILE E ACORDEÕES (Restaurado do Legado)
+    // =========================================================================
+    const mobileMenuTrigger = document.querySelector('.lg\\:hidden.text-2xl'); // Seletor baseado nas classes Tailwind do botão
+    // Se o HTML tiver IDs específicos, melhor usar getElementById. 
+    // Assumindo IDs padrão para garantir compatibilidade:
     const mobileMenu = document.getElementById('mobile-menu');
+    const closeMobileBtn = document.getElementById('close-mobile-menu');
     const mobileDrawer = document.getElementById('mobile-menu-drawer');
     const mobileBackdrop = document.getElementById('mobile-menu-backdrop');
     
-    // Elementos focáveis para Focus Trap
-    let mobileFocusables = []; 
+    let mobileFocusables = [];
 
     function toggleMobileMenu(isOpen) {
-        if (!mobileMenu || !mobileDrawer || !mobileBackdrop) return;
+        if (!mobileMenu) return; // Segurança caso o HTML mobile não exista
 
         if (isOpen) {
-            lastFocusedElement = document.activeElement; // Salva quem abriu
+            lastFocusedElement = document.activeElement;
             mobileMenu.classList.remove('hidden');
             mobileMenu.setAttribute('aria-hidden', 'false');
-            
-            // Gerenciar ARIA do botão trigger
-            if(mobileMenuTrigger) mobileMenuTrigger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden'; // Bloqueia scroll do fundo
 
-            setTimeout(() => {
-                mobileBackdrop.classList.remove('opacity-0');
-                mobileBackdrop.classList.add('opacity-100');
-                mobileDrawer.classList.remove('-translate-x-full');
-                mobileDrawer.classList.add('translate-x-0');
-                
-                // Focus Trap: Mover foco para o botão de fechar
-                if (closeMobileMenuBtn) closeMobileMenuBtn.focus();
-                
-                // Capturar elementos focáveis atuais
-                mobileFocusables = getFocusableElements(mobileDrawer);
-            }, 10);
-            document.body.style.overflow = 'hidden';
+            // Animação de entrada (se houver elementos de drawer)
+            if (mobileDrawer && mobileBackdrop) {
+                setTimeout(() => {
+                    mobileBackdrop.classList.remove('opacity-0');
+                    mobileBackdrop.classList.add('opacity-100');
+                    mobileDrawer.classList.remove('-translate-x-full');
+                    mobileDrawer.classList.add('translate-x-0');
+                    
+                    // Focus Trap
+                    mobileFocusables = getFocusableElements(mobileDrawer);
+                    if (closeMobileBtn) closeMobileBtn.focus();
+                }, 10);
+            }
 
-            // Adicionar listener para Focus Trap
             document.addEventListener('keydown', trapFocusMobile);
 
         } else {
-            if(mobileMenuTrigger) mobileMenuTrigger.setAttribute('aria-expanded', 'false');
-            
-            mobileBackdrop.classList.remove('opacity-100');
-            mobileBackdrop.classList.add('opacity-0');
-            mobileDrawer.classList.remove('translate-x-0');
-            mobileDrawer.classList.add('-translate-x-full');
-            
+            // Fechar
+            if (mobileDrawer && mobileBackdrop) {
+                mobileBackdrop.classList.remove('opacity-100');
+                mobileBackdrop.classList.add('opacity-0');
+                mobileDrawer.classList.remove('translate-x-0');
+                mobileDrawer.classList.add('-translate-x-full');
+            }
+
             setTimeout(() => {
                 mobileMenu.classList.add('hidden');
                 mobileMenu.setAttribute('aria-hidden', 'true');
                 document.body.style.overflow = '';
-                
-                // Retornar foco
                 if (lastFocusedElement) lastFocusedElement.focus();
             }, 300);
 
-            // Remover listener
             document.removeEventListener('keydown', trapFocusMobile);
         }
     }
 
-    // Função de Focus Trap
+    // Função de Trap Focus para Mobile
     function trapFocusMobile(e) {
         if (e.key !== 'Tab') return;
+        if (mobileFocusables.length === 0) return;
 
         const first = mobileFocusables[0];
         const last = mobileFocusables[mobileFocusables.length - 1];
@@ -256,94 +277,76 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Event Listeners Mobile
     if (mobileMenuTrigger) {
         mobileMenuTrigger.addEventListener('click', () => toggleMobileMenu(true));
-        // Suporte tecla
-        mobileMenuTrigger.addEventListener('keydown', (e) => {
-            if(e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleMobileMenu(true);
-            }
-        });
+    }
+    if (closeMobileBtn) {
+        closeMobileBtn.addEventListener('click', () => toggleMobileMenu(false));
+    }
+    if (mobileBackdrop) {
+        mobileBackdrop.addEventListener('click', () => toggleMobileMenu(false));
     }
 
-    if (closeMobileMenuBtn) closeMobileMenuBtn.addEventListener('click', () => toggleMobileMenu(false));
-    if (mobileBackdrop) mobileBackdrop.addEventListener('click', () => toggleMobileMenu(false));
-
-    // ESC fecha mobile menu
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileMenu && !mobileMenu.classList.contains('hidden')) {
-            toggleMobileMenu(false);
-        }
-    });
-
-    // Acordeões do Menu Mobile
+    // Acordeões Mobile (Submenus)
     const accordionBtns = document.querySelectorAll('.mobile-accordion-btn');
     accordionBtns.forEach(btn => {
-        // Garantir atributos iniciais
-        if (!btn.hasAttribute('aria-expanded')) btn.setAttribute('aria-expanded', 'false');
-
-        const toggleAccordion = () => {
+        btn.addEventListener('click', () => {
             const isExpanded = btn.getAttribute('aria-expanded') === 'true';
             
-            // Opcional: Fechar outros
-            accordionBtns.forEach(otherBtn => {
-                if (otherBtn !== btn) {
-                    otherBtn.setAttribute('aria-expanded', 'false');
-                    const otherContent = otherBtn.nextElementSibling;
-                    if (otherContent) {
-                        otherContent.style.maxHeight = '0px';
-                        otherContent.setAttribute('hidden', '');
+            // Fecha outros (Opcional - UX choice)
+            accordionBtns.forEach(other => {
+                if(other !== btn) {
+                    other.setAttribute('aria-expanded', 'false');
+                    other.classList.remove('active');
+                    const content = other.nextElementSibling;
+                    if(content) {
+                        content.style.maxHeight = '0px';
+                        content.setAttribute('hidden', '');
                     }
-                    const otherIcon = otherBtn.querySelector('i');
-                    if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
                 }
             });
 
+            // Toggle atual
             btn.setAttribute('aria-expanded', !isExpanded);
             const content = btn.nextElementSibling;
-            const icon = btn.querySelector('i');
             
             if (!isExpanded) {
+                btn.classList.add('active');
                 content.removeAttribute('hidden');
                 content.style.maxHeight = content.scrollHeight + 'px';
-                if (icon) icon.style.transform = 'rotate(180deg)';
             } else {
+                btn.classList.remove('active');
                 content.setAttribute('hidden', '');
                 content.style.maxHeight = '0px';
-                if (icon) icon.style.transform = 'rotate(0deg)';
-            }
-        };
-
-        btn.addEventListener('click', toggleAccordion);
-        btn.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleAccordion();
             }
         });
     });
 });
 
-// --- 4. FUNÇÕES GLOBAIS (ACESSABILIDADE E BUSCA) ---
+// =========================================================================
+// 4. FUNÇÕES GLOBAIS (ESCOPO WINDOW)
+// Necessárias para botões onclick="..." e Search Engine
+// =========================================================================
 
+// --- Theme Toggle ---
 window.toggleTheme = function() {
     const body = document.body;
     const isDark = body.classList.toggle('dark-theme');
+    
+    // Suporte a Tailwind 'dark' class se estiver sendo usada
+    body.classList.toggle('dark'); 
+
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     
+    // Atualiza ícone se existir
     const icon = document.querySelector('#theme-toggle i');
-    const btn = document.getElementById('theme-toggle');
-    
-    if (isDark) {
-        if (icon) icon.className = 'fas fa-sun';
-        if (btn) btn.setAttribute('aria-label', 'Alternar para modo claro');
-    } else {
-        if (icon) icon.className = 'fas fa-moon';
-        if (btn) btn.setAttribute('aria-label', 'Alternar para modo escuro');
+    if (icon) {
+        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
     }
 };
 
+// --- Font Resize ---
 window.changeFontSize = function(action) {
     const root = document.documentElement;
     const currentSize = parseFloat(getComputedStyle(root).fontSize) || 16;
@@ -354,40 +357,35 @@ window.changeFontSize = function(action) {
     }
 };
 
+// --- Search Engine (Simulado) ---
 window.performSearch = function(query) {
     const resultsContainer = document.getElementById('active-search-results');
     const defaultMsg = document.getElementById('default-search-msg');
-    
-    // Live Region para screen readers
-    let liveRegion = document.getElementById('search-live-region');
-    if (!liveRegion) {
-        liveRegion = document.createElement('div');
-        liveRegion.id = 'search-live-region';
-        liveRegion.className = 'sr-only'; // Classe comum para screen-reader-only
-        liveRegion.setAttribute('aria-live', 'polite');
-        document.body.appendChild(liveRegion);
-    }
+    const liveRegion = document.getElementById('search-live-region'); // Para leitores de tela
 
-    if (!resultsContainer || !defaultMsg) return;
+    if (!resultsContainer) return;
 
-    if (query.trim().length < 2) {
+    // Limpar se query for curta
+    if (!query || query.trim().length < 2) {
         resultsContainer.classList.add('hidden');
         resultsContainer.innerHTML = '';
-        defaultMsg.classList.remove('hidden');
-        liveRegion.textContent = ''; // Limpa aviso
+        if(defaultMsg) defaultMsg.classList.remove('hidden');
+        if(liveRegion) liveRegion.textContent = '';
         return;
     }
 
+    if(defaultMsg) defaultMsg.classList.add('hidden');
     resultsContainer.classList.remove('hidden');
-    defaultMsg.classList.add('hidden');
 
+    // Banco de Dados Simulado
     const database = [
-        { title: 'Cálculo de Heparina', url: 'heparina.html', cat: 'Calculadora' },
-        { title: 'Escala de Glasgow', url: 'glasgow.html', cat: 'Escala' },
-        { title: 'Calendário Vacinal Adulto', url: 'calendariovacinaladultos.html', cat: 'Vacina' },
-        { title: 'Cálculo de Gotejamento', url: 'gotejamento.html', cat: 'Calculadora' },
-        { title: 'Diagnósticos NANDA', url: 'diagnosticosnanda.html', cat: 'Biblioteca' },
-        { title: 'Cálculo de Insulina', url: 'insulina.html', cat: 'Calculadora' }
+        { title: 'Cálculo de Heparina', url: '#', cat: 'Calculadora' },
+        { title: 'Escala de Glasgow', url: '#', cat: 'Escala' },
+        { title: 'Calendário Vacinal Adulto', url: '#', cat: 'Vacina' },
+        { title: 'Cálculo de Gotejamento', url: '#', cat: 'Calculadora' },
+        { title: 'Diagnósticos NANDA', url: '#', cat: 'Biblioteca' },
+        { title: 'Cálculo de Insulina', url: '#', cat: 'Calculadora' },
+        { title: 'Drogas Vasoativas', url: '#', cat: 'Guia' }
     ];
 
     const results = database.filter(item => 
@@ -397,7 +395,7 @@ window.performSearch = function(query) {
     if (results.length > 0) {
         resultsContainer.innerHTML = results.map(item => `
             <li>
-                <a href="${item.url}" class="group flex items-center justify-between p-3 hover:bg-blue-50 rounded-lg transition-all border-b border-gray-50 focus:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <a href="${item.url}" class="group flex items-center justify-between p-3 hover:bg-blue-50 rounded-lg transition-all border-b border-gray-50 focus:bg-blue-50 focus:outline-none">
                     <div class="flex items-center gap-3">
                         <i class="fas fa-file-medical text-blue-600"></i>
                         <span class="text-gray-700 font-medium group-hover:text-blue-700">${item.title}</span>
@@ -406,7 +404,7 @@ window.performSearch = function(query) {
                 </a>
             </li>
         `).join('');
-        liveRegion.textContent = `${results.length} resultados encontrados.`;
+        if(liveRegion) liveRegion.textContent = `${results.length} resultados encontrados.`;
     } else {
         resultsContainer.innerHTML = `
             <li class="p-8 text-center">
@@ -414,12 +412,12 @@ window.performSearch = function(query) {
                 <p class="text-gray-500">Nenhum resultado para "${query}"</p>
             </li>
         `;
-        liveRegion.textContent = `Nenhum resultado para ${query}.`;
+        if(liveRegion) liveRegion.textContent = `Nenhum resultado para ${query}.`;
     }
 };
 
 window.clearSearch = function() {
-    const input = document.getElementById('panel-busca-input');
+    const input = document.getElementById('panel-busca-input'); // Certifique-se que o ID input existe no HTML
     if (input) {
         input.value = '';
         input.focus();
@@ -429,12 +427,22 @@ window.clearSearch = function() {
 
 // --- Inicialização de Estado (Persistência) ---
 (function initHeader() {
+    // 1. Aplicar tema guardado
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.body.classList.add('dark-theme');
+        document.body.classList.add('dark');
+        
         const icon = document.querySelector('#theme-toggle i');
-        const btn = document.getElementById('theme-toggle');
         if (icon) icon.className = 'fas fa-sun';
-        if (btn) btn.setAttribute('aria-label', 'Alternar para modo claro');
+    }
+
+    // 2. Criar Live Region para Busca (Acessibilidade) se não existir
+    if (!document.getElementById('search-live-region')) {
+        const liveRegion = document.createElement('div');
+        liveRegion.id = 'search-live-region';
+        liveRegion.className = 'sr-only'; // Classe comum para screen-reader-only
+        liveRegion.setAttribute('aria-live', 'polite');
+        document.body.appendChild(liveRegion);
     }
 })();
