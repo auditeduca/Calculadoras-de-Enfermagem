@@ -26,20 +26,20 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847" crossorigin="anonymous"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9472305505608641" crossorigin="anonymous"></script>
 
-    <!-- Correção da Meta Tag Mobile -->
+    <!-- Meta Tags Mobile -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <!-- Favicon com URLs Absolutas -->
+    <!-- Favicon -->
     <link rel="icon" type="image/webp" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/favicon-calculadoras-de-enfermagem.webp">
     <link rel="apple-touch-icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/favicon-calculadoras-de-enfermagem.webp">
     
+    <!-- Performance e Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -52,7 +52,7 @@
     <meta property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
     <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp">
 
-    <!-- Canonical e Hreflang (Lista Expandida) -->
+    <!-- Canonical e Hreflang -->
     <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
     <link rel="alternate" hreflang="pt-br" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
     <link rel="alternate" hreflang="en" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html?lang=en">
@@ -75,7 +75,7 @@
     <link rel="alternate" hreflang="uk" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html?lang=uk">
     <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
     
-    <!-- Tailwind CSS (via CDN) -->
+    <!-- Tailwind CSS Config -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -99,7 +99,7 @@
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main-index.css">
 
-    <!-- Configuração de Imagens e Assets -->
+    <!-- Configuração do Tema e Imagens -->
     <script>
         window.AppConfig = {
             baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/',
@@ -125,20 +125,23 @@
     <!-- Container Principal -->
     <div id="app-container">
         
-        <!-- Header: Conteúdo será injetado pelo template-engine.js -->
+        <!-- Header: Injetado pelo template-engine.js -->
         <header id="main-header"></header>
 
-        <!-- Conteúdo Principal: Conteúdo será injetado pelo global-main-index.js -->
-        <main id="main-content" class="container mx-auto px-4 py-8 min-h-screen"></main>
+        <!-- Conteúdo Principal: Injetado pelo global-main-index.js -->
+        <main id="main-content" class="container mx-auto px-4 py-8 min-h-screen">
+            <!-- CORREÇÃO: Container para Grid de Ferramentas exigido pelo global-main-index.js -->
+            <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </main>
 
-        <!-- Footer: Conteúdo será injetado pelo template-engine.js -->
+        <!-- Footer: Injetado pelo template-engine.js -->
         <footer id="main-footer"></footer>
 
-        <!-- Modais: Container para injeção dinâmica -->
+        <!-- Modais: Injeção dinâmica -->
         <div id="modal-container"></div>
     </div>
 
-    <!-- Scripts com URLs Absolutas -->
+    <!-- Scripts do Sistema -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js"></script>
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/modals.js"></script>
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/template-engine.js"></script>
@@ -147,17 +150,19 @@
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js"></script>
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js"></script>
 
-    <!-- Script de Inicialização e Verificação -->
+    <!-- Inicialização e Tratamento de Erros -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             console.log('[System] Verificando carregamento de recursos...');
             
+            // Verificação da configuração de imagens
             if(window.AppConfig && window.AppConfig.images) {
                 console.log('[System] Configuração de imagens carregada com sucesso.');
             } else {
                 console.warn('[System] Aviso: Configuração de imagens não encontrada.');
             }
 
+            // Fallback para Utils se falhar no carregamento externo (CORS/404)
             if (typeof Utils === 'undefined') {
                 console.error('[Index] Utils.js não carregado via URL externa. Usando fallback local simples.');
                 window.Utils = {
@@ -165,15 +170,18 @@
                 };
             }
 
+            // Fallback de Tempo Limite para TemplateEngine
             setTimeout(() => {
                 if (!window.TemplateEngine) {
                     console.log('[Index] Scripts externos demoraram. Inicializando modo de segurança.');
-                    document.getElementById('app-container').classList.remove('opacity-0');
+                    const appContainer = document.getElementById('app-container');
+                    if(appContainer) appContainer.classList.remove('opacity-0');
                     window.dispatchEvent(new Event('Page:Ready'));
                 }
             }, 2000);
         });
 
+        // Inicialização Principal
         document.addEventListener('TemplateEngine:Ready', function() {
             console.log('[Index] Sistema modular inicializado com sucesso via Script Externo');
             window.dispatchEvent(new Event('Page:Ready'));
