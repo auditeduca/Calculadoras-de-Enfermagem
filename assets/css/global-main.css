@@ -4,7 +4,7 @@
  */
 
 :root {
-    --header-height-offset: 7.5rem; /* 120px */
+    --header-height-offset: 9.375rem; /* 150px */
     --z-index-content: 10;
     --z-index-header: 100;
 }
@@ -24,7 +24,7 @@
 
 /* --- Breadcrumbs e Meta Tags --- */
 .article-meta-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 3rem;
     position: relative;
     display: flex;
     flex-wrap: wrap; 
