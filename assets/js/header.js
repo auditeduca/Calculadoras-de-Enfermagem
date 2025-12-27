@@ -1,11 +1,17 @@
 /**
  * CALCULADORAS DE ENFERMAGEM - CORE HEADER ENGINE
- * Versão: 2.3 - Corrigida e Otimizada para Interação Modular
+ * Versão: 2.4 - Corrigida com Mega-Menus, Menu Mobile e Acessibilidade Completa
+ * Correções Implementadas:
+ * - Seletor específico para mega-menus (nav-trigger[data-panel])
+ * - Menu mobile com z-index correto
+ * - Feedback visual completo
+ * - Acessibilidade WCAG 2.1
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- 1. GERENCIAMENTO DOS MEGA PANELS (DESKTOP) ---
-    const navTriggers = document.querySelectorAll('.nav-trigger');
+    // CORRIGIDO: Usar seletor específico para elementos com data-panel
+    const navTriggers = document.querySelectorAll('.nav-trigger[data-panel]');
     const megaPanels = document.querySelectorAll('.mega-panel');
     let activePanelId = null;
 
@@ -16,11 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         navTriggers.forEach(t => {
             t.setAttribute('aria-expanded', 'false');
-            t.classList.remove('active-nav'); // Feedback visual consistente com CSS
+            t.classList.remove('active-nav');
         });
         activePanelId = null;
     }
 
+    // Event listeners para mega-menus
     navTriggers.forEach(trigger => {
         trigger.addEventListener('click', (e) => {
             const panelId = trigger.getAttribute('data-panel');
@@ -41,16 +48,29 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             e.stopPropagation();
         });
+
+        // Adicionar feedback visual ao hover
+        trigger.addEventListener('mouseenter', () => {
+            if (activePanelId === null) {
+                trigger.style.color = '#1A3E74';
+            }
+        });
+
+        trigger.addEventListener('mouseleave', () => {
+            if (activePanelId === null) {
+                trigger.style.color = '';
+            }
+        });
     });
 
-    // Fechar ao clicar fora dos painéis ou do menu
+    // Fechar ao clicar fora dos painéis
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.mega-panel') && !e.target.closest('.nav-trigger')) {
+        if (!e.target.closest('.mega-panel') && !e.target.closest('.nav-trigger[data-panel]')) {
             closeAllPanels();
         }
     });
 
-    // Fechar com a tecla ESC para acessibilidade
+    // Fechar com a tecla ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeAllPanels();
     });
@@ -107,7 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isOpen) {
             mobileMenu.classList.remove('hidden');
             mobileMenu.setAttribute('aria-hidden', 'false');
-            // Pequeno delay para a transição CSS funcionar
+            
+            // Atualizar aria-expanded do botão
+            if (mobileMenuTrigger) {
+                mobileMenuTrigger.setAttribute('aria-expanded', 'true');
+            }
+            
+            // Delay para a transição CSS funcionar
             setTimeout(() => {
                 mobileBackdrop.classList.remove('opacity-0');
                 mobileBackdrop.classList.add('opacity-100');
@@ -120,6 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
             mobileBackdrop.classList.add('opacity-0');
             mobileDrawer.classList.remove('translate-x-0');
             mobileDrawer.classList.add('-translate-x-full');
+            
+            // Atualizar aria-expanded do botão
+            if (mobileMenuTrigger) {
+                mobileMenuTrigger.setAttribute('aria-expanded', 'false');
+            }
             
             setTimeout(() => {
                 mobileMenu.classList.add('hidden');
@@ -139,10 +170,11 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const isExpanded = btn.getAttribute('aria-expanded') === 'true';
             
-            // Opcional: Fechar outros acordeões ao abrir um novo
+            // Fechar outros acordeões ao abrir um novo
             accordionBtns.forEach(otherBtn => {
                 if (otherBtn !== btn) {
                     otherBtn.setAttribute('aria-expanded', 'false');
+                    otherBtn.classList.remove('active');
                     const otherContent = otherBtn.nextElementSibling;
                     if (otherContent) otherContent.style.maxHeight = '0px';
                     const otherIcon = otherBtn.querySelector('i');
@@ -151,6 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             btn.setAttribute('aria-expanded', !isExpanded);
+            if (!isExpanded) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+            
             const content = btn.nextElementSibling;
             const icon = btn.querySelector('i');
             
@@ -170,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.toggleTheme = function() {
     const body = document.body;
-    const isDark = body.classList.toggle('dark-theme'); // Corrigido para dark-theme no body
+    const isDark = body.classList.toggle('dark-theme');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     
     const icon = document.querySelector('#theme-toggle i');
@@ -187,7 +225,6 @@ window.toggleTheme = function() {
 
 window.changeFontSize = function(action) {
     const root = document.documentElement;
-    // Pega o tamanho atual ou assume 16px como padrão
     const currentSize = parseFloat(getComputedStyle(root).fontSize) || 16;
     let newSize = action === 'increase' ? currentSize + 1 : currentSize - 1;
     
@@ -213,18 +250,23 @@ window.performSearch = function(query) {
     resultsContainer.classList.remove('hidden');
     defaultMsg.classList.add('hidden');
 
-    // Simulação de base de dados (Pode ser expandida ou ligada a um JSON externo)
+    // Base de dados de busca
     const database = [
         { title: 'Cálculo de Heparina', url: 'heparina.html', cat: 'Calculadora' },
         { title: 'Escala de Glasgow', url: 'glasgow.html', cat: 'Escala' },
         { title: 'Calendário Vacinal Adulto', url: 'calendariovacinaladultos.html', cat: 'Vacina' },
         { title: 'Cálculo de Gotejamento', url: 'gotejamento.html', cat: 'Calculadora' },
         { title: 'Diagnósticos NANDA', url: 'diagnosticosnanda.html', cat: 'Biblioteca' },
-        { title: 'Cálculo de Insulina', url: 'insulina.html', cat: 'Calculadora' }
+        { title: 'Cálculo de Insulina', url: 'insulina.html', cat: 'Calculadora' },
+        { title: 'Escala de Braden', url: 'braden.html', cat: 'Escala' },
+        { title: 'IMC - Índice de Massa Corporal', url: 'imc.html', cat: 'Calculadora' },
+        { title: 'Escala de Apgar', url: 'apgar.html', cat: 'Escala' },
+        { title: 'Balanço Hídrico', url: 'balancohidrico.html', cat: 'Calculadora' }
     ];
 
     const results = database.filter(item => 
-        item.title.toLowerCase().includes(query.toLowerCase())
+        item.title.toLowerCase().includes(query.toLowerCase()) ||
+        item.cat.toLowerCase().includes(query.toLowerCase())
     );
 
     if (results.length > 0) {
@@ -263,7 +305,7 @@ window.clearSearch = function() {
     // Aplicar tema guardado
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.body.classList.add('dark-theme'); // Corrigido para dark-theme no body
+        document.body.classList.add('dark-theme');
         const icon = document.querySelector('#theme-toggle i');
         if (icon) icon.className = 'fas fa-sun';
     }
