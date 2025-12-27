@@ -1,29 +1,23 @@
 /**
  * global-main-index.js
- * AUDITORIA 2025: Código Restaurado e Unificado
- * * - DADOS: Restaurados do arquivo original (todas as calculadoras e escalas).
- * - ENGINE: Atualizada para usar Utils.renderCard (evita duplicação).
- * - UI: Suporte a Grid/List e Filtros de Categoria.
+ * DASHBOARD COMPLETA: 63 Ferramentas (Calculadoras + Escalas + Calendários)
  */
 
 const BASE_URL = 'https://www.calculadorasdeenfermagem.com.br/';
 
-// ==========================================
-// 1. DATA LAYER (Restaurado do Original)
-// ==========================================
 const TOOLS_DATA = [
     // --- CALCULADORAS ---
     { id: 'balanco-hidrico', name: 'Balanço Hídrico', category: 'Controle Hídrico', type: 'calculator', description: 'Controle preciso de líquidos e fluidos.', filename: BASE_URL + 'balancohidrico.html', icon: 'fas fa-tint', color: 'emerald' },
     { id: 'gasometria', name: 'Cálculo de Gasometria', category: 'Exames', type: 'calculator', description: 'Interpretação de gasometria arterial e distúrbios.', filename: BASE_URL + 'gasometria.html', icon: 'fas fa-vial', color: 'emerald' },
     { id: 'gotejamento', name: 'Cálculo de Gotejamento', category: 'Medicamentos', type: 'calculator', description: 'Velocidade de infusão de soluções parenterais.', filename: BASE_URL + 'gotejamento.html', icon: 'fas fa-hand-holding-water', color: 'emerald' },
-    { id: 'aspiracao-heparina', name: 'Cálculo de Heparina', category: 'Medicamentos', type: 'calculator', description: 'Cálculo seguro de doses de heparina.', filename: BASE_URL + 'heparina.html', icon: 'fas fa-syringe', color: 'emerald' }, // Link corrigido conforme original: heparina.html
+    { id: 'aspiracao-heparina', name: 'Cálculo de Heparina', category: 'Medicamentos', type: 'calculator', description: 'Cálculo seguro de doses de heparina.', filename: BASE_URL + 'heparina.html', icon: 'fas fa-syringe', color: 'emerald' },
     { id: 'imc', name: 'Índice de Massa Corporal (IMC)', category: 'Nutrição', type: 'calculator', description: 'Avaliação nutricional e peso ideal.', filename: BASE_URL + 'imc.html', icon: 'fas fa-weight', color: 'emerald' },
     { id: 'aspiracao-insulina', name: 'Cálculo de Insulina', category: 'Medicamentos', type: 'calculator', description: 'Cálculo de doses e unidades de insulina.', filename: BASE_URL + 'insulina.html', icon: 'fas fa-syringe', color: 'emerald' },
     { id: 'medicamentos', name: 'Cálculo de Medicamentos', category: 'Medicamentos', type: 'calculator', description: 'Regra de três para doses e diluições.', filename: BASE_URL + 'medicamentos.html', icon: 'fas fa-pills', color: 'emerald' },
     { id: 'dimensionamento', name: 'Dimensionamento de Equipe', category: 'Gestão', type: 'calculator', description: 'Organização de recursos humanos segundo COFEN.', filename: BASE_URL + 'dimensionamento.html', icon: 'fas fa-users-cog', color: 'emerald' },
     { id: 'idade-gestacional', name: 'Idade Gestacional e DPP', category: 'Obstetrícia', type: 'calculator', description: 'Cálculo de DUM, DPP e idade gestacional.', filename: BASE_URL + 'gestacional.html', icon: 'fas fa-baby', color: 'emerald' },
 
-    // --- ESCALAS (Dados recuperados) ---
+    // --- ESCALAS (52 Itens Preservados) ---
     { id: 'aldrete-e-kroulik', name: 'Escala de Aldrete e Kroulik', category: 'Sedação', type: 'scale', description: 'Avaliação do paciente em recuperação pós-anestésica.', filename: BASE_URL + 'aldrete.html', icon: 'fas fa-notes-medical', color: 'blue' },
     { id: 'apache-ii', name: 'Escala de APACHE II', category: 'UTI', type: 'scale', description: 'Avaliação de gravidade em pacientes críticos.', filename: BASE_URL + 'apache.html', icon: 'fa-solid fa-receipt', color: 'blue' },
     { id: 'apgar', name: 'Escala de Apgar', category: 'Neonatalogia', type: 'scale', description: 'Avaliação imediata do recém-nascido.', filename: BASE_URL + 'apgar.html', icon: 'fas fa-baby-carriage', color: 'blue' },
@@ -76,51 +70,36 @@ const TOOLS_DATA = [
     { id: 'ramsay', name: 'Escala de Ramsay', category: 'Sedação', type: 'scale', description: 'Nível de sedação do paciente.', filename: BASE_URL + 'ramsay.html', icon: 'fas fa-sleep', color: 'blue' },
     { id: 'richmond', name: 'Escala de RASS', category: 'Sedação', type: 'scale', description: 'Richmond Agitation-Sedation Scale.', filename: BASE_URL + 'richmond.html', icon: 'fas fa-user-md', color: 'blue' },
     { id: 'saps-iii', name: 'Escala de SAPS III', category: 'UTI', type: 'scale', description: 'Simplified Acute Physiology Score.', filename: BASE_URL + 'saps.html', icon: 'fas fa-hospital-alt', color: 'blue' },
+
+    // --- CALENDÁRIOS (Reinclusos) ---
+    { id: 'vacinal-2024', name: 'Calendário Vacinal 2024', category: 'Imunização', type: 'other', description: 'Calendário nacional completo atualizado para 2024.', filename: BASE_URL + 'vacinas.html', icon: 'fas fa-calendar-check', color: 'amber' },
+    { id: 'gestante', name: 'Calendário da Gestante', category: 'Obstetrícia', type: 'other', description: 'Cálculo de idade gestacional e data provável do parto.', filename: BASE_URL + 'gestante.html', icon: 'fas fa-baby', color: 'purple' }
 ];
 
-// ==========================================
-// 2. STATE MANAGEMENT
-// ==========================================
 let state = {
     searchTerm: '',
     filterCategory: 'all',
-    viewMode: 'grid', // 'grid' | 'list'
-    sortOrder: 'az'   // 'az' | 'za' | 'newest'
+    viewMode: 'grid',
+    sortOrder: 'az'
 };
 
-// ==========================================
-// 3. RENDER ENGINE (Atualizada com Utils)
-// ==========================================
 function render() {
-    // Nota: O código original usava containers separados (calculators-container, scales-container).
-    // O código novo assume um grid unificado (tools-grid). Se você ainda usa HTML separado,
-    // precisará ajustar o ID aqui ou unificar seu HTML.
     const gridContainer = document.getElementById('tools-grid');
-    
-    // Fallback de segurança caso o container não exista (evita crash do script)
-    if (!gridContainer) {
-        console.warn('Container #tools-grid não encontrado. Verifique se o HTML foi atualizado para a estrutura unificada.');
-        return;
-    }
+    if (!gridContainer) return;
 
-    // 1. Filtragem
     const term = state.searchTerm.toLowerCase();
     let filtered = TOOLS_DATA.filter(tool => {
-        const matchesSearch = tool.name.toLowerCase().includes(term) || 
-                              tool.description.toLowerCase().includes(term);
+        const matchesSearch = tool.name.toLowerCase().includes(term) || tool.description.toLowerCase().includes(term);
         const matchesCategory = state.filterCategory === 'all' || tool.category === state.filterCategory;
         return matchesSearch && matchesCategory;
     });
 
-    // 2. Ordenação
     filtered.sort((a, b) => {
         if (state.sortOrder === 'az') return a.name.localeCompare(b.name);
         if (state.sortOrder === 'za') return b.name.localeCompare(a.name);
-        // "newest" não tem campo de data nos dados originais, mantendo fallback
         return 0;
     });
 
-    // 3. Ajuste de Classes de Visualização (Grid vs List)
     if (state.viewMode === 'list') {
         gridContainer.classList.remove('grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3');
         gridContainer.classList.add('grid-cols-1');
@@ -129,19 +108,8 @@ function render() {
         gridContainer.classList.add('grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3');
     }
 
-    // 4. Renderização HTML
     if (filtered.length > 0) {
-        // USO OTIMIZADO: Utils.renderCard
-        gridContainer.innerHTML = filtered.map(tool => {
-            // Verifica se Utils existe para não quebrar caso a dependência falte
-            if (typeof Utils !== 'undefined' && Utils.renderCard) {
-                return Utils.renderCard(tool, state.viewMode);
-            } else {
-                // Fallback simples se Utils não carregar
-                console.error("Utils.renderCard não encontrado!");
-                return `<div class="p-4 border">Erro: Utils não carregado. ${tool.name}</div>`;
-            }
-        }).join('');
+        gridContainer.innerHTML = filtered.map(tool => Utils.renderCard(tool, state)).join('');
     } else {
         gridContainer.innerHTML = `
             <div class="col-span-full text-center py-12 bg-gray-50 rounded-lg border border-dashed border-gray-300">
@@ -153,13 +121,9 @@ function render() {
     }
 }
 
-// ==========================================
-// 4. UI HELPERS
-// ==========================================
 function updateViewButtons() {
     const btnGrid = document.getElementById('view-grid');
     const btnList = document.getElementById('view-list');
-    
     if (!btnGrid || !btnList) return;
 
     if (state.viewMode === 'grid') {
@@ -175,48 +139,34 @@ function updateViewButtons() {
     }
 }
 
-// ==========================================
-// 5. INICIALIZAÇÃO E LISTENERS
-// ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    // Renderiza inicialmente
+Utils.onReady(() => {
     render();
 
-    // Event Listeners
-
-    // Busca com Debounce (Melhoria do código novo)
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
-        // Verifica se Utils.debounce existe, senão usa função direta
-        const handler = (typeof Utils !== 'undefined' && Utils.debounce) 
-            ? Utils.debounce((e) => { state.searchTerm = e.target.value; render(); }, 300)
-            : (e) => { state.searchTerm = e.target.value; render(); };
-            
-        searchInput.addEventListener('input', handler);
+        searchInput.addEventListener('input', Utils.debounce((e) => {
+            state.searchTerm = e.target.value;
+            render();
+        }, 300));
     }
 
-    // Ordenação
     document.getElementById('sort-select')?.addEventListener('change', (e) => {
         state.sortOrder = e.target.value;
         render();
     });
 
-    // Filtro de Categoria (Se existir o dropdown no HTML)
     document.getElementById('category-select')?.addEventListener('change', (e) => {
         state.filterCategory = e.target.value;
         render();
     });
 
-    // View Toggles
     document.getElementById('view-grid')?.addEventListener('click', () => {
-        if(state.viewMode === 'grid') return;
         state.viewMode = 'grid';
         updateViewButtons();
         render();
     });
 
     document.getElementById('view-list')?.addEventListener('click', () => {
-        if(state.viewMode === 'list') return;
         state.viewMode = 'list';
         updateViewButtons();
         render();
