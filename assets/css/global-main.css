@@ -1,42 +1,61 @@
 /**
- * GLOBAL-MAIN.CSS - REFATORADO
- * Estilos específicos para layout de Artigos e Páginas de Conteúdo.
- * Variáveis globais removidas em favor de global.css.
+ * GLOBAL-MAIN.CSS
+ * Estilos para Artigos e Páginas de Conteúdo.
  */
 
 :root {
-    /* Apenas variáveis locais específicas deste contexto, se necessário */
-    --header-height-offset: 100px; 
+    --header-height-offset: 7.5rem; /* 120px */
+    --z-index-content: 10;
+    --z-index-header: 100;
 }
 
 /* --- Layout Principal --- */
 .main-layout {
     display: grid;
-    grid-template-columns: 1fr 300px; /* Conteúdo + Sidebar */
+    grid-template-columns: 1fr 18.75rem; /* 300px */
     gap: 3rem;
-    max-width: 1200px;
+    max-width: 75rem; /* 1200px */
     margin: 0 auto;
+    margin-top: var(--header-height-offset);
     padding: 2rem;
+    position: relative;
+    z-index: var(--z-index-content);
+}
+
+/* --- Breadcrumbs e Meta Tags --- */
+.article-meta-header {
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 1rem;
+    align-items: center;
+}
+
+.breadcrumb, .tags-list {
+    position: relative;
+    z-index: 2;
 }
 
 /* --- Imagem de Destaque --- */
 .featured-image-container img {
     width: 100%; 
-    height: auto; /* Responsivo em vez de 550px fixo */
-    max-height: 550px;
+    height: auto;
+    max-height: 34.375rem; /* 550px */
     object-fit: cover;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-sm);
     margin-bottom: 3rem;
-    border: 8px solid var(--bg-panel); /* Usa variável de painel */
+    border: 0.5rem solid var(--bg-panel); /* 8px */
 }
 
 /* --- Bloco de Conteúdo --- */
 .article-content {
     background: var(--bg-panel);
-    padding: 2.5rem; /* Reduzido levemente para mobile, ajustado via media query */
+    padding: 2.5rem;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-sm);
+    position: relative; 
 }
 
 .article-content .lead { 
@@ -58,21 +77,26 @@
 /* --- Sidebar --- */
 .content-sidebar { 
     position: sticky; 
-    top: calc(var(--header-height-offset) + 20px);
+    top: calc(var(--header-height-offset) + 1.25rem); /* + 20px de margem */
     height: fit-content; 
     display: flex; 
     flex-direction: column;
     gap: 2rem;
+    z-index: var(--z-index-content);
 }
 
-/* Responsividade do Layout Principal */
-@media (max-width: 960px) {
+/* --- Responsividade --- */
+@media (max-width: 60rem) { /* 960px */
+    :root {
+        --header-height-offset: 5rem; /* 80px */
+    }
+
     .main-layout {
-        grid-template-columns: 1fr; /* Empilha sidebar */
+        grid-template-columns: 1fr;
     }
     
     .content-sidebar {
-        position: relative; /* Remove sticky no mobile */
+        position: relative; 
         top: 0;
     }
     
