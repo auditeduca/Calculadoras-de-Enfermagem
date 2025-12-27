@@ -1,31 +1,69 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e Conteúdo Técnico para Profissionais de Saúde">
+    <meta name="keywords" content="calculadoras enfermagem, saúde, ferramentas clínicas, escalas, imc, gotejamento, enfermagem">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#1A3E74">
     <title>Calculadoras de Enfermagem | Ferramentas e Conteúdo Técnico</title>
     
+    <!-- Analytics e AdSense (Recuperados da v1) -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied',
+            'wait_for_update': 500
+        });
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9472305505608641" crossorigin="anonymous"></script>
+
+    <!-- Meta Tags Mobile -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/favicon.svg">
     <link rel="apple-touch-icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/favicon.svg">
-    <meta name="mobile-web-app-capable" content="yes">
-    
-    <!-- Canonical e Hreflang para SEO -->
+
+    <!-- Canonical e Hreflang -->
     <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
     <link rel="alternate" hreflang="pt-br" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
     <link rel="alternate" hreflang="en" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html?lang=en">
     <link rel="alternate" hreflang="es" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html?lang=es">
+    <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
 
-    <!-- Tailwind CSS -->
+    <!-- Performance e Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Tailwind CSS (Configuração Mesclada) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Nunito Sans', 'sans-serif'],
+                    },
                     colors: {
+                        // Compatibilidade v1
+                        primary: '#1A3E74',
+                        secondary: '#2C5282',
+                        accent: '#4299E1',
+                        // Cores extendidas da v2 (Nurse Theme)
                         nurse: {
                             primary: '#1A3E74',
                             secondary: '#2C5282',
@@ -38,24 +76,23 @@
         }
     </script>
 
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- CSS Global e Específico -->
+    <!-- CSS Global -->
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main-index.css">
 
-    <!-- Pré-carregamento -->
+    <!-- Pré-carregamento Scripts Críticos -->
     <link rel="preload" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js" as="script">
     <link rel="preload" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/template-engine.js" as="script">
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen transition-colors duration-300">
+<body class="bg-gray-50 text-gray-800 font-sans antialiased flex flex-col min-h-screen transition-colors duration-300">
 
-    <!-- Header Modular -->
-    <div id="header-container"></div>
+    <!-- Header: Placeholder para injeção via template-engine.js -->
+    <!-- NOTA: Retornado ao ID 'main-header' da v1 para compatibilidade com o script -->
+    <header id="main-header"></header>
 
-    <!-- Conteúdo Principal -->
+    <!-- Conteúdo Principal (Estrutura Rica da v2) -->
     <main id="main-content" class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-20">
+        
         <!-- Breadcrumbs -->
         <div id="breadcrumbs" class="mb-6"></div>
 
@@ -69,12 +106,9 @@
             </div>
         </section>
 
-        <!-- Barra de Controles (Apenas Filtros, Busca Removida) -->
+        <!-- Barra de Controles -->
         <section id="controls-section" class="sticky top-20 z-30 bg-gray-50/95 backdrop-blur-sm py-4 mb-6 border-b border-gray-200 transition-all duration-300" aria-label="Filtros">
-            <!-- Ajustado justify-end pois só restam os botões -->
             <div class="flex flex-col md:flex-row gap-4 justify-end items-center">
-                
-                <!-- Botões de Ação -->
                 <div class="flex items-center gap-2 w-full md:w-auto justify-end" id="controls-container">
                     
                     <!-- Dropdown Ordenar -->
@@ -122,9 +156,7 @@
                     </div>
                     <h2 id="calc-heading" class="text-2xl font-bold text-gray-800">Calculadoras</h2>
                 </div>
-                <div id="calculators-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Cards Injetados via JS -->
-                </div>
+                <div id="calculators-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </section>
 
             <!-- Escalas -->
@@ -135,9 +167,7 @@
                     </div>
                     <h2 id="scale-heading" class="text-2xl font-bold text-gray-800">Escalas Clínicas</h2>
                 </div>
-                <div id="scales-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Cards Injetados via JS -->
-                </div>
+                <div id="scales-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </section>
 
             <!-- Vacinas -->
@@ -148,9 +178,7 @@
                     </div>
                     <h2 id="vac-heading" class="text-2xl font-bold text-gray-800">Calendário Vacinal</h2>
                 </div>
-                <div id="vaccines-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Cards Injetados via JS -->
-                </div>
+                <div id="vaccines-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </section>
 
             <!-- Sem Resultados -->
@@ -167,42 +195,46 @@
         </div>
     </main>
 
-    <!-- Footer Modular -->
-    <div id="footer-container"></div>
+    <!-- Footer: Placeholder para injeção via template-engine.js -->
+    <!-- NOTA: Retornado ao ID 'main-footer' da v1 -->
+    <footer id="main-footer"></footer>
     
-    <!-- Container de Modais -->
+    <!-- Modal: Placeholder para injeção -->
     <div id="modal-container"></div>
 
     <!-- Scripts Modulares -->
-    <!-- Adicionado onerror para ajudar no debug do Utils.js -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js" onerror="console.error('ERRO CRÍTICO: Falha ao carregar https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js. O arquivo existe?')"></script>
-    <script>
-        if (typeof Utils === 'undefined') {
-            console.error('[Index] Utils não definido globalmente. Verifique erros de sintaxe em utils.js ou falha de carregamento.');
-        } else {
-            console.log('[Index] Utils.js carregado com sucesso');
-        }
-    </script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js" onerror="console.error('ERRO CRÍTICO: Falha ao carregar utils.js')"></script>
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/template-engine.js"></script>
-    
-    <!-- Correção: asset-config -> theme-config -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/theme-config.js"></script>
-    
-    <!-- Script principal atualizado (necessário update para não quebrar sem a busca) -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js"></script>
-    
-    <!-- Script de Inicialização -->
+
+    <!-- Inicialização Robusta -->
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fallback para Utils
+            if (typeof Utils === 'undefined') {
+                console.warn('[Index] Utils não carregado. Aplicando fallback.');
+                window.Utils = { log: console.log };
+            }
+        });
+
         document.addEventListener('TemplateEngine:Ready', function() {
-            console.log('[Index] Sistema modular inicializado');
+            console.log('[Index] Template Engine pronto.');
             window.dispatchEvent(new Event('Page:Ready'));
+            
+            // Suporte para a v1 do script de renderização, se necessário
+            if (typeof window.renderTools === 'function') {
+                window.renderTools();
+            }
         });
         
-        if (window.TemplateEngine && window.TemplateEngine.initialized) {
-            setTimeout(() => {
+        // Fallback de segurança se o evento demorar
+        setTimeout(() => {
+            if (!window.TemplateEngine || !window.TemplateEngine.initialized) {
+                console.log('[Index] Disparando Page:Ready por timeout de segurança');
                 window.dispatchEvent(new Event('Page:Ready'));
-            }, 100);
-        }
+            }
+        }, 2000);
     </script>
 </body>
 </html>
