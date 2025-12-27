@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-br" class="scroll-smooth">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Calculadoras de Enfermagem</title>
     
-    <!-- SEO Meta Tags -->
-    <title>Calculadoras de Enfermagem — Escalas Clínicas e Ferramentas de Dosagem</title>
-    <meta name="description" content="Mais de 50 calculadoras e escalas clínicas para profissionais de enfermagem. Calculadoras de dosagem, IMC, gotejamento, risco de queda, vacinas e muito mais.">
-    <meta name="keywords" content="calculadoras de enfermagem, escalas clínicas, dosagem de medicamentos, IMC, gotejamento, risco de queda, vacinas, cálculo de insulina, gasometria, balanço hídrico">
-    <meta name="author" content="Calculadoras de Enfermagem">
-    <meta name="theme-color" content="#1A3E74">
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Calculadoras de Enfermagem">
+    <meta name="keywords" content="Calculadoras,Escalas">
 
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:locale" content="pt_BR">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Calculadoras de Enfermagem — Escalas Clínicas e Doses">
-    <meta property="og:url" content="https://www.calculadorasdeenfermagem.com.br/">
-    <meta property="og:image" content="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
-    <meta property="og:site_name" content="Calculadoras de Enfermagem">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/index.html" />
+
+    <link rel="icon" type="image/webp" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
+
+    <!-- Hreflang Atualizados -->
+    <link rel="alternate" hreflang="pt-BR" href="https://www.calculadorasdeenfermagem.com.br/inicio.html" />
+    <link rel="alternate" hreflang="en" href="https://www.calculadorasdeenfermagem.com.br/" />
+    <link rel="alternate" hreflang="es" href="https://www.calculadorasdeenfermagem.com.br/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/" />
     
-    <!-- Tailwind CSS & Configuração -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -29,122 +28,76 @@
                 extend: {
                     fontFamily: {
                         sans: ['Poppins', 'sans-serif'],
-                        display: ['Nunito Sans', 'sans-serif'],
                     },
                     colors: {
-                        'nurse-primary': '#1A3E74',
-                        'nurse-primary-hover': '#15325e',
-                        'nurse-secondary': '#00bcd4',
-                        'nurse-accent': '#D4AF37',
-                        'nurse-bgDark': '#0F172A',
+                        'audit-gold': '#D4AF37',
+                        'audit-navy': '#1E3A8A',
+                        'audit-blue': '#3B82F6',
+                        'audit-bgDark': '#0F172A',
                     }
                 }
             }
         }
     </script>
+    
+    <!-- Font Awesome e Fontes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Fontes e Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+    <!-- CSS Externos -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/main.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
 
-    <!-- CSS Externos Modulares -->
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/global-main-index.css">
+    <!-- Animações -->
+    <style>
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-down {
+            animation: fadeInDown 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in-up {
+            animation: slideInUp 0.8s ease-out;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+<body class="bg-gray-100 text-gray-800 dark:bg-audit-bgDark dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-300 selection:bg-audit-gold selection:text-audit-navy">
 
-    <!-- Scripts de utilidade e limpeza -->
-    <script src="assets/js/console-cleaner.js"></script>
-    <script src="assets/js/utils.js"></script>
-
-    <!-- Injeção do Header -->
-    <div id="header-container"></div>
-
-    <!-- Background Decorativo Institucional -->
-    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
-        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
-            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#00bcd4" stroke-width="2" />
-            <path d="M-200,800 C200,750 500,850 1400,780" fill="none" stroke="#1A3E74" stroke-width="2" />
-        </svg>
+    <!-- CONTAINER HEADER -->
+    <div id="header-container">
     </div>
 
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-        
-        <!-- Cabeçalho -->
-        <header class="mb-12 text-center md:text-left">
-            <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 font-display tracking-tight leading-tight">
-                Calculadoras de <span class="text-nurse-secondary">Enfermagem</span>
-            </h1>
-            <div class="h-1.5 w-24 bg-nurse-accent mb-6 mx-auto md:mx-0 rounded-full"></div>
-            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
-                Mais de 50 ferramentas essenciais para profissionais e estudantes. Otimize sua prática diária com precisão científica e segurança na assistência.
-            </p>
-        </header>
+    <!-- MAIN CONTENT -->
+    <div id="main-container">
+       
+        </main>
+    </div>
 
-        <!-- Acesso Rápido -->
-        <div id="quick-access-card" class="mb-12 bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-700">
-            <h2 class="text-2xl font-bold text-nurse-primary dark:text-nurse-secondary mb-8 font-display flex items-center gap-3">
-                <i class="fa-solid fa-bolt text-nurse-accent"></i> Atalhos Rápidos
-            </h2>
-            <div id="quick-access-container" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
-        </div>
+    <!-- CONTAINER FOOTER -->
+    <div id="footer-container">
+    </div>
 
-        <!-- Barra de Busca -->
-        <div id="search-card" class="mb-12">
-            <div class="max-w-4xl mx-auto">
-                <div class="flex flex-col sm:flex-row items-center gap-4">
-                    <div class="relative flex-grow w-full">
-                        <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
-                            <i class="fas fa-search text-gray-400 text-lg"></i>
-                        </div>
-                        <input type="text" id="search-input" placeholder="Pesquisar ferramentas..." 
-                               class="w-full h-16 pl-16 pr-6 py-4 border-2 border-gray-100 dark:border-slate-600 dark:bg-slate-700 rounded-2xl text-lg focus:outline-none focus:ring-4 focus:ring-nurse-secondary/20 focus:border-nurse-secondary transition-all outline-none">
-                    </div>
-                    <button id="clear-search" class="bg-white dark:bg-slate-700 text-gray-500 px-6 h-16 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-600 hover:bg-gray-50 transition-all">
-                        <i class="fas fa-sync-alt"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Área de Ferramentas -->
-        <div id="tools-card" class="bg-white dark:bg-slate-800 p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-gray-100 dark:border-slate-700">
-            <div id="controls-container" class="mb-10 flex flex-col md:flex-row justify-between items-center gap-6 pb-6 border-b border-gray-100 dark:border-slate-700"></div>
-
-            <section id="calculators-section" class="mb-16">
-                <h3 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary mb-8 font-display inline-flex items-center gap-3 border-b-4 border-nurse-primary pb-2" data-anchor-id="calculadoras">
-                    <i class="fa-solid fa-calculator"></i> Cálculos e Dosagens
-                </h3>
-                <div id="calculators-container"></div>
-            </section>
-
-            <section id="scales-section" class="mb-16">
-                <h3 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary mb-8 font-display inline-flex items-center gap-3 border-b-4 border-nurse-secondary pb-2" data-anchor-id="escalas">
-                    <i class="fa-solid fa-heartbeat"></i> Escalas Clínicas
-                </h3>
-                <div id="scales-container"></div>
-            </section>
-
-            <section id="vaccines-section">
-                <h3 class="text-3xl font-bold text-nurse-primary dark:text-nurse-secondary mb-8 font-display inline-flex items-center gap-3 border-b-4 border-nurse-accent pb-2" data-anchor-id="vacinas">
-                    <i class="fa-solid fa-syringe"></i> Calendário Vacinal
-                </h3>
-                <div id="vaccines-container"></div>
-            </section>
-
-            <div id="no-results" class="hidden text-center py-24">
-                <h4 class="text-2xl font-bold text-gray-400">Nenhuma ferramenta encontrada</h4>
-            </div>
-        </div>
-    </main>
-
-    <div id="footer-container"></div>
+    <!-- CONTAINER MODAIS -->
     <div id="modals-container"></div>
 
-    <script src="assets/js/template-engine.js"></script>
-    <script src="assets/js/global-main-index.js"></script>
+    <!-- SCRIPTS -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/console-cleaner.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/template-engine.js"></script>
+
 </body>
 </html>
