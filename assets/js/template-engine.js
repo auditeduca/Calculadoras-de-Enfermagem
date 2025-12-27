@@ -1,10 +1,8 @@
 /**
- * Template Engine v3.2.2 - Ajustes de Compatibilidade
+ * Template Engine v3.2.3 - Correção de IDs e BaseURL
  * Correções:
- * - Caminhos logados para debug.
- * - Garantia de ordem de execução (async=false).
- * - CSS aguarda onload antes de JS (evita FOUC).
- * - Mensagens de erro mais visíveis em dev.
+ * - IDs alinhados com index.html (main-header, main-footer, modal-container).
+ * - Uso de AppConfig.baseUrl para garantir caminhos absolutos.
  */
 
 class TemplateEngine {
@@ -19,6 +17,11 @@ class TemplateEngine {
 
         this.initialized = false;
 
+        // Garante que AppConfig esteja disponível ou usa fallback
+        this.baseUrl = (window.AppConfig && window.AppConfig.baseUrl) 
+            ? window.AppConfig.baseUrl 
+            : this.rootPath;
+
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.init());
         } else {
@@ -27,6 +30,7 @@ class TemplateEngine {
     }
 
     _calculateRootPath() {
+        // Fallback caso AppConfig não exista
         return window.location.hostname.includes('github.io') 
             ? '/Calculadoras-de-Enfermagem/' 
             : '/';
@@ -38,10 +42,11 @@ class TemplateEngine {
         try {
             console.time('TemplateEngine Load');
 
+            // CORREÇÃO: IDs atualizados para bater com o index.html
             await Promise.all([
-                this._inject('header-container', 'header.html', 'header'),
-                this._inject('footer-container', 'footer.html', 'footer'),
-                this._inject('modals-container', 'modals-main.html', 'modals')
+                this._inject('main-header', 'header.html', 'header'),
+                this._inject('main-footer', 'footer.html', 'footer'),
+                this._inject('modal-container', 'modals-main.html', 'modals')
             ]);
 
             this.initialized = true;
@@ -57,11 +62,15 @@ class TemplateEngine {
 
     async _inject(containerId, fileName, assetKey) {
         const container = document.getElementById(containerId);
-        if (!container) return;
+        if (!container) {
+            console.warn(`[TemplateEngine] Container ID '${containerId}' não encontrado no HTML.`);
+            return;
+        }
 
         try {
-            const url = `${this.rootPath}assets/components/${fileName}`;
-            console.debug(`[TemplateEngine] Carregando: ${url}`);
+            // Usa baseUrl completa para evitar erros de caminho relativo
+            const url = `${this.baseUrl}assets/components/${fileName}`;
+            // console.debug(`[TemplateEngine] Carregando: ${url}`); // Descomente para debug
 
             const response = await fetch(url);
             if (!response.ok) throw new Error(`Status ${response.status} ao carregar ${fileName}`);
@@ -73,19 +82,22 @@ class TemplateEngine {
                 const { js, css } = this.componentAssets[assetKey];
 
                 if (css) {
-                    const link = this._loadCSS(`${this.rootPath}assets/css/${css}`);
+                    // Carrega CSS
+                    const link = this._loadCSS(`${this.baseUrl}assets/css/${css}`);
+                    
+                    // Se tiver JS, carrega após o CSS (opcional, mas bom para evitar FOUC)
                     if (js) {
-                        await new Promise(resolve => {
-                            link.onload = () => this._loadScript(`${this.rootPath}assets/js/${js}`).then(resolve);
-                        });
+                        // Pequeno delay ou promise pode ser usado aqui se necessário
+                        await this._loadScript(`${this.baseUrl}assets/js/${js}`);
                     }
                 } else if (js) {
-                    await this._loadScript(`${this.rootPath}assets/js/${js}`);
+                    await this._loadScript(`${this.baseUrl}assets/js/${js}`);
                 }
             }
         } catch (error) {
             console.warn(`[TemplateEngine] Falha ao injetar componente '${assetKey}':`, error);
-            container.innerHTML = `<div style="color:red">Erro ao carregar ${fileName}</div>`;
+            // Mostra erro visualmente apenas em dev/local se quiser
+            // container.innerHTML = `<div style="color:red; font-size: 10px;">Erro: ${fileName}</div>`;
         }
     }
 
@@ -110,9 +122,10 @@ class TemplateEngine {
             script.defer = true;  // executa após parse do DOM
             script.onload = () => resolve();
             script.onerror = () => {
-                const errorMsg = `[TemplateEngine] Falha crítica ao carregar script: ${src}`;
+                const errorMsg = `[TemplateEngine] Falha ao carregar script: ${src}`;
                 console.error(errorMsg);
-                reject(new Error(errorMsg));
+                // Não rejeita para não travar Promise.all de outros componentes
+                resolve(); 
             };
             document.body.appendChild(script);
         });
@@ -122,39 +135,8 @@ class TemplateEngine {
         if (typeof window.Utils !== 'undefined' && typeof window.Utils.renderCard === 'function') {
             return window.Utils.renderCard(tool, state);
         }
-
-        const viewMode = state.viewMode || 'grid';
-        const colorMap = {
-            'emerald': 'from-emerald-50 to-emerald-100 border-emerald-200',
-            'blue': 'from-blue-50 to-blue-100 border-blue-200'
-        };
-        const bgClass = colorMap[tool.color] || colorMap['blue'];
-
-        if (viewMode === 'list') {
-            return `
-                <div class="p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-                    <div class="flex items-start gap-4">
-                        <div class="text-2xl text-gray-600"><i class="${tool.icon}"></i></div>
-                        <div class="flex-1">
-                            <h3 class="font-semibold text-gray-900">${tool.name}</h3>
-                            <p class="text-sm text-gray-600">${tool.category}</p>
-                            <p class="text-sm text-gray-500 mt-1">${tool.description}</p>
-                        </div>
-                        <a href="${tool.filename}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Acessar</a>
-                    </div>
-                </div>
-            `;
-        }
-
-        return `
-            <div class="bg-gradient-to-br ${bgClass} border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-                <div class="text-4xl mb-4 text-gray-700 group-hover:scale-110 transition-transform"><i class="${tool.icon}"></i></div>
-                <h3 class="font-semibold text-gray-900 mb-2">${tool.name}</h3>
-                <p class="text-sm text-gray-600 mb-3">${tool.category}</p>
-                <p class="text-xs text-gray-600 mb-4 line-clamp-2">${tool.description}</p>
-                <a href="${tool.filename}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors">Acessar</a>
-            </div>
-        `;
+        // Fallback simples caso Utils não esteja pronto
+        return `<div class="p-4 border"><b>${tool.name}</b><br>${tool.description}</div>`;
     }
 }
 

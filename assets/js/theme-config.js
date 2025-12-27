@@ -2,15 +2,11 @@
  * THEME-CONFIG.JS
  * Configuração Global do Tailwind CSS (Runtime)
  * ----------------------------------------------------------------------
- * IMPORTANTE: Este arquivo DEVE ser carregado no <head>, ANTES do script
- * do Tailwind CDN (https://cdn.tailwindcss.com).
- * * Ele garante que as classes utilitárias (ex: text-nurse-primary) usem
- * a mesma paleta de cores definida no seu global.css.
+ * Carregado antes do Tailwind CDN para aplicar cores da marca.
  */
 
 window.tailwind = {
     config: {
-        // Habilita dark mode via classe 'dark' no body/html
         darkMode: 'class', 
         theme: {
             extend: {
