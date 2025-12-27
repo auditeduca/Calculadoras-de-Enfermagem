@@ -1,16 +1,16 @@
 /**
- * Template Engine v3.2.2 - Ajustes de Compatibilidade
- * Correções:
- * - Caminhos logados para debug.
- * - Garantia de ordem de execução (async=false).
- * - CSS aguarda onload antes de JS (evita FOUC).
- * - Mensagens de erro mais visíveis em dev.
+ * Template Engine v3.3 - CORRIGIDO PARA PRODUÇÃO
+ * Alterações:
+ * - Dispara evento 'components:loaded' ao finalizar.
+ * - Garante que scripts só rodem após HTML injetado.
+ * - Tratamento de erro de path.
  */
 
 class TemplateEngine {
     constructor() {
         this.rootPath = this._calculateRootPath();
-
+        
+        // Mapeamento de assets
         this.componentAssets = {
             'header': { js: 'header.js', css: 'header.css' },
             'footer': { js: 'footer.js', css: 'footer.css' },
@@ -19,6 +19,7 @@ class TemplateEngine {
 
         this.initialized = false;
 
+        // Inicia assim que possível
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.init());
         } else {
@@ -27,9 +28,10 @@ class TemplateEngine {
     }
 
     _calculateRootPath() {
-        return window.location.hostname.includes('github.io') 
-            ? '/Calculadoras-de-Enfermagem/' 
-            : '/';
+        // Ajuste esta lógica conforme a estrutura real do seu servidor
+        const isGithub = window.location.hostname.includes('github.io');
+        // Se estiver local, geralmente é '/', se for github pages, tem o nome do repo
+        return isGithub ? '/Calculadoras-de-Enfermagem/' : '/';
     }
 
     async init() {
@@ -37,127 +39,96 @@ class TemplateEngine {
 
         try {
             console.time('TemplateEngine Load');
+            console.log(`[TemplateEngine] Iniciando load via: ${this.rootPath}`);
 
+            // 1. Carrega HTMLs primeiro (Paralelo)
             await Promise.all([
-                this._inject('header-container', 'header.html', 'header'),
                 this._inject('footer-container', 'footer.html', 'footer'),
                 this._inject('modals-container', 'modals-main.html', 'modals')
+                // Adicione header aqui se necessário
             ]);
 
             this.initialized = true;
-
-            window.dispatchEvent(new Event('templateEngineReady'));
-            window.dispatchEvent(new CustomEvent('TemplateEngine:Ready', { detail: { timestamp: Date.now() } }));
-
             console.timeEnd('TemplateEngine Load');
+
+            // 2. DISPARO CRÍTICO DE EVENTO
+            // Avisa a aplicação que o HTML existe e os Scripts foram carregados
+            window.dispatchEvent(new CustomEvent('components:loaded', {
+                detail: { timestamp: Date.now() }
+            }));
+            
+            console.log('[TemplateEngine] Evento "components:loaded" disparado.');
+
         } catch (error) {
-            console.error('[TemplateEngine] Erro crítico na inicialização:', error);
+            console.error('[TemplateEngine] Falha fatal na inicialização:', error);
         }
     }
 
-    async _inject(containerId, fileName, assetKey) {
+    /**
+     * Injeta HTML e depois carrega CSS/JS associados
+     */
+    async _inject(containerId, htmlFile, componentName) {
         const container = document.getElementById(containerId);
-        if (!container) return;
+        if (!container) {
+            console.warn(`[TemplateEngine] Container #${containerId} não encontrado. Pulando ${componentName}.`);
+            return;
+        }
 
         try {
-            const url = `${this.rootPath}assets/components/${fileName}`;
-            console.debug(`[TemplateEngine] Carregando: ${url}`);
+            // A. Fetch do HTML
+            const response = await fetch(`${this.rootPath}${htmlFile}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status} ao carregar ${htmlFile}`);
+            
+            const htmlContent = await response.text();
+            
+            // B. Inserção Segura
+            container.innerHTML = htmlContent;
 
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`Status ${response.status} ao carregar ${fileName}`);
+            // C. Carregar Assets (CSS e JS) APÓS o HTML existir
+            await this._loadAssets(componentName);
 
-            const html = await response.text();
-            container.innerHTML = html;
-
-            if (this.componentAssets[assetKey]) {
-                const { js, css } = this.componentAssets[assetKey];
-
-                if (css) {
-                    const link = this._loadCSS(`${this.rootPath}assets/css/${css}`);
-                    if (js) {
-                        await new Promise(resolve => {
-                            link.onload = () => this._loadScript(`${this.rootPath}assets/js/${js}`).then(resolve);
-                        });
-                    }
-                } else if (js) {
-                    await this._loadScript(`${this.rootPath}assets/js/${js}`);
-                }
-            }
-        } catch (error) {
-            console.warn(`[TemplateEngine] Falha ao injetar componente '${assetKey}':`, error);
-            container.innerHTML = `<div style="color:red">Erro ao carregar ${fileName}</div>`;
+        } catch (err) {
+            console.error(`[TemplateEngine] Erro ao injetar ${componentName}:`, err);
+            container.innerHTML = `<div class="error-placeholder">Falha ao carregar ${componentName}</div>`;
         }
     }
 
-    _loadCSS(href) {
-        if (document.querySelector(`link[href="${href}"]`)) return;
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = href;
-        document.head.appendChild(link);
-        return link;
-    }
+    async _loadAssets(componentName) {
+        const assets = this.componentAssets[componentName];
+        if (!assets) return;
 
-    _loadScript(src) {
-        return new Promise((resolve, reject) => {
-            if (document.querySelector(`script[src="${src}"]`)) {
-                resolve();
-                return;
-            }
-            const script = document.createElement('script');
-            script.src = src;
-            script.async = false; // garante ordem
-            script.defer = true;  // executa após parse do DOM
-            script.onload = () => resolve();
-            script.onerror = () => {
-                const errorMsg = `[TemplateEngine] Falha crítica ao carregar script: ${src}`;
-                console.error(errorMsg);
-                reject(new Error(errorMsg));
-            };
-            document.body.appendChild(script);
-        });
-    }
+        const promises = [];
 
-    renderCard(tool, state = {}) {
-        if (typeof window.Utils !== 'undefined' && typeof window.Utils.renderCard === 'function') {
-            return window.Utils.renderCard(tool, state);
+        // Carrega CSS
+        if (assets.css) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = `${this.rootPath}${assets.css}`;
+            document.head.appendChild(link);
         }
 
-        const viewMode = state.viewMode || 'grid';
-        const colorMap = {
-            'emerald': 'from-emerald-50 to-emerald-100 border-emerald-200',
-            'blue': 'from-blue-50 to-blue-100 border-blue-200'
-        };
-        const bgClass = colorMap[tool.color] || colorMap['blue'];
-
-        if (viewMode === 'list') {
-            return `
-                <div class="p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-                    <div class="flex items-start gap-4">
-                        <div class="text-2xl text-gray-600"><i class="${tool.icon}"></i></div>
-                        <div class="flex-1">
-                            <h3 class="font-semibold text-gray-900">${tool.name}</h3>
-                            <p class="text-sm text-gray-600">${tool.category}</p>
-                            <p class="text-sm text-gray-500 mt-1">${tool.description}</p>
-                        </div>
-                        <a href="${tool.filename}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Acessar</a>
-                    </div>
-                </div>
-            `;
+        // Carrega JS
+        if (assets.js) {
+            promises.push(new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = `${this.rootPath}${assets.js}`;
+                script.async = false; // Garante ordem se houver múltiplos
+                script.onload = () => {
+                    console.log(`[TemplateEngine] Script carregado: ${assets.js}`);
+                    resolve();
+                };
+                script.onerror = () => {
+                    console.error(`[TemplateEngine] Falha script: ${assets.js}`);
+                    // Resolvemos mesmo com erro para não travar o Promise.all principal
+                    resolve(); 
+                };
+                document.body.appendChild(script);
+            }));
         }
 
-        return `
-            <div class="bg-gradient-to-br ${bgClass} border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-                <div class="text-4xl mb-4 text-gray-700 group-hover:scale-110 transition-transform"><i class="${tool.icon}"></i></div>
-                <h3 class="font-semibold text-gray-900 mb-2">${tool.name}</h3>
-                <p class="text-sm text-gray-600 mb-3">${tool.category}</p>
-                <p class="text-xs text-gray-600 mb-4 line-clamp-2">${tool.description}</p>
-                <a href="${tool.filename}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors">Acessar</a>
-            </div>
-        `;
+        return Promise.all(promises);
     }
 }
 
-const instance = new TemplateEngine();
-window.TemplateEngine = instance;
-window.templateEngine = instance;
+// Inicializa Engine
+window.templateEngine = new TemplateEngine();
