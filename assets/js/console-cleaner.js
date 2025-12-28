@@ -1,159 +1,117 @@
+/**
+ * Console Cleaner v2.0
+ * Limpa console em produção, mantém em desenvolvimento
+ */
+
 (function() {
   'use strict';
 
-  const ConsoleCleaner = {
-    /**
-     * Inicializa o limpador de console
-     */
+  const ConsoleManager = {
+    isProduction: true,
+    allowedPrefixes: ['[TemplateEngine]', '[MainIndexLoader]', '[ThemeConfig]', '[Header]', '[App]'],
+    
     init: function() {
-      // Verifica se está em ambiente de produção
-      const isProduction = this.isProduction();
+      // Detecta ambiente
+      this.isProduction = !window.location.hostname.includes('localhost') && 
+                         !window.location.hostname.includes('127.0.0.1') &&
+                         !window.location.hostname.includes('dev.');
       
-      if (isProduction) {
-        // Remove métodos de console em produção
-        this.cleanConsole();
-        
-        // Sobrescreve console.error para evitar stack traces feios
-        this.overrideConsole();
+      if (this.isProduction) {
+        this.setupProductionConsole();
+      } else {
+        this.setupDevelopmentConsole();
       }
       
-      // Sempre registra versão em ambiente de desenvolvimento
-      if (!isProduction) {
-        console.log('%c[System] Console Cleaner ativado (desenvolvimento)', 
-          'color: #10b981; font-weight: bold;');
-      }
+      console.log(`[ConsoleManager] Ambiente: ${this.isProduction ? 'Produção' : 'Desenvolvimento'}`);
     },
-
-    /**
-     * Verifica se está em produção
-     */
-    isProduction: function() {
-      // Verifica se há flag no localStorage
-      if (localStorage.getItem('clean_console') === 'true') {
-        return true;
-      }
-      
-      // Verifica se hostname não é localhost ou 127.0.0.1
-      const hostname = window.location.hostname;
-      if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
-        return false;
-      }
-      
-      // Verifica se há query param de debug
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.has('debug') || urlParams.has('console')) {
-        return false;
-      }
-      
-      // Por padrão, considera produção
-      return true;
-    },
-
-    /**
-     * Remove métodos de console em produção
-     */
-    cleanConsole: function() {
+    
+    setupProductionConsole: function() {
       // Salva referências originais
-      const originalConsole = window.console;
-      
-      // Cria novo objeto console apenas com os métodos essenciais
-      const cleanConsole = {
-        log: function() {},
-        info: function() {},
-        warn: function() {},
-        error: function() {
-          // Em produção, erros ainda são registrados mas de forma mais limpa
-          if (arguments.length > 0 && arguments[0] && arguments[0].includes && arguments[0].includes('[Error]')) {
-            originalConsole.error.apply(originalConsole, arguments);
-          }
-        },
-        debug: function() {},
-        trace: function() {},
-        dir: function() {},
-        time: function() {},
-        timeEnd: function() {},
-        group: function() {},
-        groupCollapsed: function() {},
-        groupEnd: function() {},
-        table: function() {},
-        clear: function() {},
-        count: function() {},
-        assert: function() {},
-        profile: function() {},
-        profileEnd: function() {},
-        dirxml: function() {}
+      const originalConsole = {
+        log: console.log,
+        warn: console.warn,
+        error: console.error,
+        info: console.info,
+        debug: console.debug
       };
       
-      // Substitui console
-      window.console = cleanConsole;
-    },
-
-    /**
-     * Sobrescreve console.error para tratamento especial
-     */
-    overrideConsole: function() {
-      const self = this;
-      const originalError = window.console.error;
-      
-      window.console.error = function() {
-        // Filtra erros não críticos
-        const args = Array.prototype.slice.call(arguments);
-        
-        // Ignora erros de recursos externos (imagens, fonts, etc)
-        const isResourceError = args.some(function(arg) {
-          return arg && (
-            arg.includes && (arg.includes('Failed to load resource') ||
-            arg.includes('net::ERR') ||
-            arg.includes('favicon'))
-          );
-        });
-        
-        if (!isResourceError) {
-          // Log simplificado para erros reais
-          self.logError('[ConsoleCleaner] Erro capturado:', args.join(' '));
+      // Sobrescreve console.log
+      console.log = function(...args) {
+        const message = args[0] || '';
+        if (typeof message === 'string' && this.isAllowed(message)) {
+          originalConsole.log.apply(console, args);
         }
-      };
-    },
-
-    /**
-     * Log simplificado de erros
-     */
-    logError: function() {
-      if (window.console && window.console.log) {
-        // Não faz nada em produção silenciosa
+      }.bind(this);
+      
+      // Sobrescreve console.warn
+      console.warn = function(...args) {
+        const message = args[0] || '';
+        if (typeof message === 'string' && this.isAllowed(message)) {
+          originalConsole.warn.apply(console, args);
+        }
+      }.bind(this);
+      
+      // Mantém console.error sempre visível
+      console.error = originalConsole.error;
+      
+      // Limpa console.info e console.debug
+      console.info = function() {};
+      console.debug = function() {};
+      
+      // Limpa console no carregamento
+      if (typeof console.clear === 'function') {
+        setTimeout(() => console.clear(), 100);
       }
     },
-
-    /**
-     * Ativa modo debug (para testes)
-     */
-    enableDebug: function() {
-      localStorage.setItem('clean_console', 'false');
-      window.location.reload();
+    
+    setupDevelopmentConsole: function() {
+      // Em desenvolvimento, mantém tudo visível
+      console.log('[ConsoleManager] Modo desenvolvimento - todos os logs visíveis');
+      
+      // Adiciona banner de desenvolvimento
+      console.log(
+        '%c🚀 MODO DESENVOLVIMENTO 🚀',
+        'color: white; background: linear-gradient(90deg, #1A3E74, #1e40af); padding: 10px; border-radius: 5px; font-weight: bold;'
+      );
     },
-
-    /**
-     * Desativa modo debug
-     */
-    disableDebug: function() {
-      localStorage.setItem('clean_console', 'true');
-      window.location.reload();
+    
+    isAllowed: function(message) {
+      return this.allowedPrefixes.some(prefix => message.startsWith(prefix));
+    },
+    
+    addAllowedPrefix: function(prefix) {
+      if (!this.allowedPrefixes.includes(prefix)) {
+        this.allowedPrefixes.push(prefix);
+      }
+    },
+    
+    forceShowLog: function() {
+      // Método para forçar exibição de logs específicos
+      const originalLog = console.log;
+      return function(...args) {
+        originalLog.apply(console, args);
+      };
     }
   };
 
-  // Expõe globalmente
-  window.ConsoleCleaner = ConsoleCleaner;
+  // Inicializa imediatamente
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => ConsoleManager.init());
+  } else {
+    ConsoleManager.init();
+  }
 
-  // Funções de debug globais
-  window.enableDebugMode = function() {
-    ConsoleCleaner.enableDebug();
+  // Expõe para uso global
+  window.ConsoleManager = ConsoleManager;
+  
+  // Método helper para logs importantes
+  window.importantLog = function(...args) {
+    console.log('%c🔔 IMPORTANTE:', 'color: #1A3E74; font-weight: bold;', ...args);
   };
-
-  window.disableDebugMode = function() {
-    ConsoleCleaner.disableDebug();
+  
+  // Método para logs de erro estruturados
+  window.errorLog = function(context, error) {
+    console.error(`[ERRO:${context}]`, error);
   };
-
-  // Inicializa automaticamente
-  ConsoleCleaner.init();
 
 })();
