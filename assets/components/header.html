@@ -1,70 +1,565 @@
+<<<<<<< HEAD
+
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas, Escalas e Conteúdo Educativo para profissionais de saúde.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#1A3E74">
     <title>Calculadoras de Enfermagem | Ferramentas e Conteúdo Técnico</title>
+    <link rel="icon" href="https://www.calculadorasdeenfermagem.com.br/favicon.ico" type="image/x-icon">
+    
+    <!-- --- [JS] INTEGRAÇÃO GOOGLE CONSENT MODE V2 --- -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied',
+            'wait_for_update': 500
+        });
+    </script>
+    <!-- ARQUIVO CSS MODULAR -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css">
+       
     </head>
-<body class="bg-gray-50 transition-colors duration-300">
+<body class="bg-gray-50 text-gray-800">
+    <!-- --- [HTML] OTIMIZAÇÃO DE PERFORMANCE --- -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
 
-    <nav id="skip-links" aria-label="Acesso rápido" class="sr-only focus-within:not-sr-only">
-        <a href="#header" class="skip-link">Ir para o Topo</a>
-        <a href="#main-content" class="skip-link">Ir para o Conteúdo</a>
-        <a href="#footer" class="skip-link">Ir para o Rodapé</a>
-    </nav>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <header id="header" class="fixed top-0 left-0 w-full z-[1000] bg-white shadow-md">
-        <div class="bg-[#1A3E74] text-white py-2 px-4 hidden md:block">
-            <div class="max-w-7xl mx-auto flex justify-between items-center text-sm font-medium">
-                <div class="flex items-center gap-4">
-                    <span class="flex items-center gap-2"><i class="fas fa-notes-medical"></i> Portal de Enfermagem</span>
-                </div>
-                <div class="flex items-center gap-6">
-                    <div class="flex items-center gap-2 border-r border-blue-400 pr-4">
-                        <button onclick="changeFontSize('decrease')" title="Diminuir fonte" class="hover:text-blue-200 transition p-1"><i class="fas fa-minus-circle"></i></button>
-                        <span class="text-xs uppercase font-bold">Acessibilidade</span>
-                        <button onclick="changeFontSize('increase')" title="Aumentar fonte" class="hover:text-blue-200 transition p-1"><i class="fas fa-plus-circle"></i></button>
-                    </div>
-                    <button id="theme-toggle-btn" onclick="window.toggleTheme()" class="flex items-center gap-2 hover:text-blue-200 transition">
-                        <i class="fas fa-moon" id="theme-icon"></i> <span id="theme-text">Modo Escuro</span>
-                    </button>
-                </div>
+<!-- --- [HTML] LINKS DE ACESSIBILIDADE (Skip Links) - CORRIGIDO: Único conjunto, IDs válidos --- -->
+=======
+<!-- Componente Header - Sistema Modular -->
+<!-- Links de Acessibilidade (Skip Links) -->
+>>>>>>> parent of 1a65080 (28.12 v4)
+<a href="#header" class="skip-link">Topo</a>
+<a href="#main-content" class="skip-link" style="left: 6rem;">Conteúdo</a>
+<a href="#footer" class="skip-link" style="left: 14rem;">Rodapé</a>
+
+<!-- --- [HTML] MENU MOBILE --- -->
+<div id="mobile-menu" class="fixed inset-0 hidden lg:hidden z-[9999]" aria-hidden="true">
+    <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300"></div>
+    <div id="mobile-menu-drawer" class="absolute top-0 left-0 w-[85%] max-w-sm h-full bg-white shadow-2xl -translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="bg-[#1A3E74] p-4 flex items-center justify-between border-b border-blue-900">
+<<<<<<< HEAD
+            <a href="https://www.calculadorasdeenfermagem.com.br/index.html" aria-label="Página Inicial">
+                <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Logo Calculadoras de Enfermagem" class="h-8 w-auto brightness-0 invert">
+=======
+            <a href="index.html" aria-label="Página Inicial">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logo-calculadoras-enfermagem.webp" alt="Logo Calculadoras de Enfermagem" class="h-8 w-auto brightness-0 invert" onerror="this.src='https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp'">
+>>>>>>> parent of 1a65080 (28.12 v4)
+            </a>
+            <button id="close-mobile-menu" class="text-white text-2xl p-2 hover:text-blue-200" aria-label="Fechar Menu"><i class="fas fa-times" aria-hidden="true"></i></button>
+        </div>
+        
+        <!-- Mobile Search -->
+        <div class="p-4 border-b border-gray-100 bg-gray-50">
+            <div class="relative">
+                <label for="mobile-search-input" class="sr-only">Buscar no site</label>
+                <input id="mobile-search-input" type="text" placeholder="Buscar..." class="w-full p-3 pl-10 border border-gray-300 rounded text-base focus:border-blue-500 outline-none text-gray-700">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" aria-hidden="true"></i>
             </div>
         </div>
 
-        <nav class="bg-white border-b border-gray-100">
-            <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-                <button id="mobile-menu-open" class="lg:hidden text-[#1A3E74] text-2xl p-2">
-                    <i class="fas fa-bars"></i>
+        <nav class="flex-1 overflow-y-auto custom-scroll">
+            <div class="accordion-group">
+                <a href="https://www.calculadorasdeenfermagem.com.br/index.html" class="block p-4 font-bold text-[#1A3E74] border-b border-gray-100">Início</a>
+
+                <!-- Sobre Nós -->
+                <button class="mobile-accordion-btn" aria-expanded="false">
+                    Sobre Nós <i class="fas fa-chevron-down text-xs transition-transform duration-300" aria-hidden="true"></i>
                 </button>
-
-                <a href="index.html" class="flex items-center gap-3">
-                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logo-calculadoras-enfermagem.webp" alt="Logo" class="h-12 w-auto">
-                </a>
-
-                <div class="hidden lg:flex items-center gap-8">
-                    <button class="nav-trigger font-bold text-[#1A3E74] flex items-center gap-1" data-panel="panel-ferramentas">
-                        Ferramentas <i class="fas fa-chevron-down text-[10px]"></i>
-                    </button>
-                    <button class="nav-trigger font-bold text-[#1A3E74] flex items-center gap-1" data-panel="panel-idiomas">
-                        Idiomas <i class="fas fa-chevron-down text-[10px]"></i>
-                    </button>
-                    <a href="contato.html" class="font-bold text-[#1A3E74]">Contato</a>
+                <div class="mobile-accordion-content">
+                    <ul>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/missao.html">Institucional</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/politicadeacessibilidade.html">Acessibilidade</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/nossocompromisso.html">Sustentabilidade</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/politica.html">Políticas</a></li>
+                    </ul>
                 </div>
+
+                <!-- Ferramentas -->
+                <button class="mobile-accordion-btn" aria-expanded="false">
+                    Ferramentas <i class="fas fa-chevron-down text-xs transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div class="mobile-accordion-content">
+                    <ul>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/medicamentos.html">Calculadoras</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/calendariovacinaladultos.html">Vacinas</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/aldrete.html">Escalas</a></li>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/notificacao-compulsoria.html">Específicas</a></li>
+                    </ul>
+                </div>
+
+                <!-- Biblioteca -->
+                <button class="mobile-accordion-btn" aria-expanded="false">
+                    Biblioteca <i class="fas fa-chevron-down text-xs transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div class="mobile-accordion-content">
+                    <ul>
+                        <li><a href="#bib-esc">Escalas e Índices</a></li>
+                        <li><a href="#bib-seg">Segurança</a></li>
+                        <li><a href="#bib-teo">Teorias</a></li>
+                    </ul>
+                </div>
+
+                <!-- Carreiras -->
+                <button class="mobile-accordion-btn" aria-expanded="false">
+                    Carreiras <i class="fas fa-chevron-down text-xs transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div class="mobile-accordion-content">
+                    <ul>
+                        <li><a href="https://www.calculadorasdeenfermagem.com.br/cadastrar-curriculo.html">Currículo</a></li>
+                        <li><a href="salarioliquido.html">Calc. Trabalhistas</a></li>
+                        <li><a href="empregos.html">Oportunidades</a></li>
+                    </ul>
+                </div>
+
+                <a href="https://www.calculadorasdeenfermagem.com.br/fale.html" class="block p-4 font-bold text-[#1A3E74] border-b border-gray-100">Fale Conosco</a>
             </div>
         </nav>
+    </div>
+</div>
 
-        <div id="panel-ferramentas" class="mega-panel hidden absolute w-full bg-white shadow-xl border-t">
+<!-- --- [HTML] HEADER DESKTOP --- -->
+<header id="header" class="fixed w-full top-0 z-[1000] transition-all duration-300 font-sans shadow-sm bg-white border-b border-gray-200">
+    <!-- Top Bar -->
+    <div class="bg-gray-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 py-1 flex justify-start items-center text-xs gap-6">
+            
+            <!-- Controles de Acessibilidade -->
+            <div class="flex items-center gap-3 text-gray-600 font-inter font-medium border-r border-gray-200 pr-4" role="group" aria-label="Controles de Acessibilidade">
+                <button onclick="changeFontSize('decrease')" class="hover:text-blue-600 px-1 transition-colors font-bold" aria-label="Diminuir tamanho da fonte">A-</button>
+                <button onclick="changeFontSize('increase')" class="hover:text-blue-600 px-1 transition-colors font-bold" aria-label="Aumentar tamanho da fonte">A+</button>
+                <button id="theme-toggle" onclick="toggleTheme()" class="hover:text-blue-600 ml-1 transition-colors flex items-center gap-1" aria-label="Alternar para modo escuro">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
             </div>
 
-        <div id="panel-idiomas" class="mega-panel hidden absolute w-full bg-white shadow-xl border-t">
+            <!-- Botões de Navegação (Renomeados e Estilizados) -->
+            <div class="hidden sm:flex items-center gap-2">
+                <a href="#header" class="bg-[#1A3E74] text-white px-3 py-1 rounded hover:bg-blue-800 transition-colors font-bold flex items-center gap-1">
+                    <i class="fas fa-arrow-up text-[10px]" aria-hidden="true"></i> Topo
+                </a>
+                <a href="#main-content" class="bg-[#1A3E74] text-white px-3 py-1 rounded hover:bg-blue-800 transition-colors font-bold flex items-center gap-1">
+                    <i class="fas fa-arrow-down text-[10px]" aria-hidden="true"></i> Conteúdo
+                </a>
+                <a href="#footer" class="bg-[#1A3E74] text-white px-3 py-1 rounded hover:bg-blue-800 transition-colors font-bold flex items-center gap-1">
+                    <i class="fas fa-arrow-down text-[10px]" aria-hidden="true"></i> Rodapé
+                </a>
             </div>
-    </header>
+            
+        </div>
+    </div>
 
-    <main id="main-content" class="pt-32">
-        </main>
+    <!-- Main Navigation Bar -->
+    <div class="relative z-[1001] bg-white">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            <div class="flex items-center shrink-0">
+<<<<<<< HEAD
+                <a href="https://www.calculadorasdeenfermagem.com.br/index.html" aria-label="Calculadoras de Enfermagem - Página Inicial">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Logo Calculadoras de Enfermagem" class="h-12 w-auto transition hover:opacity-90">
+=======
+                <a href="index.html" aria-label="Calculadoras de Enfermagem - Página Inicial">
+                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logo-calculadoras-enfermagem.webp" alt="Logo Calculadoras de Enfermagem" class="h-12 w-auto transition hover:opacity-90" onerror="this.src='https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp'">
+>>>>>>> parent of 1a65080 (28.12 v4)
+                </a>
+            </div>
 
-    <footer id="footer">
-        </footer>
+            <!-- Desktop Nav Links -->
+            <nav class="hidden lg:flex items-center gap-1 h-full" aria-label="Menu Principal">
+                <a href="https://www.calculadorasdeenfermagem.com.br/index.html" class="px-4 py-2 text-sm font-bold text-gray-700 transition flex items-center h-full font-inter">Início</a>
+                
+                <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 transition flex items-center h-full gap-1 focus:outline-none font-inter group" data-panel="panel-sobrenos" aria-expanded="false" aria-controls="panel-sobrenos">
+                    Sobre Nós <i class="fas fa-chevron-down text-[10px] opacity-50 group-hover:text-blue-500 transition" aria-hidden="true"></i>
+                </button>
+
+                <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 transition flex items-center h-full gap-1 focus:outline-none font-inter group" data-panel="panel-ferramentas" aria-expanded="false" aria-controls="panel-ferramentas">
+                    Ferramentas <i class="fas fa-chevron-down text-[10px] opacity-50 group-hover:text-blue-500 transition" aria-hidden="true"></i>
+                </button>
+
+                <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 transition flex items-center h-full gap-1 focus:outline-none font-inter group" data-panel="panel-biblioteca" aria-expanded="false" aria-controls="panel-biblioteca">
+                    Biblioteca de Enfermagem <i class="fas fa-chevron-down text-[10px] opacity-50 group-hover:text-blue-500 transition" aria-hidden="true"></i>
+                </button>
+
+                <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 transition flex items-center h-full gap-1 focus:outline-none font-inter group" data-panel="panel-carreiras" aria-expanded="false" aria-controls="panel-carreiras">
+                    Carreiras <i class="fas fa-chevron-down text-[10px] opacity-50 group-hover:text-blue-500 transition" aria-hidden="true"></i>
+                </button>
+
+                <button class="nav-trigger px-4 py-2 text-sm font-bold text-gray-700 transition flex items-center h-full gap-1 focus:outline-none font-inter group" data-panel="panel-fale" aria-expanded="false" aria-controls="panel-fale">
+                    Fale Conosco <i class="fas fa-chevron-down text-[10px] opacity-50 group-hover:text-blue-500 transition" aria-hidden="true"></i>
+                </button>
+            </nav>
+
+            <!-- Desktop Right Actions -->
+            <div class="flex items-center gap-3">
+                <button class="nav-trigger hidden lg:flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-50 transition text-gray-600 hover:text-[#1A3E74]" data-panel="panel-busca" title="Buscar" aria-label="Abrir busca">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </button>
+
+                <button class="nav-trigger hidden lg:flex items-center gap-2 px-3 py-2 rounded-full hover:bg-gray-50 transition text-gray-700" data-panel="panel-idiomas" aria-label="Selecionar Idioma" aria-expanded="false" aria-controls="panel-idiomas">
+                    <img src="https://flagcdn.com/w40/br.png" alt="" class="w-5 h-4 object-cover rounded-sm shadow-sm" aria-hidden="true">
+                    <i class="fas fa-chevron-down text-xs text-gray-400" aria-hidden="true"></i>
+                </button>
+
+                <button id="mobile-menu-trigger" class="lg:hidden p-2 text-[#1A3E74] text-xl hover:text-blue-600 transition" aria-label="Abrir Menu Mobile" aria-controls="mobile-menu" aria-expanded="false">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- (REMOVIDO) LINHA DE GRADIENTE AZUL -->
+
+    <!-- --- [HTML] MEGA PANELS --- -->
+    
+    <!-- 1. SOBRE NÓS -->
+    <div id="panel-sobrenos" class="mega-panel" role="region" aria-label="Submenu Sobre Nós">
+        <div class="max-w-7xl mx-auto panel-standard-height">
+            <div class="w-[20%] panel-sidebar py-8 pr-0">
+                <ul class="space-y-1 pl-4" role="tablist" aria-orientation="vertical">
+                    <li tabindex="0" class="menu-tab-trigger active px-6 py-4 flex justify-between items-center" data-target="sn-inst" role="tab" aria-selected="true" aria-controls="sn-inst">Institucional <i class="fas fa-chevron-right text-xs opacity-0" aria-hidden="true"></i></li>
+                    <li tabindex="0" class="menu-tab-trigger px-6 py-4 flex justify-between items-center" data-target="sn-aces" role="tab" aria-selected="false" aria-controls="sn-aces">Acessibilidade <i class="fas fa-chevron-right text-xs opacity-0" aria-hidden="true"></i></li>
+                    <li tabindex="0" class="menu-tab-trigger px-6 py-4 flex justify-between items-center" data-target="sn-sust" role="tab" aria-selected="false" aria-controls="sn-sust">Sustentabilidade <i class="fas fa-chevron-right text-xs opacity-0" aria-hidden="true"></i></li>
+                    <li tabindex="0" class="menu-tab-trigger px-6 py-4 flex justify-between items-center" data-target="sn-pol" role="tab" aria-selected="false" aria-controls="sn-pol">Políticas <i class="fas fa-chevron-right text-xs opacity-0" aria-hidden="true"></i></li>
+                    <li tabindex="0" class="menu-tab-trigger px-6 py-4 flex justify-between items-center" data-target="sn-mapa" role="tab" aria-selected="false" aria-controls="sn-mapa">Mapa do Site <i class="fas fa-chevron-right text-xs opacity-0" aria-hidden="true"></i></li>
+                </ul>
+            </div>
+            <div class="w-[45%] p-10 overflow-y-auto custom-scroll">
+                <div id="sn-inst" class="tab-content active" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Institucional</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/missao.html">Missão, Visão e Valores</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/objetivo.html">Objetivo do Site</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/institucional/acessorestrito.html">Acesso Restrito</a>
+                    </div>
+                </div>
+                 <div id="sn-aces" class="tab-content" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Acessibilidade Digital</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/politicadeacessibilidade.html">Política de Acessibilidade</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/recursos-assitivos.html">Recursos Assistivos</a>
+                    </div>
+                </div>
+                <div id="sn-sust" class="tab-content" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Sustentabilidade Digital</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/nossocompromisso.html">Nosso Compromisso</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/impactodigital.html">Relatório de Impacto</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/tecnologiaverde.html">Tecnologia Verde</a>
+                    </div>
+                </div>
+                <div id="sn-pol" class="tab-content" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Políticas do Site</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/politica.html">Política de Privacidade</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/notificacoes-legais.html">Notificações Legais</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/termos.html">Termos e Condições</a>
+                    </div>
+                </div>
+                <div id="sn-mapa" class="tab-content" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Mapa do Site</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/mapa-do-site.html">Acessar Mapa Completo</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-[35%] p-6 h-full">
+                <div class="glowing-frame">
+                    <div class="frame-image-container">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-sobre-nos.webp" alt="Imagem ilustrativa Sobre Nós">
+                        <div class="menu-cta-overlay"><h3>Sobre Nós</h3></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. FERRAMENTAS -->
+    <div id="panel-ferramentas" class="mega-panel" role="region" aria-label="Submenu Ferramentas">
+        <div class="max-w-7xl mx-auto panel-standard-height">
+            <div class="w-[20%] panel-sidebar py-8 pr-0">
+                <ul class="space-y-1 pl-4" role="tablist" aria-orientation="vertical">
+                    <li tabindex="0" class="menu-tab-trigger active px-6 py-4 flex justify-between items-center" data-target="ferr-calc" role="tab" aria-selected="true">Calculadoras <i class="fas fa-chevron-right text-xs text-[#1A3E74]" aria-hidden="true"></i></li>
+                    <li tabindex="0" class="menu-tab-trigger px-6 py-4 flex justify-between items-center" data-target="ferr-vac" role="tab" aria-selected="false">Vacinas <i class="fas fa-chevron-right text-xs opacity-0" aria-hidden="true"></i></li>
+                    <li tabindex="0" class="menu-tab-trigger px-6 py-4 flex justify-between items-center" data-target="ferr-esc" role="tab" aria-selected="false">Escalas <i class="fas fa-chevron-right text-xs opacity-0" aria-hidden="true"></i></li>
+                    <li tabindex="0" class="menu-tab-trigger px-6 py-4 flex justify-between items-center" data-target="ferr-esp" role="tab" aria-selected="false">Específicas <i class="fas fa-chevron-right text-xs opacity-0" aria-hidden="true"></i></li>
+                </ul>
+            </div>
+            <div class="w-[45%] p-10 overflow-y-auto custom-scroll">
+                <div id="ferr-calc" class="tab-content active" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Calculadoras Clínicas</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/heparina.html">Heparina</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/insulina.html">Insulina</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/balancohidrico.html">Balanço Hídrico</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/dimensionamento.html">Dimensionamento</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/gasometria.html">Gasometria</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/gotejamento.html">Gotejamento</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/gestacional.html">Idade Gestacional</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/imc.html">IMC</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/medicamentos.html">Cálculo de Medicamentos</a>
+                    </div>
+                </div>
+                <div id="ferr-vac" class="tab-content" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Calendário Vacinal</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/calendariovacinalprematuros.html">Prematuros</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/calendariovacinalcriancas.html">Crianças</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/calendariovacinaladolescentes.html">Adolescentes</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/calendariovacinaladultos.html">Adultos</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/calendariovacinalidosos.html">Idosos</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/calendariovacinalgestantes.html">Gestantes</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/calendariovacinalespeciais.html">Especiais (CRIE)</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/calendariovacinalocupacional.html">Ocupacional</a>
+                    </div>
+                </div>
+                
+                <div id="ferr-esc" class="tab-content" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Escalas Clínicas</h3>
+                    <div class="link-grid-3">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/aldrete.html">Aldrete</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/apache.html">APACHE</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/apgar.html">Apgar</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/asa.html">ASA</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/ballard.html">Ballard</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/barthel.html">Barthel</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/berg.html">Berg</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/bishop.html">Bishop</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/braden.html">Braden</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/curb65.html">CURB-65</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/dowton.html">Dowton</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/fugulin.html">Fugulin</a>
+                    </div>
+                </div>
+
+                <div id="ferr-esp" class="tab-content" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Ferramentas Específicas</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/notificacao-compulsoria.html">Notificação Compulsória</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/diagnosticos-nanda.html">Diagnósticos NANDA</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-[35%] p-6 h-full">
+                <div class="glowing-frame">
+                    <div class="frame-image-container">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-ferramentas.webp" alt="Imagem ilustrativa Ferramentas">
+                        <div class="menu-cta-overlay"><h3>Ferramentas</h3></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. BIBLIOTECA -->
+    <div id="panel-biblioteca" class="mega-panel" role="region" aria-label="Submenu Biblioteca">
+        <div class="max-w-7xl mx-auto panel-standard-height">
+            <div class="w-[20%] panel-sidebar py-8 pr-0">
+                <ul class="space-y-1 pl-4" role="tablist" aria-orientation="vertical">
+                    <li tabindex="0" class="menu-tab-trigger active px-6 py-3 flex justify-between items-center" data-target="bib-esc" role="tab" aria-selected="true">Escalas e Índices <i class="fas fa-chevron-right text-xs text-[#1A3E74]" aria-hidden="true"></i></li>
+                    <li tabindex="0" class="menu-tab-trigger px-6 py-3 flex justify-between items-center" data-target="bib-seg" role="tab" aria-selected="false">Segurança <i class="fas fa-chevron-right text-xs opacity-0" aria-hidden="true"></i></li>
+                    <li tabindex="0" class="menu-tab-trigger px-6 py-3 flex justify-between items-center" data-target="bib-teo" role="tab" aria-selected="false">Teorias e NANDA <i class="fas fa-chevron-right text-xs opacity-0" aria-hidden="true"></i></li>
+                </ul>
+            </div>
+            <div class="w-[45%] p-10 overflow-y-auto custom-scroll">
+                
+                <!-- BIBLIOTECA: ESCALAS -->
+                <div id="bib-esc" class="tab-content active" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Escalas e Índices</h3>
+                    <div class="link-grid-3">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/escala-de-aldrete-e-kroulik.html">Aldrete</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/escala-de-apache.html">APACHE</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/escala-de-apgar.html">Apgar</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/escala-de-barthel.html">Barthel</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/escala-de-berg-bbs.html">Berg</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/escala-de-braden.html">Braden</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/escala-de-curb-65.html">CURB-65</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/indice-de-massa-corporal-imc.html">IMC</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/mini-exame-do-estado-mental-meem.html">MEEM</a>
+                    </div>
+                </div>
+
+                <!-- BIBLIOTECA: SEGURANÇA -->
+                <div id="bib-seg" class="tab-content" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Segurança e Legislação</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/checagem.html">Checagem de Enfermagem</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/doencas-de-notificacao-compulsoria.html">Doenças de Notificação</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/legislacoes.html">Legislações</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/metasinternacionais.html">Metas Internacionais</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/sinan.html">SINAN</a>
+                    </div>
+                </div>
+
+                <!-- BIBLIOTECA: TEORIAS -->
+                <div id="bib-teo" class="tab-content" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Teorias e NANDA</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/callista-roy-teoria-da-adaptacao.html">Callista Roy</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/dorothea-orem-teoria-do-defict-do-auto-cuidado.html">Dorothea Orem</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/florence-nightngale-enfermeira-patrona-da-enfermagem.html">Florence Nightingale</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/hildegard-peplau-teoria-das-relacoes-interpessoais.html">Hildegard Peplau</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/biblioteca/jean-watson-teoria-do-cuidado-humano.html">Jean Watson</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/diagnosticos-nanda.html">Diagnósticos NANDA</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-[35%] p-6 h-full">
+                <div class="glowing-frame">
+                    <div class="frame-image-container">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-biblioteca.webp" alt="Imagem ilustrativa Biblioteca">
+                        <div class="menu-cta-overlay"><h3>Biblioteca</h3></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. CARREIRAS -->
+    <div id="panel-carreiras" class="mega-panel" role="region" aria-label="Submenu Carreiras">
+        <div class="max-w-7xl mx-auto panel-standard-height">
+            <div class="w-[20%] panel-sidebar py-8 pr-0">
+                <ul class="space-y-1 pl-4" role="tablist" aria-orientation="vertical">
+                    <li tabindex="0" class="menu-tab-trigger active px-6 py-4 flex justify-between items-center" data-target="car-oport" role="tab" aria-selected="true">Oportunidades <i class="fas fa-chevron-right text-xs text-[#1A3E74]" aria-hidden="true"></i></li>
+                    <li tabindex="0" class="menu-tab-trigger px-6 py-4 flex justify-between items-center" data-target="car-trab" role="tab" aria-selected="false">Ferramentas <i class="fas fa-chevron-right text-xs opacity-0" aria-hidden="true"></i></li>
+                </ul>
+            </div>
+            <div class="w-[45%] p-10 overflow-y-auto custom-scroll">
+                <div id="car-oport" class="tab-content active" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Oportunidades</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/empregos.html">Buscar Empregos</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/cadastrar-curriculo.html">Cadastrar Currículo</a>
+                    </div>
+                </div>
+                <div id="car-trab" class="tab-content" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Ferramentas Trabalhistas</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/salarioliquido.html">Cálculo de Salário Líquido</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/13-salario.html">Cálculo do 13º Salário</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-[35%] p-6 h-full">
+                <div class="glowing-frame">
+                    <div class="frame-image-container">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-carreiras.webp" alt="Imagem ilustrativa Carreiras">
+                        <div class="menu-cta-overlay"><h3>Carreiras</h3></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. FALE CONOSCO -->
+    <div id="panel-fale" class="mega-panel" role="region" aria-label="Submenu Fale Conosco">
+        <div class="max-w-7xl mx-auto panel-standard-height">
+            <div class="w-[20%] panel-sidebar py-8 pr-0">
+                <ul class="space-y-1 pl-4" role="tablist" aria-orientation="vertical">
+                    <li tabindex="0" class="menu-tab-trigger active px-6 py-4 flex justify-between items-center" data-target="fale-cont" role="tab" aria-selected="true">Contato <i class="fas fa-chevron-right text-xs text-[#1A3E74]" aria-hidden="true"></i></li>
+                </ul>
+            </div>
+            <div class="w-[45%] p-10 overflow-y-auto custom-scroll">
+                <div id="fale-cont" class="tab-content active" role="tabpanel">
+                    <h3 class="text-2xl font-bold text-[#1A3E74] mb-6">Entre em Contato</h3>
+                    <div class="link-grid">
+                        <a href="https://www.calculadorasdeenfermagem.com.br/fale.html">Formulário de Contato</a>
+                        <a href="https://www.calculadorasdeenfermagem.com.br/sugestoes.html">Enviar Sugestão</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-[35%] p-6 h-full">
+                <div class="glowing-frame">
+                    <div class="frame-image-container">
+<<<<<<< HEAD
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-contato.webp" alt="Imagem ilustrativa Contato">
+=======
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-contato.webp" alt="Imagem ilustrativa Contato" onerror="this.style.display='none'">
+>>>>>>> parent of 1a65080 (28.12 v4)
+                        <div class="menu-cta-overlay"><h3>Fale Conosco</h3></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. BUSCA -->
+    <div id="panel-busca" class="mega-panel" role="region" aria-label="Busca no Site">
+        <div class="max-w-7xl mx-auto panel-standard-height">
+            <div class="w-full p-10 flex flex-col">
+                <div class="mb-6">
+                    <label for="panel-busca-input" class="block text-sm font-bold text-[#1A3E74] mb-2">Buscar no site:</label>
+                    <div class="relative">
+                        <input id="panel-busca-input" type="text" placeholder="Digite sua busca..." oninput="performSearch(this.value)" class="w-full p-4 pl-12 border-2 border-[#1A3E74] rounded-lg text-base focus:border-blue-500 outline-none text-gray-700">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-[#1A3E74]" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div id="default-search-msg" class="text-center py-8">
+                    <p class="text-gray-500">Digite algo acima para pesquisar em todo o site.</p>
+                </div>
+                <ul id="active-search-results" class="hidden space-y-2"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. IDIOMAS -->
+    <div id="panel-idiomas" class="mega-panel" role="region" aria-label="Seleção de Idioma">
+        <div class="max-w-7xl mx-auto panel-standard-height">
+            <div class="w-[20%] panel-sidebar py-8 pr-0">
+                <ul class="space-y-1 pl-4" role="tablist" aria-orientation="vertical">
+                    <li tabindex="0" class="menu-tab-trigger active px-6 py-4 flex justify-between items-center" data-target="lang-all" role="tab" aria-selected="true">Idiomas <i class="fas fa-chevron-right text-xs text-[#1A3E74]" aria-hidden="true"></i></li>
+                </ul>
+            </div>
+            <div class="w-[45%] p-10 overflow-y-auto custom-scroll">
+                <div id="lang-all" class="tab-content active" role="tabpanel">
+                    <h3 class="text-xl font-bold text-[#1A3E74] mb-4">Selecione seu Idioma</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <a href="?lang=pt-br" class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded transition" title="Português (BR)"><img src="https://flagcdn.com/w40/br.png" alt="Bandeira do Brasil" class="w-6 h-4 object-cover shadow-sm"><span class="text-sm">Português</span></a>
+                        <a href="?lang=en" class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded transition"><img src="https://flagcdn.com/w40/us.png" alt="USA Flag" class="w-6 h-4 object-cover shadow-sm"><span class="text-sm">English</span></a>
+                        <a href="?lang=es" class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded transition"><img src="https://flagcdn.com/w40/es.png" alt="Bandera de España" class="w-6 h-4 object-cover shadow-sm"><span class="text-sm">Español</span></a>
+                        <a href="?lang=fr" class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded transition"><img src="https://flagcdn.com/w40/fr.png" alt="Drapeau de la France" class="w-6 h-4 object-cover shadow-sm"><span class="text-sm">Français</span></a>
+                        <a href="?lang=de" class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded transition"><img src="https://flagcdn.com/w40/de.png" alt="Flagge Deutschlands" class="w-6 h-4 object-cover shadow-sm"><span class="text-sm">Deutsch</span></a>
+                        <a href="?lang=it" class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded transition"><img src="https://flagcdn.com/w40/it.png" alt="Bandiera dell'Italia" class="w-6 h-4 object-cover shadow-sm"><span class="text-sm">Italiano</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-[35%] p-6 h-full">
+                <div class="glowing-frame">
+                    <div class="frame-image-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/World_map_blank_without_borders.svg/2000px-World_map_blank_without_borders.svg.png" alt="Mapa Mundi Ilustrativo">
+                        <div class="menu-cta-overlay"><h3>Idiomas</h3></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+<!-- CONTEÚDO PRINCIPAL (Placeholder para IDs de skip links) -->
+<main id="main-content" class="pt-[200px]">
+    <!-- Seu conteúdo principal vai aqui -->
+</main>
+
+<!-- RODAPÉ (Placeholder para IDs de skip links) -->
+<footer id="footer" class="bg-gray-900 text-white py-8">
+    <!-- Seu rodapé vai aqui -->
+</footer>
+
+<!-- ARQUIVO JS MODULAR -->
+<script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js"></script>
 </body>
-</html>
