@@ -29,7 +29,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Tailwind CSS (necessário para o header modular) -->
+    <!-- Tailwind CSS (Play CDN - para desenvolvimento/protótipos) -->
+    <!-- Nota: Para produção, recomenda-se instalar Tailwind como PostCSS plugin -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -43,6 +44,9 @@
                 }
             }
         }
+        // Suprimir aviso em produção (esse aviso é apenas informativo)
+        tailwind.debug = false;
+        tailwind.safeList = [];
     </script>
     
     <!-- CSS Global -->
@@ -59,6 +63,44 @@
             'ad_personalization': 'denied',
             'analytics_storage': 'denied',
             'wait_for_update': 500
+        });
+    </script>
+    
+    <!-- Script de monitoramento de carregamento -->
+    <script>
+        // Monitora se os componentes foram carregados
+        window.addEventListener('TemplateEngine:Ready', function() {
+            console.log('[Index] Template Engine Ready - Componentes carregados');
+            
+            // Verifica se todos os containers foram preenchidos
+            const headerContainer = document.getElementById('header-container');
+            const footerContainer = document.getElementById('footer-container');
+            const modalsContainer = document.getElementById('modals-container');
+            
+            if (!headerContainer || headerContainer.innerHTML.trim() === '') {
+                console.warn('[Index] Header não foi carregado');
+            }
+            if (!footerContainer || footerContainer.innerHTML.trim() === '') {
+                console.warn('[Index] Footer não foi carregado');
+            }
+            if (!modalsContainer || modalsContainer.innerHTML.trim() === '') {
+                console.warn('[Index] Modais não foram carregados');
+            }
+        });
+        
+        // Fallback para timeout se componentes não carregarem
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const headerContainer = document.getElementById('header-container');
+                const footerContainer = document.getElementById('footer-container');
+                
+                if (headerContainer && headerContainer.innerHTML.trim() === '') {
+                    headerContainer.innerHTML = '<div style="padding: 40px; text-align: center; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; margin: 20px;"><p style="color: #92400e; margin: 0;"><strong>Aviso:</strong> O cabeçalho não pôde ser carregado. Por favor, recarregue a página.</p></div>';
+                }
+                if (footerContainer && footerContainer.innerHTML.trim() === '') {
+                    footerContainer.innerHTML = '<div style="padding: 20px; text-align: center; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; margin: 20px;"><p style="color: #92400e; margin: 0;"><strong>Aviso:</strong> O rodapé não pôde ser carregado.</p></div>';
+                }
+            }, 5000); // 5 segundos de timeout
         });
     </script>
 </head>
