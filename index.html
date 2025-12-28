@@ -79,6 +79,14 @@
 
             if (!headerContainer || headerContainer.innerHTML.trim() === '') {
                 console.warn('[Index] Header não foi carregado');
+            } else {
+                console.log('[Index] Header carregado com sucesso');
+                // Verificar se os mega-panels existem
+                const megaPanels = headerContainer.querySelectorAll('.mega-panel');
+                console.log(`[Index] Mega-panels encontrados: ${megaPanels.length}`);
+                // Verificar se os nav-triggers existem
+                const navTriggers = headerContainer.querySelectorAll('.nav-trigger');
+                console.log(`[Index] Nav triggers encontrados: ${navTriggers.length}`);
             }
             if (!footerContainer || footerContainer.innerHTML.trim() === '') {
                 console.warn('[Index] Footer não foi carregado');
@@ -92,11 +100,21 @@
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const headerContainer = document.getElementById('header-container');
-                const footerContainer = document.getElementById('footer-container');
 
                 if (headerContainer && headerContainer.innerHTML.trim() === '') {
                     headerContainer.innerHTML = '<div style="padding: 40px; text-align: center; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; margin: 20px;"><p style="color: #92400e; margin: 0;"><strong>Aviso:</strong> O cabeçalho não pôde ser carregado. Por favor, recarregue a página.</p></div>';
+                } else if (headerContainer) {
+                    // Verificar se Tailwind está funcionando
+                    const navItems = headerContainer.querySelector('.lg\\:flex');
+                    if (navItems) {
+                        const computedStyle = window.getComputedStyle(navItems);
+                        if (computedStyle.display === 'none') {
+                            console.warn('[Index] Tailwind pode não estar funcionando - menu escondido');
+                        }
+                    }
                 }
+
+                const footerContainer = document.getElementById('footer-container');
                 if (footerContainer && footerContainer.innerHTML.trim() === '') {
                     footerContainer.innerHTML = '<div style="padding: 20px; text-align: center; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; margin: 20px;"><p style="color: #92400e; margin: 0;"><strong>Aviso:</strong> O rodapé não pôde ser carregado.</p></div>';
                 }

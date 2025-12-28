@@ -375,21 +375,56 @@
    * Espera o Template Engine estar pronto antes de inicializar
    */
   function waitForDOM() {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(initHeader, 50);
-      });
-    } else {
-      setTimeout(initHeader, 50);
+    // Função para inicializar o header
+    const initHeaderSafe = function() {
+      const navTriggers = document.querySelectorAll('.nav-trigger[data-panel]');
+      if (navTriggers.length > 0) {
+        initHeader();
+        console.log('[Header] Mega-menu inicializado com sucesso');
+      } else {
+        console.warn('[Header] Elementos do mega-menu não encontrados, tentando novamente...');
+        // Tentar novamente em 200ms
+        setTimeout(initHeaderSafe, 200);
+      }
+    };
+
+    // Método 1: Escutar o evento TemplateEngine:Ready
+    let engineReady = false;
+    window.addEventListener('TemplateEngine:Ready', function() {
+      if (!engineReady) {
+        engineReady = true;
+        console.log('[Header] Template Engine Ready detectado');
+        setTimeout(initHeaderSafe, 100);
+      }
+    });
+
+    // Método 2: Verificar periodicamente se os elementos existem
+    const checkInterval = setInterval(function() {
+      const navTriggers = document.querySelectorAll('.nav-trigger[data-panel]');
+      if (navTriggers.length > 0 && !window.headerInitialized) {
+        console.log('[Header] Elementos detectados via polling');
+        initHeaderSafe();
+        clearInterval(checkInterval);
+      }
+    }, 100);
+
+    // Limpar intervalo após 10 segundos para evitar vazamento de memória
+    setTimeout(function() {
+      clearInterval(checkInterval);
+    }, 10000);
+
+    // Método 3: Tentar inicializar imediatamente se o DOM já estiver pronto
+    if (document.readyState !== 'loading') {
+      setTimeout(function() {
+        const navTriggers = document.querySelectorAll('.nav-trigger[data-panel]');
+        if (navTriggers.length > 0) {
+          initHeaderSafe();
+        }
+      }, 200);
     }
   }
 
-  // Inicializar quando o DOM estiver pronto
+  // Inicializar
   waitForDOM();
-
-  // Também ouvir o evento do Template Engine
-  window.addEventListener('TemplateEngine:Ready', function() {
-    setTimeout(initHeader, 100);
-  });
 
 })();
