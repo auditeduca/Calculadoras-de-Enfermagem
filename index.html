@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e Conteúdo Técnico para Profissionais de Saúde">
+    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e Conteúdo Técnico para Profissionais de Saúde. Calculadoras, Escalas Clínicas e Calendário Vacinal.">
+    <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#1A3E74">
     <title>Calculadoras de Enfermagem | Ferramentas e Conteúdo Técnico</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/favicon-calculadoras-de-enfermagem.webp">
-    <link rel="apple-touch-icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/favicon-calculadoras-de-enfermagem.webp">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon-calculadoras-de-enfermagem.webp">
+    <link rel="apple-touch-icon" href="assets/images/favicon-calculadoras-de-enfermagem.webp">
     <meta name="mobile-web-app-capable" content="yes">
     
     <!-- Canonical e Hreflang para SEO -->
@@ -19,13 +20,15 @@
     <link rel="alternate" hreflang="es" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html?lang=es">
     <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
     
-    <!-- Fontes -->
+    <!-- Preconnect para performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    
+    <!-- Fontes -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <!-- Tailwind CSS (necessário para o header modular) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -46,75 +49,35 @@
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/global-main-index.css">
     
-    <!-- Preload critical assets for faster loading -->
-    <link rel="preload" href="assets/components/header.html" as="fetch" crossorigin>
-    <link rel="preload" href="assets/components/footer.html" as="fetch" crossorigin>
-    <link rel="preload" href="assets/components/modals-main.html" as="fetch" crossorigin>
-    <link rel="preload" href="assets/css/header.css" as="style">
-    <link rel="preload" href="assets/css/footer.css" as="style">
-    <link rel="preload" href="assets/css/modals.css" as="style">
+    <!-- Google Consent Mode V2 -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied',
+            'wait_for_update': 500
+        });
+    </script>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800">
+    
     <!-- Contêiner do Header (será carregado dinamicamente) -->
     <div id="header-container"></div>
     
-    <!-- Conteúdo Principal -->
-    <main id="main-content">
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1>Calculadoras de Enfermagem</h1>
-                <p class="hero-subtitle">Ferramentas e Conteúdo Técnico para Profissionais de Saúde</p>
-                <div class="hero-cta">
-                    <a href="#calculadoras" class="btn btn-primary">Acessar Calculadoras</a>
-                    <a href="#escalas" class="btn btn-secondary">Ver Escalas Clínicas</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="https://placehold.co/600x400/1A3E74/white?text=Calculadoras+de+Enfermagem" alt="Calculadoras de Enfermagem" loading="lazy">
-            </div>
-        </section>
-
-        <section id="calculadoras" class="tools-section">
-            <h2>Calculadoras Clínicas</h2>
-            <div class="tools-grid" id="calculadoras-grid">
-                <!-- Ferramentas serão carregadas aqui -->
-            </div>
-        </section>
-
-        <section id="escalas" class="tools-section">
-            <h2>Escalas Clínicas</h2>
-            <div class="tools-grid" id="escalas-grid">
-                <!-- Ferramentas serão carregadas aqui -->
-            </div>
-        </section>
-
-        <section id="vacinas" class="tools-section">
-            <h2>Calendário Vacinal</h2>
-            <div class="tools-grid" id="vacinas-grid">
-                <!-- Ferramentas serão carregadas aqui -->
-            </div>
-        </section>
-
-        <section class="info-section">
-            <h2>Por que usar nossas ferramentas?</h2>
-            <div class="info-cards">
-                <div class="info-card">
-                    <i class="fas fa-calculator"></i>
-                    <h3>Cálculos Precisos</h3>
-                    <p>Todas as calculadoras são baseadas em evidências científicas e seguem protocolos atualizados.</p>
-                </div>
-                <div class="info-card">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Acesso Mobile</h3>
-                    <p>Acesse de qualquer dispositivo, a qualquer momento, sem necessidade de instalação.</p>
-                </div>
-                <div class="info-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Dados Seguros</h3>
-                    <p>Sua privacidade é nossa prioridade. Não armazenamos dados pessoais sensíveis.</p>
-                </div>
-            </div>
-        </section>
+    <!-- Elemento Decorativo SVG Background -->
+    <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+    
+    <!-- Conteúdo Principal (será carregado dinamicamente) -->
+    <main id="main-container" class="pt-[140px] min-h-screen">
+        <!-- Conteúdo será injetado via TemplateEngine -->
     </main>
     
     <!-- Contêiner do Footer (será carregado dinamicamente) -->
@@ -123,54 +86,40 @@
     <!-- Contêiner dos Modais (será carregado dinamicamente) -->
     <div id="modals-container"></div>
     
-    <!-- Botões Flutuantes -->
-    <div class="floating-buttons">
-        <button id="back-to-top-btn" aria-label="Voltar ao topo">
-            <i class="fas fa-arrow-up"></i>
-        </button>
-    </div>
-
     <!-- Scripts Base (carregados em ordem específica para dependências) -->
-    <!-- Console Cleaner - Deve ser o primeiro script -->
+    
+    <!-- Console Cleaner -->
     <script src="assets/js/console-cleaner.js"></script>
     
-    <!-- Utils e verificação -->
+    <!-- Utils -->
     <script src="assets/js/utils.js"></script>
     <script>
         // Verificar se Utils foi carregado corretamente
         if (typeof Utils === 'undefined') {
-            console.error('[Index] Erro: Utils.js não foi carregado corretamente. Verifique se o arquivo existe em assets/js/');
+            console.error('[Index] Erro: Utils.js não foi carregado corretamente.');
         } else {
             console.log('[Index] Utils.js carregado com sucesso');
         }
     </script>
+    
+    <!-- Template Engine (carrega componentes header, footer, modals) -->
     <script src="assets/js/template-engine.js"></script>
+    
+    <!-- Theme Config -->
     <script src="assets/js/theme-config.js"></script>
+    
+    <!-- Main Index Loader (carrega conteúdo principal) -->
+    <script src="assets/js/main-index-loader.js"></script>
+    
+    <!-- Global Main Index (dados e renderização de ferramentas) -->
     <script src="assets/js/global-main-index.js"></script>
     
     <!-- Script de Inicialização -->
     <script>
-        // Aguardar o Template Engine estar pronto
-        document.addEventListener('TemplateEngine:Ready', function() {
-            console.log('[Index] Sistema modular inicializado com sucesso');
-            
-            // Disparar evento para outros scripts
-            window.dispatchEvent(new Event('Page:Ready'));
-            
-            // Carregar ferramentas dinamicamente
-            if (typeof window.renderTools === 'function') {
-                window.renderTools();
-            }
+        // Log quando a página estiver pronta
+        document.addEventListener('Page:Ready', function() {
+            console.log('[Index] Página totalmente carregada e pronta');
         });
-        
-        // Fallback: se o template engine já estiver pronto
-        if (window.TemplateEngine && window.TemplateEngine.initialized) {
-            setTimeout(() => {
-                window.dispatchEvent(new Event('Page:Ready'));
-                if (typeof window.renderTools === 'function') {
-                    window.renderTools();
-                }
-            }, 100);
-        }
     </script>
 </body>
+</html>

@@ -1,145 +1,228 @@
 /**
- * Template Engine v3.2.3 - Correção de IDs e BaseURL
- * Correções:
- * - IDs alinhados com index.html (main-header, main-footer, modal-container).
- * - Uso de AppConfig.baseUrl para garantir caminhos absolutos.
+ * Template Engine v4.0 - Sistema Modular de Componentes
+ * 
+ * Correções implementadas:
+ * - IDs corrigidos para bater com index.html (header-container, footer-container, modals-container)
+ * - Sistema de eventos para notificar quando componentes estão prontos
+ * - Carregamento assíncrono com Promise.all
+ * - Tratamento de erros robusto
+ * - Suporte a baseUrl dinâmica para GitHub Pages
  */
 
 class TemplateEngine {
-    constructor() {
-        this.rootPath = this._calculateRootPath();
+  constructor() {
+    this.components = {
+      'header': {
+        html: 'header.html',
+        js: 'header.js',
+        css: 'header.css',
+        container: 'header-container'
+      },
+      'footer': {
+        html: 'footer.html',
+        js: 'footer.js',
+        css: 'footer.css',
+        container: 'footer-container'
+      },
+      'modals': {
+        html: 'modals-main.html',
+        js: 'modals.js',
+        css: 'modals.css',
+        container: 'modals-container'
+      }
+    };
+    
+    this.initialized = false;
+    this.readyPromise = null;
+    this.baseUrl = this._detectBaseUrl();
+    
+    // Inicializar quando o DOM estiver pronto
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.init());
+    } else {
+      this.init();
+    }
+  }
 
-        this.componentAssets = {
-            'header': { js: 'header.js', css: 'header.css' },
-            'footer': { js: 'footer.js', css: 'footer.css' },
-            'modals': { js: 'modals.js', css: 'modals.css' }
-        };
+  /**
+   * Detecta a URL base automaticamente
+   */
+  _detectBaseUrl() {
+    const path = window.location.pathname;
+    const repoName = '/Calculadoras-de-Enfermagem';
+    
+    // Se estiver no GitHub Pages
+    if (path.includes(repoName)) {
+      return repoName;
+    }
+    
+    // Se for desenvolvimento local
+    if (path === '/' || path.endsWith('.html')) {
+      return '';
+    }
+    
+    // Extrai o diretório base do arquivo atual
+    const lastSlash = path.lastIndexOf('/');
+    return lastSlash > 0 ? path.substring(0, lastSlash) : '';
+  }
 
-        this.initialized = false;
+  /**
+   * Inicializa o motor de templates
+   */
+  async init() {
+    if (this.initialized) return this.readyPromise;
+    
+    console.log('[TemplateEngine] Inicializando sistema modular...');
+    console.log('[TemplateEngine] Base URL detectada:', this.baseUrl);
+    
+    this.readyPromise = this._loadAllComponents();
+    
+    try {
+      await this.readyPromise;
+      this.initialized = true;
+      
+      // Dispara evento de sistema pronto
+      window.dispatchEvent(new CustomEvent('TemplateEngine:Ready', { 
+        detail: { timestamp: Date.now() } 
+      }));
+      
+      console.log('[TemplateEngine] Todos os componentes carregados com sucesso!');
+    } catch (error) {
+      console.error('[TemplateEngine] Erro crítico na inicialização:', error);
+    }
+    
+    return this.readyPromise;
+  }
 
-        // Garante que AppConfig esteja disponível ou usa fallback
-        this.baseUrl = (window.AppConfig && window.AppConfig.baseUrl) 
-            ? window.AppConfig.baseUrl 
-            : this.rootPath;
+  /**
+   * Carrega todos os componentes em paralelo
+   */
+  async _loadAllComponents() {
+    const loadPromises = [];
+    
+    for (const [name, config] of Object.entries(this.components)) {
+      loadPromises.push(this._loadComponent(name, config));
+    }
+    
+    await Promise.all(loadPromises);
+  }
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.init());
-        } else {
-            this.init();
-        }
+  /**
+   * Carrega um componente individual
+   */
+  async _loadComponent(name, config) {
+    const container = document.getElementById(config.container);
+    
+    if (!container) {
+      console.warn(`[TemplateEngine] Container '#${config.container}' não encontrado para '${name}'`);
+      return;
     }
 
-    _calculateRootPath() {
-        // Fallback caso AppConfig não exista
-        return window.location.hostname.includes('github.io') 
-            ? '/Calculadoras-de-Enfermagem/' 
-            : '/';
+    console.log(`[TemplateEngine] Carregando componente: ${name}`);
+    
+    try {
+      // Determina o caminho base baseado na pasta do componente
+      let htmlPath;
+      if (name === 'main') {
+        // main-index.html está em assets/pages/
+        htmlPath = `assets/pages/${config.html}`;
+      } else {
+        // Outros componentes estão em assets/components/
+        htmlPath = `assets/components/${config.html}`;
+      }
+      
+      // Carrega o HTML do componente
+      const htmlUrl = `${this.baseUrl}${htmlPath}`;
+      const response = await fetch(htmlUrl);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const html = await response.text();
+      container.innerHTML = html;
+      
+      // Carrega o CSS do componente (se existir)
+      if (config.css) {
+        this._loadCSS(`${this.baseUrl}assets/css/${config.css}`);
+      }
+      
+      // Carrega o JS do componente (se existir)
+      if (config.js) {
+        await this._loadScript(`${this.baseUrl}assets/js/${config.js}`);
+      }
+      
+      console.log(`[TemplateEngine] Componente '${name}' carregado com sucesso`);
+      
+    } catch (error) {
+      console.warn(`[TemplateEngine] Falha ao carregar '${name}':`, error.message);
+      // Não lança erro para não bloquear outros componentes
     }
+  }
 
-    async init() {
-        if (this.initialized) return;
-
-        try {
-            console.time('TemplateEngine Load');
-
-            // CORREÇÃO: IDs atualizados para bater com o index.html
-            await Promise.all([
-                this._inject('main-header', 'header.html', 'header'),
-                this._inject('main-footer', 'footer.html', 'footer'),
-                this._inject('modal-container', 'modals-main.html', 'modals')
-            ]);
-
-            this.initialized = true;
-
-            window.dispatchEvent(new Event('templateEngineReady'));
-            window.dispatchEvent(new CustomEvent('TemplateEngine:Ready', { detail: { timestamp: Date.now() } }));
-
-            console.timeEnd('TemplateEngine Load');
-        } catch (error) {
-            console.error('[TemplateEngine] Erro crítico na inicialização:', error);
-        }
+  /**
+   * Carrega um arquivo CSS
+   */
+  _loadCSS(href) {
+    // Evita carregar o mesmo CSS múltiplas vezes
+    if (document.querySelector(`link[href="${href}"]`)) {
+      return;
     }
+    
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+    
+    console.log(`[TemplateEngine] CSS carregado: ${href}`);
+  }
 
-    async _inject(containerId, fileName, assetKey) {
-        const container = document.getElementById(containerId);
-        if (!container) {
-            console.warn(`[TemplateEngine] Container ID '${containerId}' não encontrado no HTML.`);
-            return;
-        }
+  /**
+   * Carrega um arquivo JS como módulo
+   */
+  _loadScript(src) {
+    return new Promise((resolve, reject) => {
+      // Evita carregar o mesmo script múltiplas vezes
+      if (document.querySelector(`script[src="${src}"]`)) {
+        console.log(`[TemplateEngine] Script já carregado: ${src}`);
+        resolve();
+        return;
+      }
+      
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = false;
+      script.defer = true;
+      script.type = 'module';
+      
+      script.onload = () => {
+        console.log(`[TemplateEngine] JS carregado: ${src}`);
+        resolve();
+      };
+      
+      script.onerror = (error) => {
+        console.warn(`[TemplateEngine] Falha ao carregar script: ${src}`);
+        // Resolve mesmo com erro para não bloquear outros componentes
+        resolve();
+      };
+      
+      document.body.appendChild(script);
+    });
+  }
 
-        try {
-            // Usa baseUrl completa para evitar erros de caminho relativo
-            const url = `${this.baseUrl}assets/components/${fileName}`;
-            // console.debug(`[TemplateEngine] Carregando: ${url}`); // Descomente para debug
-
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`Status ${response.status} ao carregar ${fileName}`);
-
-            const html = await response.text();
-            container.innerHTML = html;
-
-            if (this.componentAssets[assetKey]) {
-                const { js, css } = this.componentAssets[assetKey];
-
-                if (css) {
-                    // Carrega CSS
-                    const link = this._loadCSS(`${this.baseUrl}assets/css/${css}`);
-                    
-                    // Se tiver JS, carrega após o CSS (opcional, mas bom para evitar FOUC)
-                    if (js) {
-                        // Pequeno delay ou promise pode ser usado aqui se necessário
-                        await this._loadScript(`${this.baseUrl}assets/js/${js}`);
-                    }
-                } else if (js) {
-                    await this._loadScript(`${this.baseUrl}assets/js/${js}`);
-                }
-            }
-        } catch (error) {
-            console.warn(`[TemplateEngine] Falha ao injetar componente '${assetKey}':`, error);
-            // Mostra erro visualmente apenas em dev/local se quiser
-            // container.innerHTML = `<div style="color:red; font-size: 10px;">Erro: ${fileName}</div>`;
-        }
+  /**
+   * Método utilitário para renderizar cards (delegado para Utils)
+   */
+  renderCard(tool, state = {}) {
+    if (typeof window.Utils !== 'undefined' && typeof window.Utils.renderCard === 'function') {
+      return window.Utils.renderCard(tool, state);
     }
-
-    _loadCSS(href) {
-        if (document.querySelector(`link[href="${href}"]`)) return;
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = href;
-        document.head.appendChild(link);
-        return link;
-    }
-
-    _loadScript(src) {
-        return new Promise((resolve, reject) => {
-            if (document.querySelector(`script[src="${src}"]`)) {
-                resolve();
-                return;
-            }
-            const script = document.createElement('script');
-            script.src = src;
-            script.async = false; // garante ordem
-            script.defer = true;  // executa após parse do DOM
-            script.onload = () => resolve();
-            script.onerror = () => {
-                const errorMsg = `[TemplateEngine] Falha ao carregar script: ${src}`;
-                console.error(errorMsg);
-                // Não rejeita para não travar Promise.all de outros componentes
-                resolve(); 
-            };
-            document.body.appendChild(script);
-        });
-    }
-
-    renderCard(tool, state = {}) {
-        if (typeof window.Utils !== 'undefined' && typeof window.Utils.renderCard === 'function') {
-            return window.Utils.renderCard(tool, state);
-        }
-        // Fallback simples caso Utils não esteja pronto
-        return `<div class="p-4 border"><b>${tool.name}</b><br>${tool.description}</div>`;
-    }
+    
+    // Fallback simples caso Utils não esteja pronto
+    return `<div class="tool-card"><h3>${tool.name}</h3><p>${tool.description}</p></div>`;
+  }
 }
 
-const instance = new TemplateEngine();
-window.TemplateEngine = instance;
-window.templateEngine = instance;
+// Cria instância única e expõe globalmente
+window.templateEngine = new TemplateEngine();
+window.TemplateEngine = window.templateEngine;

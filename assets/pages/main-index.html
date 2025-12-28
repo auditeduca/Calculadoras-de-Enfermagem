@@ -1,0 +1,101 @@
+<!-- Componente Main Index - Página Principal -->
+<!-- Este componente é injetado pelo TemplateEngine ou MainIndexLoader -->
+
+<section class="hero-section bg-gradient-to-br from-[#1A3E74] to-[#0d2137] text-white py-20">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col lg:flex-row items-center gap-12">
+            <div class="lg:w-1/2">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 font-nunito">
+                    Calculadoras de Enfermagem
+                </h1>
+                <p class="text-xl text-blue-100 mb-8">
+                    Ferramentas e conteúdo técnico para profissionais de saúde. 
+                    Acesse calculadoras clínicas, escalas de avaliação e calendários vacinais.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#calculadoras" class="btn btn-primary bg-white text-[#1A3E74] hover:bg-blue-50">
+                        <i class="fas fa-calculator mr-2"></i>Calculadoras
+                    </a>
+                    <a href="#escalas" class="btn btn-secondary bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#1A3E74]">
+                        <i class="fas fa-clipboard-list mr-2"></i>Escalas Clínicas
+                    </a>
+                </div>
+            </div>
+            <div class="lg:w-1/2">
+                <img src="https://placehold.co/600x400/1A3E74/white?text=Calculadoras+de+Enfermagem" 
+                     alt="Calculadoras de Enfermagem" 
+                     class="rounded-2xl shadow-2xl w-full"
+                     loading="eager">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section bg-white py-12 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="stat-item">
+                <div class="text-4xl font-bold text-[#1A3E74] mb-2">63+</div>
+                <div class="text-gray-600">Ferramentas</div>
+            </div>
+            <div class="stat-item">
+                <div class="text-4xl font-bold text-[#1A3E74] mb-2">50+</div>
+                <div class="text-gray-600">Escalas Clínicas</div>
+            </div>
+            <div class="stat-item">
+                <div class="text-4xl font-bold text-[#1A3E74] mb-2">8</div>
+                <div class="text-gray-600">Categorias Vacinais</div>
+            </div>
+            <div class="stat-item">
+                <div class="text-4xl font-bold text-[#1A3E74] mb-2">Free</div>
+                <div class="text-gray-600">100% Gratuito</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Calculadoras Section -->
+<section id="calculadoras" class="section-decorative py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="section-header">
+            <h2 class="section-title">Calculadoras Clínicas</h2>
+            <div class="decorative-line"></div>
+        </div>
+        
+        <!-- Grid de Calculadoras -->
+        <div class="tools-grid" id="calculadoras-grid">
+            <!-- Ferramentas serão carregadas aqui dinamicamente -->
+        </div>
+    </div>
+</section>
+
+<!-- Escalas Section -->
+<section id="escalas" class="section-decorative py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="section-header">
+            <h2 class="section-title">Escalas Clínicas</h2>
+            <div class="decorative-line"></div>
+        </div>
+        
+        <!-- Grid de Escalas -->
+        <div class="tools-grid" id="escalas-grid">
+            <!-- Ferramentas serão carregadas aqui dinamicamente -->
+        </div>
+    </div>
+</section>
+
+<!-- Vacinas Section -->
+<section id="vacinas" class="section-decorative py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="section-header">
+            <h2 class="section-title">Calendário Vacinal</h2>
+            <div class="decorative-line"></div>
+        </div>
+        
+        <!-- Grid de Vacinas -->
+        <div class="tools-grid" id="vacinas-grid">
+            <!-- Ferramentas serão carregadas aqui dinamicamente -->
+        </div>
+    </div>
+</section>

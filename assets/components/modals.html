@@ -1,6 +1,9 @@
 <!-- Componente Modais - Sistema Modular -->
+<!-- Contém todos os modais reutilizáveis da aplicação (exceto preload que já está no index.html) -->
 
-<!-- Modal de Pesquisa Rápida -->
+<!-- ===============================
+     MODAL DE PESQUISA RÁPIDA
+     =============================== -->
 <div id="search-modal" class="modal" role="dialog" aria-label="Pesquisa Rápida" aria-hidden="true">
     <div class="modal-overlay" data-close="search-modal"></div>
     <div class="modal-container">
@@ -20,7 +23,9 @@
     </div>
 </div>
 
-<!-- Modal de Informações da Ferramenta -->
+<!-- ===============================
+     MODAL DE INFORMAÇÕES DA FERRAMENTA
+     =============================== -->
 <div id="tool-info-modal" class="modal" role="dialog" aria-label="Informações da Ferramenta" aria-hidden="true">
     <div class="modal-overlay" data-close="tool-info-modal"></div>
     <div class="modal-container modal-lg">
@@ -42,7 +47,9 @@
     </div>
 </div>
 
-<!-- Modal de Erro -->
+<!-- ===============================
+     MODAL DE ERRO
+     =============================== -->
 <div id="error-modal" class="modal" role="dialog" aria-label="Erro" aria-hidden="true">
     <div class="modal-overlay" data-close="error-modal"></div>
     <div class="modal-container modal-sm">
@@ -61,20 +68,9 @@
     </div>
 </div>
 
-<!-- Modal de Carregamento -->
-<div id="loading-modal" class="modal" role="dialog" aria-label="Carregando" aria-hidden="true" data-show-on-load="false">
-    <div class="modal-overlay" style="background: rgba(255,255,255,0.9);"></div>
-    <div class="modal-container modal-sm">
-        <div class="modal-body text-center py-8">
-            <div class="loading-spinner">
-                <i class="fas fa-spinner fa-spin fa-3x"></i>
-            </div>
-            <p class="mt-4 text-gray-600">Carregando...</p>
-        </div>
-    </div>
-</div>
-
-<!-- Modal de Confirmação -->
+<!-- ===============================
+     MODAL DE CONFIRMAÇÃO
+     =============================== -->
 <div id="confirm-modal" class="modal" role="dialog" aria-label="Confirmação" aria-hidden="true">
     <div class="modal-overlay" data-close="confirm-modal"></div>
     <div class="modal-container modal-sm">
@@ -94,12 +90,16 @@
     </div>
 </div>
 
-<!-- Toast Notifications Container -->
+<!-- ===============================
+     TOAST NOTIFICATIONS CONTAINER
+     =============================== -->
 <div id="toast-container" class="toast-container" aria-live="polite">
     <!-- Toast notifications serão inseridos aqui dinamicamente -->
 </div>
 
-<!-- Tooltip Container -->
+<!-- ===============================
+     TOOLTIP CONTAINER
+     =============================== -->
 <div id="tooltip-container" class="tooltip-container" aria-hidden="true">
     <div class="tooltip-content">
         <span id="tooltip-text"></span>

@@ -1,0 +1,215 @@
+/**
+ * PRELOAD.CSS
+ * Estilos para Tela de Carregamento/Preload
+ * Versão: 2.1 - Sistema Modular
+ */
+
+:root {
+    --preload-primary: #1A3E74;
+    --preload-secondary: #00bcd4;
+    --preload-bg: #ffffff;
+    --preload-transition: 300ms;
+    --preload-z-index: 999999;
+}
+
+/* =========================================
+   PRELOAD MODAL (usado em index.html)
+   ========================================= */
+
+#preload-modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--preload-z-index);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    background: rgba(255, 255, 255, 0.98);
+    transition: opacity var(--preload-transition) ease-out,
+                visibility var(--preload-transition) ease-out;
+}
+
+#preload-modal.hidden,
+#preload-modal[aria-hidden="true"] {
+    display: none !important;
+}
+
+/* Animação de saída */
+#preload-modal.loading-exit {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Container interno */
+.preload-container {
+    background: var(--preload-bg);
+    border-radius: 1rem;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    max-width: 90vw;
+    width: 320px;
+}
+
+#preload-modal.loading-exit .preload-container {
+    transform: scale(0.95);
+    opacity: 0;
+    transition: transform var(--preload-transition) ease-out,
+                opacity var(--preload-transition) ease-out;
+}
+
+/* =========================================
+   CONTEÚDO DO PRELOAD
+   ========================================= */
+
+.preload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Logo */
+.preload-logo {
+    width: 120px;
+    height: auto;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+    animation: pulse-logo 2s infinite ease-in-out;
+}
+
+@keyframes pulse-logo {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.9; }
+}
+
+/* Texto principal - SEMPRE VISÍVEL */
+.preload-text {
+    color: #1A3E74;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Barra de progresso */
+.preload-bar-container {
+    width: 200px;
+    height: 6px;
+    background-color: #f1f5f9;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.preload-bar-progress {
+    height: 100%;
+    width: 40%;
+    background: linear-gradient(90deg, var(--preload-primary), var(--preload-secondary));
+    border-radius: 20px;
+    animation: slide-loading 1.5s infinite ease-in-out;
+    position: absolute;
+}
+
+@keyframes slide-loading {
+    0% { left: -40%; }
+    100% { left: 100%; }
+}
+
+/* Percentual */
+.preload-percentage {
+    font-family: monospace;
+    font-size: 12px;
+    color: #9ca3af;
+    margin: 0;
+}
+
+/* =========================================
+   SUPORTE A ACESSIBILIDADE
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    #preload-modal {
+        transition: none;
+    }
+    
+    #preload-modal.loading-exit {
+        transition: none;
+    }
+    
+    .preload-logo {
+        animation: none;
+    }
+    
+    .preload-bar-progress {
+        animation: none;
+        width: 100%;
+    }
+    
+    #preload-modal.loading-exit .preload-container {
+        transform: none;
+        transition: none;
+        opacity: 1;
+    }
+}
+
+/* =========================================
+   MODO ESCURO
+   ========================================= */
+
+body.dark-theme #preload-modal,
+.dark-theme #preload-modal {
+    background: rgba(15, 23, 42, 0.98);
+}
+
+body.dark-theme .preload-container,
+.dark-theme .preload-container {
+    background: #1e293b;
+}
+
+body.dark-theme .preload-text,
+.dark-theme .preload-text {
+    color: #e2e8f0;
+}
+
+body.dark-theme .preload-bar-container,
+.dark-theme .preload-bar-container {
+    background-color: #334155;
+}
+
+/* =========================================
+   RESPONSIVIDADE
+   ========================================= */
+
+@media (max-width: 480px) {
+    .preload-container {
+        padding: 2rem 1.5rem;
+    }
+    
+    .preload-logo {
+        width: 100px;
+    }
+    
+    .preload-bar-container {
+        width: 160px;
+    }
+    
+    .preload-text {
+        font-size: 14px;
+    }
+}
+
+/* =========================================
+   OCULTAR CONTEÚDO PRINCIPAL
+   ========================================= */
+
+#main-content {
+    visibility: hidden;
+    transition: visibility 0s linear var(--preload-transition);
+}
+
+#main-content.visible,
+#main-content[style*="visibility: visible"] {
+    visibility: visible;
+}

@@ -1,0 +1,29 @@
+<!-- Componente Preload/Loading Screen - Sistema Modular -->
+<!-- Este componente deve ser injetado pelo TemplateEngine -->
+
+<div id="loading-screen" class="loading-screen" role="status" aria-label="Carregando conteúdo">
+    <div class="loader-wrapper">
+        <!-- Logo principal com fallback -->
+        <img src="https://www.calculadorasdeenfermagem.com.br/iconpages.webp" 
+             alt="Logo Calculadoras de Enfermagem" 
+             class="loader-logo"
+             onerror="this.onerror=null; this.src='https://placehold.co/150x150/1A3E74/ffffff?text=CE'">
+        
+        <div class="space-y-2">
+            <p class="loader-text">Aguarde enquanto o conteúdo é carregado...</p>
+            
+            <!-- Barra de progresso animada -->
+            <div class="loading-bar-container mx-auto" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+                <div class="loading-bar-progress"></div>
+            </div>
+            
+            <!-- Texto de percentual (opcional) -->
+            <p id="loading-percentage" class="text-xs text-gray-400 font-mono mt-1">40%</p>
+        </div>
+    </div>
+</div>
+
+<!-- Conteúdo da página (será exibido após carregamento) -->
+<main id="main-content" class="hidden">
+    <!-- Conteúdo principal será inserido aqui -->
+</main>

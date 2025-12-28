@@ -1,287 +1,381 @@
 /**
- * ESTILOS GLOBAIS - VERSÃO UNIFICADA E FINAL
- * ---------------------------------------------------------
- * Integração do sistema semântico com suporte legado ao Header.
+ * GLOBAL.CSS - Estilos Globais do Sistema
+ * Versão: 2.0
+ * 
+ * Contém:
+ * - Variáveis CSS (cores, fontes, etc.)
+ * - Estilos base
+ * - Utilitários
+ * - Componentes compartilhados
  */
 
+/* --- VARIÁVEIS CSS --- */
 :root {
-    /* 1. PALETA DE CORES (SISTEMA SEMÂNTICO)
-    --------------------------------------------------------- */
-    --primary-color: #1A3E74;       /* Azul Marinho Institucional */
-    --primary-hover: #15325e;
-    --primary-light: #2E5A9C;
+    /* Cores Principais */
+    --primary-color: #1A3E74;
+    --primary-hover: #143260;
+    --primary-light: #2563eb;
+    --accent-color: #1e40af;
+    --accent-glow: #3b82f6;
     
-    --secondary-color: #00bcd4;     /* Ciano/Destaque */
-    --accent-gold: #D4AF37;         /* Premium/Avisos */
-    --accent-active: #CC6600;       /* Acessibilidade/Foco */
+    /* Cores de Status */
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --info-color: #3b82f6;
     
-    /* Cores Neutras (Mapeamento Semântico) */
-    --color-white: #ffffff;
-    --bg-body: #f8fafc;             /* Slate 50 */
+    /* Cores de Fundo */
+    --bg-body: #F9FAFB;
     --bg-panel: #ffffff;
-    --text-main: #1f2937;           /* Slate 900 */
-    --text-muted: #64748b;          /* Slate 500 */
-    --border-color: #e2e8f0;        /* Slate 200 */
-
-    /* 2. COMPATIBILIDADE (ALIASES PARA O HEADER)
-       Essas variáveis garantem que o header.css funcione sem quebras.
-    --------------------------------------------------------- */
-    --text-body: var(--text-main);
-    --border-panel: var(--border-color);
+    --bg-secondary: #f3f4f6;
     
-    /* O Header usa accent-color (azul vibrante) e accent-glow */
-    --accent-color: #1e40af; 
-    --accent-glow: #3b82f6;
-
-    /* 3. Z-INDEX LAYERS (HIERARQUIA ESTRITA)
-    --------------------------------------------------------- */
-    --z-back: -1;
-    --z-normal: 1;
-    --z-floating: 100;    /* Botões flutuantes */
-    --z-mega-panel: 490;  /* Painel do menu */
-    --z-header: 500;      /* Navbar fixa */
-    --z-overlay: 900;     /* Fundo escurecido */
-    --z-modal: 1000;      /* Modais */
-    --z-tooltip: 1100;    /* Toasts/Tooltips */
-
-    /* 4. TIPOGRAFIA E LAYOUT
-    --------------------------------------------------------- */
-    --font-main: 'Inter', 'Open Sans', sans-serif;
-    --font-heading: 'Nunito Sans', sans-serif;
+    /* Cores de Texto */
+    --text-body: #1f2937;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
     
-    --border-radius-sm: 8px;
-    --border-radius-md: 12px;
-    --border-radius-lg: 24px;
+    /* Bordas */
+    --border-color: #e5e7eb;
+    --border-focus: #3b82f6;
     
-    --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    /* Sombras */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     
-    --transition-speed: 0.3s;
-    --focus-outline: 3px solid var(--accent-glow);
-
-    /* 5. SCROLLBARS
-    --------------------------------------------------------- */
-    --scroll-track: #f1f5f9;
-    --scroll-thumb: #cbd5e1;
-    --scroll-thumb-hover: var(--primary-color);
+    /* Z-Index */
+    --z-dropdown: 100;
+    --z-modal: 1000;
+    --z-toast: 2000;
+    --z-loading: 3000;
+    
+    /* Transições */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
 }
 
-/* ==================================== */
-/* MODO ESCURO (DARK THEME)             */
-/* ==================================== */
-body.dark-theme, .dark {
-    /* Redefinição Semântica */
-    --primary-color: #60a5fa;       
+/* --- TEMA ESCURO --- */
+body.dark-theme {
+    --primary-color: #60a5fa;
     --primary-hover: #93c5fd;
-    
-    --bg-body: #0f172a;             /* Slate 900 */
-    --bg-panel: #1e293b;            /* Slate 800 */
-    --text-main: #f1f5f9;           /* Slate 100 */
-    --text-muted: #94a3b8;          /* Slate 400 */
-    --border-color: #334155;        /* Slate 700 */
-    
-    /* Compatibilidade Header Dark */
     --accent-color: #60a5fa;
-    --accent-glow: #3b82f6;
-    
-    --color-white: #1e293b;         
-    --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.3);
+    --bg-body: #0f172a;
+    --bg-panel: #1e293b;
+    --bg-secondary: #334155;
+    --text-body: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
 }
 
-/* Utilitários de Compatibilidade Dark Mode (Legado do Header) */
-body.dark-theme .bg-white { background-color: var(--bg-panel) !important; }
-body.dark-theme .bg-gray-50 { background-color: var(--bg-body) !important; }
-body.dark-theme .text-gray-800 { color: var(--text-main) !important; }
-body.dark-theme input { background-color: var(--bg-body); border-color: var(--border-color); color: var(--text-main); }
+body.dark-theme .bg-white { background-color: #1e293b !important; }
+body.dark-theme .bg-gray-50 { background-color: #0f172a !important; }
+body.dark-theme .text-gray-600, 
+body.dark-theme .text-gray-700, 
+body.dark-theme .text-gray-500 { color: #cbd5e1 !important; }
+body.dark-theme .text-gray-800 { color: #f1f5f9 !important; }
 
-/* ==================================== */
-/* RESET E BASE                         */
-/* ==================================== */
-* { box-sizing: border-box; }
-
-body { 
-    font-family: var(--font-main);
-    background-color: var(--bg-body);
-    color: var(--text-main);
+/* --- TIPOGRAFIA --- */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
     line-height: 1.6;
-    margin: 0;
+    color: var(--text-body);
+    background-color: var(--bg-body);
     -webkit-font-smoothing: antialiased;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-body);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+
+a {
     color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
 }
 
-.dark h1, .dark h2, .dark h3 {
-    color: var(--text-main);
+a:hover {
+    color: var(--primary-hover);
 }
 
-/* Bloqueio de Scroll (Modais) */
-body.modal-open { overflow: hidden; }
-
-/* ==================================== */
-/* UTILITÁRIOS GLOBAIS                  */
-/* ==================================== */
-
-/* Scroll Customizado */
-.custom-scroll::-webkit-scrollbar { width: 6px; }
-.custom-scroll::-webkit-scrollbar-track { background: var(--scroll-track); border-radius: 4px; }
-.custom-scroll::-webkit-scrollbar-thumb {
-    background-color: var(--scroll-thumb);
-    border-radius: 10px;
-    border: 2px solid var(--scroll-track);
-}
-.custom-scroll::-webkit-scrollbar-thumb:hover { background-color: var(--scroll-thumb-hover); }
-
-/* Focabilidade Acessível */
-:focus-visible {
-    outline: var(--focus-outline);
+/* --- FOCO ACESSÍVEL --- */
+*:focus-visible {
+    outline: 3px solid var(--accent-glow);
     outline-offset: 2px;
 }
 
-/* Badges */
-.badge-new {
-    background-color: #f0fdf4;
-    color: #166534;
-    font-size: 0.65rem;
-    padding: 0.15rem 0.6rem;
-    border-radius: 9999px;
+/* --- SKIP LINKS --- */
+.skip-link {
+    position: absolute;
+    top: -9999px;
+    left: 1rem;
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    z-index: 10001;
     font-weight: 700;
-    text-transform: uppercase;
+    border-radius: 0 0 8px 8px;
+    text-decoration: none;
+    transition: top var(--transition-fast);
 }
 
-/* Widgets Flutuantes */
-.floating-buttons {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: var(--z-floating);
+.skip-link:focus { 
+    top: 0; 
+    z-index: 10002;
 }
 
-.floating-buttons button {
-    width: 56px;
-    height: 56px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.2s;
-    display: flex;
+/* --- BOTÕES --- */
+.btn {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: white;
-}
-
-.floating-buttons button:hover { transform: scale(1.1); }
-#back-to-top-btn { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-#libras-btn { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
-
-/* ==================================== */
-/* COMPONENTES UI (Cards, Pills)        */
-/* ==================================== */
-
-/* Card de Artigo Principal */
-.article-card {
-    background-color: var(--bg-panel);
-    border-radius: 2rem;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-color);
-    padding: 1.5rem;
-    transition: background-color var(--transition-speed), border-color var(--transition-speed);
-}
-
-@media (min-width: 768px) {
-    .article-card { padding: 3rem; }
-}
-
-/* Sidebar Gradient Card */
-.sidebar-card-gradient { 
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: var(--shadow-sm);
-    color: white;
-    background: linear-gradient(135deg, #1A3E74, #2E5A9C);
-}
-
-.sidebar-card-gradient h3 {
-    color: white !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding-bottom: 0.75rem;
-    margin-bottom: 1rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.sidebar-card-gradient a {
-    color: rgba(255, 255, 255, 0.9);
-    transition: all 0.2s;
-    text-decoration: none;
-}
-
-.sidebar-card-gradient a:hover {
-    color: white;
-    transform: translateX(4px);
-}
-
-/* Navegação Breadcrumb */
-.nav-breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    margin-bottom: 2rem;
-    font-family: var(--font-main);
-}
-
-.nav-breadcrumb a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.nav-breadcrumb a:hover { color: var(--secondary-color); }
-
-/* Tags / Pills */
-.tag-pill {
-    padding: 0.25rem 0.75rem;
-    background-color: var(--bg-body);
-    color: var(--text-muted);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.938rem;
+    font-weight: 600;
     border-radius: 0.5rem;
-    font-size: 11px;
-    font-weight: 700;
-    transition: all 0.2s;
+    border: none;
     cursor: pointer;
-    display: inline-block;
-    border: 1px solid var(--border-color);
+    transition: all var(--transition-normal);
+    text-decoration: none;
 }
 
-.tag-pill:hover {
-    background-color: var(--secondary-color);
-    color: white;
-    border-color: var(--secondary-color);
-}
-
-/* Badge de Categoria */
-.badge-category {
+.btn-primary {
     background-color: var(--primary-color);
     color: white;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 0.375rem 1rem;
-    border-radius: 9999px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    display: inline-block;
-    margin-bottom: 1rem;
-    font-family: var(--font-heading);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--bg-secondary);
+    color: var(--text-body);
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-color);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* --- FORMULÁRIOS --- */
+input, select, textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--bg-panel);
+    color: var(--text-body);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input::placeholder {
+    color: var(--text-muted);
+}
+
+/* --- SCROLLBAR --- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--text-muted);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-secondary);
+}
+
+/* --- UTILITÁRIOS --- */
+.hidden { display: none !important; }
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-4 { margin-top: 1rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mt-8 { margin-top: 2rem; }
+.mb-8 { margin-bottom: 2rem; }
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-4 { gap: 1rem; }
+.gap-8 { gap: 2rem; }
+
+/* --- LOADING SPINNER --- */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
+}
+
+.loading-spinner.fa-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* --- TOOLTIPS --- */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 0.75rem;
+    background: var(--text-body);
+    color: var(--bg-panel);
+    font-size: 0.75rem;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast);
+    z-index: var(--z-dropdown);
+}
+
+[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- ANIMAÇÕES --- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.animate-fadeIn { animation: fadeIn var(--transition-normal); }
+.animate-slideUp { animation: slideUp var(--transition-normal); }
+.animate-pulse { animation: pulse 2s infinite; }
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+    
+    .btn {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* --- ACESSIBILIDADE --- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.high-contrast {
+    --primary-color: #000000;
+    --text-body: #000000;
+    --bg-body: #ffffff;
+}
+
+/* --- ELEMENTO DECORATIVO SVG BACKGROUND --- */
+.decorative-svg-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.3;
+    overflow: hidden;
+}
+
+.decorative-svg-bg svg {
+    width: 100%;
+    height: 100%;
+    min-width: 100vw;
+}
+
+body.dark-theme .decorative-svg-bg {
+    opacity: 0.15;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .decorative-svg-bg {
+        opacity: 0.15 !important;
+    }
 }

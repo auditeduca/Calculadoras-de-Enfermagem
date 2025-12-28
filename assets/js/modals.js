@@ -1,331 +1,377 @@
 /**
- * MODALS-MANAGER.JS - Gerenciamento Centralizado v2025 (Híbrido)
- * * MERGE FINAL:
- * - Mantém compatibilidade com classes legadas (.trigger-class).
- * - Mantém integração com Utils.animate.
- * - Adiciona Focus Trap, ARIA e prevenção de Memory Leaks.
+ * CALCULADORAS DE ENFERMAGEM - MODAL SYSTEM
+ * Versão: 2.0 - Sistema Modular de Modais
+ * 
+ * Funcionalidades:
+ * - Abertura e fechamento de modais
+ * - Toast notifications
+ * - Confirmações
+ * - Loading states
+ * - Acessibilidade WCAG 2.1
  */
 
-class ModalsManager {
-    constructor() {
-        this.modals = new Map();
-        this.isInitialized = false;
-        this.observer = null;
-        this.lastFocusedElement = null; // Para restaurar o foco ao fechar
+(function() {
+  'use strict';
 
-        // Mapeamento de configuração (Mantido do original)
-        this.modalConfigs = {
-            'accessibility-menu': { id: 'accessibility-menu', activeClass: 'open' },
-            'cookie-prefs-modal': { id: 'cookie-prefs-modal', activeClass: 'show' },
-            'suggestion-modal': { id: 'suggestion-modal', activeClass: 'show' }
+  const ModalSystem = {
+    // Armazena callbacks de confirmação
+    confirmCallbacks: {},
+
+    /**
+     * Inicializa o sistema de modais
+     */
+    init: function() {
+      this.initModals();
+      this.initToast();
+      this.initCloseOnEscape();
+      this.initOverlayClick();
+      
+      console.log('[ModalSystem] Sistema inicializado');
+    },
+
+    /**
+     * Inicializa event listeners dos modais
+     */
+    initModals: function() {
+      const self = this;
+
+      // Botões de abertura de modais
+      document.querySelectorAll('[data-modal]').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const modalId = this.getAttribute('data-modal');
+          self.open(modalId);
+        });
+      });
+
+      // Botões de fechamento
+      document.querySelectorAll('[data-close]').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const modalId = this.getAttribute('data-close');
+          self.close(modalId);
+        });
+      });
+
+      // Close buttons genéricos
+      document.querySelectorAll('.modal-close').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const modal = this.closest('.modal');
+          if (modal) {
+            self.close(modal.id);
+          }
+        });
+      });
+    },
+
+    /**
+     * Abre um modal pelo ID
+     */
+    open: function(modalId) {
+      const modal = document.getElementById(modalId);
+      if (!modal) {
+        console.warn('[ModalSystem] Modal não encontrado:', modalId);
+        return;
+      }
+
+      const overlay = modal.querySelector('.modal-overlay');
+      const body = document.body;
+
+      // Salva elemento com foco
+      modal._lastFocusedElement = document.activeElement;
+
+      // Remove hidden e aria-hidden
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+
+      if (overlay) {
+        overlay.classList.remove('hidden');
+      }
+
+      // Previne scroll do body
+      body.style.overflow = 'hidden';
+
+      // Foco no modal
+      setTimeout(function() {
+        const focusable = modal.querySelector(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable) {
+          focusable.focus();
+        } else {
+          modal.focus();
+        }
+      }, 100);
+
+      // Dispara evento
+      modal.dispatchEvent(new CustomEvent('modal:open', { detail: { id: modalId } }));
+    },
+
+    /**
+     * Fecha um modal pelo ID
+     */
+    close: function(modalId) {
+      const modal = document.getElementById(modalId);
+      if (!modal) return;
+
+      const overlay = modal.querySelector('.modal-overlay');
+      const body = document.body;
+
+      // Adiciona hidden e aria-hidden
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+
+      if (overlay) {
+        overlay.classList.add('hidden');
+      }
+
+      // Restaura scroll
+      body.style.overflow = '';
+
+      // Restaura foco
+      if (modal._lastFocusedElement) {
+        modal._lastFocusedElement.focus();
+      }
+
+      // Dispara evento
+      modal.dispatchEvent(new CustomEvent('modal:close', { detail: { id: modalId } }));
+    },
+
+    /**
+     * Fecha todos os modais abertos
+     */
+    closeAll: function() {
+      document.querySelectorAll('.modal:not(.hidden)').forEach(function(modal) {
+        this.close(modal.id);
+      }.bind(this));
+    },
+
+    /**
+     * Inicializa sistema de toast notifications
+     */
+    initToast: function() {
+      window.showToast = function(message, type, duration) {
+        type = type || 'info';
+        duration = duration || 5000;
+
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = 'toast toast-' + type;
+        
+        const icons = {
+          success: 'fa-check-circle',
+          error: 'fa-exclamation-circle',
+          warning: 'fa-exclamation-triangle',
+          info: 'fa-info-circle'
         };
 
-        // Binds fixos para garantir contexto e permitir remoção correta
-        this._handleOutsideClick = this._handleOutsideClick.bind(this);
-        this._handleKeyDown = this._handleKeyDown.bind(this);
-        this._handleTriggerClick = this._handleTriggerClick.bind(this);
+        toast.innerHTML = 
+          '<i class="fas ' + (icons[type] || icons.info) + '"></i>' +
+          '<span class="toast-message">' + this.escapeHtml(message) + '</span>' +
+          '<button class="toast-close" onclick="ModalSystem.hideToast(this)">' +
+            '<i class="fas fa-times"></i>' +
+          '</button>';
 
-        this.init();
-    }
+        container.appendChild(toast);
 
-    init() {
-        if (this.isInitialized) return;
+        // Animação de entrada
+        setTimeout(function() {
+          toast.classList.add('show');
+        }, 10);
 
-        this.refresh();
-        this.bindGlobalEvents();
-        this.setupObserver();
-        
-        this.isInitialized = true;
-        this._debug('Gerenciador inicializado (Modo Híbrido: A11Y + Legado).');
-    }
+        // Auto-remover
+        if (duration > 0) {
+          setTimeout(function() {
+            this.hideToast(toast);
+          }.bind(this), duration);
+        }
+      }.bind(this);
+
+      window.hideToast = function(element) {
+        const toast = element.closest('.toast');
+        if (toast) {
+          toast.classList.remove('show');
+          toast.classList.add('hide');
+          setTimeout(function() {
+            toast.remove();
+          }, 300);
+        }
+      };
+    },
 
     /**
-     * Atualiza o mapa de modais com base no DOM atual.
+     * Mostra confirmação personalizada
      */
-    refresh() {
-        this.modals.clear();
-        Object.entries(this.modalConfigs).forEach(([key, config]) => {
-            const el = document.getElementById(config.id);
-            if (el) {
-                this.modals.set(key, {
-                    element: el,
-                    config: config,
-                    isOpen: el.classList.contains(config.activeClass)
-                });
+    confirm: function(message, title, onConfirm, onCancel) {
+      title = title || 'Confirmar';
+      
+      const modal = document.getElementById('confirm-modal');
+      if (!modal) return;
 
-                // Inicialização de atributos ARIA (Melhoria A11Y)
-                if (!el.hasAttribute('role')) el.setAttribute('role', 'dialog');
-                if (!el.hasAttribute('aria-modal')) el.setAttribute('aria-modal', 'true');
-                if (!el.hasAttribute('aria-hidden')) el.setAttribute('aria-hidden', 'true');
-                if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
-            }
-        });
-        
-        if (this.modals.size > 0) {
-            this._debug(`Modais detectados: ${Array.from(this.modals.keys()).join(', ')}`);
-        }
-    }
+      const titleEl = document.getElementById('confirm-title');
+      const messageEl = document.getElementById('confirm-message');
+      const okBtn = document.getElementById('confirm-ok');
+      const cancelBtn = document.getElementById('confirm-cancel');
+
+      if (titleEl) titleEl.innerHTML = '<i class="fas fa-question-circle"></i> ' + title;
+      if (messageEl) messageEl.textContent = message;
+
+      // Remove listeners anteriores
+      const newOkBtn = okBtn.cloneNode(true);
+      const newCancelBtn = cancelBtn.cloneNode(true);
+      okBtn.parentNode.replaceChild(newOkBtn, okBtn);
+      cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+      // Adiciona novos listeners
+      newOkBtn.addEventListener('click', function() {
+        this.close('confirm-modal');
+        if (onConfirm) onConfirm();
+      }.bind(this));
+
+      newCancelBtn.addEventListener('click', function() {
+        this.close('confirm-modal');
+        if (onCancel) onCancel();
+      }.bind(this));
+
+      this.open('confirm-modal');
+    },
 
     /**
-     * OBSERVER (Restaurada lógica de performance do original)
-     * Prioriza #modals-container para evitar observar o body inteiro desnecessariamente.
+     * Mostra mensagem de erro
      */
-    setupObserver() {
-        if (this.observer) this.observer.disconnect();
+    showError: function(message, title) {
+      title = title || 'Ops! Algo deu errado';
+      
+      const modal = document.getElementById('error-modal');
+      if (!modal) {
+        // Fallback: mostrar como toast
+        window.showToast(message, 'error');
+        return;
+      }
 
-        // Tenta pegar o container específico primeiro (otimização do original)
-        const target = document.getElementById('modals-container') || document.body;
+      const titleEl = document.getElementById('error-title');
+      const messageEl = document.getElementById('error-message');
 
-        this.observer = new MutationObserver((mutations) => {
-            const hasNewNodes = mutations.some(m => m.addedNodes.length > 0);
-            // Verifica se os nós adicionados são relevantes para os modais configurados
-            if (hasNewNodes) {
-                // Verificação leve para não dar refresh à toa
-                const needsRefresh = mutations.some(m => 
-                    Array.from(m.addedNodes).some(node => 
-                        node.nodeType === 1 && (node.id in this.modalConfigs || node.querySelector && node.querySelector('[id]'))
-                    )
-                );
-                
-                if (needsRefresh) {
-                    this._debug('Injeção dinâmica detectada. Atualizando referências...');
-                    this.refresh();
-                }
-            }
-        });
+      if (titleEl) titleEl.textContent = title;
+      if (messageEl) messageEl.textContent = message;
 
-        this.observer.observe(target, { childList: true, subtree: true });
-    }
+      this.open('error-modal');
+    },
 
     /**
-     * Gerenciamento de Eventos Globais
-     * Remove listeners antigos (Fix Memory Leak)
+     * Mostra modal de informações de ferramenta
      */
-    bindGlobalEvents() {
-        document.removeEventListener('click', this._handleOutsideClick);
-        document.removeEventListener('keydown', this._handleKeyDown);
-        document.removeEventListener('click', this._handleTriggerClick); // Centralizado
+    showToolInfo: function(tool) {
+      const modal = document.getElementById('tool-info-modal');
+      if (!modal) return;
 
-        document.addEventListener('click', this._handleOutsideClick);
-        document.addEventListener('keydown', this._handleKeyDown);
-        document.addEventListener('click', this._handleTriggerClick);
-    }
+      const titleEl = document.getElementById('modal-tool-title');
+      const contentEl = document.getElementById('modal-tool-content');
+      const linkEl = document.getElementById('modal-tool-link');
+
+      if (titleEl) {
+        titleEl.innerHTML = '<i class="fas fa-info-circle"></i> ' + tool.name;
+      }
+
+      if (contentEl) {
+        contentEl.innerHTML = 
+          '<div class="tool-info">' +
+            '<p class="tool-category"><strong>Categoria:</strong> ' + this.escapeHtml(tool.category) + '</p>' +
+            '<p class="tool-description">' + this.escapeHtml(tool.description) + '</p>' +
+            (tool.instructions ? '<div class="tool-instructions"><strong>Instruções:</strong><p>' + this.escapeHtml(tool.instructions) + '</p></div>' : '') +
+          '</div>';
+      }
+
+      if (linkEl) {
+        linkEl.href = tool.filename;
+      }
+
+      this.open('tool-info-modal');
+    },
 
     /**
-     * Handler unificado: Suporta tanto data-attributes (Novo) quanto classes (Legado)
+     * Mostra modal de loading
      */
-    _handleTriggerClick(e) {
-        const target = e.target;
-        let modalId = null;
-        let triggerElement = null;
+    showLoading: function(message) {
+      message = message || 'Carregando...';
+      
+      const modal = document.getElementById('loading-modal');
+      if (!modal) return;
 
-        // 1. Tenta via data-attribute (Padrão Novo)
-        const dataTrigger = target.closest('[data-modal-target]');
-        if (dataTrigger) {
-            modalId = dataTrigger.getAttribute('data-modal-target');
-            triggerElement = dataTrigger;
-        }
+      const messageEl = modal.querySelector('.modal-body p');
+      if (messageEl) messageEl.textContent = message;
 
-        // 2. Fallback para classes legadas (Restaurado do Original)
-        if (!modalId) {
-            if (target.closest('.accessibility-menu-trigger')) {
-                modalId = 'accessibility-menu';
-                triggerElement = target.closest('.accessibility-menu-trigger');
-            }
-            else if (target.closest('.cookie-prefs-trigger')) {
-                modalId = 'cookie-prefs-modal';
-                triggerElement = target.closest('.cookie-prefs-trigger');
-            }
-            else if (target.closest('.suggestion-modal-trigger')) {
-                modalId = 'suggestion-modal';
-                triggerElement = target.closest('.suggestion-modal-trigger');
-            }
-        }
+      this.open('loading-modal');
+    },
 
-        // Abertura
-        if (modalId) {
-            e.preventDefault();
-            this.openModal(modalId, triggerElement);
-            return;
-        }
+    /**
+     * Esconde modal de loading
+     */
+    hideLoading: function() {
+      this.close('loading-modal');
+    },
 
-        // Fechamento (Compatível com ambos)
-        if (
-            target.matches('[data-modal-close]') || 
-            target.closest('[data-modal-close]') ||
-            target.matches('.modal-close') || 
-            target.closest('.modal-close') ||
-            target.matches('.accessibility-menu-close') ||
-            target.closest('.accessibility-menu-close')
-        ) {
-            e.preventDefault();
-            // Tenta descobrir qual modal fechar (passado no data ou fecha tudo se genérico)
-            const closeBtn = target.closest('[data-modal-close]');
-            const specificId = closeBtn ? closeBtn.getAttribute('data-modal-close') : null;
-            
-            if (specificId) this.closeModal(specificId);
-            else this.closeAllModals();
-        }
-    }
-
-    _handleOutsideClick(e) {
-        // Verifica se clicou no backdrop (fundo escuro)
-        if (e.target.matches('.modal-backdrop')) {
-            this.closeAllModals();
-            return;
-        }
-
-        this.modals.forEach((data, key) => {
-            if (data.isOpen && e.target === data.element) {
-                this.closeModal(key);
-            }
-        });
-    }
-
-    _handleKeyDown(e) {
-        const activeModal = this._getActiveModal();
-        if (!activeModal) return;
-
+    /**
+     * Inicializa fechamento com ESC
+     */
+    initCloseOnEscape: function() {
+      document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            this.closeAllModals();
-            return;
+          this.closeAll();
         }
+      }.bind(this));
+    },
 
-        if (e.key === 'Tab') {
-            this._handleFocusTrap(e, activeModal.element);
-        }
+    /**
+     * Inicializa clique no overlay para fechar
+     */
+    initOverlayClick: function() {
+      document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+        overlay.addEventListener('click', function() {
+          const modal = this.closest('.modal');
+          if (modal) {
+            this.close(modal.id);
+          }
+        }.bind(this));
+      }.bind(this));
+    },
+
+    /**
+     * Escapa HTML para prevenir XSS
+     */
+    escapeHtml: function(str) {
+      if (typeof str !== 'string') return str;
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
     }
+  };
 
-    _handleFocusTrap(e, modalElement) {
-        const focusableElements = modalElement.querySelectorAll(
-            'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
-        );
-        
-        if (focusableElements.length === 0) return;
+  // Expõe globalmente
+  window.ModalSystem = ModalSystem;
+  window.modalSystem = ModalSystem;
 
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
+  // Inicializa quando o DOM estiver pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        ModalSystem.init();
+      }, 50);
+    });
+  } else {
+    setTimeout(function() {
+      ModalSystem.init();
+    }, 50);
+  }
 
-        if (e.shiftKey) {
-            if (document.activeElement === firstElement) {
-                e.preventDefault();
-                lastElement.focus();
-            }
-        } else {
-            if (document.activeElement === lastElement) {
-                e.preventDefault();
-                firstElement.focus();
-            }
-        }
-    }
+  // Também ouvir o evento do Template Engine
+  window.addEventListener('TemplateEngine:Ready', function() {
+    setTimeout(function() {
+      ModalSystem.init();
+    }, 100);
+  });
 
-    _getActiveModal() {
-        for (let [_, data] of this.modals) {
-            if (data.isOpen) return data;
-        }
-        return null;
-    }
-
-    openModal(modalKey, triggerElement = null) {
-        // Retry se não achar no map (pode ter sido injetado agora)
-        if (!this.modals.has(modalKey)) this.refresh();
-
-        const key = this.modals.has(modalKey) ? modalKey : 
-                    Object.keys(this.modalConfigs).find(k => this.modalConfigs[k].id === modalKey);
-
-        const data = this.modals.get(key);
-        
-        if (data) {
-            // Salva foco anterior
-            if (triggerElement) {
-                this.lastFocusedElement = triggerElement;
-            } else {
-                this.lastFocusedElement = document.activeElement;
-            }
-
-            this.closeAllModals(); 
-            
-            data.element.classList.add(data.config.activeClass);
-            data.element.setAttribute('aria-hidden', 'false');
-            data.isOpen = true;
-            document.body.style.overflow = 'hidden';
-
-            // Integração com Utils (Restaurado do Original)
-            if (window.Utils && window.Utils.animate && window.Utils.animate.fadeIn) {
-                window.Utils.animate.fadeIn(data.element);
-            }
-            
-            // Foco com delay para garantir renderização
-            setTimeout(() => {
-                const focusable = data.element.querySelector('input, button, [tabindex]:not([tabindex="-1"])');
-                if (focusable) {
-                    focusable.focus();
-                } else {
-                    data.element.focus();
-                }
-            }, 100);
-
-            this._debug(`Modal "${key}" aberto.`);
-        } else {
-            console.error(`[ModalsManager] Modal não encontrado: ${modalKey}`);
-        }
-    }
-
-    closeModal(modalKey) {
-        const key = this.modals.has(modalKey) ? modalKey : 
-                    Object.keys(this.modalConfigs).find(k => this.modalConfigs[k].id === modalKey);
-
-        const data = this.modals.get(key);
-        if (data && data.isOpen) {
-            data.element.classList.remove(data.config.activeClass);
-            data.element.setAttribute('aria-hidden', 'true');
-            data.isOpen = false;
-            
-            const anyOpen = Array.from(this.modals.values()).some(m => m.isOpen);
-            if (!anyOpen) document.body.style.overflow = '';
-
-            // Restaura foco
-            if (this.lastFocusedElement && document.body.contains(this.lastFocusedElement)) {
-                this.lastFocusedElement.focus();
-                this.lastFocusedElement = null;
-            }
-
-            this._debug(`Modal "${key}" fechado.`);
-        }
-    }
-
-    closeAllModals() {
-        this.modals.forEach((_, key) => {
-            if (this.modals.get(key).isOpen) {
-                this.closeModal(key);
-            }
-        });
-    }
-
-    _debug(msg) {
-        console.log(`%c[MODAL-SYSTEM] ${msg}`, 'color: #8b5cf6; font-weight: bold;');
-    }
-}
-
-/**
- * PONTO DE ENTRADA (Restaurado padrão global)
- */
-function initializeModals() {
-    if (!window.modalsManager) {
-        window.modalsManager = new ModalsManager();
-    } else {
-        window.modalsManager.refresh();
-    }
-}
-
-// Inicialização segura com TemplateEngine (Mantido)
-window.addEventListener('templateEngineReady', () => {
-    setTimeout(initializeModals, 100);
-});
-
-// Fallback padrão
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeModals);
-} else {
-    initializeModals();
-}
+})();
