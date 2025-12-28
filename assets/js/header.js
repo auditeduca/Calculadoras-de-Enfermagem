@@ -1,6 +1,6 @@
 /**
  * CALCULADORAS DE ENFERMAGEM - CORE HEADER ENGINE
- * Versão: 2.5 - Sincronizado com Template Engine
+ * Versão: 2.7 - Integração com Utils.js e ThemeConfig
  * 
  * IMPORTANTE: Este script deve rodar APÓS o Template Engine injetar o header
  */
@@ -9,6 +9,16 @@ class HeaderEngine {
   constructor() {
     this.activePanelId = null;
     this.initialized = false;
+    this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // URLs centralizadas das imagens do mega menu
+    this.megaMenuImages = {
+      sobrenos: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-sobre-nos.webp',
+      ferramentas: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-ferramentas.webp',
+      biblioteca: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-biblioteca.webp',
+      carreiras: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-carreiras.webp',
+      fale: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-fale-conosco.webp'
+    };
   }
 
   /**
@@ -21,6 +31,7 @@ class HeaderEngine {
     }
 
     console.log('[HeaderEngine] Inicializando...');
+    console.log(`[HeaderEngine] Dispositivo: ${this.isTouchDevice ? 'Touch' : 'Mouse/Trackpad'}`);
     
     // 1. GERENCIAMENTO DOS MEGA PANELS
     this.initMegaPanels();
@@ -30,6 +41,12 @@ class HeaderEngine {
     
     // 3. ACORDEÕES MOBILE
     this.initMobileAccordions();
+    
+    // 4. INICIALIZAÇÃO DAS IMAGENS DO MEGA MENU
+    this.initMegaMenuImages();
+    
+    // 5. INICIALIZAÇÃO DO TEMA (se ThemeConfig disponível)
+    this.initThemeIntegration();
     
     this.initialized = true;
     console.log('[HeaderEngine] Inicializado com sucesso');
@@ -169,7 +186,6 @@ class HeaderEngine {
       };
 
       trigger.addEventListener('click', activateTab);
-      trigger.addEventListener('mouseenter', activateTab);
       trigger.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -260,13 +276,16 @@ class HeaderEngine {
   }
 
   /**
-   * Inicializa Acordeões Mobile
+   * Inicializa Acordeões Mobile com suporte a touch
    */
   initMobileAccordions() {
     const accordionBtns = document.querySelectorAll('.mobile-accordion-btn');
     
     accordionBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
+      // Em dispositivos touch, usar apenas click para evitar comportamento indesejado de hover
+      const eventType = this.isTouchDevice ? 'click' : 'click';
+      
+      btn.addEventListener(eventType, () => {
         const isExpanded = btn.getAttribute('aria-expanded') === 'true';
         
         // Fechar outros acordeões (comportamento de accordion)
@@ -313,6 +332,108 @@ class HeaderEngine {
         }
       });
     });
+  }
+
+  /**
+   * Atualiza imagem do mega menu dinamicamente
+   * @param {string} panelId - ID do painel (ex: 'panel-sobrenos')
+   * @param {string} imageKey - Chave da imagem (ex: 'sobrenos')
+   */
+  updateMegaMenuImage(panelId, imageKey) {
+    const panel = document.getElementById(panelId);
+    if (!panel || !this.megaMenuImages[imageKey]) {
+      console.warn(`[HeaderEngine] Painel ou imagem não encontrados: ${panelId}, ${imageKey}`);
+      return;
+    }
+
+    const imgElement = panel.querySelector('.frame-image-container img');
+    if (imgElement) {
+      imgElement.src = this.megaMenuImages[imageKey];
+      console.log(`[HeaderEngine] Imagem atualizada para: ${imageKey}`);
+    }
+  }
+
+  /**
+   * Retorna URL da imagem do mega menu
+   * @param {string} imageKey - Chave da imagem
+   * @returns {string} URL da imagem
+   */
+  getMegaMenuImageUrl(imageKey) {
+    return this.megaMenuImages[imageKey] || null;
+  }
+
+  /**
+   * Inicializa e verifica as imagens do mega menu
+   */
+  initMegaMenuImages() {
+    console.log('[HeaderEngine] Imagens do mega menu disponíveis:', Object.keys(this.megaMenuImages));
+    
+    // Usar debounce se disponível no Utils
+    const preloadImages = window.Utils && typeof window.Utils.debounce === 'function'
+      ? window.Utils.debounce((key) => {
+          const img = new Image();
+          img.onerror = () => {
+            console.warn(`[HeaderEngine] Imagem não encontrada: ${key} - ${this.megaMenuImages[key]}`);
+          };
+          img.onload = () => {
+            console.log(`[HeaderEngine] Imagem carregada com sucesso: ${key}`);
+          };
+          img.src = this.megaMenuImages[key];
+        }, 100)
+      : (key) => {
+          const img = new Image();
+          img.onerror = () => {
+            console.warn(`[HeaderEngine] Imagem não encontrada: ${key} - ${this.megaMenuImages[key]}`);
+          };
+          img.onload = () => {
+            console.log(`[HeaderEngine] Imagem carregada com sucesso: ${key}`);
+          };
+          img.src = this.megaMenuImages[key];
+        };
+    
+    // Verificar se as imagens existem e fazer fallback se necessário
+    Object.keys(this.megaMenuImages).forEach(key => {
+      preloadImages(key);
+    });
+  }
+
+  /**
+   * Integração com ThemeConfig
+   */
+  initThemeIntegration() {
+    // Se ThemeConfig não existir, usar fallback simples
+    if (!window.ThemeConfig) {
+      window.toggleTheme = this.createSimpleThemeToggle();
+      return;
+    }
+
+    // Usar ThemeConfig para toggle de tema
+    window.toggleTheme = function() {
+      window.ThemeConfig.toggle();
+    };
+  }
+
+  /**
+   * Cria função simples de toggle de tema (fallback)
+   * @returns {Function}
+   */
+  createSimpleThemeToggle() {
+    return function() {
+      const body = document.body;
+      const isDark = body.classList.toggle('dark-theme');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      
+      const icon = document.querySelector('#theme-toggle i');
+      const btn = document.getElementById('theme-toggle');
+      
+      if (isDark) {
+        if (icon) icon.className = 'fas fa-sun';
+        if (btn) btn.setAttribute('aria-label', 'Alternar para modo claro');
+      } else {
+        if (icon) icon.className = 'fas fa-moon';
+        if (btn) btn.setAttribute('aria-label', 'Alternar para modo escuro');
+      }
+    };
   }
 
   /**
@@ -388,28 +509,6 @@ if (window.templateEngine) {
 
 // --- FUNÇÕES GLOBAIS (para compatibilidade com HTML) ---
 
-window.toggleTheme = function() {
-  if (window.ThemeConfig && typeof window.ThemeConfig.toggle === 'function') {
-    window.ThemeConfig.toggle();
-  } else {
-    // Fallback simples
-    const body = document.body;
-    const isDark = body.classList.toggle('dark-theme');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    
-    const icon = document.querySelector('#theme-toggle i');
-    const btn = document.getElementById('theme-toggle');
-    
-    if (isDark) {
-      if (icon) icon.className = 'fas fa-sun';
-      if (btn) btn.setAttribute('aria-label', 'Alternar para modo claro');
-    } else {
-      if (icon) icon.className = 'fas fa-moon';
-      if (btn) btn.setAttribute('aria-label', 'Alternar para modo escuro');
-    }
-  }
-};
-
 window.changeFontSize = function(action) {
   const root = document.documentElement;
   const currentSize = parseFloat(getComputedStyle(root).fontSize) || 16;
@@ -436,7 +535,7 @@ window.performSearch = function(query) {
   }
 
   resultsContainer.classList.remove('hidden');
-  defaultMsg.classList.add('hidden');
+    defaultMsg.classList.add('hidden');
 
   // Base de dados de busca
   const database = [

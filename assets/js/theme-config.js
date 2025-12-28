@@ -1,171 +1,315 @@
 /**
  * THEME-CONFIG.JS
- * Configuração de Tema (Claro/Escuro)
- * Versão: 2.0
+ * Sistema de Configuração de Tema
+ * Versão: 1.0 - Completo com suporte a dark mode
+ * 
+ * Funcionalidades:
+ * - Alternância entre tema claro e escuro
+ * - Persistência no localStorage
+ * - Detecção de preferência do sistema
+ * - Classes CSS dinâmicas
+ * - Integração com prefers-color-scheme
+ * - Transições suaves entre temas
  */
+
+const ThemeConfig = {
+  // Configurações
+  config: {
+    defaultTheme: 'light',
+    storageKey: 'site_theme',
+    className: 'dark-theme',
+    attribute: 'data-theme',
+    transitionDuration: 300,
+    watchSystem: true
+  },
+
+  // Estado
+  state: {
+    currentTheme: 'light',
+    isInitialized: false
+  },
+
+  /**
+   * Inicializa o sistema de tema
+   */
+  init: function() {
+    if (this.state.isInitialized) {
+      console.warn('[ThemeConfig] Já inicializado');
+      return;
+    }
+
+    console.log('[ThemeConfig] Inicializando...');
+
+    // Obter tema salvo ou detectar preferência
+    const savedTheme = this.getSavedTheme();
+    const systemTheme = this.getSystemTheme();
+    
+    // Aplicar tema inicial
+    this.applyTheme(savedTheme || systemTheme);
+
+    // Configurar listener de mudanças do sistema
+    if (this.config.watchSystem) {
+      this.watchSystemTheme();
+    }
+
+    // Configurar toggle button se existir
+    this.setupToggleButton();
+
+    this.state.isInitialized = true;
+    console.log(`[ThemeConfig] Inicializado com tema: ${this.state.currentTheme}`);
+
+    // Disparar evento de inicialização
+    window.dispatchEvent(new CustomEvent('ThemeConfig:Ready', {
+      detail: { theme: this.state.currentTheme }
+    }));
+  },
+
+  /**
+   * Obtém tema salvo no localStorage
+   * @returns {string|null}
+   */
+  getSavedTheme: function() {
+    try {
+      return localStorage.getItem(this.config.storageKey);
+    } catch (e) {
+      console.error('[ThemeConfig] Erro ao ler tema salvo:', e);
+      return null;
+    }
+  },
+
+  /**
+   * Obtém tema do sistema
+   * @returns {string}
+   */
+  getSystemTheme: function() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  },
+
+  /**
+   * Aplica tema ao documento
+   * @param {string} theme - 'light' ou 'dark'
+   */
+  applyTheme: function(theme) {
+    const validThemes = ['light', 'dark'];
+    theme = validThemes.includes(theme) ? theme : this.config.defaultTheme;
+
+    this.state.currentTheme = theme;
+    const body = document.body;
+
+    // Adicionar classe de transição para suavidade
+    body.style.transition = `background-color ${this.config.transitionDuration}ms ease, color ${this.config.transitionDuration}ms ease`;
+
+    if (theme === 'dark') {
+      body.classList.add(this.config.className);
+      body.setAttribute(this.config.attribute, 'dark');
+    } else {
+      body.classList.remove(this.config.className);
+      body.setAttribute(this.config.attribute, 'light');
+    }
+
+    // Salvar preferência
+    this.saveTheme(theme);
+
+    // Atualizar ícone do toggle se existir
+    this.updateToggleIcon();
+
+    // Disparar evento
+    window.dispatchEvent(new CustomEvent('ThemeChanged', {
+      detail: { theme: theme }
+    }));
+
+    console.log(`[ThemeConfig] Tema aplicado: ${theme}`);
+  },
+
+  /**
+   * Salva tema no localStorage
+   * @param {string} theme
+   */
+  saveTheme: function(theme) {
+    try {
+      localStorage.setItem(this.config.storageKey, theme);
+    } catch (e) {
+      console.error('[ThemeConfig] Erro ao salvar tema:', e);
+    }
+  },
+
+  /**
+   * Alterna entre temas
+   */
+  toggle: function() {
+    const newTheme = this.state.currentTheme === 'light' ? 'dark' : 'light';
+    this.applyTheme(newTheme);
+    return newTheme;
+  },
+
+  /**
+   * Define tema específico
+   * @param {string} theme - 'light' ou 'dark'
+   */
+  set: function(theme) {
+    if (['light', 'dark'].includes(theme)) {
+      this.applyTheme(theme);
+    }
+  },
+
+  /**
+   * Obtém tema atual
+   * @returns {string}
+   */
+  get: function() {
+    return this.state.currentTheme;
+  },
+
+  /**
+   * Verifica se tema escuro está ativo
+   * @returns {boolean}
+   */
+  isDark: function() {
+    return this.state.currentTheme === 'dark';
+  },
+
+  /**
+   * Configura listener para mudanças de tema do sistema
+   */
+  watchSystemTheme: function() {
+    if (!window.matchMedia) return;
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    mediaQuery.addEventListener('change', (e) => {
+      // Só alterar se usuário não tiver preferência salva
+      if (!this.getSavedTheme()) {
+        this.applyTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+  },
+
+  /**
+   * Configura botão de toggle do tema
+   */
+  setupToggleButton: function() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+
+    // Adicionar click listener se não existir
+    if (!toggleBtn.hasAttribute('data-theme-initialized')) {
+      toggleBtn.addEventListener('click', () => {
+        this.toggle();
+      });
+      toggleBtn.setAttribute('data-theme-initialized', 'true');
+    }
+
+    // Atualizar ícone inicial
+    this.updateToggleIcon();
+  },
+
+  /**
+   * Atualiza ícone do botão de toggle
+   */
+  updateToggleIcon: function() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+
+    const icon = toggleBtn.querySelector('i');
+    if (icon) {
+      if (this.state.currentTheme === 'dark') {
+        icon.className = 'fas fa-sun';
+        toggleBtn.setAttribute('aria-label', 'Alternar para modo claro');
+      } else {
+        icon.className = 'fas fa-moon';
+        toggleBtn.setAttribute('aria-label', 'Alternar para modo escuro');
+      }
+    }
+  },
+
+  /**
+   * Remove transição (útil para testes)
+   */
+  disableTransitions: function() {
+    document.body.style.transition = 'none';
+  },
+
+  /**
+   * Obtém status do tema
+   * @returns {Object}
+   */
+  getStatus: function() {
+    return {
+      currentTheme: this.state.currentTheme,
+      savedTheme: this.getSavedTheme(),
+      systemTheme: this.getSystemTheme(),
+      isDark: this.isDark(),
+      isInitialized: this.state.isInitialized
+    };
+  }
+};
+
+// Exportar globalmente
+window.ThemeConfig = ThemeConfig;
+
+// ============================================
+// ACESSIBILIDADE - REDUÇÃO DE MOVIMENTO
+// ============================================
 
 (function() {
   'use strict';
 
-  const ThemeConfig = {
-    STORAGE_KEY: 'theme_preference',
-    SYSTEM_KEY: 'prefers-color-scheme',
-    DARK_CLASS: 'dark-theme',
+  // Verificar preferência de movimento reduzido
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion) {
+    // Desabilitar transições para usuários que preferem movimento reduzido
+    document.documentElement.style.setProperty('--transition-duration', '0ms');
     
-    /**
-     * Inicializa o sistema de tema
-     */
-    init: function() {
-      // Aplica tema salvo ou preferência do sistema
-      this.applyTheme(this.getSavedTheme());
-      
-      // Espera o DOM estar pronto para sincronizar com controles do header
-      this.syncWithHeader();
-      
-      // Espera o Template Engine estar pronto
-      if (window.TemplateEngine) {
-        window.addEventListener('TemplateEngine:Ready', function() {
-          this.syncWithHeader();
-        }.bind(this));
+    // Sobrescrever transições em elementos críticos
+    const style = document.createElement('style');
+    style.textContent = `
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
       }
-      
-      console.log('[ThemeConfig] Sistema de tema inicializado');
-    },
-
-    /**
-     * Obtém o tema salvo ou detecta preferência
-     */
-    getSavedTheme: function() {
-      // Primeiro verifica localStorage
-      const saved = localStorage.getItem(this.STORAGE_KEY);
-      if (saved === 'dark' || saved === 'light') {
-        return saved;
-      }
-      
-      // Depois verifica preferência do sistema
-      if (window.matchMedia && window.matchMedia('(' + this.SYSTEM_KEY + ': dark)').matches) {
-        return 'dark';
-      }
-      
-      return 'light';
-    },
-
-    /**
-     * Aplica o tema ao documento
-     */
-    applyTheme: function(theme) {
-      theme = theme || 'light';
-      
-      if (theme === 'dark') {
-        document.body.classList.add(this.DARK_CLASS);
-      } else {
-        document.body.classList.remove(this.DARK_CLASS);
-      }
-      
-      // Salva preferência
-      localStorage.setItem(this.STORAGE_KEY, theme);
-      
-      // Dispara evento para outros scripts
-      window.dispatchEvent(new CustomEvent('theme:change', {
-        detail: { theme: theme }
-      }));
-    },
-
-    /**
-     * Alterna entre temas
-     */
-    toggle: function() {
-      const isDark = document.body.classList.contains(this.DARK_CLASS);
-      this.applyTheme(isDark ? 'light' : 'dark');
-      
-      // Atualiza ícone do header
-      this.updateHeaderIcon();
-    },
-
-    /**
-     * Define tema específico
-     */
-    set: function(theme) {
-      if (theme === 'dark' || theme === 'light') {
-        this.applyTheme(theme);
-        this.updateHeaderIcon();
-      }
-    },
-
-    /**
-     * Obtém tema atual
-     */
-    get: function() {
-      return document.body.classList.contains(this.DARK_CLASS) ? 'dark' : 'light';
-    },
-
-    /**
-     * Sincroniza com controles do header
-     */
-    syncWithHeader: function() {
-      this.updateHeaderIcon();
-    },
-
-    /**
-     * Atualiza ícone do botão de tema no header
-     */
-    updateHeaderIcon: function() {
-      const themeToggle = document.getElementById('theme-toggle');
-      const icon = themeToggle ? themeToggle.querySelector('i') : null;
-      const isDark = this.get() === 'dark';
-      
-      if (icon) {
-        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-      }
-      
-      if (themeToggle) {
-        themeToggle.setAttribute('aria-label', 
-          isDark ? 'Alternar para modo claro' : 'Alternar para modo escuro'
-        );
-      }
-    },
-
-    /**
-     * Escuta mudanças na preferência do sistema
-     */
-    watchSystemPreference: function() {
-      if (!window.matchMedia) return;
-      
-      const mediaQuery = window.matchMedia('(' + this.SYSTEM_KEY + ': dark)');
-      
-      mediaQuery.addEventListener('change', function(e) {
-        // Só altera se o usuário não tiver preferência salva
-        if (!localStorage.getItem(this.STORAGE_KEY)) {
-          this.applyTheme(e.matches ? 'dark' : 'light');
-          this.updateHeaderIcon();
-        }
-      }.bind(this));
-    }
-  };
-
-  // Expõe globalmente
-  window.ThemeConfig = ThemeConfig;
-  window.themeConfig = ThemeConfig;
-
-  // Função global compatível com onclick no HTML
-  window.toggleTheme = function() {
-    ThemeConfig.toggle();
-  };
-
-  // Inicializa quando o DOM estiver pronto
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      ThemeConfig.init();
-      ThemeConfig.watchSystemPreference();
-    });
-  } else {
-    ThemeConfig.init();
-    ThemeConfig.watchSystemPreference();
+    `;
+    document.head.appendChild(style);
   }
 
-  // Também ouvir o evento do Template Engine
-  window.addEventListener('TemplateEngine:Ready', function() {
-    ThemeConfig.syncWithHeader();
+  // Listener para mudanças na preferência
+  window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
+    if (e.matches) {
+      location.reload(); // Recarregar para aplicar mudanças
+    }
   });
 
 })();
+
+// ============================================
+// INICIALIZAÇÃO
+// ============================================
+
+// Inicializar quando DOM estiver pronto
+function initTheme() {
+  ThemeConfig.init();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTheme);
+} else {
+  initTheme();
+}
+
+// Listener para quando Template Engine estiver pronto
+window.addEventListener('TemplateEngine:Ready', () => {
+  setTimeout(() => {
+    // Atualizar toggle button após componentes carregarem
+    ThemeConfig.setupToggleButton();
+  }, 100);
+});
+
+// Para compatibilidade com módulos
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { ThemeConfig };
+}
