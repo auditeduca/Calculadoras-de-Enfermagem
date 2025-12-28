@@ -5,17 +5,15 @@
  */
 
 :root {
-    --primary-color: #1A3E74; 
+    /* Variáveis específicas do Header (não duplicadas em global.css) */
     --primary-hover: #143260;
     --accent-color: #1e40af; 
     --accent-glow: #3b82f6;  
     --scroll-track: #f1f5f9;
     --scroll-thumb: #93c5fd;
-    --bg-body: #F9FAFB;
-    --text-body: #1f2937;
-    --bg-panel: #ffffff;
-    --border-panel: #e2e8f0;
-
+    
+    /* Z-Index - Hierarquia de camadas do Header */
+    /* Nota: --z-dropdown, --z-modal, --z-toast, --z-loading definidos em global.css */
     --z-mega-panel: 900;
     --z-header: 1000;
     --z-mobile-menu: 9999;

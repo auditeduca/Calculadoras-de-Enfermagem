@@ -272,20 +272,10 @@
    * Inicializa sistema de tema (claro/escuro)
    */
   function initTheme() {
+    // Define toggleTheme globalmente, delegando para ThemeConfig
     window.toggleTheme = function() {
-      const body = document.body;
-      const isDark = body.classList.toggle('dark-theme');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-
-      const icon = document.querySelector('#theme-toggle i');
-      const btn = document.getElementById('theme-toggle');
-
-      if (isDark) {
-        if (icon) icon.className = 'fas fa-sun';
-        if (btn) btn.setAttribute('aria-label', 'Alternar para modo claro');
-      } else {
-        if (icon) icon.className = 'fas fa-moon';
-        if (btn) btn.setAttribute('aria-label', 'Alternar para modo escuro');
+      if (window.ThemeConfig && typeof window.ThemeConfig.toggle === 'function') {
+        window.ThemeConfig.toggle();
       }
     };
 
