@@ -7,28 +7,28 @@
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#1A3E74">
     <title>Calculadoras de Enfermagem | Ferramentas e Conteúdo Técnico</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/images/favicon-calculadoras-de-enfermagem.webp">
     <link rel="apple-touch-icon" href="assets/images/favicon-calculadoras-de-enfermagem.webp">
     <meta name="mobile-web-app-capable" content="yes">
-    
+
     <!-- Canonical e Hreflang para SEO -->
     <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
     <link rel="alternate" hreflang="pt-br" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
     <link rel="alternate" hreflang="en" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html?lang=en">
     <link rel="alternate" hreflang="es" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html?lang=es">
     <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
-    
+
     <!-- Preconnect para performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    
+
     <!-- Fontes -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Tailwind CSS (Play CDN - para desenvolvimento/protótipos) -->
     <!-- Nota: Para produção, recomenda-se instalar Tailwind como PostCSS plugin -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -48,11 +48,11 @@
         tailwind.debug = false;
         tailwind.safeList = [];
     </script>
-    
-    <!-- CSS Global -->
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/global-main-index.css">
-    
+
+    <!-- CSS Global (URLs absolutas para evitar 404 em produção) -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main-index.css">
+
     <!-- Google Consent Mode V2 -->
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -65,18 +65,18 @@
             'wait_for_update': 500
         });
     </script>
-    
+
     <!-- Script de monitoramento de carregamento -->
     <script>
         // Monitora se os componentes foram carregados
         window.addEventListener('TemplateEngine:Ready', function() {
             console.log('[Index] Template Engine Ready - Componentes carregados');
-            
+
             // Verifica se todos os containers foram preenchidos
             const headerContainer = document.getElementById('header-container');
             const footerContainer = document.getElementById('footer-container');
             const modalsContainer = document.getElementById('modals-container');
-            
+
             if (!headerContainer || headerContainer.innerHTML.trim() === '') {
                 console.warn('[Index] Header não foi carregado');
             }
@@ -87,13 +87,13 @@
                 console.warn('[Index] Modais não foram carregados');
             }
         });
-        
+
         // Fallback para timeout se componentes não carregarem
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const headerContainer = document.getElementById('header-container');
                 const footerContainer = document.getElementById('footer-container');
-                
+
                 if (headerContainer && headerContainer.innerHTML.trim() === '') {
                     headerContainer.innerHTML = '<div style="padding: 40px; text-align: center; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; margin: 20px;"><p style="color: #92400e; margin: 0;"><strong>Aviso:</strong> O cabeçalho não pôde ser carregado. Por favor, recarregue a página.</p></div>';
                 }
@@ -105,10 +105,10 @@
     </script>
 </head>
 <body class="bg-gray-50 text-gray-800">
-    
+
     <!-- Contêiner do Header (será carregado dinamicamente) -->
     <div id="header-container"></div>
-    
+
     <!-- Elemento Decorativo SVG Background -->
     <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
         <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
@@ -116,25 +116,25 @@
             <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
         </svg>
     </div>
-    
+
     <!-- Conteúdo Principal (será carregado dinamicamente) -->
     <main id="main-container" class="pt-[140px] min-h-screen">
         <!-- Conteúdo será injetado via TemplateEngine -->
     </main>
-    
+
     <!-- Contêiner do Footer (será carregado dinamicamente) -->
     <div id="footer-container"></div>
-    
+
     <!-- Contêiner dos Modais (será carregado dinamicamente) -->
     <div id="modals-container"></div>
-    
+
     <!-- Scripts Base (carregados em ordem específica para dependências) -->
-    
+
     <!-- Console Cleaner -->
-    <script src="assets/js/console-cleaner.js"></script>
-    
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/console-cleaner.js"></script>
+
     <!-- Utils -->
-    <script src="assets/js/utils.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js"></script>
     <script>
         // Verificar se Utils foi carregado corretamente
         if (typeof Utils === 'undefined') {
@@ -143,19 +143,19 @@
             console.log('[Index] Utils.js carregado com sucesso');
         }
     </script>
-    
+
     <!-- Template Engine (carrega componentes header, footer, modals) -->
-    <script src="assets/js/template-engine.js"></script>
-    
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/template-engine.js"></script>
+
     <!-- Theme Config -->
-    <script src="assets/js/theme-config.js"></script>
-    
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/theme-config.js"></script>
+
     <!-- Main Index Loader (carrega conteúdo principal) -->
-    <script src="assets/js/main-index-loader.js"></script>
-    
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index-loader.js"></script>
+
     <!-- Global Main Index (dados e renderização de ferramentas) -->
-    <script src="assets/js/global-main-index.js"></script>
-    
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js"></script>
+
     <!-- Script de Inicialização -->
     <script>
         // Log quando a página estiver pronta

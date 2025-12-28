@@ -12,6 +12,13 @@
  */
 
 class TemplateEngine {
+  /**
+   * URL base fixa para GitHub Pages
+   */
+  static get BASE_URL() {
+    return 'https://auditeduca.github.io/Calculadoras-de-Enfermagem';
+  }
+
   constructor() {
     this.components = {
       'header': {
@@ -36,7 +43,6 @@ class TemplateEngine {
     
     this.initialized = false;
     this.readyPromise = null;
-    this.baseUrl = this._detectBaseUrl();
     
     // Inicializar quando o DOM estiver pronto
     if (document.readyState === 'loading') {
@@ -47,51 +53,13 @@ class TemplateEngine {
   }
 
   /**
-   * Detecta a URL base automaticamente
-   */
-  _detectBaseUrl() {
-    const path = window.location.pathname;
-    const hostname = window.location.hostname;
-    
-    // Se estiver no GitHub Pages
-    if (hostname.includes('github.io')) {
-      // Extrai o nome do repositório do caminho
-      const pathParts = path.split('/').filter(part => part.length > 0);
-      // O primeiro segmento após a raiz é o nome do repositório
-      if (pathParts.length > 0) {
-        return '/' + pathParts[0];
-      }
-      return '';
-    }
-    
-    // Se for localhost ou servidor local
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
-      return '';
-    }
-    
-    // Se for produção com subdiretório
-    if (path.includes('/Calculadoras-de-Enfermagem')) {
-      return '/Calculadoras-de-Enfermagem';
-    }
-    
-    // Se for produção na raiz
-    if (path === '/' || path.endsWith('/index.html')) {
-      return '';
-    }
-    
-    // Extrai o diretório base do arquivo atual
-    const lastSlash = path.lastIndexOf('/');
-    return lastSlash > 0 ? path.substring(0, lastSlash) : '';
-  }
-
-  /**
    * Inicializa o motor de templates
    */
   async init() {
     if (this.initialized) return this.readyPromise;
     
     console.log('[TemplateEngine] Inicializando sistema modular...');
-    console.log('[TemplateEngine] Base URL detectada:', this.baseUrl);
+    console.log('[TemplateEngine] Base URL:', TemplateEngine.BASE_URL);
     
     this.readyPromise = this._loadAllComponents();
     
@@ -181,18 +149,15 @@ class TemplateEngine {
   }
 
   /**
-   * Constrói URL considerando a base
+   * Constrói URL absoluta
    */
   _buildUrl(path) {
-    // Remove barras duplas e garante formato correto
-    const cleanBase = this.baseUrl.replace(/\/$/, '');
-    const cleanPath = path.replace(/^\//, '');
-    return `${cleanBase}/${cleanPath}`;
+    return `${TemplateEngine.BASE_URL}/${path}`;
   }
 
   /**
    * Fallback para carregar componente quando fetch falha
-   * Usa script inline como módulo
+   * Usa caminhos absolutos para garantir funcionamento em produção
    */
   async _loadComponentFallback(name, config) {
     const container = document.getElementById(config.container);
@@ -201,54 +166,38 @@ class TemplateEngine {
     console.log(`[TemplateEngine] Tentando fallback para '${name}'`);
 
     try {
-      // Tenta caminhos alternativos
-      const alternativePaths = [
-        `assets/components/${config.html}`,
-        `../assets/components/${config.html}`,
-        `/assets/components/${config.html}`
-      ];
+      // Caminhos absolutos para GitHub Pages
+      const absoluteHtmlUrl = `${TemplateEngine.BASE_URL}/assets/components/${config.html}`;
+      const response = await fetch(absoluteHtmlUrl);
 
-      let loaded = false;
-      
-      for (const altPath of alternativePaths) {
-        try {
-          const response = await fetch(altPath);
-          if (response.ok) {
-            const html = await response.text();
-            container.innerHTML = html;
-            
-            // Carrega CSS e JS
-            if (config.css) {
-              this._loadCSS(`assets/css/${config.css}`);
-            }
-            if (config.js) {
-              await this._loadScript(`assets/js/${config.js}`);
-            }
-            
-            console.log(`[TemplateEngine] Componente '${name}' carregado via fallback: ${altPath}`);
-            loaded = true;
-            break;
-          }
-        } catch (e) {
-          // Continua para o próximo caminho
+      if (response.ok) {
+        const html = await response.text();
+        container.innerHTML = html;
+
+        // Carrega CSS e JS com URLs absolutas
+        if (config.css) {
+          this._loadCSS(`${TemplateEngine.BASE_URL}/assets/css/${config.css}`);
         }
-      }
+        if (config.js) {
+          await this._loadScript(`${TemplateEngine.BASE_URL}/assets/js/${config.js}`);
+        }
 
-      if (!loaded) {
-        // Último recurso: mostrar mensagem de erro no container
-        container.innerHTML = `
-          <div style="padding: 20px; background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; margin: 10px;">
-            <p style="color: #b91c1c; margin: 0;">
-              <strong>Erro ao carregar componente:</strong> ${name}<br>
-              <small>Por favor, recarregue a página ou verifique sua conexão.</small>
-            </p>
-          </div>
-        `;
-        console.error(`[TemplateEngine] Falha definitiva ao carregar '${name}'`);
+        console.log(`[TemplateEngine] Componente '${name}' carregado via fallback`);
+      } else {
+        throw new Error(`HTTP ${response.status}`);
       }
 
     } catch (error) {
-      console.error(`[TemplateEngine] Erro no fallback de '${name}':`, error);
+      // Último recurso: mostrar mensagem de erro no container
+      container.innerHTML = `
+        <div style="padding: 20px; background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; margin: 10px;">
+          <p style="color: #b91c1c; margin: 0;">
+            <strong>Erro ao carregar componente:</strong> ${name}<br>
+            <small>Por favor, recarregue a página ou verifique sua conexão.</small>
+          </p>
+        </div>
+      `;
+      console.error(`[TemplateEngine] Falha definitiva ao carregar '${name}'`);
     }
   }
 
