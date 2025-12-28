@@ -1,9 +1,3 @@
-/**
- * CONSOLE-CLEANER.JS
- * Limpa mensagens de console em produção
- * Versão: 2.0
- */
-
 (function() {
   'use strict';
 
