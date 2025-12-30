@@ -20,8 +20,14 @@ const AccessControl = {
 
     elements: {},
 
-    init() {
-        // Cachear elementos
+    // Método para verificar e recarregar elementos se necessário
+    ensureElements() {
+        // Se os elementos já estão cacheados e válidos, retorna true
+        if (this.elements.panel && this.elements.sideWidgets) {
+            return true;
+        }
+        
+        // Tentar recarregar do DOM
         this.elements = {
             body: document.body,
             panel: document.getElementById('accessibility-panel'),
@@ -29,6 +35,13 @@ const AccessControl = {
             closeBtn: document.getElementById('close-panel-btn'),
             openBtn: document.getElementById('accessibility-btn')
         };
+        
+        return !!this.elements.panel;
+    },
+
+    init() {
+        // Cachear elementos
+        this.ensureElements();
 
         if (!this.elements.panel) {
             console.warn('Painel de Acessibilidade não encontrado no DOM.');
@@ -126,11 +139,15 @@ const AccessControl = {
             if (e.key === 'Escape') this.closePanel();
         });
 
-        // Clique Fora
+        // Clique Fora - com verificação defensiva
         document.addEventListener('click', (e) => {
+            if (!this.ensureElements()) return;
+            
             if (!this.isPanelClosed() && 
-                !this.elements.panel.contains(e.target) && 
-                !this.elements.sideWidgets.contains(e.target)) {
+                this.elements.panel && 
+                this.elements.panel.contains(e.target) === false && 
+                this.elements.sideWidgets && 
+                this.elements.sideWidgets.contains(e.target) === false) {
                 this.closePanel();
             }
         });
@@ -139,10 +156,20 @@ const AccessControl = {
     // --- Controles de UI ---
 
     isPanelClosed() {
+        // Verificação defensiva
+        if (!this.ensureElements() || !this.elements.panel) {
+            return true; // Assume fechado se não encontrar elemento
+        }
         return this.elements.panel.classList.contains('accessibility-panel-hidden');
     },
 
     togglePanel() {
+        // Verificação defensiva - tentar inicializar se necessário
+        if (!this.ensureElements()) {
+            console.warn('Painel de acessibilidade não carregado ainda.');
+            return;
+        }
+        
         if (this.isPanelClosed()) {
             this.openPanel();
         } else {
@@ -151,21 +178,38 @@ const AccessControl = {
     },
 
     openPanel() {
+        // Verificação defensiva
+        if (!this.ensureElements() || !this.elements.panel) return;
+        
         this.elements.panel.classList.remove('accessibility-panel-hidden');
-        this.elements.sideWidgets.classList.add('side-widgets-hidden');
+        if (this.elements.sideWidgets) {
+            this.elements.sideWidgets.classList.add('side-widgets-hidden');
+        }
         // Delay para foco acessível
-        setTimeout(() => this.elements.closeBtn?.focus(), 100);
+        setTimeout(() => {
+            if (this.elements.closeBtn) {
+                this.elements.closeBtn.focus();
+            }
+        }, 100);
     },
 
     closePanel() {
+        // Verificação defensiva
+        if (!this.ensureElements() || !this.elements.panel) return;
         if(this.isPanelClosed()) return;
         
         this.elements.panel.classList.add('accessibility-panel-hidden');
-        this.elements.sideWidgets.classList.remove('side-widgets-hidden');
-        this.elements.openBtn?.focus();
+        if (this.elements.sideWidgets) {
+            this.elements.sideWidgets.classList.remove('side-widgets-hidden');
+        }
+        if (this.elements.openBtn) {
+            this.elements.openBtn.focus();
+        }
     },
 
     toggleMaximize() {
+        // Verificação defensiva
+        if (!this.ensureElements() || !this.elements.panel) return;
         this.elements.panel.classList.toggle('panel-expanded');
     },
 
@@ -179,16 +223,24 @@ const AccessControl = {
     // --- Funcionalidades (Features) ---
 
     toggleSimple(className, cardElement) {
+        // Verificação defensiva
+        if (!this.ensureElements()) return;
+        
         this.elements.body.classList.toggle(className);
-        cardElement.classList.toggle('active');
-        this.updateDots(cardElement);
+        if (cardElement) {
+            cardElement.classList.toggle('active');
+            this.updateDots(cardElement);
+        }
     },
 
     cycleFeature(key, values, cardElement) {
+        // Verificação defensiva
+        if (!this.ensureElements()) return;
+        
         this.state[key] = (this.state[key] + 1) % (values.length + 1);
         const currentIndex = this.state[key] - 1;
         const activeValue = values[currentIndex];
-        const badge = cardElement.querySelector('.level-badge');
+        const badge = cardElement ? cardElement.querySelector('.level-badge') : null;
 
         // Remover classes anteriores
         if (key === 'fontFamily') this.elements.body.classList.remove('font-atkinson', 'font-newsreader', 'font-dyslexic');
@@ -196,16 +248,16 @@ const AccessControl = {
 
         if (currentIndex === -1) {
             // Desativar feature
-            cardElement.classList.remove('active');
+            if (cardElement) cardElement.classList.remove('active');
             if(badge) badge.style.display = 'none';
-            this.resetDots(cardElement);
+            if (cardElement) this.resetDots(cardElement);
             
             if (key === 'fontSize') document.documentElement.style.setProperty('--font-scale', '1');
             if (key === 'letterSpacing') document.documentElement.style.setProperty('--letter-spacing', 'normal');
             if (key === 'readingMask') this.toggleReadingMask(false);
         } else {
             // Ativar feature
-            cardElement.classList.add('active');
+            if (cardElement) cardElement.classList.add('active');
             this.updateDots(cardElement, this.state[key]);
             
             // Formatar texto do badge
@@ -250,9 +302,14 @@ const AccessControl = {
     },
 
     toggleTTS(cardElement) {
+        // Verificação defensiva
+        if (!this.ensureElements()) return;
+        
         this.state.isTTSActive = !this.state.isTTSActive;
-        cardElement.classList.toggle('active');
-        this.updateDots(cardElement, this.state.isTTSActive ? 1 : 0);
+        if (cardElement) {
+            cardElement.classList.toggle('active');
+            this.updateDots(cardElement, this.state.isTTSActive ? 1 : 0);
+        }
         
         if (this.state.isTTSActive) {
             this.elements.body.style.cursor = "help";
@@ -273,13 +330,18 @@ const AccessControl = {
     },
 
     resetAll() {
+        // Verificação defensiva
+        this.ensureElements();
+        
         Object.keys(this.state).forEach(k => this.state[k] = 0);
         document.documentElement.style.setProperty('--font-scale', '1');
         document.documentElement.style.setProperty('--letter-spacing', 'normal');
         
-        this.elements.body.classList.remove('contrast-dark', 'contrast-inverted', 'highlight-links', 'bold-text', 'stop-anim', 'font-atkinson', 'font-newsreader', 'font-dyslexic');
+        if (this.elements.body) {
+            this.elements.body.classList.remove('contrast-dark', 'contrast-inverted', 'highlight-links', 'bold-text', 'stop-anim', 'font-atkinson', 'font-newsreader', 'font-dyslexic');
+            this.elements.body.style.cursor = "default";
+        }
         
-        this.elements.body.style.cursor = "default";
         this.toggleReadingMask(false);
         window.speechSynthesis.cancel();
         
