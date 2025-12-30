@@ -20,6 +20,14 @@ class TemplateEngine {
       'footer-container': 'assets/components/footer.html'
     };
     
+    // Configuração de estilos CSS (path -> ordem de carregamento)
+    this.cssConfig = {
+      'assets/css/header.css': 1,      // Header principal
+      'assets/css/footer.css': 2,      // Footer
+      'assets/css/modals.css': 3,      // Modais
+      'assets/css/main.css': 10        // Estilos gerais (último)
+    };
+    
     // Mapeamento de módulos JS para componentes
     this.moduleMapping = {
       'header-container': { module: 'HeaderEngine', initializer: 'init', jsPath: 'assets/js/header.js' },
@@ -30,6 +38,7 @@ class TemplateEngine {
     
     this.componentsLoaded = false;
     this.modulesInitialized = false;
+    this.cssLoaded = false;
     this.basePath = '';
     this.initPromise = null;
     
@@ -72,6 +81,9 @@ class TemplateEngine {
       // Atualizar caminhos na config com basePath
       this.updateConfigPaths();
       
+      // Carregar estilos CSS primeiro (síncrono para evitar FOU)
+      await this.loadStylesheets();
+      
       // Carregar componentes com retry
       await this.loadComponentsWithRetry();
       
@@ -85,6 +97,7 @@ class TemplateEngine {
       // Marcar como pronto e disparar evento
       this.componentsLoaded = true;
       this.modulesInitialized = true;
+      this.cssLoaded = true;
       document.dispatchEvent(new Event('TemplateEngine:Ready'));
       
       // Inicializar conteúdo principal se existir
@@ -123,6 +136,7 @@ class TemplateEngine {
   updateConfigPaths() {
     const updatedConfig = {};
     const updatedModuleMapping = {};
+    const updatedCssConfig = {};
     
     // Atualizar config de componentes
     for (const [containerId, path] of Object.entries(this.config)) {
@@ -138,6 +152,85 @@ class TemplateEngine {
       };
     }
     this.moduleMapping = updatedModuleMapping;
+    
+    // Atualizar config de CSS
+    for (const [path, order] of Object.entries(this.cssConfig)) {
+      updatedCssConfig[`${this.basePath}${path}`] = order;
+    }
+    this.cssConfig = updatedCssConfig;
+  }
+  
+  /**
+   * Carrega todos os estilos CSS configurados
+   */
+  async loadStylesheets() {
+    console.log('[TemplateEngine] Carregando estilos CSS...');
+    
+    // Ordenar estilos por prioridade
+    const sortedStyles = Object.entries(this.cssConfig)
+      .sort((a, b) => a[1] - b[1])
+      .map(([path]) => path);
+    
+    // Carregar estilos em paralelo
+    const loadPromises = sortedStyles.map(path => this.loadStylesheet(path));
+    
+    await Promise.all(loadPromises);
+    console.log(`[TemplateEngine] ${sortedStyles.length} estilos carregados`);
+  }
+  
+  /**
+   * Carrega um único stylesheet
+   */
+  loadStylesheet(path) {
+    return new Promise((resolve, reject) => {
+      // Verificar se já existe
+      const existingLink = document.querySelector(`link[href="${path}"]`);
+      if (existingLink) {
+        console.log(`[TemplateEngine] Stylesheet já existente: ${path}`);
+        resolve();
+        return;
+      }
+      
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = path;
+      link.media = 'all';
+      link.id = `css-${path.replace(/[^a-zA-Z0-9]/g, '-')}`;
+      
+      link.onload = () => {
+        console.log(`[TemplateEngine] Stylesheet carregado: ${path}`);
+        resolve();
+      };
+      
+      link.onerror = (error) => {
+        console.warn(`[TemplateEngine] Erro ao carregar stylesheet: ${path}`, error);
+        // Não rejeitar - permitir que o site continue funcionando
+        resolve();
+      };
+      
+      // Adicionar ao head
+      document.head.appendChild(link);
+    });
+  }
+  
+  /**
+   * Adiciona novo stylesheet dinamicamente
+   */
+  addStylesheet(path, order = 5) {
+    this.cssConfig[path] = order;
+    return this.loadStylesheet(`${this.basePath}${path}`);
+  }
+  
+  /**
+   * Remove um stylesheet
+   */
+  removeStylesheet(path) {
+    const fullPath = `${this.basePath}${path}`;
+    const link = document.getElementById(`css-${fullPath.replace(/[^a-zA-Z0-9]/g, '-')}`);
+    if (link && link.parentNode) {
+      link.parentNode.removeChild(link);
+      console.log(`[TemplateEngine] Stylesheet removido: ${fullPath}`);
+    }
   }
 
   /**
@@ -415,10 +508,19 @@ class TemplateEngine {
     return {
       loaded: this.componentsLoaded,
       modulesInitialized: this.modulesInitialized,
+      cssLoaded: this.cssLoaded,
       basePath: this.basePath,
       components: Object.keys(this.config),
-      containers: Object.keys(this.config).filter(id => document.getElementById(id))
+      containers: Object.keys(this.config).filter(id => document.getElementById(id)),
+      stylesheets: Object.keys(this.cssConfig)
     };
+  }
+  
+  /**
+   * Verifica se todos os recursos estão carregados
+   */
+  isReady() {
+    return this.componentsLoaded && this.modulesInitialized && this.cssLoaded;
   }
 }
 
