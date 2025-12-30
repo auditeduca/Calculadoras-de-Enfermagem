@@ -1,9 +1,6 @@
-<!-- FAIXA 1: Top Bar com Controles de Acessibilidade e Tema -->
 <div class="top-bar" id="top-bar">
     <div class="top-bar-container">
-        <!-- Grupo de Controles de Acessibilidade (Fonte + Tema) -->
         <div class="accessibility-controls" role="group" aria-label="Controles de acessibilidade">
-            <!-- Controles de Tamanho da Fonte -->
             <div class="font-size-controls" role="group" aria-label="Controle de tamanho da fonte">
                 <button type="button" class="font-btn font-btn-reduce" id="font-reduce" aria-label="Reduzir fonte" title="Reduzir fonte">
                     <span class="font-btn-icon">A-</span>
@@ -12,17 +9,11 @@
                     <span class="font-btn-icon">A+</span>
                 </button>
             </div>
-            
-            <!-- Botão Toggle Tema -->
             <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
                 <i class="fas fa-moon" aria-hidden="true"></i>
             </button>
-            
-            <!-- Divisória -->
             <div class="top-bar-divider" aria-hidden="true"></div>
         </div>
-        
-        <!-- Botões de Navegação Rápida (Skip) - Lado Direito -->
         <div class="skip-controls" role="group" aria-label="Navegação rápida">
             <a href="#main-header" class="skip-btn" id="skip-top" aria-label="Ir para o topo da página">
                 <i class="fas fa-arrow-up" aria-hidden="true"></i>
@@ -39,30 +30,19 @@
         </div>
     </div>
 </div>
-
-<!-- FAIXA 2: Header Principal com Logo e Navegação -->
 <header class="main-header" id="main-header">
     <div class="header-container">
-        <!-- Logo -->
         <a href="index.html" class="site-logo" aria-label="Calculadoras de Enfermagem - Página Inicial">
-            <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" 
-                 alt="Calculadoras de Enfermagem" 
-                 class="logo-image">
+            <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="logo-image">
         </a>
-
-        <!-- Menu Desktop -->
         <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
             <ul class="nav-list">
                 <li class="nav-item">
                     <a href="index.html" class="nav-link">Início</a>
                 </li>
                 <li class="nav-item has-mega-menu">
-                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="sobre-nos">
-                        Sobre Nós
-                    </button>
-                    <!-- Mega Panel: Sobre Nós -->
-                    <div class="mega-panel" id="mega-panel-sobre-nos" data-menu="sobre-nos">
-                        <!-- Elemento Decorativo SVG Background -->
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="sobre-nos">Sobre Nós</button>
+                    <div class="mega-panel" id="mega-panel-sobre-nos" data-menu="sobre-nos" style="position: fixed; left: 0; right: 0; top: 92px; z-index: 9999;">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
@@ -70,25 +50,14 @@
                             </svg>
                         </div>
                         <div class="panel-standard-height">
-                            <!-- Coluna 1: Abas de Categorias -->
                             <aside class="panel-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Categorias de Sobre Nós">
-                                    <button type="button" class="menu-tab-trigger active" data-tab="historia" aria-selected="true">
-                                        Nossa História
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="missao" aria-selected="false">
-                                        Missão e Valores
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="equipe" aria-selected="false">
-                                        Nossa Equipe
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="parceiros" aria-selected="false">
-                                        Parceiros
-                                    </button>
+                                    <button type="button" class="menu-tab-trigger active" data-tab="historia" aria-selected="true">Nossa História</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="missao" aria-selected="false">Missão e Valores</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="equipe" aria-selected="false">Nossa Equipe</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="parceiros" aria-selected="false">Parceiros</button>
                                 </nav>
                             </aside>
-                            
-                            <!-- Coluna 2: Conteúdo dos Links -->
                             <main class="panel-main-content header-scroll">
                                 <div class="tab-content active" id="tab-historia">
                                     <h3 class="content-title">Nossa História</h3>
@@ -128,28 +97,19 @@
                                     </ul>
                                 </div>
                             </main>
-                            
-                            <!-- Coluna 3: Imagem Promocional -->
                             <aside class="panel-promo-area">
                                 <div class="glowing-frame">
                                     <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-sobre-nos.webp" 
-                                             alt="Equipe de enfermagem trabalhando" 
-                                             loading="lazy">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-sobre-nos.webp" alt="Equipe de enfermagem trabalhando" loading="lazy">
                                     </div>
                                 </div>
                             </aside>
                         </div>
                     </div>
                 </li>
-                
                 <li class="nav-item has-mega-menu">
-                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="ferramentas">
-                        Ferramentas
-                    </button>
-                    <!-- Mega Panel: Ferramentas -->
-                    <div class="mega-panel" id="mega-panel-ferramentas" data-menu="ferramentas">
-                        <!-- Elemento Decorativo SVG Background -->
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="ferramentas">Ferramentas</button>
+                    <div class="mega-panel" id="mega-panel-ferramentas" data-menu="ferramentas" style="position: fixed; left: 0; right: 0; top: 92px; z-index: 9999;">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
@@ -159,21 +119,12 @@
                         <div class="panel-standard-height">
                             <aside class="panel-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Categorias de Ferramentas">
-                                    <button type="button" class="menu-tab-trigger active" data-tab="calculadoras" aria-selected="true">
-                                        Calculadoras
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="protocolos" aria-selected="false">
-                                        Protocolos
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="simuladores" aria-selected="false">
-                                        Simuladores
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="recursos" aria-selected="false">
-                                        Recursos Úteis
-                                    </button>
+                                    <button type="button" class="menu-tab-trigger active" data-tab="calculadoras" aria-selected="true">Calculadoras</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="protocolos" aria-selected="false">Protocolos</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="simuladores" aria-selected="false">Simuladores</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="recursos" aria-selected="false">Recursos Úteis</button>
                                 </nav>
                             </aside>
-                            
                             <main class="panel-main-content header-scroll">
                                 <div class="tab-content active" id="tab-calculadoras">
                                     <h3 class="content-title">Calculadoras Clínicas</h3>
@@ -215,27 +166,19 @@
                                     </ul>
                                 </div>
                             </main>
-                            
                             <aside class="panel-promo-area">
                                 <div class="glowing-frame">
                                     <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-ferramentas.webp" 
-                                             alt="Ferramentas de enfermagem" 
-                                             loading="lazy">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-ferramentas.webp" alt="Ferramentas de enfermagem" loading="lazy">
                                     </div>
                                 </div>
                             </aside>
                         </div>
                     </div>
                 </li>
-                
                 <li class="nav-item has-mega-menu">
-                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="biblioteca">
-                        Biblioteca
-                    </button>
-                    <!-- Mega Panel: Biblioteca -->
-                    <div class="mega-panel" id="mega-panel-biblioteca" data-menu="biblioteca">
-                        <!-- Elemento Decorativo SVG Background -->
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="biblioteca">Biblioteca</button>
+                    <div class="mega-panel" id="mega-panel-biblioteca" data-menu="biblioteca" style="position: fixed; left: 0; right: 0; top: 92px; z-index: 9999;">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
@@ -245,21 +188,12 @@
                         <div class="panel-standard-height">
                             <aside class="panel-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Categorias da Biblioteca">
-                                    <button type="button" class="menu-tab-trigger active" data-tab="artigos" aria-selected="true">
-                                        Artigos
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="guias" aria-selected="false">
-                                        Guias Práticos
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="videos" aria-selected="false">
-                                        Vídeos
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="ebooks" aria-selected="false">
-                                        E-books
-                                    </button>
+                                    <button type="button" class="menu-tab-trigger active" data-tab="artigos" aria-selected="true">Artigos</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="guias" aria-selected="false">Guias Práticos</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="videos" aria-selected="false">Vídeos</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="ebooks" aria-selected="false">E-Books</button>
                                 </nav>
                             </aside>
-                            
                             <main class="panel-main-content header-scroll">
                                 <div class="tab-content active" id="tab-artigos">
                                     <h3 class="content-title">Artigos Científicos</h3>
@@ -290,36 +224,28 @@
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-ebooks">
-                                    <h3 class="content-title">E-books</h3>
+                                    <h3 class="content-title">E-Books</h3>
                                     <ul class="content-links">
                                         <li><a href="#">Coleção Completa</a></li>
                                         <li><a href="#">Manuais de Rotina</a></li>
-                                        <li><a href="#"> Apostilas</a></li>
+                                        <li><a href="#">Apostilas</a></li>
                                         <li><a href="#">Publicações Exclusivas</a></li>
                                     </ul>
                                 </div>
                             </main>
-                            
                             <aside class="panel-promo-area">
                                 <div class="glowing-frame">
                                     <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-biblioteca.webp" 
-                                             alt="Biblioteca de enfermagem" 
-                                             loading="lazy">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-biblioteca.webp" alt="Biblioteca de enfermagem" loading="lazy">
                                     </div>
                                 </div>
                             </aside>
                         </div>
                     </div>
                 </li>
-                
                 <li class="nav-item has-mega-menu">
-                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="carreiras">
-                        Carreiras
-                    </button>
-                    <!-- Mega Panel: Carreiras -->
-                    <div class="mega-panel" id="mega-panel-carreiras" data-menu="carreiras">
-                        <!-- Elemento Decorativo SVG Background -->
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="carreiras">Carreiras</button>
+                    <div class="mega-panel" id="mega-panel-carreiras" data-menu="carreiras" style="position: fixed; left: 0; right: 0; top: 92px; z-index: 9999;">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
@@ -329,26 +255,17 @@
                         <div class="panel-standard-height">
                             <aside class="panel-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Categorias de Carreiras">
-                                    <button type="button" class="menu-tab-trigger active" data-tab="oportunidades" aria-selected="true">
-                                        Oportunidades
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="formacao" aria-selected="false">
-                                        Formação
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="desenvolvimento" aria-selected="false">
-                                        Desenvolvimento
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="dicas" aria-selected="false">
-                                        Dicas de Carreira
-                                    </button>
+                                    <button type="button" class="menu-tab-trigger active" data-tab="oportunidades" aria-selected="true">Oportunidades</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="formacao" aria-selected="false">Formação</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="desenvolvimento" aria-selected="false">Desenvolvimento</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="dicas" aria-selected="false">Dicas de Carreira</button>
                                 </nav>
                             </aside>
-                            
                             <main class="panel-main-content header-scroll">
                                 <div class="tab-content active" id="tab-oportunidades">
                                     <h3 class="content-title">Oportunidades de Trabalho</h3>
                                     <ul class="content-links">
-                                        <li><a href="#">Vagas Activas</a></li>
+                                        <li><a href="#">Vagas Ativas</a></li>
                                         <li><a href="#">Hospitais e Clínicas</a></li>
                                         <li><a href="#">Saúde Pública</a></li>
                                         <li><a href="#">Home Care</a></li>
@@ -383,27 +300,19 @@
                                     </ul>
                                 </div>
                             </main>
-                            
                             <aside class="panel-promo-area">
                                 <div class="glowing-frame">
                                     <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-carreiras.webp" 
-                                             alt="Carreiras em enfermagem" 
-                                             loading="lazy">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-carreiras.webp" alt="Carreiras em enfermagem" loading="lazy">
                                     </div>
                                 </div>
                             </aside>
                         </div>
                     </div>
                 </li>
-                
                 <li class="nav-item has-mega-menu">
-                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="fale-conosco">
-                        Fale Conosco
-                    </button>
-                    <!-- Mega Panel: Fale Conosco -->
-                    <div class="mega-panel" id="mega-panel-fale-conosco" data-menu="fale-conosco">
-                        <!-- Elemento Decorativo SVG Background -->
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="fale-conosco">Fale Conosco</button>
+                    <div class="mega-panel" id="mega-panel-fale-conosco" data-menu="fale-conosco" style="position: fixed; left: 0; right: 0; top: 92px; z-index: 9999;">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
@@ -413,21 +322,12 @@
                         <div class="panel-standard-height">
                             <aside class="panel-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Categorias de Contato">
-                                    <button type="button" class="menu-tab-trigger active" data-tab="contato" aria-selected="true">
-                                        Contato
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="duvidas" aria-selected="false">
-                                        Dúvidas
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="parceria" aria-selected="false">
-                                        Parcerias
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="feedback" aria-selected="false">
-                                        Feedback
-                                    </button>
+                                    <button type="button" class="menu-tab-trigger active" data-tab="contato" aria-selected="true">Contato</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="duvidas" aria-selected="false">Dúvidas</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="parceria" aria-selected="false">Parcerias</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="feedback" aria-selected="false">Feedback</button>
                                 </nav>
                             </aside>
-                            
                             <main class="panel-main-content header-scroll">
                                 <div class="tab-content active" id="tab-contato">
                                     <h3 class="content-title">Fale Conosco</h3>
@@ -467,33 +367,22 @@
                                     </ul>
                                 </div>
                             </main>
-                            
                             <aside class="panel-promo-area">
                                 <div class="glowing-frame">
                                     <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-fale-conosco.webp" 
-                                             alt="Fale com nossa equipe" 
-                                             loading="lazy">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-fale-conosco.webp" alt="Fale com nossa equipe" loading="lazy">
                                     </div>
                                 </div>
                             </aside>
                         </div>
                     </div>
                 </li>
-                
                 <li class="nav-item has-mega-menu">
                     <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="idiomas">
                         <i class="fas fa-globe" aria-hidden="true"></i>
-                        <!-- Bandeira do idioma ativo -->
-                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" 
-                             alt="Português (Brasil)" 
-                             class="active-lang-flag"
-                             id="active-lang-flag"
-                             loading="lazy">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)" class="active-lang-flag" id="active-lang-flag" loading="lazy">
                     </button>
-                    <!-- Mega Panel: Idiomas -->
-                    <div class="mega-panel mega-idiomas-panel" id="mega-panel-idiomas" data-menu="idiomas">
-                        <!-- Elemento Decorativo SVG Background -->
+                    <div class="mega-panel mega-idiomas-panel" id="mega-panel-idiomas" data-menu="idiomas" style="position: fixed; left: 0; right: 0; top: 92px; z-index: 9999;">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
@@ -501,7 +390,6 @@
                             </svg>
                         </div>
                         <div class="panel-standard-height">
-                            <!-- Título do Mega Menu -->
                             <div class="idiomas-title-area">
                                 <h3 class="idiomas-title">Selecione o idioma desejado</h3>
                                 <div class="idiomas-grid header-scroll">
@@ -583,28 +471,21 @@
                                     </a>
                                 </div>
                             </div>
-                            
-                            <!-- Imagem Promocional -->
                             <aside class="panel-promo-area">
                                 <div class="glowing-frame">
                                     <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-idiomas.webp" 
-                                             alt="Idiomas disponíveis" 
-                                             loading="lazy">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-idiomas.webp" alt="Idiomas disponíveis" loading="lazy">
                                     </div>
                                 </div>
                             </aside>
                         </div>
                     </div>
                 </li>
-                
                 <li class="nav-item has-mega-menu">
                     <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="buscar">
                         <i class="fas fa-search" aria-hidden="true"></i>
                     </button>
-                    <!-- Mega Panel: Buscar -->
-                    <div class="mega-panel mega-search-panel" id="mega-panel-buscar" data-menu="buscar">
-                        <!-- Elemento Decorativo SVG Background -->
+                    <div class="mega-panel mega-search-panel" id="mega-panel-buscar" data-menu="buscar" style="position: fixed; left: 0; right: 0; top: 92px; z-index: 9999;">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
@@ -614,26 +495,16 @@
                         <div class="panel-standard-height">
                             <aside class="panel-sidebar search-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Buscar por categoria">
-                                    <button type="button" class="menu-tab-trigger active" data-tab="buscar-calculadoras" aria-selected="true">
-                                        Calculadoras
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="buscar-artigos" aria-selected="false">
-                                        Artigos
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="buscar-guias" aria-selected="false">
-                                        Guias
-                                    </button>
+                                    <button type="button" class="menu-tab-trigger active" data-tab="buscar-calculadoras" aria-selected="true">Calculadoras</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="buscar-artigos" aria-selected="false">Artigos</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="buscar-guias" aria-selected="false">Guias</button>
                                 </nav>
                             </aside>
-                            
                             <main class="panel-main-content search-main-content">
                                 <div class="search-container">
                                     <h3 class="content-title">Buscar no Site</h3>
                                     <div class="search-box">
-                                        <input type="search" 
-                                               class="search-input" 
-                                               placeholder="Digite sua busca..." 
-                                               aria-label="Buscar no site">
+                                        <input type="search" class="search-input" placeholder="Digite sua busca..." aria-label="Buscar no site">
                                         <button type="button" class="search-btn" aria-label="Buscar">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <circle cx="11" cy="11" r="8"></circle>
@@ -641,44 +512,11 @@
                                             </svg>
                                         </button>
                                     </div>
-                                    
-                                    <div class="search-categories header-scroll">
-                                        <div class="tab-content active" id="tab-buscar-calculadoras">
-                                            <h4 class="search-category-title">Calculadoras Populares</h4>
-                                            <ul class="content-links">
-                                                <li><a href="#">Gotejamento</a></li>
-                                                <li><a href="#">Glicemia Capilar</a></li>
-                                                <li><a href="#">IMC</a></li>
-                                                <li><a href="#">Balanço Hídrico</a></li>
-                                                <li><a href="#">Dose de Medicamento</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="tab-content" id="tab-buscar-artigos">
-                                            <h4 class="search-category-title">Artigos Recentes</h4>
-                                            <ul class="content-links">
-                                                <li><a href="#">Cuidados com Pacientes Diabéticos</a></li>
-                                                <li><a href="#">Administração de Antibióticos</a></li>
-                                                <li><a href="#">Prevenção de Infecções Hospitalares</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="tab-content" id="tab-buscar-guias">
-                                            <h4 class="search-category-title">Guias Mais Acessados</h4>
-                                            <ul class="content-links">
-                                                <li><a href="#">Manual de Sinais Vitais</a></li>
-                                                <li><a href="#">Protocolo de Curativos</a></li>
-                                                <li><a href="#">Administração de Medicamentos</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
                                 </div>
                             </main>
-                            
                             <aside class="panel-promo-area search-promo-area">
                                 <div class="search-logo-container">
-                                    <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" 
-                                         alt="Calculadoras de Enfermagem" 
-                                         class="search-logo-image"
-                                         loading="lazy">
+                                    <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="search-logo-image" loading="lazy">
                                     <p class="search-tagline">Encontre rapidamente o que você procura</p>
                                 </div>
                             </aside>
@@ -687,8 +525,6 @@
                 </li>
             </ul>
         </nav>
-
-        <!-- Botão Menu Mobile -->
         <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Abrir menu" aria-expanded="false">
             <span class="hamburger-line line-1"></span>
             <span class="hamburger-line line-2"></span>
@@ -696,25 +532,17 @@
         </button>
     </div>
 </header>
-
-<!-- Menu Mobile Overlay -->
 <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
-
-<!-- Menu Mobile Panel -->
 <nav class="mobile-menu" id="mobile-menu" aria-label="Menu mobile">
     <div class="mobile-menu-header">
         <a href="index.html" class="mobile-logo">
-            <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" 
-                 alt="Calculadoras de Enfermagem" 
-                 class="mobile-logo-image">
+            <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="mobile-logo-image">
         </a>
         <button type="button" class="mobile-menu-close" id="mobile-menu-close" aria-label="Fechar menu">
             <span class="close-icon">✕</span>
         </button>
     </div>
-    
     <div class="mobile-menu-content">
-        <!-- Controles de Acessibilidade Mobile -->
         <div class="mobile-accessibility">
             <div class="font-size-controls mobile-font-controls" role="group" aria-label="Controle de tamanho da fonte">
                 <button type="button" class="font-btn font-btn-reduce" id="mobile-font-reduce" aria-label="Reduzir fonte" title="Reduzir fonte">
@@ -730,17 +558,12 @@
                 <span class="theme-text">Tema</span>
             </button>
         </div>
-        
-        <!-- Links do Menu Mobile -->
         <ul class="mobile-nav-list">
             <li class="mobile-nav-item">
                 <a href="index.html" class="mobile-nav-link">Início</a>
             </li>
             <li class="mobile-nav-item has-mobile-submenu">
-                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
-                    Sobre Nós
-                    <span class="submenu-arrow">▼</span>
-                </button>
+                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">Sobre Nós<span class="submenu-arrow">▼</span></button>
                 <ul class="mobile-submenu">
                     <li><a href="#">Nossa História</a></li>
                     <li><a href="#">Missão e Valores</a></li>
@@ -749,10 +572,7 @@
                 </ul>
             </li>
             <li class="mobile-nav-item has-mobile-submenu">
-                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
-                    Ferramentas
-                    <span class="submenu-arrow">▼</span>
-                </button>
+                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">Ferramentas<span class="submenu-arrow">▼</span></button>
                 <ul class="mobile-submenu">
                     <li><a href="#">Calculadoras</a></li>
                     <li><a href="#">Protocolos</a></li>
@@ -761,22 +581,16 @@
                 </ul>
             </li>
             <li class="mobile-nav-item has-mobile-submenu">
-                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
-                    Biblioteca
-                    <span class="submenu-arrow">▼</span>
-                </button>
+                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">Biblioteca<span class="submenu-arrow">▼</span></button>
                 <ul class="mobile-submenu">
                     <li><a href="#">Artigos</a></li>
                     <li><a href="#">Guias Práticos</a></li>
                     <li><a href="#">Vídeos</a></li>
-                    <li><a href="#">E-books</a></li>
+                    <li><a href="#">E-Books</a></li>
                 </ul>
             </li>
             <li class="mobile-nav-item has-mobile-submenu">
-                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
-                    Carreiras
-                    <span class="submenu-arrow">▼</span>
-                </button>
+                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">Carreiras<span class="submenu-arrow">▼</span></button>
                 <ul class="mobile-submenu">
                     <li><a href="#">Oportunidades</a></li>
                     <li><a href="#">Formação</a></li>
@@ -785,10 +599,7 @@
                 </ul>
             </li>
             <li class="mobile-nav-item has-mobile-submenu">
-                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
-                    Fale Conosco
-                    <span class="submenu-arrow">▼</span>
-                </button>
+                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">Fale Conosco<span class="submenu-arrow">▼</span></button>
                 <ul class="mobile-submenu">
                     <li><a href="#">Contato</a></li>
                     <li><a href="#">Dúvidas</a></li>
@@ -797,10 +608,7 @@
                 </ul>
             </li>
             <li class="mobile-nav-item has-mobile-submenu">
-                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
-                    Idiomas
-                    <span class="submenu-arrow">▼</span>
-                </button>
+                <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">Idiomas<span class="submenu-arrow">▼</span></button>
                 <ul class="mobile-submenu">
                     <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Brasil" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Português (Brasil)</a></li>
                     <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-espanha.webp" alt="Espanha" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Español</a></li>
@@ -824,9 +632,7 @@
                 </ul>
             </li>
             <li class="mobile-nav-item">
-                <a href="#" class="mobile-nav-link">
-                    <i class="fas fa-search" aria-hidden="true"></i> Buscar
-                </a>
+                <a href="#" class="mobile-nav-link"><i class="fas fa-search" aria-hidden="true"></i> Buscar</a>
             </li>
         </ul>
     </div>

@@ -11,7 +11,6 @@
 
     <!-- Preload de Recursos Críticos -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">
-    <link rel="preload" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/main-index.html" as="fetch" crossorigin="anonymous">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,10 +18,10 @@
     <meta name="theme-color" content="#1A3E74">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
+
     <!-- 2. SEO e Metadados -->
     <title>Calculadoras de Enfermagem — Escalas Clínicas e Ferramentas de Dosagem</title>
-    <meta name="description" content="Mais de 50 calculadoras e escalas clínicas para profissionais de enfermagem. Ferramentas essenciais para dosagem, gotejamento, risco de queda e vacinas.">
+    <meta name="description" content="Mais de 50 calculadoras e escalas clínicas para profissionais de enfermagem. Ferramentas essenciais para dosagem, gotejamento, risco de queda e vacunas.">
     <meta name="keywords" content="enfermagem, calculadoras clínicas, dosagem medicamentos, escalas de enfermagem, segurança do paciente">
     <meta name="author" content="Calculadoras de Enfermagem">
     <meta name="robots" content="index, follow, max-image-preview:large">
@@ -86,8 +85,11 @@
         }
     </script>
 
-    <!-- 5. Estilos e Módulos -->
+    <!-- 5. Estilos e Módulos CSS -->
+    <!-- Font Awesome com carregamento otimizado -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -99,60 +101,50 @@
         }
     </script>
 
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/modals.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main-index.css">
+    <!-- Estilos do Projeto (Ordem: Global → Componentes → Páginas) -->
+    <link rel="stylesheet" href="minified/global.css">
+    <link rel="stylesheet" href="minified/preload.css">
+    <link rel="stylesheet" href="minified/header.css">
+    <link rel="stylesheet" href="minified/accessibility.css">
+    <link rel="stylesheet" href="minified/footer.css">
+    <link rel="stylesheet" href="minified/global-main-index.css">
+    <link rel="stylesheet" href="minified/idiomas-grid-fix.css">
+    <link rel="stylesheet" href="minified/whitespace-fix.css">
+    <link rel="stylesheet" href="minified/mega-menus-final.css">
 
+    <!-- Estilos Críticos Inline para Evitar FOUC -->
     <style>
-        #preload-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 99999; background: #fff;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .preload-hidden { opacity: 0 !important; visibility: hidden !important; transition: opacity 0.5s ease; }
-        #main-container { min-height: 80vh; opacity: 0; transition: opacity 0.4s ease; }
-        body.ready #main-container { opacity: 1; }
+        /* VLibras z-index fix */
         .v-libras-widget { z-index: 9998 !important; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-
-    <!-- Preloader -->
-    <div id="preload-container">
-        <div class="text-center">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-            <p class="text-primary font-bold animate-pulse">Sincronizando Ambiente Clínico...</p>
-        </div>
-    </div>
-
-    <!-- VLibras -->
-    <div vw class="enabled">
+    <!-- VLibras Plugin (antes dos componentes) -->
+    <div vw class="enabled" style="position: fixed; width: 0; height: 0; overflow: hidden;">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
             <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
 
-    <!-- Interface Modular -->
-    <div id="accessibility-container"></div>
+    <!-- Container para widgets de acessibilidade -->
+    <div id="accessibility-widgets-container"></div>
+
+    <!-- Container para o painel de acessibilidade -->
+    <div id="accessibility-panel-container"></div>
+
+    <!-- Header Container -->
     <div id="header-container"></div>
 
-    <main id="main-container" class="pt-[100px] md:pt-[140px]">
-        <div class="flex flex-col justify-center items-center h-64 space-y-4">
-            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
-            <p class="text-sm text-gray-500">Montando ferramentas...</p>
-        </div>
+    <!-- Main Content -->
+    <main id="main-container" class="pt-4 md:pt-6">
+        <!-- Conteúdo Principal Injetado via main-index.html -->
     </main>
 
+    <!-- Footer Container -->
     <div id="footer-container"></div>
-    <div id="modals-container"></div>
 
-    <!-- 6. Scripts e Schema -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/console-cleaner.js"></script>
+    <!-- 6. Scripts de Funcionalidade -->
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js" crossorigin="anonymous"></script>
 
     <!-- Schema JSON-LD Avançado -->
@@ -189,18 +181,26 @@
     ]
     </script>
 
+    <!-- Sistema de Carregamento de Componentes -->
     <script>
         const ComponentLoader = {
+            loadedComponents: {},
+            loadedScripts: [],
+
             async fetchAndInject(url, containerId) {
                 try {
                     const response = await fetch(url);
                     if (!response.ok) throw new Error(`HTTP ${response.status}`);
                     const html = await response.text();
                     const container = document.getElementById(containerId);
-                    if (container) container.innerHTML = html;
+                    if (container) {
+                        container.innerHTML = html;
+                        this.loadedComponents[containerId] = true;
+                    }
                     return true;
                 } catch (error) {
-                    console.warn(`[Loader] Erro: ${containerId}`, error.message);
+                    console.error(`[Loader] Erro em ${containerId}:`, error.message);
+                    this.loadedComponents[containerId] = false;
                     return false;
                 }
             },
@@ -210,60 +210,93 @@
                     const script = document.createElement('script');
                     script.src = src;
                     script.async = false;
-                    script.crossOrigin = "anonymous";
-                    script.onload = () => resolve(true);
-                    script.onerror = () => resolve(false);
+                    script.crossOrigin = 'anonymous';
+                    script.onload = () => {
+                        this.loadedScripts.push(src);
+                        resolve(true);
+                    };
+                    script.onerror = () => {
+                        console.error(`[Loader] Erro ao carregar: ${src}`);
+                        resolve(false);
+                    };
                     document.body.appendChild(script);
                 });
             },
 
             async init() {
-                const components = [
-                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/preload.html', id: 'preload-container' },
-                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility.html', id: 'accessibility-container' },
-                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header.html', id: 'header-container' },
-                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer.html', id: 'footer-container' },
-                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/modals.html', id: 'modals-container' },
-                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/main-index.html', id: 'main-container' }
-                ];
+                const startTime = performance.now();
 
-                await Promise.all(components.map(c => this.fetchAndInject(c.url, c.id)));
-                await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+                try {
+                    // Acessibilidade dividido em widgets e painel
+                    const accessibilityWidgetsPromise = this.fetchAndInject('accessibility-widgets.html', 'accessibility-widgets-container');
+                    const accessibilityPanelPromise = this.fetchAndInject('accessibility-panel.html', 'accessibility-panel-container');
+                    
+                    // Outros componentes
+                    const components = [
+                        { url: 'header.html', id: 'header-container' },
+                        { url: 'footer.html', id: 'footer-container' }
+                    ];
 
-                if (window.VLibras) {
-                    try { new window.VLibras.Widget('https://vlibras.gov.br/app'); } catch(e) {}
+                    // Carrega o conteúdo principal
+                    const mainContentPromise = this.fetchAndInject('main-index.html', 'main-container');
+
+                    // Carrega todos os componentes em paralelo
+                    await Promise.all([accessibilityWidgetsPromise, accessibilityPanelPromise, ...components.map(c => this.fetchAndInject(c.url, c.id)), mainContentPromise]);
+
+                    // Aguarda renderização
+                    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+                    // Inicializa VLibras
+                    if (window.VLibras) {
+                        try {
+                            new window.VLibras.Widget('https://vlibras.gov.br/app');
+                        } catch(e) {
+                            console.warn('[Loader] VLibras erro:', e.message);
+                        }
+                    }
+
+                    // Carregamento de scripts na ordem correta
+                    const scripts = [
+                        'minified/utils.js',
+                        'minified/header.js',
+                        'minified/accessibility.js',
+                        'minified/global-main-index.js',
+                        'minified/footer.js'
+                    ];
+
+                    for (const src of scripts) {
+                        await this.loadScript(src);
+                    }
+
+                    const duration = Math.round(performance.now() - startTime);
+                    this.finalize(duration);
+
+                } catch (error) {
+                    console.error('[Loader] Erro crítico:', error);
+                    this.finalize(0);
                 }
-
-                const scripts = [
-                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js',
-                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/preload.js',
-                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js',
-                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js',
-                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index-loader.js',
-                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js',
-                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/modals.js',
-                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js'
-                ];
-
-                for (const src of scripts) {
-                    await this.loadScript(src);
-                }
-
-                this.finalize();
             },
 
-            finalize() {
-                document.getElementById('preload-container')?.classList.add('preload-hidden');
-                document.body.classList.add('ready');
-                window.dispatchEvent(new CustomEvent('ModulesLoaded'));
+            finalize(duration = 0) {
+                // Define flag para sistemas de fallback detectarem
+                window.modulesLoadedFired = true;
+                // Dispara evento customizado
+                window.dispatchEvent(new CustomEvent('ModulesLoaded', { bubbles: true }));
+                console.log(`[Loader] Carregamento completo em ${duration}ms`);
             }
         };
 
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            ComponentLoader.init();
-        } else {
-            window.addEventListener('load', () => ComponentLoader.init());
-        }
+        // Inicialização após DOM estar pronto
+        const startLoader = () => {
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                ComponentLoader.init();
+            } else {
+                window.addEventListener('DOMContentLoaded', () => ComponentLoader.init());
+            }
+        };
+
+        // Iniciar imediatamente
+        startLoader();
     </script>
 </body>
 </html>

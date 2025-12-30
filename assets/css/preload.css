@@ -1,188 +1,118 @@
-/**
- * PRELOAD.CSS
- * Estilos para Tela de Carregamento/Preload
- * Versão: 3.0 - Refatorado com CSS Variables Centralizado
- * 
- * NOTA: Variáveis CSS e temas estão centralizados em accessibility.css
- */
-
-/* =========================================
-   LOADING SCREEN
-   ========================================= */
-
-#loading-screen {
+#preload-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
-    z-index: 999998;
+    height: 100%;
+    z-index: 99999;
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    pointer-events: auto;
-    background: var(--bg-preload);
-    transition: opacity 400ms ease-out, visibility 400ms ease-out;
+    transition: opacity 0.8s ease-out;
 }
 
-#loading-screen.loading-exit {
+#preload-container.preload-hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
 
-/* Container interno */
-.loader-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 2rem 3rem;
-    max-width: 90vw;
-    width: auto;
-    background: var(--bg-preload);
-    border-radius: 16px;
+#brain-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
-#loading-screen.loading-exit .loader-wrapper {
-    transform: scale(0.95);
-    opacity: 0;
-    transition: transform 400ms ease-out, opacity 400ms ease-out;
-}
-
-/* =========================================
-   CONTEÚDO DO PRELOAD
-   ========================================= */
-
-/* Logo */
-.loader-logo {
-    width: 140px;
-    height: auto;
-    filter: drop-shadow(0 4px 8px rgba(26, 62, 116, 0.15));
-    animation: soft-pulse 2.5s infinite ease-in-out;
-    border-radius: 8px;
-}
-
-/* Animação suave */
-@keyframes soft-pulse {
-    0%, 100% { 
-        transform: scale(1); 
-    }
-    50% { 
-        transform: scale(1.02); 
-    }
-}
-
-/* Texto principal */
-.loader-text {
-    color: var(--color-primary);
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    margin: 0;
-    line-height: 1.5;
-    text-align: center;
-}
-
-/* Barra de progresso */
-.loading-bar-container {
-    width: 220px;
-    height: 4px;
-    background-color: var(--bg-secondary);
-    border-radius: 2px;
-    overflow: hidden;
+.preload-content {
     position: relative;
+    z-index: 10;
+    text-align: center;
+    pointer-events: none;
+}
+
+.preload-logo {
+    width: 120px;
+    height: auto;
+    max-height: 120px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(135, 206, 235, 0.5));
+    animation: pulse-logo 2s ease-in-out infinite;
+}
+
+@keyframes pulse-logo {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(135, 206, 235, 0.5)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(135, 206, 235, 0.8)); }
+}
+
+.preload-text {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 18px;
+    color: #1A3E74;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: text-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes text-pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.loading-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(135, 206, 235, 0.2);
+    border-radius: 2px;
+    margin-top: 25px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .loading-bar-progress {
+    width: 0%;
     height: 100%;
-    width: 30%;
-    background: linear-gradient(90deg, var(--color-primary), #00bcd4);
+    background: linear-gradient(90deg, #87CEEB, #1A3E74, #87CEEB);
     border-radius: 2px;
-    animation: slide-loading 1.8s infinite ease-in-out;
+    animation: loading-progress 2s ease-in-out infinite;
+}
+
+@keyframes loading-progress {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+.brain-info {
     position: absolute;
-}
-
-@keyframes slide-loading {
-    0% { left: -30%; }
-    100% { left: 100%; }
-}
-
-/* Percentual discreto */
-#loading-percentage {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    margin: 0;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(26, 62, 116, 0.5);
+    font-size: 12px;
     letter-spacing: 1px;
+    white-space: nowrap;
 }
 
-/* =========================================
-   SUPORTE A ACESSIBILIDADE
-   ========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-    #loading-screen {
-        transition: none;
-    }
-    
-    #loading-screen.loading-exit {
-        transition: none;
-    }
-    
-    .loader-logo {
-        animation: none;
-    }
-    
-    .loading-bar-progress {
-        animation: none;
-        width: 100%;
-    }
-    
-    #loading-screen.loading-exit .loader-wrapper {
-        transform: none;
-        transition: none;
-        opacity: 1;
-    }
+.interaction-hint {
+    position: absolute;
+    bottom: 65px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(135, 206, 235, 0.7);
+    font-size: 11px;
+    white-space: nowrap;
+    animation: bounce-hint 2s ease-in-out infinite;
 }
 
-/* =========================================
-   RESPONSIVIDADE
-   ========================================= */
-
-@media (max-width: 480px) {
-    .loader-wrapper {
-        padding: 1.5rem 2rem;
-    }
-    
-    .loader-logo {
-        width: 110px;
-    }
-    
-    .loading-bar-container {
-        width: 180px;
-    }
-    
-    .loader-text {
-        font-size: 14px;
-    }
-}
-
-/* =========================================
-   OCULTAR CONTEÚDO PRINCIPAL
-   ========================================= */
-
-#main-content {
-    visibility: hidden;
-    transition: visibility 0s linear 400ms;
-}
-
-#main-content.visible,
-#main-content[style*="visibility: visible"],
-#main-content:not(.hidden) {
-    visibility: visible;
-}
-
-.hidden {
-    display: none !important;
+@keyframes bounce-hint {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+    50% { transform: translateX(-50%) translateY(-5px); opacity: 1; }
 }
