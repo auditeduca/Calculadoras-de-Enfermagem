@@ -1,7 +1,12 @@
 /**
- * HEADER.CSS
+ * HEADER.CSS - VERSÃO 2.4
  * Estilos para o componente Header e Mega Menu
- * Versão: 2.3 - Corrigido e limpo
+ * 
+ * CORREÇÕES IMPLEMENTADAS:
+ * - Ocultação padrão forçada dos mega-panels (display: none)
+ * - Sincronização com animações para evitar FOUC
+ * - Melhor especificidade de CSS para garantir renderização correta
+ * - Suporte a tema escuro otimizado
  */
 
 /* --- VARIÁVEIS ESPECÍFICAS DO HEADER --- */
@@ -75,8 +80,9 @@ body.dark-theme input {
 }
 
 /* --- MEGA PANEL & ANIMAÇÕES --- */
+/* CORREÇÃO: Ocultação padrão forçada com display: none */
 .mega-panel {
-    display: none;
+    display: none !important;
     position: absolute;
     left: 0;
     right: 0;
@@ -86,11 +92,19 @@ body.dark-theme input {
     border-top: 1px solid var(--header-border-panel);
     box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.2);
     z-index: var(--header-z-mega-panel);
-    animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* CORREÇÃO: Mostrar painel apenas quando tem classe .active */
 .mega-panel.active {
     display: block !important;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .panel-standard-height {
@@ -144,13 +158,13 @@ body.dark-theme input {
 }
 
 .tab-content {
-    display: none;
+    display: none !important;
     animation: fadeIn 0.3s ease;
     height: 100%;
 }
 
 .tab-content.active {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
 }
 
