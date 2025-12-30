@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br" class="scroll-smooth">
 <head>
-    <link rel="dns-prefetch" href="//googleads.g.doubleclick.net">
-    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
-    <link rel="dns-prefetch" href="//www.googletagmanager.com">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">
+    <!-- 1. Configurações Iniciais e Performance -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#1A3E74">
-<<<<<<< HEAD
 
     <!-- Preconnect para recursos externos -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://auditeduca.github.io">
 
     <!-- 2. SEO e Metadados -->
     <title>Calculadoras de Enfermagem — Escalas Clínicas e Ferramentas</title>
@@ -27,134 +21,34 @@
     <link rel="icon" href="https://www.calculadorasdeenfermagem.com.br/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="https://www.calculadorasdeenfermagem.com.br/favicon.ico" type="image/x-icon">
 
-    <!-- 3. CSS - Carregamento Otimizado para Evitar Flickering -->
+    <!-- 3. CSS - Carregamento Otimizado -->
     
-    <!-- Tailwind CSS (síncrono para evitar FOUC) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com" defer></script>
-=======
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Calculadoras de Enfermagem — Escalas Clínicas e Ferramentas de Dosagem</title>
-    <meta name="description" content="Mais de 50 calculadoras e escalas clínicas para profissionais de enfermagem. Ferramentas essenciais para dosagem, gotejamento, risco de queda e vacinas.">
-    <meta name="keywords" content="enfermagem, calculadoras clínicas, dosagem medicamentos, escalas de enfermagem, segurança do paciente">
-    <meta name="author" content="Calculadoras de Enfermagem">
-    <meta name="robots" content="index, follow, max-image-preview:large">
-    <link rel="icon" href="assets/images/favicon-calculadoras-de-enfermagem.webp" type="image/webp">
-    <link rel="shortcut icon" href="assets/images/favicon-calculadoras-de-enfermagem.webp" type="image/webp">
-    <link rel="apple-touch-icon" href="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
-    <link rel="manifest" href="manifest.json">
-    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/">
-    <link rel="alternate" hreflang="pt-br" href="https://www.calculadorasdeenfermagem.com.br/">
-    <link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Calculadoras de Enfermagem — Escalas e Doses">
-    <meta property="og:description" content="Ferramentas práticas e seguras para a assistência de enfermagem.">
-    <meta property="og:url" content="https://www.calculadorasdeenfermagem.com.br/">
-    <meta property="og:image" content="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
-    <meta name="twitter:card" content="summary_large_image">
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        const isAdmin = localStorage.getItem('admin_mode') === 'true';
-        gtag('consent', 'default', {
-            'ad_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied',
-            'analytics_storage': 'denied',
-            'functionality_storage': 'granted',
-            'security_storage': 'granted',
-            'wait_for_update': 500
-        });
-        if (!isAdmin) {
-            const savedConsent = localStorage.getItem('cookieConsent');
-            if (savedConsent === 'accepted') {
-                gtag('consent', 'update', {
-                    'ad_storage': 'granted',
-                    'ad_user_data': 'granted',
-                    'ad_personalization': 'granted',
-                    'analytics_storage': 'granted'
-                });
-            }
-        }
-    </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-952633102"></script>
-    <script>
-        if (localStorage.getItem('admin_mode') !== 'true') {
-            gtag('js', new Date());
-            gtag('config', 'AW-952633102');
-            gtag('config', 'G-8FLJ59XXDK', { 'anonymize_ip': true });
-        }
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
-    <script src="https://cdn.tailwindcss.com"></script>
->>>>>>> parent of ddf5af9 (30.12 minificado v5)
     <script>
         tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { primary: '#1A3E74', accent: '#1e40af' }
-                }
-            }
+            theme: { extend: { colors: { primary: '#1A3E74', accent: '#1e40af' } } }
         }
     </script>
-<<<<<<< HEAD
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
 
-    <!-- Estilos Globais e Críticos (inline crítico para evitar flickering) -->
+    <!-- CSS Crítico Modular -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
+    
+    <!-- Estilos Globais e Controle de FOUC -->
     <style>
-        /* CSS Crítico Inline - Resolve flickering imediato */
         :root {
             --primary: #1A3E74;
         }
         
-        /* Evita flash de conteúdo não estilizado */
+        /* Controle de visibilidade da página (Evita FOUC) */
         .js-loading {
             visibility: hidden;
         }
         
-        /* Preloader styles inline para carregar antes de qualquer JS */
-        #preload-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1A3E74 0%, #2d5a9e 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        
-        .preloader-content {
-            text-align: center;
-            color: white;
-        }
-        
-        .preloader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255,255,255,0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .preloader-text {
-            font-size: 1.1rem;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-        
-        /* Placeholder para conteúdo carregando */
+        /* Placeholder para conteúdo principal */
         .content-placeholder {
             min-height: 400px;
             display: flex;
@@ -163,7 +57,7 @@
             background: #f9fafb;
         }
         
-        /* Esconde elementos até JS estar pronto */
+        /* Visibilidade controlada dos elementos estruturais */
         body:not(.js-ready) header,
         body:not(.js-ready) main,
         body:not(.js-ready) footer {
@@ -178,40 +72,31 @@
         }
     </style>
     
-    <!-- Carregamento assíncrono do CSS não-crítico -->
-    <link rel="stylesheet" href="assets/css/global.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="assets/css/global-main.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="assets/css/whitespace-fix.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="assets/css/header.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="assets/css/mega-menu-final.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="assets/css/accessibility.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="assets/css/footer.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="assets/css/global-main-index.css" media="print" onload="this.media='all'">
+    <!-- Carregamento CSS Não-Crítico -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/whitespace-fix.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/mega-menu-final.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main-index.css" media="print" onload="this.media='all'">
     
-    <!-- Fallback para browsers sem suporte a media="print" onload -->
     <noscript>
-        <link rel="stylesheet" href="assets/css/global.css">
-        <link rel="stylesheet" href="assets/css/global-main.css">
-        <link rel="stylesheet" href="assets/css/header.css">
-        <link rel="stylesheet" href="assets/css/mega-menu-final.css">
-        <link rel="stylesheet" href="assets/css/accessibility.css">
-        <link rel="stylesheet" href="assets/css/footer.css">
-        <link rel="stylesheet" href="assets/css/global-main-index.css">
+        <!-- Fallbacks CSS -->
+        <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
+        <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main.css">
+        <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
     </noscript>
 
-    <!-- Script para controle de visibilidade (evita flickering) -->
+    <!-- Script de controle de estado -->
     <script>
         (function() {
-            // Marca página como "carregando JS" imediatamente
             document.documentElement.classList.add('js-loading');
-            
-            // Quando tudo estiver pronto, remove a classe
             window.addEventListener('AppReady', function() {
                 document.documentElement.classList.remove('js-loading');
                 document.body.classList.add('js-ready');
             });
-            
-            // Fallback timeout caso AppReady não dispare
             setTimeout(function() {
                 document.documentElement.classList.remove('js-loading');
                 document.body.classList.add('js-ready');
@@ -223,13 +108,8 @@
 
     <!-- 4. Componentes -->
     
-    <!-- Preloader (Inline para carregar imediatamente) -->
-    <div id="preload-container">
-        <div class="preloader-content">
-            <div class="preloader-spinner"></div>
-            <div class="preloader-text">Carregando Calculadoras de Enfermagem...</div>
-        </div>
-    </div>
+    <!-- Container do Preloader -->
+    <div id="preload-container"></div>
 
     <!-- Widgets de Acessibilidade -->
     <div id="accessibility-container"></div>
@@ -242,11 +122,11 @@
     <header id="header-container" class="relative z-50"></header>
 
     <!-- Conteúdo Principal -->
-    <main id="main-container" class="min-h-screen pt-4 md:pt-6 pb-12">
+    <!-- ADICIONADO: Classes 'container mx-auto px-4' para centralizar o conteúdo injetado e evitar colagem nas bordas -->
+    <main id="main-container" class="container mx-auto px-4 min-h-screen pt-4 md:pt-6 pb-12">
         <div id="main-content-placeholder" class="content-placeholder">
             <div class="text-center">
-                <div class="preloader-spinner" style="border-color: rgba(26, 62, 116, 0.3); border-top-color: #1A3E74; width: 40px; height: 40px;"></div>
-                <p class="text-primary font-medium mt-4" style="color: #1A3E74;">Carregando conteúdo...</p>
+                <p class="text-primary font-medium mt-4" style="color: #1A3E74;">Carregando...</p>
             </div>
         </div>
     </main>
@@ -256,264 +136,100 @@
 
     <!-- 5. Scripts de Orquestração -->
     
-    <!-- Configuração do App -->
     <script>
-        // CONFIGURAÇÃO CENTRAL
         const APP_CONFIG = {
-            baseUrl: "", // Ex: "https://auditeduca.github.io/Calculadoras-de-Enfermagem/"
+            baseUrl: "https://auditeduca.github.io/Calculadoras-de-Enfermagem/", 
             components: [
                 { id: 'preload-container', url: 'assets/components/preload.html' },
                 { id: 'accessibility-container', url: 'assets/components/accessibility.html' },
                 { id: 'header-container', url: 'assets/components/header.html' },
                 { id: 'footer-container', url: 'assets/components/footer.html' },
+                // O arquivo main-index.html DEVE conter as seções e os grids (#calculadoras-grid, etc.)
                 { id: 'main-container', url: 'assets/pages/main-index.html' }
             ],
             scripts: [
-                // 1. Utilitários Base
                 'assets/js/utils.js',
                 'assets/js/console-cleaner.js',
-                
-                // 2. Componentes UI
-                'assets/js/preload.js',
+                'assets/js/preload.js', 
                 'assets/js/accessibility.js', 
                 'assets/js/header.js',
-                
-                // 3. Lógica do Main Content
                 'assets/js/global-main.js',
                 'assets/js/global-main-index.js',
                 'assets/js/main-index-loader.js',
-                
-                // 4. Finalização
                 'assets/js/footer.js'
             ]
         };
-=======
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/preload.css">
-    <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/accessibility.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/global-main-index.css">
-    <link rel="stylesheet" href="assets/css/mega-menu-final.css">
-    <style>
-        .v-libras-widget { z-index: 9998 !important; }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-800">
-    <div vw class="enabled" style="position: fixed; width: 0; height: 0; overflow: hidden;">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper>
-            <div class="vw-plugin-top-wrapper"></div>
-        </div>
-    </div>
-    <div id="accessibility-widgets-container"></div>
-    <div id="accessibility-panel-container"></div>
-    <div id="header-container"></div>
-    <main id="main-container" class="pt-4 md:pt-6"></main>
-    <div id="footer-container"></div>
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js" crossorigin="anonymous"></script>
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "MedicalWebPage",
-        "@id": "https://www.calculadorasdeenfermagem.com.br/#webpage",
-        "url": "https://www.calculadorasdeenfermagem.com.br/",
-        "name": "Calculadoras de Enfermagem",
-        "description": "Ferramentas clínicas e escalas para enfermagem.",
-        "isPartOf": { "@id": "https://www.calculadorasdeenfermagem.com.br/#website" },
-        "audience": { "@type": "MedicalAudience", "audienceType": "Clinician" },
-        "specialty": { "@type": "MedicalSpecialty", "name": "Nursing" }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Calculadoras Clínicas de Enfermagem",
-        "operatingSystem": "All",
-        "applicationCategory": "MedicalApplication",
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "1250"
-        },
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "BRL"
-        }
-      }
-    ]
->>>>>>> parent of ddf5af9 (30.12 minificado v5)
     </script>
+
+    <!-- Loader Modular -->
     <script>
-        const ComponentLoader = {
-            loadedComponents: {},
-            loadedScripts: [],
-            basePath: 'assets/components/',
-            cssPath: 'assets/css/',
-            jsPath: 'assets/js/',
+        class AppLoader {
+            constructor(config) {
+                this.config = config;
+                this.init();
+            }
 
-            async fetchAndInject(url, containerId) {
+            async init() {
+                console.log('[AppLoader] Iniciando orquestração...');
+                const start = performance.now();
+
                 try {
-<<<<<<< HEAD
-                    // 1. Carregar HTML dos Componentes em Paralelo
                     await this.loadAllComponents();
-
-                    // 2. Remover placeholder e mostrar conteúdo real
                     this.showMainContent();
-
-                    // 3. Inicializar VLibras
                     this.initVLibras();
-
-                    // 4. Carregar Scripts JS em Sequência
                     await this.loadAllScripts();
 
                     const end = performance.now();
-                    console.log(`[AppLoader] Carregamento completo em ${Math.round(end - start)}ms`);
+                    console.log(`[AppLoader] Completo em ${Math.round(end - start)}ms`);
                     
-                    // Dispara eventos para acordar scripts
                     this.dispatchReadyEvents();
-
-                    // Remover preloader
                     this.hidePreloader();
 
                 } catch (error) {
-                    console.error('[AppLoader] Erro crítico:', error);
+                    console.error('[AppLoader] Erro:', error);
                     this.hidePreloader();
                 }
             }
 
             showMainContent() {
-                // Remove o placeholder de carregamento suavemente
                 const placeholder = document.getElementById('main-content-placeholder');
                 if (placeholder) {
-                    placeholder.style.transition = 'opacity 0.3s ease';
                     placeholder.style.opacity = '0';
-                    setTimeout(() => {
-                        placeholder.style.display = 'none';
-                    }, 300);
+                    setTimeout(() => placeholder.style.display = 'none', 300);
                 }
             }
 
             async fetchComponent(component) {
                 const element = document.getElementById(component.id);
                 if (!element) return;
-
                 try {
-                    const fullUrl = this.config.baseUrl + component.url;
-                    const response = await fetch(fullUrl);
-=======
-                    const response = await fetch(url);
->>>>>>> parent of ddf5af9 (30.12 minificado v5)
+                    const response = await fetch(this.config.baseUrl + component.url);
                     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    const html = await response.text();
-<<<<<<< HEAD
-                    
-                    // Adiciona transição suave para o conteúdo
-                    element.style.opacity = '0';
-                    element.style.transition = 'opacity 0.3s ease';
-                    element.innerHTML = html;
-                    
-                    // Pequeno delay para permitir renderização
-                    await new Promise(resolve => setTimeout(resolve, 50));
-                    element.style.opacity = '1';
-                    element.removeAttribute('aria-busy');
+                    element.innerHTML = await response.text();
                 } catch (err) {
-                    console.error(`[AppLoader] Falha ao carregar ${component.id}:`, err);
-                    element.innerHTML = `<div class="p-4 text-red-600 text-center">Erro ao carregar módulo: ${component.url}</div>`;
-                    element.style.opacity = '1';
-=======
-                    const container = document.getElementById(containerId);
-                    if (container) {
-                        container.innerHTML = html;
-                        this.loadedComponents[containerId] = true;
-                    }
-                    return true;
-                } catch (error) {
-                    console.error(`[Loader] Erro em ${containerId}:`, error.message);
-                    this.loadedComponents[containerId] = false;
-                    return false;
->>>>>>> parent of ddf5af9 (30.12 minificado v5)
+                    console.error(`Erro ao carregar ${component.id}`);
                 }
-            },
+            }
 
-<<<<<<< HEAD
             async loadAllComponents() {
-                // Carrega todos os componentes em paralelo
                 const promises = this.config.components.map(c => this.fetchComponent(c));
                 await Promise.all(promises);
-                
-                // Espera um pouco para garantir que o CSS foi aplicado
-                await new Promise(resolve => setTimeout(resolve, 100));
             }
 
             loadScript(src) {
                 return new Promise((resolve) => {
                     const script = document.createElement('script');
                     script.src = this.config.baseUrl + src;
-                    script.async = false;
-                    script.onload = () => resolve(src);
-                    script.onerror = () => {
-                        console.warn(`[AppLoader] Falha script: ${src}`);
-                        resolve(src); 
-=======
-            loadScript(src) {
-                return new Promise((resolve) => {
-                    const script = document.createElement('script');
-                    script.src = src;
-                    script.async = false;
-                    script.crossOrigin = 'anonymous';
-                    script.onload = () => {
-                        this.loadedScripts.push(src);
-                        resolve(true);
-                    };
-                    script.onerror = () => {
-                        console.error(`[Loader] Erro ao carregar: ${src}`);
-                        resolve(false);
->>>>>>> parent of ddf5af9 (30.12 minificado v5)
-                    };
+                    script.onload = () => resolve();
+                    script.onerror = () => resolve();
                     document.head.appendChild(script);
                 });
-            },
+            }
 
-            async init() {
-                const startTime = performance.now();
-                try {
-                    const accessibilityWidgetsPromise = this.fetchAndInject(this.basePath + 'accessibility-widgets.html', 'accessibility-widgets-container');
-                    const accessibilityPanelPromise = this.fetchAndInject(this.basePath + 'accessibility-panel.html', 'accessibility-panel-container');
-                    const components = [
-                        { url: this.basePath + 'header.html', id: 'header-container' },
-                        { url: this.basePath + 'footer.html', id: 'footer-container' }
-                    ];
-                    const mainContentPromise = this.fetchAndInject(this.basePath + 'main-index.html', 'main-container');
-                    await Promise.all([accessibilityWidgetsPromise, accessibilityPanelPromise, ...components.map(c => this.fetchAndInject(c.url, c.id)), mainContentPromise]);
-                    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-                    if (window.VLibras) {
-                        try {
-                            new window.VLibras.Widget('https://vlibras.gov.br/app');
-                        } catch(e) {
-                            console.warn('[Loader] VLibras erro:', e.message);
-                        }
-                    }
-                    const scripts = [
-                        this.jsPath + 'utils.js',
-                        this.jsPath + 'header.js',
-                        this.jsPath + 'accessibility.js',
-                        this.jsPath + 'global-main-index.js',
-                        this.jsPath + 'footer.js'
-                    ];
-                    for (const src of scripts) {
-                        await this.loadScript(src);
-                    }
-                    const duration = Math.round(performance.now() - startTime);
-                    this.finalize(duration);
-                } catch (error) {
-                    console.error('[Loader] Erro crítico:', error);
-                    this.finalize(0);
-                }
-            },
+            async loadAllScripts() {
+                for (const src of this.config.scripts) await this.loadScript(src);
+            }
 
-<<<<<<< HEAD
             initVLibras() {
                 if (!document.querySelector('script[src*="vlibras-plugin.js"]')) {
                     const script = document.createElement('script');
@@ -526,59 +242,26 @@
             }
 
             dispatchReadyEvents() {
-                // Dispara evento moderno
                 window.dispatchEvent(new CustomEvent('AppReady'));
                 window.dispatchEvent(new CustomEvent('ModulesLoaded'));
-
-                // Tenta re-disparar DOMContentLoaded para scripts legados
-                try {
-                    document.dispatchEvent(new Event('DOMContentLoaded', {
-                        bubbles: true,
-                        cancelable: true
-                    }));
-                } catch(e) { 
-                    console.log('Evento nativo não pôde ser redisparado'); 
-                }
             }
 
             hidePreloader() {
-                const preloadContainer = document.getElementById('preload-container');
-                if (!preloadContainer) return;
+                const container = document.getElementById('preload-container');
+                if (!container) return;
 
-                // Espera suficiente para garantir que tudo foi renderizado
                 setTimeout(() => {
-                    preloadContainer.style.transition = 'opacity 0.5s ease, visibility 0.5s ease';
-                    preloadContainer.style.opacity = '0';
-                    preloadContainer.style.pointerEvents = 'none';
-                    
+                    container.style.transition = 'opacity 0.5s ease';
+                    container.style.opacity = '0';
+                    container.style.pointerEvents = 'none';
                     setTimeout(() => {
-                        preloadContainer.style.visibility = 'hidden';
-                        preloadContainer.style.display = 'none';
-                        if(preloadContainer.parentNode) preloadContainer.parentNode.removeChild(preloadContainer);
-                    }, 550);
+                        container.style.display = 'none';
+                        container.innerHTML = '';
+                    }, 500);
                 }, 500);
             }
         }
-
-        // Inicializa quando o DOM estiver pronto
         document.addEventListener('DOMContentLoaded', () => new AppLoader(APP_CONFIG));
-=======
-            finalize(duration = 0) {
-                window.modulesLoadedFired = true;
-                window.dispatchEvent(new CustomEvent('ModulesLoaded', { bubbles: true }));
-                console.log(`[Loader] Carregamento completo em ${duration}ms`);
-            }
-        };
-
-        const startLoader = () => {
-            if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                ComponentLoader.init();
-            } else {
-                window.addEventListener('DOMContentLoaded', () => ComponentLoader.init());
-            }
-        };
-        startLoader();
->>>>>>> parent of ddf5af9 (30.12 minificado v5)
     </script>
 </body>
 </html>
