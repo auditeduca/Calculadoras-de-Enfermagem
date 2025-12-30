@@ -41,24 +41,34 @@
             <div class="grid grid-cols-2 gap-2">
                 <div class="accessibility-card" onclick="toggleSimpleFeature('highlight-links', this)">
                     <div class="level-indicator"><div class="dot"></div></div>
-                    <i data-lucide="link" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <i data-lucide="link" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
                     <span class="card-label">Destaque de Links</span>
+                </div>
+                <div class="accessibility-card" onclick="toggleSimpleFeature('highlight-headers', this)">
+                    <div class="level-indicator"><div class="dot"></div></div>
+                    <i data-lucide="heading-1" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
+                    <span class="card-label">Destaque Títulos</span>
                 </div>
                 <div class="accessibility-card" onclick="cycleFeature('readingMask', ['sm', 'md', 'lg'], this)">
                     <div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
                     <span class="level-badge"></span>
-                    <i data-lucide="scan-line" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <i data-lucide="scan-line" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
                     <span class="card-label">Máscara de Leitura</span>
                 </div>
                 <div class="accessibility-card" onclick="toggleSimpleFeature('structure', this)">
                     <div class="level-indicator"><div class="dot"></div></div>
-                    <i data-lucide="layout" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <i data-lucide="layout" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
                     <span class="card-label">Estrutura</span>
                 </div>
                 <div class="accessibility-card" onclick="toggleSimpleFeature('hide-images', this)">
                     <div class="level-indicator"><div class="dot"></div></div>
-                    <i data-lucide="image-off" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <i data-lucide="image-off" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
                     <span class="card-label">Ocultar Imagens</span>
+                </div>
+                <div class="accessibility-card" onclick="toggleSimpleFeature('stop-anim', this)">
+                    <div class="level-indicator"><div class="dot"></div></div>
+                    <i data-lucide="pause-circle" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
+                    <span class="card-label">Pausar Animações</span>
                 </div>
             </div>
         </section>
@@ -70,24 +80,24 @@
                 <div class="accessibility-card" onclick="cycleFeature('fontSize', ['1.2', '1.5', '2.0'], this)">
                     <div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
                     <span class="level-badge"></span>
-                    <i data-lucide="type" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <i data-lucide="type" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
                     <span class="card-label">Tamanho de Fonte</span>
                 </div>
                 <div class="accessibility-card" onclick="toggleSimpleFeature('bold-text', this)">
                     <div class="level-indicator"><div class="dot"></div></div>
-                    <i data-lucide="highlighter" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <i data-lucide="highlighter" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
                     <span class="card-label">Negrito</span>
                 </div>
                 <div class="accessibility-card" onclick="cycleFeature('letterSpacing', ['0.1em', '0.2em', '0.3em'], this)">
                     <div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
                     <span class="level-badge"></span>
-                    <i data-lucide="move-horizontal" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <i data-lucide="move-horizontal" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
                     <span class="card-label">Espaço Letras</span>
                 </div>
                 <div class="accessibility-card" onclick="cycleFeature('fontFamily', ['atkinson', 'newsreader', 'dyslexic'], this)">
                     <div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
                     <span class="level-badge"></span>
-                    <i data-lucide="pen-tool" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <i data-lucide="pen-tool" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
                     <span class="card-label">Fonte</span>
                 </div>
             </div>
@@ -98,19 +108,14 @@
             <h4 class="section-title">Cores e Som</h4>
             <div class="grid grid-cols-2 gap-2">
                 <div class="accessibility-card" onclick="cycleFeature('contrast', ['contrast-dark', 'contrast-inverted'], this)">
-                        <div class="level-indicator"><div class="dot"></div><div class="dot"></div></div>
-                        <span class="level-badge"></span>
-                    <i data-lucide="moon" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <div class="level-indicator"><div class="dot"></div><div class="dot"></div></div>
+                    <span class="level-badge"></span>
+                    <i data-lucide="moon" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
                     <span class="card-label">Contraste</span>
-                </div>
-                <div class="accessibility-card" onclick="toggleSimpleFeature('stop-anim', this)">
-                    <div class="level-indicator"><div class="dot"></div></div>
-                    <i data-lucide="pause-circle" class="w-6 h-6 icon-slot opacity-80"></i>
-                    <span class="card-label">Pausar Animações</span>
                 </div>
                 <div class="accessibility-card" onclick="toggleTTS(this)">
                     <div class="level-indicator"><div class="dot"></div></div>
-                    <i data-lucide="volume-2" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <i data-lucide="volume-2" class="w-6 h-6 icon-slot opacity-80" aria-hidden="true"></i>
                     <span class="card-label">Leitor TTS</span>
                 </div>
             </div>

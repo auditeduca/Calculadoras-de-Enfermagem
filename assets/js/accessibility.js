@@ -112,20 +112,18 @@ const AccessControl = {
 
     setupObservers() {
         // Observer para fechar menu ao abrir modais/menus (conflitos)
-        // Isso cobre o ModalsSystem.js que define overflow: hidden no body
         const observer = new MutationObserver(mutations => {
             mutations.forEach(mutation => {
                 // Checa classes (ex: modal-open)
                 if (mutation.attributeName === "class") {
                     const classList = document.body.classList;
-                    if (classList.contains("modal-open") || classList.contains("mobile-menu-open")) {
-                        this.closePanel();
-                    }
-                }
-                // Checa estilo inline (overflow: hidden usado pelo modals.js)
-                if (mutation.attributeName === "style") {
-                    if (document.body.style.overflow === "hidden") {
-                         this.closePanel();
+                    if (classList.contains("modal-open") || 
+                        classList.contains("mobile-menu-open") || 
+                        classList.contains("overflow-hidden")) {
+                        // Se painel estiver aberto, fecha
+                        if (!this.isPanelClosed()) {
+                            this.closePanel();
+                        }
                     }
                 }
             });
@@ -160,6 +158,7 @@ const AccessControl = {
         if (!this.ensureElements() || !this.elements.panel) {
             return true; // Assume fechado se não encontrar elemento
         }
+        // Usa a classe accessibility-panel-hidden que é adicionada/removida para controle de visibilidade
         return this.elements.panel.classList.contains('accessibility-panel-hidden');
     },
 
@@ -338,7 +337,20 @@ const AccessControl = {
         document.documentElement.style.setProperty('--letter-spacing', 'normal');
         
         if (this.elements.body) {
-            this.elements.body.classList.remove('contrast-dark', 'contrast-inverted', 'highlight-links', 'bold-text', 'stop-anim', 'font-atkinson', 'font-newsreader', 'font-dyslexic');
+            // Remove todas as classes de recursos de acessibilidade
+            this.elements.body.classList.remove(
+                'contrast-dark', 
+                'contrast-inverted', 
+                'highlight-links', 
+                'highlight-headers',
+                'bold-text', 
+                'stop-anim', 
+                'font-atkinson', 
+                'font-newsreader', 
+                'font-dyslexic',
+                'hide-images',
+                'structure'
+            );
             this.elements.body.style.cursor = "default";
         }
         
@@ -359,9 +371,29 @@ const AccessControl = {
         
         // Dispatch evento para outros módulos
         window.dispatchEvent(new CustomEvent('Accessibility:Reset'));
+        
+        // Feedback visual de restauração
+        const btn = document.querySelector('button[onclick="resetAllFeatures()"]');
+        if (btn) {
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Restaurado!';
+            
+            // Recarregar ícones Lucide se necessário
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                    window.lucide.createIcons();
+                }
+            }, 1500);
+        }
     },
 
     updateDots(card, count = 1) {
+        if (!card) return;
         const dots = card.querySelectorAll('.dot');
         dots.forEach((d, i) => {
             if (i < count) d.classList.add('active');
@@ -369,6 +401,7 @@ const AccessControl = {
         });
     },
     resetDots(card) {
+        if (!card) return;
         card.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
     }
 };
