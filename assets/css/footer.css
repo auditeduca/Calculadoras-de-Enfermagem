@@ -1,7 +1,7 @@
 /**
  * FOOTER.CSS
  * Estilos para o componente Footer
- * Versão: 8.0 - Sistema Completo de Cookies com Accordion
+ * Versão: 3.0 - Refatorado com CSS Variables Centralizado
  * 
  * Contém:
  * - Footer principal
@@ -10,28 +10,23 @@
  * - Modais de detalhes aninhados
  * - Botões flutuantes
  * - Sistema de acessibilidade
+ * 
+ * NOTA: Variáveis CSS e temas estão centralizados em accessibility.css
  */
 
-:root {
-    --footer-bg: #111827;
-    --footer-text: #f3f4f6;
-    --footer-text-muted: #9ca3af;
-    --footer-border: #1f2937;
-    --cookie-bg: #1f2937;
-    --cookie-text: #f3f4f6;
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.3s ease;
-}
+/* ═══════════════════════════════════════════
+   FOOTER PRINCIPAL
+   ═══════════════════════════════════════════ */
 
-/* --- FOOTER PRINCIPAL --- */
 footer {
-    background-color: var(--footer-bg);
-    color: var(--footer-text);
+    background-color: var(--bg-footer);
+    color: var(--text-footer);
 }
 
-/* --- HEADER DO FOOTER (Logo e Divisor) --- */
+/* ═══════════════════════════════════════════
+   HEADER DO FOOTER
+   ═══════════════════════════════════════════ */
+
 .footer-header {
     display: flex;
     flex-direction: column;
@@ -49,12 +44,12 @@ footer {
 .footer-divider {
     width: 100%;
     height: 1px;
-    background-color: white;
+    background-color: var(--text-footer);
     opacity: 0.3;
 }
 
 .footer-section h3 {
-    color: #ffffff;
+    color: var(--text-footer);
     font-size: 1.125rem;
     margin-bottom: 1rem;
 }
@@ -70,13 +65,13 @@ footer {
 }
 
 .footer-links a {
-    color: var(--footer-text-muted);
+    color: var(--text-footer-muted);
     font-size: 0.875rem;
     transition: color var(--transition-fast);
 }
 
 .footer-links a:hover {
-    color: var(--footer-text);
+    color: var(--text-footer);
 }
 
 .footer-contact {
@@ -90,17 +85,20 @@ footer {
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 0.75rem;
-    color: var(--footer-text-muted);
+    color: var(--text-footer-muted);
     font-size: 0.875rem;
 }
 
 .footer-contact i {
-    color: var(--primary-color);
+    color: var(--color-primary);
     width: 1.25rem;
     text-align: center;
 }
 
-/* --- SOCIAL LINKS --- */
+/* ═══════════════════════════════════════════
+   SOCIAL LINKS
+   ═══════════════════════════════════════════ */
+
 .social-links {
     display: flex;
     gap: 0.75rem;
@@ -118,7 +116,7 @@ footer {
     height: 2.5rem;
     border-radius: 50%;
     background: transparent;
-    color: white;
+    color: var(--text-footer);
     transition: all var(--transition-fast);
 }
 
@@ -127,9 +125,12 @@ footer {
     transform: scale(1.1);
 }
 
-/* --- FOOTER BOTTOM --- */
+/* ═══════════════════════════════════════════
+   FOOTER BOTTOM
+   ═══════════════════════════════════════════ */
+
 .footer-bottom {
-    border-top: 1px solid var(--footer-border);
+    border-top: 1px solid var(--border-color);
     padding-top: 2rem;
     padding-bottom: 2rem;
     display: flex;
@@ -151,7 +152,7 @@ footer {
 .footer-copyright p {
     margin: 0;
     font-size: 0.875rem;
-    color: var(--footer-text-muted);
+    color: var(--text-footer-muted);
 }
 
 .footer-legal-links {
@@ -163,24 +164,27 @@ footer {
 
 .footer-legal-links a {
     font-size: 0.813rem;
-    color: var(--footer-text-muted);
+    color: var(--text-footer-muted);
     transition: color var(--transition-fast);
 }
 
 .footer-legal-links a:hover {
-    color: var(--footer-text);
+    color: var(--text-footer);
 }
 
-/* --- COOKIE BANNER --- */
+/* ═══════════════════════════════════════════
+   COOKIE BANNER
+   ═══════════════════════════════════════════ */
+
 .cookie-banner {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.98);
+    background: var(--bg-cookie-banner, var(--bg-panel));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    color: #1f2937;
+    color: var(--text-cookie, var(--text-body));
     padding: 1rem 1.5rem;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
     transform: translateY(0);
@@ -201,17 +205,17 @@ footer {
     margin: 0;
     font-size: 0.875rem;
     line-height: 1.6;
-    color: #374151;
+    color: var(--text-body);
 }
 
 .cookie-consent-note {
     margin-top: 0.5rem !important;
     font-size: 0.813rem !important;
-    color: #6b7280 !important;
+    color: var(--text-secondary) !important;
 }
 
 .cookie-content a {
-    color: var(--primary-color);
+    color: var(--color-primary);
     font-weight: 500;
     text-decoration: none;
 }
@@ -233,7 +237,7 @@ footer {
     padding: 0.625rem 1.25rem;
     font-size: 0.875rem;
     font-weight: 600;
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius-md);
     cursor: pointer;
     transition: all var(--transition-fast);
     border: 2px solid transparent;
@@ -244,31 +248,34 @@ footer {
 }
 
 .cookie-btn-primary {
-    background: var(--primary-color);
+    background: var(--color-primary);
     color: white;
-    border-color: var(--primary-color);
+    border-color: var(--color-primary);
 }
 
 .cookie-btn-primary:hover {
-    background: var(--primary-hover);
-    border-color: var(--primary-hover);
+    background: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
 }
 
 .cookie-btn-secondary {
-    background: white;
-    color: var(--primary-color);
-    border-color: var(--primary-color);
+    background: var(--bg-panel);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
 }
 
 .cookie-btn-secondary:hover {
-    background: #eff6ff;
+    background: var(--bg-secondary);
 }
 
-/* --- COOKIE OVERLAY --- */
+/* ═══════════════════════════════════════════
+   COOKIE OVERLAY
+   ═══════════════════════════════════════════ */
+
 .cookie-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--bg-cookie-overlay, rgba(0, 0, 0, 0.6));
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     z-index: 9999;
@@ -282,13 +289,16 @@ footer {
     visibility: visible;
 }
 
-/* --- COOKIE MODAL --- */
+/* ═══════════════════════════════════════════
+   COOKIE MODAL
+   ═══════════════════════════════════════════ */
+
 .cookie-modal {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.95);
-    background: rgba(255, 255, 255, 0.98);
+    background: var(--bg-cookie-modal, var(--bg-panel));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 1rem;
@@ -314,8 +324,8 @@ footer {
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
-    background: rgba(249, 250, 251, 0.9);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-secondary);
     flex-shrink: 0;
     position: sticky;
     top: 0;
@@ -325,14 +335,14 @@ footer {
 .cookie-modal-header h3 {
     margin: 0;
     font-size: 1.25rem;
-    color: #111827;
+    color: var(--text-body);
     font-weight: 600;
 }
 
 .cookie-modal-close {
     background: none;
     border: none;
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 1.5rem;
     cursor: pointer;
     transition: all var(--transition-fast);
@@ -346,27 +356,30 @@ footer {
 }
 
 .cookie-modal-close:hover {
-    color: #111827;
-    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-body);
+    background: var(--bg-tertiary);
 }
 
 .cookie-modal-close:focus {
-    outline: 3px solid var(--primary-color);
+    outline: 3px solid var(--color-primary);
     outline-offset: 2px;
 }
 
 .cookie-modal-body {
     padding: 1.5rem;
-    color: #374151;
+    color: var(--text-body);
 }
 
-/* --- COOKIE CATEGORIES (Accordion Style) --- */
+/* ═══════════════════════════════════════════
+   COOKIE CATEGORIES (ACCORDION STYLE)
+   ═══════════════════════════════════════════ */
+
 .cookie-category {
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border-color);
     border-radius: 0.75rem;
     margin-bottom: 1rem;
     overflow: hidden;
-    background: #ffffff;
+    background: var(--bg-panel);
     transition: box-shadow var(--transition-fast);
 }
 
@@ -383,20 +396,20 @@ footer {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.25rem;
-    background: #f9fafb;
+    background: var(--bg-secondary);
     border-bottom: 1px solid transparent;
     cursor: pointer;
     transition: background var(--transition-fast);
 }
 
 .cookie-category-header:hover {
-    background: #f3f4f6;
+    background: var(--bg-tertiary);
 }
 
 .cookie-category-header h4 {
     margin: 0;
     font-size: 0.938rem;
-    color: #111827;
+    color: var(--text-body);
     font-weight: 600;
     flex: 1;
 }
@@ -410,8 +423,8 @@ footer {
 
 .cookie-expand-btn {
     background: none;
-    border: 1px solid #d1d5db;
-    color: #6b7280;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -426,13 +439,13 @@ footer {
 }
 
 .cookie-expand-btn:hover {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
+    background: var(--color-primary);
+    border-color: var(--color-primary);
     color: white;
 }
 
 .cookie-expand-btn:focus {
-    outline: 3px solid var(--primary-color);
+    outline: 3px solid var(--color-primary);
     outline-offset: 2px;
 }
 
@@ -446,8 +459,8 @@ footer {
 
 .cookie-info-btn {
     background: none;
-    border: 1px solid #d1d5db;
-    color: #6b7280;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -462,13 +475,13 @@ footer {
 }
 
 .cookie-info-btn:hover {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
+    background: var(--color-primary);
+    border-color: var(--color-primary);
     color: white;
 }
 
 .cookie-info-btn:focus {
-    outline: 3px solid var(--primary-color);
+    outline: 3px solid var(--color-primary);
     outline-offset: 2px;
 }
 
@@ -490,7 +503,7 @@ footer {
     position: absolute;
     cursor: pointer;
     inset: 0;
-    background-color: #e5e7eb;
+    background-color: var(--bg-tertiary);
     transition: var(--transition-fast);
     border-radius: 30px;
 }
@@ -509,7 +522,7 @@ footer {
 }
 
 .cookie-switch input:checked + .cookie-slider {
-    background-color: var(--primary-color);
+    background-color: var(--color-primary);
 }
 
 .cookie-switch input:checked + .cookie-slider:before {
@@ -522,7 +535,7 @@ footer {
 }
 
 .cookie-switch input:focus-visible + .cookie-slider {
-    outline: 3px solid var(--primary-color);
+    outline: 3px solid var(--color-primary);
     outline-offset: 2px;
 }
 
@@ -530,35 +543,38 @@ footer {
     max-height: 0;
     overflow: hidden;
     transition: max-height var(--transition-normal), padding var(--transition-fast);
-    background: #ffffff;
+    background: var(--bg-panel);
 }
 
 .cookie-category-description.expanded {
     max-height: 500px;
     padding: 1rem 1.25rem;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .cookie-category-description p {
     margin: 0;
     font-size: 0.813rem;
-    color: #6b7280;
+    color: var(--text-secondary);
     line-height: 1.6;
 }
 
-/* --- COOKIE SERVICE TOPIC --- */
+/* ═══════════════════════════════════════════
+   COOKIE SERVICE TOPIC
+   ═══════════════════════════════════════════ */
+
 .cookie-service-topic {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 0;
-    border-top: 1px dashed #e5e7eb;
+    border-top: 1px dashed var(--border-color);
     margin-top: 0.75rem;
 }
 
 .cookie-service-name {
     font-size: 0.813rem;
-    color: #374151;
+    color: var(--text-body);
     font-weight: 500;
 }
 
@@ -568,13 +584,16 @@ footer {
     gap: 0.5rem;
 }
 
-/* --- COOKIE DETAIL MODALS --- */
+/* ═══════════════════════════════════════════
+   COOKIE DETAIL MODALS
+   ═══════════════════════════════════════════ */
+
 .cookie-detail-modal {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.95);
-    background: rgba(255, 255, 255, 0.98);
+    background: var(--bg-cookie-modal, var(--bg-panel));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 1rem;
@@ -601,15 +620,15 @@ footer {
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
-    background: rgba(249, 250, 251, 0.9);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-secondary);
     flex-shrink: 0;
 }
 
 .cookie-detail-header h3 {
     margin: 0;
     font-size: 1.125rem;
-    color: #111827;
+    color: var(--text-body);
     font-weight: 600;
     padding-right: 1rem;
 }
@@ -621,7 +640,7 @@ footer {
 .cookie-detail-body {
     padding: 1.5rem;
     overflow-y: auto;
-    color: #374151;
+    color: var(--text-body);
     flex: 1;
 }
 
@@ -639,11 +658,11 @@ footer {
 }
 
 .cookie-detail-content strong {
-    color: #111827;
+    color: var(--text-body);
 }
 
 .cookie-detail-content a {
-    color: var(--primary-color);
+    color: var(--color-primary);
     text-decoration: none;
 }
 
@@ -654,7 +673,7 @@ footer {
 .cookie-detail-content h5 {
     font-size: 0.813rem;
     font-weight: 600;
-    color: #111827;
+    color: var(--text-body);
     margin: 1.5rem 0 0.5rem 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -671,13 +690,13 @@ footer {
 .cookie-detail-links {
     margin-top: 1.5rem;
     padding-top: 1rem;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--border-color);
 }
 
 .cookie-link {
     display: block;
     font-size: 0.813rem;
-    color: var(--primary-color);
+    color: var(--color-primary);
     margin-bottom: 0.5rem;
     text-decoration: none;
     font-weight: 500;
@@ -690,18 +709,21 @@ footer {
 
 .cookie-detail-footer {
     padding: 1rem 1.5rem;
-    border-top: 1px solid #e5e7eb;
-    background: rgba(249, 250, 251, 0.9);
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-secondary);
     display: flex;
     justify-content: flex-start;
     flex-shrink: 0;
 }
 
-/* --- COOKIE MODAL FOOTER --- */
+/* ═══════════════════════════════════════════
+   COOKIE MODAL FOOTER
+   ═══════════════════════════════════════════ */
+
 .cookie-modal-footer {
     padding: 1.25rem 1.5rem;
-    border-top: 1px solid #e5e7eb;
-    background: rgba(249, 250, 251, 0.9);
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-secondary);
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
@@ -716,11 +738,14 @@ footer {
 }
 
 .cookie-modal-footer .cookie-btn:focus-visible {
-    outline: 3px solid var(--primary-color);
+    outline: 3px solid var(--color-primary);
     outline-offset: 2px;
 }
 
-/* --- TOAST NOTIFICATION --- */
+/* ═══════════════════════════════════════════
+   TOAST NOTIFICATION
+   ═══════════════════════════════════════════ */
+
 .toast-notification {
     position: fixed;
     bottom: 7rem;
@@ -746,7 +771,10 @@ footer {
     display: none;
 }
 
-/* --- BACK TO TOP BUTTON --- */
+/* ═══════════════════════════════════════════
+   BACK TO TOP BUTTON
+   ═══════════════════════════════════════════ */
+
 .back-to-top {
     position: fixed;
     bottom: 30px;
@@ -754,7 +782,7 @@ footer {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--primary-color);
+    background: var(--color-primary);
     color: white;
     border: none;
     cursor: pointer;
@@ -777,22 +805,25 @@ footer {
 }
 
 .back-to-top:hover {
-    background: var(--primary-hover);
+    background: var(--color-primary-hover);
     transform: translateY(-3px);
 }
 
 .back-to-top:focus {
-    outline: 3px solid var(--primary-color);
+    outline: 3px solid var(--color-primary);
     outline-offset: 2px;
 }
 
-/* Back-to-top must appear ABOVE cookie banner when banner is visible */
+/* Back-to-top deve aparecer ACIMA do cookie banner quando visível */
 .cookie-banner.visible + .cookie-overlay ~ .back-to-top,
 .cookie-banner.visible ~ .back-to-top {
     bottom: 130px;
 }
 
-/* --- COOKIE FAB --- */
+/* ═══════════════════════════════════════════
+   COOKIE FAB
+   ═══════════════════════════════════════════ */
+
 .cookie-fab {
     position: fixed;
     bottom: 80px;
@@ -800,7 +831,7 @@ footer {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--primary-color);
+    background: var(--color-primary);
     color: white;
     border: none;
     cursor: pointer;
@@ -817,12 +848,12 @@ footer {
 }
 
 .cookie-fab:hover {
-    background: var(--primary-hover);
+    background: var(--color-primary-hover);
     transform: translateY(-3px);
 }
 
 .cookie-fab:focus {
-    outline: 3px solid var(--primary-color);
+    outline: 3px solid var(--color-primary);
     outline-offset: 2px;
 }
 
@@ -830,13 +861,16 @@ footer {
     display: none;
 }
 
-/* FAB positioned below back-to-top when banner is visible */
+/* FAB posicionado abaixo do back-to-top quando banner está visível */
 .cookie-banner.visible + .cookie-overlay ~ .cookie-fab,
 .cookie-banner.visible ~ .cookie-fab {
     bottom: 180px;
 }
 
-/* --- SEÇÃO DE SELOS NO FOOTER --- */
+/* ═══════════════════════════════════════════
+   SELOS NO FOOTER
+   ═══════════════════════════════════════════ */
+
 .footer-seals {
     display: flex;
     align-items: center;
@@ -856,7 +890,10 @@ footer {
     transform: scale(1.1);
 }
 
-/* --- RESPONSIVIDADE TABLET (768px - 1024px) --- */
+/* ═══════════════════════════════════════════
+   RESPONSIVIDADE TABLET (768PX - 1024PX)
+   ═══════════════════════════════════════════ */
+
 @media (max-width: 1024px) {
     .footer-bottom {
         flex-direction: column;
@@ -883,7 +920,10 @@ footer {
     }
 }
 
-/* --- RESPONSIVIDADE MOBILE (< 768px) --- */
+/* ═══════════════════════════════════════════
+   RESPONSIVIDADE MOBILE (< 768PX)
+   ═══════════════════════════════════════════ */
+
 @media (max-width: 768px) {
     .cookie-banner {
         flex-direction: column;
@@ -919,7 +959,7 @@ footer {
         margin-left: auto;
     }
     
-    /* Footer mobile - alinhado à esquerda */
+    /* Footer mobile */
     .footer-bottom {
         flex-direction: column;
         align-items: flex-start;
@@ -1055,7 +1095,10 @@ footer {
     }
 }
 
-/* --- ACESSIBILIDADE --- */
+/* ═══════════════════════════════════════════
+   ACESSIBILIDADE
+   ═══════════════════════════════════════════ */
+
 @media (prefers-reduced-motion: reduce) {
     .cookie-banner,
     .cookie-modal,
@@ -1069,13 +1112,19 @@ footer {
     }
 }
 
-/* --- FOCO ACESSÍVEL --- */
+/* ═══════════════════════════════════════════
+   FOCO ACESSÍVEL
+   ═══════════════════════════════════════════ */
+
 :focus-visible {
-    outline: 3px solid var(--primary-color);
+    outline: 3px solid var(--color-primary);
     outline-offset: 2px;
 }
 
-/* --- VISUALIZAÇÃO DE FOCO CUSTOMIZADA --- */
+/* ═══════════════════════════════════════════
+   VISUALIZAÇÃO DE FOCO CUSTOMIZADA
+   ═══════════════════════════════════════════ */
+
 .cookie-btn:focus:not(:focus-visible),
 .cookie-switch input:focus:not(:focus-visible),
 .cookie-info-btn:focus:not(:focus-visible),

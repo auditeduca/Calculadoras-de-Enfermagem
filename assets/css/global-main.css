@@ -1,15 +1,15 @@
 /**
  * GLOBAL-MAIN.CSS
- * Estilos para Artigos e Páginas de Conteúdo.
+ * Estilos para Artigos e Páginas de Conteúdo
+ * Versão: 3.0 - Refatorado com CSS Variables Centralizado
+ * 
+ * NOTA: Variáveis CSS e temas estão centralizados em accessibility.css
  */
 
-:root {
-    --header-height-offset: 9.375rem; /* 150px */
-    --z-index-content: 10;
-    --z-index-header: 100;
-}
+/* =========================================
+   LAYOUT PRINCIPAL
+   ========================================= */
 
-/* --- Layout Principal --- */
 .main-layout {
     display: grid;
     grid-template-columns: 1fr 18.75rem; /* 300px */
@@ -19,15 +19,18 @@
     margin-top: var(--header-height-offset);
     padding: 2rem;
     position: relative;
-    z-index: var(--z-index-content);
+    z-index: 10;
 }
 
-/* --- Breadcrumbs e Meta Tags --- */
+/* =========================================
+   BREADCRUMBS E META TAGS
+   ========================================= */
+
 .article-meta-header {
     margin-bottom: 3rem;
     position: relative;
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
 }
@@ -37,58 +40,70 @@
     z-index: 2;
 }
 
-/* --- Imagem de Destaque --- */
+/* =========================================
+   IMAGEM DE DESTAQUE
+   ========================================= */
+
 .featured-image-container img {
-    width: 100%; 
+    width: 100%;
     height: auto;
     max-height: 34.375rem; /* 550px */
     object-fit: cover;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-sm);
     margin-bottom: 3rem;
-    border: 0.5rem solid var(--bg-panel); /* 8px */
+    border: 0.5rem solid var(--bg-panel);
 }
 
-/* --- Bloco de Conteúdo --- */
+/* =========================================
+   BLOCO DE CONTEÚDO
+   ========================================= */
+
 .article-content {
     background: var(--bg-panel);
     padding: 2.5rem;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-sm);
-    position: relative; 
+    position: relative;
 }
 
-.article-content .lead { 
-    font-size: 1.25rem; 
-    color: var(--text-main); 
-    font-weight: 500; 
-    line-height: 1.8; 
-    margin-bottom: 2rem; 
+.article-content .lead {
+    font-size: 1.25rem;
+    color: var(--text-body);
+    font-weight: 500;
+    line-height: 1.8;
+    margin-bottom: 2rem;
 }
 
-.article-content p { 
-    font-size: 1.05rem; 
-    line-height: 1.8; 
-    margin-bottom: 1.5rem; 
-    color: var(--text-main); 
+.article-content p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--text-body);
     opacity: 0.9;
 }
 
-/* --- Sidebar --- */
-.content-sidebar { 
-    position: sticky; 
-    top: calc(var(--header-height-offset) + 1.25rem); /* + 20px de margem */
-    height: fit-content; 
-    display: flex; 
+/* =========================================
+   SIDEBAR
+   ========================================= */
+
+.content-sidebar {
+    position: sticky;
+    top: calc(var(--header-height-offset) + 1.25rem);
+    height: fit-content;
+    display: flex;
     flex-direction: column;
     gap: 2rem;
-    z-index: var(--z-index-content);
+    z-index: 10;
 }
 
-/* --- Responsividade --- */
-@media (max-width: 60rem) { /* 960px */
+/* =========================================
+   RESPONSIVIDADE
+   ========================================= */
+
+@media (max-width: 60rem) {
     :root {
-        --header-height-offset: 5rem; /* 80px */
+        --header-height-offset: 5rem;
     }
 
     .main-layout {
@@ -96,7 +111,7 @@
     }
     
     .content-sidebar {
-        position: relative; 
+        position: relative;
         top: 0;
     }
     

@@ -1,26 +1,152 @@
 /**
- * Módulo de Acessibilidade Calculadoras de Enfermagem
- * Gerencia o painel, widgets, VLibras e overrides de CSS.
+ * ACCESSIBILITY.JS
+ * Sistema Centralizado de Acessibilidade e Temas
+ * Versão: 3.0 - Refatorado com Theme Manager Integrado
  * 
- * Integração com o sistema modular:
+ * Funcionalidades:
+ * - Painel de acessibilidade
+ * - Theme Manager (claro/escuro)
+ * - VLibras integração
+ * - Recursos de leitura e navegação
+ * 
+ * Integração:
  * - Carregado após ComponentsLoaded
  * - Gerencia estado global de acessibilidade
- * - Coordena com HeaderEngine e ModalSystem
  */
 
 const AccessControl = {
+    // ═══════════════════════════════════════════
+    // CONFIGURAÇÕES DE ESTADO
+    // ═══════════════════════════════════════════
     state: {
-        fontSize: 0, 
-        fontFamily: 0, 
+        fontSize: 0,
+        fontFamily: 0,
         letterSpacing: 0,
-        readingMask: 0, 
-        isTTSActive: false, 
-        contrast: 0
+        readingMask: 0,
+        isTTSActive: false,
+        contrast: 0,
+        theme: 'system' // 'light', 'dark', 'system'
     },
 
+    // Elementos cacheados do DOM
     elements: {},
 
-    // Método para verificar e recarregar elementos se necessário
+    // ═══════════════════════════════════════════
+    // THEME MANAGER
+    // ═══════════════════════════════════════════
+    ThemeManager: {
+        keys: {
+            theme: 'nursing_calc_theme',
+            systemPreference: 'nursing_calc_system_theme'
+        },
+
+        // Detectar preferência do sistema
+        detectSystemTheme() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        },
+
+        // Obter tema atual
+        getTheme() {
+            const savedTheme = localStorage.getItem(this.keys.theme);
+            if (savedTheme) {
+                return savedTheme;
+            }
+            
+            // Se não houver preferência salva, usar preferência do sistema
+            const systemTheme = this.detectSystemTheme();
+            localStorage.setItem(this.keys.systemTheme, systemTheme);
+            return 'system';
+        },
+
+        // Aplicar tema ao body
+        applyTheme(theme) {
+            const body = document.body;
+            const isDark = theme === 'dark' || 
+                (theme === 'system' && this.detectSystemTheme() === 'dark');
+            
+            if (isDark) {
+                body.classList.add('dark-theme');
+            } else {
+                body.classList.remove('dark-theme');
+            }
+            
+            // Salvar preferência
+            localStorage.setItem(this.keys.theme, theme);
+            this.state.theme = theme;
+        },
+
+        // Alternar entre temas
+        toggleTheme() {
+            const currentTheme = this.getTheme();
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            this.applyTheme(newTheme);
+            
+            // Dispatch evento para outros módulos
+            window.dispatchEvent(new CustomEvent('Theme:Changed', { 
+                detail: { theme: newTheme } 
+            }));
+            
+            return newTheme;
+        },
+
+        // Inicializar tema na carga da página
+        init() {
+            const theme = this.getTheme();
+            this.applyTheme(theme);
+            
+            // Listener para mudanças na preferência do sistema
+            if (window.matchMedia) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    const savedTheme = localStorage.getItem(this.keys.theme);
+                    if (savedTheme === 'system') {
+                        this.applyTheme('system');
+                    }
+                });
+            }
+        },
+
+        // Resetar para preferência do sistema
+        resetToSystem() {
+            localStorage.removeItem(this.keys.theme);
+            this.applyTheme('system');
+        }
+    },
+
+    // ═══════════════════════════════════════════
+    // INICIALIZAÇÃO
+    // ═══════════════════════════════════════════
+
+    init() {
+        // Inicializar Theme Manager primeiro
+        this.ThemeManager.init();
+        
+        // Cachear elementos
+        this.ensureElements();
+
+        if (!this.elements.panel) {
+            return;
+        }
+
+        // Configurar inicialização diferida (Lucide, VLibras)
+        this.setupDeferredInit();
+        
+        // Observadores de mutação
+        this.setupObservers();
+        
+        // Eventos globais (teclado, clique fora)
+        this.setupGlobalEvents();
+        
+        // Carregar configurações salvas
+        this.loadSavedState();
+    },
+
+    // ═══════════════════════════════════════════
+    // ELEMENTOS DO DOM
+    // ═══════════════════════════════════════════
+
     ensureElements() {
         // Se os elementos já estão cacheados e válidos, retorna true
         if (this.elements.panel && this.elements.sideWidgets) {
@@ -33,32 +159,20 @@ const AccessControl = {
             panel: document.getElementById('accessibility-panel'),
             sideWidgets: document.getElementById('side-widgets'),
             closeBtn: document.getElementById('close-panel-btn'),
-            openBtn: document.getElementById('accessibility-btn')
+            openBtn: document.getElementById('accessibility-btn'),
+            themeToggleBtn: document.getElementById('theme-toggle-btn'),
+            themeIcon: document.getElementById('theme-icon')
         };
         
         return !!this.elements.panel;
     },
 
-    init() {
-        // Cachear elementos
-        this.ensureElements();
-
-        if (!this.elements.panel) {
-            console.warn('Painel de Acessibilidade não encontrado no DOM.');
-            return;
-        }
-
-        // Aguardar carregamento do Lucide e VLibras
-        this.setupDeferredInit();
-        this.setupObservers();
-        this.setupGlobalEvents();
-        
-        // Aplicar configurações salvas do localStorage
-        this.loadSavedState();
-    },
+    // ═══════════════════════════════════════════
+    // INICIALIZAÇÃO DIFERIDA
+    // ═══════════════════════════════════════════
 
     setupDeferredInit() {
-        // Inicializar Lucide quando disponível (tenta 3 vezes com intervalo)
+        // Inicializar Lucide quando disponível
         let lucideAttempts = 0;
         const tryInitLucide = () => {
             lucideAttempts++;
@@ -70,7 +184,7 @@ const AccessControl = {
         };
         tryInitLucide();
 
-        // Inicializar VLibras quando disponível
+        // Inicializar VLibras
         const checkVLibras = setInterval(() => {
             if (window.VLibras && window.VLibras.Widget) {
                 clearInterval(checkVLibras);
@@ -82,45 +196,58 @@ const AccessControl = {
         setTimeout(() => clearInterval(checkVLibras), 10000);
     },
 
+    // ═══════════════════════════════════════════
+    // PERSISTÊNCIA DE ESTADO
+    // ═══════════════════════════════════════════
+
     loadSavedState() {
-        // Carregar preferências salvas do localStorage
         const savedState = localStorage.getItem('accessControlState');
         if (savedState) {
             try {
                 const parsed = JSON.parse(savedState);
-                // Restaurar configurações de fonte e contraste se existirem
+                
+                // Restaurar configurações de fonte
                 if (parsed.fontSize && parsed.fontSize !== 0) {
                     document.documentElement.style.setProperty('--font-scale', parsed.fontSize);
                 }
+                
+                // Restaurar configurações de contraste
                 if (parsed.contrast && parsed.contrast !== 0) {
-                    // Reaplicar contraste via classe no body
+                    // Aplicado via classe no body
                 }
+                
+                // Restaurar tema (já feito pelo ThemeManager)
+                const theme = this.ThemeManager.getTheme();
+                this.updateThemeIcon(theme);
+                
             } catch (e) {
-                console.warn('Erro ao carregar estado de acessibilidade:', e);
+                // Erro ao carregar estado, usa padrões
             }
         }
     },
 
     saveState() {
-        // Salvar estado atual no localStorage
         const stateToSave = {
             fontSize: this.state.fontSize > 0 ? ['', '1.2', '1.5', '2.0'][this.state.fontSize] : 0,
-            contrast: this.state.contrast > 0 ? ['', 'contrast-dark', 'contrast-inverted'][this.state.contrast] : 0
+            contrast: this.state.contrast > 0 ? ['', 'contrast-dark', 'contrast-inverted'][this.state.contrast] : 0,
+            theme: this.state.theme
         };
         localStorage.setItem('accessControlState', JSON.stringify(stateToSave));
     },
 
+    // ═══════════════════════════════════════════
+    // OBSERVADORES E EVENTOS
+    // ═══════════════════════════════════════════
+
     setupObservers() {
-        // Observer para fechar menu ao abrir modais/menus (conflitos)
+        // Observer para fechar menu ao abrir modais/menus
         const observer = new MutationObserver(mutations => {
             mutations.forEach(mutation => {
-                // Checa classes (ex: modal-open)
                 if (mutation.attributeName === "class") {
                     const classList = document.body.classList;
                     if (classList.contains("modal-open") || 
                         classList.contains("mobile-menu-open") || 
                         classList.contains("overflow-hidden")) {
-                        // Se painel estiver aberto, fecha
                         if (!this.isPanelClosed()) {
                             this.closePanel();
                         }
@@ -137,7 +264,7 @@ const AccessControl = {
             if (e.key === 'Escape') this.closePanel();
         });
 
-        // Clique Fora - com verificação defensiva
+        // Clique Fora
         document.addEventListener('click', (e) => {
             if (!this.ensureElements()) return;
             
@@ -151,21 +278,19 @@ const AccessControl = {
         });
     },
 
-    // --- Controles de UI ---
+    // ═══════════════════════════════════════════
+    // CONTROLES DO PAINEL
+    // ═══════════════════════════════════════════
 
     isPanelClosed() {
-        // Verificação defensiva
         if (!this.ensureElements() || !this.elements.panel) {
-            return true; // Assume fechado se não encontrar elemento
+            return true;
         }
-        // Usa a classe accessibility-panel-hidden que é adicionada/removida para controle de visibilidade
         return this.elements.panel.classList.contains('accessibility-panel-hidden');
     },
 
     togglePanel() {
-        // Verificação defensiva - tentar inicializar se necessário
         if (!this.ensureElements()) {
-            console.warn('Painel de acessibilidade não carregado ainda.');
             return;
         }
         
@@ -177,7 +302,6 @@ const AccessControl = {
     },
 
     openPanel() {
-        // Verificação defensiva
         if (!this.ensureElements() || !this.elements.panel) return;
         
         this.elements.panel.classList.remove('accessibility-panel-hidden');
@@ -185,10 +309,8 @@ const AccessControl = {
             this.elements.sideWidgets.classList.add('side-widgets-hidden');
         }
         
-        // Ocultar botões flutuantes do footer quando painel de acessibilidade estiver aberto
         this.hideFloatingButtons();
         
-        // Delay para foco acessível
         setTimeout(() => {
             if (this.elements.closeBtn) {
                 this.elements.closeBtn.focus();
@@ -197,7 +319,6 @@ const AccessControl = {
     },
 
     closePanel() {
-        // Verificação defensiva
         if (!this.ensureElements() || !this.elements.panel) return;
         if(this.isPanelClosed()) return;
         
@@ -206,7 +327,6 @@ const AccessControl = {
             this.elements.sideWidgets.classList.remove('side-widgets-hidden');
         }
         
-        // Mostrar botões flutuantes do footer novamente
         this.showFloatingButtons();
         
         if (this.elements.openBtn) {
@@ -214,37 +334,58 @@ const AccessControl = {
         }
     },
 
-    hideFloatingButtons() {
-        // Ocultar botões flutuantes do footer (cookie FAB e back-to-top)
-        const cookieFab = document.getElementById('cookie-fab');
-        const backToTop = document.getElementById('backToTop');
-        
-        if (cookieFab) {
-            cookieFab.style.display = 'none';
-        }
-        if (backToTop) {
-            backToTop.style.display = 'none';
-        }
-    },
-    
-    showFloatingButtons() {
-        // Mostrar botões flutuantes do footer novamente
-        const cookieFab = document.getElementById('cookie-fab');
-        const backToTop = document.getElementById('backToTop');
-        
-        if (cookieFab) {
-            cookieFab.style.display = 'flex';
-        }
-        if (backToTop) {
-            backToTop.style.display = 'flex';
-        }
-    },
-
     toggleMaximize() {
-        // Verificação defensiva
         if (!this.ensureElements() || !this.elements.panel) return;
         this.elements.panel.classList.toggle('panel-expanded');
     },
+
+    // ═══════════════════════════════════════════
+    // CONTROLES DE TEMAS
+    // ═══════════════════════════════════════════
+
+    toggleTheme() {
+        const newTheme = this.ThemeManager.toggleTheme();
+        this.updateThemeIcon(newTheme);
+        this.saveState();
+    },
+
+    updateThemeIcon(theme) {
+        if (!this.ensureElements()) return;
+        
+        const icon = this.elements.themeIcon;
+        if (icon) {
+            const isDark = theme === 'dark' || 
+                (theme === 'system' && this.ThemeManager.detectSystemTheme() === 'dark');
+            
+            if (isDark) {
+                icon.className = 'fas fa-sun';
+                icon.setAttribute('aria-label', 'Alternar para modo claro');
+            } else {
+                icon.className = 'fas fa-moon';
+                icon.setAttribute('aria-label', 'Alternar para modo escuro');
+            }
+        }
+    },
+
+    hideFloatingButtons() {
+        const cookieFab = document.getElementById('cookie-fab');
+        const backToTop = document.getElementById('backToTop');
+        
+        if (cookieFab) cookieFab.style.display = 'none';
+        if (backToTop) backToTop.style.display = 'none';
+    },
+    
+    showFloatingButtons() {
+        const cookieFab = document.getElementById('cookie-fab');
+        const backToTop = document.getElementById('backToTop');
+        
+        if (cookieFab) cookieFab.style.display = 'flex';
+        if (backToTop) backToTop.style.display = 'flex';
+    },
+
+    // ═══════════════════════════════════════════
+    // VLIBS
+    // ═══════════════════════════════════════════
 
     toggleLibrasWidget() {
         const vlibrasBtn = document.querySelector('[vw-access-button]');
@@ -253,10 +394,11 @@ const AccessControl = {
         }
     },
 
-    // --- Funcionalidades (Features) ---
+    // ═══════════════════════════════════════════
+    // RECURSOS DE ACESSIBILIDADE
+    // ═══════════════════════════════════════════
 
     toggleSimple(className, cardElement) {
-        // Verificação defensiva
         if (!this.ensureElements()) return;
         
         this.elements.body.classList.toggle(className);
@@ -267,7 +409,6 @@ const AccessControl = {
     },
 
     cycleFeature(key, values, cardElement) {
-        // Verificação defensiva
         if (!this.ensureElements()) return;
         
         this.state[key] = (this.state[key] + 1) % (values.length + 1);
@@ -309,7 +450,6 @@ const AccessControl = {
             if (key === 'contrast') this.elements.body.classList.add(activeValue);
         }
         
-        // Salvar estado
         this.saveState();
     },
 
@@ -335,7 +475,6 @@ const AccessControl = {
     },
 
     toggleTTS(cardElement) {
-        // Verificação defensiva
         if (!this.ensureElements()) return;
         
         this.state.isTTSActive = !this.state.isTTSActive;
@@ -362,16 +501,26 @@ const AccessControl = {
         }
     },
 
+    // ═══════════════════════════════════════════
+    // RESETAR TUDO
+    // ═══════════════════════════════════════════
+
     resetAll() {
-        // Verificação defensiva
         this.ensureElements();
         
+        // Resetar estado
         Object.keys(this.state).forEach(k => this.state[k] = 0);
+        
+        // Resetar variáveis CSS
         document.documentElement.style.setProperty('--font-scale', '1');
         document.documentElement.style.setProperty('--letter-spacing', 'normal');
         
+        // Resetar tema para preferência do sistema
+        this.ThemeManager.resetToSystem();
+        this.updateThemeIcon(this.ThemeManager.getTheme());
+        
+        // Remover classes do body
         if (this.elements.body) {
-            // Remove todas as classes de recursos de acessibilidade
             this.elements.body.classList.remove(
                 'contrast-dark', 
                 'contrast-inverted', 
@@ -403,16 +552,15 @@ const AccessControl = {
         // Limpar localStorage
         localStorage.removeItem('accessControlState');
         
-        // Dispatch evento para outros módulos
+        // Dispatch evento
         window.dispatchEvent(new CustomEvent('Accessibility:Reset'));
         
-        // Feedback visual de restauração
+        // Feedback visual
         const btn = document.querySelector('button[onclick="resetAllFeatures()"]');
         if (btn) {
             const originalHTML = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Restaurado!';
             
-            // Recarregar ícones Lucide se necessário
             if (window.lucide && typeof window.lucide.createIcons === 'function') {
                 window.lucide.createIcons();
             }
@@ -426,6 +574,10 @@ const AccessControl = {
         }
     },
 
+    // ═══════════════════════════════════════════
+    // UTILIDADES DE UI
+    // ═══════════════════════════════════════════
+
     updateDots(card, count = 1) {
         if (!card) return;
         const dots = card.querySelectorAll('.dot');
@@ -434,17 +586,38 @@ const AccessControl = {
             else d.classList.remove('active');
         });
     },
+    
     resetDots(card) {
         if (!card) return;
         card.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
     }
 };
 
-// Exposição Global para onclick
+// ═══════════════════════════════════════════
+// EXPOSIÇÃO GLOBAL PARA ONCLICK
+// ═══════════════════════════════════════════
+
 window.toggleAccessibilityPanel = () => AccessControl.togglePanel();
 window.toggleMaximizePanel = () => AccessControl.toggleMaximize();
-window.toggleLibras = () => AccessControl.toggleLibrasWidget();
+window.toggleLibras = () => {
+    // Chamar a função principal do header.js
+    if (typeof toggleLibras === 'function') {
+        toggleLibras();
+    }
+};
 window.toggleSimpleFeature = (cls, el) => AccessControl.toggleSimple(cls, el);
 window.cycleFeature = (key, vals, el) => AccessControl.cycleFeature(key, vals, el);
 window.toggleTTS = (el) => AccessControl.toggleTTS(el);
+window.toggleThemeMode = () => AccessControl.toggleTheme();
 window.resetAllFeatures = () => AccessControl.resetAll();
+
+// ═══════════════════════════════════════════
+// INICIALIZAÇÃO AUTOMÁTICA
+// ═══════════════════════════════════════════
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Aguardar um tick para garantir que outros scripts carregaram
+    setTimeout(() => {
+        AccessControl.init();
+    }, 50);
+});

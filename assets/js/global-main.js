@@ -5,7 +5,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll();
-    initTemplateLogging();
 });
 
 /**
@@ -20,8 +19,6 @@ function initSmoothScroll() {
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 e.preventDefault();
-                
-                // Calcula offset para não ficar colado no topo (devido ao header fixo)
                 const headerOffset = 100;
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -32,15 +29,6 @@ function initSmoothScroll() {
                 });
             }
         });
-    });
-}
-
-/**
- * Log de carregamento modular
- */
-function initTemplateLogging() {
-    window.addEventListener('templateEngineReady', function() {
-        console.log('%c [Calculadoras de Enfermagem] ', 'background: #1A3E74; color: #fff; font-weight: bold;', 'Ambiente modular carregado com sucesso.');
     });
 }
 

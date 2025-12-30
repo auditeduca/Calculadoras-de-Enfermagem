@@ -1,128 +1,120 @@
 /**
  * PRELOAD.CSS
  * Estilos para Tela de Carregamento/Preload
- * Versão: 2.1 - Sistema Modular
+ * Versão: 3.0 - Refatorado com CSS Variables Centralizado
+ * 
+ * NOTA: Variáveis CSS e temas estão centralizados em accessibility.css
  */
 
-:root {
-    --preload-primary: #1A3E74;
-    --preload-secondary: #00bcd4;
-    --preload-bg: #ffffff;
-    --preload-transition: 300ms;
-    --preload-z-index: 999999;
-}
-
 /* =========================================
-   PRELOAD MODAL (usado em index.html)
+   LOADING SCREEN
    ========================================= */
 
-#preload-modal {
+#loading-screen {
     position: fixed;
-    inset: 0;
-    z-index: var(--preload-z-index);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 999998;
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: auto;
-    background: rgba(255, 255, 255, 0.98);
-    transition: opacity var(--preload-transition) ease-out,
-                visibility var(--preload-transition) ease-out;
+    background: var(--bg-preload);
+    transition: opacity 400ms ease-out, visibility 400ms ease-out;
 }
 
-#preload-modal.hidden,
-#preload-modal[aria-hidden="true"] {
-    display: none !important;
-}
-
-/* Animação de saída */
-#preload-modal.loading-exit {
+#loading-screen.loading-exit {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
 
 /* Container interno */
-.preload-container {
-    background: var(--preload-bg);
-    border-radius: 1rem;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    text-align: center;
+.loader-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem 3rem;
     max-width: 90vw;
-    width: 320px;
+    width: auto;
+    background: var(--bg-preload);
+    border-radius: 16px;
 }
 
-#preload-modal.loading-exit .preload-container {
+#loading-screen.loading-exit .loader-wrapper {
     transform: scale(0.95);
     opacity: 0;
-    transition: transform var(--preload-transition) ease-out,
-                opacity var(--preload-transition) ease-out;
+    transition: transform 400ms ease-out, opacity 400ms ease-out;
 }
 
 /* =========================================
    CONTEÚDO DO PRELOAD
    ========================================= */
 
-.preload-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-}
-
 /* Logo */
-.preload-logo {
-    width: 120px;
+.loader-logo {
+    width: 140px;
     height: auto;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
-    animation: pulse-logo 2s infinite ease-in-out;
+    filter: drop-shadow(0 4px 8px rgba(26, 62, 116, 0.15));
+    animation: soft-pulse 2.5s infinite ease-in-out;
+    border-radius: 8px;
 }
 
-@keyframes pulse-logo {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.05); opacity: 0.9; }
+/* Animação suave */
+@keyframes soft-pulse {
+    0%, 100% { 
+        transform: scale(1); 
+    }
+    50% { 
+        transform: scale(1.02); 
+    }
 }
 
-/* Texto principal - SEMPRE VISÍVEL */
-.preload-text {
-    color: #1A3E74;
-    font-size: 15px;
+/* Texto principal */
+.loader-text {
+    color: var(--color-primary);
+    font-size: 16px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     margin: 0;
     line-height: 1.5;
+    text-align: center;
 }
 
 /* Barra de progresso */
-.preload-bar-container {
-    width: 200px;
-    height: 6px;
-    background-color: #f1f5f9;
-    border-radius: 20px;
+.loading-bar-container {
+    width: 220px;
+    height: 4px;
+    background-color: var(--bg-secondary);
+    border-radius: 2px;
     overflow: hidden;
     position: relative;
 }
 
-.preload-bar-progress {
+.loading-bar-progress {
     height: 100%;
-    width: 40%;
-    background: linear-gradient(90deg, var(--preload-primary), var(--preload-secondary));
-    border-radius: 20px;
-    animation: slide-loading 1.5s infinite ease-in-out;
+    width: 30%;
+    background: linear-gradient(90deg, var(--color-primary), #00bcd4);
+    border-radius: 2px;
+    animation: slide-loading 1.8s infinite ease-in-out;
     position: absolute;
 }
 
 @keyframes slide-loading {
-    0% { left: -40%; }
+    0% { left: -30%; }
     100% { left: 100%; }
 }
 
-/* Percentual */
-.preload-percentage {
-    font-family: monospace;
-    font-size: 12px;
-    color: #9ca3af;
+/* Percentual discreto */
+#loading-percentage {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
     margin: 0;
+    letter-spacing: 1px;
 }
 
 /* =========================================
@@ -130,24 +122,24 @@
    ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
-    #preload-modal {
+    #loading-screen {
         transition: none;
     }
     
-    #preload-modal.loading-exit {
+    #loading-screen.loading-exit {
         transition: none;
     }
     
-    .preload-logo {
+    .loader-logo {
         animation: none;
     }
     
-    .preload-bar-progress {
+    .loading-bar-progress {
         animation: none;
         width: 100%;
     }
     
-    #preload-modal.loading-exit .preload-container {
+    #loading-screen.loading-exit .loader-wrapper {
         transform: none;
         transition: none;
         opacity: 1;
@@ -155,47 +147,23 @@
 }
 
 /* =========================================
-   MODO ESCURO
-   ========================================= */
-
-body.dark-theme #preload-modal,
-.dark-theme #preload-modal {
-    background: rgba(15, 23, 42, 0.98);
-}
-
-body.dark-theme .preload-container,
-.dark-theme .preload-container {
-    background: #1e293b;
-}
-
-body.dark-theme .preload-text,
-.dark-theme .preload-text {
-    color: #e2e8f0;
-}
-
-body.dark-theme .preload-bar-container,
-.dark-theme .preload-bar-container {
-    background-color: #334155;
-}
-
-/* =========================================
    RESPONSIVIDADE
    ========================================= */
 
 @media (max-width: 480px) {
-    .preload-container {
-        padding: 2rem 1.5rem;
+    .loader-wrapper {
+        padding: 1.5rem 2rem;
     }
     
-    .preload-logo {
-        width: 100px;
+    .loader-logo {
+        width: 110px;
     }
     
-    .preload-bar-container {
-        width: 160px;
+    .loading-bar-container {
+        width: 180px;
     }
     
-    .preload-text {
+    .loader-text {
         font-size: 14px;
     }
 }
@@ -206,10 +174,15 @@ body.dark-theme .preload-bar-container,
 
 #main-content {
     visibility: hidden;
-    transition: visibility 0s linear var(--preload-transition);
+    transition: visibility 0s linear 400ms;
 }
 
 #main-content.visible,
-#main-content[style*="visibility: visible"] {
+#main-content[style*="visibility: visible"],
+#main-content:not(.hidden) {
     visibility: visible;
+}
+
+.hidden {
+    display: none !important;
 }

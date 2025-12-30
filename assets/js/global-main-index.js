@@ -221,20 +221,14 @@
   function init() {
     // Verifica se Utils está disponível
     if (typeof Utils === 'undefined') {
-      console.error('[Index] Utils.js não foi carregado corretamente.');
       return;
     }
-
-    console.log('[Index] Inicializando sistema de ferramentas...');
 
     // Inicializa listeners
     initEventListeners();
 
     // Renderiza ferramentas
     renderAllTools();
-
-    console.log('[Index] Sistema de ferramentas inicializado com sucesso');
-    console.log('[Index] Total de ferramentas:', TOOLS_DATA.length);
   }
 
   // --- EXPOSIÇÃO GLOBAL ---
@@ -242,25 +236,22 @@
   window.renderTools = renderTools;
 
   // --- INICIALIZAÇÃO ---
-  
-  // Espera o MainIndex estar pronto (depois que o HTML é injetado)
-  document.addEventListener('MainIndex:Ready', function() {
-    setTimeout(init, 50);
+
+  // Espera o evento ModulesLoaded (disparado pelo ComponentLoader após todos os componentes serem carregados)
+  document.addEventListener('ModulesLoaded', function() {
+    setTimeout(init, 100);
   });
 
-  // Fallback: se já estiver pronto
-  if (window.MainIndexLoader && window.MainIndexLoader.loaded) {
-    setTimeout(init, 50);
-  }
-
-  // Inicializa quando o DOM estiver pronto
+  // Fallback: inicializa quando o DOM estiver pronto se o evento ainda não foi disparado
   Utils.onReady(function() {
     setTimeout(function() {
-      if (!window.MainIndexLoader || !window.MainIndexLoader.loaded) {
-        // Tenta inicializar mesmo assim - pode funcionar se o HTML já existe
+      // Verifica se os containers já existem no DOM
+      if (document.getElementById('calculadoras-grid') && 
+          document.getElementById('escalas-grid') && 
+          document.getElementById('vacinas-grid')) {
         init();
       }
-    }, 200);
+    }, 500);
   });
 
 })();

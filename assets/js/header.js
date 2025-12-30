@@ -63,8 +63,6 @@ class HeaderEngine {
      */
     async init() {
         try {
-            console.log('[HeaderEngine] Inicializando sistema do cabeçalho...');
-
             // Aguardar DOM estar pronto
             await this.waitForDOM();
 
@@ -83,13 +81,14 @@ class HeaderEngine {
             // Configurar acessibilidade
             this.setupAccessibility();
 
+            // Inicializar preferência do VLibras
+            this.initLibras();
+
             // Configurar observadores de redimensionamento
             this.setupResizeObserver();
 
-            console.log('[HeaderEngine] Sistema do cabeçalho inicializado com sucesso');
-
         } catch (error) {
-            console.error('[HeaderEngine] Erro ao inicializar:', error);
+            // Erro ao inicializar sistema do cabeçalho
         }
     }
 
@@ -144,8 +143,6 @@ class HeaderEngine {
         this.elements.topBar = document.getElementById('top-bar');
         this.elements.mainHeader = document.getElementById('main-header');
         this.elements.languageFlagIcon = document.getElementById('language-flag-icon');
-
-        console.log('[HeaderEngine] Elementos cacheados');
     }
 
     /**
@@ -375,8 +372,6 @@ class HeaderEngine {
         // Atualizar bandeira do idioma
         this.updateLanguageFlag(lang);
 
-        console.log(`[HeaderEngine] Idioma alterado para: ${lang}`);
-
         // Fechar o mega panel de idiomas
         this.hideMegaPanel('idiomas');
     }
@@ -404,8 +399,6 @@ class HeaderEngine {
             this.elements.languageFlagIcon.innerHTML = flag;
             this.elements.languageFlagIcon.setAttribute('aria-label', `Idioma: ${lang.toUpperCase()}`);
         }
-        
-        console.log(`[HeaderEngine] Bandeira atualizada para: ${flag} (${lang})`);
     }
 
     /**
@@ -431,6 +424,16 @@ class HeaderEngine {
 
         // Navegação por teclado nos mega panels
         this.setupKeyboardNavigation();
+    }
+
+    /**
+     * Inicializa VLibras com base na preferência salva
+     */
+    initLibras() {
+        // Chamar a função global de inicialização
+        if (typeof initLibrasPreference === 'function') {
+            initLibrasPreference();
+        }
     }
 
     /**
@@ -601,8 +604,6 @@ class HeaderEngine {
         window.dispatchEvent(new CustomEvent('ce:fontSizeChanged', {
             detail: { size }
         }));
-
-        console.log(`[HeaderEngine] Tamanho da fonte alterado para: ${size}%`);
     }
 
     // ============================================
@@ -636,8 +637,6 @@ class HeaderEngine {
         window.dispatchEvent(new CustomEvent('ce:themeChanged', {
             detail: { isDark: newTheme }
         }));
-
-        console.log(`[HeaderEngine] Tema alterado para: ${newTheme ? 'escuro' : 'claro'}`);
     }
 
     // ============================================
@@ -674,8 +673,6 @@ class HeaderEngine {
         if (firstTab) {
             firstTab.focus();
         }
-
-        console.log(`[HeaderEngine] Mega panel "${menuName}" aberto`);
     }
 
     /**
@@ -700,8 +697,6 @@ class HeaderEngine {
         if (this.state.openMegaPanel === menuName) {
             this.state.openMegaPanel = null;
         }
-
-        console.log(`[HeaderEngine] Mega panel "${menuName}" fechado`);
     }
 
     /**
@@ -763,8 +758,6 @@ class HeaderEngine {
         if (activeContent) {
             activeContent.classList.add(this.config.tabActiveClass);
         }
-
-        console.log(`[HeaderEngine] Aba "${tabId}" ativada`);
     }
 
     // ============================================
@@ -811,8 +804,6 @@ class HeaderEngine {
         setTimeout(() => {
             this.elements.mobileMenuClose?.focus();
         }, 300);
-
-        console.log('[HeaderEngine] Menu mobile aberto');
     }
 
     /**
@@ -839,8 +830,6 @@ class HeaderEngine {
 
         // Focar botão de toggle
         this.elements.mobileMenuToggle?.focus();
-
-        console.log('[HeaderEngine] Menu mobile fechado');
     }
 
     /**
@@ -972,6 +961,77 @@ if (typeof window !== 'undefined') {
 // Exportar para módulos
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { HeaderEngine };
+}
+
+// ═══════════════════════════════════════════
+// VLIBRAS INTEGRATION
+// ═══════════════════════════════════════════
+
+// Store reference to accessibility module's toggleLibras
+const _accessibilityToggleLibras = window.toggleLibras;
+
+/**
+ * Alterna a visibilidade do widget VLibras
+ * Esta função sobrescreve a definição em accessibility.js para melhor integração
+ */
+function toggleLibras() {
+    const pluginWrapper = document.querySelector('.vw-plugin-wrapper');
+    const accessButton = document.querySelector('[vw-access-button]');
+    
+    // Se o widget VLibras oficial existir, usar ele
+    if (accessButton) {
+        accessButton.click();
+        // Atualizar estado no localStorage
+        const isVisible = accessButton.style.opacity !== '0' && accessButton.style.opacity !== '';
+        localStorage.setItem('ce-libras-visible', isVisible ? 'true' : 'false');
+        return;
+    }
+    
+    // Fallback: controlar wrapper manualmente
+    if (!pluginWrapper) {
+        return;
+    }
+    
+    const isActive = pluginWrapper.classList.contains('active');
+    
+    if (isActive) {
+        pluginWrapper.classList.remove('active');
+        localStorage.setItem('ce-libras-visible', 'false');
+    } else {
+        pluginWrapper.classList.add('active');
+        localStorage.setItem('ce-libras-visible', 'true');
+    }
+    
+    window.dispatchEvent(new CustomEvent('ce:librasToggled', {
+        detail: { isActive: !isActive }
+    }));
+}
+
+/**
+ * Inicializa VLibras com base na preferência salva
+ */
+function initLibrasPreference() {
+    const savedPreference = localStorage.getItem('ce-libras-visible');
+    
+    if (savedPreference === 'true') {
+        const checkWidget = setInterval(() => {
+            const accessButton = document.querySelector('[vw-access-button]');
+            const pluginWrapper = document.querySelector('.vw-plugin-wrapper');
+            
+            if (accessButton) {
+                clearInterval(checkWidget);
+                // Garantir que o botão esteja visível
+                accessButton.style.opacity = '1';
+                accessButton.style.pointerEvents = 'auto';
+            } else if (pluginWrapper) {
+                // Fallback para wrapper manual
+                clearInterval(checkWidget);
+                pluginWrapper.classList.add('active');
+            }
+        }, 200);
+        
+        setTimeout(() => clearInterval(checkWidget), 10000);
+    }
 }
 
 // Função global para seleção de idiomas (chamada pelo onclick no HTML)

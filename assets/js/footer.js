@@ -23,32 +23,6 @@
 (function() {
   'use strict';
 
-  // --- UTILITÁRIOS NATIVOS ---
-  const debounce = function(func, wait) {
-    let timeout;
-    return function(...args) {
-      const context = this;
-      clearTimeout(timeout);
-      timeout = setTimeout(function() {
-        func.apply(context, args);
-      }, wait);
-    };
-  };
-
-  const throttle = function(func, limit) {
-    let inThrottle;
-    return function(...args) {
-      const context = this;
-      if (!inThrottle) {
-        func.apply(context, args);
-        inThrottle = true;
-        setTimeout(function() {
-          inThrottle = false;
-        }, limit);
-      }
-    };
-  };
-
   // --- CONFIGURAÇÃO E UI ---
   const ui = {
     banner: null,
@@ -59,6 +33,7 @@
     yearSpan: null,
     toast: null,
     toastMessage: null,
+    scrollTimeout: null,
     detailModals: {},
     accordionBtns: {}
   };
@@ -100,7 +75,6 @@
     detailModalElements.forEach(function(modal) {
       if (modal.id) {
         ui.detailModals[modal.id] = modal;
-        // Garantir que modais de detalhes estejam escondidos
         if (!modal.classList.contains('hidden')) {
           modal.classList.add('hidden');
           modal.setAttribute('aria-hidden', 'true');
@@ -133,8 +107,6 @@
 
     // Event listeners para elementos do footer
     attachEventListeners();
-
-    console.log('[Footer] Sistema V8.0 inicializado com sucesso');
   }
 
   // --- TOAST NOTIFICATION ---
@@ -162,28 +134,20 @@
   function initCookieConsent() {
     const savedConsent = localStorage.getItem(CONSENT_KEY);
     
-    console.log('[Cookie] Verificando consentimento. Salvamento encontrado:', !!savedConsent);
-    
     if (savedConsent) {
       try {
         const consentData = JSON.parse(savedConsent);
-        console.log('[Cookie] Dadosparsed:', consentData);
         
         if (validateConsentSchema(consentData)) {
-          console.log('[Cookie] Schema válido, aplicando consentimento...');
           applyConsent(consentData);
-          // Banner não deve ser mostrado
           hideBanner();
         } else {
-          console.log('[Cookie] Schema inválido, mostrando banner...');
           showBanner();
         }
       } catch (e) {
-        console.error('[Cookie] Erro ao parsear consentimento:', e);
         showBanner();
       }
     } else {
-      console.log('[Cookie] Nenhum consentimento encontrado, mostrando banner...');
       showBanner();
     }
   }
@@ -262,12 +226,13 @@
     }
   }
 
-  // --- GERENCIAMENTO DE MODAIS ANINHADOS ---
+  // --- MODAIS ANINHADOS ---
   function showModal() {
     lastFocusedElement = document.activeElement;
-    pushModalStack(ui.modal);
+    if (ui.modal && !ui.modal.classList.contains('hidden')) {
+      modalStack.push(ui.modal);
+    }
     
-    // Mostrar overlay
     if (ui.overlay) {
       ui.overlay.classList.remove('hidden');
       ui.overlay.setAttribute('aria-hidden', 'false');
@@ -276,14 +241,9 @@
     if (ui.modal) {
       ui.modal.classList.remove('hidden');
       ui.modal.setAttribute('aria-hidden', 'false');
-      
-      // Inicializar estado do accordion
       initAccordionState();
-      
-      // Atualizar elementos focáveis
       updateFocusableElements(ui.modal);
       
-      // Foco no primeiro elemento focável
       const firstFocusable = ui.modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
       if (firstFocusable) {
         setTimeout(function() {
@@ -292,7 +252,6 @@
       }
     }
 
-    // Trap de foco
     trapFocus(ui.modal);
   }
 
@@ -302,44 +261,32 @@
       if (topModal) {
         topModal.classList.add('hidden');
         topModal.setAttribute('aria-hidden', 'true');
-        
-        // Se fechou o modal principal, fechar também o banner
         if (topModal === ui.modal) {
           hideBanner();
         }
       }
     }
-    
-    // Atualizar overlay baseado na pilha de modais
     updateOverlayVisibility();
   }
 
   function showDetailModal(detailModalId) {
     const detailModal = ui.detailModals[detailModalId];
-    if (!detailModal) {
-      console.warn('[Modal] Detalhe modal não encontrado:', detailModalId);
-      return;
-    }
+    if (!detailModal) return;
 
-    // Salvar o modal atual na pilha (mantendo-o visível no fundo)
     if (ui.modal && !ui.modal.classList.contains('hidden')) {
       modalStack.push(ui.modal);
     }
     
-    // Mostrar overlay
     if (ui.overlay) {
       ui.overlay.classList.remove('hidden');
       ui.overlay.setAttribute('aria-hidden', 'false');
     }
     
-    // Mostrar modal de detalhes
     detailModal.classList.remove('hidden');
     detailModal.setAttribute('aria-hidden', 'false');
     
-    // Atualizar elementos focáveis
     updateFocusableElements(detailModal);
     
-    // Foco no botão de fechar do modal de detalhes
     const closeBtn = detailModal.querySelector('.cookie-modal-close');
     if (closeBtn) {
       setTimeout(function() {
@@ -347,7 +294,6 @@
       }, 100);
     }
 
-    // Trap de foco
     trapFocus(detailModal);
   }
 
@@ -358,14 +304,11 @@
     detailModal.classList.add('hidden');
     detailModal.setAttribute('aria-hidden', 'true');
 
-    // Voltar ao modal principal (que estava na pilha)
     if (modalStack.length > 0) {
       const mainModal = modalStack.pop();
       if (mainModal) {
         mainModal.classList.remove('hidden');
         mainModal.setAttribute('aria-hidden', 'false');
-        
-        // Restaurar foco no botão de info que foi clicado
         if (lastFocusedElement) {
           setTimeout(function() {
             lastFocusedElement.focus();
@@ -374,29 +317,19 @@
       }
     }
 
-    // Atualizar overlay
     updateOverlayVisibility();
   }
 
-  function pushModalStack(modal) {
-    if (modal && !modal.classList.contains('hidden')) {
-      modalStack.push(modal);
-    }
-  }
-
   function updateOverlayVisibility() {
-    // Overlay permanece visível enquanto houver modais na pilha
     if (modalStack.length === 0) {
       if (ui.overlay) {
         ui.overlay.classList.add('hidden');
         ui.overlay.setAttribute('aria-hidden', 'true');
       }
-      // Restaurar foco
       if (lastFocusedElement) {
         lastFocusedElement.focus();
       }
     } else {
-      // Ainda há modais abertos, garantir que overlay esteja visível
       if (ui.overlay) {
         ui.overlay.classList.remove('hidden');
         ui.overlay.setAttribute('aria-hidden', 'false');
@@ -445,27 +378,22 @@
     });
   }
 
-  // --- ACCORDION (EXPANSÃO/RETRATAÇÃO) ---
+  // --- ACCORDION ---
   function toggleAccordion(targetId) {
     const description = document.getElementById(targetId);
     const btn = ui.accordionBtns[targetId];
     
-    if (!description) {
-      console.warn('[Accordion] Elemento não encontrado:', targetId);
-      return;
-    }
+    if (!description) return;
     
     const isExpanded = description.classList.contains('expanded');
     
     if (isExpanded) {
-      // Se já está expandido, recolher (toggle)
       description.classList.remove('expanded');
       if (btn) {
         btn.classList.remove('expanded');
         btn.setAttribute('aria-expanded', 'false');
       }
     } else {
-      // Se não está expandido, fechar todos os outros e expandir este
       closeAllAccordions();
       description.classList.add('expanded');
       if (btn) {
@@ -473,7 +401,6 @@
         btn.setAttribute('aria-expanded', 'true');
       }
       
-      // Focar no conteúdo
       setTimeout(function() {
         const firstP = description.querySelector('p');
         if (firstP) {
@@ -493,36 +420,16 @@
     });
   }
 
-  function expandAccordion(description, btn) {
-    description.classList.add('expanded');
-    if (btn) {
-      btn.classList.add('expanded');
-      btn.setAttribute('aria-expanded', 'true');
-    }
-  }
-
-  function collapseAccordion(description, btn) {
-    description.classList.remove('expanded');
-    if (btn) {
-      btn.classList.remove('expanded');
-      btn.setAttribute('aria-expanded', 'false');
-    }
-  }
-
-  // Inicializar estado do accordion ao abrir o modal - todos retraídos
   function initAccordionState() {
-    // Fechar todos os accordions ao abrir o modal
     closeAllAccordions();
   }
 
+  // --- INICIALIZAÇÃO DA POSIÇÃO DOS BOTÕES FLUTUANTES ---
+
   // --- SALVAR CONSENTIMENTO ---
   function saveConsent(accepted) {
-    if (typeof accepted !== 'boolean' && accepted !== 'partial') {
-      console.error('[Security] Tentativa de salvar consentimento com tipo inválido:', typeof accepted);
-      return;
-    }
+    if (typeof accepted !== 'boolean' && accepted !== 'partial') return;
 
-    // Capturar estado atual dos checkboxes
     const necessaryCheck = document.getElementById('check-necessary');
     const analyticsCheck = document.getElementById('check-analytics');
     const marketingCheck = document.getElementById('check-marketing');
@@ -538,69 +445,36 @@
       version: '8.0'
     };
 
-    if (!validateConsentSchema(preferences)) {
-      console.error('[Security] Falha na validação do schema de preferências.');
-      return;
-    }
+    if (!validateConsentSchema(preferences)) return;
 
     try {
       localStorage.setItem(CONSENT_KEY, JSON.stringify(preferences));
       applyConsent(preferences);
       
-      // Dispara eventos para GTM/Analytics
       window.dispatchEvent(new CustomEvent('consentUpdated', { detail: preferences }));
       
-      console.info('[Consent] Preferências salvas:', preferences);
-      
-      // Mostrar toast de confirmação
-      if (accepted === true) {
-        showToast('Cookies aceitos com sucesso!');
-      } else {
-        showToast('Preferências salvas!');
-      }
-    } catch (e) {
-      console.error('[Consent] Erro ao salvar preferências:', e);
-    }
+      showToast(accepted === true ? 'Cookies aceitos com sucesso!' : 'Preferências salvas!');
+    } catch (e) {}
 
     hideBanner();
     hideModal();
   }
 
   function applyConsent(preferences) {
-    // Função global para aplicar configurações (legado)
     if (typeof window.applyConsentSettings === 'function') {
       window.applyConsentSettings(preferences);
     }
 
-    // Google Consent Mode v2 - Integração Completa
+    // Google Consent Mode v2
     if (typeof gtag !== 'undefined') {
-      // Analytics Storage
       gtag('consent', 'update', {
-        'analytics_storage': preferences.analytics ? 'granted' : 'denied'
-      });
-      
-      // Ad Storage (para AdSense)
-      gtag('consent', 'update', {
-        'ad_storage': preferences.marketing ? 'granted' : 'denied'
-      });
-      
-      // Ad User Data
-      gtag('consent', 'update', {
-        'ad_user_data': preferences.marketing ? 'granted' : 'denied'
-      });
-      
-      // Ad Personalization
-      gtag('consent', 'update', {
+        'analytics_storage': preferences.analytics ? 'granted' : 'denied',
+        'ad_storage': preferences.marketing ? 'granted' : 'denied',
+        'ad_user_data': preferences.marketing ? 'granted' : 'denied',
         'ad_personalization': preferences.marketing ? 'granted' : 'denied'
-      });
-      
-      console.info('[GTM] Consent Mode v2 atualizado:', {
-        analytics: preferences.analytics ? 'granted' : 'denied',
-        marketing: preferences.marketing ? 'granted' : 'denied'
       });
     }
     
-    // Atualizar window.dataLayer para GTM
     if (window.dataLayer) {
       window.dataLayer.push({
         event: 'consent_update',
@@ -608,25 +482,11 @@
         consent_marketing: preferences.marketing ? 'granted' : 'denied',
         consent_necessary: 'granted'
       });
-    }
-    
-    // Inicializar Google Analytics se permitido
-    if (preferences.analytics && typeof gtag !== 'undefined') {
-      console.info('[Analytics] Google Analytics ativado com consentimento');
-    }
-    
-    // Inicializar Google AdSense se permitido
-    if (preferences.marketing) {
-      console.info('[AdSense] Google AdSense ativado com consentimento');
-    }
-    
-    // Google Tag Manager - Atualizar dataLayer
-    if (window.dataLayer) {
       window.dataLayer.push({
-        'event': 'privacy_consent',
-        'consent_analytics': preferences.analytics,
-        'consent_marketing': preferences.marketing,
-        'consent_necessary': true
+        event: 'privacy_consent',
+        consent_analytics: preferences.analytics,
+        consent_marketing: preferences.marketing,
+        consent_necessary: true
       });
     }
   }
@@ -635,7 +495,7 @@
   function initBackToTop() {
     if (!ui.backToTop) return;
 
-    const updateVisibility = throttle(function() {
+    const updateVisibility = function() {
       const shouldShow = window.scrollY > 300;
       if (shouldShow) {
         ui.backToTop.classList.add('visible');
@@ -644,18 +504,17 @@
         ui.backToTop.classList.remove('visible');
         ui.backToTop.classList.add('hidden');
       }
-    }, 100);
+    };
 
-    window.addEventListener('scroll', updateVisibility);
+    window.addEventListener('scroll', function() {
+      clearTimeout(ui.scrollTimeout);
+      ui.scrollTimeout = setTimeout(updateVisibility, 100);
+    });
     
-    // Verificar posição inicial do scroll
     updateVisibility();
 
     ui.backToTop.addEventListener('click', function() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
