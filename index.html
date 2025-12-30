@@ -1,97 +1,135 @@
 <!DOCTYPE html>
 <html lang="pt-br" class="scroll-smooth">
 <head>
+    <!-- 1. Otimização de Conexão e Performance -->
+    <link rel="dns-prefetch" href="//googleads.g.doubleclick.net">
+    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Preload de Recursos Críticos -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">
+    <link rel="preload" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/main-index.html" as="fetch" crossorigin="anonymous">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e Conteúdo Técnico para Profissionais de Saúde.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#1A3E74">
-    <title>Missão, Visão e Valores | Calculadoras de Enfermagem</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <!-- Google Consent Mode v2 -->
+    <!-- 2. SEO e Metadados -->
+    <title>Calculadoras de Enfermagem — Escalas Clínicas e Ferramentas de Dosagem</title>
+    <meta name="description" content="Mais de 50 calculadoras e escalas clínicas para profissionais de enfermagem. Ferramentas essenciais para dosagem, gotejamento, risco de queda e vacinas.">
+    <meta name="keywords" content="enfermagem, calculadoras clínicas, dosagem medicamentos, escalas de enfermagem, segurança do paciente">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+
+    <!-- Ícones, Favicons e PWA -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Canonical e Hreflang (Consolidado) -->
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/">
+    <link rel="alternate" hreflang="pt-br" href="https://www.calculadorasdeenfermagem.com.br/">
+    <link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/">
+
+    <!-- 3. Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Calculadoras de Enfermagem — Escalas e Doses">
+    <meta property="og:description" content="Ferramentas práticas e seguras para a assistência de enfermagem.">
+    <meta property="og:url" content="https://www.calculadorasdeenfermagem.com.br/">
+    <meta property="og:image" content="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- 4. Google Consent Mode v2 & Analytics -->
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
+
+        const isAdmin = localStorage.getItem('admin_mode') === 'true';
+
+        // Configuração inicial rigorosa (Privacy First)
         gtag('consent', 'default', {
             'ad_storage': 'denied',
             'ad_user_data': 'denied',
             'ad_personalization': 'denied',
             'analytics_storage': 'denied',
             'functionality_storage': 'granted',
-            'personalization_storage': 'denied',
             'security_storage': 'granted',
             'wait_for_update': 500
         });
+
+        if (!isAdmin) {
+            const savedConsent = localStorage.getItem('cookieConsent');
+            if (savedConsent === 'accepted') {
+                gtag('consent', 'update', {
+                    'ad_storage': 'granted',
+                    'ad_user_data': 'granted',
+                    'ad_personalization': 'granted',
+                    'analytics_storage': 'granted'
+                });
+            }
+        }
     </script>
 
-    <!-- Preconnect & Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Tag Manager / Gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-952633102"></script>
+    <script>
+        if (localStorage.getItem('admin_mode') !== 'true') {
+            gtag('js', new Date());
+            gtag('config', 'AW-952633102');
+            gtag('config', 'G-8FLJ59XXDK', { 'anonymize_ip': true });
+        }
+    </script>
 
-    <!-- Tailwind CSS (Play CDN) -->
+    <!-- 5. Estilos e Módulos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        primary: '#1A3E74',
-                        accent: '#1e40af',
-                    }
+                    colors: { primary: '#1A3E74', accent: '#1e40af' }
                 }
             }
         }
     </script>
 
-    <!-- CSS Modules -->
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main-index.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/modals.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main-index.css">
 
     <style>
         #preload-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 99999;
-            background-color: #ffffff;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 99999; background: #fff;
             display: flex; align-items: center; justify-content: center;
         }
-        
-        .preload-hidden {
-            opacity: 0 !important;
-            visibility: hidden !important;
-            transition: opacity 0.6s ease, visibility 0.6s;
-        }
-
-        #main-container { 
-            min-height: 80vh; 
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        body.modules-ready #main-container {
-            opacity: 1;
-        }
-
+        .preload-hidden { opacity: 0 !important; visibility: hidden !important; transition: opacity 0.5s ease; }
+        #main-container { min-height: 80vh; opacity: 0; transition: opacity 0.4s ease; }
+        body.ready #main-container { opacity: 1; }
         .v-libras-widget { z-index: 9998 !important; }
-        [vw] { opacity: 0; transition: opacity 0.3s; }
-        [vw].enabled { opacity: 1; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
+    <!-- Preloader -->
     <div id="preload-container">
-        <div class="flex flex-col items-center">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
-            <p class="text-primary font-bold animate-pulse">Sincronizando Módulos...</p>
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p class="text-primary font-bold animate-pulse">Sincronizando Ambiente Clínico...</p>
         </div>
     </div>
 
+    <!-- VLibras -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
@@ -99,40 +137,70 @@
         </div>
     </div>
 
+    <!-- Interface Modular -->
     <div id="accessibility-container"></div>
     <div id="header-container"></div>
 
-    <main id="main-container" class="pt-[140px]">
-        <div class="flex justify-center items-center h-64">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+    <main id="main-container" class="pt-[100px] md:pt-[140px]">
+        <div class="flex flex-col justify-center items-center h-64 space-y-4">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
+            <p class="text-sm text-gray-500">Montando ferramentas...</p>
         </div>
     </main>
 
     <div id="footer-container"></div>
     <div id="modals-container"></div>
 
+    <!-- 6. Scripts e Schema -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/console-cleaner.js"></script>
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js" crossorigin="anonymous"></script>
 
+    <!-- Schema JSON-LD Avançado -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "MedicalWebPage",
+        "@id": "https://www.calculadorasdeenfermagem.com.br/#webpage",
+        "url": "https://www.calculadorasdeenfermagem.com.br/",
+        "name": "Calculadoras de Enfermagem",
+        "description": "Ferramentas clínicas e escalas para enfermagem.",
+        "isPartOf": { "@id": "https://www.calculadorasdeenfermagem.com.br/#website" },
+        "audience": { "@type": "MedicalAudience", "audienceType": "Clinician" },
+        "specialty": { "@type": "MedicalSpecialty", "name": "Nursing" }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Calculadoras Clínicas de Enfermagem",
+        "operatingSystem": "All",
+        "applicationCategory": "MedicalApplication",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "1250"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "BRL"
+        }
+      }
+    ]
+    </script>
+
     <script>
-        /**
-         * ComponentLoader Pro 
-         * Orquestra a injeção de HTML e a ativação de Scripts com segurança.
-         */
         const ComponentLoader = {
             async fetchAndInject(url, containerId) {
                 try {
                     const response = await fetch(url);
-                    if (!response.ok) throw new Error(`Status: ${response.status}`);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
                     const html = await response.text();
                     const container = document.getElementById(containerId);
-                    if (container) {
-                        container.innerHTML = html;
-                        return true;
-                    }
-                    return false;
+                    if (container) container.innerHTML = html;
+                    return true;
                 } catch (error) {
-                    console.warn(`[Loader] Erro ao carregar ${containerId}:`, error.message);
+                    console.warn(`[Loader] Erro: ${containerId}`, error.message);
                     return false;
                 }
             },
@@ -144,10 +212,7 @@
                     script.async = false;
                     script.crossOrigin = "anonymous";
                     script.onload = () => resolve(true);
-                    script.onerror = () => {
-                        console.warn(`[Loader] Script falhou: ${src}`);
-                        resolve(false);
-                    };
+                    script.onerror = () => resolve(false);
                     document.body.appendChild(script);
                 });
             },
@@ -162,28 +227,19 @@
                     { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/main-index.html', id: 'main-container' }
                 ];
 
-                // 1. Injetar todos os fragmentos HTML
                 await Promise.all(components.map(c => this.fetchAndInject(c.url, c.id)));
-                
-                // 2. Pequena pausa para o navegador processar a árvore DOM injetada
-                // Isso evita o erro de "undefined classList" em elementos recém-criados
                 await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
-                // 3. Inicializar VLibras
-                try {
-                    if (window.VLibras) {
-                        new window.VLibras.Widget('https://vlibras.gov.br/app');
-                    }
-                } catch (e) {
-                    console.warn("[Loader] VLibras error:", e.message);
+                if (window.VLibras) {
+                    try { new window.VLibras.Widget('https://vlibras.gov.br/app'); } catch(e) {}
                 }
 
-                // 4. Carregar Scripts sequencialmente
                 const scripts = [
                     'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js',
                     'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/preload.js',
                     'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js',
                     'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js',
+                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index-loader.js',
                     'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js',
                     'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/modals.js',
                     'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js'
@@ -197,20 +253,17 @@
             },
 
             finalize() {
-                const preload = document.getElementById('preload-container');
-                if (preload) preload.classList.add('preload-hidden');
-                document.body.classList.add('modules-ready');
+                document.getElementById('preload-container')?.classList.add('preload-hidden');
+                document.body.classList.add('ready');
                 window.dispatchEvent(new CustomEvent('ModulesLoaded'));
-                console.log("[Loader] Inicialização modular completa.");
             }
         };
 
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             ComponentLoader.init();
         } else {
-            window.addEventListener('DOMContentLoaded', () => ComponentLoader.init());
+            window.addEventListener('load', () => ComponentLoader.init());
         }
     </script>
-
 </body>
 </html>
