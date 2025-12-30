@@ -55,10 +55,10 @@
     --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     
     /* Dimensões */
-    --top-bar-height: 36px;
-    --header-height: 70px;
-    --mega-panel-height: 420px;
-    --cookie-banner-height: 80px;
+    --top-bar-height: 30px;
+    --header-height: 60px;
+    --mega-panel-height: 350px;
+    --cookie-banner-height: 70px;
     --mobile-menu-width: 320px;
     
     /* Fontes */
@@ -345,10 +345,10 @@ body.dark-theme .top-bar-divider {
 
 .main-header {
     position: relative;
-    height: 70px;
+    height: 60px;
     background-color: var(--bg-main-header);
-    border-bottom: 3px solid var(--accent-glow);
-    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.15);
+    border-bottom: 2px solid var(--accent-glow);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
     z-index: var(--header-z-main-header);
     transition: background-color var(--transition-normal), border-color var(--transition-normal);
 }
@@ -363,6 +363,20 @@ body.dark-theme .top-bar-divider {
     align-items: center;
 }
 
+/* Bandeira do idioma ativo */
+.active-lang-flag {
+    width: 20px;
+    height: auto;
+    border-radius: 3px;
+    margin-left: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: transform var(--transition-fast);
+}
+
+.nav-link:hover .active-lang-flag {
+    transform: scale(1.1);
+}
+
 /* Logo */
 .site-logo {
     display: flex;
@@ -372,10 +386,10 @@ body.dark-theme .top-bar-divider {
 }
 
 .logo-image {
-    height: 50px;
+    height: 42px;
     width: auto;
     object-fit: contain;
-    padding: 5px 0;
+    padding: 3px 0;
     transition: transform var(--transition-normal);
 }
 
@@ -395,7 +409,7 @@ body.dark-theme .top-bar-divider {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 8px;
+    gap: 4px;
 }
 
 .nav-item {
@@ -405,12 +419,12 @@ body.dark-theme .top-bar-divider {
 .nav-link {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 15px;
+    gap: 4px;
+    padding: 8px 12px;
     color: #11366b;
     text-decoration: none;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 15px;
     border-radius: 6px;
     transition: color 0.2s;
     background: transparent;
@@ -493,24 +507,24 @@ body.dark-theme .top-bar-divider {
 }
 
 .menu-tabs {
-    padding: 16px 0;
+    padding: 12px 0;
 }
 
 .menu-tab-trigger {
     display: block;
     width: 100%;
     text-align: left;
-    padding: 14px 24px;
+    padding: 10px 20px;
     background: transparent;
     border: none;
-    border-left: 4px solid transparent;
+    border-left: 3px solid transparent;
     color: #475569;
-    font-size: calc(14px * var(--font-size-scale));
+    font-size: calc(13px * var(--font-size-scale));
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    border-radius: 0 24px 24px 0;
-    margin-bottom: 4px;
+    border-radius: 0 20px 20px 0;
+    margin-bottom: 3px;
     margin-right: -1px;
 }
 
@@ -536,16 +550,16 @@ body.dark-theme .top-bar-divider {
 /* Coluna 2: Conteúdo Principal */
 .panel-main-content {
     flex: 1;
-    padding: 24px 32px;
+    padding: 16px 24px;
     overflow-y: auto;
 }
 
 .content-title {
-    font-size: calc(20px * var(--font-size-scale));
+    font-size: calc(18px * var(--font-size-scale));
     font-weight: 700;
     color: var(--primary-color);
-    margin: 0 0 20px 0;
-    padding-bottom: 12px;
+    margin: 0 0 16px 0;
+    padding-bottom: 8px;
     border-bottom: 2px solid var(--border-color);
 }
 
@@ -599,10 +613,10 @@ body.dark-theme .top-bar-divider {
 
 /* Coluna 3: Área Promocional/Imagem */
 .panel-promo-area {
-    width: 35%;
-    min-width: 300px;
-    max-width: 400px;
-    padding: 24px;
+    width: 30%;
+    min-width: 250px;
+    max-width: 350px;
+    padding: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -612,8 +626,8 @@ body.dark-theme .top-bar-divider {
 .glowing-frame {
     width: 100%;
     height: 100%;
-    max-height: 400px;
-    border-radius: 3rem 0 3rem 0;
+    max-height: 320px;
+    border-radius: 2rem 0 2rem 0;
     border: 2px solid var(--border-color);
     overflow: hidden;
     position: relative;
@@ -622,7 +636,7 @@ body.dark-theme .top-bar-divider {
     align-items: center;
     justify-content: center;
     background: var(--sidebar-bg);
-    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.08);
 }
 
 .glowing-frame:hover {

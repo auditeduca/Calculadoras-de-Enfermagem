@@ -6,14 +6,14 @@
 
 /* --- MAIN CONTENT --- */
 #main-container {
-    padding-top: 80px;
-    padding-bottom: 40px;
+    padding-top: 60px;
+    padding-bottom: 24px;
 }
 
 @media (max-width: 768px) {
     #main-container {
-        padding-top: 60px;
-        padding-bottom: 24px;
+        padding-top: 50px;
+        padding-bottom: 16px;
     }
 }
 

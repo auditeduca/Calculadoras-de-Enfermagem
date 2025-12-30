@@ -41,6 +41,13 @@ class HeaderEngine {
         // Elementos cacheados
         this.elements = {};
 
+        // Mapeamento de bandeiras por idioma
+        this.flagMap = {
+            'pt': '🇧🇷',
+            'en': '🇺🇸',
+            'es': '🇪🇸'
+        };
+
         // Proteção de inicialização múltipla
         if (window.__HEADER_ENGINE_INIT__) {
             return;
@@ -136,6 +143,7 @@ class HeaderEngine {
         // Containers
         this.elements.topBar = document.getElementById('top-bar');
         this.elements.mainHeader = document.getElementById('main-header');
+        this.elements.languageFlagIcon = document.getElementById('language-flag-icon');
 
         console.log('[HeaderEngine] Elementos cacheados');
     }
@@ -364,6 +372,9 @@ class HeaderEngine {
             detail: { language: lang }
         }));
 
+        // Atualizar bandeira do idioma
+        this.updateLanguageFlag(lang);
+
         console.log(`[HeaderEngine] Idioma alterado para: ${lang}`);
 
         // Fechar o mega panel de idiomas
@@ -377,7 +388,24 @@ class HeaderEngine {
         const savedLang = localStorage.getItem('ce-language');
         if (savedLang) {
             this.selectLanguage(savedLang);
+        } else {
+            // Definir bandeira para o idioma padrão (pt) se nenhum idioma estiver salvo
+            this.updateLanguageFlag('pt');
         }
+    }
+
+    /**
+     * Atualiza a bandeira do idioma no elemento visual
+     */
+    updateLanguageFlag(lang) {
+        const flag = this.flagMap[lang] || this.flagMap['pt'];
+        
+        if (this.elements.languageFlagIcon) {
+            this.elements.languageFlagIcon.innerHTML = flag;
+            this.elements.languageFlagIcon.setAttribute('aria-label', `Idioma: ${lang.toUpperCase()}`);
+        }
+        
+        console.log(`[HeaderEngine] Bandeira atualizada para: ${flag} (${lang})`);
     }
 
     /**
