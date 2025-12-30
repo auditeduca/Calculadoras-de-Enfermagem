@@ -602,4 +602,50 @@ window.clearSearch = function() {
   if (savedFontSize) {
     document.documentElement.style.fontSize = savedFontSize + 'px';
   }
+  // ============================================
+// INSTANCIAÇÃO E INICIALIZAÇÃO GLOBAL
+// ============================================
+
+// Criar instância global da classe HeaderEngine
+const headerEngine = new HeaderEngine();
+
+// Expor globalmente para acesso externo
+window.headerEngine = headerEngine;
+
+console.log('[HeaderEngine] Instância criada e exposta globalmente como window.headerEngine');
+
+// Inicializar quando o DOM estiver pronto
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!headerEngine.initialized) {
+      console.log('[HeaderEngine] DOM pronto - iniciando HeaderEngine');
+      headerEngine.init();
+    }
+  });
+} else {
+  // DOM já está pronto
+  if (!headerEngine.initialized) {
+    console.log('[HeaderEngine] DOM já pronto - iniciando HeaderEngine imediatamente');
+    headerEngine.init();
+  }
+}
+
+// Também inicializar quando o Template Engine indicar que os componentes estão prontos
+// Isso garante que o header.html foi injetado corretamente
+window.addEventListener('TemplateEngine:Ready', function() {
+  if (!headerEngine.initialized) {
+    console.log('[HeaderEngine] TemplateEngine:Ready - iniciando HeaderEngine');
+    headerEngine.init();
+  } else {
+    console.log('[HeaderEngine] Já foi inicializado anteriormente');
+  }
+});
+
+// Fallback: inicializar após um tempo se nenhum evento foi disparado
+setTimeout(function() {
+  if (!headerEngine.initialized) {
+    console.warn('[HeaderEngine] Timeout - inicializando HeaderEngine como fallback');
+    headerEngine.init();
+  }
+}, 3000); // 3 segundos de timeout
 })();
