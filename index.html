@@ -137,8 +137,13 @@
                     // Dispara evento global para avisar que tudo está pronto
                     window.dispatchEvent(new CustomEvent('AppReady'));
 
+                    // FIX: Forçar remoção do preloader após carregamento bem sucedido
+                    this.forcePreloaderHide();
+
                 } catch (error) {
                     console.error('[AppLoader] Erro crítico:', error);
+                    // Fallback: Remove o preloader mesmo com erro para não travar o site
+                    this.forcePreloaderHide();
                 }
             }
 
@@ -198,6 +203,29 @@
                     };
                     document.body.appendChild(script);
                 }
+            }
+
+            // FIX: Método robusto para remover o preloader
+            forcePreloaderHide() {
+                const preloadContainer = document.getElementById('preload-container');
+                if (!preloadContainer) return;
+
+                // Tenta disparar evento que o preload.js possa estar ouvindo
+                window.dispatchEvent(new CustomEvent('ModulesLoaded'));
+
+                // Fallback visual manual após pequeno delay (para garantir transições suaves)
+                setTimeout(() => {
+                    // Aplica estilos inline para forçar o desaparecimento
+                    preloadContainer.style.transition = 'opacity 0.5s ease, visibility 0.5s ease';
+                    preloadContainer.style.opacity = '0';
+                    preloadContainer.style.pointerEvents = 'none'; // Evita cliques fantasmas
+                    
+                    // Remove do DOM ou esconde totalmente após a transição
+                    setTimeout(() => {
+                        preloadContainer.style.visibility = 'hidden';
+                        preloadContainer.style.display = 'none';
+                    }, 550);
+                }, 800); // Aguarda um pouco para não piscar se for muito rápido
             }
         }
 
