@@ -184,7 +184,7 @@ footer {
     padding: 1rem 1.5rem;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
     transform: translateY(0);
-    z-index: 9998;
+    z-index: 10001;
     display: flex;
     align-items: center;
     justify-content: space-between;

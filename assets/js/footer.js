@@ -80,11 +80,31 @@
     ui.toast = document.getElementById('toast-notification');
     ui.toastMessage = document.getElementById('toast-message');
 
+    // Garantir que elementos estejam escondidos inicialmente
+    if (ui.modal && !ui.modal.classList.contains('hidden')) {
+      ui.modal.classList.add('hidden');
+      ui.modal.setAttribute('aria-hidden', 'true');
+    }
+    if (ui.overlay && !ui.overlay.classList.contains('hidden')) {
+      ui.overlay.classList.add('hidden');
+      ui.overlay.setAttribute('aria-hidden', 'true');
+    }
+    
+    // Esconder o FAB inicialmente - só mostra após aceitar cookies
+    if (ui.cookieFab) {
+      ui.cookieFab.classList.add('hidden');
+    }
+
     // Capturar todos os modais de detalhes
     const detailModalElements = document.querySelectorAll('.cookie-detail-modal');
     detailModalElements.forEach(function(modal) {
       if (modal.id) {
         ui.detailModals[modal.id] = modal;
+        // Garantir que modais de detalhes estejam escondidos
+        if (!modal.classList.contains('hidden')) {
+          modal.classList.add('hidden');
+          modal.setAttribute('aria-hidden', 'true');
+        }
       }
     });
 
@@ -141,19 +161,29 @@
   // --- GERENCIAMENTO DE CONSENTIMENTO DE COOKIES ---
   function initCookieConsent() {
     const savedConsent = localStorage.getItem(CONSENT_KEY);
-
+    
+    console.log('[Cookie] Verificando consentimento. Salvamento encontrado:', !!savedConsent);
+    
     if (savedConsent) {
       try {
         const consentData = JSON.parse(savedConsent);
+        console.log('[Cookie] Dadosparsed:', consentData);
+        
         if (validateConsentSchema(consentData)) {
+          console.log('[Cookie] Schema válido, aplicando consentimento...');
           applyConsent(consentData);
+          // Banner não deve ser mostrado
+          hideBanner();
         } else {
+          console.log('[Cookie] Schema inválido, mostrando banner...');
           showBanner();
         }
       } catch (e) {
+        console.error('[Cookie] Erro ao parsear consentimento:', e);
         showBanner();
       }
     } else {
+      console.log('[Cookie] Nenhum consentimento encontrado, mostrando banner...');
       showBanner();
     }
   }
