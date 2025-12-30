@@ -14,47 +14,157 @@
 
     <!-- 2. SEO e Metadados -->
     <title>Calculadoras de Enfermagem — Escalas Clínicas e Ferramentas</title>
-    <meta name="description" content="Mais de 50 calculadoras e escalas clínicas para profissionais de enfermagem.">
+    <meta name="description" content="Mais de 50 calculadoras e escalas clínicas para profissionais de enfermagem;">
     
     <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://www.calculadorasdeenfermagem.com.br/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://www.calculadorasdeenfermagem.com.br/favicon.ico" type="image/x-icon">
 
-    <!-- 3. CSS - Carregamento Modularizado -->
-    <!-- Frameworks e Bibliotecas -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 3. CSS - Carregamento Otimizado para Evitar Flickering -->
+    
+    <!-- Tailwind CSS (síncrono para evitar FOUC) -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
     <script>
         tailwind.config = {
             theme: { extend: { colors: { primary: '#1A3E74', accent: '#1e40af' } } }
         }
     </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <!-- Estilos Globais e Críticos -->
-    <link rel="stylesheet" href="assets/css/preload.css">
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/global-main.css">
-    <link rel="stylesheet" href="assets/css/whitespace-fix.css">
-
-    <!-- Estilos de Componentes -->
-    <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/mega-menu-final.css">
-    <link rel="stylesheet" href="assets/css/accessibility.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
     
-    <!-- Estilos da Página Principal -->
-    <link rel="stylesheet" href="assets/css/global-main-index.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
 
+    <!-- Estilos Globais e Críticos (inline crítico para evitar flickering) -->
+    <style>
+        /* CSS Crítico Inline - Resolve flickering imediato */
+        :root {
+            --primary: #1A3E74;
+        }
+        
+        /* Evita flash de conteúdo não estilizado */
+        .js-loading {
+            visibility: hidden;
+        }
+        
+        /* Preloader styles inline para carregar antes de qualquer JS */
+        #preload-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1A3E74 0%, #2d5a9e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .preloader-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .preloader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .preloader-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        
+        /* Placeholder para conteúdo carregando */
+        .content-placeholder {
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f9fafb;
+        }
+        
+        /* Esconde elementos até JS estar pronto */
+        body:not(.js-ready) header,
+        body:not(.js-ready) main,
+        body:not(.js-ready) footer {
+            visibility: hidden;
+        }
+        
+        body.js-ready header,
+        body.js-ready main,
+        body.js-ready footer {
+            visibility: visible;
+            transition: visibility 0.3s ease;
+        }
+    </style>
+    
+    <!-- Carregamento assíncrono do CSS não-crítico -->
+    <link rel="stylesheet" href="assets/css/global.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/global-main.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/whitespace-fix.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/header.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/mega-menu-final.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/accessibility.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/footer.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/global-main-index.css" media="print" onload="this.media='all'">
+    
+    <!-- Fallback para browsers sem suporte a media="print" onload -->
+    <noscript>
+        <link rel="stylesheet" href="assets/css/global.css">
+        <link rel="stylesheet" href="assets/css/global-main.css">
+        <link rel="stylesheet" href="assets/css/header.css">
+        <link rel="stylesheet" href="assets/css/mega-menu-final.css">
+        <link rel="stylesheet" href="assets/css/accessibility.css">
+        <link rel="stylesheet" href="assets/css/footer.css">
+        <link rel="stylesheet" href="assets/css/global-main-index.css">
+    </noscript>
+
+    <!-- Script para controle de visibilidade (evita flickering) -->
+    <script>
+        (function() {
+            // Marca página como "carregando JS" imediatamente
+            document.documentElement.classList.add('js-loading');
+            
+            // Quando tudo estiver pronto, remove a classe
+            window.addEventListener('AppReady', function() {
+                document.documentElement.classList.remove('js-loading');
+                document.body.classList.add('js-ready');
+            });
+            
+            // Fallback timeout caso AppReady não dispare
+            setTimeout(function() {
+                document.documentElement.classList.remove('js-loading');
+                document.body.classList.add('js-ready');
+            }, 5000);
+        })();
+    </script>
 </head>
 <body class="bg-gray-50 text-gray-800 relative">
 
-    <!-- 4. Placeholders dos Componentes (Skeleton) -->
+    <!-- 4. Componentes -->
     
-    <!-- Preloader (Carregado primeiro) -->
-    <div id="preload-container"></div>
+    <!-- Preloader (Inline para carregar imediatamente) -->
+    <div id="preload-container">
+        <div class="preloader-content">
+            <div class="preloader-spinner"></div>
+            <div class="preloader-text">Carregando Calculadoras de Enfermagem...</div>
+        </div>
+    </div>
 
-    <!-- Widgets de Acessibilidade (VLibras e Botões) -->
+    <!-- Widgets de Acessibilidade -->
     <div id="accessibility-container"></div>
-    <div vw class="enabled" style="display:none"> <!-- Placeholder para VLibras se necessário injetar dps -->
+    <div vw class="enabled" style="display:none">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
     </div>
@@ -64,9 +174,11 @@
 
     <!-- Conteúdo Principal -->
     <main id="main-container" class="min-h-screen pt-4 md:pt-6 pb-12">
-        <!-- O conteúdo de assets/pages/main-index.html será injetado aqui -->
-        <div class="flex justify-center items-center h-64">
-            <span class="animate-pulse text-primary">Carregando conteúdo...</span>
+        <div id="main-content-placeholder" class="content-placeholder">
+            <div class="text-center">
+                <div class="preloader-spinner" style="border-color: rgba(26, 62, 116, 0.3); border-top-color: #1A3E74; width: 40px; height: 40px;"></div>
+                <p class="text-primary font-medium mt-4" style="color: #1A3E74;">Carregando conteúdo...</p>
+            </div>
         </div>
     </main>
 
@@ -78,8 +190,6 @@
     <!-- Configuração do App -->
     <script>
         // CONFIGURAÇÃO CENTRAL
-        // Mude para "" se estiver rodando localmente com a estrutura de pastas correta.
-        // Mude para a URL do GitHub se quiser forçar o carregamento remoto (pode dar erro de CORS localmente).
         const APP_CONFIG = {
             baseUrl: "", // Ex: "https://auditeduca.github.io/Calculadoras-de-Enfermagem/"
             components: [
@@ -94,15 +204,15 @@
                 'assets/js/utils.js',
                 'assets/js/console-cleaner.js',
                 
-                // 2. Componentes UI (Preload precisa rodar cedo para controlar a tela)
+                // 2. Componentes UI
                 'assets/js/preload.js',
                 'assets/js/accessibility.js', 
                 'assets/js/header.js',
                 
-                // 3. Lógica do Main Content (Ordem Crítica)
-                'assets/js/global-main.js',       // Definições gerais
-                'assets/js/global-main-index.js', // Funções específicas da index
-                'assets/js/main-index-loader.js', // Inicialização/Execução
+                // 3. Lógica do Main Content
+                'assets/js/global-main.js',
+                'assets/js/global-main-index.js',
+                'assets/js/main-index-loader.js',
                 
                 // 4. Finalização
                 'assets/js/footer.js'
@@ -126,24 +236,39 @@
                     // 1. Carregar HTML dos Componentes em Paralelo
                     await this.loadAllComponents();
 
-                    // 2. Inicializar VLibras (se necessário)
+                    // 2. Remover placeholder e mostrar conteúdo real
+                    this.showMainContent();
+
+                    // 3. Inicializar VLibras
                     this.initVLibras();
 
-                    // 3. Carregar Scripts JS em Sequência
+                    // 4. Carregar Scripts JS em Sequência
                     await this.loadAllScripts();
 
                     const end = performance.now();
                     console.log(`[AppLoader] Carregamento completo em ${Math.round(end - start)}ms`);
                     
-                    // Dispara eventos para acordar scripts que dependem do DOM pronto
+                    // Dispara eventos para acordar scripts
                     this.dispatchReadyEvents();
 
-                    // FIX: Forçar remoção do preloader após tudo estar pronto
-                    this.forcePreloaderHide();
+                    // Remover preloader
+                    this.hidePreloader();
 
                 } catch (error) {
                     console.error('[AppLoader] Erro crítico:', error);
-                    this.forcePreloaderHide();
+                    this.hidePreloader();
+                }
+            }
+
+            showMainContent() {
+                // Remove o placeholder de carregamento suavemente
+                const placeholder = document.getElementById('main-content-placeholder');
+                if (placeholder) {
+                    placeholder.style.transition = 'opacity 0.3s ease';
+                    placeholder.style.opacity = '0';
+                    setTimeout(() => {
+                        placeholder.style.display = 'none';
+                    }, 300);
                 }
             }
 
@@ -157,30 +282,43 @@
                     if (!response.ok) throw new Error(`HTTP ${response.status}`);
                     
                     const html = await response.text();
+                    
+                    // Adiciona transição suave para o conteúdo
+                    element.style.opacity = '0';
+                    element.style.transition = 'opacity 0.3s ease';
                     element.innerHTML = html;
+                    
+                    // Pequeno delay para permitir renderização
+                    await new Promise(resolve => setTimeout(resolve, 50));
+                    element.style.opacity = '1';
                     element.removeAttribute('aria-busy');
                 } catch (err) {
                     console.error(`[AppLoader] Falha ao carregar ${component.id}:`, err);
                     element.innerHTML = `<div class="p-4 text-red-600 text-center">Erro ao carregar módulo: ${component.url}</div>`;
+                    element.style.opacity = '1';
                 }
             }
 
             async loadAllComponents() {
+                // Carrega todos os componentes em paralelo
                 const promises = this.config.components.map(c => this.fetchComponent(c));
-                return Promise.all(promises);
+                await Promise.all(promises);
+                
+                // Espera um pouco para garantir que o CSS foi aplicado
+                await new Promise(resolve => setTimeout(resolve, 100));
             }
 
             loadScript(src) {
                 return new Promise((resolve) => {
                     const script = document.createElement('script');
                     script.src = this.config.baseUrl + src;
-                    script.async = false; // Garante execução na ordem exata do array
+                    script.async = false;
                     script.onload = () => resolve(src);
                     script.onerror = () => {
                         console.warn(`[AppLoader] Falha script: ${src}`);
                         resolve(src); 
                     };
-                    document.body.appendChild(script);
+                    document.head.appendChild(script);
                 });
             }
 
@@ -202,25 +340,26 @@
             }
 
             dispatchReadyEvents() {
-                // Evento customizado moderno
+                // Dispara evento moderno
                 window.dispatchEvent(new CustomEvent('AppReady'));
                 window.dispatchEvent(new CustomEvent('ModulesLoaded'));
 
-                // Tenta re-disparar DOMContentLoaded para scripts legados (JQuery, etc)
-                // Nota: Muitos navegadores modernos protegem o evento nativo, então usamos um compatível se possível
+                // Tenta re-disparar DOMContentLoaded para scripts legados
                 try {
                     document.dispatchEvent(new Event('DOMContentLoaded', {
                         bubbles: true,
                         cancelable: true
                     }));
-                } catch(e) { console.log('Evento DOMContentLoaded nativo não pôde ser redisparado, confiando em AppReady'); }
+                } catch(e) { 
+                    console.log('Evento nativo não pôde ser redisparado'); 
+                }
             }
 
-            forcePreloaderHide() {
+            hidePreloader() {
                 const preloadContainer = document.getElementById('preload-container');
                 if (!preloadContainer) return;
 
-                // Delay de segurança para garantir que o CSS processe a renderização do HTML injetado
+                // Espera suficiente para garantir que tudo foi renderizado
                 setTimeout(() => {
                     preloadContainer.style.transition = 'opacity 0.5s ease, visibility 0.5s ease';
                     preloadContainer.style.opacity = '0';
@@ -229,13 +368,13 @@
                     setTimeout(() => {
                         preloadContainer.style.visibility = 'hidden';
                         preloadContainer.style.display = 'none';
-                        // Remove do DOM para limpar memória
                         if(preloadContainer.parentNode) preloadContainer.parentNode.removeChild(preloadContainer);
                     }, 550);
-                }, 800);
+                }, 500);
             }
         }
 
+        // Inicializa quando o DOM estiver pronto
         document.addEventListener('DOMContentLoaded', () => new AppLoader(APP_CONFIG));
     </script>
 </body>
