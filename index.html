@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e Conteúdo Técnico para Profissionais de Saúde.">
     <meta name="theme-color" content="#1A3E74">
-    <title>Calculadoras de Enfermagem | Modular</title>
+    <title>Missão, Visão e Valores | Calculadoras de Enfermagem</title>
+    
+    <!-- Google Consent Mode v2 -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied',
+            'functionality_storage': 'granted',
+            'personalization_storage': 'denied',
+            'security_storage': 'granted',
+            'wait_for_update': 500
+        });
+    </script>
 
     <!-- Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +44,7 @@
         }
     </script>
 
-    <!-- CSS Modules - Carregamento de todos os estilos fornecidos -->
+    <!-- CSS Modules -->
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css">
@@ -38,63 +54,105 @@
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
 
     <style>
-        /* Ajuste para evitar pulo de layout (FOUC) enquanto os componentes carregam */
-        [id$="-container"] { min-height: 1px; }
-        #main-container { min-height: 80vh; }
+        #preload-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 99999;
+            background-color: #ffffff;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .preload-hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+
+        #main-container { 
+            min-height: 80vh; 
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        body.modules-ready #main-container {
+            opacity: 1;
+        }
+
+        .v-libras-widget { z-index: 9998 !important; }
+        [vw] { opacity: 0; transition: opacity 0.3s; }
+        [vw].enabled { opacity: 1; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- 1. Componente de Preload (Crítico) -->
-    <div id="preload-container"></div>
+    <div id="preload-container">
+        <div class="flex flex-col items-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+            <p class="text-primary font-bold animate-pulse">Sincronizando Módulos...</p>
+        </div>
+    </div>
 
-    <!-- 2. Componente de Acessibilidade -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
     <div id="accessibility-container"></div>
-
-    <!-- 3. Header / Navegação -->
     <div id="header-container"></div>
 
-    <!-- 4. Conteúdo Principal (Injetado dinamicamente) -->
     <main id="main-container" class="pt-[140px]">
-        <!-- O conteúdo de main-index.html entrará aqui -->
         <div class="flex justify-center items-center h-64">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
         </div>
     </main>
 
-    <!-- 5. Footer -->
     <div id="footer-container"></div>
-
-    <!-- 6. Modais e Popups -->
     <div id="modals-container"></div>
 
-    <!-- SCRIPTS CORE & UTILS -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/console-cleaner.js"></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js"></script>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js" crossorigin="anonymous"></script>
 
-    <!-- LÓGICA DE CARREGAMENTO MODULAR (Orquestração Nativa) -->
     <script>
         /**
-         * Motor de Injeção de Componentes
-         * Carrega os arquivos HTML externos nos seus respectivos contêineres.
+         * ComponentLoader Pro 
+         * Orquestra a injeção de HTML e a ativação de Scripts com segurança.
          */
         const ComponentLoader = {
             async fetchAndInject(url, containerId) {
                 try {
                     const response = await fetch(url);
-                    if (!response.ok) throw new Error(`Erro ao carregar: ${url}`);
+                    if (!response.ok) throw new Error(`Status: ${response.status}`);
                     const html = await response.text();
-                    document.getElementById(containerId).innerHTML = html;
-                    console.log(`[Loader] ${containerId} carregado.`);
-                    return true;
+                    const container = document.getElementById(containerId);
+                    if (container) {
+                        container.innerHTML = html;
+                        return true;
+                    }
+                    return false;
                 } catch (error) {
-                    console.error(`[Loader] Erro em ${containerId}:`, error);
+                    console.warn(`[Loader] Erro ao carregar ${containerId}:`, error.message);
                     return false;
                 }
             },
 
+            loadScript(src) {
+                return new Promise((resolve) => {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.async = false;
+                    script.crossOrigin = "anonymous";
+                    script.onload = () => resolve(true);
+                    script.onerror = () => {
+                        console.warn(`[Loader] Script falhou: ${src}`);
+                        resolve(false);
+                    };
+                    document.body.appendChild(script);
+                });
+            },
+
             async init() {
-                // Definição do mapeamento de componentes
                 const components = [
                     { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/preload.html', id: 'preload-container' },
                     { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility.html', id: 'accessibility-container' },
@@ -104,26 +162,55 @@
                     { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/main-index.html', id: 'main-container' }
                 ];
 
-                // Carrega todos simultaneamente
+                // 1. Injetar todos os fragmentos HTML
                 await Promise.all(components.map(c => this.fetchAndInject(c.url, c.id)));
                 
-                // Dispara evento global quando tudo estiver pronto para os scripts específicos iniciarem
+                // 2. Pequena pausa para o navegador processar a árvore DOM injetada
+                // Isso evita o erro de "undefined classList" em elementos recém-criados
+                await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+                // 3. Inicializar VLibras
+                try {
+                    if (window.VLibras) {
+                        new window.VLibras.Widget('https://vlibras.gov.br/app');
+                    }
+                } catch (e) {
+                    console.warn("[Loader] VLibras error:", e.message);
+                }
+
+                // 4. Carregar Scripts sequencialmente
+                const scripts = [
+                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js',
+                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/preload.js',
+                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js',
+                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js',
+                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js',
+                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/modals.js',
+                    'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js'
+                ];
+
+                for (const src of scripts) {
+                    await this.loadScript(src);
+                }
+
+                this.finalize();
+            },
+
+            finalize() {
+                const preload = document.getElementById('preload-container');
+                if (preload) preload.classList.add('preload-hidden');
+                document.body.classList.add('modules-ready');
                 window.dispatchEvent(new CustomEvent('ModulesLoaded'));
+                console.log("[Loader] Inicialização modular completa.");
             }
         };
 
-        // Inicia o carregamento
-        document.addEventListener('DOMContentLoaded', () => ComponentLoader.init());
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            ComponentLoader.init();
+        } else {
+            window.addEventListener('DOMContentLoaded', () => ComponentLoader.init());
+        }
     </script>
-
-    <!-- SCRIPTS DOS COMPONENTES (Carregados após a estrutura básica) -->
-    <!-- Nota: Estes scripts geralmente contêm a lógica de clique, animação e cálculos -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/preload.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/modals.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js" defer></script>
 
 </body>
 </html>
