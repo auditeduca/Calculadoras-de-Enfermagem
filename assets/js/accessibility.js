@@ -1,6 +1,11 @@
 /**
  * Módulo de Acessibilidade Calculadoras de Enfermagem
  * Gerencia o painel, widgets, VLibras e overrides de CSS.
+ * 
+ * Integração com o sistema modular:
+ * - Carregado após ComponentsLoaded
+ * - Gerencia estado global de acessibilidade
+ * - Coordena com HeaderEngine e ModalSystem
  */
 
 const AccessControl = {
@@ -26,20 +31,70 @@ const AccessControl = {
         };
 
         if (!this.elements.panel) {
-            console.warn('Painel de Acessibilidade não encontrado no DOM. Verifique a ordem de carregamento.');
+            console.warn('Painel de Acessibilidade não encontrado no DOM.');
             return;
         }
 
-        // Inicializar VLibras se carregado
-        if (window.VLibras && window.VLibras.Widget) {
-            new window.VLibras.Widget('https://vlibras.gov.br/app');
-        }
-
+        // Aguardar carregamento do Lucide e VLibras
+        this.setupDeferredInit();
         this.setupObservers();
         this.setupGlobalEvents();
         
-        // Inicializar ícones Lucide
-        if(window.lucide) window.lucide.createIcons();
+        // Aplicar configurações salvas do localStorage
+        this.loadSavedState();
+    },
+
+    setupDeferredInit() {
+        // Inicializar Lucide quando disponível (tenta 3 vezes com intervalo)
+        let lucideAttempts = 0;
+        const tryInitLucide = () => {
+            lucideAttempts++;
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            } else if (lucideAttempts < 10) {
+                setTimeout(tryInitLucide, 100);
+            }
+        };
+        tryInitLucide();
+
+        // Inicializar VLibras quando disponível
+        const checkVLibras = setInterval(() => {
+            if (window.VLibras && window.VLibras.Widget) {
+                clearInterval(checkVLibras);
+                new window.VLibras.Widget('https://vlibras.gov.br/app');
+            }
+        }, 200);
+        
+        // Parar verificação após 10 segundos
+        setTimeout(() => clearInterval(checkVLibras), 10000);
+    },
+
+    loadSavedState() {
+        // Carregar preferências salvas do localStorage
+        const savedState = localStorage.getItem('accessControlState');
+        if (savedState) {
+            try {
+                const parsed = JSON.parse(savedState);
+                // Restaurar configurações de fonte e contraste se existirem
+                if (parsed.fontSize && parsed.fontSize !== 0) {
+                    document.documentElement.style.setProperty('--font-scale', parsed.fontSize);
+                }
+                if (parsed.contrast && parsed.contrast !== 0) {
+                    // Reaplicar contraste via classe no body
+                }
+            } catch (e) {
+                console.warn('Erro ao carregar estado de acessibilidade:', e);
+            }
+        }
+    },
+
+    saveState() {
+        // Salvar estado atual no localStorage
+        const stateToSave = {
+            fontSize: this.state.fontSize > 0 ? ['', '1.2', '1.5', '2.0'][this.state.fontSize] : 0,
+            contrast: this.state.contrast > 0 ? ['', 'contrast-dark', 'contrast-inverted'][this.state.contrast] : 0
+        };
+        localStorage.setItem('accessControlState', JSON.stringify(stateToSave));
     },
 
     setupObservers() {
@@ -135,10 +190,12 @@ const AccessControl = {
         const activeValue = values[currentIndex];
         const badge = cardElement.querySelector('.level-badge');
 
+        // Remover classes anteriores
         if (key === 'fontFamily') this.elements.body.classList.remove('font-atkinson', 'font-newsreader', 'font-dyslexic');
         if (key === 'contrast') this.elements.body.classList.remove('contrast-dark', 'contrast-inverted');
 
         if (currentIndex === -1) {
+            // Desativar feature
             cardElement.classList.remove('active');
             if(badge) badge.style.display = 'none';
             this.resetDots(cardElement);
@@ -147,9 +204,11 @@ const AccessControl = {
             if (key === 'letterSpacing') document.documentElement.style.setProperty('--letter-spacing', 'normal');
             if (key === 'readingMask') this.toggleReadingMask(false);
         } else {
+            // Ativar feature
             cardElement.classList.add('active');
             this.updateDots(cardElement, this.state[key]);
             
+            // Formatar texto do badge
             let txt = activeValue;
             if(key === 'fontSize') txt = (parseFloat(activeValue) * 100) + '%';
             if(key === 'fontFamily') txt = {'atkinson': 'Legível', 'newsreader': 'Notícia', 'dyslexic': 'Dislexia'}[activeValue];
@@ -157,12 +216,16 @@ const AccessControl = {
             
             if(badge) { badge.textContent = txt; badge.style.display = 'block'; }
 
+            // Aplicar configurações
             if (key === 'fontSize') document.documentElement.style.setProperty('--font-scale', activeValue);
             if (key === 'letterSpacing') document.documentElement.style.setProperty('--letter-spacing', activeValue);
             if (key === 'fontFamily') this.elements.body.classList.add('font-' + activeValue);
             if (key === 'readingMask') this.toggleReadingMask(true, activeValue);
             if (key === 'contrast') this.elements.body.classList.add(activeValue);
         }
+        
+        // Salvar estado
+        this.saveState();
     },
 
     toggleReadingMask(active, size) {
@@ -220,6 +283,7 @@ const AccessControl = {
         this.toggleReadingMask(false);
         window.speechSynthesis.cancel();
         
+        // Resetar cards visualmente
         const cards = document.querySelectorAll('.accessibility-card');
         cards.forEach(c => {
             c.classList.remove('active');
@@ -227,6 +291,12 @@ const AccessControl = {
             const badge = c.querySelector('.level-badge');
             if(badge) badge.style.display = 'none';
         });
+        
+        // Limpar localStorage
+        localStorage.removeItem('accessControlState');
+        
+        // Dispatch evento para outros módulos
+        window.dispatchEvent(new CustomEvent('Accessibility:Reset'));
     },
 
     updateDots(card, count = 1) {

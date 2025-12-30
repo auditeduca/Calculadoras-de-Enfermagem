@@ -1,43 +1,41 @@
-<!-- Skip Links para Acessibilidade -->
-<a href="#main-content" class="skip-link" id="skip-topo">Ir para o Topo</a>
-<a href="#main-content" class="skip-link" id="skip-conteudo">Ir para o Conteúdo</a>
-<a href="#footer" class="skip-link" id="skip-rodape">Ir para o Rodapé</a>
-
 <!-- FAIXA 1: Top Bar com Controles de Acessibilidade e Tema -->
 <div class="top-bar" id="top-bar">
     <div class="top-bar-container">
-        <div class="top-bar-left">
+        <!-- Grupo de Controles de Acessibilidade (Fonte + Tema) -->
+        <div class="accessibility-controls" role="group" aria-label="Controles de acessibilidade">
             <!-- Controles de Tamanho da Fonte -->
             <div class="font-size-controls" role="group" aria-label="Controle de tamanho da fonte">
-                <span class="font-label" aria-hidden="true">Fonte:</span>
                 <button type="button" class="font-btn font-btn-reduce" id="font-reduce" aria-label="Reduzir fonte" title="Reduzir fonte">
                     <span class="font-btn-icon">A-</span>
                 </button>
                 <button type="button" class="font-btn font-btn-increase" id="font-increase" aria-label="Aumentar fonte" title="Aumentar fonte">
                     <span class="font-btn-icon">A+</span>
                 </button>
-                <span class="font-size-display" id="font-size-display" aria-live="polite">100%</span>
             </div>
-        </div>
-        
-        <div class="top-bar-center">
-            <!-- Botão Skip para Topo -->
-            <a href="#main-header" class="skip-top-btn" id="skip-top" aria-label="Ir para o topo da página">
-                <span class="skip-icon" aria-hidden="true">↑</span>
-                <span class="skip-text">Topo</span>
-            </a>
-        </div>
-        
-        <div class="top-bar-right">
+            
+            <!-- Botão Toggle Tema -->
             <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
-                <span class="theme-icon sun" aria-hidden="true">☀️</span>
-                <span class="theme-icon moon" aria-hidden="true">🌙</span>
+                <i class="fas fa-moon" aria-hidden="true"></i>
             </button>
             
-            <nav class="top-bar-links" id="top-bar-links" aria-label="Navegação rápida">
-                <a href="#main-content" class="top-link">Conteúdo</a>
-                <a href="#footer" class="top-link">Rodapé</a>
-            </nav>
+            <!-- Divisória -->
+            <div class="top-bar-divider" aria-hidden="true"></div>
+        </div>
+        
+        <!-- Botões de Navegação Rápida (Skip) - Lado Direito -->
+        <div class="skip-controls" role="group" aria-label="Navegação rápida">
+            <a href="#main-header" class="skip-btn" id="skip-top" aria-label="Ir para o topo da página">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+                <span class="skip-label">Topo</span>
+            </a>
+            <a href="#main-content" class="skip-btn" id="skip-content" aria-label="Ir para o conteúdo principal">
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                <span class="skip-label">Conteúdo</span>
+            </a>
+            <a href="#footer" class="skip-btn" id="skip-footer" aria-label="Ir para o rodapé">
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                <span class="skip-label">Rodapé</span>
+            </a>
         </div>
     </div>
 </div>
@@ -64,9 +62,16 @@
                     </button>
                     <!-- Mega Panel: Sobre Nós -->
                     <div class="mega-panel" id="mega-panel-sobre-nos" data-menu="sobre-nos">
+                        <!-- Elemento Decorativo SVG Background -->
+                        <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
+                            <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+                                <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+                            </svg>
+                        </div>
                         <div class="panel-standard-height">
                             <!-- Coluna 1: Abas de Categorias -->
-                            <aside class="panel-sidebar">
+                            <aside class="panel-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Categorias de Sobre Nós">
                                     <button type="button" class="menu-tab-trigger active" data-tab="historia" aria-selected="true">
                                         Nossa História
@@ -84,7 +89,7 @@
                             </aside>
                             
                             <!-- Coluna 2: Conteúdo dos Links -->
-                            <main class="panel-main-content">
+                            <main class="panel-main-content header-scroll">
                                 <div class="tab-content active" id="tab-historia">
                                     <h3 class="content-title">Nossa História</h3>
                                     <ul class="content-links">
@@ -144,8 +149,15 @@
                     </button>
                     <!-- Mega Panel: Ferramentas -->
                     <div class="mega-panel" id="mega-panel-ferramentas" data-menu="ferramentas">
+                        <!-- Elemento Decorativo SVG Background -->
+                        <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
+                            <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+                                <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+                            </svg>
+                        </div>
                         <div class="panel-standard-height">
-                            <aside class="panel-sidebar">
+                            <aside class="panel-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Categorias de Ferramentas">
                                     <button type="button" class="menu-tab-trigger active" data-tab="calculadoras" aria-selected="true">
                                         Calculadoras
@@ -162,7 +174,7 @@
                                 </nav>
                             </aside>
                             
-                            <main class="panel-main-content">
+                            <main class="panel-main-content header-scroll">
                                 <div class="tab-content active" id="tab-calculadoras">
                                     <h3 class="content-title">Calculadoras Clínicas</h3>
                                     <ul class="content-links">
@@ -223,8 +235,15 @@
                     </button>
                     <!-- Mega Panel: Biblioteca -->
                     <div class="mega-panel" id="mega-panel-biblioteca" data-menu="biblioteca">
+                        <!-- Elemento Decorativo SVG Background -->
+                        <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
+                            <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+                                <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+                            </svg>
+                        </div>
                         <div class="panel-standard-height">
-                            <aside class="panel-sidebar">
+                            <aside class="panel-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Categorias da Biblioteca">
                                     <button type="button" class="menu-tab-trigger active" data-tab="artigos" aria-selected="true">
                                         Artigos
@@ -241,7 +260,7 @@
                                 </nav>
                             </aside>
                             
-                            <main class="panel-main-content">
+                            <main class="panel-main-content header-scroll">
                                 <div class="tab-content active" id="tab-artigos">
                                     <h3 class="content-title">Artigos Científicos</h3>
                                     <ul class="content-links">
@@ -300,8 +319,15 @@
                     </button>
                     <!-- Mega Panel: Carreiras -->
                     <div class="mega-panel" id="mega-panel-carreiras" data-menu="carreiras">
+                        <!-- Elemento Decorativo SVG Background -->
+                        <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
+                            <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+                                <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+                            </svg>
+                        </div>
                         <div class="panel-standard-height">
-                            <aside class="panel-sidebar">
+                            <aside class="panel-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Categorias de Carreiras">
                                     <button type="button" class="menu-tab-trigger active" data-tab="oportunidades" aria-selected="true">
                                         Oportunidades
@@ -318,7 +344,7 @@
                                 </nav>
                             </aside>
                             
-                            <main class="panel-main-content">
+                            <main class="panel-main-content header-scroll">
                                 <div class="tab-content active" id="tab-oportunidades">
                                     <h3 class="content-title">Oportunidades de Trabalho</h3>
                                     <ul class="content-links">
@@ -377,8 +403,15 @@
                     </button>
                     <!-- Mega Panel: Fale Conosco -->
                     <div class="mega-panel" id="mega-panel-fale-conosco" data-menu="fale-conosco">
+                        <!-- Elemento Decorativo SVG Background -->
+                        <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
+                            <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+                                <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+                            </svg>
+                        </div>
                         <div class="panel-standard-height">
-                            <aside class="panel-sidebar">
+                            <aside class="panel-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Categorias de Contato">
                                     <button type="button" class="menu-tab-trigger active" data-tab="contato" aria-selected="true">
                                         Contato
@@ -395,7 +428,7 @@
                                 </nav>
                             </aside>
                             
-                            <main class="panel-main-content">
+                            <main class="panel-main-content header-scroll">
                                 <div class="tab-content active" id="tab-contato">
                                     <h3 class="content-title">Fale Conosco</h3>
                                     <ul class="content-links">
@@ -450,55 +483,102 @@
                 
                 <li class="nav-item has-mega-menu">
                     <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="idiomas">
-                        Idiomas
+                        <i class="fas fa-globe" aria-hidden="true"></i>
                     </button>
                     <!-- Mega Panel: Idiomas -->
-                    <div class="mega-panel" id="mega-panel-idiomas" data-menu="idiomas">
+                    <div class="mega-panel mega-idiomas-panel" id="mega-panel-idiomas" data-menu="idiomas">
+                        <!-- Elemento Decorativo SVG Background -->
+                        <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
+                            <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+                                <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+                            </svg>
+                        </div>
                         <div class="panel-standard-height">
-                            <aside class="panel-sidebar">
-                                <nav class="menu-tabs" aria-label="Idiomas disponíveis">
-                                    <button type="button" class="menu-tab-trigger active" data-tab="pt-br" aria-selected="true">
-                                        Português
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="es" aria-selected="false">
-                                        Español
-                                    </button>
-                                    <button type="button" class="menu-tab-trigger" data-tab="en" aria-selected="false">
-                                        English
-                                    </button>
-                                </nav>
-                            </aside>
+                            <!-- Título do Mega Menu -->
+                            <div class="idiomas-title-area">
+                                <h3 class="idiomas-title">Selecione o idioma desejado</h3>
+                                <div class="idiomas-grid header-scroll">
+                                    <a href="#" class="idioma-item" data-lang="pt-br">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)" class="idioma-flag">
+                                        <span class="idioma-name">Português</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="es">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-espanha.webp" alt="Español" class="idioma-flag">
+                                        <span class="idioma-name">Español</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="en">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-eua.webp" alt="English" class="idioma-flag">
+                                        <span class="idioma-name">English</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="de">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-alemanha.webp" alt="Deutsch" class="idioma-flag">
+                                        <span class="idioma-name">Deutsch</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="fr">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-franca.webp" alt="Français" class="idioma-flag">
+                                        <span class="idioma-name">Français</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="it">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-italia.webp" alt="Italiano" class="idioma-flag">
+                                        <span class="idioma-name">Italiano</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="zh">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-china.webp" alt="中文" class="idioma-flag">
+                                        <span class="idioma-name">中文</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="ja">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-japao.webp" alt="日本語" class="idioma-flag">
+                                        <span class="idioma-name">日本語</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="ko">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-coreia.webp" alt="한국어" class="idioma-flag">
+                                        <span class="idioma-name">한국어</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="ar">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-arabia.webp" alt="العربية" class="idioma-flag">
+                                        <span class="idioma-name">العربية</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="nl">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-holanda.webp" alt="Nederlands" class="idioma-flag">
+                                        <span class="idioma-name">Nederlands</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="pl">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-polonia.webp" alt="Polski" class="idioma-flag">
+                                        <span class="idioma-name">Polski</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="ru">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-russia.webp" alt="Русский" class="idioma-flag">
+                                        <span class="idioma-name">Русский</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="sv">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-suecia.webp" alt="Svenska" class="idioma-flag">
+                                        <span class="idioma-name">Svenska</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="tr">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-turquia.webp" alt="Türkçe" class="idioma-flag">
+                                        <span class="idioma-name">Türkçe</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="uk">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-ucrania.webp" alt="Українська" class="idioma-flag">
+                                        <span class="idioma-name">Українська</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="hi">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-india.webp" alt="हिन्दी" class="idioma-flag">
+                                        <span class="idioma-name">हिन्दी</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="id">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-indonesia.webp" alt="Bahasa Indonesia" class="idioma-flag">
+                                        <span class="idioma-name">Bahasa Indonesia</span>
+                                    </a>
+                                    <a href="#" class="idioma-item" data-lang="vi">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-vietna.webp" alt="Tiếng Việt" class="idioma-flag">
+                                        <span class="idioma-name">Tiếng Việt</span>
+                                    </a>
+                                </div>
+                            </div>
                             
-                            <main class="panel-main-content">
-                                <div class="tab-content active" id="tab-pt-br">
-                                    <h3 class="content-title">Português (Brasil)</h3>
-                                    <ul class="content-links">
-                                        <li><a href="#">Página Inicial</a></li>
-                                        <li><a href="#">Todas as Calculadoras</a></li>
-                                        <li><a href="#">Artigos em Português</a></li>
-                                        <li><a href="#">Suporte em Português</a></li>
-                                    </ul>
-                                </div>
-                                <div class="tab-content" id="tab-es">
-                                    <h3 class="content-title">Español</h3>
-                                    <ul class="content-links">
-                                        <li><a href="#">Página Principal</a></li>
-                                        <li><a href="#">Todas las Calculadoras</a></li>
-                                        <li><a href="#">Artículos en Español</a></li>
-                                        <li><a href="#">Soporte en Español</a></li>
-                                    </ul>
-                                </div>
-                                <div class="tab-content" id="tab-en">
-                                    <h3 class="content-title">English</h3>
-                                    <ul class="content-links">
-                                        <li><a href="#">Homepage</a></li>
-                                        <li><a href="#">All Calculators</a></li>
-                                        <li><a href="#">Articles in English</a></li>
-                                        <li><a href="#">English Support</a></li>
-                                    </ul>
-                                </div>
-                            </main>
-                            
+                            <!-- Imagem Promocional -->
                             <aside class="panel-promo-area">
                                 <div class="glowing-frame">
                                     <div class="frame-image-container">
@@ -514,12 +594,19 @@
                 
                 <li class="nav-item has-mega-menu">
                     <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="buscar">
-                        Buscar
+                        <i class="fas fa-search" aria-hidden="true"></i>
                     </button>
                     <!-- Mega Panel: Buscar -->
                     <div class="mega-panel mega-search-panel" id="mega-panel-buscar" data-menu="buscar">
+                        <!-- Elemento Decorativo SVG Background -->
+                        <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
+                            <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+                                <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+                            </svg>
+                        </div>
                         <div class="panel-standard-height">
-                            <aside class="panel-sidebar search-sidebar">
+                            <aside class="panel-sidebar search-sidebar header-scroll">
                                 <nav class="menu-tabs" aria-label="Buscar por categoria">
                                     <button type="button" class="menu-tab-trigger active" data-tab="buscar-calculadoras" aria-selected="true">
                                         Calculadoras
@@ -549,7 +636,7 @@
                                         </button>
                                     </div>
                                     
-                                    <div class="search-categories">
+                                    <div class="search-categories header-scroll">
                                         <div class="tab-content active" id="tab-buscar-calculadoras">
                                             <h4 class="search-category-title">Calculadoras Populares</h4>
                                             <ul class="content-links">
@@ -624,24 +711,18 @@
         <!-- Controles de Acessibilidade Mobile -->
         <div class="mobile-accessibility">
             <div class="font-size-controls mobile-font-controls" role="group" aria-label="Controle de tamanho da fonte">
-                <span class="font-label" aria-hidden="true">Fonte:</span>
                 <button type="button" class="font-btn font-btn-reduce" id="mobile-font-reduce" aria-label="Reduzir fonte" title="Reduzir fonte">
                     <span class="font-btn-icon">A-</span>
                 </button>
                 <button type="button" class="font-btn font-btn-increase" id="mobile-font-increase" aria-label="Aumentar fonte" title="Aumentar fonte">
                     <span class="font-btn-icon">A+</span>
                 </button>
-                <span class="font-size-display" id="mobile-font-size-display" aria-live="polite">100%</span>
             </div>
             <button type="button" class="theme-toggle mobile-theme-toggle" id="mobile-theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
                 <span class="theme-icon sun">☀️</span>
                 <span class="theme-icon moon">🌙</span>
                 <span class="theme-text">Tema</span>
             </button>
-            <a href="#main-header" class="skip-top-btn mobile-skip-top-btn" id="mobile-skip-top" aria-label="Ir para o topo da página">
-                <span class="skip-icon" aria-hidden="true">↑</span>
-                <span class="skip-text">Topo</span>
-            </a>
         </div>
         
         <!-- Links do Menu Mobile -->
@@ -715,22 +796,32 @@
                     <span class="submenu-arrow">▼</span>
                 </button>
                 <ul class="mobile-submenu">
-                    <li><a href="#">Português (Brasil)</a></li>
-                    <li><a href="#">Español</a></li>
-                    <li><a href="#">English</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Brasil" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Português (Brasil)</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-espanha.webp" alt="Espanha" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Español</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-eua.webp" alt="EUA" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">English</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-alemanha.webp" alt="Alemanha" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Deutsch</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-franca.webp" alt="França" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Français</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-italia.webp" alt="Itália" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Italiano</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-china.webp" alt="China" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">中文</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-japao.webp" alt="Japão" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">日本語</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-coreia.webp" alt="Coreia" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">한국어</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-arabia.webp" alt="Arábia" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">العربية</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-holanda.webp" alt="Holanda" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Nederlands</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-polonia.webp" alt="Polônia" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Polski</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-russia.webp" alt="Rússia" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Русский</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-suecia.webp" alt="Suécia" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Svenska</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-turquia.webp" alt="Turquia" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Türkçe</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-ucrania.webp" alt="Ucrânia" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Українська</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-india.webp" alt="Índia" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">हिन्दी</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-indonesia.webp" alt="Indonésia" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Bahasa Indonesia</a></li>
+                    <li><a href="#"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-vietna.webp" alt="Vietnã" style="width:20px;height:auto;border-radius:2px;margin-right:8px;vertical-align:middle;">Tiếng Việt</a></li>
                 </ul>
             </li>
             <li class="mobile-nav-item">
                 <a href="#" class="mobile-nav-link">
-                    <span class="search-icon">🔍</span> Buscar
+                    <i class="fas fa-search" aria-hidden="true"></i> Buscar
                 </a>
             </li>
         </ul>
-        
-        <!-- Links Rápidos Mobile -->
-        <div class="mobile-quick-links">
-            <a href="#main-content" class="mobile-quick-link">Conteúdo</a>
-            <a href="#footer" class="mobile-quick-link">Rodapé</a>
-        </div>
     </div>
 </nav>
