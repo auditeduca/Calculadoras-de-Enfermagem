@@ -1,15 +1,14 @@
 /**
  * TEMPLATE ENGINE
  * Sistema de Injeção de Componentes Modular
- * Versão: 2.0 - Integração Completa com Módulos JS
- * 
+ * Versão: 2.1 - Sincronização Melhorada
+ *
  * Responsável por:
  * - Carregar e injetar componentes HTML dinamicamente
  * - Gerenciar a ordem de carregamento
  * - Sincronizar inicialização dos módulos JS
  * - Disparar eventos globais de lifecycle
  */
-
 class TemplateEngine {
   constructor() {
     this.components = new Map();
@@ -17,10 +16,8 @@ class TemplateEngine {
     this.isInitialized = false;
     this.basePath = '';
     this.moduleInitializers = new Map();
-    
     // Callback para quando todos os componentes estiverem carregados
     this.onReadyCallback = null;
-    
     // Mapeamento de módulos JS para componentes
     this.moduleMapping = {
       'header': { module: 'HeaderEngine', initializer: 'init', path: 'header.js' },
@@ -52,7 +49,6 @@ class TemplateEngine {
       loaded: false,
       ...options
     });
-    
     // Registrar módulo JS associado se existir
     if (options.modulePath && this.moduleMapping[name]) {
       this.moduleMapping[name].path = options.modulePath;
@@ -62,7 +58,7 @@ class TemplateEngine {
   /**
    * Carrega um componente individual via Fetch
    * @param {string} filePath - Caminho do arquivo
-   * @returns {Promise<string>} HTML do componente
+   * @returns {Promise} HTML do componente
    */
   async fetchComponent(filePath) {
     try {
@@ -78,9 +74,9 @@ class TemplateEngine {
   }
 
   /**
-   * Carrega e injeta um componente no DOM
+   * Carrega e injeta um componente no DOM com sincronização melhorada
    * @param {string} name - Nome do componente
-   * @returns {Promise<boolean>} Sucesso da operação
+   * @returns {Promise} Sucesso da operação
    */
   async loadComponent(name) {
     const component = this.components.get(name);
@@ -88,7 +84,6 @@ class TemplateEngine {
       console.warn(`[TemplateEngine] Componente não registrado: ${name}`);
       return false;
     }
-
     const target = document.querySelector(component.targetSelector);
     if (!target) {
       console.warn(`[TemplateEngine] Alvo não encontrado: ${component.targetSelector}`);
@@ -100,14 +95,30 @@ class TemplateEngine {
       return true;
     }
 
+    console.log(`[TemplateEngine] Carregando componente: ${name}`);
+
     // Se o componente já tem HTML inline (para desenvolvimento)
     const inlineElement = document.getElementById(`inline-${name}`);
     if (inlineElement) {
       target.innerHTML = inlineElement.innerHTML;
       inlineElement.remove();
+      
+      // Sincronização: Aguardar um tick do navegador para garantir que o DOM foi atualizado
+      await new Promise(resolve => setTimeout(resolve, 0));
+      
       component.loaded = true;
       this.loadedComponents.add(name);
-      console.log(`[TemplateEngine] Componente inline carregado: ${name}`);
+      
+      // Disparar evento específico indicando que este componente está pronto
+      window.dispatchEvent(new CustomEvent(`TemplateEngine:${name}:Ready`, {
+        detail: { 
+          component: name,
+          container: component.targetSelector,
+          timestamp: Date.now()
+        }
+      }));
+      
+      console.log(`[TemplateEngine] Componente '${name}' carregado e pronto`);
       return true;
     }
 
@@ -115,23 +126,36 @@ class TemplateEngine {
     const html = await this.fetchComponent(component.filePath);
     if (html) {
       target.innerHTML = html;
+      
+      // Sincronização: Aguardar um tick do navegador para garantir que o DOM foi atualizado
+      await new Promise(resolve => setTimeout(resolve, 0));
+      
       component.loaded = true;
       this.loadedComponents.add(name);
-      console.log(`[TemplateEngine] Componente carregado: ${name}`);
+      
+      console.log(`[TemplateEngine] Componente '${name}' carregado e pronto`);
+      
+      // Disparar evento específico indicando que este componente está pronto
+      window.dispatchEvent(new CustomEvent(`TemplateEngine:${name}:Ready`, {
+        detail: { 
+          component: name,
+          container: component.targetSelector,
+          timestamp: Date.now()
+        }
+      }));
+      
       return true;
     }
-
     return false;
   }
 
   /**
    * Carrega todos os componentes registrados
    * @param {Object} order - Ordem específica de carregamento
-   * @returns {Promise<void>}
+   * @returns {Promise}
    */
   async loadAll(order = null) {
     console.log('[TemplateEngine] Iniciando carregamento de componentes...');
-
     // Se há uma ordem específica, carregar nessa ordem
     if (order && order.sequence) {
       for (const name of order.sequence) {
@@ -141,26 +165,22 @@ class TemplateEngine {
       // Carregar em ordem padrão de prioridade
       const priorityOrder = ['preload', 'header', 'modals', 'footer'];
       const regularComponents = [];
-
       for (const [name] of this.components) {
         if (!priorityOrder.includes(name)) {
           regularComponents.push(name);
         }
       }
-
       // Carregar na ordem de prioridade
       for (const name of priorityOrder) {
         if (this.components.has(name)) {
           await this.loadComponent(name);
         }
       }
-
       // Carregar demais componentes
       for (const name of regularComponents) {
         await this.loadComponent(name);
       }
     }
-
     console.log(`[TemplateEngine] Componentes carregados: ${Array.from(this.loadedComponents).join(', ')}`);
   }
 
@@ -171,13 +191,14 @@ class TemplateEngine {
   async initializeModule(name) {
     const mapping = this.moduleMapping[name];
     if (!mapping) return;
-
     try {
       // Carregar script do módulo se ainda não estiver carregado
       if (!this.isModuleLoaded(mapping.module)) {
         await this.loadModuleScript(mapping.path);
+        
+        // Sincronização: Aguardar um tick após carregar o JS
+        await new Promise(resolve => setTimeout(resolve, 0));
       }
-
       // Inicializar módulo
       const moduleObj = window[mapping.module];
       if (moduleObj && typeof moduleObj[mapping.initializer] === 'function') {
@@ -201,7 +222,7 @@ class TemplateEngine {
   /**
    * Carrega um script de módulo dinamicamente
    * @param {string} scriptPath - Caminho do script
-   * @returns {Promise<void>}
+   * @returns {Promise}
    */
   async loadModuleScript(scriptPath) {
     return new Promise((resolve, reject) => {
@@ -218,7 +239,6 @@ class TemplateEngine {
    */
   async initializeAllModules() {
     const moduleOrder = ['header', 'modals', 'footer', 'preload'];
-    
     for (const name of moduleOrder) {
       if (this.components.has(name)) {
         await this.initializeModule(name);
@@ -256,7 +276,6 @@ class TemplateEngine {
    */
   onReady(callback) {
     this.onReadyCallback = callback;
-    
     // Se já estiver inicializado, chamar imediatamente
     if (this.isInitialized) {
       callback();
@@ -269,10 +288,8 @@ class TemplateEngine {
   markAsReady() {
     this.isInitialized = true;
     console.log('[TemplateEngine] Todos os componentes estão prontos');
-    
     // Disparar evento global
     window.dispatchEvent(new CustomEvent('TemplateEngine:Ready'));
-    
     // Chamar callback se existir
     if (this.onReadyCallback) {
       this.onReadyCallback();
@@ -313,58 +330,49 @@ async function initializeModules() {
 // Função principal de inicialização completa
 async function initializeSite() {
   console.log('[TemplateEngine] Inicializando site...');
-  
   // 1. Carregar todos os componentes
   await window.templateEngine.loadAll();
-  
   // 2. Inicializar módulos JS
   await window.templateEngine.initializeAllModules();
-  
   // 3. Marcar como pronto
   window.templateEngine.markAsReady();
-  
   // 4. Inicializar conteúdo principal se existir
   if (typeof window.MainIndexLoader !== 'undefined') {
     window.MainIndexLoader.load();
   }
-  
   console.log('[TemplateEngine] Site inicializado com sucesso');
 }
 
 // Configuração padrão de componentes
 document.addEventListener('DOMContentLoaded', () => {
   // Configurar caminhos base
-  const basePath = window.location.pathname.includes('/Calculadoras-de-Enfermagem/') 
-    ? '/Calculadoras-de-Enfermagem/' 
+  const basePath = window.location.pathname.includes('/Calculadoras-de-Enfermagem/')
+    ? '/Calculadoras-de-Enfermagem/'
     : './';
-  
   window.templateEngine.setBasePath(basePath);
-  
+
   // Registrar componentes padrão
   window.templateEngine.registerComponent(
-    'preload', 
-    `${basePath}components/preload.html`, 
+    'preload',
+    `${basePath}components/preload.html`,
     '#preload-container',
     { modulePath: `${basePath}js/preload.js` }
   );
-  
   window.templateEngine.registerComponent(
-    'header', 
-    `${basePath}components/header.html`, 
+    'header',
+    `${basePath}components/header.html`,
     '#header-container',
     { modulePath: `${basePath}js/header.js` }
   );
-  
   window.templateEngine.registerComponent(
-    'modals', 
-    `${basePath}components/modals.html`, 
+    'modals',
+    `${basePath}components/modals.html`,
     '#modals-container',
     { modulePath: `${basePath}js/modals.js` }
   );
-  
   window.templateEngine.registerComponent(
-    'footer', 
-    `${basePath}components/footer.html`, 
+    'footer',
+    `${basePath}components/footer.html`,
     '#footer-container',
     { modulePath: `${basePath}js/footer.js` }
   );
