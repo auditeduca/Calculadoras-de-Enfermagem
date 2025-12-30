@@ -184,6 +184,10 @@ const AccessControl = {
         if (this.elements.sideWidgets) {
             this.elements.sideWidgets.classList.add('side-widgets-hidden');
         }
+        
+        // Ocultar botões flutuantes do footer quando painel de acessibilidade estiver aberto
+        this.hideFloatingButtons();
+        
         // Delay para foco acessível
         setTimeout(() => {
             if (this.elements.closeBtn) {
@@ -201,8 +205,38 @@ const AccessControl = {
         if (this.elements.sideWidgets) {
             this.elements.sideWidgets.classList.remove('side-widgets-hidden');
         }
+        
+        // Mostrar botões flutuantes do footer novamente
+        this.showFloatingButtons();
+        
         if (this.elements.openBtn) {
             this.elements.openBtn.focus();
+        }
+    },
+
+    hideFloatingButtons() {
+        // Ocultar botões flutuantes do footer (cookie FAB e back-to-top)
+        const cookieFab = document.getElementById('cookie-fab');
+        const backToTop = document.getElementById('backToTop');
+        
+        if (cookieFab) {
+            cookieFab.style.display = 'none';
+        }
+        if (backToTop) {
+            backToTop.style.display = 'none';
+        }
+    },
+    
+    showFloatingButtons() {
+        // Mostrar botões flutuantes do footer novamente
+        const cookieFab = document.getElementById('cookie-fab');
+        const backToTop = document.getElementById('backToTop');
+        
+        if (cookieFab) {
+            cookieFab.style.display = 'flex';
+        }
+        if (backToTop) {
+            backToTop.style.display = 'flex';
         }
     },
 
