@@ -25,7 +25,8 @@ class HeaderEngine {
             mobileMenuOpenClass: 'active',
             submenuOpenClass: 'active',
             tabActiveClass: 'active',
-            transitionDelay: 250
+            transitionDelay: 250,
+            mobileBreakpoint: 768
         };
 
         // Estado do módulo
@@ -33,7 +34,8 @@ class HeaderEngine {
             currentFontSize: this.config.defaultFontSize,
             isDarkTheme: false,
             openMegaPanel: null,
-            isMobileMenuOpen: false
+            isMobileMenuOpen: false,
+            isMobileView: window.innerWidth <= this.config.mobileBreakpoint
         };
 
         // Elementos cacheados
@@ -64,6 +66,9 @@ class HeaderEngine {
 
             // Carregar preferências do usuário
             this.loadUserPreferences();
+
+            // Carregar idioma salvo
+            this.loadSavedLanguage();
 
             // Configurar event listeners
             this.setupEventListeners();
@@ -101,20 +106,19 @@ class HeaderEngine {
         // Controles de fonte (desktop)
         this.elements.fontIncrease = document.getElementById('font-increase');
         this.elements.fontReduce = document.getElementById('font-reduce');
-        this.elements.fontSizeDisplay = document.getElementById('font-size-display');
         
         // Controles de fonte (mobile)
         this.elements.mobileFontIncrease = document.getElementById('mobile-font-increase');
         this.elements.mobileFontReduce = document.getElementById('mobile-font-reduce');
-        this.elements.mobileFontSizeDisplay = document.getElementById('mobile-font-size-display');
 
         // Toggle de tema
         this.elements.themeToggle = document.getElementById('theme-toggle');
         this.elements.mobileThemeToggle = document.getElementById('mobile-theme-toggle');
 
-        // Skip links
+        // Skip links (desktop - top bar)
         this.elements.skipTop = document.getElementById('skip-top');
-        this.elements.mobileSkipTop = document.getElementById('mobile-skip-top');
+        this.elements.skipContent = document.getElementById('skip-content');
+        this.elements.skipFooter = document.getElementById('skip-footer');
 
         // Mega menu
         this.elements.navItems = document.querySelectorAll('.nav-item.has-mega-menu');
@@ -209,7 +213,7 @@ class HeaderEngine {
             });
         }
 
-        // Links skip
+        // Skip links (desktop)
         if (this.elements.skipTop) {
             this.elements.skipTop.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -217,11 +221,23 @@ class HeaderEngine {
             });
         }
         
-        if (this.elements.mobileSkipTop) {
-            this.elements.mobileSkipTop.addEventListener('click', (e) => {
+        if (this.elements.skipContent) {
+            this.elements.skipContent.addEventListener('click', (e) => {
                 e.preventDefault();
-                this.closeMobileMenu();
-                this.scrollToTarget(this.elements.mainHeader);
+                const mainContent = document.getElementById('main-content') || document.querySelector('main');
+                if (mainContent) {
+                    this.scrollToTarget(mainContent);
+                }
+            });
+        }
+        
+        if (this.elements.skipFooter) {
+            this.elements.skipFooter.addEventListener('click', (e) => {
+                e.preventDefault();
+                const footer = document.getElementById('footer') || document.querySelector('footer');
+                if (footer) {
+                    this.scrollToTarget(footer);
+                }
             });
         }
 
@@ -232,23 +248,10 @@ class HeaderEngine {
                 const menuName = btn.dataset.menu;
                 this.toggleMegaPanel(menuName);
             });
-
-            btn.addEventListener('mouseenter', () => {
-                if (!this.isMobileView()) {
-                    const menuName = btn.dataset.menu;
-                    this.showMegaPanel(menuName);
-                }
-            });
         });
 
-        // Items do nav com mouse leave
-        this.elements.navItems.forEach(item => {
-            item.addEventListener('mouseleave', () => {
-                if (!this.isMobileView()) {
-                    this.closeAllMegaPanels();
-                }
-            });
-        });
+        // Items do nav com mouse leave - Removido para comportamento apenas clique
+        /* Anteriormente fechava ao sair com mouse, agora apenas clique fecha */
 
         // Abas dos mega panels
         this.elements.tabTriggers.forEach(trigger => {
@@ -319,6 +322,62 @@ class HeaderEngine {
                 }
             }
         });
+
+        // Seleção de idiomas
+        this.setupLanguageSelection();
+    }
+
+    /**
+     * Configura seleção de idiomas
+     */
+    setupLanguageSelection() {
+        const idiomaItems = document.querySelectorAll('.idioma-item');
+        idiomaItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = item.dataset.lang;
+                this.selectLanguage(lang);
+            });
+        });
+    }
+
+    /**
+     * Seleciona um idioma
+     */
+    selectLanguage(lang) {
+        // Remover classe active de todos os itens
+        document.querySelectorAll('.idioma-item').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        // Adicionar classe active ao idioma selecionado
+        const selectedItem = document.querySelector(`.idioma-item[data-lang="${lang}"]`);
+        if (selectedItem) {
+            selectedItem.classList.add('active');
+        }
+
+        // Salvar idioma no localStorage
+        localStorage.setItem('ce-language', lang);
+
+        // Disparar evento
+        window.dispatchEvent(new CustomEvent('ce:languageChanged', {
+            detail: { language: lang }
+        }));
+
+        console.log(`[HeaderEngine] Idioma alterado para: ${lang}`);
+
+        // Fechar o mega panel de idiomas
+        this.hideMegaPanel('idiomas');
+    }
+
+    /**
+     * Carrega idioma salvo
+     */
+    loadSavedLanguage() {
+        const savedLang = localStorage.getItem('ce-language');
+        if (savedLang) {
+            this.selectLanguage(savedLang);
+        }
     }
 
     /**
@@ -333,7 +392,7 @@ class HeaderEngine {
         // Configurar tabindex para elementos interativos
         const focusableElements = document.querySelectorAll(
             '.nav-link, .menu-tab-trigger, .font-btn, .theme-toggle, ' +
-            '.mobile-nav-link, .mobile-menu-close, .skip-link'
+            '.mobile-nav-link, .mobile-menu-close, .skip-link, .skip-btn'
         );
 
         focusableElements.forEach(el => {
@@ -388,6 +447,9 @@ class HeaderEngine {
      * Manipula redimensionamento da janela
      */
     handleResize() {
+        const wasMobile = this.state.isMobileView;
+        this.state.isMobileView = window.innerWidth <= this.config.mobileBreakpoint;
+        
         // Fechar menu mobile ao redimensionar para desktop
         if (window.innerWidth > 1024 && this.state.isMobileMenuOpen) {
             this.closeMobileMenu();
@@ -396,6 +458,23 @@ class HeaderEngine {
         // Fechar mega panels ao redimensionar para mobile
         if (window.innerWidth <= 1024 && this.state.openMegaPanel) {
             this.closeAllMegaPanels();
+        }
+        
+        // Atualizar visibilidade dos botões de skip
+        this.updateSkipButtonsVisibility();
+    }
+
+    /**
+     * Atualiza a visibilidade dos botões de skip baseada no tamanho da tela
+     */
+    updateSkipButtonsVisibility() {
+        const skipControls = document.querySelector('.skip-controls');
+        if (skipControls) {
+            if (this.state.isMobileView) {
+                skipControls.style.display = 'none';
+            } else {
+                skipControls.style.display = 'flex';
+            }
         }
     }
 
@@ -476,24 +555,6 @@ class HeaderEngine {
      */
     applyFontSize(size) {
         document.documentElement.style.setProperty('--font-size-scale', size / 100);
-        
-        // Atualizar displays de fonte
-        this.updateFontDisplays(size);
-    }
-
-    /**
-     * Atualiza os displays de tamanho da fonte
-     */
-    updateFontDisplays(size) {
-        // Desktop display
-        if (this.elements.fontSizeDisplay) {
-            this.elements.fontSizeDisplay.textContent = size + '%';
-        }
-        
-        // Mobile display
-        if (this.elements.mobileFontSizeDisplay) {
-            this.elements.mobileFontSizeDisplay.textContent = size + '%';
-        }
     }
 
     /**
@@ -797,6 +858,8 @@ class HeaderEngine {
      * Rola até elemento alvo
      */
     scrollToTarget(targetElement) {
+        if (!targetElement) return;
+
         const headerOffset = this.elements.mainHeader?.offsetHeight || 80;
         const elementPosition = targetElement.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -881,4 +944,12 @@ if (typeof window !== 'undefined') {
 // Exportar para módulos
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { HeaderEngine };
+}
+
+// Função global para seleção de idiomas (chamada pelo onclick no HTML)
+function selectLanguage(event, lang) {
+    event.preventDefault();
+    if (window.headerEngine) {
+        window.headerEngine.selectLanguage(lang);
+    }
 }

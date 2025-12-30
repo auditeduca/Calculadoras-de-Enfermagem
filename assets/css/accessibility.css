@@ -312,10 +312,11 @@ body.contrast-inverted .accessibility-card.active .icon-slot {
 }
 
 .card-label {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 700;
     line-height: 1.2;
     color: var(--acc-text-main);
+    text-transform: capitalize;
 }
 
 .card-label-ext {
@@ -521,18 +522,31 @@ body.contrast-inverted .dot.active {
    VLIBRAS
    ============================================ */
 
+/* Esconder o botão padrão do VLibras mas permitir que seja clicado via script */
 [vw-access-button] {
     opacity: 0 !important;
-    pointer-events: none !important;
     width: 0 !important;
     height: 0 !important;
     overflow: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
 }
 
+/* Quando o VLibras estiver ativo, mostrar o wrapper */
 .vw-plugin-wrapper {
     display: none;
 }
 
 .vw-plugin-wrapper.active {
     display: block;
+}
+
+/* Botão customizado VLibras no painel de acessibilidade */
+.accessibility-widget button[onclick="toggleLibras()"] {
+    cursor: pointer;
+}
+
+.accessibility-widget button[onclick="toggleLibras()"]:focus {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
 }
