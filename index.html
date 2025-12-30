@@ -3,34 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e Conteúdo Técnico para Profissionais de Saúde. Calculadoras, Escalas Clínicas e Calendário Vacinal.">
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e Conteúdo Técnico para Profissionais de Saúde.">
     <meta name="theme-color" content="#1A3E74">
-    <title>Calculadoras de Enfermagem | Ferramentas e Conteúdo Técnico</title>
+    <title>Calculadoras de Enfermagem | Modular</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon-calculadoras-de-enfermagem.webp">
-    <link rel="apple-touch-icon" href="assets/images/favicon-calculadoras-de-enfermagem.webp">
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Canonical e Hreflang para SEO -->
-    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
-    <link rel="alternate" hreflang="pt-br" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
-    <link rel="alternate" hreflang="en" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html?lang=en">
-    <link rel="alternate" hreflang="es" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html?lang=es">
-    <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html">
-
-    <!-- Preconnect para performance -->
+    <!-- Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-
-    <!-- Fontes -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Tailwind CSS (Play CDN - para desenvolvimento/protótipos) -->
-    <!-- Nota: Para produção, recomenda-se instalar Tailwind como PostCSS plugin -->
+    <!-- Tailwind CSS (Play CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -38,148 +21,109 @@
                 extend: {
                     colors: {
                         primary: '#1A3E74',
-                        primaryHover: '#143260',
                         accent: '#1e40af',
                     }
                 }
             }
         }
-        // Suprimir aviso em produção (esse aviso é apenas informativo)
-        tailwind.debug = false;
-        tailwind.safeList = [];
     </script>
 
-    <!-- CSS Global (URLs absolutas para evitar 404 em produção) -->
+    <!-- CSS Modules - Carregamento de todos os estilos fornecidos -->
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main-index.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/modals.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
 
-    <!-- Google Consent Mode V2 -->
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('consent', 'default', {
-            'ad_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied',
-            'analytics_storage': 'denied',
-            'wait_for_update': 500
-        });
-    </script>
-
-    <!-- Script de monitoramento de carregamento -->
-    <script>
-        // Monitora se os componentes foram carregados
-        window.addEventListener('TemplateEngine:Ready', function() {
-            console.log('[Index] Template Engine Ready - Componentes carregados');
-
-            // Verifica se todos os containers foram preenchidos
-            const headerContainer = document.getElementById('header-container');
-            const footerContainer = document.getElementById('footer-container');
-            const modalsContainer = document.getElementById('modals-container');
-
-            if (!headerContainer || headerContainer.innerHTML.trim() === '') {
-                console.warn('[Index] Header não foi carregado');
-            } else {
-                console.log('[Index] Header carregado com sucesso');
-                // Verificar se os mega-panels existem
-                const megaPanels = headerContainer.querySelectorAll('.mega-panel');
-                console.log(`[Index] Mega-panels encontrados: ${megaPanels.length}`);
-                // Verificar se os nav-triggers existem
-                const navTriggers = headerContainer.querySelectorAll('.nav-trigger');
-                console.log(`[Index] Nav triggers encontrados: ${navTriggers.length}`);
-            }
-            if (!footerContainer || footerContainer.innerHTML.trim() === '') {
-                console.warn('[Index] Footer não foi carregado');
-            }
-            if (!modalsContainer || modalsContainer.innerHTML.trim() === '') {
-                console.warn('[Index] Modais não foram carregados');
-            }
-        });
-
-        // Fallback para timeout se componentes não carregarem
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const headerContainer = document.getElementById('header-container');
-
-                if (headerContainer && headerContainer.innerHTML.trim() === '') {
-                    headerContainer.innerHTML = '<div style="padding: 40px; text-align: center; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; margin: 20px;"><p style="color: #92400e; margin: 0;"><strong>Aviso:</strong> O cabeçalho não pôde ser carregado. Por favor, recarregue a página.</p></div>';
-                } else if (headerContainer) {
-                    // Verificar se Tailwind está funcionando
-                    const navItems = headerContainer.querySelector('.lg\\:flex');
-                    if (navItems) {
-                        const computedStyle = window.getComputedStyle(navItems);
-                        if (computedStyle.display === 'none') {
-                            console.warn('[Index] Tailwind pode não estar funcionando - menu escondido');
-                        }
-                    }
-                }
-
-                const footerContainer = document.getElementById('footer-container');
-                if (footerContainer && footerContainer.innerHTML.trim() === '') {
-                    footerContainer.innerHTML = '<div style="padding: 20px; text-align: center; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; margin: 20px;"><p style="color: #92400e; margin: 0;"><strong>Aviso:</strong> O rodapé não pôde ser carregado.</p></div>';
-                }
-            }, 5000); // 5 segundos de timeout
-        });
-    </script>
+    <style>
+        /* Ajuste para evitar pulo de layout (FOUC) enquanto os componentes carregam */
+        [id$="-container"] { min-height: 1px; }
+        #main-container { min-height: 80vh; }
+    </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Contêiner do Header (será carregado dinamicamente) -->
+    <!-- 1. Componente de Preload (Crítico) -->
+    <div id="preload-container"></div>
+
+    <!-- 2. Componente de Acessibilidade -->
+    <div id="accessibility-container"></div>
+
+    <!-- 3. Header / Navegação -->
     <div id="header-container"></div>
 
-    <!-- Elemento Decorativo SVG Background -->
-    <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
-        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
-            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
-        </svg>
-    </div>
-
-    <!-- Conteúdo Principal (será carregado dinamicamente) -->
-    <main id="main-container" class="pt-[140px] min-h-screen">
-        <!-- Conteúdo será injetado via TemplateEngine -->
+    <!-- 4. Conteúdo Principal (Injetado dinamicamente) -->
+    <main id="main-container" class="pt-[140px]">
+        <!-- O conteúdo de main-index.html entrará aqui -->
+        <div class="flex justify-center items-center h-64">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        </div>
     </main>
 
-    <!-- Contêiner do Footer (será carregado dinamicamente) -->
+    <!-- 5. Footer -->
     <div id="footer-container"></div>
 
-    <!-- Contêiner dos Modais (será carregado dinamicamente) -->
+    <!-- 6. Modais e Popups -->
     <div id="modals-container"></div>
 
-    <!-- Scripts Base (carregados em ordem específica para dependências) -->
-
-    <!-- Console Cleaner -->
+    <!-- SCRIPTS CORE & UTILS -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/console-cleaner.js"></script>
-
-    <!-- Utils -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js"></script>
+
+    <!-- LÓGICA DE CARREGAMENTO MODULAR (Orquestração Nativa) -->
     <script>
-        // Verificar se Utils foi carregado corretamente
-        if (typeof Utils === 'undefined') {
-            console.error('[Index] Erro: Utils.js não foi carregado corretamente.');
-        } else {
-            console.log('[Index] Utils.js carregado com sucesso');
-        }
+        /**
+         * Motor de Injeção de Componentes
+         * Carrega os arquivos HTML externos nos seus respectivos contêineres.
+         */
+        const ComponentLoader = {
+            async fetchAndInject(url, containerId) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`Erro ao carregar: ${url}`);
+                    const html = await response.text();
+                    document.getElementById(containerId).innerHTML = html;
+                    console.log(`[Loader] ${containerId} carregado.`);
+                    return true;
+                } catch (error) {
+                    console.error(`[Loader] Erro em ${containerId}:`, error);
+                    return false;
+                }
+            },
+
+            async init() {
+                // Definição do mapeamento de componentes
+                const components = [
+                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/preload.html', id: 'preload-container' },
+                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility.html', id: 'accessibility-container' },
+                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header.html', id: 'header-container' },
+                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer.html', id: 'footer-container' },
+                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/modals.html', id: 'modals-container' },
+                    { url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/main-index.html', id: 'main-container' }
+                ];
+
+                // Carrega todos simultaneamente
+                await Promise.all(components.map(c => this.fetchAndInject(c.url, c.id)));
+                
+                // Dispara evento global quando tudo estiver pronto para os scripts específicos iniciarem
+                window.dispatchEvent(new CustomEvent('ModulesLoaded'));
+            }
+        };
+
+        // Inicia o carregamento
+        document.addEventListener('DOMContentLoaded', () => ComponentLoader.init());
     </script>
 
-    <!-- Template Engine (carrega componentes header, footer, modals) -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/template-engine.js"></script>
+    <!-- SCRIPTS DOS COMPONENTES (Carregados após a estrutura básica) -->
+    <!-- Nota: Estes scripts geralmente contêm a lógica de clique, animação e cálculos -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/preload.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/modals.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js" defer></script>
 
-    <!-- Theme Config -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/theme-config.js"></script>
-
-    <!-- Main Index Loader (carrega conteúdo principal) -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index-loader.js"></script>
-
-    <!-- Global Main Index (dados e renderização de ferramentas) -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js"></script>
-
-    <!-- Script de Inicialização -->
-    <script>
-        // Log quando a página estiver pronta
-        document.addEventListener('Page:Ready', function() {
-            console.log('[Index] Página totalmente carregada e pronta');
-        });
-    </script>
 </body>
 </html>
