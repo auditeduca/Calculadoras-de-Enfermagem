@@ -55,9 +55,9 @@
     --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     
     /* Dimensões */
-    --top-bar-height: 40px;
-    --header-height: 90px;
-    --mega-panel-height: 450px;
+    --top-bar-height: 36px;
+    --header-height: 70px;
+    --mega-panel-height: 420px;
     --cookie-banner-height: 80px;
     --mobile-menu-width: 320px;
     
@@ -345,7 +345,7 @@ body.dark-theme .top-bar-divider {
 
 .main-header {
     position: relative;
-    height: var(--header-height);
+    height: 70px;
     background-color: var(--bg-main-header);
     border-bottom: 3px solid var(--accent-glow);
     box-shadow: 0 2px 10px rgba(59, 130, 246, 0.15);
@@ -356,7 +356,7 @@ body.dark-theme .top-bar-divider {
 .header-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 24px;
     height: 100%;
     display: flex;
     justify-content: space-between;
@@ -441,7 +441,6 @@ body.dark-theme .top-bar-divider {
     transition: transform var(--transition-fast);
 }
 
-.nav-item:hover .nav-link-dropdown::after,
 .nav-item.active .nav-link-dropdown::after {
     transform: rotate(180deg);
 }
@@ -461,16 +460,15 @@ body.dark-theme .top-bar-divider {
     border-top: 1px solid var(--border-color);
     box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.15);
     z-index: var(--z-mega-panel);
-    animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .mega-panel.active {
     display: block;
-}
-
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Altura Padrão do Panel - Responsiva ao Cookie Banner */
@@ -538,7 +536,7 @@ body.dark-theme .top-bar-divider {
 /* Coluna 2: Conteúdo Principal */
 .panel-main-content {
     flex: 1;
-    padding: 32px 40px;
+    padding: 24px 32px;
     overflow-y: auto;
 }
 
@@ -1181,37 +1179,10 @@ body.dark-theme .top-bar-divider {
    ANIMAÇÕES E EFEITOS
    ============================================ */
 
-/* Animação de entrada do mega panel */
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.mega-panel.active {
-    animation: slideDown 0.3s ease forwards;
-}
-
-/* Efeito de hover nos links */
+/* Animação de entrada do mega panel - Removida, agora usa transição CSS */
+/* Efeito de hover nos links - Removido */
 .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: var(--accent-color);
-    transition: all var(--transition-normal);
-    transform: translateX(-50%);
-}
-
-.nav-link:hover::after {
-    width: 80%;
+    display: none;
 }
 
 /* Loading state para imagens */
@@ -1572,6 +1543,20 @@ body.cookie-banner-visible .panel-standard-height {
 
 .idioma-item:hover {
     background: rgba(0, 51, 102, 0.05);
+}
+
+.idioma-item.active {
+    background: rgba(0, 51, 102, 0.1);
+    box-shadow: inset 0 0 0 2px var(--primary-color);
+}
+
+.idioma-item.active .idioma-flag {
+    box-shadow: 0 0 0 3px var(--accent-color);
+}
+
+.idioma-item.active .idioma-name {
+    color: var(--primary-color);
+    font-weight: 700;
 }
 
 .idioma-item:focus {

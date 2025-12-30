@@ -4,6 +4,19 @@
  * Depende de global.css para cores e utilitários
  */
 
+/* --- MAIN CONTENT --- */
+#main-container {
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+    #main-container {
+        padding-top: 60px;
+        padding-bottom: 24px;
+    }
+}
+
 /* --- HERO SECTION --- */
 .hero-section {
     position: relative;
