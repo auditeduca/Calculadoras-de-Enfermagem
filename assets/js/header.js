@@ -1,1 +1,307 @@
-(function(){"use strict";const d={defaultFontSize:16,minFontSize:12,maxFontSize:24,fontStep:2,fontStorageKey:"nursing_calc_font_size",themeStorageKey:"nursing_calc_theme"},c={currentFontSize:d.defaultFontSize,isDarkMode:!1,loaded:!1};function b(e){return document.querySelector(e)}function h(e){return document.querySelectorAll(e)}function s(e){return document.getElementById(e)}function y(){try{localStorage.setItem(d.fontStorageKey,c.currentFontSize.toString())}catch(e){console.warn("[Header] Erro ao salvar tamanho da fonte:",e)}}function k(){try{const e=localStorage.getItem(d.fontStorageKey);if(e){const o=parseInt(e,10);if(!isNaN(o)&&o>=d.minFontSize&&o<=d.maxFontSize)return c.currentFontSize=o,!0}}catch(e){console.warn("[Header] Erro ao carregar tamanho da fonte:",e)}return c.currentFontSize=d.defaultFontSize,!1}function F(){try{localStorage.setItem(d.themeStorageKey,c.isDarkMode?"dark":"light")}catch(e){console.warn("[Header] Erro ao salvar tema:",e)}}function w(){try{const e=localStorage.getItem(d.themeStorageKey);if(e)return c.isDarkMode=e==="dark",!0}catch(e){console.warn("[Header] Erro ao carregar tema:",e)}return c.isDarkMode=!1,!1}function z(){function e(l){const u=Math.max(d.minFontSize,Math.min(d.maxFontSize,l));c.currentFontSize=u,document.documentElement.style.fontSize=c.currentFontSize+"px",y(),o()}function o(){const l=s("font-increase"),u=s("font-reduce"),m=s("mobile-font-increase"),v=s("mobile-font-reduce"),S=[l,m],p=[u,v];S.forEach(g=>{g&&(g.disabled=c.currentFontSize>=d.maxFontSize)}),p.forEach(g=>{g&&(g.disabled=c.currentFontSize<=d.minFontSize)})}function t(l){l.preventDefault(),l.stopPropagation(),e(c.currentFontSize+d.fontStep)}function n(l){l.preventDefault(),l.stopPropagation(),e(c.currentFontSize-d.fontStep)}const i=s("font-increase"),a=s("font-reduce"),r=s("mobile-font-increase"),f=s("mobile-font-reduce");i&&i.addEventListener("click",t),a&&a.addEventListener("click",n),r&&r.addEventListener("click",t),f&&f.addEventListener("click",n),o()}function E(){const e=s("theme-toggle"),o=s("mobile-theme-toggle");function t(i){if(c.isDarkMode=i,document.body.classList.toggle("dark-theme",i),e){const a=e.querySelector("i");a&&(a.classList.remove("fa-moon","fa-sun"),a.classList.add(i?"fa-sun":"fa-moon"))}if(o){const a=o.querySelector(".theme-icon.sun"),r=o.querySelector(".theme-icon.moon");a&&(a.style.display=i?"inline":"none"),r&&(r.style.display=i?"none":"inline")}F()}function n(i){i.preventDefault(),i.stopPropagation(),t(!c.isDarkMode)}e&&e.addEventListener("click",n),o&&o.addEventListener("click",n),c.isDarkMode&&t(!0)}function x(){function e(i,a){i&&i.addEventListener("click",function(r){r.preventDefault(),r.stopPropagation();const f=s(a);f&&(f.scrollIntoView({behavior:"smooth",block:"start"}),f.setAttribute("tabindex","-1"),f.focus())})}const o=s("skip-top"),t=s("skip-content"),n=s("skip-footer");e(o,"main-header"),e(t,"main-content"),e(n,"footer")}function M(){const e=s("mobile-menu-toggle"),o=s("mobile-menu-close"),t=s("mobile-menu"),n=s("mobile-menu-overlay");function i(){t&&(t.classList.add("active"),t.setAttribute("aria-expanded","true")),n&&n.classList.add("active"),document.body.style.overflow="hidden"}function a(){t&&(t.classList.remove("active"),t.setAttribute("aria-expanded","false")),n&&n.classList.remove("active"),document.body.style.overflow=""}function r(){t&&t.classList.contains("active")?a():i()}e&&e.addEventListener("click",r),o&&o.addEventListener("click",a),n&&n.addEventListener("click",a),document.addEventListener("keydown",function(l){l.key==="Escape"&&t&&t.classList.contains("active")&&a()}),h(".has-mobile-submenu").forEach(l=>{const u=l.querySelector(".mobile-nav-dropdown");u&&u.addEventListener("click",function(){const m=this.getAttribute("aria-expanded")==="true";this.setAttribute("aria-expanded",!m),l.classList.toggle("active")})})}function q(){const e=h(".has-mega-menu");e.forEach(o=>{const t=o.querySelector(".nav-link-dropdown"),n=o.querySelector(".mega-panel");if(!t||!n)return;let i;function a(){clearTimeout(i),e.forEach(u=>{if(u!==o){const m=u.querySelector(".mega-panel"),v=u.querySelector(".nav-link-dropdown");m&&m.classList.remove("active"),v&&v.setAttribute("aria-expanded","false")}}),n.classList.add("active"),t.setAttribute("aria-expanded","true"),document.body.classList.add("mega-menu-active")}function r(){i=setTimeout(()=>{n.classList.remove("active"),t.setAttribute("aria-expanded","false"),document.body.classList.remove("mega-menu-active")},150)}function f(){window.matchMedia("(min-width: 1024px)").matches&&a()}function l(){window.matchMedia("(min-width: 1024px)").matches&&r()}t.addEventListener("mouseenter",f),t.addEventListener("mouseleave",l),t.addEventListener("focus",f),t.addEventListener("click",function(u){if(window.matchMedia("(max-width: 1023px)").matches){u.preventDefault();const m=n.classList.contains("active");e.forEach(v=>{const S=v.querySelector(".mega-panel"),p=v.querySelector(".nav-link-dropdown");S&&S.classList.remove("active"),p&&p.setAttribute("aria-expanded","false")}),m||a()}}),n.addEventListener("mouseenter",()=>clearTimeout(i)),n.addEventListener("mouseleave",l),document.addEventListener("keydown",function(u){u.key==="Escape"&&(n.classList.remove("active"),t.setAttribute("aria-expanded","false"))})})}function T(){h(".menu-tabs").forEach(o=>{const t=o.querySelectorAll(".menu-tab-trigger"),n=o.parentElement.parent().querySelectorAll(".tab-content");t.forEach(i=>{i.addEventListener("click",function(){const a=this.getAttribute("data-tab");t.forEach(r=>{r.classList.remove("active"),r.setAttribute("aria-selected","false")}),this.classList.add("active"),this.setAttribute("aria-selected","true"),n.forEach(r=>{r.classList.remove("active"),r.id==="tab-"+a&&r.classList.add("active")})})})})}function A(){const e=h(".idioma-item");e.forEach(o=>{o.addEventListener("click",function(t){t.preventDefault(),e.forEach(a=>a.classList.remove("active")),this.classList.add("active");const n=s("active-lang-flag");if(n){const a=this.querySelector(".idioma-flag").src;n.src=a,n.alt=this.querySelector(".idioma-name").textContent}h(".mega-panel").forEach(a=>a.classList.remove("active"))})})}function I(){const e=b(".search-container");if(!e)return;const o=e.querySelector(".search-input"),t=e.querySelector(".search-btn");t&&o&&(t.addEventListener("click",function(){const n=o.value.trim();n&&console.log("[Search] Buscando:",n)}),o.addEventListener("keydown",function(n){n.key==="Enter"&&t.click()}))}function D(){const e=b(".main-header");let o=0;if(!e)return;function t(){const n=window.pageYOffset;n>50?e.classList.add("scrolled"):e.classList.remove("scrolled"),o=n}window.addEventListener("scroll",t,{passive:!0}),t()}function H(){const e=b(".main-header");if(!e)return;let o=window.scrollY,t=!1;function n(){const i=window.scrollY;i>o&&i>100?e.classList.add("header-hidden"):e.classList.remove("header-hidden"),o=i,t=!1}window.addEventListener("scroll",function(){t||(requestAnimationFrame(n),t=!0)},{passive:!0})}function L(){c.loaded||(c.loaded=!0,console.log("[Header] Inicializando m\xF3dulo do cabe\xE7alho..."),k(),w(),document.documentElement.style.fontSize=c.currentFontSize+"px",z(),E(),x(),M(),q(),T(),A(),I(),D(),H(),console.log("[Header] M\xF3dulo do cabe\xE7alho inicializado com sucesso"))}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",L):window.requestIdleCallback?requestIdleCallback(L):setTimeout(L,100),window.HeaderModule={setFontSize:function(e){c.currentFontSize=Math.max(d.minFontSize,Math.min(d.maxFontSize,e)),document.documentElement.style.fontSize=c.currentFontSize+"px",y()},toggleTheme:function(){E()}}})();
+(function() {
+    "use strict";
+
+    const d = {
+        defaultFontSize: 16,
+        minFontSize: 12,
+        maxFontSize: 24,
+        fontStep: 2,
+        fontStorageKey: "nursing_calc_font_size",
+        themeStorageKey: "nursing_calc_theme"
+    };
+
+    const c = {
+        currentFontSize: d.defaultFontSize,
+        isDarkMode: !1,
+        loaded: !1
+    };
+
+    function b(e) {
+        return document.querySelector(e)
+    }
+
+    function h(e) {
+        return document.querySelectorAll(e)
+    }
+
+    function s(e) {
+        return document.getElementById(e)
+    }
+
+    function y() {
+        try {
+            localStorage.setItem(d.fontStorageKey, c.currentFontSize.toString())
+        } catch (e) {
+            console.warn("[Header] Erro ao salvar tamanho da fonte:", e)
+        }
+    }
+
+    function k() {
+        try {
+            const e = localStorage.getItem(d.fontStorageKey);
+            if (e) {
+                const o = parseInt(e, 10);
+                if (!isNaN(o) && o >= d.minFontSize && o <= d.maxFontSize) return c.currentFontSize = o, !0
+            }
+        } catch (e) {
+            console.warn("[Header] Erro ao carregar tamanho da fonte:", e)
+        }
+        return c.currentFontSize = d.defaultFontSize, !1
+    }
+
+    function F() {
+        try {
+            localStorage.setItem(d.themeStorageKey, c.isDarkMode ? "dark" : "light")
+        } catch (e) {
+            console.warn("[Header] Erro ao salvar tema:", e)
+        }
+    }
+
+    function w() {
+        try {
+            const e = localStorage.getItem(d.themeStorageKey);
+            if (e) return c.isDarkMode = e === "dark", !0
+        } catch (e) {
+            console.warn("[Header] Erro ao carregar tema:", e)
+        }
+        return c.isDarkMode = !1, !1
+    }
+
+    function z() {
+        function e(l) {
+            const u = Math.max(d.minFontSize, Math.min(d.maxFontSize, l));
+            c.currentFontSize = u, document.documentElement.style.fontSize = c.currentFontSize + "px", y(), o()
+        }
+
+        function o() {
+            const l = s("font-increase"),
+                u = s("font-reduce"),
+                m = s("mobile-font-increase"),
+                v = s("mobile-font-reduce"),
+                S = [l, m],
+                p = [u, v];
+            S.forEach(g => {
+                g && (g.disabled = c.currentFontSize >= d.maxFontSize)
+            }), p.forEach(g => {
+                g && (g.disabled = c.currentFontSize <= d.minFontSize)
+            })
+        }
+
+        function t(l) {
+            l.preventDefault(), l.stopPropagation(), e(c.currentFontSize + d.fontStep)
+        }
+
+        function n(l) {
+            l.preventDefault(), l.stopPropagation(), e(c.currentFontSize - d.fontStep)
+        }
+        const i = s("font-increase"),
+            a = s("font-reduce"),
+            r = s("mobile-font-increase"),
+            f = s("mobile-font-reduce");
+        i && i.addEventListener("click", t), a && a.addEventListener("click", n), r && r.addEventListener("click", t), f && f.addEventListener("click", n), o()
+    }
+
+    function E() {
+        const e = s("theme-toggle"),
+            o = s("mobile-theme-toggle");
+
+        function t(i) {
+            if (c.isDarkMode = i, document.body.classList.toggle("dark-theme", i), e) {
+                const a = e.querySelector("i");
+                a && (a.classList.remove("fa-moon", "fa-sun"), a.classList.add(i ? "fa-sun" : "fa-moon"))
+            }
+            if (o) {
+                const a = o.querySelector(".theme-icon.sun"),
+                    r = o.querySelector(".theme-icon.moon");
+                a && (a.style.display = i ? "inline" : "none"), r && (r.style.display = i ? "none" : "inline")
+            }
+            F()
+        }
+
+        function n(i) {
+            i.preventDefault(), i.stopPropagation(), t(!c.isDarkMode)
+        }
+        e && e.addEventListener("click", n), o && o.addEventListener("click", n), c.isDarkMode && t(!0)
+    }
+
+    function x() {
+        function e(i, a) {
+            i && i.addEventListener("click", function(r) {
+                r.preventDefault(), r.stopPropagation();
+                const f = s(a);
+                f && (f.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                }), f.setAttribute("tabindex", "-1"), f.focus())
+            })
+        }
+        const o = s("skip-top"),
+            t = s("skip-content"),
+            n = s("skip-footer");
+        e(o, "main-header"), e(t, "main-content"), e(n, "footer")
+    }
+
+    function M() {
+        const e = s("mobile-menu-toggle"),
+            o = s("mobile-menu-close"),
+            t = s("mobile-menu"),
+            n = s("mobile-menu-overlay");
+
+        function i() {
+            t && (t.classList.add("active"), t.setAttribute("aria-expanded", "true")), n && n.classList.add("active"), document.body.style.overflow = "hidden"
+        }
+
+        function a() {
+            t && (t.classList.remove("active"), t.setAttribute("aria-expanded", "false")), n && n.classList.remove("active"), document.body.style.overflow = ""
+        }
+
+        function r() {
+            t && t.classList.contains("active") ? a() : i()
+        }
+        e && e.addEventListener("click", r), o && o.addEventListener("click", a), n && n.addEventListener("click", a), document.addEventListener("keydown", function(l) {
+            l.key === "Escape" && t && t.classList.contains("active") && a()
+        }), h(".has-mobile-submenu").forEach(l => {
+            const u = l.querySelector(".mobile-nav-dropdown");
+            u && u.addEventListener("click", function() {
+                const m = this.getAttribute("aria-expanded") === "true";
+                this.setAttribute("aria-expanded", !m), l.classList.toggle("active")
+            })
+        })
+    }
+
+    function q() {
+        const e = h(".has-mega-menu");
+        e.forEach(o => {
+            const t = o.querySelector(".nav-link-dropdown"),
+                n = o.querySelector(".mega-panel");
+            if (!t || !n) return;
+            let i;
+
+            function a() {
+                clearTimeout(i), e.forEach(u => {
+                    if (u !== o) {
+                        const m = u.querySelector(".mega-panel"),
+                            v = u.querySelector(".nav-link-dropdown");
+                        m && m.classList.remove("active"), v && v.setAttribute("aria-expanded", "false")
+                    }
+                }), n.classList.add("active"), t.setAttribute("aria-expanded", "true"), document.body.classList.add("mega-menu-active")
+            }
+
+            function r() {
+                i = setTimeout(() => {
+                    n.classList.remove("active"), t.setAttribute("aria-expanded", "false"), document.body.classList.remove("mega-menu-active")
+                }, 150)
+            }
+
+            function f() {
+                window.matchMedia("(min-width: 1024px)").matches && a()
+            }
+
+            function l() {
+                window.matchMedia("(min-width: 1024px)").matches && r()
+            }
+            t.addEventListener("mouseenter", f), t.addEventListener("mouseleave", l), t.addEventListener("focus", f), t.addEventListener("click", function(u) {
+                if (window.matchMedia("(max-width: 1023px)").matches) {
+                    u.preventDefault();
+                    const m = n.classList.contains("active");
+                    e.forEach(v => {
+                        const S = v.querySelector(".mega-panel"),
+                            p = v.querySelector(".nav-link-dropdown");
+                        S && S.classList.remove("active"), p && p.setAttribute("aria-expanded", "false")
+                    }), m || a()
+                }
+            }), n.addEventListener("mouseenter", () => clearTimeout(i)), n.addEventListener("mouseleave", l), document.addEventListener("keydown", function(u) {
+                u.key === "Escape" && (n.classList.remove("active"), t.setAttribute("aria-expanded", "false"))
+            })
+        })
+    }
+
+    function T() {
+        h(".menu-tabs").forEach(o => {
+            const t = o.querySelectorAll(".menu-tab-trigger");
+            // CORREÇÃO AQUI: substituído .parent() por .parentElement
+            const n = o.parentElement.parentElement.querySelectorAll(".tab-content");
+            t.forEach(i => {
+                i.addEventListener("click", function() {
+                    const a = this.getAttribute("data-tab");
+                    t.forEach(r => {
+                        r.classList.remove("active"), r.setAttribute("aria-selected", "false")
+                    }), this.classList.add("active"), this.setAttribute("aria-selected", "true"), n.forEach(r => {
+                        r.classList.remove("active"), r.id === "tab-" + a && r.classList.add("active")
+                    })
+                })
+            })
+        })
+    }
+
+    function A() {
+        const e = h(".idioma-item");
+        e.forEach(o => {
+            o.addEventListener("click", function(t) {
+                t.preventDefault(), e.forEach(a => a.classList.remove("active")), this.classList.add("active");
+                const n = s("active-lang-flag");
+                if (n) {
+                    const a = this.querySelector(".idioma-flag").src;
+                    n.src = a, n.alt = this.querySelector(".idioma-name").textContent
+                }
+                h(".mega-panel").forEach(a => a.classList.remove("active"))
+            })
+        })
+    }
+
+    function I() {
+        const e = b(".search-container");
+        if (!e) return;
+        const o = e.querySelector(".search-input"),
+            t = e.querySelector(".search-btn");
+        t && o && (t.addEventListener("click", function() {
+            const n = o.value.trim();
+            n && console.log("[Search] Buscando:", n)
+        }), o.addEventListener("keydown", function(n) {
+            n.key === "Enter" && t.click()
+        }))
+    }
+
+    function D() {
+        const e = b(".main-header");
+        let o = 0;
+        if (!e) return;
+
+        function t() {
+            const n = window.pageYOffset;
+            n > 50 ? e.classList.add("scrolled") : e.classList.remove("scrolled"), o = n
+        }
+        window.addEventListener("scroll", t, {
+            passive: !0
+        }), t()
+    }
+
+    function H() {
+        const e = b(".main-header");
+        if (!e) return;
+        let o = window.scrollY,
+            t = !1;
+
+        function n() {
+            const i = window.scrollY;
+            i > o && i > 100 ? e.classList.add("header-hidden") : e.classList.remove("header-hidden"), o = i, t = !1
+        }
+        window.addEventListener("scroll", function() {
+            t || (requestAnimationFrame(n), t = !0)
+        }, {
+            passive: !0
+        })
+    }
+
+    function L() {
+        c.loaded || (c.loaded = !0, console.log("[Header] Inicializando módulo do cabeçalho..."), k(), w(), document.documentElement.style.fontSize = c.currentFontSize + "px", z(), E(), x(), M(), q(), T(), A(), I(), D(), H(), console.log("[Header] Módulo do cabeçalho inicializado com sucesso"))
+    }
+    document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", L) : window.requestIdleCallback ? requestIdleCallback(L) : setTimeout(L, 100), window.HeaderModule = {
+        setFontSize: function(e) {
+            c.currentFontSize = Math.max(d.minFontSize, Math.min(d.maxFontSize, e)), document.documentElement.style.fontSize = c.currentFontSize + "px", y()
+        },
+        toggleTheme: function() {
+            E()
+        }
+    }
+})();
