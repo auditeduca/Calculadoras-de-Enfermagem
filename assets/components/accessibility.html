@@ -1,0 +1,139 @@
+<!-- WIDGETS LATERAIS -->
+<div id="side-widgets" class="side-widgets-container">
+    <div class="accessibility-widget">
+        <!-- Botão Customizado VLibras -->
+        <button type="button" aria-label="Abrir tradutor de libras" onclick="toggleLibras()">
+            <i class="fas fa-sign-language fa-lg" aria-hidden="true"></i>
+        </button>
+        <!-- Botão Menu Acessibilidade -->
+        <button id="accessibility-btn" type="button" aria-label="Abrir menu de recursos assistivos" onclick="toggleAccessibilityPanel()">
+            <i class="fas fa-eye fa-lg" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+
+<!-- PAINEL DE ACESSIBILIDADE -->
+<aside id="accessibility-panel" class="accessibility-panel-hidden" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+    
+    <!-- Header -->
+    <header class="panel-header shiny-header-border">
+        <div class="flex items-center gap-2">
+            <!-- Caminho ajustado para a raiz -->
+            <img src="assets/images/author-info.webp" alt="Logo Calculadoras de Enfermagem" class="w-10 h-10 object-contain">
+            <span id="panel-title" class="sr-only">Menu de Acessibilidade</span>
+        </div>
+        <div class="flex items-center gap-1">
+            <button onclick="toggleMaximizePanel()" class="icon-btn sm-hidden" title="Expandir Menu" aria-label="Expandir tamanho do menu">
+                <i data-lucide="maximize-2" class="w-4 h-4" aria-hidden="true"></i>
+            </button>
+            <button id="close-panel-btn" onclick="toggleAccessibilityPanel()" class="icon-btn" aria-label="Fechar menu">
+                <i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Conteúdo com Scroll -->
+    <div class="panel-content custom-scrollbar">
+        
+        <!-- Navegação -->
+        <section class="mb-6">
+            <h4 class="section-title">Navegação</h4>
+            <div class="grid grid-cols-2 gap-2">
+                <div class="accessibility-card" onclick="toggleSimpleFeature('highlight-links', this)">
+                    <div class="level-indicator"><div class="dot"></div></div>
+                    <i data-lucide="link" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <span class="card-label">Destaque de Links</span>
+                </div>
+                <div class="accessibility-card" onclick="cycleFeature('readingMask', ['sm', 'md', 'lg'], this)">
+                    <div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                    <span class="level-badge"></span>
+                    <i data-lucide="scan-line" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <span class="card-label">Máscara de Leitura</span>
+                </div>
+                <div class="accessibility-card" onclick="toggleSimpleFeature('structure', this)">
+                    <div class="level-indicator"><div class="dot"></div></div>
+                    <i data-lucide="layout" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <span class="card-label">Estrutura</span>
+                </div>
+                <div class="accessibility-card" onclick="toggleSimpleFeature('hide-images', this)">
+                    <div class="level-indicator"><div class="dot"></div></div>
+                    <i data-lucide="image-off" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <span class="card-label">Ocultar Imagens</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Texto -->
+        <section class="mb-6">
+            <h4 class="section-title">Texto e Leitura</h4>
+            <div class="grid grid-cols-2 gap-2">
+                <div class="accessibility-card" onclick="cycleFeature('fontSize', ['1.2', '1.5', '2.0'], this)">
+                    <div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                    <span class="level-badge"></span>
+                    <i data-lucide="type" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <span class="card-label">Tamanho de Fonte</span>
+                </div>
+                <div class="accessibility-card" onclick="toggleSimpleFeature('bold-text', this)">
+                    <div class="level-indicator"><div class="dot"></div></div>
+                    <i data-lucide="highlighter" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <span class="card-label">Negrito</span>
+                </div>
+                <div class="accessibility-card" onclick="cycleFeature('letterSpacing', ['0.1em', '0.2em', '0.3em'], this)">
+                    <div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                    <span class="level-badge"></span>
+                    <i data-lucide="move-horizontal" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <span class="card-label">Espaço Letras</span>
+                </div>
+                <div class="accessibility-card" onclick="cycleFeature('fontFamily', ['atkinson', 'newsreader', 'dyslexic'], this)">
+                    <div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                    <span class="level-badge"></span>
+                    <i data-lucide="pen-tool" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <span class="card-label">Fonte</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cores e Som -->
+        <section class="mb-6">
+            <h4 class="section-title">Cores e Som</h4>
+            <div class="grid grid-cols-2 gap-2">
+                <div class="accessibility-card" onclick="cycleFeature('contrast', ['contrast-dark', 'contrast-inverted'], this)">
+                        <div class="level-indicator"><div class="dot"></div><div class="dot"></div></div>
+                        <span class="level-badge"></span>
+                    <i data-lucide="moon" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <span class="card-label">Contraste</span>
+                </div>
+                <div class="accessibility-card" onclick="toggleSimpleFeature('stop-anim', this)">
+                    <div class="level-indicator"><div class="dot"></div></div>
+                    <i data-lucide="pause-circle" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <span class="card-label">Pausar Animações</span>
+                </div>
+                <div class="accessibility-card" onclick="toggleTTS(this)">
+                    <div class="level-indicator"><div class="dot"></div></div>
+                    <i data-lucide="volume-2" class="w-6 h-6 icon-slot opacity-80"></i>
+                    <span class="card-label">Leitor TTS</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Rodapé CTA (Overlay Azul) -->
+    <div class="menu-cta-overlay">
+        <button onclick="resetAllFeatures()" class="btn-restore">
+            <i data-lucide="rotate-ccw" class="w-4 h-4" aria-hidden="true"></i>
+            Restaurar Recursos
+        </button>
+    </div>
+</aside>
+
+<!-- Máscaras de Leitura Globais -->
+<div id="reading-mask-top"></div>
+<div id="reading-mask-bottom"></div>
+
+<!-- Integração VLibras (Elemento Oculto) -->
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>

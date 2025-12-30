@@ -1,0 +1,272 @@
+/* VARIÁVEIS DO COMPONENTE */
+:root {
+    --acc-primary: #1A3E74;
+    --acc-primary-hover: #112b52;
+    
+    /* Tema Claro (Padrão) */
+    --acc-panel-bg: rgba(240, 249, 255, 0.85); /* Azul claríssimo glass */
+    --acc-panel-border: rgba(255, 255, 255, 0.6);
+    --acc-text-main: #334155;
+    --acc-text-muted: #94a3b8;
+    --acc-card-bg: rgba(255, 255, 255, 0.7);
+    --acc-card-hover: rgba(255, 255, 255, 0.95);
+    
+    /* Linha divisória header */
+    --acc-header-shine: linear-gradient(90deg, transparent, #3b82f6, #3b82f6, #3b82f6, transparent);
+}
+
+/* TEMA ESCURO (Ativado via JS) */
+body.contrast-dark, body.contrast-inverted {
+    --acc-panel-bg: rgba(15, 23, 42, 0.9);
+    --acc-panel-border: rgba(255, 255, 255, 0.1);
+    --acc-text-main: #f1f5f9;
+    --acc-text-muted: #cbd5e1;
+    --acc-card-bg: rgba(30, 41, 59, 0.6);
+    --acc-card-hover: rgba(51, 65, 85, 0.8);
+    --acc-header-shine: linear-gradient(90deg, transparent, #60a5fa, #93c5fd, #60a5fa, transparent);
+}
+
+/* WIDGETS LATERAIS */
+.side-widgets-container {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    /* Z-Index: 990 - Abaixo do modal (1000) e do toast (3000) mas acima do conteúdo */
+    z-index: 990; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.side-widgets-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(20px, -50%);
+}
+
+.accessibility-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    filter: drop-shadow(-2px 2px 4px rgba(0,0,0,0.15));
+}
+
+.accessibility-widget button {
+    background-color: var(--acc-primary);
+    color: white;
+    border: none;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: background-color 0.2s, width 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.accessibility-widget button:first-child { border-top-left-radius: 0.5rem; }
+.accessibility-widget button:last-child { border-bottom-left-radius: 0.5rem; }
+.accessibility-widget button:hover { background-color: var(--acc-primary-hover); width: 55px; }
+
+/* Tooltip */
+.accessibility-widget button::after {
+    content: attr(aria-label);
+    position: absolute;
+    right: 110%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+.accessibility-widget button:hover::after { opacity: 1; }
+
+/* PAINEL PRINCIPAL */
+#accessibility-panel {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: 320px; /* Largura Desktop */
+    max-height: calc(100vh - 2rem);
+    
+    /* Glassmorphism */
+    background: var(--acc-panel-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--acc-panel-border);
+    color: var(--acc-text-main);
+    
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    
+    /* Z-Index: 995 - Abaixo de modais (1000) mas acima dos widgets laterais */
+    z-index: 995; 
+    
+    /* Estado Fechado/Aberto */
+    transform: translateX(150%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s ease;
+}
+
+#accessibility-panel:not(.accessibility-panel-hidden) {
+    transform: translateX(0);
+}
+
+/* Header do Painel */
+.panel-header {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparente */
+    position: relative;
+}
+
+/* Linha Reluzente #3b82f6 */
+.shiny-header-border::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 1px;
+    background: var(--acc-header-shine);
+    box-shadow: 0 1px 3px rgba(59, 130, 246, 0.5);
+}
+
+.icon-btn {
+    padding: 0.375rem;
+    border-radius: 0.25rem;
+    color: var(--acc-text-main);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.icon-btn:hover { background-color: rgba(0,0,0,0.1); }
+
+/* Conteúdo */
+.panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    padding-bottom: 10rem; /* Espaço para o overlay do footer */
+}
+
+.section-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+    color: var(--acc-text-muted);
+}
+
+/* Cards */
+.accessibility-card {
+    background-color: var(--acc-card-bg);
+    border: 2px solid transparent;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    height: 7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+.accessibility-card:hover {
+    transform: translateY(-2px);
+    background-color: var(--acc-card-hover);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+.accessibility-card.active {
+    border-color: var(--acc-primary);
+    background-color: rgba(240, 244, 250, 0.9);
+}
+.accessibility-card.active .icon-slot { color: var(--acc-primary); }
+
+.card-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--acc-text-main);
+}
+
+/* Indicadores */
+.level-indicator { position: absolute; top: 8px; right: 8px; display: flex; gap: 3px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background-color: rgba(0,0,0,0.1); }
+.dot.active { background-color: var(--acc-primary); }
+
+.level-badge {
+    position: absolute; top: 22px; right: 8px;
+    background-color: var(--acc-primary); color: white;
+    font-size: 0.6rem; padding: 1px 5px; border-radius: 999px;
+    font-weight: bold; display: none; pointer-events: none;
+}
+.accessibility-card.active .level-badge { display: block; }
+
+/* Overlay Footer */
+.menu-cta-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 140px;
+    background: linear-gradient(to top, rgba(26, 62, 116, 0.95) 0%, rgba(26, 62, 116, 0.3) 60%, transparent 100%);
+    display: flex; align-items: flex-end; padding: 2rem;
+    pointer-events: none; z-index: 50;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.btn-restore {
+    pointer-events: auto;
+    background-color: white; color: var(--acc-primary);
+    font-size: 0.75rem; font-weight: 700;
+    padding: 0.75rem 1.5rem; border-radius: 0.75rem;
+    width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s;
+    border: none;
+    cursor: pointer;
+}
+.btn-restore:active { transform: scale(0.95); }
+
+/* RESPONSIVIDADE */
+@media (max-width: 640px) {
+    .sm-hidden { display: none !important; }
+    #accessibility-panel {
+        width: 90% !important;
+        right: 5% !important;
+        top: 20px;
+        max-height: calc(100vh - 40px);
+    }
+    .panel-expanded { width: 90% !important; }
+}
+@media (min-width: 641px) {
+    .panel-expanded { width: 450px !important; }
+}
+
+/* UTILS de Acessibilidade */
+.font-atkinson { font-family: 'Atkinson Hyperlegible', sans-serif !important; }
+.font-newsreader { font-family: 'Newsreader', serif !important; }
+.font-dyslexic { font-family: 'OpenDyslexic', sans-serif !important; }
+.highlight-links a { background-color: #ffeb3b; color: #000; font-weight: bold; padding: 0 2px; border: 1px dashed #000; }
+.highlight-headers h1, .highlight-headers h2 { text-decoration: underline; text-decoration-color: var(--acc-primary); text-decoration-thickness: 3px; }
+.hide-images img { opacity: 0 !important; }
+.bold-text * { font-weight: 700 !important; }
+.stop-anim * { animation-play-state: paused !important; transition: none !important; }
+
+#reading-mask-top, #reading-mask-bottom { position: fixed; left: 0; width: 100%; background: rgba(0,0,0,0.7); z-index: 9998; pointer-events: none; display: none; }
+
+/* VLibras Oculto */
+[vw-access-button] { opacity: 0 !important; pointer-events: none !important; width: 0 !important; height: 0 !important; overflow: hidden !important; }
