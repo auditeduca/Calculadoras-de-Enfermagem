@@ -354,27 +354,27 @@ document.addEventListener('DOMContentLoaded', () => {
   // Registrar componentes padrão
   window.templateEngine.registerComponent(
     'preload',
-    `${basePath}components/preload.html`,
+    `${basePath}assets/components/preload.html`,
     '#preload-container',
-    { modulePath: `${basePath}js/preload.js` }
+    { modulePath: `${basePath}assets/js/preload.js` }
   );
   window.templateEngine.registerComponent(
     'header',
-    `${basePath}components/header.html`,
+    `${basePath}assets/components/header.html`,
     '#header-container',
-    { modulePath: `${basePath}js/header.js` }
+    { modulePath: `${basePath}assets/js/header.js` }
   );
   window.templateEngine.registerComponent(
     'modals',
-    `${basePath}components/modals.html`,
+    `${basePath}assets/components/modals.html`,
     '#modals-container',
-    { modulePath: `${basePath}js/modals.js` }
+    { modulePath: `${basePath}assets/js/modals.js` }
   );
   window.templateEngine.registerComponent(
     'footer',
-    `${basePath}components/footer.html`,
+    `${basePath}assets/components/footer.html`,
     '#footer-container',
-    { modulePath: `${basePath}js/footer.js` }
+    { modulePath: `${basePath}assets/js/footer.js` }
   );
 });
 
