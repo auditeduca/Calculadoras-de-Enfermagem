@@ -1,480 +1,441 @@
 /**
  * TEMPLATE ENGINE
  * Sistema de Injeção de Componentes Modular
- * Versão: 2.2 - Integração Corrigida
+ * Versão: 3.0 - Integração Completa com Melhorias
  *
+ * Baseado em melhores práticas de sistemas modulares
  * Responsável por:
  * - Carregar e injetar componentes HTML dinamicamente
- * - Gerenciar a ordem de carregamento
+ * - Gerenciar a ordem de carregamento com retry
  * - Sincronizar inicialização dos módulos JS
  * - Disparar eventos globais de lifecycle
  */
 class TemplateEngine {
   constructor() {
-    this.components = new Map();
-    this.loadedComponents = new Set();
-    this.isInitialized = false;
-    this.basePath = '';
-    this.moduleInitializers = new Map();
-    // Callback para quando todos os componentes estiverem carregados
-    this.onReadyCallback = null;
-    // Mapeamento de módulos JS para componentes (sem path fixo - será construído dinamicamente)
-    this.moduleMapping = {
-      'header': { module: 'HeaderEngine', initializer: 'init' },
-      'footer': { module: 'FooterManager', initializer: 'initFooter' },
-      'modals': { module: 'ModalSystem', initializer: 'init' },
-      'preload': { module: 'LoadingScreen', initializer: 'init' }
+    // Configuração de componentes (containerId -> path)
+    this.config = {
+      'preload-container': 'assets/components/preload.html',
+      'header-container': 'assets/components/header.html',
+      'modals-container': 'assets/components/modals.html',
+      'footer-container': 'assets/components/footer.html'
     };
-  }
-
-  /**
-   * Configura o caminho base para os componentes
-   * @param {string} path - Caminho base
-   */
-  setBasePath(path) {
-    this.basePath = path.replace(/\/$/, '');
-  }
-
-  /**
-   * Registra um componente para carregamento
-   * @param {string} name - Nome do componente
-   * @param {string} filePath - Caminho do arquivo HTML
-   * @param {string} targetSelector - Seletor onde injetar
-   * @param {Object} options - Opções adicionais
-   */
-  registerComponent(name, filePath, targetSelector, options = {}) {
-    this.components.set(name, {
-      filePath,
-      targetSelector,
-      loaded: false,
-      ...options
-    });
-    // Registrar módulo JS associado se existir
-    if (options.modulePath && this.moduleMapping[name]) {
-      this.moduleMapping[name].path = options.modulePath;
+    
+    // Mapeamento de módulos JS para componentes
+    this.moduleMapping = {
+      'header-container': { module: 'HeaderEngine', initializer: 'init', jsPath: 'assets/js/header.js' },
+      'modals-container': { module: 'ModalSystem', initializer: 'init', jsPath: 'assets/js/modals.js' },
+      'footer-container': { module: 'FooterManager', initializer: 'initFooter', jsPath: 'assets/js/footer.js' },
+      'preload-container': { module: 'LoadingScreen', initializer: 'init', jsPath: 'assets/js/preload.js' }
+    };
+    
+    this.componentsLoaded = false;
+    this.modulesInitialized = false;
+    this.basePath = '';
+    this.initPromise = null;
+    
+    // Singleton protection
+    if (window.__TEMPLATE_ENGINE_INIT__) {
+      return;
     }
-  }
-
-  /**
-   * Carrega um componente individual via Fetch
-   * @param {string} filePath - Caminho do arquivo
-   * @returns {Promise} HTML do componente
-   */
-  async fetchComponent(filePath) {
-    try {
-      const response = await fetch(filePath);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.text();
-    } catch (error) {
-      console.error(`[TemplateEngine] Erro ao carregar ${filePath}:`, error);
-      return '';
-    }
-  }
-
-  /**
-   * Aguarda até que um elemento exista no DOM
-   * @param {string} selector - Seletor do elemento
-   * @param {number} timeout - Tempo máximo de espera em ms
-   * @returns {Promise<Element>}
-   */
-  async waitForElement(selector, timeout = 5000) {
-    return new Promise((resolve, reject) => {
-      // Verificar se já existe
-      const existingElement = document.querySelector(selector);
-      if (existingElement) {
-        resolve(existingElement);
-        return;
-      }
-
-      // Criar observer para detectar quando o elemento for adicionado
-      const observer = new MutationObserver((mutations) => {
-        const element = document.querySelector(selector);
-        if (element) {
-          observer.disconnect();
-          resolve(element);
-        }
-      });
-
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-
-      // Timeout
-      setTimeout(() => {
-        observer.disconnect();
-        const element = document.querySelector(selector);
-        if (element) {
-          resolve(element);
-        } else {
-          reject(new Error(`Timeout: Elemento ${selector} não encontrado`));
-        }
-      }, timeout);
+    window.__TEMPLATE_ENGINE_INIT__ = true;
+    
+    // Auto-inicialização
+    this.waitForDOM().then(() => {
+      this.init();
     });
   }
 
   /**
-   * Carrega e injeta um componente no DOM com sincronização melhorada
-   * @param {string} name - Nome do componente
-   * @returns {Promise} Sucesso da operação
-   */
-  async loadComponent(name) {
-    const component = this.components.get(name);
-    if (!component) {
-      console.warn(`[TemplateEngine] Componente não registrado: ${name}`);
-      return false;
-    }
-
-    console.log(`[TemplateEngine] Carregando componente: ${name}`);
-
-    // Se já foi carregado, não carregar novamente
-    if (component.loaded) {
-      console.log(`[TemplateEngine] Componente '${name}' já carregado anteriormente`);
-      return true;
-    }
-
-    // Se o componente já tem HTML inline (para desenvolvimento)
-    const inlineElement = document.getElementById(`inline-${name}`);
-    if (inlineElement) {
-      // Aguardar o container existir
-      try {
-        await this.waitForElement(component.targetSelector, 3000);
-      } catch (error) {
-        console.warn(`[TemplateEngine] Container não encontrado para '${name}':`, error.message);
-        return false;
-      }
-
-      const target = document.querySelector(component.targetSelector);
-      target.innerHTML = inlineElement.innerHTML;
-      inlineElement.remove();
-      
-      // Sincronização: Aguardar um tick do navegador para garantir que o DOM foi atualizado
-      await new Promise(resolve => setTimeout(resolve, 0));
-      
-      component.loaded = true;
-      this.loadedComponents.add(name);
-      
-      // Disparar evento específico indicando que este componente está pronto
-      window.dispatchEvent(new CustomEvent(`TemplateEngine:${name}:Ready`, {
-        detail: { 
-          component: name,
-          container: component.targetSelector,
-          timestamp: Date.now()
-        }
-      }));
-      
-      console.log(`[TemplateEngine] Componente '${name}' carregado e pronto`);
-      return true;
-    }
-
-    // Aguardar o container existir antes de carregar via Fetch
-    try {
-      await this.waitForElement(component.targetSelector, 3000);
-    } catch (error) {
-      console.warn(`[TemplateEngine] Container não encontrado para '${name}':`, error.message);
-      return false;
-    }
-
-    // Carregar via Fetch
-    const html = await this.fetchComponent(component.filePath);
-    if (html) {
-      const target = document.querySelector(component.targetSelector);
-      if (!target) {
-        console.warn(`[TemplateEngine] Alvo não encontrado após espera: ${component.targetSelector}`);
-        return false;
-      }
-      
-      target.innerHTML = html;
-      
-      // Sincronização: Aguardar um tick do navegador para garantir que o DOM foi atualizado
-      await new Promise(resolve => setTimeout(resolve, 0));
-      
-      component.loaded = true;
-      this.loadedComponents.add(name);
-      
-      console.log(`[TemplateEngine] Componente '${name}' carregado e pronto`);
-      
-      // Disparar evento específico indicando que este componente está pronto
-      window.dispatchEvent(new CustomEvent(`TemplateEngine:${name}:Ready`, {
-        detail: { 
-          component: name,
-          container: component.targetSelector,
-          timestamp: Date.now()
-        }
-      }));
-      
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Carrega todos os componentes registrados
-   * @param {Object} order - Ordem específica de carregamento
+   * Aguarda o DOM estar pronto
    * @returns {Promise}
    */
-  async loadAll(order = null) {
-    console.log('[TemplateEngine] Iniciando carregamento de componentes...');
-    // Se há uma ordem específica, carregar nessa ordem
-    if (order && order.sequence) {
-      for (const name of order.sequence) {
-        await this.loadComponent(name);
+  waitForDOM() {
+    return new Promise((resolve) => {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', resolve);
+      } else {
+        resolve();
       }
+    });
+  }
+
+  /**
+   * Inicialização principal
+   */
+  async init() {
+    try {
+      console.log('[TemplateEngine] Inicializando sistema...');
+      
+      // Detectar basePath
+      this.detectBasePath();
+      
+      // Atualizar caminhos na config com basePath
+      this.updateConfigPaths();
+      
+      // Carregar componentes com retry
+      await this.loadComponentsWithRetry();
+      
+      // Inicializar módulos JS
+      await this.initializeModules();
+      
+      // Configurar sistemas complementares
+      this.setupScrollToTop();
+      this.highlightActiveMenuItem();
+      
+      // Marcar como pronto e disparar evento
+      this.componentsLoaded = true;
+      this.modulesInitialized = true;
+      document.dispatchEvent(new Event('TemplateEngine:Ready'));
+      
+      // Inicializar conteúdo principal se existir
+      if (typeof window.MainIndexLoader !== 'undefined') {
+        window.MainIndexLoader.load();
+      }
+      
+      console.log('[TemplateEngine] Sistema operacional');
+      
+    } catch (error) {
+      console.error('[TemplateEngine] Erro crítico:', error);
+      this.showCriticalError("Não foi possível carregar partes do site. Verifique sua conexão.");
+    }
+  }
+
+  /**
+   * Detecta o caminho base automaticamente
+   */
+  detectBasePath() {
+    const currentPath = window.location.pathname;
+    
+    if (currentPath.includes('/Calculadoras-de-Enfermagem/')) {
+      this.basePath = '/Calculadoras-de-Enfermagem/';
+    } else if (currentPath.endsWith('/')) {
+      this.basePath = currentPath;
     } else {
-      // Carregar em ordem padrão de prioridade
-      const priorityOrder = ['preload', 'header', 'modals', 'footer'];
-      const regularComponents = [];
-      for (const [name] of this.components) {
-        if (!priorityOrder.includes(name)) {
-          regularComponents.push(name);
-        }
-      }
-      // Carregar na ordem de prioridade
-      for (const name of priorityOrder) {
-        if (this.components.has(name)) {
-          await this.loadComponent(name);
-        }
-      }
-      // Carregar demais componentes
-      for (const name of regularComponents) {
-        await this.loadComponent(name);
-      }
+      this.basePath = './';
     }
-    console.log(`[TemplateEngine] Componentes carregados: ${Array.from(this.loadedComponents).join(', ')}`);
+    
+    console.log(`[TemplateEngine] BasePath: ${this.basePath}`);
   }
 
   /**
-   * Inicializa o módulo JS associado a um componente
-   * @param {string} name - Nome do componente
+   * Atualiza os caminhos na config com o basePath
    */
-  async initializeModule(name) {
-    const mapping = this.moduleMapping[name];
-    if (!mapping) return;
+  updateConfigPaths() {
+    const updatedConfig = {};
+    const updatedModuleMapping = {};
     
-    // Usar o path registrado ou construir a partir do basePath
-    let scriptPath = mapping.path;
-    if (!scriptPath) {
-      // Fallback: construir path baseado no nome do componente
-      scriptPath = `${this.basePath}assets/js/${name}.js`;
+    // Atualizar config de componentes
+    for (const [containerId, path] of Object.entries(this.config)) {
+      updatedConfig[containerId] = `${this.basePath}${path}`;
     }
+    this.config = updatedConfig;
     
-    try {
-      // Carregar script do módulo se ainda não estiver carregado
-      if (!this.isModuleLoaded(mapping.module)) {
-        console.log(`[TemplateEngine] Carregando script: ${scriptPath}`);
-        await this.loadModuleScript(scriptPath);
+    // Atualizar mapping de módulos
+    for (const [containerId, moduleInfo] of Object.entries(this.moduleMapping)) {
+      updatedModuleMapping[containerId] = {
+        ...moduleInfo,
+        jsPath: `${this.basePath}${moduleInfo.jsPath}`
+      };
+    }
+    this.moduleMapping = updatedModuleMapping;
+  }
+
+  /**
+   * Carrega componentes com sistema de retry
+   */
+  async loadComponentsWithRetry() {
+    const maxRetries = 3;
+    let attempt = 0;
+    
+    while (attempt < maxRetries) {
+      try {
+        await this.loadComponents();
+        console.log('[TemplateEngine] Componentes carregados com sucesso');
+        return;
+      } catch (error) {
+        attempt++;
+        console.warn(`[TemplateEngine] Tentativa ${attempt}/${maxRetries} falhou:`, error.message);
         
-        // Sincronização: Aguardar um tick após carregar o JS
-        await new Promise(resolve => setTimeout(resolve, 50));
+        if (attempt >= maxRetries) {
+          throw new Error(`Falha definitiva após ${maxRetries} tentativas`);
+        }
+        
+        // Exponential backoff
+        await new Promise(r => setTimeout(r, 500 * attempt));
       }
-      // Inicializar módulo
-      const moduleObj = window[mapping.module];
-      if (moduleObj && typeof moduleObj[mapping.initializer] === 'function') {
-        moduleObj[mapping.initializer]();
-        console.log(`[TemplateEngine] Módulo ${mapping.module} inicializado`);
-      } else if (moduleObj && typeof moduleObj.init === 'function') {
-        // Fallback para inicializadores com nome diferente
-        moduleObj.init();
-        console.log(`[TemplateEngine] Módulo ${mapping.module} inicializado (via init)`);
-      }
-    } catch (error) {
-      console.error(`[TemplateEngine] Erro ao inicializar módulo ${name}:`, error);
     }
   }
 
   /**
-   * Verifica se um módulo já foi carregado
-   * @param {string} moduleName - Nome do módulo
-   * @returns {boolean}
+   * Carrega todos os componentes configurados
    */
-  isModuleLoaded(moduleName) {
-    return typeof window[moduleName] !== 'undefined';
+  async loadComponents() {
+    const containerIds = Object.keys(this.config);
+    
+    // Verificar se containers existem
+    const missingContainers = containerIds.filter(id => !document.getElementById(id));
+    if (missingContainers.length > 0) {
+      console.warn(`[TemplateEngine] Containers não encontrados: ${missingContainers.join(', ')}`);
+    }
+    
+    // Carregar componentes em paralelo
+    const promises = containerIds
+      .filter(containerId => document.getElementById(containerId))
+      .map(async (containerId) => {
+        const componentPath = this.config[containerId];
+        
+        try {
+          const response = await fetch(componentPath);
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          
+          const html = await response.text();
+          const container = document.getElementById(containerId);
+          
+          if (container) {
+            container.innerHTML = html;
+            
+            // Executar scripts inline do componente
+            this.executeScripts(container);
+            
+            console.log(`[TemplateEngine] Componente ${containerId} carregado`);
+          }
+        } catch (error) {
+          console.error(`[TemplateEngine] Erro ao carregar ${containerId}:`, error.message);
+          throw error;
+        }
+      });
+    
+    await Promise.all(promises);
   }
 
   /**
-   * Carrega um script de módulo dinamicamente
-   * @param {string} scriptPath - Caminho do script
-   * @returns {Promise}
+   * Executa scripts inline após injeção no DOM
    */
-  async loadModuleScript(scriptPath) {
+  executeScripts(container) {
+    const scripts = container.querySelectorAll('script');
+    scripts.forEach(script => {
+      const newScript = document.createElement('script');
+      
+      if (script.src) {
+        newScript.src = script.src;
+        newScript.async = false;
+      } else {
+        newScript.textContent = script.textContent;
+      }
+      
+      // Copiar atributos
+      Array.from(script.attributes).forEach(attr => {
+        if (attr.name !== 'src' && attr.name !== 'textContent') {
+          newScript.setAttribute(attr.name, attr.value);
+        }
+      });
+      
+      // Substituir script original
+      script.parentNode.insertBefore(newScript, script);
+      script.parentNode.removeChild(script);
+    });
+  }
+
+  /**
+   * Inicializa todos os módulos JS
+   */
+  async initializeModules() {
+    console.log('[TemplateEngine] Inicializando módulos JS...');
+    
+    const modulePromises = Object.entries(this.moduleMapping)
+      .filter(([containerId]) => document.getElementById(containerId))
+      .map(async ([containerId, moduleInfo]) => {
+        try {
+          // Verificar se módulo já existe no window
+          if (typeof window[moduleInfo.module] !== 'undefined') {
+            console.log(`[TemplateEngine] Módulo ${moduleInfo.module} já carregado`);
+            return;
+          }
+          
+          // Carregar script
+          await this.loadScript(moduleInfo.jsPath);
+          
+          // Aguardar um tick para o script executar
+          await new Promise(r => setTimeout(r, 50));
+          
+          // Inicializar módulo
+          const moduleObj = window[moduleInfo.module];
+          if (moduleObj && typeof moduleObj[moduleInfo.initializer] === 'function') {
+            moduleObj[moduleInfo.initializer]();
+            console.log(`[TemplateEngine] Módulo ${moduleInfo.module} inicializado`);
+          } else if (moduleObj && typeof moduleObj.init === 'function') {
+            moduleObj.init();
+            console.log(`[TemplateEngine] Módulo ${moduleInfo.module} inicializado (via init)`);
+          }
+        } catch (error) {
+          console.warn(`[TemplateEngine] Erro ao inicializar ${moduleInfo.module}:`, error.message);
+        }
+      });
+    
+    await Promise.all(modulePromises);
+  }
+
+  /**
+   * Carrega um script dinamicamente
+   */
+  loadScript(src) {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
-      script.src = scriptPath;
-      script.async = false; // Carregar de forma síncrona para garantir ordem
-      script.onload = () => resolve();
-      script.onerror = (error) => {
-        console.error(`[TemplateEngine] Erro ao carregar script: ${scriptPath}`, error);
-        reject(new Error(`Falha ao carregar: ${scriptPath}`));
+      script.src = src;
+      script.async = false;
+      
+      script.onload = () => {
+        console.log(`[TemplateEngine] Script carregado: ${src}`);
+        resolve();
       };
+      
+      script.onerror = (error) => {
+        console.error(`[TemplateEngine] Erro ao carregar script: ${src}`);
+        reject(new Error(`Falha ao carregar: ${src}`));
+      };
+      
       document.head.appendChild(script);
     });
   }
 
   /**
-   * Inicializa todos os módulos JS na ordem correta
+   * Configura botão de scroll to top
    */
-  async initializeAllModules() {
-    const moduleOrder = ['header', 'modals', 'footer', 'preload'];
-    console.log('[TemplateEngine] Inicializando módulos JS...');
-    
-    for (const name of moduleOrder) {
-      if (this.components.has(name)) {
-        console.log(`[TemplateEngine] Processando módulo: ${name}`);
-        await this.initializeModule(name);
+  setupScrollToTop() {
+    const checkBtn = setInterval(() => {
+      const btn = document.getElementById('backToTop');
+      if (btn) {
+        clearInterval(checkBtn);
+        
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 300) {
+            btn.classList.remove('hidden');
+          } else {
+            btn.classList.add('hidden');
+          }
+        });
+
+        btn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
       }
-    }
+    }, 100);
+
+    setTimeout(() => clearInterval(checkBtn), 5000);
   }
 
   /**
-   * Verifica se um componente específico foi carregado
-   * @param {string} name - Nome do componente
-   * @returns {boolean}
+   * Destaca o item de menu ativo
    */
-  isComponentLoaded(name) {
-    return this.loadedComponents.has(name);
+  highlightActiveMenuItem() {
+    requestAnimationFrame(() => {
+      const currentPath = window.location.pathname;
+      const pageName = currentPath.split('/').pop() || 'index.html';
+      
+      const navLinks = document.querySelectorAll('header nav a, header .mobile-menu a, #top-bar-links a');
+      
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (!href) return;
+
+        link.classList.remove('active', 'text-yellow-500', 'font-bold');
+        
+        if (href === pageName || (pageName === '' && href === 'index.html') || currentPath.endsWith(href)) {
+          link.classList.add('active', 'text-yellow-500', 'font-bold');
+        }
+      });
+    });
   }
 
   /**
-   * Obtém o status de todos os componentes
-   * @returns {Object}
+   * Exibe erro crítico na tela
    */
-  getStatus() {
-    const status = {};
-    for (const [name, component] of this.components) {
-      status[name] = {
-        loaded: component.loaded,
-        target: component.targetSelector
+  showCriticalError(message) {
+    const div = document.createElement('div');
+    div.className = 'fixed bottom-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded z-50 shadow-lg';
+    div.innerHTML = `<strong class="font-bold">Erro:</strong> <span class="block sm:inline">${message}</span>`;
+    document.body.appendChild(div);
+    
+    // Auto-remover após 10 segundos
+    setTimeout(() => div.remove(), 10000);
+  }
+
+  /**
+   * Adiciona novo componente dinamicamente
+   */
+  registerComponent(containerId, componentPath, moduleInfo = null) {
+    this.config[containerId] = componentPath;
+    
+    if (moduleInfo) {
+      this.moduleMapping[containerId] = {
+        module: moduleInfo.module || containerId,
+        initializer: moduleInfo.initializer || 'init',
+        jsPath: moduleInfo.jsPath || `assets/js/${containerId}.js`
       };
     }
-    return status;
+    
+    console.log(`[TemplateEngine] Componente registrado: ${containerId}`);
   }
 
   /**
-   * Callback quando todos os componentes estiverem prontos
-   * @param {Function} callback - Função de callback
+   * Recarrega um componente específico
    */
-  onReady(callback) {
-    this.onReadyCallback = callback;
-    // Se já estiver inicializado, chamar imediatamente
-    if (this.isInitialized) {
-      callback();
+  async reloadComponent(containerId) {
+    if (!this.config[containerId]) {
+      console.warn(`[TemplateEngine] Componente não registrado: ${containerId}`);
+      return false;
     }
-  }
-
-  /**
-   * Finaliza a inicialização e dispara eventos
-   */
-  markAsReady() {
-    this.isInitialized = true;
-    console.log('[TemplateEngine] Todos os componentes estão prontos');
-    // Disparar evento global
-    window.dispatchEvent(new CustomEvent('TemplateEngine:Ready'));
-    // Chamar callback se existir
-    if (this.onReadyCallback) {
-      this.onReadyCallback();
-    }
-  }
-
-  /**
-   * Remove um componente do DOM e da memória
-   * @param {string} name - Nome do componente
-   */
-  unloadComponent(name) {
-    const component = this.components.get(name);
-    if (component && component.loaded) {
-      const target = document.querySelector(component.targetSelector);
-      if (target) {
-        target.innerHTML = '';
+    
+    try {
+      const response = await fetch(this.config[containerId]);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      
+      const html = await response.text();
+      const container = document.getElementById(containerId);
+      
+      if (container) {
+        container.innerHTML = html;
+        this.executeScripts(container);
+        console.log(`[TemplateEngine] Componente ${containerId} recarregado`);
+        return true;
       }
-      component.loaded = false;
-      this.loadedComponents.delete(name);
-      console.log(`[TemplateEngine] Componente descarregado: ${name}`);
+    } catch (error) {
+      console.error(`[TemplateEngine] Erro ao recarregar ${containerId}:`, error.message);
     }
+    
+    return false;
+  }
+
+  /**
+   * Verifica status de carregamento
+   */
+  getStatus() {
+    return {
+      loaded: this.componentsLoaded,
+      modulesInitialized: this.modulesInitialized,
+      basePath: this.basePath,
+      components: Object.keys(this.config),
+      containers: Object.keys(this.config).filter(id => document.getElementById(id))
+    };
   }
 }
 
-// Instância global do Template Engine
-window.templateEngine = new TemplateEngine();
-
-// Função helper para carregamento simplificado
-async function loadTemplates() {
-  await window.templateEngine.loadAll();
-}
-
-// Função helper para inicializar módulos
-async function initializeModules() {
-  await window.templateEngine.initializeAllModules();
-}
-
-// Função principal de inicialização completa
-async function initializeSite() {
-  console.log('[TemplateEngine] Inicializando site...');
+// Inicialização singleton
+if (!window.__TEMPLATE_ENGINE_GLOBAL_INIT__) {
+  window.__TEMPLATE_ENGINE_GLOBAL_INIT__ = true;
   
-  // 1. Aguardar containers existirem no DOM
-  await new Promise(resolve => setTimeout(resolve, 100));
+  const initEngine = () => {
+    window.templateEngine = new TemplateEngine();
+  };
   
-  // 2. Carregar todos os componentes
-  await window.templateEngine.loadAll();
-  
-  // 3. Inicializar módulos JS
-  await window.templateEngine.initializeAllModules();
-  
-  // 4. Marcar como pronto
-  window.templateEngine.markAsReady();
-  
-  // 5. Inicializar conteúdo principal se existir
-  if (typeof window.MainIndexLoader !== 'undefined') {
-    window.MainIndexLoader.load();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initEngine);
+  } else {
+    initEngine();
   }
-  
-  console.log('[TemplateEngine] Site inicializado com sucesso');
 }
-
-// Configuração padrão de componentes
-document.addEventListener('DOMContentLoaded', () => {
-  // Configurar caminhos base
-  const currentPath = window.location.pathname;
-  let basePath = './';
-  
-  if (currentPath.includes('/Calculadoras-de-Enfermagem/')) {
-    basePath = '/Calculadoras-de-Enfermagem/';
-  } else if (currentPath.endsWith('/')) {
-    basePath = currentPath;
-  }
-  
-  window.templateEngine.setBasePath(basePath);
-  console.log(`[TemplateEngine] BasePath configurado: ${basePath}`);
-
-  // Registrar componentes padrão
-  window.templateEngine.registerComponent(
-    'preload',
-    `${basePath}assets/components/preload.html`,
-    '#preload-container',
-    { modulePath: `${basePath}assets/js/preload.js` }
-  );
-  window.templateEngine.registerComponent(
-    'header',
-    `${basePath}assets/components/header.html`,
-    '#header-container',
-    { modulePath: `${basePath}assets/js/header.js` }
-  );
-  window.templateEngine.registerComponent(
-    'modals',
-    `${basePath}assets/components/modals.html`,
-    '#modals-container',
-    { modulePath: `${basePath}assets/js/modals.js` }
-  );
-  window.templateEngine.registerComponent(
-    'footer',
-    `${basePath}assets/components/footer.html`,
-    '#footer-container',
-    { modulePath: `${basePath}assets/js/footer.js` }
-  );
-  
-  console.log('[TemplateEngine] Componentes registrados:', Array.from(window.templateEngine.components.keys()).join(', '));
-});
 
 // Exportar para uso em outros scripts
 if (typeof module !== 'undefined' && module.exports) {
