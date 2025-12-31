@@ -1,5 +1,6 @@
-const AccessControl={state:{fontSize:0,fontFamily:0,letterSpacing:0,readingMask:0,isTTSActive:!1,contrast:0,theme:"system"},elements:{},ThemeManager:{keys:{theme:"nursing_calc_theme",systemPreference:"nursing_calc_system_theme"},detectSystemTheme(){return window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"},getTheme(){const e=localStorage.getItem(this.keys.theme);if(e)return e;const t=this.detectSystemTheme();return localStorage.setItem(this.keys.systemTheme,t),"system"},applyTheme(e){const t=document.body;e==="dark"||e==="system"&&this.detectSystemTheme()==="dark"?t.classList.add("dark-theme"):t.classList.remove("dark-theme"),localStorage.setItem(this.keys.theme,e),this.state.theme=e},toggleTheme(){const t=this.getTheme()==="dark"?"light":"dark";return this.applyTheme(t),window.dispatchEvent(new CustomEvent("Theme:Changed",{detail:{theme:t}})),t},init(){const e=this.getTheme();this.applyTheme(e),window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",t=>{localStorage.getItem(this.keys.theme)==="system"&&this.applyTheme("system")})},resetToSystem(){localStorage.removeItem(this.keys.theme),this.applyTheme("system")}},init(){this.ThemeManager.init(),this.ensureElements(),this.elements.panel&&(this.setupDeferredInit(),this.setupObservers(),this.setupGlobalEvents(),this.loadSavedState())},ensureElements(){return this.elements.panel&&this.elements.sideWidgets?!0:(this.elements={body:document.body,panel:document.getElementById("accessibility-panel"),sideWidgets:document.getElementById("side-widgets"),closeBtn:document.getElementById("close-panel-btn"),openBtn:document.getElementById("accessibility-btn"),themeToggleBtn:document.getElementById("theme-toggle-btn"),themeIcon:document.getElementById("theme-icon")},!!this.elements.panel)},setupDeferredInit(){let e=0;const t=()=>{e++,window.lucide&&typeof window.lucide.createIcons=="function"?window.lucide.createIcons():e<10&&setTimeout(t,100)};t();const s=setInterval(()=>{window.VLibras&&window.VLibras.Widget&&(clearInterval(s),new window.VLibras.Widget("https://vlibras.gov.br/app"))},200);setTimeout(()=>clearInterval(s),1e4)},loadSavedState(){const e=localStorage.getItem("accessControlState");if(e)try{const t=JSON.parse(e);t.fontSize&&t.fontSize!==0&&document.documentElement.style.setProperty("--font-scale",t.fontSize),t.contrast&&t.contrast;const s=this.ThemeManager.getTheme();this.updateThemeIcon(s)}catch{}},saveState(){const e={fontSize:this.state.fontSize>0?["","1.2","1.5","2.0"][this.state.fontSize]:0,contrast:this.state.contrast>0?["","contrast-dark","contrast-inverted"][this.state.contrast]:0,theme:this.state.theme};localStorage.setItem("accessControlState",JSON.stringify(e))},setupObservers(){new MutationObserver(t=>{t.forEach(s=>{if(s.attributeName==="class"){const i=document.body.classList;(i.contains("modal-open")||i.contains("mobile-menu-open")||i.contains("overflow-hidden"))&&(this.isPanelClosed()||this.closePanel())}})}).observe(document.body,{attributes:!0})},setupGlobalEvents(){document.addEventListener("keydown",e=>{e.key==="Escape"&&this.closePanel()}),document.addEventListener("click",e=>{this.ensureElements()&&!this.isPanelClosed()&&this.elements.panel&&this.elements.panel.contains(e.target)===!1&&this.elements.sideWidgets&&this.elements.sideWidgets.contains(e.target)===!1&&this.closePanel()})},isPanelClosed(){return!this.ensureElements()||!this.elements.panel?!0:this.elements.panel.classList.contains("accessibility-panel-hidden")},togglePanel(){this.ensureElements()&&(this.isPanelClosed()?this.openPanel():this.closePanel())},openPanel(){!this.ensureElements()||!this.elements.panel||(this.elements.panel.classList.remove("accessibility-panel-hidden"),this.elements.sideWidgets&&this.elements.sideWidgets.classList.add("side-widgets-hidden"),this.hideFloatingButtons(),setTimeout(()=>{this.elements.closeBtn&&this.elements.closeBtn.focus()},100))},closePanel(){!this.ensureElements()||!this.elements.panel||this.isPanelClosed()||(this.elements.panel.classList.add("accessibility-panel-hidden"),this.elements.sideWidgets&&this.elements.sideWidgets.classList.remove("side-widgets-hidden"),this.showFloatingButtons(),this.elements.openBtn&&this.elements.openBtn.focus())},toggleMaximize(){!this.ensureElements()||!this.elements.panel||this.elements.panel.classList.toggle("panel-expanded")},toggleTheme(){const e=this.ThemeManager.toggleTheme();this.updateThemeIcon(e),this.saveState()},updateThemeIcon(e){if(!this.ensureElements())return;const t=this.elements.themeIcon;t&&(e==="dark"||e==="system"&&this.ThemeManager.detectSystemTheme()==="dark"?(t.className="fas fa-sun",t.setAttribute("aria-label","Alternar para modo claro")):(t.className="fas fa-moon",t.setAttribute("aria-label","Alternar para modo escuro")))},hideFloatingButtons(){const e=document.getElementById("cookie-fab"),t=document.getElementById("backToTop");e&&(e.style.display="none"),t&&(t.style.display="none")},showFloatingButtons(){const e=document.getElementById("cookie-fab"),t=document.getElementById("backToTop");e&&(e.style.display="flex"),t&&(t.style.display="flex")},toggleLibrasWidget(){const e=document.querySelector("[vw-access-button]");e&&e.click()},toggleSimple(e,t){this.ensureElements()&&(this.elements.body.classList.toggle(e),t&&(t.classList.toggle("active"),this.updateDots(t)))},cycleFeature(e,t,s){if(!this.ensureElements())return;this.state[e]=(this.state[e]+1)%(t.length+1);const i=this.state[e]-1,n=t[i],o=s?s.querySelector(".level-badge"):null;if(e==="fontFamily"&&this.elements.body.classList.remove("font-atkinson","font-newsreader","font-dyslexic"),e==="contrast"&&this.elements.body.classList.remove("contrast-dark","contrast-inverted"),i===-1)s&&s.classList.remove("active"),o&&(o.style.display="none"),s&&this.resetDots(s),e==="fontSize"&&document.documentElement.style.setProperty("--font-scale","1"),e==="letterSpacing"&&document.documentElement.style.setProperty("--letter-spacing","normal"),e==="readingMask"&&this.toggleReadingMask(!1);else{s&&s.classList.add("active"),this.updateDots(s,this.state[e]);let a=n;e==="fontSize"&&(a=parseFloat(n)*100+"%"),e==="fontFamily"&&(a={atkinson:"Leg\xEDvel",newsreader:"Not\xEDcia",dyslexic:"Dislexia"}[n]),e==="contrast"&&(a={"contrast-dark":"Escuro","contrast-inverted":"Invertido"}[n]),o&&(o.textContent=a,o.style.display="block"),e==="fontSize"&&document.documentElement.style.setProperty("--font-scale",n),e==="letterSpacing"&&document.documentElement.style.setProperty("--letter-spacing",n),e==="fontFamily"&&this.elements.body.classList.add("font-"+n),e==="readingMask"&&this.toggleReadingMask(!0,n),e==="contrast"&&this.elements.body.classList.add(n)}this.saveState()},toggleReadingMask(e,t){const s=document.getElementById("reading-mask-top"),i=document.getElementById("reading-mask-bottom");if(!(!s||!i))if(s.style.display=e?"block":"none",i.style.display=e?"block":"none",e){const n=t==="sm"?60:t==="md"?120:200;window.onmousemove=o=>{const a=o.clientY;s.style.height=a-n/2+"px",i.style.top=a+n/2+"px",i.style.bottom="0"}}else window.onmousemove=null},toggleTTS(e){this.ensureElements()&&(this.state.isTTSActive=!this.state.isTTSActive,e&&(e.classList.toggle("active"),this.updateDots(e,this.state.isTTSActive?1:0)),this.state.isTTSActive?(this.elements.body.style.cursor="help",document.onmouseup=()=>{const t=window.getSelection().toString();if(t){window.speechSynthesis.cancel();const s=new SpeechSynthesisUtterance(t);s.lang="pt-BR",window.speechSynthesis.speak(s)}}):(this.elements.body.style.cursor="default",document.onmouseup=null,window.speechSynthesis.cancel()))},resetAll(){this.ensureElements(),Object.keys(this.state).forEach(s=>this.state[s]=0),document.documentElement.style.setProperty("--font-scale","1"),document.documentElement.style.setProperty("--letter-spacing","normal"),this.ThemeManager.resetToSystem(),this.updateThemeIcon(this.ThemeManager.getTheme()),this.elements.body&&(this.elements.body.classList.remove("contrast-dark","contrast-inverted","highlight-links","highlight-headers","bold-text","stop-anim","font-atkinson","font-newsreader","font-dyslexic","hide-images","structure"),this.elements.body.style.cursor="default"),this.toggleReadingMask(!1),window.speechSynthesis.cancel(),document.querySelectorAll(".accessibility-card").forEach(s=>{s.classList.remove("active"),this.resetDots(s);const i=s.querySelector(".level-badge");i&&(i.style.display="none")}),localStorage.removeItem("accessControlState"),window.dispatchEvent(new CustomEvent("Accessibility:Reset"));const t=document.querySelector('button[onclick="resetAllFeatures()"]');if(t){const s=t.innerHTML;t.innerHTML='<i class="fas fa-check" aria-hidden="true"></i> Restaurado!',window.lucide&&typeof window.lucide.createIcons=="function"&&window.lucide.createIcons(),setTimeout(()=>{t.innerHTML=s,window.lucide&&typeof window.lucide.createIcons=="function"&&window.lucide.createIcons()},1500)}},updateDots(e,t=1){if(!e)return;e.querySelectorAll(".dot").forEach((i,n)=>{n<t?i.classList.add("active"):i.classList.remove("active")})},resetDots(e){e&&e.querySelectorAll(".dot").forEach(t=>t.classList.remove("active"))}};window.toggleAccessibilityPanel=()=>AccessControl.togglePanel(),window.toggleMaximizePanel=()=>AccessControl.toggleMaximize(),window.toggleLibras=()=>{typeof toggleLibras=="function"&&toggleLibras()},window.toggleSimpleFeature=(e,t)=>AccessControl.toggleSimple(e,t),window.cycleFeature=(e,t,s)=>AccessControl.cycleFeature(e,t,s),window.toggleTTS=e=>AccessControl.toggleTTS(e),window.toggleThemeMode=()=>AccessControl.toggleTheme(),window.resetAllFeatures=()=>AccessControl.resetAll(),document.addEventListener("DOMContentLoaded",()=>{setTimeout(()=>{AccessControl.init()},50)});
-const AccessControl = {
+// Verifica se AccessControl já existe para evitar erro de redeclaração
+// Se já existir, usamos a instância atual. Se não, criamos o objeto.
+window.AccessControl = window.AccessControl || {
     state: {
         fontSize: 0,
         fontFamily: 0,
@@ -40,7 +41,10 @@ const AccessControl = {
                 body.classList.remove("dark-theme");
             }
             localStorage.setItem(this.keys.theme, theme);
-            AccessControl.state.theme = theme;
+            // Atualiza o estado global se AccessControl já estiver definido
+            if(window.AccessControl && window.AccessControl.state) {
+                 window.AccessControl.state.theme = theme;
+            }
         },
 
         toggleTheme() {
@@ -89,7 +93,8 @@ const AccessControl = {
     },
 
     ensureElements() {
-        if (this.elements.panel && this.elements.sideWidgets) return true;
+        // Se já temos os elementos cacheados e eles ainda estão no DOM, retorna true
+        if (this.elements.panel && document.body.contains(this.elements.panel)) return true;
 
         this.elements = {
             body: document.body,
@@ -105,6 +110,9 @@ const AccessControl = {
     },
 
     setupDeferredInit() {
+        // Evita re-inicialização de listeners se já foram configurados
+        if(this.state._deferredInitDone) return;
+
         // Inicializa ícones Lucide
         let attempts = 0;
         const initIcons = () => {
@@ -121,12 +129,15 @@ const AccessControl = {
         const vLibrasInterval = setInterval(() => {
             if (window.VLibras && window.VLibras.Widget) {
                 clearInterval(vLibrasInterval);
-                new window.VLibras.Widget("https://vlibras.gov.br/app");
+                // Verifica se o widget já não existe no DOM antes de criar
+                if(!document.querySelector('[vw]')) {
+                    new window.VLibras.Widget("https://vlibras.gov.br/app");
+                }
             }
         }, 200);
 
-        // Timeout de segurança para parar de tentar carregar VLibras
         setTimeout(() => clearInterval(vLibrasInterval), 10000);
+        this.state._deferredInitDone = true;
     },
 
     loadSavedState() {
@@ -138,6 +149,7 @@ const AccessControl = {
                 // Restaura Font Size
                 if (state.fontSize && state.fontSize !== 0) {
                     document.documentElement.style.setProperty("--font-scale", state.fontSize);
+                    this.state.fontSize = state.fontSize;
                 }
                 
                 // Atualiza ícone do tema
@@ -152,14 +164,16 @@ const AccessControl = {
 
     saveState() {
         const stateToSave = {
-            fontSize: this.state.fontSize > 0 ? ["", "1.2", "1.5", "2.0"][this.state.fontSize] : 0,
-            contrast: this.state.contrast > 0 ? ["", "contrast-dark", "contrast-inverted"][this.state.contrast] : 0,
+            fontSize: this.state.fontSize,
+            contrast: this.state.contrast,
             theme: this.state.theme
         };
         localStorage.setItem("accessControlState", JSON.stringify(stateToSave));
     },
 
     setupObservers() {
+        if(this.state._observersSet) return;
+
         // Observa mudanças de classe no body para garantir que o painel feche se outros modais abrirem
         new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
@@ -175,9 +189,13 @@ const AccessControl = {
                 }
             });
         }).observe(document.body, { attributes: true });
+        
+        this.state._observersSet = true;
     },
 
     setupGlobalEvents() {
+        if(this.state._eventsSet) return;
+
         // Fecha com ESC
         document.addEventListener("keydown", (e) => {
             if (e.key === "Escape") this.closePanel();
@@ -186,12 +204,18 @@ const AccessControl = {
         // Fecha ao clicar fora
         document.addEventListener("click", (e) => {
             if (this.ensureElements() && !this.isPanelClosed()) {
-                if (this.elements.panel && !this.elements.panel.contains(e.target) &&
-                    this.elements.sideWidgets && !this.elements.sideWidgets.contains(e.target)) {
+                // Verifica se o clique não foi dentro do painel e nem no botão de abrir
+                const clickedInPanel = this.elements.panel.contains(e.target);
+                const clickedInOpenBtn = this.elements.openBtn && this.elements.openBtn.contains(e.target);
+                const clickedInSideWidgets = this.elements.sideWidgets && this.elements.sideWidgets.contains(e.target);
+
+                if (!clickedInPanel && !clickedInOpenBtn && !clickedInSideWidgets) {
                     this.closePanel();
                 }
             }
         });
+        
+        this.state._eventsSet = true;
     },
 
     isPanelClosed() {
@@ -279,6 +303,8 @@ const AccessControl = {
         const widgetBtn = document.querySelector("[vw-access-button]");
         if (widgetBtn) {
             widgetBtn.click();
+        } else {
+            console.warn("VLibras widget não encontrado ou ainda não carregado.");
         }
     },
 
@@ -408,7 +434,10 @@ const AccessControl = {
         this.ensureElements();
         
         // Reseta estados internos
-        Object.keys(this.state).forEach(key => this.state[key] = 0);
+        Object.keys(this.state).forEach(key => {
+            if(key !== "theme") this.state[key] = 0; // Mantém tema para não piscar
+        });
+        this.state.isTTSActive = false;
         
         // Reseta CSS Vars
         document.documentElement.style.setProperty("--font-scale", "1");
@@ -478,26 +507,25 @@ const AccessControl = {
 };
 
 // ============================================================
-// EXPORTAÇÃO GLOBAL DE FUNÇÕES
+// EXPORTAÇÃO GLOBAL DE FUNÇÕES (Seguro para redeclaração)
 // ============================================================
-// Estas funções são chamadas pelo HTML (onclick="...")
-// ============================================================
+// Usamos a atribuição direta para garantir que se o script rodar 2x,
+// ele apenas re-atribui a mesma função, sem erro de SyntaxError.
 
-window.toggleAccessibilityPanel = () => AccessControl.togglePanel();
-window.toggleMaximizePanel = () => AccessControl.toggleMaximize();
+window.toggleAccessibilityPanel = () => window.AccessControl.togglePanel();
+window.toggleMaximizePanel = () => window.AccessControl.toggleMaximize();
+window.toggleLibras = () => window.AccessControl.toggleLibrasWidget(); 
+window.toggleSimpleFeature = (cls, el) => window.AccessControl.toggleSimple(cls, el);
+window.cycleFeature = (feat, vals, el) => window.AccessControl.cycleFeature(feat, vals, el);
+window.toggleTTS = (el) => window.AccessControl.toggleTTS(el);
+window.toggleThemeMode = () => window.AccessControl.toggleTheme();
+window.resetAllFeatures = () => window.AccessControl.resetAll();
 
-// CORREÇÃO AQUI: Aponta para a função correta no objeto, evitando recursividade
-window.toggleLibras = () => AccessControl.toggleLibrasWidget(); 
-
-window.toggleSimpleFeature = (cls, el) => AccessControl.toggleSimple(cls, el);
-window.cycleFeature = (feat, vals, el) => AccessControl.cycleFeature(feat, vals, el);
-window.toggleTTS = (el) => AccessControl.toggleTTS(el);
-window.toggleThemeMode = () => AccessControl.toggleTheme();
-window.resetAllFeatures = () => AccessControl.resetAll();
-
-// Inicialização
-document.addEventListener("DOMContentLoaded", () => {
-    setTimeout(() => {
-        AccessControl.init();
-    }, 50);
-});
+// Inicialização segura
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(() => window.AccessControl.init(), 50);
+    });
+} else {
+    setTimeout(() => window.AccessControl.init(), 50);
+}
