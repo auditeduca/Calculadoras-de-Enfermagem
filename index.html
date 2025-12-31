@@ -21,10 +21,13 @@
     <link rel="icon" href="https://www.calculadorasdeenfermagem.com.br/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="https://www.calculadorasdeenfermagem.com.br/favicon.ico" type="image/x-icon">
 
-    <!-- 3. CSS - Carregamento Otimizado -->
+    <!-- 3. CSS e Bibliotecas Críticas -->
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <!-- Three.js (Adicionado para corrigir 'THREE is not defined' no preload.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Tailwind CSS (Removido 'defer' para corrigir 'tailwind is not defined') -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: { extend: { colors: { primary: '#1A3E74', accent: '#1e40af' } } }
@@ -75,7 +78,7 @@
     <!-- Carregamento CSS Não-Crítico -->
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/whitespace-fix.css" media="print" onload="this.media='all'">
+    
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/mega-menu-final.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css" media="print" onload="this.media='all'">
@@ -122,7 +125,6 @@
     <header id="header-container" class="relative z-50"></header>
 
     <!-- Conteúdo Principal -->
-    <!-- ADICIONADO: Classes 'container mx-auto px-4' para centralizar o conteúdo injetado e evitar colagem nas bordas -->
     <main id="main-container" class="container mx-auto px-4 min-h-screen pt-4 md:pt-6 pb-12">
         <div id="main-content-placeholder" class="content-placeholder">
             <div class="text-center">
@@ -144,7 +146,6 @@
                 { id: 'accessibility-container', url: 'assets/components/accessibility.html' },
                 { id: 'header-container', url: 'assets/components/header.html' },
                 { id: 'footer-container', url: 'assets/components/footer.html' },
-                // O arquivo main-index.html DEVE conter as seções e os grids (#calculadoras-grid, etc.)
                 { id: 'main-container', url: 'assets/pages/main-index.html' }
             ],
             scripts: [
