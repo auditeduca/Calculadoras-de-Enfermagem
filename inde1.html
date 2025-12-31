@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-PT" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuditEduca - Calculadoras de Enfermagem</title>
+    
+    <!-- Meta Tags e Favicon -->
+    <meta name="description" content="Integração inteligente de dados clínicos e calculadoras de enfermagem com interface neural.">
+    <link rel="icon" type="image/webp" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
+
+    <!-- Estilos Externos -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/mega-menu-final.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main-index.css">
+
+    <!-- Frameworks -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body { margin: 0; background-color: #ffffff; overflow-x: hidden; font-family: 'Inter', sans-serif; }
+        
+        /* Container do Fundo 3D */
+        #canvas-container { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            z-index: 1; 
+            cursor: grab;
+            background: radial-gradient(circle at 70% 30%, rgba(0, 188, 212, 0.08) 0%, rgba(255, 255, 255, 0) 60%);
+        }
+        
+        /* Camada de UI sobre o 3D */
+        .shell-layer { position: relative; z-index: 10; pointer-events: none; }
+        .interactive-element { pointer-events: auto; }
+
+        /* Animações GSAP */
+        .mask-container { overflow: hidden; display: block; }
+        .mask-content { display: block; transform: translateY(115%); }
+        .reveal-fade { opacity: 0; transform: translateY(30px); filter: blur(8px); }
+
+        /* Loader */
+        #main-loader {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            transition: opacity 0.6s ease;
+        }
+
+        .leaf-frame {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            transition: all 0.8s ease;
+        }
+        .leaf-frame:hover {
+            border-radius: 30% 70% 60% 40% / 70% 60% 30% 40%;
+        }
+    </style>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body class="antialiased">
+
+    <!-- Loader -->
+    <div id="main-loader">
+        <div class="flex flex-col items-center gap-4">
+            <div class="w-12 h-12 border-4 border-blue-50 border-t-[#00bcd4] rounded-full animate-spin"></div>
+            <p class="text-[#1A3E74] font-black text-[10px] uppercase tracking-[0.3em]">AuditEduca Neural Network</p>
+        </div>
+    </div>
+
+    <!-- Background 3D -->
+    <div id="canvas-container"></div>
+
+    <div class="shell-layer">
+        
+        <!-- Componentes Dinâmicos (Header e Acessibilidade) -->
+        <div id="accessibility-container" class="interactive-element"></div>
+        <header id="header-container" class="interactive-element"></header>
+        
+        <!-- NOVO HERO 3D (Substitui o main-index.html antigo) -->
+        <main id="hero-main" class="interactive-element min-h-screen flex items-center">
+            <div class="container mx-auto px-6 lg:px-12 py-20">
+                <div class="flex flex-col lg:flex-row items-center gap-16">
+                    
+                    <!-- Texto do Hero -->
+                    <div class="w-full lg:w-3/5">
+                        <div class="reveal-fade inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-[#1A3E74]/10 bg-white/60 mb-8 backdrop-blur-xl">
+                            <span class="w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse"></span>
+                            <span class="text-[#1A3E74] text-[10px] font-black uppercase tracking-[0.2em]">Tecnologia & Cuidado</span>
+                        </div>
+                        
+                        <h1 class="text-[#1A3E74] text-6xl lg:text-8xl font-black leading-[0.9] mb-8 tracking-tighter">
+                            <span class="mask-container">
+                                <span class="mask-content">Raciocínio</span>
+                            </span>
+                            <span class="mask-container">
+                                <span class="mask-content text-[#00bcd4]">Clínico</span>
+                            </span>
+                        </h1>
+                        
+                        <p class="reveal-fade text-gray-500 text-lg lg:text-xl max-w-xl font-light leading-relaxed border-l-4 border-[#00bcd4]/30 pl-6 mb-12">
+                            A evolução da prática assistencial através de dados. Acesse calculadoras validadas e ferramentas de decisão clínica integradas em uma interface neural.
+                        </p>
+
+                        <div class="reveal-fade flex flex-wrap gap-5 mb-16">
+                            <button class="px-10 py-5 bg-[#1A3E74] text-white rounded-2xl font-bold shadow-2xl shadow-[#1A3E74]/20 hover:scale-105 transition-transform flex items-center gap-3">
+                                <i data-lucide="zap" class="w-5 h-5"></i>
+                                Iniciar Consulta
+                            </button>
+                            <button class="px-10 py-5 bg-white border border-gray-200 text-[#1A3E74] rounded-2xl font-bold hover:bg-gray-50 transition-all flex items-center gap-3">
+                                <i data-lucide="layers" class="w-5 h-5"></i>
+                                Explorar Escalas
+                            </button>
+                        </div>
+
+                        <!-- Cards de Profissionais -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                            <div class="reveal-fade flex items-center gap-4 group">
+                                <div class="w-16 h-16 leaf-frame bg-[#00bcd4]/10 overflow-hidden border-2 border-white shadow-xl">
+                                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover" alt="Saúde">
+                                </div>
+                                <div>
+                                    <p class="text-[#1A3E74] text-[11px] font-black uppercase tracking-wider mb-1">Precisão</p>
+                                    <p class="text-gray-400 text-[11px]">Cálculos baseados em protocolos internacionais.</p>
+                                </div>
+                            </div>
+                            <div class="reveal-fade flex items-center gap-4 group">
+                                <div class="w-16 h-16 leaf-frame bg-[#1A3E74]/10 overflow-hidden border-2 border-white shadow-xl">
+                                    <img src="https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover" alt="Enfermagem">
+                                </div>
+                                <div>
+                                    <p class="text-[#1A3E74] text-[11px] font-black uppercase tracking-wider mb-1">Segurança</p>
+                                    <p class="text-gray-400 text-[11px]">Redução de erros na prática assistencial.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Espaço reservado para o modelo 3D à direita -->
+                    <div class="w-full lg:w-2/5 h-[400px] lg:h-[600px] pointer-events-none"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer id="footer-container" class="interactive-element"></footer>
+    </div>
+
+    <!-- Scripts de Injeção Modular -->
+    <script>
+        const components = [
+            { id: 'accessibility-container', url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility.html' },
+            { id: 'header-container', url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header.html' },
+            { id: 'footer-container', url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer.html' }
+        ];
+
+        async function initApp() {
+            await Promise.all(components.map(async comp => {
+                try {
+                    const response = await fetch(comp.url);
+                    if (response.ok) {
+                        const html = await response.text();
+                        document.getElementById(comp.id).innerHTML = html;
+                    }
+                } catch (err) { console.error(`Erro: ${comp.id}`, err); }
+            }));
+
+            if (window.lucide) lucide.createIcons();
+            
+            // Remove loader e inicia animações
+            const loader = document.getElementById('main-loader');
+            if(loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.remove();
+                    startGSAP();
+                }, 600);
+            }
+        }
+
+        function startGSAP() {
+            const tl = gsap.timeline();
+            tl.to(".mask-content", { y: "0%", duration: 1.4, stagger: 0.2, ease: "expo.out" });
+            tl.to(".reveal-fade", { opacity: 1, y: 0, filter: "blur(0px)", duration: 1, stagger: 0.1, ease: "power2.out" }, "-=1");
+        }
+
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+
+    <!-- JS Externos -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main.js"></script>
+
+    <!-- LOGICA 3D PREMIUM -->
+    <script type="module">
+        import * as THREE from 'three';
+        import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+        import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        let scene, camera, renderer, model, controls, neuralGroup, pointsMesh, linesMesh;
+        const MAX_POINTS = 140;
+        const points = [];
+        const CONNECT_DISTANCE = 4.8;
+
+        const ASSETS = {
+            base: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/animation/',
+            mtl: 'Health_Calculator_0815105642_texture.mtl',
+            obj: 'Health_Calculator_0815105642_texture.obj'
+        };
+
+        function init3D() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 0, 16);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.2;
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.5;
+            controls.enableZoom = false;
+
+            scene.add(new THREE.AmbientLight(0xffffff, 1.5));
+            const spotlight = new THREE.SpotLight(0x00bcd4, 10);
+            spotlight.position.set(5, 10, 5);
+            scene.add(spotlight);
+
+            createNeuralNetwork();
+            loadCalculator();
+            animate();
+        }
+
+        function createNeuralNetwork() {
+            neuralGroup = new THREE.Group();
+            const positions = new Float32Array(MAX_POINTS * 3);
+            for (let i = 0; i < MAX_POINTS; i++) {
+                const x = (Math.random() - 0.5) * 22;
+                const y = (Math.random() - 0.5) * 22;
+                const z = (Math.random() - 0.5) * 15;
+                positions[i*3] = x; positions[i*3+1] = y; positions[i*3+2] = z;
+                points.push({ 
+                    pos: new THREE.Vector3(x,y,z), 
+                    vel: new THREE.Vector3((Math.random()-0.5)*0.008, (Math.random()-0.5)*0.008, (Math.random()-0.5)*0.008)
+                });
+            }
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            pointsMesh = new THREE.Points(geometry, new THREE.PointsMaterial({ color: 0x00bcd4, size: 0.08, transparent: true, opacity: 0.4 }));
+            neuralGroup.add(pointsMesh);
+
+            linesMesh = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: 0x1A3E74, transparent: true, opacity: 0.07 }));
+            neuralGroup.add(linesMesh);
+            scene.add(neuralGroup);
+        }
+
+        function loadCalculator() {
+            const mtlLoader = new MTLLoader();
+            mtlLoader.setPath(ASSETS.base).load(ASSETS.mtl, (materials) => {
+                materials.preload();
+                new OBJLoader().setMaterials(materials).load(ASSETS.base + ASSETS.obj, (object) => {
+                    model = object;
+                    const box = new THREE.Box3().setFromObject(model);
+                    model.position.sub(box.getCenter(new THREE.Vector3()));
+                    
+                    // Posicionamento estratégico à direita no desktop
+                    if(window.innerWidth > 1024) {
+                        model.position.x = 4.2; 
+                        model.scale.set(1.7, 1.7, 1.7);
+                    } else {
+                        model.position.y = -1.5;
+                        model.scale.set(1.1, 1.1, 1.1);
+                    }
+                    scene.add(model);
+                    gsap.from(model.scale, { x: 0, y: 0, z: 0, duration: 2, ease: "back.out(1.2)" });
+                });
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if(neuralGroup) {
+                neuralGroup.rotation.y += 0.0004;
+                const positions = pointsMesh.geometry.attributes.position.array;
+                const linePos = [];
+                for (let i = 0; i < MAX_POINTS; i++) {
+                    const p = points[i];
+                    p.pos.add(p.vel);
+                    if (Math.abs(p.pos.x) > 11) p.vel.x *= -1;
+                    if (Math.abs(p.pos.y) > 11) p.vel.y *= -1;
+                    positions[i*3] = p.pos.x; positions[i*3+1] = p.pos.y; positions[i*3+2] = p.pos.z;
+                    for (let j = i + 1; j < MAX_POINTS; j++) {
+                        if (p.pos.distanceTo(points[j].pos) < CONNECT_DISTANCE) {
+                            linePos.push(p.pos.x, p.pos.y, p.pos.z, points[j].pos.x, points[j].pos.y, points[j].pos.z);
+                        }
+                    }
+                }
+                pointsMesh.geometry.attributes.position.needsUpdate = true;
+                linesMesh.geometry.setAttribute('position', new THREE.Float32BufferAttribute(linePos, 3));
+            }
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        init3D();
+        window.onresize = () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            if(model) {
+                if(window.innerWidth > 1024) { model.position.x = 4.2; model.position.y = 0; model.scale.set(1.7, 1.7, 1.7); }
+                else { model.position.x = 0; model.position.y = -1.5; model.scale.set(1.1, 1.1, 1.1); }
+            }
+        };
+    </script>
+</body>
+</html>
