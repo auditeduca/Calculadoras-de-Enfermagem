@@ -141,11 +141,11 @@
 
     // Ajusta posições (BackToTop, FAB)
     function g(t) {
-        if (e.backToTop) e.backToTop.style.bottom = t ? "130px" : "30px";
+        if (e.backToTop) e.backToTop.style.bottom = t ? "150px" : "30px";
         if (e.cookieFab && !e.cookieFab.classList.contains("hidden")) {
-            e.cookieFab.style.bottom = t ? "180px" : "80px";
+            e.cookieFab.style.bottom = t ? "200px" : "80px";
         }
-        if (e.toast) e.toast.style.bottom = t ? "200px" : "7rem";
+        if (e.toast) e.toast.style.bottom = t ? "220px" : "7rem";
     }
 
     // ============================================================
