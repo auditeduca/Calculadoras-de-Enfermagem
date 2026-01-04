@@ -1,1 +1,60 @@
-document.addEventListener("DOMContentLoaded",()=>{initSmoothScroll()});function initSmoothScroll(){document.querySelectorAll('a[href^="#"]').forEach(r=>{r.addEventListener("click",function(e){const o=this.getAttribute("href");if(o==="#")return;const n=document.querySelector(o);if(n){e.preventDefault();const l=n.getBoundingClientRect().top+window.pageYOffset-100;window.scrollTo({top:l,behavior:"smooth"})}})})}(function(){const e=document.querySelector('link[rel="canonical"]')?.href;if(!e)return;[{lang:"pt-br",href:e},{lang:"en",href:e.replace(".com.br/",".com.br/en/")},{lang:"es",href:e.replace(".com.br/",".com.br/es/")},{lang:"x-default",href:e}].forEach(n=>{if(!document.querySelector(`link[hreflang="${n.lang}"]`)){const t=document.createElement("link");t.rel="alternate",t.hreflang=n.lang,t.href=n.href,document.head.appendChild(t)}})})();
+/**
+ * GLOBAL-MAIN.JS
+ * Funções Globais Principais
+ * Calculadoras de Enfermagem
+ */
+
+(function() {
+  'use strict';
+  
+  document.addEventListener("DOMContentLoaded", () => {
+    initSmoothScroll();
+  });
+  
+  function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(r => {
+      r.addEventListener("click", function(e) {
+        const o = this.getAttribute("href");
+        if (o === "#") return;
+        
+        const n = document.querySelector(o);
+        if (n) {
+          e.preventDefault();
+          const l = n.getBoundingClientRect().top + window.pageYOffset - 100;
+          window.scrollTo({
+            top: l,
+            behavior: "smooth"
+          });
+        }
+      });
+    });
+  }
+  
+  // Configuração de links alternativos para SEO multilíngue
+  (function() {
+    const e = document.querySelector('link[rel="canonical"]')?.href;
+    if (!e) return;
+    
+    [{
+      lang: "pt-br",
+      href: e
+    }, {
+      lang: "en",
+      href: e.replace(".com.br/", ".com.br/en/")
+    }, {
+      lang: "es",
+      href: e.replace(".com.br/", ".com.br/es/")
+    }, {
+      lang: "x-default",
+      href: e
+    }].forEach(n => {
+      if (!document.querySelector(`link[hreflang="${n.lang}"]`)) {
+        const t = document.createElement("link");
+        t.rel = "alternate";
+        t.hreflang = n.lang;
+        t.href = n.href;
+        document.head.appendChild(t);
+      }
+    });
+  })();
+})();
