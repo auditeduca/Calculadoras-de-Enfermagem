@@ -1,1 +1,291 @@
-.nav-item{position:relative!important}.main-header{position:relative!important;z-index:1000!important}#header-container{overflow:visible!important;position:relative!important;z-index:1000!important}.mega-panel{display:none;position:fixed;left:0;right:0;top:92px;width:100%;max-width:100vw;background-color:var(--bg-mega-panel);border-top:1px solid var(--border-color);box-shadow:0 20px 40px -5px rgba(0,0,0,0.15);z-index:9999;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s ease;transform:translateY(-10px);overflow:visible!important}.mega-panel.active{display:block;opacity:1;visibility:visible;transform:translateY(0)}.mega-panel .panel-standard-height{display:flex!important;flex-direction:row;width:100%;max-width:1400px;margin:0 auto;padding:24px 40px!important;gap:40px!important;height:auto!important;min-height:unset!important;overflow:visible!important;background:transparent!important}.mega-panel .panel-sidebar{display:block!important;width:20%;min-width:180px;max-width:200px;background-color:var(--bg-secondary);border-right:1px solid var(--border-color);overflow-y:auto}.mega-panel .panel-main-content{flex:1!important;padding:0 24px!important;overflow-y:auto;background:transparent!important;border:none!important}.mega-panel .panel-promo-area{width:280px!important;min-width:280px!important;max-width:280px!important;flex-shrink:0!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important}.mega-panel .tab-content{display:none!important;animation:slideInLeft .3s ease forwards;height:auto!important}.mega-panel .tab-content.active{display:flex!important;flex-direction:column}.mega-panel .content-title{font-size:calc(15px * var(--font-size-scale))!important;font-weight:700!important;color:var(--color-primary)!important;margin:0 0 16px 0!important;padding-bottom:10px!important;border-bottom:2px solid var(--border-color)!important}.mega-panel .content-links{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:.5rem 1.5rem!important;margin:0!important;padding:0!important;list-style:none!important}.mega-panel .content-links li a{display:flex!important;align-items:center!important;padding:.5rem 0!important;color:var(--text-secondary)!important;text-decoration:none!important;font-size:calc(12px * var(--font-size-scale))!important;border-bottom:1px solid transparent!important;transition:all .2s!important}.mega-panel .content-links li a:hover{color:var(--color-accent)!important;transform:translateX(4px)!important;border-bottom-color:var(--color-accent)!important}@keyframes slideInLeft{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}.mega-idiomas-panel .panel-sidebar{display:none!important}.mega-idiomas-panel .idiomas-title-area{flex:1!important;display:flex!important;flex-direction:column!important}.mega-idiomas-panel .idiomas-grid{display:grid!important;grid-template-columns:repeat(6,1fr)!important;gap:12px 20px!important;overflow-y:visible!important;max-height:none!important;padding-right:0!important}.mega-idiomas-panel .idioma-item{display:flex!important;flex-direction:column!important;align-items:center!important;gap:8px!important;padding:12px!important}.mega-search-panel .panel-main-content{padding:0!important}.mega-search-panel .search-container{height:auto!important;display:flex!important;flex-direction:column!important}.mega-search-panel .search-box{margin-bottom:24px!important}@media(max-width:1024px){.mega-panel{position:fixed!important;top:0!important;left:0!important;width:100%!important;height:100vh!important;max-width:100%!important;z-index:10000!important;border-top:none!important;transform:none!important}.mega-panel.active{display:flex!important;align-items:flex-start!important;justify-content:center!important;padding-top:70px!important}.mega-panel .panel-standard-height{flex-direction:column!important;max-width:500px!important;margin:0 auto!important;height:auto!important;min-height:auto!important;padding:24px!important;overflow-y:auto!important}.mega-panel .panel-sidebar,.mega-panel .panel-promo-area{display:none!important}.mega-panel .panel-main-content{flex:none!important;width:100%!important;padding:0!important}.mega-idiomas-panel .idiomas-grid{grid-template-columns:repeat(4,1fr)!important;width:100%!important;max-height:none!important;overflow-y:visible!important}}@media(max-width:600px){.mega-idiomas-panel .idiomas-grid{grid-template-columns:repeat(3,1fr)!important;gap:12px!important}.mega-panel .content-links{grid-template-columns:1fr!important}}@media(max-width:480px){.mega-panel .panel-standard-height{padding:16px!important}}
+/**
+ * Mega Menu Styles - Desktop & Mobile
+ * Este arquivo gerencia os estilos dos mega-panels para o menu desktop e mobile
+ */
+
+/* ============================================
+   MEGA PANEL BASE STYLES
+   ============================================ */
+.nav-item {
+    position: relative !important;
+}
+
+.main-header {
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+#header-container {
+    overflow: visible !important;
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+/* Mega Panel - Desktop Default (hidden by default) */
+.mega-panel {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    width: 100%;
+    background-color: var(--bg-mega-panel);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    transform: translateY(-10px);
+    overflow: visible !important;
+}
+
+/* Mega Panel Active State - Desktop */
+.mega-panel.active {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ============================================
+   MEGA PANEL LAYOUT
+   ============================================ */
+.mega-panel .panel-standard-height {
+    display: flex !important;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 40px !important;
+    gap: 40px !important;
+    height: auto !important;
+    min-height: unset !important;
+    overflow: visible !important;
+    background: transparent !important;
+}
+
+/* Sidebar (Tab Navigation) */
+.mega-panel .panel-sidebar {
+    display: block !important;
+    width: 20%;
+    min-width: 180px;
+    max-width: 200px;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+}
+
+/* Main Content Area */
+.mega-panel .panel-main-content {
+    flex: 1 !important;
+    padding: 0 24px !important;
+    overflow-y: auto;
+    background: transparent !important;
+    border: none !important;
+}
+
+/* Promo/Image Area */
+.mega-panel .panel-promo-area {
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+    flex-shrink: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* ============================================
+   TAB CONTENT STYLES
+   ============================================ */
+.mega-panel .tab-content {
+    display: none !important;
+    animation: slideInLeft 0.3s ease forwards;
+    height: auto !important;
+}
+
+.mega-panel .tab-content.active {
+    display: flex !important;
+    flex-direction: column;
+}
+
+/* Content Title */
+.mega-panel .content-title {
+    font-size: calc(15px * var(--font-size-scale)) !important;
+    font-weight: 700 !important;
+    color: var(--color-primary) !important;
+    margin: 0 0 16px 0 !important;
+    padding-bottom: 10px !important;
+    border-bottom: 2px solid var(--border-color) !important;
+}
+
+/* Content Links Grid */
+.mega-panel .content-links {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem 1.5rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.mega-panel .content-links li a {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.5rem 0 !important;
+    color: var(--text-secondary) !important;
+    text-decoration: none !important;
+    font-size: calc(12px * var(--font-size-scale)) !important;
+    border-bottom: 1px solid transparent !important;
+    transition: all 0.2s !important;
+}
+
+.mega-panel .content-links li a:hover {
+    color: var(--color-accent) !important;
+    transform: translateX(4px) !important;
+    border-bottom-color: var(--color-accent) !important;
+}
+
+/* Animation for tab content */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ============================================
+   SPECIAL MEGA PANEL TYPES
+   ============================================ */
+
+/* idiomas Panel - No Sidebar */
+.mega-idiomas-panel .panel-sidebar {
+    display: none !important;
+}
+
+.mega-idiomas-panel .idiomas-title-area {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.mega-idiomas-panel .idiomas-grid {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 12px 20px !important;
+    overflow-y: visible !important;
+    max-height: none !important;
+    padding-right: 0 !important;
+}
+
+.mega-idiomas-panel .idioma-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 12px !important;
+}
+
+/* Search Panel */
+.mega-search-panel .panel-main-content {
+    padding: 0 !important;
+}
+
+.mega-search-panel .search-container {
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.mega-search-panel .search-box {
+    margin-bottom: 24px !important;
+}
+
+/* ============================================
+   MOBILE STYLES (max-width: 1024px)
+   ============================================ */
+@media (max-width: 1024px) {
+    /* Mega Panel becomes full-screen modal on mobile */
+    .mega-panel {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        max-width: 100% !important;
+        z-index: 10000 !important;
+        border-top: none !important;
+        transform: none !important;
+    }
+
+    /* Active state shows as flex container */
+    .mega-panel.active {
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        padding-top: 70px !important;
+    }
+
+    /* Stack content vertically on mobile */
+    .mega-panel .panel-standard-height {
+        flex-direction: column !important;
+        max-width: 500px !important;
+        margin: 0 auto !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 24px !important;
+        overflow-y: auto !important;
+    }
+
+    /* Hide sidebar and promo area on mobile */
+    .mega-panel .panel-sidebar,
+    .mega-panel .panel-promo-area {
+        display: none !important;
+    }
+
+    /* Full width main content */
+    .mega-panel .panel-main-content {
+        flex: none !important;
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    /* idiomas grid adjustments */
+    .mega-idiomas-panel .idiomas-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        width: 100% !important;
+        max-height: none !important;
+        overflow-y: visible !important;
+    }
+}
+
+/* ============================================
+   TABLET STYLES (max-width: 600px)
+   ============================================ */
+@media (max-width: 600px) {
+    /* Smaller grid for idiomas */
+    .mega-idiomas-panel .idiomas-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    /* Single column for content links */
+    .mega-panel .content-links {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ============================================
+   SMALL MOBILE STYLES (max-width: 480px)
+   ============================================ */
+@media (max-width: 480px) {
+    .mega-panel .panel-standard-height {
+        padding: 16px !important;
+    }
+}
