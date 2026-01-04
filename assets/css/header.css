@@ -343,6 +343,7 @@
     min-width: 200px;
     max-width: 260px;
     height: 100%;
+<<<<<<< HEAD
     background-color: var(--bg-secondary);
     border-right: 1px solid var(--border-color);
     overflow-y: auto;
@@ -453,18 +454,27 @@
     animation: fadeIn 0.2s ease;
     height: 100%;
     min-height: 0;
+=======
+>>>>>>> parent of 180f9cd (v10 04.01.2026)
 }
 
 .tab-content.active {
     display: flex;
     flex-direction: column;
+<<<<<<< HEAD
     height: 100%;
+=======
+>>>>>>> parent of 180f9cd (v10 04.01.2026)
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
+<<<<<<< HEAD
         transform: translateX(4px);
+=======
+        transform: translateX(8px);
+>>>>>>> parent of 180f9cd (v10 04.01.2026)
     }
     to {
         opacity: 1;
@@ -473,11 +483,18 @@
 }
 
 .panel-promo-area {
+<<<<<<< HEAD
     width: 240px;
     min-width: 240px;
     max-width: 240px;
     height: 100%;
     padding: 8px;
+=======
+    width: 280px;
+    min-width: 280px;
+    max-width: 280px;
+    padding: 16px;
+>>>>>>> parent of 180f9cd (v10 04.01.2026)
     display: flex;
     align-items: center;
     justify-content: center;
@@ -488,7 +505,12 @@
 .glowing-frame {
     width: 100%;
     height: 100%;
+<<<<<<< HEAD
     border-radius: 1.5rem 0 1.5rem 0;
+=======
+    max-height: 250px;
+    border-radius: 2rem 0 2rem 0;
+>>>>>>> parent of 180f9cd (v10 04.01.2026)
     border: 2px solid var(--border-color);
     overflow: hidden;
     position: relative;
@@ -497,12 +519,20 @@
     align-items: center;
     justify-content: center;
     background: var(--bg-secondary);
+<<<<<<< HEAD
     box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.05);
+=======
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.08);
+>>>>>>> parent of 180f9cd (v10 04.01.2026)
 }
 
 .glowing-frame:hover {
     border-color: var(--color-accent-glow);
+<<<<<<< HEAD
     box-shadow: 0 6px 16px -3px rgba(59, 130, 246, 0.2);
+=======
+    box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.3);
+>>>>>>> parent of 180f9cd (v10 04.01.2026)
 }
 
 .frame-image-container {
@@ -510,13 +540,18 @@
     height: 100%;
     position: relative;
     overflow: hidden;
+<<<<<<< HEAD
     border-radius: 2rem 0 2rem 0;
+=======
+    border-radius: 2.5rem 0 2.5rem 0;
+>>>>>>> parent of 180f9cd (v10 04.01.2026)
 }
 
 .frame-image-container img {
     width: 100%;
     height: 100%;
     max-width: 100%;
+<<<<<<< HEAD
     max-height: none;
     object-fit: cover;
     object-position: center;
@@ -529,11 +564,26 @@
 
 /* ============================================
    DECORATIVE SVG BACKGROUND (Compact Positioning)
+=======
+    max-height: 250px;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.7s ease;
+}
+
+.glowing-frame:hover .frame-image-container img {
+    transform: scale(1.08);
+}
+
+/* ============================================
+   DECORATIVE SVG BACKGROUND (Fixed Positioning)
+>>>>>>> parent of 180f9cd (v10 04.01.2026)
    ============================================ */
 .decorative-svg-bg {
     position: absolute;
     top: 0;
     left: 0;
+<<<<<<< HEAD
     width: 100%;
     height: 45px;
     overflow: hidden;
@@ -757,9 +807,30 @@
 
 /* ============================================
    COMPACT SEARCH PANEL LAYOUT
+=======
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.decorative-svg-bg svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    max-height: 200px;
+    opacity: 0.15;
+}
+
+/* ============================================
+   SEARCH PANEL STYLES
+>>>>>>> parent of 180f9cd (v10 04.01.2026)
    ============================================ */
 .mega-search-panel .panel-main-content {
-    padding: 20px;
+    padding: 40px;
 }
 
 .search-container {
@@ -769,21 +840,21 @@
 }
 
 .search-container .content-title {
-    margin-bottom: 12px;
+    margin-bottom: 24px;
 }
 
 .search-box {
     display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
+    gap: 12px;
+    margin-bottom: 32px;
 }
 
 .search-input {
     flex: 1;
-    padding: 10px 16px;
-    font-size: calc(14px * var(--font-size-scale));
+    padding: 14px 20px;
+    font-size: calc(16px * var(--font-size-scale));
     border: 2px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: 8px;
     background: var(--bg-main-header);
     color: var(--text-primary);
     transition: all var(--transition-fast);
@@ -796,11 +867,11 @@
 }
 
 .search-btn {
-    padding: 10px 18px;
+    padding: 14px 24px;
     background: var(--color-primary);
     color: var(--text-light);
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all var(--transition-fast);
     display: flex;
@@ -810,7 +881,7 @@
 
 .search-btn:hover {
     background: var(--color-primary-hover);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .search-btn:focus {
