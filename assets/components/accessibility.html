@@ -1,1 +1,441 @@
-<div id="side-widgets" class="side-widgets-container"><div class="accessibility-widget"><button type="button" aria-label="Abrir tradutor de libras" data-action="toggleLibras"><i class="fas fa-sign-language fa-lg" aria-hidden="true"></i></button><button id="accessibility-btn" type="button" aria-label="Abrir menu de recursos assistivos" data-action="togglePanel"><i class="fas fa-eye fa-lg" aria-hidden="true"></i></button></div></div><aside id="accessibility-panel" class="accessibility-panel-hidden" role="dialog" aria-modal="true" aria-labelledby="panel-title"><header class="panel-header shiny-header-border" id="panel-drag-handle" style="cursor:grab"><div class="flex items-center gap-2"><img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Logo" class="panel-logo-img"></div><div class="flex items-center gap-1"><button type="button" data-action="toggleMaximize" class="icon-btn sm-hidden" title="Expandir/Recolher Menu" aria-label="Expandir ou recolher tamanho do menu"><i class="fas fa-arrows-alt-h" aria-hidden="true"></i></button><button id="close-panel-btn" type="button" data-action="togglePanel" class="icon-btn" aria-label="Fechar menu"><i class="fas fa-times" aria-hidden="true"></i></button></div></header><div class="panel-content custom-scrollbar"><section class="mb-6" aria-labelledby="dict-section-title"><h3 id="dict-section-title" class="section-title">Dicionário de Termos de Enfermagem</h3><div class="grid grid-cols-2 gap-2" role="group"><button type="button" class="accessibility-card" data-feature="glossary" aria-pressed="false" title="Glossário de termos técnicos de enfermagem"><i class="fas fa-book-medical icon-slot" aria-hidden="true"></i><span class="card-label">Glossário</span><span class="card-hint">Dicionário de termos</span></button></div></section><section class="mb-6" aria-labelledby="font-section-title"><h3 id="font-section-title" class="section-title">Controle de Fonte</h3><div class="grid grid-cols-2 gap-2" role="group"><button type="button" class="accessibility-card" data-feature="fontSize" data-type="cycle" data-values="1.2,1.5,2.0" aria-pressed="false" title="Aumentar tamanho do texto em 120%, 150% ou 200%"><div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span class="level-badge" aria-live="polite"></span><i class="fas fa-text-height icon-slot" aria-hidden="true"></i><span class="card-label">Tamanho de Fonte</span></button><button type="button" class="accessibility-card" data-feature="fontStyle" data-type="cycle" data-values="atkinson,newsreader,opendyslexic" aria-pressed="false" title="Alternar entre Atkinson, Newsreader ou OpenDyslexic"><div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span class="level-badge" aria-live="polite"></span><i class="fas fa-italic icon-slot" aria-hidden="true"></i><span class="card-label">Estilo de Fonte</span></button><button type="button" class="accessibility-card" data-feature="bold-text" data-type="simple" aria-pressed="false" title="Realçar todo o texto com negrito"><div class="level-indicator"><div class="dot"></div></div><i class="fas fa-bold icon-slot" aria-hidden="true"></i><span class="card-label">Letras Destacadas</span></button><button type="button" class="accessibility-card" data-feature="lineHeight" data-type="cycle" data-values="1.2,1.5,2.0" aria-pressed="false" title="Espaçar linhas em 120%, 150% ou 200%"><div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span class="level-badge" aria-live="polite"></span><i class="fas fa-align-justify icon-slot" aria-hidden="true"></i><span class="card-label">Espaço entre Linhas</span></button><button type="button" class="accessibility-card" data-feature="letterSpacing" data-type="cycle" data-values="1.2,1.5,2.0" aria-pressed="false" title="Espaçar letras em 120%, 150% ou 200%"><div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span class="level-badge" aria-live="polite"></span><i class="fas fa-text-width icon-slot" aria-hidden="true"></i><span class="card-label">Espaço entre Letras</span></button></div></section><section class="mb-6" aria-labelledby="nav-section-title"><h3 id="nav-section-title" class="section-title">Navegação</h3><div class="grid grid-cols-2 gap-2" role="group"><button type="button" class="accessibility-card" data-feature="keyboard-shortcuts" data-action="showKeyboardShortcuts" aria-pressed="false" title="Ver atalhos de teclado por navegador"><div class="level-indicator"><div class="dot"></div></div><i class="fas fa-keyboard icon-slot" aria-hidden="true"></i><span class="card-label">Atalhos</span></button><button type="button" class="accessibility-card" data-feature="tts" data-type="tts-click" aria-pressed="false" title="Clique no texto para ouvir a partir do ponto clicado"><div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span class="level-badge" aria-live="polite"></span><i class="fas fa-assistive-listening-systems icon-slot" aria-hidden="true"></i><span class="card-label">Leitor de Site</span></button><button type="button" class="accessibility-card" data-feature="bigCursor" data-type="cycle" data-values="medium,large,xlarge" aria-pressed="false" title="Aumentar cursor em 120%, 150% ou 200%"><div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span class="level-badge" aria-live="polite"></span><i class="fas fa-mouse-pointer icon-slot" aria-hidden="true"></i><span class="card-label">Cursor do Mouse</span></button><button type="button" class="accessibility-card" data-feature="reading-mode" data-type="simple" aria-pressed="false" title="Remove distrações e adapta ao contraste do sistema"><div class="level-indicator"><div class="dot"></div></div><i class="fas fa-book-reader icon-slot" aria-hidden="true"></i><span class="card-label">Modo Leitura</span></button><button type="button" class="accessibility-card" data-feature="readingMask" data-type="cycle" data-values="sm,md,lg" aria-pressed="false" title="Foco em trechos - Pequeno, Médio ou Grande"><div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span class="level-badge" aria-live="polite"></span><i class="fas fa-window-minimize icon-slot" aria-hidden="true"></i><span class="card-label">Máscara de Leitura</span></button><button type="button" class="accessibility-card" data-feature="readingGuide" data-type="cycle" data-values="azul,laranja,preto" aria-pressed="false" title="Régua de leitura - Azul, Laranja ou Preto"><div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span class="level-badge" aria-live="polite"></span><i class="fas fa-grip-lines icon-slot" aria-hidden="true"></i><span class="card-label">Guia de Leitura</span></button><button type="button" class="accessibility-card" data-feature="highlight-links" data-type="simple" aria-pressed="false" title="Destacar todos os links da página"><div class="level-indicator"><div class="dot"></div></div><i class="fas fa-link icon-slot" aria-hidden="true"></i><span class="card-label">Destaque de Links</span></button><button type="button" class="accessibility-card" data-feature="highlight-headers" data-type="simple" aria-pressed="false" title="Destacar todos os cabeçalhos e títulos"><div class="level-indicator"><div class="dot"></div></div><i class="fas fa-heading icon-slot" aria-hidden="true"></i><span class="card-label">Destacar Cabeçalhos</span></button><button type="button" class="accessibility-card" data-feature="magnifier" data-type="simple" aria-pressed="false" title="Ampliar texto ao passar o mouse"><div class="level-indicator"><div class="dot"></div></div><i class="fas fa-search-plus icon-slot" aria-hidden="true"></i><span class="card-label">Lupa de Conteúdo</span></button><button type="button" class="accessibility-card" data-feature="hide-images" data-type="simple" aria-pressed="false" title="Ocultar todas as imagens do site"><div class="level-indicator"><div class="dot"></div></div><i class="fas fa-eye-slash icon-slot" aria-hidden="true"></i><span class="card-label">Esconder Imagens</span></button><button type="button" class="accessibility-card" data-feature="stop-anim" data-type="simple" aria-pressed="false" title="Pausar todas as animações CSS"><div class="level-indicator"><div class="dot"></div></div><i class="fas fa-pause-circle icon-slot" aria-hidden="true"></i><span class="card-label">Pausar Animações</span></button><button type="button" class="accessibility-card" data-feature="stop-sounds" data-type="simple" aria-pressed="false" title="Silenciar áudio, vídeo e iframes"><div class="level-indicator"><div class="dot"></div></div><i class="fas fa-volume-mute icon-slot" aria-hidden="true"></i><span class="card-label">Parar Sons</span></button></div></section><section class="mb-6" aria-labelledby="color-section-title"><h3 id="color-section-title" class="section-title">Controle de Cor</h3><div class="grid grid-cols-2 gap-2" role="group"><button type="button" class="accessibility-card" data-feature="contrast" data-type="cycle" data-values="inverted,dark-contrast,light-contrast" aria-pressed="false" title="Invertido, Contraste Escuro ou Claro"><div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span class="level-badge" aria-live="polite"></span><i class="fas fa-adjust icon-slot" aria-hidden="true"></i><span class="card-label">Contraste de Cores</span></button><button type="button" class="accessibility-card" data-feature="saturation" data-type="cycle" data-values="low,high,monochrome" aria-pressed="false" title="Baixa, Alta Saturação ou Monocromático"><div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span class="level-badge" aria-live="polite"></span><i class="fas fa-tint icon-slot" aria-hidden="true"></i><span class="card-label">Intensidade de Cores</span></button><button type="button" class="accessibility-card" data-feature="colorblind" data-type="cycle" data-values="deuteranopia,protanopia,tritanopia" aria-pressed="false" title="Deuteranopia (Verde), Protanopia (Vermelho), Tritanopia (Azul)"><div class="level-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span class="level-badge" aria-live="polite"></span><i class="fas fa-eye icon-slot" aria-hidden="true"></i><span class="card-label">Modo Daltônico</span></button></div></section></div><div class="menu-cta-overlay"><button type="button" data-action="resetAll" class="btn-restore"><i class="fas fa-undo" aria-hidden="true"></i>Restaurar Tudo</button></div></aside><div id="reading-mask-top" class="reading-mask" aria-hidden="true"></div><div id="reading-mask-bottom" class="reading-mask" aria-hidden="true"></div><div id="reading-guide" class="reading-guide" aria-hidden="true"></div><div id="magnifier-tooltip" class="magnifier-tooltip" aria-hidden="true"></div><div id="keyboard-shortcuts-modal" class="shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title" hidden><div class="shortcuts-content"><header class="shortcuts-header"><h2 id="shortcuts-title"><i class="fas fa-keyboard"></i> Atalhos de Teclado</h2><button type="button" data-action="closeShortcutsModal" class="icon-btn" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i></button></header><div class="shortcuts-body"><div class="browser-tabs"><button type="button" class="browser-tab active" data-browser="chrome">Chrome / Edge</button><button type="button" class="browser-tab" data-browser="firefox">Firefox</button><button type="button" class="browser-tab" data-browser="safari">Safari</button></div><div class="shortcuts-list" id="shortcuts-list"></div><p class="shortcuts-note"><i class="fas fa-info-circle"></i> No Mac, use <kbd>Option</kbd> ao invés de <kbd>Alt</kbd></p></div></div></div><svg style="position:absolute;width:0;height:0" aria-hidden="true"><defs><filter id="protanopia-filter"><feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0"/></filter><filter id="deuteranopia-filter"><feColorMatrix type="matrix" values="0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0"/></filter><filter id="tritanopia-filter"><feColorMatrix type="matrix" values="0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0"/></filter></defs></svg>
+<!-- Componente Footer - Sistema Modular V8.0 -->
+<footer id="footer" class="bg-gray-900 text-white py-8">
+    <!-- Logotipo e Linha Divisória -->
+    <div class="footer-header">
+        <img src="https://www.calculadorasdeenfermagem.com.br/img/iconrodape1-80.webp" alt="Calculadoras de Enfermagem" class="footer-logo">
+        <div class="footer-divider"></div>
+    </div>
+
+    <!-- Banner de Cookies -->
+    <div id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Aviso de Cookies" aria-describedby="cookie-description">
+        <div class="cookie-content">
+            <p id="cookie-description">
+                Seu conhecimento importa e sua privacidade também.
+                Nós da Calculadora de Enfermagem utilizamos cookies para aprimorar sua experiência de navegação e analisar nosso tráfego. Queremos assegurar-lhe a melhor utilização possível e a melhoria contínua do nosso website. Assim, podemos também apresentar-lhe conteúdo e publicidade baseados no seu perfil de utilização, e, para isso, trabalhamos em conjunto com parceiro selecionado (Google).
+            </p>
+            <p class="cookie-consent-note">
+                Pode retirar o seu consentimento a qualquer momento. Mais informações e opções de alteração das suas definições podem ser encontradas em Personalizar e nas nossas informações de proteção de dados.
+            </p>
+        </div>
+        <div class="cookie-actions">
+            <button id="cookie-settings" class="cookie-btn cookie-btn-secondary" aria-label="Personalizar configurações de cookies">
+                Personalizar
+            </button>
+            <button id="cookie-accept" class="cookie-btn cookie-btn-primary" aria-label="Aceitar todos os cookies">
+                Aceitar
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlay do Modal de Cookies -->
+    <div id="cookie-overlay" class="cookie-overlay hidden" aria-hidden="true"></div>
+    
+    <!-- Modal de Configurações de Cookies -->
+    <div id="cookie-modal-content" class="cookie-modal hidden" role="dialog" aria-label="Preferências de Cookies">
+        <div class="cookie-modal-header">
+            <h3>Preferências de Cookies</h3>
+            <button id="cookie-modal-close" class="cookie-modal-close" aria-label="Fechar configuração de cookies">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cookie-modal-body">
+            <!-- Tecnicamente Necessário -->
+            <div class="cookie-category">
+                <div class="cookie-category-header" role="button" tabindex="0" aria-expanded="false">
+                    <h4>Tecnicamente Necessário</h4>
+                    <div class="cookie-category-info">
+                        <button class="cookie-expand-btn" data-accordion-target="accordion-necessary" aria-label="Expandir detalhes">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <label class="cookie-switch">
+                            <input type="checkbox" id="check-necessary" checked disabled>
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="cookie-category-description" id="accordion-necessary">
+                    <p>As tecnologias web e cookies necessários tornam a nossa página tecnicamente acessível e utilizável. Tratam-se de funcionalidades básicas essenciais, como a navegação no website, a correta apresentação no seu browser ou a consulta do seu consentimento. Sem estas tecnologias web e cookies, o nosso website não funciona.</p>
+                    <div class="cookie-service-topic">
+                        <span class="cookie-service-name">Google Tag Manager | BR</span>
+                        <div class="cookie-service-info">
+                            <button class="cookie-info-btn" data-modal-target="modal-necessary" aria-label="Ver detalhes">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Análise e Estatística -->
+            <div class="cookie-category">
+                <div class="cookie-category-header" role="button" tabindex="0" aria-expanded="false">
+                    <h4>Análise e Estatística</h4>
+                    <div class="cookie-category-info">
+                        <button class="cookie-expand-btn" data-accordion-target="accordion-analytics" aria-label="Expandir detalhes">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <label class="cookie-switch">
+                            <input type="checkbox" id="check-analytics">
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="cookie-category-description" id="accordion-analytics">
+                    <p>Preferências de Privacidade: Queremos aperfeiçoar constantemente a facilidade de utilização e o desempenho dos nossos websites. Por este motivo, utilizamos tecnologias de análise (também Cookies), que medem e avaliam que funções e conteúdos dos nossos websites são utilizados e com que frequência. Assim, conseguimos melhorar as nossas páginas para os usuários e apenas mostrar o conteúdo de seu interesse.</p>
+                    <div class="cookie-service-topic">
+                        <span class="cookie-service-name">Google Analytics | BR</span>
+                        <div class="cookie-service-info">
+                            <button class="cookie-info-btn" data-modal-target="modal-analytics" aria-label="Ver detalhes">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Marketing -->
+            <div class="cookie-category">
+                <div class="cookie-category-header" role="button" tabindex="0" aria-expanded="false">
+                    <h4>Marketing</h4>
+                    <div class="cookie-category-info">
+                        <button class="cookie-expand-btn" data-accordion-target="accordion-marketing" aria-label="Expandir detalhes">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <label class="cookie-switch">
+                            <input type="checkbox" id="check-marketing">
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="cookie-category-description" id="accordion-marketing">
+                    <p>Preferências de Privacidade: Nós utilizamos cookies para várias finalidades. Trabalhamos em conjunto com parceiros selecionados (Google, LinkedIn, Salesforce, Facebook, entre outros) para apresentar conteúdos e publicidade personalizados. Através destes parceiros, é possível que receba também publicidade de outros websites.</p>
+                    <div class="cookie-service-topic">
+                        <span class="cookie-service-name">Google AdSense | BR</span>
+                        <div class="cookie-service-info">
+                            <button class="cookie-info-btn" data-modal-target="modal-marketing" aria-label="Ver detalhes">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cookie-modal-footer">
+            <button id="cookie-save-preferences" class="cookie-btn cookie-btn-secondary">
+                Salvar Preferências
+            </button>
+            <button id="cookie-accept-all" class="cookie-btn cookie-btn-primary">
+                Concordar com tudo
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes - Tecnicamente Necessário (Google Tag Manager) -->
+    <div id="modal-necessary" class="cookie-detail-modal hidden" role="dialog" aria-label="Detalhes de Tecnicamente Necessário">
+        <div class="cookie-detail-header">
+            <h3>Tecnicamente Necessário</h3>
+            <h4>Google Tag Manager | BR</h4>
+            <button class="cookie-modal-close" data-close="modal-necessary" aria-label="Fechar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cookie-detail-body">
+            <div class="cookie-detail-content">
+                <div class="cookie-detail-section">
+                    <h5>Descrição do Serviço</h5>
+                    <p>Este é um sistema de gerenciamento de tags. Com isso, o usuário pode atualizar códigos de medição e fragmentos de código relacionados, conhecidos coletivamente como tags no site ou aplicativo móvel do usuário.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Empresa de processamento</h5>
+                    <p>Google Ireland Limited<br>Google Building Gordon House, 4 Barrow St, Dublin, D04 E5W5, Ireland</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Finalidades dos dados</h5>
+                    <p>Gestão de tags</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Tecnologias utilizadas</h5>
+                    <p>Pixel</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Dados recolhidos</h5>
+                    <p>Dados agregados sobre disparo de tags</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Base jurídica</h5>
+                    <p>Interesses legítimos, Art. 7(9) LGPD</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Local de processamento</h5>
+                    <p>União Europeia</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Período de retenção</h5>
+                    <p>Os dados serão excluídos após 14 dias da recuperação.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Agente de proteção de dados da empresa de processamento</h5>
+                    <p><a href="https://support.google.com/policies/contact/general_privacy_form" target="_blank" rel="noopener">https://support.google.com/policies/contact/general_privacy_form</a></p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Transferência para outros países</h5>
+                    <p>Taiwan, Chile, Singapura, Estados Unidos da América</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Destinatários dos dados</h5>
+                    <p>Alphabet Inc., Google LLC, Google Ireland Limited</p>
+                </div>
+                <div class="cookie-detail-links">
+                    <a href="https://business.safety.google/privacy/?hl=en" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de privacidade do processador de dados</a>
+                    <a href="https://www.google.com/intl/de/tagmanager/use-policy.html" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de cookies do processador de dados</a>
+                    <a href="https://safety.google/privacy/privacy-controls/" target="_blank" rel="noopener" class="cookie-link">Clique aqui para desativar este processador em todos os domínios</a>
+                </div>
+            </div>
+            <div class="cookie-detail-footer">
+                <button class="cookie-btn cookie-btn-secondary cookie-detail-back" data-close="modal-necessary">
+                    Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes - Análise e Estatística (Google Analytics) -->
+    <div id="modal-analytics" class="cookie-detail-modal hidden" role="dialog" aria-label="Detalhes de Análise e Estatística">
+        <div class="cookie-detail-header">
+            <h3>Análise e Estatística</h3>
+            <h4>Google Analytics | BR</h4>
+            <button class="cookie-modal-close" data-close="modal-analytics" aria-label="Fechar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cookie-detail-body">
+            <div class="cookie-detail-content">
+                <div class="cookie-detail-section">
+                    <h5>Descrição do Serviço</h5>
+                    <p>Este é um serviço de análise da web. Com isso, o usuário pode medir o retorno sobre o investimento publicitário "ROI", bem como acompanhar o comportamento do usuário com flash, vídeo, sites e aplicativos.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Empresa de processamento</h5>
+                    <p>Google Ireland Limited<br>Google Building Gordon House, 4 Barrow St, Dublin, D04 E5W5, Ireland</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Finalidades dos dados</h5>
+                    <p>Análise de usuários, Relatórios de desempenho, Remarketing</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Tecnologias utilizadas</h5>
+                    <p>Cookies, Pixel, Local Storage</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Dados recolhidos</h5>
+                    <p>Endereço IP, informações do dispositivo, comportamento de navegação, tempo de permanência</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Base jurídica</h5>
+                    <p>Consentimento, Art. 7(1) LGPD</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Local de processamento</h5>
+                    <p>União Europeia</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Período de retenção</h5>
+                    <p>Os dados serão excluídos após 14 meses.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Agente de proteção de dados da empresa de processamento</h5>
+                    <p><a href="https://support.google.com/policies/contact/general_privacy_form" target="_blank" rel="noopener">https://support.google.com/policies/contact/general_privacy_form</a></p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Transferência para outros países</h5>
+                    <p>Taiwan, Chile, Singapura, Estados Unidos da América</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Destinatários dos dados</h5>
+                    <p>Alphabet Inc., Google LLC, Google Ireland Limited</p>
+                </div>
+                <div class="cookie-detail-links">
+                    <a href="https://business.safety.google/privacy/?hl=en" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de privacidade do processador de dados</a>
+                    <a href="https://policies.google.com/technologies/cookies?hl=en" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de cookies do processador de dados</a>
+                    <a href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener" class="cookie-link">Clique aqui para desativar este processador em todos os domínios</a>
+                </div>
+            </div>
+            <div class="cookie-detail-footer">
+                <button class="cookie-btn cookie-btn-secondary cookie-detail-back" data-close="modal-analytics">
+                    Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes - Marketing (Google AdSense) -->
+    <div id="modal-marketing" class="cookie-detail-modal hidden" role="dialog" aria-label="Detalhes de Marketing">
+        <div class="cookie-detail-header">
+            <h3>Marketing</h3>
+            <h4>Google AdSense | BR</h4>
+            <button class="cookie-modal-close" data-close="modal-marketing" aria-label="Fechar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cookie-detail-body">
+            <div class="cookie-detail-content">
+                <div class="cookie-detail-section">
+                    <h5>Descrição do Serviço</h5>
+                    <p>Serviço de rede de publicidade online para exibição de anúncios relevantes baseados no conteúdo visitado e no perfil do utilizador.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Empresa de processamento</h5>
+                    <p>Google Ireland Limited<br>Google Building Gordon House, 4 Barrow St, Dublin, D04 E5W5, Ireland</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Finalidades dos dados</h5>
+                    <p>Exibição de anúncios personalizados, Remarketing, Relatórios de desempenho</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Tecnologias utilizadas</h5>
+                    <p>Cookies, DoubleClick, Pixel</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Dados recolhidos</h5>
+                    <p>Histórico de navegação, interesses do usuário, identificadores de publicidade</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Base jurídica</h5>
+                    <p>Consentimento, Art. 7(1) LGPD</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Local de processamento</h5>
+                    <p>União Europeia</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Período de retenção</h5>
+                    <p>Os dados serão excluídos após 6 meses.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Agente de proteção de dados da empresa de processamento</h5>
+                    <p><a href="https://support.google.com/policies/contact/general_privacy_form" target="_blank" rel="noopener">https://support.google.com/policies/contact/general_privacy_form</a></p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Transferência para outros países</h5>
+                    <p>Taiwan, Chile, Singapura, Estados Unidos da América</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Destinatários dos dados</h5>
+                    <p>Alphabet Inc., Google LLC, Google Ireland Limited</p>
+                </div>
+                <div class="cookie-detail-links">
+                    <a href="https://business.safety.google/privacy/?hl=en" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de privacidade do processador de dados</a>
+                    <a href="https://policies.google.com/technologies/cookies?hl=en" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de cookies do processador de dados</a>
+                    <a href="https://myadcenter.google.com/controls" target="_blank" rel="noopener" class="cookie-link">Clique aqui para desativar este processador em todos os domínios</a>
+                </div>
+            </div>
+            <div class="cookie-detail-footer">
+                <button class="cookie-btn cookie-btn-secondary cookie-detail-back" data-close="modal-marketing">
+                    Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="toast-notification hidden" role="alert">
+        <span id="toast-message"></span>
+    </div>
+
+    <!-- Botão Voltar ao Topo -->
+    <button id="backToTop" class="back-to-top hidden" aria-label="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Botão Flutuante de Cookies -->
+    <button id="cookie-fab" class="cookie-fab hidden" aria-label="Abrir configurações de cookies">
+        <i class="fas fa-cookie-bite"></i>
+    </button>
+
+    <!-- Footer Content (Conteúdo Principal) -->
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <!-- Coluna 1: Institucional -->
+            <div class="footer-section">
+                <h3>Institucional</h3>
+                <ul class="footer-links">
+                    <li><a href="/">Início</a></li>
+                    <li><a href="/sobre">Sobre Nós</a></li>
+                    <li><a href="/mapa-do-site">Mapa do Site</a></li>
+                    <li><a href="/politicas">Políticas do Site</a></li>
+                    <li><a href="/termos">Termos e Condições de Uso</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 2: Sustentabilidade Digital -->
+            <div class="footer-section">
+                <h3>Sustentabilidade Digital</h3>
+                <ul class="footer-links">
+                    <li><a href="/sustentabilidade">Nosso Compromisso</a></li>
+                    <li><a href="/relatorio-impacto">Relatório de Impacto</a></li>
+                    <li><a href="/tecnologia-verde">Tecnologia Verde</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 3: Acessibilidade Digital -->
+            <div class="footer-section">
+                <h3>Acessibilidade Digital</h3>
+                <ul class="footer-links">
+                    <li><a href="/acessibilidade">Política de Acessibilidade</a></li>
+                    <li><a href="/recursos-acessibilidade">Recursos de Acessibilidade</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 4: Nosso Compromisso -->
+            <div class="footer-section">
+                <h3>Nosso Compromisso</h3>
+                <p class="text-gray-400 text-sm mt-2">
+                    Nosso site adota como princípio de governança, o comprometimento com elevados padrões de acessibilidade digital, sustentabilidade digital e proteção de dados.
+                </p>
+                <div class="footer-seals mt-4">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/img/seloacessibilidade-80.webp" alt="Selo de Acessibilidade" class="footer-seal">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/img/selosustentabilidade-80.webp" alt="Selo de Sustentabilidade" class="footer-seal">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/img/selolgpd-80.webp" alt="Selo LGPD" class="footer-seal">
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                <p>&copy; <span id="current-year">2025</span> Calculadoras de Enfermagem. Todos os direitos reservados.</p>
+                <div class="footer-legal-links">
+                    <a href="https://www.calculadorasdeenfermagem.com.br/politica.html">Central de Privacidade</a>
+                    <a href="https://www.calculadorasdeenfermagem.com.br/notificacoes-legais.html">Notificações Legais</a>
+                    <a href="https://www.calculadorasdeenfermagem.com.br/termos.html">Configurações</a>
+                </div>
+            </div>
+            <div class="social-links-container" style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem;">
+                <span class="social-links-label">Siga-nos</span>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/company/calculadoras-de-enfermagem" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    
+                    <a href="https://www.instagram.com/calculadorasdeenfermagem/" target="_blank" rel="noopener" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+
+                    <a href="https://www.tiktok.com/@calculadorasdeenf?_t=ZM-8y94b3VAz2M&_r=1" target="_blank" rel="noopener" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+
+                    <a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" target="_blank" rel="noopener" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
