@@ -158,15 +158,219 @@
         function r() {
             t && t.classList.contains("active") ? a() : i()
         }
-        e && e.addEventListener("click", r), o && o.addEventListener("click", a), n && n.addEventListener("click", a), document.addEventListener("keydown", function(l) {
+        
+        // Toggle hamburger menu
+        e && e.addEventListener("click", r);
+        
+        // Close button
+        o && o.addEventListener("click", a);
+        
+        // Click outside to close
+        n && n.addEventListener("click", a);
+        
+        // Escape key to close
+        document.addEventListener("keydown", function(l) {
             l.key === "Escape" && t && t.classList.contains("active") && a()
-        }), h(".has-mobile-submenu").forEach(l => {
-            const u = l.querySelector(".mobile-nav-dropdown");
-            u && u.addEventListener("click", function() {
-                const m = this.getAttribute("aria-expanded") === "true";
-                this.setAttribute("aria-expanded", !m), l.classList.toggle("active")
-            })
+        });
+    }
+
+    function V() {
+        // Lógica para expansão e retração de todos os sub-menus no menu mobile
+        // Expansão do primeiro nível (Sobre Nós, Ferramentas, Biblioteca, Carreiras)
+        h(".mobile-nav-item.has-mobile-submenu").forEach(function(navItem) {
+            const toggleBtn = navItem.querySelector(".mobile-nav-dropdown");
+            const submenu = navItem.querySelector(".mobile-submenu");
+            
+            if (toggleBtn && submenu) {
+                toggleBtn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+                    
+                    // Fechar outros submenus do mesmo nível
+                    h(".mobile-nav-item.has-mobile-submenu").forEach(function(otherItem) {
+                        if (otherItem !== navItem) {
+                            const otherBtn = otherItem.querySelector(".mobile-nav-dropdown");
+                            const otherSubmenu = otherItem.querySelector(".mobile-submenu");
+                            if (otherBtn && otherSubmenu) {
+                                otherBtn.setAttribute("aria-expanded", "false");
+                                otherItem.classList.remove("active");
+                            }
+                        }
+                    });
+                    
+                    toggleBtn.setAttribute("aria-expanded", !isExpanded);
+                    navItem.classList.toggle("active");
+                });
+            }
+        });
+        
+        // Expansão do segundo nível (Institucional, Calculadoras Clínicas, etc.)
+        h(".mobile-submenu-item.has-mobile-submenu").forEach(function(subItem) {
+            const toggleBtn = subItem.querySelector(".mobile-submenu-dropdown");
+            const submenu = subItem.querySelector(".mobile-submenu.level-3");
+            
+            if (toggleBtn && submenu) {
+                // Adicionar indicador de "Voltar"
+                const backIndicator = document.createElement("li");
+                backIndicator.className = "submenu-back-item";
+                backIndicator.innerHTML = '<a href="#" class="submenu-back-link"><i class="fas fa-arrow-left"></i> Voltar</a>';
+                backIndicator.style.cssText = "display: none; padding: 8px 0; border-bottom: 1px solid #e0e0e0; margin-bottom: 8px;";
+                submenu.insertBefore(backIndicator, submenu.firstChild);
+                
+                toggleBtn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+                    
+                    // Fechar outros submenus do mesmo nível
+                    h(".mobile-submenu-item.has-mobile-submenu").forEach(function(otherItem) {
+                        if (otherItem !== subItem) {
+                            const otherBtn = otherItem.querySelector(".mobile-submenu-dropdown");
+                            const otherSubmenu = otherItem.querySelector(".mobile-submenu.level-3");
+                            if (otherBtn && otherSubmenu) {
+                                otherBtn.setAttribute("aria-expanded", "false");
+                                otherItem.classList.remove("active");
+                                otherSubmenu.style.display = "";
+                                const back = otherSubmenu.querySelector(".submenu-back-item");
+                                if (back) back.style.display = "none";
+                            }
+                        }
+                    });
+                    
+                    toggleBtn.setAttribute("aria-expanded", !isExpanded);
+                    subItem.classList.toggle("active");
+                    submenu.style.display = isExpanded ? "" : "block";
+                    backIndicator.style.display = isExpanded ? "none" : "block";
+                });
+                
+                // Funcionalidade do botão Voltar
+                backIndicator.querySelector(".submenu-back-link").addEventListener("click", function(e) {
+                    e.preventDefault();
+                    toggleBtn.setAttribute("aria-expanded", "false");
+                    subItem.classList.remove("active");
+                    submenu.style.display = "";
+                    backIndicator.style.display = "none";
+                });
+            }
+        });
+    }
+
+    function W() {
+        // Lógica para a seção de Idiomas no final do menu mobile
+        const e = s("mobile-idiomas-section"),
+            o = s("mobile-idiomas-toggle"),
+            t = s("mobile-idiomas-list"),
+            i = s("mobile-idiomas-arrow");
+        
+        if (!e || !o || !t) return;
+        
+        o.addEventListener("click", function(r) {
+            r.preventDefault();
+            r.stopPropagation();
+            const isExpanded = e.classList.contains("expanded");
+            e.classList.toggle("expanded");
+            t.style.display = isExpanded ? "none" : "grid";
+            o.setAttribute("aria-expanded", !isExpanded);
+            if (i) {
+                i.classList.toggle("fa-chevron-down", isExpanded);
+                i.classList.toggle("fa-chevron-up", !isExpanded);
+            }
+        });
+        
+        // Funcionalidade de seleção de idioma
+        h(".language-flag-item").forEach(function(link) {
+            link.addEventListener("click", function(r) {
+                r.preventDefault();
+                
+                // Remover classe active de todos os itens
+                h(".language-flag-item").forEach(function(item) {
+                    item.classList.remove("active");
+                });
+                
+                // Adicionar classe active ao item selecionado
+                this.classList.add("active");
+                
+                const img = this.querySelector("img");
+                const current = s("mobile-idiomas-current");
+                const alt = img ? img.alt : "";
+                const lang = this.getAttribute("data-lang");
+                
+                if (img && current) {
+                    current.innerHTML = img.outerHTML + '<span>' + alt + '</span>';
+                }
+                
+                // Salvar idioma selecionado no localStorage
+                try {
+                    localStorage.setItem("nursing_calc_lang", lang);
+                } catch (err) {
+                    console.warn("[Header] Erro ao salvar idioma:", err);
+                }
+                
+                // Fechar a lista após seleção
+                e.classList.remove("expanded");
+                t.style.display = "none";
+                o.setAttribute("aria-expanded", "false");
+                if (i) {
+                    i.classList.add("fa-chevron-down");
+                    i.classList.remove("fa-chevron-up");
+                }
+            });
+        });
+        
+        // Inicializar idioma ativo do localStorage
+        try {
+            const savedLang = localStorage.getItem("nursing_calc_lang") || "pt-br";
+            const activeItem = t.querySelector('[data-lang="' + savedLang + '"]');
+            if (activeItem) {
+                activeItem.classList.add("active");
+                // Atualizar显示 atual também
+                const img = activeItem.querySelector("img");
+                const current = s("mobile-idiomas-current");
+                if (img && current) {
+                    current.innerHTML = img.outerHTML + '<span>' + img.alt + '</span>';
+                }
+            }
+        } catch (err) {
+            console.warn("[Header] Erro ao carregar idioma ativo:", err);
+        }
+    }
+
+    function J() {
+        // Lógica para o botão Buscar expandir área de busca abaixo do cabeçalho (mobile)
+        const e = s("mobile-search-toggle"),
+            o = s("mobile-search-container"),
+            t = s("mobile-menu-search-input");
+        
+        if (!e || !o) return;
+        
+        const n = () => {
+            const i = o.classList.contains("expanded");
+            o.classList.toggle("expanded"), e.classList.toggle("active"), e.setAttribute("aria-expanded", !i), i || setTimeout(() => t && t.focus(), 100)
+        };
+        
+        e.addEventListener("click", function(i) {
+            i.preventDefault(), i.stopPropagation(), n()
+        });
+        
+        // Fechar busca ao pressionar Escape
+        document.addEventListener("keydown", function(i) {
+            i.key === "Escape" && o.classList.contains("expanded") && n()
         })
+    }
+
+    function K() {
+        // Sincronizar estado do idioma ativo com a seção mobile
+        const e = h(".mega-panel-idiomas .idiomas-list li a.active");
+        if (e.length > 0 && s("mobile-idiomas-current")) {
+            const o = e[0].querySelector(".idioma-flag-link");
+            if (o) {
+                const t = o.cloneNode(!0);
+                t.style.width = "24px", t.style.height = "18px", t.style.marginRight = "8px", t.style.verticalAlign = "middle";
+                const n = s("mobile-idiomas-current");
+                n.innerHTML = "", n.appendChild(t);
+                const i = o.alt || e[0].textContent.trim();
+                i && (n.innerHTML += '<span class="current-lang-name">' + i + "</span>")
+            }
+        }
     }
 
     function q() {
@@ -235,16 +439,32 @@
     }
 
     function A() {
-        const e = h(".idioma-item");
-        e.forEach(o => {
-            o.addEventListener("click", function(t) {
-                t.preventDefault(), e.forEach(a => a.classList.remove("active")), this.classList.add("active");
-                const n = s("active-lang-flag");
-                if (n) {
-                    const a = this.querySelector(".idioma-flag").src;
-                    n.src = a, n.alt = this.querySelector(".idioma-name").textContent
-                }
-                h(".mega-panel").forEach(a => a.classList.remove("active"))
+        const e = h(".mega-panel-idiomas .idiomas-list li a");
+        const r = s("active-lang-flag");
+        const i = r ? r.alt : "Português (Brasil)";
+        const o = r ? r.src : "";
+        
+        // Função para atualizar o estado ativo
+        function n(t) {
+            e.forEach(a => a.classList.remove("active")), t.classList.add("active");
+            const l = t.querySelector(".idioma-flag-link");
+            if (l && r) {
+                r.src = l.src, r.alt = l.alt
+            }
+            h(".mega-panel").forEach(a => a.classList.remove("active"))
+        }
+        
+        // Marcar idioma ativo baseado no flag atual
+        e.forEach(t => {
+            const a = t.querySelector(".idioma-flag-link");
+            if (a && o && a.src === o) {
+                t.classList.add("active")
+            }
+        })
+        
+        e.forEach(t => {
+            t.addEventListener("click", function(a) {
+                a.preventDefault(), n(this)
             })
         })
     }
@@ -294,14 +514,22 @@
     }
 
     function L() {
-        c.loaded || (c.loaded = !0, console.log("[Header] Inicializando módulo do cabeçalho..."), k(), w(), document.documentElement.style.fontSize = c.currentFontSize + "px", z(), E(), x(), M(), q(), T(), A(), I(), D(), H(), console.log("[Header] Módulo do cabeçalho inicializado com sucesso"))
+        c.loaded || (c.loaded = !0, console.log("[Header] Inicializando módulo do cabeçalho..."), k(), w(), document.documentElement.style.fontSize = c.currentFontSize + "px", z(), E(), x(), M(), V(), W(), J(), K(), q(), T(), A(), I(), D(), H(), console.log("[Header] Módulo do cabeçalho inicializado com sucesso"))
     }
-    document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", L) : window.requestIdleCallback ? requestIdleCallback(L) : setTimeout(L, 100), window.HeaderModule = {
+    window.HeaderModule = {
+        init: function() {
+            // Forçar recarregamento dos elementos do DOM
+            c.loaded = !1;
+            L();
+        },
         setFontSize: function(e) {
             c.currentFontSize = Math.max(d.minFontSize, Math.min(d.maxFontSize, e)), document.documentElement.style.fontSize = c.currentFontSize + "px", y()
         },
         toggleTheme: function() {
             E()
+        },
+        getFontSize: function() {
+            return c.currentFontSize;
         }
     }
 })();
