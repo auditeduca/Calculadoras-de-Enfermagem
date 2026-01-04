@@ -5,8 +5,10 @@
  * - global-main.js
  * - global-main-index.js
  * - main-index-loader.js
+ * - main-index.html (templates HTML)
  * 
  * Funcionalidades:
+ * - Templates HTML da página principal
  * - Scroll suave
  * - Links canônicos multilíngues
  * - Dados das ferramentas clínicas
@@ -97,34 +99,170 @@
   // CONFIGURAÇÕES DO APLICATIVO
   // ============================================
   const appConfig = {
-    searchTerm: "",
     filterCategory: "all",
     sortOrder: "az",
     scrollOffset: 100,
     scrollThreshold: 300,
-    debounceDelay: 300,
     throttleDelay: 200
   };
+
+  // ============================================
+  // TEMPLATES HTML DA PÁGINA PRINCIPAL
+  // ============================================
+
+  /**
+   * Template da seção de estatísticas
+   */
+  function renderStatisticsSection() {
+    return `
+      <section class="statistics-section">
+        <div class="container">
+          <div class="statistics-grid">
+            <div class="stat-item">
+              <span class="stat-number">63+</span>
+              <span class="stat-label">Ferramentas</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">50+</span>
+              <span class="stat-label">Escalas Clínicas</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">8</span>
+              <span class="stat-label">Categorias Vacinais</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Gratuito</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  /**
+   * Template da seção de recursos
+   */
+  function renderFeaturesSection() {
+    return `
+      <section class="features-section">
+        <div class="container">
+          <h2 class="section-title">Recursos</h2>
+          <div class="features-grid">
+            <div class="feature-item">
+              <i class="fas fa-calculator feature-icon"></i>
+              <h3 class="feature-title">Calculadoras Clínicas</h3>
+              <p class="feature-description">Ferramentas para cálculos médicos e de enfermagem</p>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-clipboard-list feature-icon"></i>
+              <h3 class="feature-title">Escalas Clínicas</h3>
+              <p class="feature-description">Avaliações padronizadas para diversos contextos</p>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-calendar-check feature-icon"></i>
+              <h3 class="feature-title">Calendário Vacinal</h3>
+              <p class="feature-description">Informações sobre imunizações</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  /**
+   * Template da seção de calculadoras
+   */
+  function renderCalculadorasSection() {
+    return `
+      <section id="calculadoras" class="tools-section">
+        <div class="container">
+          <h2 class="section-title">Calculadoras</h2>
+          <div id="calculadoras-grid" class="tools-grid">
+            <!-- Ferramentas serão renderizadas dinamicamente -->
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  /**
+   * Template da seção de escalas clínicas
+   */
+  function renderEscalasSection() {
+    return `
+      <section id="escalas" class="tools-section">
+        <div class="container">
+          <h2 class="section-title">Escalas Clínicas</h2>
+          <div id="escalas-grid" class="tools-grid">
+            <!-- Ferramentas serão renderizadas dinamicamente -->
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  /**
+   * Template da seção de calendários vacinais
+   */
+  function renderVacinasSection() {
+    return `
+      <section id="vacinas" class="tools-section">
+        <div class="container">
+          <h2 class="section-title">Calendários Vacinais</h2>
+          <div id="vacinas-grid" class="tools-grid">
+            <!-- Ferramentas serão renderizadas dinamicamente -->
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  /**
+   * Renderiza a página HTML completa
+   */
+  function renderMainPageHTML() {
+    const containerId = 'app';
+    const container = document.getElementById(containerId);
+    
+    if (!container) {
+      console.warn('Container #app não encontrado. Use renderMainPageHTML(containerId) para especificar outro ID.');
+      return null;
+    }
+
+    container.innerHTML = renderStatisticsSection() +
+                          renderFeaturesSection() +
+                          renderCalculadorasSection() +
+                          renderEscalasSection() +
+                          renderVacinasSection();
+
+    return container;
+  }
+
+  /**
+   * Renderiza a página em um container específico
+   */
+  function renderMainPageHTMLIn(containerId) {
+    const container = document.getElementById(containerId);
+    
+    if (!container) {
+      console.error(`Container #${containerId} não encontrado.`);
+      return false;
+    }
+
+    container.innerHTML = renderStatisticsSection() +
+                          renderFeaturesSection() +
+                          renderCalculadorasSection() +
+                          renderEscalasSection() +
+                          renderVacinasSection();
+
+    return true;
+  }
 
   // ============================================
   // FUNÇÕES UTILITÁRIAS
   // ============================================
   
-  /**
-   * Função debounce para otimizar eventos de input
-   */
-  function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func.apply(this, args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  }
-
   /**
    * Função throttle para otimizar eventos de scroll
    */
@@ -142,7 +280,7 @@
   /**
    * Renderiza um card de ferramenta
    */
-  function renderCard(tool, config, type) {
+  function renderCard(tool, type) {
     const basePath = type === 'calculator' ? 'calculadoras/' : 
                      type === 'scale' ? 'escalas/' : 'outros/';
     const url = basePath + tool.filename;
@@ -157,8 +295,7 @@
           <p class="tool-description">${tool.description}</p>
           <span class="tool-category">${tool.category}</span>
         </div>
-        <a href="${url}" class="tool-link" aria-label="Acessar ${tool.name}">
-          <span class="sr-only">Acessar</span>
+        <a href="${url}" class="tool-link">
           <i class="fas fa-arrow-right"></i>
         </a>
       </article>
@@ -188,31 +325,6 @@
   }
 
   /**
-   * Configura links canônicos para SEO multilíngue
-   */
-  function initCanonicalLinks() {
-    const canonicalUrl = document.querySelector('link[rel="canonical"]')?.href;
-    if (!canonicalUrl) return;
-
-    const translations = [
-      { lang: "pt-br", href: canonicalUrl },
-      { lang: "en", href: canonicalUrl.replace(/\/$/, '') + '/en/' },
-      { lang: "es", href: canonicalUrl.replace(/\/$/, '') + '/es/' },
-      { lang: "x-default", href: canonicalUrl }
-    ];
-
-    translations.forEach(trans => {
-      if (!document.querySelector(`link[hreflang="${trans.lang}"]`)) {
-        const link = document.createElement('link');
-        link.rel = 'alternate';
-        link.hreflang = trans.lang;
-        link.href = trans.href;
-        document.head.appendChild(link);
-      }
-    });
-  }
-
-  /**
    * Renderiza ferramentas filtradas por tipo
    */
   function renderTools(type, toolType) {
@@ -224,16 +336,6 @@
     // Aplicar filtro de categoria
     if (appConfig.filterCategory !== 'all') {
       filteredTools = filteredTools.filter(tool => tool.category === appConfig.filterCategory);
-    }
-
-    // Aplicar busca
-    if (appConfig.searchTerm) {
-      const searchLower = appConfig.searchTerm.toLowerCase();
-      filteredTools = filteredTools.filter(tool => 
-        tool.name.toLowerCase().includes(searchLower) ||
-        tool.description.toLowerCase().includes(searchLower) ||
-        tool.category.toLowerCase().includes(searchLower)
-      );
     }
 
     // Ordenar
@@ -248,12 +350,11 @@
 
     // Renderizar
     if (filteredTools.length > 0) {
-      gridElement.innerHTML = filteredTools.map(tool => renderCard(tool, appConfig, type)).join('');
+      gridElement.innerHTML = filteredTools.map(tool => renderCard(tool, type)).join('');
     } else {
       gridElement.innerHTML = `
         <div class="no-results">
           <p>Nenhuma ferramenta encontrada</p>
-          <p class="no-results-hint">Tente buscar por outros termos ou categorias.</p>
         </div>
       `;
     }
@@ -266,51 +367,6 @@
     renderTools('calculadoras', 'calculator');
     renderTools('escalas', 'scale');
     renderTools('vacinas', 'other');
-  }
-
-  /**
-   * Inicializa controles de busca e filtros
-   */
-  function initSearchControls() {
-    // Busca calculadoras
-    const calcSearch = document.getElementById('calc-search');
-    if (calcSearch) {
-      calcSearch.addEventListener('input', debounce(function(e) {
-        appConfig.searchTerm = e.target.value;
-        renderTools('calculadoras', 'calculator');
-      }, appConfig.debounceDelay));
-    }
-
-    // Busca escalas
-    const scaleSearch = document.getElementById('scale-search');
-    if (scaleSearch) {
-      scaleSearch.addEventListener('input', debounce(function(e) {
-        appConfig.searchTerm = e.target.value;
-        renderTools('escalas', 'scale');
-      }, appConfig.debounceDelay));
-    }
-
-    // Botão voltar ao topo
-    const backToTopBtn = document.getElementById('back-to-top-btn');
-    if (backToTopBtn) {
-      window.addEventListener('scroll', throttle(function() {
-        if (window.scrollY > appConfig.scrollThreshold) {
-          backToTopBtn.style.display = 'flex';
-          backToTopBtn.classList.add('visible');
-        } else {
-          backToTopBtn.classList.remove('visible');
-          setTimeout(function() {
-            if (window.scrollY <= appConfig.scrollThreshold) {
-              backToTopBtn.style.display = 'none';
-            }
-          }, 300);
-        }
-      }, appConfig.throttleDelay));
-
-      backToTopBtn.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
   }
 
   /**
@@ -329,14 +385,19 @@
    */
   function init() {
     initSmoothScroll();
-    initCanonicalLinks();
-    initSearchControls();
     renderAllTools();
   }
 
   // Expor funções globalmente
   window.renderAllTools = renderAllTools;
   window.renderTools = renderTools;
+  window.renderMainPageHTML = renderMainPageHTML;
+  window.renderMainPageHTMLIn = renderMainPageHTMLIn;
+  window.renderStatisticsSection = renderStatisticsSection;
+  window.renderFeaturesSection = renderFeaturesSection;
+  window.renderCalculadorasSection = renderCalculadorasSection;
+  window.renderEscalasSection = renderEscalasSection;
+  window.renderVacinasSection = renderVacinasSection;
 
   // Inicialização quando os módulos estiverem carregados
   document.addEventListener('ModulesLoaded', function() {
@@ -346,12 +407,19 @@
   // Inicialização quando o DOM estiver pronto
   onReady(function() {
     setTimeout(function() {
+      // Verificar se existe container para renderização automática
+      const appContainer = document.getElementById('app');
+      if (appContainer) {
+        renderMainPageHTML();
+      }
+      
+      // Verificar se existem grids para renderizar ferramentas
       if (document.getElementById('calculadoras-grid') && 
           document.getElementById('escalas-grid') && 
           document.getElementById('vacinas-grid')) {
         init();
       }
-    }, 500);
+    }, 100);
   });
 
 })();
