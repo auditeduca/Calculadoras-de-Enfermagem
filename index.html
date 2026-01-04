@@ -31,15 +31,12 @@
     <script>
         tailwind.config = {
             theme: { extend: { colors: { primary: '#1A3E74', accent: '#1e40af' } } }
-        }
+        }  
     </script>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
 
-    <!-- CSS Crítico Modular -->
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
-    
     <!-- Estilos Globais e Controle de FOUC -->
     <style>
         :root {
@@ -141,7 +138,6 @@
         const APP_CONFIG = {
             baseUrl: "https://auditeduca.github.io/Calculadoras-de-Enfermagem/", 
             components: [
-                { id: 'preload-container', url: 'assets/components/preload.html' },
                 { id: 'accessibility-container', url: 'assets/components/accessibility.html' },
                 { id: 'header-container', url: 'assets/components/header.html' },
                 { id: 'footer-container', url: 'assets/components/footer.html' },
