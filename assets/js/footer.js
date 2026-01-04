@@ -313,28 +313,82 @@
             toast: document.getElementById(CONFIG.selectors.toast),
             toastMessage: document.getElementById(CONFIG.selectors.toastMessage)
         };
+        
+        console.log('[Footer] Elementos buscados:', {
+            banner: !!state.elements.banner,
+            overlay: !!state.elements.overlay,
+            modal: !!state.elements.modal,
+            backToTop: !!state.elements.backToTop,
+            cookieFab: !!state.elements.cookieFab,
+            yearSpan: !!state.elements.yearSpan
+        });
     }
 
     /**
      * Configura todos os event listeners dos elementos interativos
      */
     function initListeners() {
-        // Botões do Banner Principal (usando IDs reais do HTML)
-        document.getElementById("cookie-accept")?.addEventListener("click", () => saveConsent('all'));
-        document.getElementById("cookie-settings")?.addEventListener("click", () => openModal());
-
-        // Botões do Modal de Preferências
-        document.getElementById("cookie-save-preferences")?.addEventListener("click", () => saveConsent('custom'));
-        document.getElementById("cookie-modal-close")?.addEventListener("click", closeModal);
-        document.getElementById("cookie-accept-all")?.addEventListener("click", () => saveConsent('all'));
+        console.log('[Footer] Configurando event listeners...');
         
-        // Clique no Overlay fecha o modal (mas não aceita cookies automaticamente)
-        state.elements.overlay?.addEventListener("click", (e) => {
-            if (e.target === state.elements.overlay) closeModal();
+        // Botões do Banner Principal (usando IDs reais do HTML)
+        const btnAccept = document.getElementById("cookie-accept");
+        const btnSettings = document.getElementById("cookie-settings");
+        const btnSavePrefs = document.getElementById("cookie-save-preferences");
+        const btnModalClose = document.getElementById("cookie-modal-close");
+        const btnAcceptAll = document.getElementById("cookie-accept-all");
+
+        console.log('[Footer] Botões encontrados:', {
+            cookieAccept: !!btnAccept,
+            cookieSettings: !!btnSettings,
+            cookieSavePreferences: !!btnSavePrefs,
+            cookieModalClose: !!btnModalClose,
+            cookieAcceptAll: !!btnAcceptAll
         });
 
+        if (btnAccept) btnAccept.addEventListener("click", () => {
+            console.log('[Footer] Botão Aceitar clicado');
+            saveConsent('all');
+        });
+        
+        if (btnSettings) btnSettings.addEventListener("click", () => {
+            console.log('[Footer] Botão Personalizar clicado');
+            openModal();
+        });
+
+        // Botões do Modal de Preferências
+        if (btnSavePrefs) btnSavePrefs.addEventListener("click", () => {
+            console.log('[Footer] Botão Salvar Preferências clicado');
+            saveConsent('custom');
+        });
+        
+        if (btnModalClose) btnModalClose.addEventListener("click", () => {
+            console.log('[Footer] Botão Fechar Modal clicado');
+            closeModal();
+        });
+        
+        if (btnAcceptAll) btnAcceptAll.addEventListener("click", () => {
+            console.log('[Footer] Botão Aceitar Todos clicado');
+            saveConsent('all');
+        });
+        
+        // Clique no Overlay fecha o modal (mas não aceita cookies automaticamente)
+        if (state.elements.overlay) {
+            state.elements.overlay.addEventListener("click", (e) => {
+                console.log('[Footer] Clique no overlay');
+                if (e.target === state.elements.overlay) closeModal();
+            });
+        }
+
         // FAB (Botão flutuante para reabrir preferências)
-        state.elements.cookieFab?.addEventListener("click", () => openModal());
+        if (state.elements.cookieFab) {
+            console.log('[Footer] FAB encontrado, adicionando listener');
+            state.elements.cookieFab.addEventListener("click", () => {
+                console.log('[Footer] FAB clicado');
+                openModal();
+            });
+        } else {
+            console.log('[Footer] FAB não encontrado');
+        }
 
         // Accordion/Expansão de categorias no modal
         document.querySelectorAll(".cookie-category-header").forEach(header => {
@@ -398,6 +452,7 @@
         });
 
         // Scroll Back to Top - visibilidade baseada na posição de scroll
+        console.log('[Footer] Configurando scroll listener para backToTop');
         window.addEventListener("scroll", () => {
             if (window.scrollY > 300) {
                 state.elements.backToTop?.classList.add("visible");
@@ -407,9 +462,15 @@
         });
 
         // Botão Voltar ao Topo - comportamento de scroll suave
-        state.elements.backToTop?.addEventListener("click", () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
+        if (state.elements.backToTop) {
+            console.log('[Footer] Back to Top encontrado, adicionando listener');
+            state.elements.backToTop.addEventListener("click", () => {
+                console.log('[Footer] Back to Top clicado');
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        } else {
+            console.log('[Footer] Back to Top não encontrado');
+        }
 
         // Tecla ESC fecha o modal mais recente
         document.addEventListener("keydown", function(e) {
@@ -435,7 +496,23 @@
      * Função principal de inicialização
      */
     function run() {
+        console.log('[Footer] run() iniciada');
         initElements();
+        
+        // Verifica se os elementos foram encontrados
+        if (!state.elements.banner && !state.elements.modal) {
+            console.log('[Footer] Elementos não encontrados na primeira tentativa');
+            // Não retorna, continua para tentar inicializar
+        }
+        
+        initializeFooter();
+    }
+
+    /**
+     * Inicializa o footer após os elementos estarem disponíveis
+     */
+    function initializeFooter() {
+        console.log('[Footer] initializeFooter() iniciada');
         
         // Atualiza o ano no copyright do footer
         if (state.elements.yearSpan) {
@@ -446,23 +523,80 @@
 
         // Verifica se o usuário já tem consentimento salvo
         const consent = getCookie(CONFIG.cookieName);
+        console.log('[Footer] Consentimento:', consent);
         
         if (!consent) {
             // Usuário ainda não consentiu: mostra banner após pequeno delay
-            setTimeout(() => toggleBanner(true), 500);
+            setTimeout(() => {
+                console.log('[Footer] Mostrando banner de cookies');
+                toggleBanner(true);
+            }, 500);
         } else {
             // Usuário já consentiu anteriormente: mostra botão FAB para reconfigurar
             if (state.elements.cookieFab) {
+                console.log('[Footer] Mostrando FAB');
                 state.elements.cookieFab.classList.remove("hidden");
             }
         }
+        
+        console.log('[Footer] Inicialização concluída');
     }
 
-    // Inicialização segura: espera o DOM estar pronto
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", run);
+    /**
+     * Sistema de retry para garantir que os elementos sejam encontrados
+     */
+    function tryInitWithRetry(attempts = 5, delay = 500) {
+        let currentAttempt = 0;
+        
+        function tryInit() {
+            currentAttempt++;
+            console.log(`[Footer] Tentativa ${currentAttempt}/${attempts}`);
+            initElements();
+            
+            if (state.elements.banner || state.elements.modal) {
+                console.log('[Footer] Elementos encontrados!');
+                initializeFooter();
+            } else if (currentAttempt < attempts) {
+                console.log(`[Footer] Elementos não encontrados, tentando novamente em ${delay}ms...`);
+                setTimeout(tryInit, delay);
+            } else {
+                console.error('[Footer] ERRO: Elementos não encontrados após todas as tentativas');
+            }
+        }
+        
+        tryInit();
+    }
+
+    // Inicialização híbrida: funciona tanto com carregamento normal quanto modular
+    function startInitialization() {
+        console.log('[Footer] startInitialization()');
+        
+        // Se AppLoader existe, espera AppReady
+        if (window.AppLoader) {
+            console.log('[Footer] AppLoader detectado, esperando AppReady...');
+            window.addEventListener('AppReady', () => {
+                console.log('[Footer] AppReady recebido');
+                tryInitWithRetry(10, 300);
+            });
+            // Fallback se AppReady não vier
+            setTimeout(() => {
+                if (!state.elements.banner) {
+                    console.log('[Footer] AppReady não veio, tentando manualmente');
+                    tryInitWithRetry(10, 300);
+                }
+            }, 3000);
+        } else {
+            // Sem AppLoader, tenta diretamente
+            console.log('[Footer] AppLoader não detectado, iniciando diretamente');
+            tryInitWithRetry(10, 300);
+        }
+    }
+
+    // Inicia a inicialização
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startInitialization);
     } else {
-        run();
+        startInitialization();
     }
 
 })();

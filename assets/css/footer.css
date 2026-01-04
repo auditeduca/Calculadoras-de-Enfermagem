@@ -7,7 +7,7 @@
    Garante que o footer fique abaixo do conteúdo principal
    e não seja sobreposto por elementos fixos
    ========================================= */
-footer#footer {
+#footer {
     position: relative;
     z-index: 1;
     margin-top: auto;
@@ -26,8 +26,28 @@ body {
 }
 
 /* O conteúdo principal deve crescer para empurrar o footer para baixo */
-body > *:not(footer) {
+body > *:not(#footer) {
     flex: 1;
+}
+
+/* =========================================
+   CONTAINER DO FOOTER
+   ========================================= */
+#footer .container {
+    position: relative;
+    z-index: 10;
+}
+
+/* Garante que o conteúdo do footer não seja sobreposto */
+#footer .container > * {
+    position: relative;
+    z-index: 10;
+}
+
+/* Container do conteúdo principal do footer */
+#footer .container.mx-auto {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
 /* =========================================
@@ -128,9 +148,9 @@ body > *:not(footer) {
    ========================================= */
 .social-links-container {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
 }
 
 .social-links-label {
