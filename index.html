@@ -114,7 +114,7 @@
 
     <!-- Widgets de Acessibilidade -->
     <div id="accessibility-container"></div>
-    <div vw class="enabled" style="display:none">
+    <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
     </div>
@@ -230,7 +230,9 @@
             }
 
             initVLibras() {
-                if (!document.querySelector('script[src*="vlibras-plugin.js"]')) {
+                // O VLibras é inicializado pelo accessibility.js
+                // Esta função é mantida para compatibilidade, mas não carrega novamente
+                if (!window.VLibras && !document.querySelector('script[src*="vlibras-plugin.js"]')) {
                     const script = document.createElement('script');
                     script.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
                     script.onload = () => {
