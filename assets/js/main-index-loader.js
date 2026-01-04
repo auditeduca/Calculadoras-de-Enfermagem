@@ -1,6 +1,7 @@
 /**
  * ============================================
  * MAIN-INDEX-LOADER.JS
+<<<<<<< HEAD
  * Calculadoras de Enfermagem
  * 
  * Funcionalidades:
@@ -10,11 +11,18 @@
  * - Controle de visualização
  * - CSS inline para cards
  * ============================================
+=======
+ * Carregamento do Conteúdo Principal
+ * Versão: 1.0
+ * 
+ * Carrega o conteúdo de assets/pages/main-index.html
+>>>>>>> parent of 62c4c81 (v13 04.01.2026)
  */
 
 (function() {
     "use strict";
 
+<<<<<<< HEAD
     // ============================================
     // DADOS DAS FERRAMENTAS
     // ============================================
@@ -622,6 +630,47 @@
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved && sortOptions.includes(saved)) {
                 currentSortOrder = saved;
+=======
+    const MainIndexLoader = {
+        loaded: false,
+
+        /**
+         * Carrega o conteúdo principal
+         */
+        load: async function() {
+            if (this.loaded) return;
+            
+            const container = document.getElementById('main-container');
+            if (!container) {
+                console.warn('[MainIndexLoader] Container #main-container não encontrado');
+                return;
+            }
+
+            try {
+                // Determina o caminho correto baseado na localização
+                const basePath = window.location.pathname.includes('/Calculadoras-de-Enfermagem/') 
+                    ? '/Calculadoras-de-Enfermagem/' 
+                    : '';
+                
+                const response = await fetch(`${basePath}assets/pages/main-index.html`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const html = await response.text();
+                container.innerHTML = html;
+                this.loaded = true;
+                
+                console.log('[MainIndexLoader] Conteúdo principal carregado');
+                
+                // Dispara evento de conteúdo carregado
+                window.dispatchEvent(new CustomEvent('MainIndex:Ready'));
+                
+            } catch (error) {
+                console.warn('[MainIndexLoader] Falha ao carregar:', error.message);
+                // Fallback: conteúdo já está inline no HTML
+>>>>>>> parent of 62c4c81 (v13 04.01.2026)
             }
         }
 
@@ -1073,7 +1122,14 @@
         updateSortLabel();
     };
 
+<<<<<<< HEAD
     // ============================================
+=======
+    // Expõe globalmente
+    window.MainIndexLoader = MainIndexLoader;
+
+    // =========================================
+>>>>>>> parent of 62c4c81 (v13 04.01.2026)
     // INICIALIZAÇÃO
     // ============================================
     function init() {

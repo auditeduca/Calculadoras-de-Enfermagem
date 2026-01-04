@@ -1,260 +1,105 @@
 <!DOCTYPE html>
-<html lang="pt-br" class="scroll-smooth">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
-    <!-- 1. Configurações Iniciais e Performance -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="theme-color" content="#1A3E74">
-
-    <!-- Preconnect para recursos externos -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://auditeduca.github.io">
-
-    <!-- 2. SEO e Metadados -->
-    <title>Calculadoras de Enfermagem — Escalas Clínicas e Ferramentas</title>
-    <meta name="description" content="Mais de 50 calculadoras e escalas clínicas para profissionais de enfermagem;">
+    <title>Calculadoras de Enfermagem</title>
+    
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e conteúdo técnico para profissionais de saúde">
+    <meta name="keywords" content="enfermagem, calculadoras, escalas clínicas, gasometria, balanço hídrico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
+    
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="pt-BR" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
+    <link rel="alternate" hreflang="en" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
+    <link rel="alternate" hreflang="es" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
+    <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
     
     <!-- Favicon -->
-    <link rel="icon" href="https://www.calculadorasdeenfermagem.com.br/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="https://www.calculadorasdeenfermagem.com.br/favicon.ico" type="image/x-icon">
-
-    <!-- 3. CSS e Bibliotecas Críticas -->
+    <link rel="icon" type="image/webp" href="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
     
-    <!-- Three.js (Adicionado para corrigir 'THREE is not defined' no preload.js) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <!-- Tailwind CSS (Removido 'defer' para corrigir 'tailwind is not defined') -->
+    <!-- Font Awesome e Fontes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            theme: { extend: { colors: { primary: '#1A3E74', accent: '#1e40af' } } }
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'audit-gold': '#D4AF37',
+                        'audit-navy': '#1E3A8A',
+                        'audit-blue': '#3B82F6',
+                        'audit-bgDark': '#0F172A',
+                    }
+                }
+            }
         }
     </script>
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
-
-    <!-- CSS Crítico Modular -->
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
+    <!-- CSS Globais -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/preload.css">
+    <link rel="stylesheet" href="assets/css/accessibility.css">
+    <link rel="stylesheet" href="assets/css/global-main.css">
+    <link rel="stylesheet" href="assets/css/global-main-index.css">
     
-    <!-- Estilos Globais e Controle de FOUC -->
     <style>
-        :root {
-            --primary: #1A3E74;
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* Controle de visibilidade da página (Evita FOUC) */
-        .js-loading {
-            visibility: hidden;
+        .animate-fade-in-down { animation: fadeInDown 1s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        
-        /* Placeholder para conteúdo principal */
-        .content-placeholder {
-            min-height: 400px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f9fafb;
+        .animate-fade-in { animation: fadeIn 1.5s ease-out; }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* Visibilidade controlada dos elementos estruturais */
-        body:not(.js-ready) header,
-        body:not(.js-ready) main,
-        body:not(.js-ready) footer {
-            visibility: hidden;
-        }
-        
-        body.js-ready header,
-        body.js-ready main,
-        body.js-ready footer {
-            visibility: visible;
-            transition: visibility 0.3s ease;
-        }
+        .animate-slide-in-up { animation: slideInUp 0.8s ease-out; }
     </style>
-    
-    <!-- Carregamento CSS Não-Crítico -->
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/index.css" media="print" onload="this.media='all'">
-    
-    <noscript>
-        <!-- Fallbacks CSS -->
-        <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
-    </noscript>
-
-    <!-- Script de controle de estado -->
-    <script>
-        (function() {
-            document.documentElement.classList.add('js-loading');
-            window.addEventListener('AppReady', function() {
-                document.documentElement.classList.remove('js-loading');
-                document.body.classList.add('js-ready');
-            });
-            setTimeout(function() {
-                document.documentElement.classList.remove('js-loading');
-                document.body.classList.add('js-ready');
-            }, 5000);
-        })();
-    </script>
 </head>
-<body class="bg-gray-50 text-gray-800 relative">
+<body class="bg-gray-100 text-gray-800 dark:bg-audit-bgDark dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-300 selection:bg-audit-gold selection:text-audit-navy">
 
-    <!-- 4. Componentes -->
-    
-    <!-- Container do Preloader -->
+    <!-- Preload Container -->
     <div id="preload-container"></div>
-
-    <!-- Widgets de Acessibilidade -->
-    <div id="accessibility-container"></div>
-    <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
-    </div>
-
-    <!-- Cabeçalho -->
-    <header id="header-container" class="relative z-50"></header>
-
-    <!-- Conteúdo Principal -->
-    <main id="main-container" class="container mx-auto px-4 min-h-screen pt-4 md:pt-6 pb-12">
-        <div id="main-content-placeholder" class="content-placeholder">
-            <div class="text-center">
-                <p class="text-primary font-medium mt-4" style="color: #1A3E74;">Carregando...</p>
-            </div>
-        </div>
-    </main>
-
-    <!-- Rodapé -->
-    <footer id="footer-container" class="relative z-40"></footer>
-
-    <!-- 5. Scripts de Orquestração -->
     
-    <script>
-        const APP_CONFIG = {
-            baseUrl: "https://auditeduca.github.io/Calculadoras-de-Enfermagem/", 
-            components: [
-                { id: 'preload-container', url: 'assets/components/preload.html' },
-                { id: 'accessibility-container', url: 'assets/components/accessibility.html' },
-                { id: 'header-container', url: 'assets/components/header.html' },
-                { id: 'footer-container', url: 'assets/components/footer.html' },
-            ],
-            scripts: [
-                'assets/js/index.js',
-                'assets/js/console-cleaner.js',
-                'assets/js/preload.js', 
-                'assets/js/accessibility.js', 
-                'assets/js/header.js',
-                'assets/js/footer.js'
-            ]
-        };
-    </script>
+    <!-- Header Container -->
+    <div id="header-container"></div>
+    
+    <!-- Main Container -->
+    <main id="main-container" class="flex-1"></main>
+    
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+    
+    <!-- Accessibility Container -->
+    <div id="accessibility-container"></div>
 
-    <!-- Loader Modular -->
-    <script>
-        class AppLoader {
-            constructor(config) {
-                this.config = config;
-                this.init();
-            }
+    <!-- Scripts -->
+    <script src="assets/js/console-cleaner.js"></script>
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/preload.js"></script>
+    <script src="assets/js/header.js"></script>
+    <script src="assets/js/footer.js"></script>
+    <script src="assets/js/accessibility.js"></script>
+    <script src="assets/js/global-main.js"></script>
+    <script src="assets/js/global-main-index.js"></script>
 
-            async init() {
-                console.log('[AppLoader] Iniciando orquestração...');
-                const start = performance.now();
-
-                try {
-                    await this.loadAllComponents();
-                    this.showMainContent();
-                    this.initVLibras();
-                    await this.loadAllScripts();
-
-                    const end = performance.now();
-                    console.log(`[AppLoader] Completo em ${Math.round(end - start)}ms`);
-                    
-                    this.dispatchReadyEvents();
-                    this.hidePreloader();
-
-                } catch (error) {
-                    console.error('[AppLoader] Erro:', error);
-                    this.hidePreloader();
-                }
-            }
-
-            showMainContent() {
-                const placeholder = document.getElementById('main-content-placeholder');
-                if (placeholder) {
-                    placeholder.style.opacity = '0';
-                    setTimeout(() => placeholder.style.display = 'none', 300);
-                }
-            }
-
-            async fetchComponent(component) {
-                const element = document.getElementById(component.id);
-                if (!element) return;
-                try {
-                    const response = await fetch(this.config.baseUrl + component.url);
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    element.innerHTML = await response.text();
-                } catch (err) {
-                    console.error(`Erro ao carregar ${component.id}`);
-                }
-            }
-
-            async loadAllComponents() {
-                const promises = this.config.components.map(c => this.fetchComponent(c));
-                await Promise.all(promises);
-            }
-
-            loadScript(src) {
-                return new Promise((resolve) => {
-                    const script = document.createElement('script');
-                    script.src = this.config.baseUrl + src;
-                    script.onload = () => resolve();
-                    script.onerror = () => resolve();
-                    document.head.appendChild(script);
-                });
-            }
-
-            async loadAllScripts() {
-                for (const src of this.config.scripts) await this.loadScript(src);
-            }
-
-            initVLibras() {
-                // O VLibras é inicializado pelo accessibility.js
-                // Esta função é mantida para compatibilidade, mas não carrega novamente
-                if (!window.VLibras && !document.querySelector('script[src*="vlibras-plugin.js"]')) {
-                    const script = document.createElement('script');
-                    script.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
-                    script.onload = () => {
-                        if (window.VLibras) new window.VLibras.Widget('https://vlibras.gov.br/app');
-                    };
-                    document.body.appendChild(script);
-                }
-            }
-
-            dispatchReadyEvents() {
-                window.dispatchEvent(new CustomEvent('AppReady'));
-                window.dispatchEvent(new CustomEvent('ModulesLoaded'));
-            }
-
-            hidePreloader() {
-                const container = document.getElementById('preload-container');
-                if (!container) return;
-
-                setTimeout(() => {
-                    container.style.transition = 'opacity 0.5s ease';
-                    container.style.opacity = '0';
-                    container.style.pointerEvents = 'none';
-                    setTimeout(() => {
-                        container.style.display = 'none';
-                        container.innerHTML = '';
-                    }, 500);
-                }, 500);
-            }
-        }
-        document.addEventListener('DOMContentLoaded', () => new AppLoader(APP_CONFIG));
-    </script>
 </body>
 </html>

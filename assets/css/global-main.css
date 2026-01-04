@@ -1,2 +1,45 @@
-@ -1 +0,0 @@
-.main-container{max-width:1200px;margin:0 auto;padding:var(--spacing-lg,2rem)}.card{background:var(--bg-card,#fff);border-radius:var(--radius-md,8px);box-shadow:var(--shadow-card,0 2px 8px rgba(0,0,0,0.1));padding:var(--spacing-md,1.5rem);transition:transform .2s ease,box-shadow .2s ease}.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-card-hover,0 4px 16px rgba(0,0,0,0.15))}.calculators-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--spacing-md,1.5rem)}.section-title{font-family:var(--font-heading,'Montserrat',sans-serif);font-size:var(--font-size-2xl,1.75rem);color:var(--color-primary,#1A3E74);margin-bottom:var(--spacing-md,1.5rem)}@media(max-width:768px){.main-container{padding:var(--spacing-md,1rem)}.calculators-grid{grid-template-columns:1fr}}
+/* ========================================
+   GLOBAL-MAIN.CSS - Estilos Globais Principais
+   Calculadoras de Enfermagem
+   ======================================== */
+
+.main-container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:var(--spacing-lg,2rem)
+}
+
+.card{
+  background:var(--bg-card,#fff);
+  border-radius:var(--radius-md,8px);
+  box-shadow:var(--shadow-card,0 2px 8px rgba(0,0,0,0.1));
+  padding:var(--spacing-md,1.5rem);
+  transition:transform .2s ease,box-shadow .2s ease
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-card-hover,0 4px 16px rgba(0,0,0,0.15))
+}
+
+.calculators-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:var(--spacing-md,1.5rem)
+}
+
+.section-title{
+  font-family:var(--font-heading,'Montserrat',sans-serif);
+  font-size:var(--font-size-2xl,1.75rem);
+  color:var(--color-primary,#1A3E74);
+  margin-bottom:var(--spacing-md,1.5rem)
+}
+
+@media(max-width:768px){
+  .main-container{
+    padding:var(--spacing-md,1rem)
+  }
+  .calculators-grid{
+    grid-template-columns:1fr
+  }
+}
