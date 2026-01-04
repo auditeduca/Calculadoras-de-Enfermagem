@@ -118,7 +118,9 @@
             state.modalStack.push(modal);
 
             // Exibe o overlay e o modal
+            overlay.classList.remove("hidden");
             overlay.classList.add("visible");
+            modal.classList.remove("hidden");
             modal.classList.add("visible");
             modal.setAttribute("aria-hidden", "false");
             
@@ -129,6 +131,74 @@
             // Mas NÃO altera o estado global de consentimento do usuário
             if (state.isBannerVisible) {
                 state.elements.banner.classList.remove("visible");
+            }
+        }
+    }
+
+    /**
+     * Abre um submodal de detalhes (Google Tag Manager, Analytics, AdSense)
+     * @param {string} modalId - ID do submodal a abrir
+     */
+    function openDetailModal(modalId) {
+        const detailModal = document.getElementById(modalId);
+        const { overlay } = state.elements;
+
+        if (!detailModal || !overlay) return;
+
+        // Salva foco atual
+        state.lastFocusedElement = document.activeElement;
+
+        // Adiciona à pilha de modais
+        state.modalStack.push(detailModal);
+
+        // Mostra overlay e submodal
+        overlay.classList.remove("hidden");
+        overlay.classList.add("visible");
+        detailModal.classList.remove("hidden");
+        detailModal.classList.add("visible");
+        detailModal.setAttribute("aria-hidden", "false");
+
+        // Trava scroll
+        document.body.style.overflow = "hidden";
+    }
+
+    /**
+     * Fecha um submodal específico (usado pelo botão Voltar)
+     * @param {string} modalId - ID do submodal a fechar
+     */
+    function closeDetailModal(modalId) {
+        const detailModal = document.getElementById(modalId);
+        if (!detailModal) return;
+
+        // Remove da pilha
+        const index = state.modalStack.indexOf(detailModal);
+        if (index > -1) {
+            state.modalStack.splice(index, 1);
+        }
+
+        // Esconde o submodal
+        detailModal.classList.remove("visible");
+        detailModal.classList.add("hidden");
+        detailModal.setAttribute("aria-hidden", "true");
+
+        // Se não há mais modais na pilha, restaura estado
+        if (state.modalStack.length === 0) {
+            const { overlay } = state.elements;
+            overlay.classList.remove("visible");
+            overlay.classList.add("hidden");
+            document.body.style.overflow = "";
+
+            // Mantém o modal principal visível
+            const mainModal = state.elements.modal;
+            if (mainModal) {
+                mainModal.classList.add("visible");
+                mainModal.setAttribute("aria-hidden", "false");
+                state.modalStack.push(mainModal);
+            }
+
+            // Restaura foco
+            if (state.lastFocusedElement) {
+                state.lastFocusedElement.focus();
             }
         }
     }
@@ -145,6 +215,7 @@
 
         if (currentModal) {
             currentModal.classList.remove("visible");
+            currentModal.classList.add("hidden");
             currentModal.setAttribute("aria-hidden", "true");
         }
 
@@ -152,13 +223,12 @@
         if (state.modalStack.length === 0) {
             // Esconde o overlay e restaura o scroll
             overlay.classList.remove("visible");
+            overlay.classList.add("hidden");
             document.body.style.overflow = "";
 
             // CORREÇÃO LGPD: Se o usuário fechou o modal SEM dar consentimento
             // (ex: clicou no 'X' ou no overlay fora do modal), e o banner deveria 
             // estar visível (consentimento pendente), REEXIBE o banner principal.
-            // Isso impede que o usuário "esqueça" de aceitar/rejeitar cookies
-            // apenas fechando a janela de preferências.
             const hasConsent = getCookie(CONFIG.cookieName);
             if (!hasConsent && state.isBannerVisible) {
                 banner.classList.add("visible");
@@ -211,11 +281,13 @@
         while(state.modalStack.length > 0) {
             const m = state.modalStack.pop();
             m.classList.remove("visible");
+            m.classList.add("hidden");
             m.setAttribute("aria-hidden", "true");
         }
         
         // Fecha overlay e restaura scroll
         state.elements.overlay.classList.remove("visible");
+        state.elements.overlay.classList.add("hidden");
         document.body.style.overflow = "";
         toggleBanner(false);
 
@@ -247,14 +319,14 @@
      * Configura todos os event listeners dos elementos interativos
      */
     function initListeners() {
-        // Botões do Banner Principal
-        document.getElementById("btn-accept-all")?.addEventListener("click", () => saveConsent('all'));
-        document.getElementById("btn-reject-all")?.addEventListener("click", () => saveConsent('reject'));
-        document.getElementById("btn-customize")?.addEventListener("click", () => openModal());
+        // Botões do Banner Principal (usando IDs reais do HTML)
+        document.getElementById("cookie-accept")?.addEventListener("click", () => saveConsent('all'));
+        document.getElementById("cookie-settings")?.addEventListener("click", () => openModal());
 
         // Botões do Modal de Preferências
-        document.getElementById("btn-save-prefs")?.addEventListener("click", () => saveConsent('custom'));
-        document.getElementById("btn-modal-close")?.addEventListener("click", closeModal);
+        document.getElementById("cookie-save-preferences")?.addEventListener("click", () => saveConsent('custom'));
+        document.getElementById("cookie-modal-close")?.addEventListener("click", closeModal);
+        document.getElementById("cookie-accept-all")?.addEventListener("click", () => saveConsent('all'));
         
         // Clique no Overlay fecha o modal (mas não aceita cookies automaticamente)
         state.elements.overlay?.addEventListener("click", (e) => {
@@ -265,7 +337,7 @@
         state.elements.cookieFab?.addEventListener("click", () => openModal());
 
         // Accordion/Expansão de categorias no modal
-        document.querySelectorAll(".cookie-group-header").forEach(header => {
+        document.querySelectorAll(".cookie-category-header").forEach(header => {
             header.addEventListener("click", function() {
                 const group = this.parentElement;
                 group.classList.toggle("active");
@@ -274,12 +346,54 @@
                 const expanded = group.classList.contains("active");
                 this.setAttribute("aria-expanded", expanded);
             });
+
+            // Suporte a teclado (Enter/Space para expandir)
+            header.addEventListener("keydown", function(e) {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
         });
 
-        // Efeito visual nos switches de checkbox (opcional)
+        // Efeito visual nos switches de checkbox
         document.querySelectorAll('.cookie-switch input[type="checkbox"]').forEach(chk => {
             chk.addEventListener("change", function() {
-                // Lógica visual adicional pode ser adicionada aqui
+                const slider = this.nextElementSibling;
+                if (slider) {
+                    slider.style.backgroundColor = this.checked ? "#2563eb" : "#e5e7eb";
+                }
+            });
+        });
+
+        // Botões de informação (abrem submodais de detalhes)
+        document.querySelectorAll(".cookie-info-btn").forEach(btn => {
+            btn.addEventListener("click", function() {
+                const modalTarget = this.getAttribute("data-modal-target");
+                if (modalTarget) {
+                    state.lastFocusedElement = this;
+                    openDetailModal(modalTarget);
+                }
+            });
+        });
+
+        // Botões de fechar nos submodais (X)
+        document.querySelectorAll(".cookie-detail-modal .cookie-modal-close").forEach(btn => {
+            btn.addEventListener("click", function() {
+                const modal = this.closest(".cookie-detail-modal");
+                if (modal && modal.id) {
+                    closeDetailModal(modal.id);
+                }
+            });
+        });
+
+        // Botões Voltar nos submodais
+        document.querySelectorAll(".cookie-detail-back").forEach(btn => {
+            btn.addEventListener("click", function() {
+                const modalTarget = this.getAttribute("data-close");
+                if (modalTarget) {
+                    closeDetailModal(modalTarget);
+                }
             });
         });
 
@@ -295,6 +409,25 @@
         // Botão Voltar ao Topo - comportamento de scroll suave
         state.elements.backToTop?.addEventListener("click", () => {
             window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // Tecla ESC fecha o modal mais recente
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape" && state.modalStack.length > 0) {
+                const topModal = state.modalStack[state.modalStack.length - 1];
+                
+                // Verifica se é um submodal
+                if (topModal.classList.contains("cookie-detail-modal")) {
+                    const modalId = topModal.id;
+                    if (modalId) {
+                        closeDetailModal(modalId);
+                        return;
+                    }
+                }
+                
+                // Caso contrário, fecha o modal principal
+                closeModal();
+            }
         });
     }
 
@@ -319,8 +452,9 @@
             setTimeout(() => toggleBanner(true), 500);
         } else {
             // Usuário já consentiu anteriormente: mostra botão FAB para reconfigurar
-            // O FAB pode ser exibido via CSS quando a classe 'hidden' for removida
-            // state.elements.cookieFab?.classList.remove("hidden");
+            if (state.elements.cookieFab) {
+                state.elements.cookieFab.classList.remove("hidden");
+            }
         }
     }
 

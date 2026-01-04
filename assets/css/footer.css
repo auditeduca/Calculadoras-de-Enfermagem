@@ -3,6 +3,34 @@
    ========================================= */
 
 /* =========================================
+   CORREÇÃO: POSICIONAMENTO DO FOOTER
+   Garante que o footer fique abaixo do conteúdo principal
+   e não seja sobreposto por elementos fixos
+   ========================================= */
+footer#footer {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+}
+
+/* Garante que o body/html tenham altura mínima para empilhamento correto */
+html, body {
+    min-height: 100%;
+}
+
+/* Ajuste para páginas com pouco conteúdo */
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+/* O conteúdo principal deve crescer para empurrar o footer para baixo */
+body > *:not(footer) {
+    flex: 1;
+}
+
+/* =========================================
    VARIÁVEIS CSS (Design Tokens)
    ========================================= */
 :root {
@@ -34,23 +62,23 @@
     align-items: flex-start;
     padding: 0 1rem;
     margin-bottom: 1.25rem;
+    position: relative;
+    z-index: 10;
 }
 
 /**
- * CORREÇÃO: Largura do Logotipo
- * - Usa width com valor em rem para flexibilidade
- * - height: auto mantém proporção original
- * - min-width evita que texto fique ilegível
- * - max-width: 100% garante responsividade
+ * CORREÇÃO: Logotipo - Usa width fixo para preservar proporção
+ * height: auto mantém a proporção original da imagem
+ * object-fit: contain evita distorção
  */
 .footer-logo {
-    width: 12.5rem;      /* 200px equivalente em rem (16px base) */
-    height: auto;        /* Altura automática para manter proporção */
-    min-width: 8rem;     /* Mínimo para legibilidade */
-    max-width: 100%;     /* Garante responsividade em telas pequenas */
+    width: 200px;
+    height: auto;
+    max-width: 100%;
     margin-bottom: 0.75rem;
     object-fit: contain;
     object-position: left center;
+    display: block;
 }
 
 .footer-divider {
@@ -100,19 +128,18 @@
    ========================================= */
 .social-links-container {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.25rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .social-links-label {
     display: block;
     font-size: 0.688rem;
-    color: var(--text-footer-muted);
+    color: #9ca3af;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 0.375rem;
-    text-align: center;
+    white-space: nowrap;
 }
 
 .social-links {
@@ -152,15 +179,17 @@
 
 /**
  * Estilo base para todos os selos
- * Altura padrão de 3.25rem para uniformidade
+ * Altura fixa para uniformidade visual
  */
 .footer-seal {
-    height: 3.25rem;
+    height: 52px;
     width: auto;
     max-width: 100px;
     object-fit: contain;
     border-radius: 6px;
     transition: transform 0.2s ease-in-out;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .footer-seal:hover {
@@ -169,21 +198,29 @@
 
 /**
  * CORREÇÃO: Selo de Sustentabilidade
- * - Usa classe específica no HTML (.seal-sustentabilidade) para clareza
- * - Mantém seletor de atributo como fallback
- * - Altura reduzida (2.75rem) para equilibrar visualmente
+ * Usa atributo alt como seletor para garantir aplicação
+ * Altura ligeiramente menor para equilíbrio visual
  */
-.footer-seal.seal-sustentabilidade,
 .footer-seal[alt*="Sustentabilidade"],
+.footer-seal[alt*="sustentabilidade"],
 .footer-seal[src*="sustentabilidade"] {
-    height: 2.75rem;
+    height: 48px;
+}
+
+/**
+ * CORREÇÃO: Ajuste fino para o selo de LGPD
+ */
+.footer-seal[alt*="LGPD"],
+.footer-seal[alt*="lgpd"],
+.footer-seal[src*="lgpd"] {
+    height: 52px;
 }
 
 /* =========================================
    COPYRIGHT E LINKS LEGAIS
    ========================================= */
 .footer-bottom {
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid #374151;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     display: flex;
@@ -227,6 +264,26 @@
 }
 
 /* =========================================
+   CONTAINER DO FOOTER
+   ========================================= */
+footer#footer .container {
+    position: relative;
+    z-index: 10;
+}
+
+/* Garante que o conteúdo do footer não seja sobreposto */
+footer#footer .container > * {
+    position: relative;
+    z-index: 10;
+}
+
+/* Container do conteúdo principal do footer */
+footer#footer .container.mx-auto {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* =========================================
    BANNER DE COOKIES
    ========================================= */
 .cookie-banner {
@@ -234,19 +291,28 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: var(--bg-cookie-banner, var(--bg-panel));
+    background: var(--bg-cookie-banner, #1f2937);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    color: var(--text-cookie, var(--text-body));
+    color: var(--text-cookie, #f9fafb);
     padding: 1rem 1.5rem;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
-    transform: translateY(0);
-    z-index: var(--z-cookie-banner);
+    transform: translateY(100%); /* Escondido por padrão */
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
     min-height: 70px;
+    transition: transform 0.3s ease;
+}
+
+.cookie-banner.visible {
+    transform: translateY(0);
+}
+
+.cookie-banner.hidden {
+    display: none;
 }
 
 .cookie-content {
@@ -258,17 +324,17 @@
     margin: 0;
     font-size: 0.875rem;
     line-height: 1.6;
-    color: var(--text-body);
+    color: #f9fafb;
 }
 
 .cookie-consent-note {
     margin-top: 0.5rem !important;
     font-size: 0.813rem !important;
-    color: var(--text-secondary) !important;
+    color: #d1d5db !important;
 }
 
 .cookie-content a {
-    color: var(--color-primary);
+    color: #60a5fa;
     font-weight: 500;
     text-decoration: none;
 }
@@ -301,24 +367,24 @@
 }
 
 .cookie-btn-primary {
-    background: var(--color-primary);
+    background: #3b82f6;
     color: #fff;
-    border-color: var(--color-primary);
+    border-color: #3b82f6;
 }
 
 .cookie-btn-primary:hover {
-    background: var(--color-primary-hover);
-    border-color: var(--color-primary-hover);
+    background: #2563eb;
+    border-color: #2563eb;
 }
 
 .cookie-btn-secondary {
-    background: var(--bg-panel);
-    color: var(--color-primary);
-    border-color: var(--color-primary);
+    background: transparent;
+    color: #3b82f6;
+    border-color: #3b82f6;
 }
 
 .cookie-btn-secondary:hover {
-    background: var(--bg-secondary);
+    background: rgba(59, 130, 246, 0.1);
 }
 
 /* =========================================
@@ -356,18 +422,22 @@
 .cookie-overlay {
     position: fixed;
     inset: 0;
-    background: var(--bg-cookie-overlay, rgba(0, 0, 0, 0.6));
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    z-index: var(--z-cookie-overlay);
+    z-index: 9998;
     opacity: 0;
     visibility: hidden;
-    transition: all var(--transition-normal);
+    transition: all 0.3s ease;
 }
 
-.cookie-overlay:not(.hidden) {
+.cookie-overlay.visible {
     opacity: 1;
     visibility: visible;
+}
+
+.cookie-overlay.hidden {
+    display: none;
 }
 
 /* =========================================
@@ -378,7 +448,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.95);
-    background: var(--bg-cookie-modal, var(--bg-panel));
+    background: #1f2937;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 1rem;
@@ -386,17 +456,22 @@
     max-width: 720px;
     max-height: 85vh;
     overflow: hidden;
-    z-index: var(--z-cookie-modal);
+    z-index: 10000;
     opacity: 0;
     visibility: hidden;
-    transition: all var(--transition-normal);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    color: #f9fafb;
 }
 
-.cookie-modal:not(.hidden) {
+.cookie-modal.visible {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
+}
+
+.cookie-modal.hidden {
+    display: none;
 }
 
 /* Header do Modal */
@@ -405,8 +480,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--border-color);
-    background: var(--bg-secondary);
+    border-bottom: 1px solid #374151;
+    background: #374151;
     flex-shrink: 0;
     position: sticky;
     top: 0;
@@ -416,7 +491,7 @@
 .cookie-modal-header h3 {
     margin: 0;
     font-size: 1.25rem;
-    color: var(--text-body);
+    color: #f9fafb;
     font-weight: 600;
 }
 
@@ -424,10 +499,10 @@
 .cookie-modal-close {
     background: none;
     border: none;
-    color: var(--text-secondary);
+    color: #9ca3af;
     font-size: 1.5rem;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: all 0.2s ease;
     width: 40px;
     height: 40px;
     display: flex;
@@ -438,19 +513,19 @@
 }
 
 .cookie-modal-close:hover {
-    color: var(--text-body);
-    background: var(--bg-tertiary);
+    color: #f9fafb;
+    background: #4b5563;
 }
 
 .cookie-modal-close:focus {
-    outline: 3px solid var(--color-primary);
+    outline: 3px solid #3b82f6;
     outline-offset: 2px;
 }
 
 /* Corpo do Modal */
 .cookie-modal-body {
     padding: 1.5rem;
-    color: var(--text-body);
+    color: #f9fafb;
     flex: 1;
     overflow-y: auto;
     max-height: calc(85vh - 140px);
@@ -460,12 +535,12 @@
    CATEGORIAS DE COOKIES (Accordion)
    ========================================= */
 .cookie-category {
-    border: 1px solid var(--border-color);
+    border: 1px solid #374151;
     border-radius: 0.75rem;
     margin-bottom: 1rem;
     overflow: hidden;
-    background: var(--bg-panel);
-    transition: box-shadow var(--transition-fast);
+    background: #111827;
+    transition: box-shadow 0.2s ease;
 }
 
 .cookie-category:last-of-type {
@@ -482,20 +557,20 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.25rem;
-    background: var(--bg-secondary);
+    background: #374151;
     border-bottom: 1px solid transparent;
     cursor: pointer;
-    transition: background var(--transition-fast);
+    transition: background 0.2s ease;
 }
 
 .cookie-category-header:hover {
-    background: var(--bg-tertiary);
+    background: #4b5563;
 }
 
 .cookie-category-header h4 {
     margin: 0;
     font-size: 0.938rem;
-    color: var(--text-body);
+    color: #f9fafb;
     font-weight: 600;
     flex: 1;
 }
@@ -510,8 +585,8 @@
 /* Botão Expandir */
 .cookie-expand-btn {
     background: none;
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
+    border: 1px solid #4b5563;
+    color: #9ca3af;
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -521,23 +596,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--transition-fast);
+    transition: all 0.2s ease;
     flex-shrink: 0;
 }
 
 .cookie-expand-btn:hover {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
+    background: #3b82f6;
+    border-color: #3b82f6;
     color: #fff;
 }
 
 .cookie-expand-btn:focus {
-    outline: 3px solid var(--color-primary);
+    outline: 3px solid #3b82f6;
     outline-offset: 2px;
 }
 
 .cookie-expand-btn svg {
-    transition: transform var(--transition-fast);
+    transition: transform 0.2s ease;
 }
 
 .cookie-expand-btn.expanded svg {
@@ -547,8 +622,8 @@
 /* Botão Info */
 .cookie-info-btn {
     background: none;
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
+    border: 1px solid #4b5563;
+    color: #9ca3af;
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -558,18 +633,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--transition-fast);
+    transition: all 0.2s ease;
     flex-shrink: 0;
 }
 
 .cookie-info-btn:hover {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
+    background: #3b82f6;
+    border-color: #3b82f6;
     color: #fff;
 }
 
 .cookie-info-btn:focus {
-    outline: 3px solid var(--color-primary);
+    outline: 3px solid #3b82f6;
     outline-offset: 2px;
 }
 
@@ -592,8 +667,8 @@
     position: absolute;
     cursor: pointer;
     inset: 0;
-    background-color: var(--bg-tertiary);
-    transition: var(--transition-fast);
+    background-color: #4b5563;
+    transition: 0.2s ease;
     border-radius: 30px;
 }
 
@@ -605,13 +680,13 @@
     left: 3px;
     bottom: 3px;
     background-color: #fff;
-    transition: var(--transition-fast);
+    transition: 0.2s ease;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .cookie-switch input:checked + .cookie-slider {
-    background-color: var(--color-primary);
+    background-color: #3b82f6;
 }
 
 .cookie-switch input:checked + .cookie-slider:before {
@@ -624,7 +699,7 @@
 }
 
 .cookie-switch input:focus-visible + .cookie-slider {
-    outline: 3px solid var(--color-primary);
+    outline: 3px solid #3b82f6;
     outline-offset: 2px;
 }
 
@@ -632,20 +707,20 @@
 .cookie-category-description {
     max-height: 0;
     overflow: hidden;
-    transition: max-height var(--transition-normal), padding var(--transition-fast);
-    background: var(--bg-panel);
+    transition: max-height 0.3s ease, padding 0.2s ease;
+    background: #111827;
 }
 
 .cookie-category-description.expanded {
     max-height: 500px;
     padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #374151;
 }
 
 .cookie-category-description p {
     margin: 0;
     font-size: 0.813rem;
-    color: var(--text-secondary);
+    color: #d1d5db;
     line-height: 1.6;
 }
 
@@ -655,13 +730,13 @@
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 0;
-    border-top: 1px dashed var(--border-color);
+    border-top: 1px dashed #374151;
     margin-top: 0.75rem;
 }
 
 .cookie-service-name {
     font-size: 0.813rem;
-    color: var(--text-body);
+    color: #f9fafb;
     font-weight: 500;
 }
 
@@ -679,27 +754,32 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.95);
-    background: var(--bg-cookie-modal, var(--bg-panel));
+    background: #1f2937;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 1rem;
     width: 90%;
     max-width: 600px;
     max-height: 85vh;
-    z-index: var(--z-cookie-detail);
+    z-index: 10001;
     opacity: 0;
     visibility: hidden;
-    transition: all var(--transition-normal);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    color: #f9fafb;
 }
 
-.cookie-detail-modal:not(.hidden) {
+.cookie-detail-modal.visible {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
+}
+
+.cookie-detail-modal.hidden {
+    display: none;
 }
 
 .cookie-detail-header {
@@ -707,15 +787,15 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--border-color);
-    background: var(--bg-secondary);
+    border-bottom: 1px solid #374151;
+    background: #374151;
     flex-shrink: 0;
 }
 
 .cookie-detail-header h3 {
     margin: 0;
     font-size: 1.125rem;
-    color: var(--text-body);
+    color: #f9fafb;
     font-weight: 600;
     padding-right: 1rem;
 }
@@ -727,7 +807,7 @@
 .cookie-detail-body {
     padding: 1.5rem;
     overflow-y: auto;
-    color: var(--text-body);
+    color: #f9fafb;
     flex: 1;
     max-height: calc(85vh - 100px);
 }
@@ -739,6 +819,7 @@
 
 .cookie-detail-content p {
     margin: 0 0 1rem 0;
+    color: #d1d5db;
 }
 
 .cookie-detail-content p:last-of-type {
@@ -746,11 +827,11 @@
 }
 
 .cookie-detail-content strong {
-    color: var(--text-body);
+    color: #f9fafb;
 }
 
 .cookie-detail-content a {
-    color: var(--color-primary);
+    color: #60a5fa;
     text-decoration: none;
 }
 
@@ -761,7 +842,7 @@
 .cookie-detail-content h5 {
     font-size: 0.813rem;
     font-weight: 600;
-    color: var(--text-body);
+    color: #f9fafb;
     margin: 1.5rem 0 0.5rem 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -778,13 +859,13 @@
 .cookie-detail-links {
     margin-top: 1.5rem;
     padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid #374151;
 }
 
 .cookie-link {
     display: block;
     font-size: 0.813rem;
-    color: var(--color-primary);
+    color: #60a5fa;
     margin-bottom: 0.5rem;
     text-decoration: none;
     font-weight: 500;
@@ -797,8 +878,8 @@
 
 .cookie-detail-footer {
     padding: 1rem 1.5rem;
-    border-top: 1px solid var(--border-color);
-    background: var(--bg-secondary);
+    border-top: 1px solid #374151;
+    background: #374151;
     display: flex;
     justify-content: flex-start;
     flex-shrink: 0;
@@ -809,8 +890,8 @@
    ========================================= */
 .cookie-modal-footer {
     padding: 1.25rem 1.5rem;
-    border-top: 1px solid var(--border-color);
-    background: var(--bg-secondary);
+    border-top: 1px solid #374151;
+    background: #374151;
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
@@ -844,7 +925,7 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--color-primary);
+    background: #3b82f6;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -856,8 +937,8 @@
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
-    transition: all var(--transition-normal);
-    z-index: var(--z-back-to-top);
+    transition: all 0.3s ease;
+    z-index: 9997;
 }
 
 .back-to-top.visible {
@@ -867,30 +948,32 @@
 }
 
 .back-to-top:hover {
-    background: var(--color-primary-hover);
+    background: #2563eb;
     transform: translateY(-3px);
 }
 
 .back-to-top:focus {
-    outline: 3px solid var(--color-primary);
+    outline: 3px solid #3b82f6;
     outline-offset: 2px;
 }
 
 /**
- * Ajuste de posição quando banner de cookies está visível
- * Usa classe adicionada via JavaScript: body.cookie-banner-active
+ * CORREÇÃO: Ajuste de posição quando banner de cookies está visível
+ * O botão deve ficar ACIMA do banner (z-index maior) e mais acima (bottom maior)
  */
-body.cookie-banner-active .back-to-top {
+body.cookie-banner-open .back-to-top {
     bottom: 150px;
+    z-index: 10000;
 }
 
 /**
  * CORREÇÃO: Botão FAB de Cookies
  * Escondido quando banner está ativo para evitar duplicidade
  */
-body.cookie-banner-active .back-to-top,
-body.cookie-banner-active ~ .cookie-fab {
+body.cookie-banner-open .back-to-top,
+body.cookie-banner-open ~ .cookie-fab {
     bottom: 150px;
+    z-index: 10000;
 }
 
 .cookie-fab {
@@ -900,7 +983,7 @@ body.cookie-banner-active ~ .cookie-fab {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--color-primary);
+    background: #3b82f6;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -912,17 +995,17 @@ body.cookie-banner-active ~ .cookie-fab {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
-    transition: all var(--transition-normal);
-    z-index: var(--z-back-to-top);
+    transition: all 0.3s ease;
+    z-index: 9997;
 }
 
 .cookie-fab:hover {
-    background: var(--color-primary-hover);
+    background: #2563eb;
     transform: translateY(-3px);
 }
 
 .cookie-fab:focus {
-    outline: 3px solid var(--color-primary);
+    outline: 3px solid #3b82f6;
     outline-offset: 2px;
 }
 
@@ -930,7 +1013,7 @@ body.cookie-banner-active ~ .cookie-fab {
     display: none;
 }
 
-body.cookie-banner-active .cookie-fab {
+body.cookie-banner-open .cookie-fab {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -1110,18 +1193,21 @@ body.cookie-banner-active .cookie-fab {
     }
     
     /* Ajustes quando banner ativo no mobile */
-    body.cookie-banner-active .back-to-top {
+    body.cookie-banner-open .back-to-top {
         bottom: 150px;
+        z-index: 10000;
     }
     
     .cookie-banner.visible ~ .back-to-top,
     .cookie-banner.visible + .cookie-overlay ~ .back-to-top {
         bottom: 150px;
+        z-index: 10000;
     }
     
     .cookie-banner.visible ~ .cookie-fab,
     .cookie-banner.visible + .cookie-overlay ~ .cookie-fab {
         bottom: 200px;
+        z-index: 10000;
     }
 }
 
@@ -1200,7 +1286,7 @@ body.cookie-banner-active .cookie-fab {
    FOCO VISÍVEL (Acessibilidade)
    ========================================= */
 :focus-visible {
-    outline: 3px solid var(--color-primary);
+    outline: 3px solid #3b82f6;
     outline-offset: 2px;
 }
 
