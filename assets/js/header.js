@@ -1,1112 +1,710 @@
 /**
- * Módulo Unificado de Header e Acessibilidade
- * Substitui header.js com integração total ao AccessControl
- * Resolve conflitos entre módulos e corrige problemas de menu
+ * HEADER.JS
+ * Funcionalidades do Cabeçalho e Navegação
+ * Calculadoras de Enfermagem
  */
+
 (function() {
-    "use strict";
-
-    // ============================================
-    // CONFIGURAÇÕES E CONSTANTES
-    // ============================================
-    const Config = {
-        defaultFontSize: 16,
-        minFontSize: 12,
-        maxFontSize: 24,
-        fontStep: 2,
-        fontStorageKey: "nursing_calc_font_size",
-        themeStorageKey: "nursing_calc_theme",
-        animationDuration: 300,
-        megaMenuBreakpoint: 1024
-    };
-
-    const State = {
-        currentFontSize: Config.defaultFontSize,
-        isDarkMode: false,
-        loaded: false,
-        activeMegaPanel: null,
-        activeMobileSubmenu: null
-    };
-
-    // ============================================
-    // UTILITÁRIOS DOM
-    // ============================================
-    function $(selector) {
-        return document.querySelector(selector);
+  "use strict";
+  
+  const config = {
+    defaultFontSize: 16,
+    minFontSize: 12,
+    maxFontSize: 24,
+    fontStep: 2,
+    fontStorageKey: "nursing_calc_font_size",
+    themeStorageKey: "nursing_calc_theme"
+  };
+  
+  const state = {
+    currentFontSize: config.defaultFontSize,
+    isDarkMode: false,
+    loaded: false
+  };
+  
+  function querySelector(selector) {
+    return document.querySelector(selector);
+  }
+  
+  function querySelectorAll(selector) {
+    return document.querySelectorAll(selector);
+  }
+  
+  function getElementById(id) {
+    return document.getElementById(id);
+  }
+  
+  // Funções de Font Size
+  function saveFontSize() {
+    try {
+      localStorage.setItem(config.fontStorageKey, state.currentFontSize.toString());
+    } catch (e) {
+      console.warn("[Header] Erro ao salvar tamanho da fonte:", e);
     }
-
-    function $$(selector) {
-        return document.querySelectorAll(selector);
-    }
-
-    function getElement(id) {
-        return document.getElementById(id);
-    }
-
-    function isDesktop() {
-        return window.matchMedia(`(min-width: ${Config.megaMenuBreakpoint + 1}px)`).matches;
-    }
-
-    function isMobile() {
-        return window.matchMedia(`(max-width: ${Config.megaMenuBreakpoint}px)`).matches;
-    }
-
-    // ============================================
-    // ACESSIBILIDADE - SCREEN READER
-    // ============================================
-    function announceToScreenReader(message) {
-        let announcer = document.getElementById('sr-announcer');
-        if (!announcer) {
-            announcer = document.createElement('div');
-            announcer.id = 'sr-announcer';
-            announcer.setAttribute('role', 'status');
-            announcer.setAttribute('aria-live', 'polite');
-            announcer.setAttribute('aria-atomic', 'true');
-            announcer.className = 'sr-only';
-            document.body.appendChild(announcer);
+  }
+  
+  function loadFontSize() {
+    try {
+      const stored = localStorage.getItem(config.fontStorageKey);
+      if (stored) {
+        const parsed = parseInt(stored, 10);
+        if (!isNaN(parsed) && parsed >= config.minFontSize && parsed <= config.maxFontSize) {
+          state.currentFontSize = parsed;
+          return true;
         }
-        announcer.textContent = '';
-        setTimeout(() => {
-            announcer.textContent = message;
-        }, 100);
+      }
+    } catch (e) {
+      console.warn("[Header] Erro ao carregar tamanho da fonte:", e);
     }
-
-    // ============================================
-    // PERSISTÊNCIA DE DADOS
-    // ============================================
-    function saveFontSize() {
-        try {
-            localStorage.setItem(Config.fontStorageKey, State.currentFontSize.toString());
-        } catch (e) {
-            console.warn('[Header] Erro ao salvar tamanho da fonte:', e);
-        }
+    state.currentFontSize = config.defaultFontSize;
+    return false;
+  }
+  
+  // Funções de Theme
+  function saveTheme() {
+    try {
+      localStorage.setItem(config.themeStorageKey, state.isDarkMode ? "dark" : "light");
+    } catch (e) {
+      console.warn("[Header] Erro ao salvar tema:", e);
     }
-
-    function loadFontSize() {
-        try {
-            const saved = localStorage.getItem(Config.fontStorageKey);
-            if (saved) {
-                const parsed = parseInt(saved, 10);
-                if (!isNaN(parsed) && parsed >= Config.minFontSize && parsed <= Config.maxFontSize) {
-                    State.currentFontSize = parsed;
-                    return true;
-                }
-            }
-        } catch (e) {
-            console.warn('[Header] Erro ao carregar tamanho da fonte:', e);
-        }
-        State.currentFontSize = Config.defaultFontSize;
-        return false;
+  }
+  
+  function loadTheme() {
+    try {
+      const stored = localStorage.getItem(config.themeStorageKey);
+      if (stored) {
+        state.isDarkMode = stored === "dark";
+        return true;
+      }
+    } catch (e) {
+      console.warn("[Header] Erro ao carregar tema:", e);
     }
-
-    function saveTheme() {
-        try {
-            localStorage.setItem(Config.themeStorageKey, State.isDarkMode ? "dark" : "light");
-        } catch (e) {
-            console.warn('[Header] Erro ao salvar tema:', e);
-        }
+    state.isDarkMode = false;
+    return false;
+  }
+  
+  // Módulo de Font Size
+  function initFontSizeControls() {
+    function updateFontSize(newSize) {
+      const clampedSize = Math.max(config.minFontSize, Math.min(config.maxFontSize, newSize));
+      state.currentFontSize = clampedSize;
+      document.documentElement.style.fontSize = state.currentFontSize + "px";
+      saveFontSize();
+      updateFontButtons();
     }
-
-    function loadTheme() {
-        try {
-            const saved = localStorage.getItem(Config.themeStorageKey);
-            if (saved) {
-                State.isDarkMode = saved === "dark";
-                return true;
-            }
-        } catch (e) {
-            console.warn('[Header] Erro ao carregar tema:', e);
-        }
-        State.isDarkMode = false;
-        return false;
-    }
-
-    // ============================================
-    // CONTROLE DE FONTE - INTEGRAÇÃO COM ACCESSCONTROL
-    // ============================================
-    function syncWithAccessControl() {
-        // Verificar se AccessControl está disponível
-        if (!window.AccessControl || !window.AccessControl.state) {
-            return;
-        }
-
-        const acState = window.AccessControl.state;
-
-        // Sincronizar tamanho da fonte se necessário
-        if (acState.fontSize && acState.fontSize > 0) {
-            const scaleMap = { 1: 16, 2: 18, 3: 20, 4: 24 };
-            const fontSizeFromScale = scaleMap[acState.fontSize];
-            if (fontSizeFromScale && State.currentFontSize !== fontSizeFromScale) {
-                applyFontSize(fontSizeFromScale);
-            }
-        }
-
-        // Sincronizar tema
-        const acTheme = window.AccessControl.ThemeManager?.getTheme?.() || acState.theme;
-        if (acTheme) {
-            const shouldBeDark = acTheme === 'dark' || (acTheme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-            if (State.isDarkMode !== shouldBeDark) {
-                applyTheme(shouldBeDark);
-            }
-        }
-    }
-
-    function applyFontSize(size) {
-        const clampedSize = Math.max(Config.minFontSize, Math.min(Config.maxFontSize, size));
-        State.currentFontSize = clampedSize;
-
-        // Aplicar ao documento
-        document.documentElement.style.fontSize = clampedSize + 'px';
-        document.documentElement.style.setProperty('--font-size-base', clampedSize + 'px');
-
-        // Atualizar variável CSS global para consistência
-        const scale = clampedSize / Config.defaultFontSize;
-        document.documentElement.style.setProperty('--font-scale', scale.toString());
-
-        // Atualizar estado do body para compatibilidade
-        document.body.setAttribute('data-font-scale', scale.toString());
-
-        // Atualizar botões de controle
-        updateFontButtons();
-
-        // Salvar no storage
-        saveFontSize();
-
-        // Sincronizar com AccessControl se disponível
-        if (window.AccessControl && window.AccessControl.state) {
-            window.AccessControl.state.fontSize = { 16: 1, 18: 2, 20: 3, 24: 4 }[clampedSize] || 1;
-        }
-
-        // Feedback para leitores de tela
-        announceToScreenReader(`Tamanho da fonte ajustado para ${clampedSize} pixels`);
-    }
-
-    function increaseFontSize(e) {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        applyFontSize(State.currentFontSize + Config.fontStep);
-    }
-
-    function decreaseFontSize(e) {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        applyFontSize(State.currentFontSize - Config.fontStep);
-    }
-
+    
     function updateFontButtons() {
-        const increaseBtns = [
-            getElement('font-increase'),
-            getElement('mobile-font-increase')
-        ];
-        const decreaseBtns = [
-            getElement('font-reduce'),
-            getElement('mobile-font-reduce')
-        ];
-
-        const isMaxSize = State.currentFontSize >= Config.maxFontSize;
-        const isMinSize = State.currentFontSize <= Config.minFontSize;
-
-        increaseBtns.forEach(btn => {
-            if (btn) {
-                btn.disabled = isMaxSize;
-                btn.style.opacity = isMaxSize ? '0.5' : '1';
-                btn.style.cursor = isMaxSize ? 'not-allowed' : 'pointer';
-            }
-        });
-
-        decreaseBtns.forEach(btn => {
-            if (btn) {
-                btn.disabled = isMinSize;
-                btn.style.opacity = isMinSize ? '0.5' : '1';
-                btn.style.cursor = isMinSize ? 'not-allowed' : 'pointer';
-            }
-        });
+      const fontIncreaseBtns = [getElementById("font-increase"), getElementById("mobile-font-increase")];
+      const fontReduceBtns = [getElementById("font-reduce"), getElementById("mobile-font-reduce")];
+      
+      fontIncreaseBtns.forEach(function(btn) {
+        if (btn) btn.disabled = state.currentFontSize >= config.maxFontSize;
+      });
+      
+      fontReduceBtns.forEach(function(btn) {
+        if (btn) btn.disabled = state.currentFontSize <= config.minFontSize;
+      });
     }
-
-    function initFontControls() {
-        const increaseBtns = [
-            { btn: getElement('font-increase'), handler: increaseFontSize },
-            { btn: getElement('mobile-font-increase'), handler: increaseFontSize }
-        ];
-        const decreaseBtns = [
-            { btn: getElement('font-reduce'), handler: decreaseFontSize },
-            { btn: getElement('mobile-font-reduce'), handler: decreaseFontSize }
-        ];
-
-        increaseBtns.forEach(({ btn, handler }) => {
-            if (btn) {
-                btn.addEventListener('click', handler, { passive: false });
-                btn.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                    handler();
-                }, { passive: false });
-            }
-        });
-
-        decreaseBtns.forEach(({ btn, handler }) => {
-            if (btn) {
-                btn.addEventListener('click', handler, { passive: false });
-                btn.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                    handler();
-                }, { passive: false });
-            }
-        });
-
-        updateFontButtons();
+    
+    function increaseFont(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      updateFontSize(state.currentFontSize + config.fontStep);
     }
-
-    // ============================================
-    // CONTROLE DE TEMA - INTEGRAÇÃO COM ACCESSCONTROL
-    // ============================================
+    
+    function decreaseFont(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      updateFontSize(state.currentFontSize - config.fontStep);
+    }
+    
+    const fontIncreaseDesktop = getElementById("font-increase");
+    const fontReduceDesktop = getElementById("font-reduce");
+    const fontIncreaseMobile = getElementById("mobile-font-increase");
+    const fontReduceMobile = getElementById("mobile-font-reduce");
+    
+    if (fontIncreaseDesktop) fontIncreaseDesktop.addEventListener("click", increaseFont);
+    if (fontReduceDesktop) fontReduceDesktop.addEventListener("click", decreaseFont);
+    if (fontIncreaseMobile) fontIncreaseMobile.addEventListener("click", increaseFont);
+    if (fontReduceMobile) fontReduceMobile.addEventListener("click", decreaseFont);
+    
+    updateFontButtons();
+  }
+  
+  // Módulo de Theme Toggle
+  function initThemeToggle() {
+    const desktopToggle = getElementById("theme-toggle");
+    const mobileToggle = getElementById("mobile-theme-toggle");
+    
     function applyTheme(isDark) {
-        State.isDarkMode = isDark;
-
-        // Aplicar classe dark-theme ao body
-        document.body.classList.toggle('dark-theme', isDark);
-
-        // Atualizar ícone do tema desktop
-        const themeToggle = getElement('theme-toggle');
-        if (themeToggle) {
-            const icon = themeToggle.querySelector('i');
-            if (icon) {
-                icon.classList.remove('fa-moon', 'fa-sun');
-                icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
-            }
+      state.isDarkMode = isDark;
+      document.body.classList.toggle("dark-theme", isDark);
+      
+      if (desktopToggle) {
+        const icon = desktopToggle.querySelector("i");
+        if (icon) {
+          icon.classList.remove("fa-moon", "fa-sun");
+          icon.classList.add(isDark ? "fa-sun" : "fa-moon");
         }
-
-        // Atualizar ícone do tema mobile
-        const mobileThemeToggle = getElement('mobile-theme-toggle');
-        if (mobileThemeToggle) {
-            const icon = mobileThemeToggle.querySelector('i');
-            if (icon) {
-                icon.classList.remove('fa-moon', 'fa-sun');
-                icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
-            }
-        }
-
-        // Sincronizar com AccessControl
-        if (window.AccessControl && window.AccessControl.ThemeManager) {
-            window.AccessControl.ThemeManager.applyTheme(isDark ? 'dark' : 'light');
-        }
-
-        // Salvar no storage
-        saveTheme();
-
-        // Feedback para leitores de tela
-        const themeName = isDark ? 'escuro' : 'claro';
-        announceToScreenReader(`Tema ${themeName} ativado`);
+      }
+      
+      if (mobileToggle) {
+        const sunIcon = mobileToggle.querySelector(".theme-icon.sun");
+        const moonIcon = mobileToggle.querySelector(".theme-icon.moon");
+        if (sunIcon) sunIcon.style.display = isDark ? "inline" : "none";
+        if (moonIcon) moonIcon.style.display = isDark ? "none" : "inline";
+      }
+      
+      saveTheme();
     }
-
-    function toggleTheme(e) {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        applyTheme(!State.isDarkMode);
+    
+    function toggleTheme(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      applyTheme(!state.isDarkMode);
     }
-
-    function initThemeControls() {
-        const desktopToggle = getElement('theme-toggle');
-        const mobileToggle = getElement('mobile-theme-toggle');
-
-        if (desktopToggle) {
-            desktopToggle.addEventListener('click', toggleTheme, { passive: false });
+    
+    if (desktopToggle) desktopToggle.addEventListener("click", toggleTheme);
+    if (mobileToggle) mobileToggle.addEventListener("click", toggleTheme);
+    
+    if (state.isDarkMode) applyTheme(true);
+  }
+  
+  // Skip Links
+  function initSkipLinks() {
+    function scrollToTarget(link, targetId) {
+      link && link.addEventListener("click", function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const target = getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+          target.setAttribute("tabindex", "-1");
+          target.focus();
         }
-
-        if (mobileToggle) {
-            mobileToggle.addEventListener('click', toggleTheme, { passive: false });
-        }
-
-        // Aplicar tema inicial se necessário
-        if (State.isDarkMode) {
-            applyTheme(true);
-        }
+      });
     }
-
-    // ============================================
-    // SKIP LINKS
-    // ============================================
-    function setupSkipLinks() {
-        function setupSkipLink(link, targetId) {
-            if (!link || !targetId) return;
-
-            const target = getElement(targetId);
-            if (!target) return;
-
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                target.setAttribute('tabindex', '-1');
-                target.focus();
-
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            });
-        }
-
-        setupSkipLink(getElement('skip-top'), 'main-header');
-        setupSkipLink(getElement('skip-content'), 'main-content');
-        setupSkipLink(getElement('skip-footer'), 'footer');
+    
+    scrollToTarget(getElementById("skip-top"), "main-header");
+    scrollToTarget(getElementById("skip-content"), "main-content");
+    scrollToTarget(getElementById("skip-footer"), "footer");
+  }
+  
+  // Mobile Menu
+  function initMobileMenu() {
+    const menuToggle = getElementById("mobile-menu-toggle");
+    const menuClose = getElementById("mobile-menu-close");
+    const mobileMenu = getElementById("mobile-menu");
+    const menuOverlay = getElementById("mobile-menu-overlay");
+    
+    function openMenu() {
+      if (mobileMenu) {
+        mobileMenu.classList.add("active");
+        mobileMenu.setAttribute("aria-expanded", "true");
+      }
+      if (menuOverlay) menuOverlay.classList.add("active");
+      document.body.style.overflow = "hidden";
     }
-
-    // ============================================
-    // MENU MOBILE - CORREÇÃO PRINCIPAL
-    // ============================================
-    function initMobileMenu() {
-        const menuToggle = getElement('mobile-menu-toggle');
-        const menuClose = getElement('mobile-menu-close');
-        const menuOverlay = getElement('mobile-menu-overlay');
-        const mobileMenu = getElement('mobile-menu');
-
-        if (!mobileMenu) {
-            console.warn('[Header] Elemento mobile-menu não encontrado');
-            return;
-        }
-
-        function openMenu() {
-            mobileMenu.classList.add('active');
-            mobileMenu.setAttribute('aria-expanded', 'true');
-
-            if (menuOverlay) {
-                menuOverlay.classList.add('active');
-            }
-
-            document.body.style.overflow = 'hidden';
-
-            if (menuToggle) {
-                menuToggle.classList.add('active');
-                menuToggle.setAttribute('aria-expanded', 'true');
-            }
-        }
-
-        function closeMenu() {
-            mobileMenu.classList.remove('active');
-            mobileMenu.setAttribute('aria-expanded', 'false');
-
-            if (menuOverlay) {
-                menuOverlay.classList.remove('active');
-            }
-
-            document.body.style.overflow = '';
-
-            if (menuToggle) {
-                menuToggle.classList.remove('active');
-                menuToggle.setAttribute('aria-expanded', 'false');
-            }
-
-            // Fechar todos os submenus
-            closeAllSubmenus();
-        }
-
-        function toggleMenu() {
-            if (mobileMenu.classList.contains('active')) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        }
-
-        // Event listeners principais
-        if (menuToggle) {
-            menuToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                toggleMenu();
-            });
-        }
-
-        if (menuClose) {
-            menuClose.addEventListener('click', function(e) {
-                e.preventDefault();
-                closeMenu();
-            });
-        }
-
-        if (menuOverlay) {
-            menuOverlay.addEventListener('click', function(e) {
-                e.preventDefault();
-                closeMenu();
-            });
-        }
-
-        // Fechar com ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-                closeMenu();
-            }
-        });
-
-        // Configurar submenus
-        setupMobileSubmenus();
+    
+    function closeMenu() {
+      if (mobileMenu) {
+        mobileMenu.classList.remove("active");
+        mobileMenu.setAttribute("aria-expanded", "false");
+      }
+      if (menuOverlay) menuOverlay.classList.remove("active");
+      document.body.style.overflow = "";
     }
-
-    function closeAllSubmenus() {
-        const allSubmenus = $$('.mobile-submenu');
-        const allItems = $$('.mobile-nav-item, .mobile-submenu-item');
-        const allToggles = $$('.mobile-nav-dropdown, .mobile-submenu-dropdown');
-
-        allSubmenus.forEach(submenu => {
-            submenu.classList.remove('active');
-        });
-
-        allItems.forEach(item => {
-            item.classList.remove('active');
-        });
-
-        allToggles.forEach(toggle => {
-            toggle.setAttribute('aria-expanded', 'false');
-        });
+    
+    function toggleMenu() {
+      mobileMenu && mobileMenu.classList.contains("active") ? closeMenu() : openMenu();
     }
-
-    function setupMobileSubmenus() {
-        // Primeiro nível - itens principais do menu
-        const mainNavItems = $$('.mobile-nav-item.has-mobile-submenu');
-
-        mainNavItems.forEach(navItem => {
-            const toggleBtn = navItem.querySelector('.mobile-nav-dropdown');
-            const submenu = navItem.querySelector('.mobile-submenu');
-
-            if (!toggleBtn || !submenu) return;
-
-            toggleBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-
-                // Fechar outros submenus do mesmo nível
-                mainNavItems.forEach(otherItem => {
-                    if (otherItem !== navItem) {
-                        const otherBtn = otherItem.querySelector('.mobile-nav-dropdown');
-                        const otherSubmenu = otherItem.querySelector('.mobile-submenu');
-                        if (otherBtn && otherSubmenu) {
-                            otherBtn.setAttribute('aria-expanded', 'false');
-                            otherItem.classList.remove('active');
-                            otherSubmenu.classList.remove('active');
-                        }
-                    }
-                });
-
-                // Toggle estado atual
-                toggleBtn.setAttribute('aria-expanded', !isExpanded);
-                navItem.classList.toggle('active', !isExpanded);
-                submenu.classList.toggle('active', !isExpanded);
-
-                // Animar flecha
-                animateChevron(toggleBtn, !isExpanded);
-            });
-        });
-
-        // Segundo nível - submenus dentro dos submenus
-        const submenuItems = $$('.mobile-submenu-item.has-mobile-submenu');
-
-        submenuItems.forEach(subItem => {
-            const toggleBtn = subItem.querySelector('.mobile-submenu-dropdown');
-            const submenu = subItem.querySelector('.mobile-submenu.level-3');
-
-            if (!toggleBtn || !submenu) return;
-
-            // Adicionar indicador de "Voltar" se não existir
-            let backIndicator = submenu.querySelector('.submenu-back-item');
-            if (!backIndicator) {
-                backIndicator = document.createElement('li');
-                backIndicator.className = 'submenu-back-item';
-                backIndicator.innerHTML = '<a href="#" class="submenu-back-link"><i class="fas fa-arrow-left"></i> Voltar</a>';
-                backIndicator.style.cssText = 'display: none; padding: 12px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 8px;';
-                submenu.insertBefore(backIndicator, submenu.firstChild);
-
-                // Evento do botão Voltar
-                const backLink = backIndicator.querySelector('.submenu-back-link');
-                if (backLink) {
-                    backLink.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        toggleBtn.setAttribute('aria-expanded', 'false');
-                        subItem.classList.remove('active');
-                        submenu.classList.remove('active');
-                        backIndicator.style.display = 'none';
-
-                        // Mostrar submenu pai
-                        const parentSubmenu = subItem.closest('.mobile-submenu');
-                        if (parentSubmenu) {
-                            parentSubmenu.classList.add('active');
-                        }
-                    });
-                }
+    
+    if (menuToggle) menuToggle.addEventListener("click", toggleMenu);
+    if (menuClose) menuClose.addEventListener("click", closeMenu);
+    if (menuOverlay) menuOverlay.addEventListener("click", closeMenu);
+    
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape" && mobileMenu && mobileMenu.classList.contains("active")) {
+        closeMenu();
+      }
+    });
+  }
+  
+  // Mobile Submenus
+  function initMobileSubmenus() {
+    // Expansão do primeiro nível
+    querySelectorAll(".mobile-nav-item.has-mobile-submenu").forEach(function(navItem) {
+      const toggleBtn = navItem.querySelector(".mobile-nav-dropdown");
+      const submenu = navItem.querySelector(".mobile-submenu");
+      
+      if (toggleBtn && submenu) {
+        toggleBtn.addEventListener("click", function(event) {
+          event.preventDefault();
+          const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+          
+          querySelectorAll(".mobile-nav-item.has-mobile-submenu").forEach(function(otherItem) {
+            if (otherItem !== navItem) {
+              const otherBtn = otherItem.querySelector(".mobile-nav-dropdown");
+              const otherSubmenu = otherItem.querySelector(".mobile-submenu");
+              if (otherBtn && otherSubmenu) {
+                otherBtn.setAttribute("aria-expanded", "false");
+                otherItem.classList.remove("active");
+              }
             }
-
-            toggleBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-
-                // Fechar outros submenus do mesmo nível
-                submenuItems.forEach(otherItem => {
-                    if (otherItem !== subItem) {
-                        const otherBtn = otherItem.querySelector('.mobile-submenu-dropdown');
-                        const otherSubmenu = otherItem.querySelector('.mobile-submenu.level-3');
-                        if (otherBtn && otherSubmenu) {
-                            otherBtn.setAttribute('aria-expanded', 'false');
-                            otherItem.classList.remove('active');
-                            otherSubmenu.classList.remove('active');
-
-                            const back = otherSubmenu.querySelector('.submenu-back-item');
-                            if (back) back.style.display = 'none';
-                        }
-                    }
-                });
-
-                // Toggle estado atual
-                toggleBtn.setAttribute('aria-expanded', !isExpanded);
-                subItem.classList.toggle('active', !isExpanded);
-                submenu.classList.toggle('active', !isExpanded);
-                backIndicator.style.display = !isExpanded ? 'block' : 'none';
-
-                // Ocultar submenu pai
-                const parentSubmenu = subItem.closest('.mobile-submenu');
-                if (parentSubmenu && !isExpanded) {
-                    parentSubmenu.classList.remove('active');
-                }
-
-                // Animar flecha
-                animateChevron(toggleBtn, !isExpanded);
-            });
+          });
+          
+          toggleBtn.setAttribute("aria-expanded", !isExpanded);
+          navItem.classList.toggle("active");
         });
-    }
-
-    function animateChevron(button, expanded) {
-        const arrow = button.querySelector('.submenu-arrow');
-        if (arrow) {
-            const chevron = arrow.querySelector('i');
-            if (chevron) {
-                if (expanded) {
-                    chevron.classList.remove('fa-chevron-down');
-                    chevron.classList.add('fa-chevron-up');
-                } else {
-                    chevron.classList.remove('fa-chevron-up');
-                    chevron.classList.add('fa-chevron-down');
-                }
+      }
+    });
+    
+    // Expansão do segundo nível
+    querySelectorAll(".mobile-submenu-item.has-mobile-submenu").forEach(function(subItem) {
+      const toggleBtn = subItem.querySelector(".mobile-submenu-dropdown");
+      const submenu = subItem.querySelector(".mobile-submenu.level-3");
+      
+      if (toggleBtn && submenu) {
+        const backIndicator = document.createElement("li");
+        backIndicator.className = "submenu-back-item";
+        backIndicator.innerHTML = '<a href="#" class="submenu-back-link">Voltar</a>';
+        backIndicator.style.cssText = "display: none; padding: 8px 0; border-bottom: 1px solid #e0e0e0; margin-bottom: 8px;";
+        submenu.insertBefore(backIndicator, submenu.firstChild);
+        
+        toggleBtn.addEventListener("click", function(event) {
+          event.preventDefault();
+          const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+          
+          querySelectorAll(".mobile-submenu-item.has-mobile-submenu").forEach(function(otherItem) {
+            if (otherItem !== subItem) {
+              const otherBtn = otherItem.querySelector(".mobile-submenu-dropdown");
+              const otherSubmenu = otherItem.querySelector(".mobile-submenu.level-3");
+              if (otherBtn && otherSubmenu) {
+                otherBtn.setAttribute("aria-expanded", "false");
+                otherItem.classList.remove("active");
+                otherSubmenu.style.display = "";
+                const back = otherSubmenu.querySelector(".submenu-back-item");
+                if (back) back.style.display = "none";
+              }
             }
+          });
+          
+          toggleBtn.setAttribute("aria-expanded", !isExpanded);
+          subItem.classList.toggle("active");
+          submenu.style.display = isExpanded ? "" : "block";
+          backIndicator.style.display = isExpanded ? "none" : "block";
+        });
+        
+        backIndicator.querySelector(".submenu-back-link").addEventListener("click", function(event) {
+          event.preventDefault();
+          toggleBtn.setAttribute("aria-expanded", "false");
+          subItem.classList.remove("active");
+          submenu.style.display = "";
+          backIndicator.style.display = "none";
+        });
+      }
+    });
+  }
+  
+  // Mobile Languages
+  function initMobileLanguages() {
+    const section = getElementById("mobile-idiomas-section");
+    const toggle = getElementById("mobile-idiomas-toggle");
+    const list = getElementById("mobile-idiomas-list");
+    const arrow = getElementById("mobile-idiomas-arrow");
+    
+    if (!section || !toggle || !list) return;
+    
+    toggle.addEventListener("click", function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const isExpanded = section.classList.contains("expanded");
+      section.classList.toggle("expanded");
+      list.style.display = isExpanded ? "none" : "grid";
+      toggle.setAttribute("aria-expanded", !isExpanded);
+      if (arrow) {
+        arrow.classList.toggle("fa-chevron-down", isExpanded);
+        arrow.classList.toggle("fa-chevron-up", !isExpanded);
+      }
+    });
+    
+    querySelectorAll(".language-flag-item").forEach(function(link) {
+      link.addEventListener("click", function(event) {
+        event.preventDefault();
+        
+        querySelectorAll(".language-flag-item").forEach(function(item) {
+          item.classList.remove("active");
+        });
+        
+        this.classList.add("active");
+        const img = this.querySelector("img");
+        const current = getElementById("mobile-idiomas-current");
+        const alt = img ? img.alt : "";
+        const lang = this.getAttribute("data-lang");
+        
+        if (img && current) {
+          current.innerHTML = img.outerHTML + '<span class="language-name">' + alt + '</span>';
         }
-    }
-
-    // ============================================
-    // MEGA MENU DESKTOP - CORREÇÃO PRINCIPAL
-    // ============================================
-    function initMegaMenu() {
-        const megaMenuItems = $$('.has-mega-menu');
-
-        if (megaMenuItems.length === 0) return;
-
-        let hoverTimeout;
-        let currentOpenPanel = null;
-        let currentOpenTrigger = null;
-
-        function closeAllPanels() {
-            megaMenuItems.forEach(item => {
-                const panel = item.querySelector('.mega-panel');
-                const trigger = item.querySelector('.nav-link-dropdown');
-                if (panel && trigger) {
-                    panel.classList.remove('active');
-                    trigger.setAttribute('aria-expanded', 'false');
-                    trigger.classList.remove('active');
-                }
-            });
-            currentOpenPanel = null;
-            currentOpenTrigger = null;
-            document.body.classList.remove('mega-menu-active');
-        }
-
-        function showPanel(trigger, panel) {
-            // Fechar painel atual se diferente
-            if (currentOpenPanel && currentOpenPanel !== panel) {
-                currentOpenPanel.classList.remove('active');
-                if (currentOpenTrigger) {
-                    currentOpenTrigger.setAttribute('aria-expanded', 'false');
-                    currentOpenTrigger.classList.remove('active');
-                }
-            }
-
-            // Abrir novo painel
-            panel.classList.add('active');
-            trigger.setAttribute('aria-expanded', 'true');
-            trigger.classList.add('active');
-            document.body.classList.add('mega-menu-active');
-
-            currentOpenPanel = panel;
-            currentOpenTrigger = trigger;
-        }
-
-        function hidePanel(trigger, panel) {
-            panel.classList.remove('active');
-            trigger.setAttribute('aria-expanded', 'false');
-            trigger.classList.remove('active');
-
-            if (currentOpenPanel === panel) {
-                currentOpenPanel = null;
-            }
-            if (currentOpenTrigger === trigger) {
-                currentOpenTrigger = null;
-            }
-
-            // Remover classe do body apenas se não houver outros painéis abertos
-            const anyOpen = $$('.mega-panel.active').length === 0;
-            if (anyOpen) {
-                document.body.classList.remove('mega-menu-active');
-            }
-        }
-
-        // Aplicar event listeners a cada item do mega menu
-        megaMenuItems.forEach(item => {
-            const trigger = item.querySelector('.nav-link-dropdown');
-            const panel = item.querySelector('.mega-panel');
-
-            if (!trigger || !panel) return;
-
-            // Handler para mouseenter (apenas desktop)
-            trigger.addEventListener('mouseenter', function(e) {
-                if (!isDesktop()) return;
-
-                clearTimeout(hoverTimeout);
-                showPanel(trigger, panel);
-            });
-
-            // Handler para mouseleave (apenas desktop)
-            trigger.addEventListener('mouseleave', function(e) {
-                if (!isDesktop()) return;
-
-                hoverTimeout = setTimeout(() => {
-                    if (currentOpenPanel === panel) {
-                        hidePanel(trigger, panel);
-                    }
-                }, 100);
-            });
-
-            // Handler para click (mobile/tablet)
-            trigger.addEventListener('click', function(e) {
-                if (isDesktop()) return;
-
-                e.preventDefault();
-
-                const isActive = panel.classList.contains('active');
-
-                if (isActive) {
-                    hidePanel(trigger, panel);
-                } else {
-                    closeAllPanels();
-                    showPanel(trigger, panel);
-                }
-            });
-
-            // Handler para focus (accessibilidade)
-            trigger.addEventListener('focus', function() {
-                if (isDesktop()) {
-                    showPanel(trigger, panel);
-                }
-            });
-
-            // Manter painel aberto quando mouse está sobre ele
-            panel.addEventListener('mouseenter', function() {
-                if (!isDesktop()) return;
-                clearTimeout(hoverTimeout);
-            });
-
-            panel.addEventListener('mouseleave', function() {
-                if (!isDesktop()) return;
-                hoverTimeout = setTimeout(() => {
-                    hidePanel(trigger, panel);
-                }, 100);
-            });
-        });
-
-        // Fechar ao pressionar ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && currentOpenPanel) {
-                closeAllPanels();
-                if (currentOpenTrigger) {
-                    currentOpenTrigger.focus();
-                }
-            }
-        });
-
-        // Fechar ao clicar fora
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.has-mega-menu') && currentOpenPanel) {
-                closeAllPanels();
-            }
-        });
-
-        // Listener para redimensionamento da janela
-        window.addEventListener('resize', function() {
-            if (isMobile() && currentOpenPanel) {
-                closeAllPanels();
-            }
-        });
-    }
-
-    // ============================================
-    // MENU TABS (DENTRO DOS MEGA PANELS)
-    // ============================================
-    function initMenuTabs() {
-        const tabContainers = $$('.menu-tabs');
-
-        tabContainers.forEach(container => {
-            if (!container || !container.parentElement) return;
-
-            const parent = container.parentElement.parentElement;
-            if (!parent) return;
-
-            const tabContents = parent.querySelectorAll('.tab-content');
-            const triggers = container.querySelectorAll('.menu-tab-trigger');
-
-            triggers.forEach(trigger => {
-                trigger.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-
-                    // Atualizar triggers
-                    triggers.forEach(t => {
-                        t.classList.remove('active');
-                        t.setAttribute('aria-selected', 'false');
-                    });
-                    this.classList.add('active');
-                    this.setAttribute('aria-selected', 'true');
-
-                    // Atualizar conteúdos
-                    tabContents.forEach(content => {
-                        content.classList.remove('active');
-                        if (content.id === 'tab-' + tabId) {
-                            content.classList.add('active');
-                        }
-                    });
-                });
-            });
-        });
-    }
-
-    // ============================================
-    // SELETOR DE IDIOMA
-    // ============================================
-    function initLanguageSelector() {
-        // Desktop mega panel
-        const languageLinks = $$('.mega-panel-idiomas .idiomas-list li a');
-        const activeLangFlag = getElement('active-lang-flag');
-
-        if (languageLinks.length > 0) {
-            languageLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    languageLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const flagImg = this.querySelector('.idioma-flag-link');
-                    if (flagImg && activeLangFlag) {
-                        activeLangFlag.src = flagImg.src;
-                        activeLangFlag.alt = flagImg.alt;
-                    }
-
-                    // Fechar mega panel
-                    const megaPanel = this.closest('.mega-panel');
-                    if (megaPanel) {
-                        megaPanel.classList.remove('active');
-                    }
-
-                    const trigger = document.querySelector('[data-menu="idiomas"]');
-                    if (trigger) {
-                        trigger.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            });
-        }
-
-        // Mobile language section
-        const mobileIdiomasSection = getElement('mobile-idiomas-section');
-        const mobileIdiomasToggle = getElement('mobile-idiomas-toggle');
-        const mobileIdiomasList = getElement('mobile-idiomas-list');
-        const mobileIdiomasArrow = getElement('mobile-idiomas-arrow');
-
-        if (mobileIdiomasToggle && mobileIdiomasList) {
-            mobileIdiomasToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const isExpanded = mobileIdiomasSection.classList.contains('expanded');
-                mobileIdiomasSection.classList.toggle('expanded', !isExpanded);
-                mobileIdiomasList.style.display = isExpanded ? 'none' : 'grid';
-                mobileIdiomasToggle.setAttribute('aria-expanded', !isExpanded);
-
-                if (mobileIdiomasArrow) {
-                    mobileIdiomasArrow.classList.toggle('fa-chevron-down', isExpanded);
-                    mobileIdiomasArrow.classList.toggle('fa-chevron-up', !isExpanded);
-                }
-            });
-        }
-
-        // Mobile language selection
-        const languageFlagItems = $$('.language-flag-item');
-        const mobileIdiomasCurrent = getElement('mobile-idiomas-current');
-
-        languageFlagItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-
-                languageFlagItems.forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-
-                const img = this.querySelector('img');
-                if (img && mobileIdiomasCurrent) {
-                    mobileIdiomasCurrent.innerHTML = img.outerHTML + '<span>' + img.alt + '</span>';
-                }
-
-                // Salvar idioma no localStorage
-                try {
-                    const lang = this.getAttribute('data-lang');
-                    localStorage.setItem('nursing_calc_lang', lang);
-                } catch (err) {
-                    console.warn('[Header] Erro ao salvar idioma:', err);
-                }
-
-                // Fechar a lista
-                if (mobileIdiomasSection && mobileIdiomasList) {
-                    mobileIdiomasSection.classList.remove('expanded');
-                    mobileIdiomasList.style.display = 'none';
-                    if (mobileIdiomasToggle) {
-                        mobileIdiomasToggle.setAttribute('aria-expanded', 'false');
-                    }
-                    if (mobileIdiomasArrow) {
-                        mobileIdiomasArrow.classList.add('fa-chevron-down');
-                        mobileIdiomasArrow.classList.remove('fa-chevron-up');
-                    }
-                }
-            });
-        });
-
-        // Initialize saved language
+        
         try {
-            const savedLang = localStorage.getItem('nursing_calc_lang') || 'pt-br';
-            const activeItem = mobileIdiomasList?.querySelector('[data-lang="' + savedLang + '"]');
-            if (activeItem) {
-                activeItem.classList.add('active');
-                const img = activeItem.querySelector('img');
-                if (img && mobileIdiomasCurrent) {
-                    mobileIdiomasCurrent.innerHTML = img.outerHTML + '<span>' + img.alt + '</span>';
-                }
-            }
+          localStorage.setItem("nursing_calc_lang", lang);
         } catch (err) {
-            console.warn('[Header] Erro ao carregar idioma ativo:', err);
+          console.warn("[Header] Erro ao salvar idioma:", err);
         }
+        
+        section.classList.remove("expanded");
+        list.style.display = "none";
+        toggle.setAttribute("aria-expanded", "false");
+        if (arrow) {
+          arrow.classList.add("fa-chevron-down");
+          arrow.classList.remove("fa-chevron-up");
+        }
+      });
+    });
+    
+    try {
+      const savedLang = localStorage.getItem("nursing_calc_lang") || "pt-br";
+      const activeItem = list.querySelector('[data-lang="' + savedLang + '"]');
+      if (activeItem) {
+        activeItem.classList.add("active");
+        const img = activeItem.querySelector("img");
+        const current = getElementById("mobile-idiomas-current");
+        if (img && current) {
+          current.innerHTML = img.outerHTML + '<span class="language-name">' + img.alt + '</span>';
+        }
+      }
+    } catch (err) {
+      console.warn("[Header] Erro ao carregar idioma ativo:", err);
     }
-
-    // ============================================
-    // BUSCA MOBILE
-    // ============================================
-    function initMobileSearch() {
-        const searchToggle = getElement('mobile-search-toggle');
-        const searchContainer = getElement('mobile-search-container');
-        const searchInput = getElement('mobile-menu-search-input');
-
-        if (!searchToggle || !searchContainer) return;
-
-        function toggleSearch() {
-            const isExpanded = searchContainer.classList.contains('expanded');
-            searchContainer.classList.toggle('expanded', !isExpanded);
-            searchToggle.classList.toggle('active', !isExpanded);
-            searchToggle.setAttribute('aria-expanded', !isExpanded);
-
-            if (!isExpanded && searchInput) {
-                setTimeout(() => searchInput.focus(), 100);
-            }
-        }
-
-        searchToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleSearch();
-        });
-
-        // Fechar ao pressionar ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && searchContainer.classList.contains('expanded')) {
-                toggleSearch();
-            }
-        });
-    }
-
-    // ============================================
-    // SEARCH DESKTOP
-    // ============================================
-    function initSearch() {
-        const searchContainer = $('.search-container');
-        if (!searchContainer) return;
-
-        const searchInput = searchContainer.querySelector('.search-input');
-        const searchBtn = searchContainer.querySelector('.search-btn');
-
-        if (searchBtn && searchInput) {
-            searchBtn.addEventListener('click', function() {
-                const query = searchInput.value.trim();
-                if (query) {
-                    console.log('[Search] Buscando:', query);
-                }
-            });
-
-            searchInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    searchBtn.click();
-                }
-            });
-        }
-    }
-
-    // ============================================
-    // HEADER SCROLL EFFECTS
-    // ============================================
-    function initScrollEffects() {
-        const header = $('.main-header');
-        if (!header) return;
-
-        let lastScrollY = 0;
-        let ticking = false;
-
-        function updateHeader() {
-            const scrollY = window.pageYOffset;
-
-            // Add/remove scrolled class
-            if (scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-
-            // Hide/show on scroll
-            if (scrollY > 100 && scrollY > lastScrollY) {
-                header.classList.add('header-hidden');
-            } else {
-                header.classList.remove('header-hidden');
-            }
-
-            lastScrollY = scrollY;
-            ticking = false;
-        }
-
-        function onScroll() {
-            if (!ticking) {
-                requestAnimationFrame(updateHeader);
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        updateHeader();
-    }
-
-    // ============================================
-    // LISTENER PARA MUDANÇAS NO ACCESSCONTROL
-    // ============================================
-    function setupAccessControlListener() {
-        // Observar mudanças no AccessControl
-        window.addEventListener('Accessibility:Reset', function() {
-            // Resetar para valores padrão
-            applyFontSize(Config.defaultFontSize);
-            applyTheme(false);
-        });
-
-        // Observer para mudanças no tema do sistema
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        mediaQuery.addEventListener('change', function(e) {
-            // Só aplicar automaticamente se estiver no modo sistema
-            try {
-                const savedTheme = localStorage.getItem(Config.themeStorageKey);
-                if (!savedTheme) {
-                    applyTheme(e.matches);
-                }
-            } catch (err) {
-                console.warn('[Header] Erro ao detectar mudança de tema do sistema:', err);
-            }
-        });
-    }
-
-    // ============================================
-    // INICIALIZAÇÃO PRINCIPAL
-    // ============================================
-    function initialize() {
-        if (State.loaded) return;
-
-        console.log('[HeaderModule] Inicializando módulo unificado...');
-
-        // Carregar estados salvos
-        loadFontSize();
-        loadTheme();
-
-        // Aplicar configurações iniciais
-        document.documentElement.style.fontSize = State.currentFontSize + 'px';
-        if (State.isDarkMode) {
-            document.body.classList.add('dark-theme');
-        }
-
-        // Inicializar controles
-        initFontControls();
-        initThemeControls();
-        setupSkipLinks();
-        initMobileMenu();
-        initMegaMenu();
-        initMenuTabs();
-        initLanguageSelector();
-        initMobileSearch();
-        initSearch();
-        initScrollEffects();
-        setupAccessControlListener();
-
-        // Sincronizar com AccessControl após um pequeno delay
-        setTimeout(syncWithAccessControl, 100);
-
-        State.loaded = true;
-        console.log('[HeaderModule] Módulo inicializado com sucesso');
-    }
-
-    // Expor API pública
-    window.HeaderModule = {
-        init: function() {
-            State.loaded = false;
-            initialize();
-        },
-        setFontSize: function(size) {
-            applyFontSize(size);
-        },
-        increaseFontSize: function() {
-            increaseFontSize();
-        },
-        decreaseFontSize: function() {
-            decreaseFontSize();
-        },
-        toggleTheme: function() {
-            toggleTheme();
-        },
-        getFontSize: function() {
-            return State.currentFontSize;
-        },
-        isDarkMode: function() {
-            return State.isDarkMode;
-        },
-        syncWithAccessControl: function() {
-            syncWithAccessControl();
-        }
+  }
+  
+  // Mobile Search
+  function initMobileSearch() {
+    const searchToggle = getElementById("mobile-search-toggle");
+    const searchContainer = getElementById("mobile-search-container");
+    const searchInput = getElementById("mobile-menu-search-input");
+    
+    if (!searchToggle || !searchContainer) return;
+    
+    const toggleSearch = function() {
+      const isExpanded = searchContainer.classList.contains("expanded");
+      searchContainer.classList.toggle("expanded");
+      searchToggle.classList.toggle("active");
+      searchToggle.setAttribute("aria-expanded", !isExpanded);
+      if (!isExpanded && searchInput) setTimeout(function() { searchInput && searchInput.focus(); }, 100);
     };
-
-    // Inicializar quando o DOM estiver pronto
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initialize);
-    } else {
-        initialize();
+    
+    searchToggle.addEventListener("click", function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleSearch();
+    });
+    
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape" && searchContainer.classList.contains("expanded")) {
+        toggleSearch();
+      }
+    });
+  }
+  
+  // Sync Language State
+  function syncLanguageState() {
+    const activeLanguageLinks = querySelectorAll(".mega-panel-idiomas .idiomas-list li a.active");
+    const activeFlag = getElementById("active-lang-flag");
+    
+    if (activeLanguageLinks.length > 0 && getElementById("mobile-idiomas-current")) {
+      const flagLink = activeLanguageLinks[0].querySelector(".idioma-flag-link");
+      if (flagLink) {
+        const clone = flagLink.cloneNode(true);
+        clone.style.width = "24px";
+        clone.style.height = "18px";
+        clone.style.marginRight = "8px";
+        clone.style.verticalAlign = "middle";
+        
+        const current = getElementById("mobile-idiomas-current");
+        current.innerHTML = "";
+        current.appendChild(clone);
+        
+        const langName = activeLanguageLinks[0].textContent.trim();
+        if (langName) {
+          current.innerHTML += '<span class="language-name">' + langName + '</span>';
+        }
+      }
     }
-
+  }
+  
+  // Mega Menu
+  function initMegaMenu() {
+    const megaMenuItems = querySelectorAll(".has-mega-menu");
+    
+    megaMenuItems.forEach(function(item) {
+      const toggleBtn = item.querySelector(".nav-link-dropdown");
+      const megaPanel = item.querySelector(".mega-panel");
+      
+      if (!toggleBtn || !megaPanel) return;
+      
+      let timeout;
+      
+      function showMegaMenu() {
+        clearTimeout(timeout);
+        megaMenuItems.forEach(function(otherItem) {
+          if (otherItem !== item) {
+            const otherPanel = otherItem.querySelector(".mega-panel");
+            const otherToggle = otherItem.querySelector(".nav-link-dropdown");
+            if (otherPanel) otherPanel.classList.remove("active");
+            if (otherToggle) otherToggle.setAttribute("aria-expanded", "false");
+          }
+        });
+        megaPanel.classList.add("active");
+        toggleBtn.setAttribute("aria-expanded", "true");
+        document.body.classList.add("mega-menu-active");
+      }
+      
+      function hideMegaMenu() {
+        timeout = setTimeout(function() {
+          megaPanel.classList.remove("active");
+          toggleBtn.setAttribute("aria-expanded", "false");
+          document.body.classList.remove("mega-menu-active");
+        }, 150);
+      }
+      
+      function handleMouseEnter() {
+        if (window.matchMedia("(min-width: 1024px)").matches) {
+          showMegaMenu();
+        }
+      }
+      
+      function handleMouseLeave() {
+        if (window.matchMedia("(min-width: 1024px)").matches) {
+          hideMegaMenu();
+        }
+      }
+      
+      function handleFocus() {
+        if (window.matchMedia("(min-width: 1024px)").matches) {
+          showMegaMenu();
+        }
+      }
+      
+      function handleClick(event) {
+        if (window.matchMedia("(max-width: 1023px)").matches) {
+          event.preventDefault();
+          const isActive = megaPanel.classList.contains("active");
+          megaMenuItems.forEach(function(otherItem) {
+            const otherPanel = otherItem.querySelector(".mega-panel");
+            const otherToggle = otherItem.querySelector(".nav-link-dropdown");
+            if (otherPanel) otherPanel.classList.remove("active");
+            if (otherToggle) otherToggle.setAttribute("aria-expanded", "false");
+          });
+          if (!isActive) showMegaMenu();
+        }
+      }
+      
+      toggleBtn.addEventListener("mouseenter", handleMouseEnter);
+      toggleBtn.addEventListener("mouseleave", handleMouseLeave);
+      toggleBtn.addEventListener("focus", handleFocus);
+      toggleBtn.addEventListener("click", handleClick);
+      megaPanel.addEventListener("mouseenter", function() { clearTimeout(timeout); });
+      megaPanel.addEventListener("mouseleave", handleMouseLeave);
+      
+      document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+          megaPanel.classList.remove("active");
+          toggleBtn.setAttribute("aria-expanded", "false");
+        }
+      });
+    });
+  }
+  
+  // Menu Tabs
+  function initMenuTabs() {
+    querySelectorAll(".menu-tabs").forEach(function(tabsContainer) {
+      const tabTriggers = tabsContainer.querySelectorAll(".menu-tab-trigger");
+      const tabContents = tabsContainer.parentElement.parentElement.querySelectorAll(".tab-content");
+      
+      tabTriggers.forEach(function(trigger) {
+        trigger.addEventListener("click", function() {
+          const targetTab = this.getAttribute("data-tab");
+          
+          tabTriggers.forEach(function(t) {
+            t.classList.remove("active");
+            t.setAttribute("aria-selected", "false");
+          });
+          
+          this.classList.add("active");
+          this.setAttribute("aria-selected", "true");
+          
+          tabContents.forEach(function(content) {
+            content.classList.remove("active");
+            if (content.id === "tab-" + targetTab) {
+              content.classList.add("active");
+            }
+          });
+        });
+      });
+    });
+  }
+  
+  // Language Selection
+  function initLanguageSelection() {
+    const languageLinks = querySelectorAll(".mega-panel-idiomas .idiomas-list li a");
+    const activeFlag = getElementById("active-lang-flag");
+    
+    const currentFlagSrc = activeFlag ? activeFlag.src : "";
+    const currentFlagAlt = activeFlag ? activeFlag.alt : "Português (Brasil)";
+    
+    function setActiveLanguage(selectedLink) {
+      languageLinks.forEach(function(link) {
+        link.classList.remove("active");
+      });
+      selectedLink.classList.add("active");
+      
+      const flagLink = selectedLink.querySelector(".idioma-flag-link");
+      if (flagLink && activeFlag) {
+        activeFlag.src = flagLink.src;
+        activeFlag.alt = flagLink.alt;
+      }
+      
+      querySelectorAll(".mega-panel").forEach(function(panel) {
+        panel.classList.remove("active");
+      });
+    }
+    
+    languageLinks.forEach(function(link) {
+      const flagLink = link.querySelector(".idioma-flag-link");
+      if (flagLink && currentFlagSrc && flagLink.src === currentFlagSrc) {
+        link.classList.add("active");
+      }
+    });
+    
+    languageLinks.forEach(function(link) {
+      link.addEventListener("click", function(event) {
+        event.preventDefault();
+        setActiveLanguage(this);
+      });
+    });
+  }
+  
+  // Search Functionality
+  function initSearch() {
+    const searchContainer = querySelector(".search-container");
+    if (!searchContainer) return;
+    
+    const searchInput = searchContainer.querySelector(".search-input");
+    const searchBtn = searchContainer.querySelector(".search-btn");
+    
+    if (searchBtn && searchInput) {
+      searchBtn.addEventListener("click", function() {
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm) {
+          console.log("[Search] Buscando:", searchTerm);
+        }
+      });
+      
+      searchInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          searchBtn.click();
+        }
+      });
+    }
+  }
+  
+  // Header Scroll Effects
+  function initHeaderScroll() {
+    const mainHeader = querySelector(".main-header");
+    let lastScrollY = 0;
+    
+    if (!mainHeader) return;
+    
+    function handleScroll() {
+      const currentScrollY = window.pageYOffset;
+      if (currentScrollY > 50) {
+        mainHeader.classList.add("scrolled");
+      } else {
+        mainHeader.classList.remove("scrolled");
+      }
+      lastScrollY = currentScrollY;
+    }
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+  }
+  
+  function initHeaderHide() {
+    const mainHeader = querySelector(".main-header");
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    
+    if (!mainHeader) return;
+    
+    function updateHeaderVisibility() {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        mainHeader.classList.add("header-hidden");
+      } else {
+        mainHeader.classList.remove("header-hidden");
+      }
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+    
+    window.addEventListener("scroll", function() {
+      if (!ticking) {
+        requestAnimationFrame(updateHeaderVisibility);
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+  
+  // Main Initialization
+  function initialize() {
+    if (state.loaded) return;
+    
+    state.loaded = true;
+    console.log("[Header] Inicializando módulo do cabeçalho...");
+    
+    loadFontSize();
+    loadTheme();
+    
+    document.documentElement.style.fontSize = state.currentFontSize + "px";
+    
+    initFontSizeControls();
+    initThemeToggle();
+    initSkipLinks();
+    initMobileMenu();
+    initMobileSubmenus();
+    initMobileLanguages();
+    initMobileSearch();
+    syncLanguageState();
+    initMegaMenu();
+    initMenuTabs();
+    initLanguageSelection();
+    initSearch();
+    initHeaderScroll();
+    initHeaderHide();
+    
+    console.log("[Header] Módulo do cabeçalho inicializado com sucesso");
+  }
+  
+  // Expose global API
+  window.HeaderModule = {
+    init: function() {
+      state.loaded = false;
+      initialize();
+    },
+    setFontSize: function(size) {
+      state.currentFontSize = Math.max(config.minFontSize, Math.min(config.maxFontSize, size));
+      document.documentElement.style.fontSize = state.currentFontSize + "px";
+      saveFontSize();
+    },
+    toggleTheme: function() {
+      initThemeToggle();
+    },
+    getFontSize: function() {
+      return state.currentFontSize;
+    }
+  };
 })();

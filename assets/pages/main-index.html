@@ -1,105 +1,100 @@
-<!-- Componente Main Index - Página Principal -->
-<!-- Este componente é injetado pelo TemplateEngine ou MainIndexLoader -->
+<!-- ========================================
+     MAIN-INDEX.HTML
+     Conteúdo Principal da Página Inicial
+     Calculadoras de Enfermagem
+     ======================================== -->
 
-<main id="main-content" class="main-content" role="main">
-
-<section class="hero-section bg-gradient-to-br from-[#1A3E74] to-[#0d2137] text-white py-12 lg:py-16">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="flex flex-col lg:flex-row items-center gap-8">
-            <div class="lg:w-1/2">
-                <h1 class="text-3xl md:text-4xl font-bold mb-4 font-nunito">
-                    Calculadoras de Enfermagem
-                </h1>
-                <p class="text-lg text-blue-100 mb-6">
-                    Ferramentas e conteúdo técnico para profissionais de saúde. 
-                    Acesse calculadoras clínicas, escalas de avaliação e calendários vacinais.
-                </p>
-                <div class="flex flex-wrap gap-3">
-                    <a href="#calculadoras" class="btn btn-primary bg-white text-[#1A3E74] hover:bg-blue-50">
-                        <i class="fas fa-calculator mr-2"></i>Calculadoras
-                    </a>
-                    <a href="#escalas" class="btn btn-secondary bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#1A3E74]">
-                        <i class="fas fa-clipboard-list mr-2"></i>Escalas Clínicas
-                    </a>
-                </div>
-            </div>
-            <div class="lg:w-1/2">
-                <img src="https://placehold.co/600x400/1A3E74/white?text=Calculadoras+de+Enfermagem" 
-                     alt="Calculadoras de Enfermagem" 
-                     class="rounded-xl shadow-xl w-full max-w-md lg:max-w-full"
-                     loading="eager">
-            </div>
-        </div>
-    </div>
+<section class="hero-section">
+  <h1 class="hero-title">Calculadoras de Enfermagem</h1>
+  <p class="hero-subtitle">Ferramentas e conteúdo técnico para profissionais de saúde.</p>
+  <p class="hero-description">Acesse calculadoras clínicas, escalas de avaliação e calendários vacinais.</p>
+  
+  <div class="hero-actions">
+    <a href="#calculadoras" class="hero-btn primary">
+      <i class="fas fa-calculator"></i>
+      Calculadoras
+    </a>
+    <a href="#escalas" class="hero-btn secondary">
+      <i class="fas fa-clipboard-list"></i>
+      Escalas Clínicas
+    </a>
+  </div>
+  
+  <div class="hero-image">
+    <img src="https://placehold.co/600x400/1A3E74/white?text=Calculadoras+de+Enfermagem" alt="Calculadoras de Enfermagem">
+  </div>
 </section>
 
-<!-- Stats Section -->
-<section class="stats-section bg-white py-8 border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div class="stat-item">
-                <div class="text-4xl font-bold text-[#1A3E74] mb-2">63+</div>
-                <div class="text-gray-600">Ferramentas</div>
-            </div>
-            <div class="stat-item">
-                <div class="text-4xl font-bold text-[#1A3E74] mb-2">50+</div>
-                <div class="text-gray-600">Escalas Clínicas</div>
-            </div>
-            <div class="stat-item">
-                <div class="text-4xl font-bold text-[#1A3E74] mb-2">8</div>
-                <div class="text-gray-600">Categorias Vacinais</div>
-            </div>
-            <div class="stat-item">
-                <div class="text-4xl font-bold text-[#1A3E74] mb-2">Free</div>
-                <div class="text-gray-600">100% Gratuito</div>
-            </div>
-        </div>
-    </div>
+<section class="stats-section">
+  <div class="stat-item">
+    <span class="stat-number">63+</span>
+    <span class="stat-label">Ferramentas</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">50+</span>
+    <span class="stat-label">Escalas Clínicas</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">8</span>
+    <span class="stat-label">Categorias Vacinais</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number free">Free</span>
+    <span class="stat-label">100% Gratuito</span>
+  </div>
 </section>
 
-<!-- Calculadoras Section -->
-<section id="calculadoras" class="section-decorative py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="section-header">
-            <h2 class="section-title">Calculadoras Clínicas</h2>
-            <div class="decorative-line"></div>
-        </div>
-        
-        <!-- Grid de Calculadoras -->
-        <div class="tools-grid" id="calculadoras-grid">
-            <!-- Ferramentas serão carregadas aqui dinamicamente -->
-        </div>
-    </div>
+<section id="calculadoras" class="tools-section">
+  <h2 class="section-title">Calculadoras Clínicas</h2>
+  <div class="tools-search">
+    <input type="text" id="calc-search" placeholder="Buscar calculadoras..." aria-label="Buscar calculadoras">
+  </div>
+  <div id="calculadoras-grid" class="calculators-grid">
+    <!-- Calculadoras serão renderizadas via JavaScript -->
+  </div>
 </section>
 
-<!-- Escalas Section -->
-<section id="escalas" class="section-decorative py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="section-header">
-            <h2 class="section-title">Escalas Clínicas</h2>
-            <div class="decorative-line"></div>
-        </div>
-        
-        <!-- Grid de Escalas -->
-        <div class="tools-grid" id="escalas-grid">
-            <!-- Ferramentas serão carregadas aqui dinamicamente -->
-        </div>
-    </div>
+<section id="escalas" class="tools-section">
+  <h2 class="section-title">Escalas Clínicas</h2>
+  <div class="tools-search">
+    <input type="text" id="scale-search" placeholder="Buscar escalas..." aria-label="Buscar escalas">
+  </div>
+  <div id="escalas-grid" class="calculators-grid">
+    <!-- Escalas serão renderizadas via JavaScript -->
+  </div>
 </section>
 
-<!-- Vacinas Section -->
-<section id="vacinas" class="section-decorative py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="section-header">
-            <h2 class="section-title">Calendário Vacinal</h2>
-            <div class="decorative-line"></div>
+<section id="vacinas" class="tools-section">
+  <h2 class="section-title">Calendário Vacinal</h2>
+  <div id="vacinas-grid" class="calculators-grid">
+    <a href="pages/vacinas.html" class="tool-card" data-category="imunizacao">
+      <div class="tool-icon">
+        <i class="fas fa-calendar-check"></i>
+      </div>
+      <div class="tool-info">
+        <h3 class="tool-name">Calendário Vacinal 2024</h3>
+        <span class="tool-category">Imunização</span>
+        <p class="tool-description">Calendário nacional completo atualizado para 2024.</p>
+        <div class="tool-tags">
+          <span class="tool-type tag-amber">Informação</span>
         </div>
-        
-        <!-- Grid de Vacinas -->
-        <div class="tools-grid" id="vacinas-grid">
-            <!-- Ferramentas serão carregadas aqui dinamicamente -->
+        <span class="tool-action">Consultar</span>
+      </div>
+    </a>
+    
+    <a href="pages/gestante.html" class="tool-card" category="obstetricia">
+      <div class="tool-icon">
+        <i class="fas fa-baby"></i>
+      </div>
+      <div class="tool-info">
+        <h3 class="tool-name">Calendário da Gestante</h3>
+        <span class="tool-category">Obstetrícia</span>
+        <p class="tool-description">Vacinas recomendadas durante a gestação.</p>
+        <div class="tool-tags">
+          <span class="tool-type tag-amber">Informação</span>
         </div>
-    </div>
+        <span class="tool-action">Consultar</span>
+      </div>
+    </a>
+  </div>
 </section>
-
-</main>

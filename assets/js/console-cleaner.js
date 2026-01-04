@@ -1,6 +1,12 @@
+/**
+ * CONSOLE-CLEANER.JS
+ * Limpeza e Otimização do Console
+ * Calculadoras de Enfermagem
+ */
+
 (function() {
   'use strict';
-
+  
   const ConsoleCleaner = {
     /**
      * Inicializa o limpador de console
@@ -12,18 +18,17 @@
       if (isProduction) {
         // Remove métodos de console em produção
         this.cleanConsole();
-        
         // Sobrescreve console.error para evitar stack traces feios
         this.overrideConsole();
       }
       
       // Sempre registra versão em ambiente de desenvolvimento
       if (!isProduction) {
-        console.log('%c[System] Console Cleaner ativado (desenvolvimento)', 
+        console.log('%c[System] Console Cleaner ativado (desenvolvimento)',
           'color: #10b981; font-weight: bold;');
       }
     },
-
+    
     /**
      * Verifica se está em produção
      */
@@ -48,7 +53,7 @@
       // Por padrão, considera produção
       return true;
     },
-
+    
     /**
      * Remove métodos de console em produção
      */
@@ -87,7 +92,7 @@
       // Substitui console
       window.console = cleanConsole;
     },
-
+    
     /**
      * Sobrescreve console.error para tratamento especial
      */
@@ -114,7 +119,7 @@
         }
       };
     },
-
+    
     /**
      * Log simplificado de erros
      */
@@ -123,7 +128,7 @@
         // Não faz nada em produção silenciosa
       }
     },
-
+    
     /**
      * Ativa modo debug (para testes)
      */
@@ -131,7 +136,7 @@
       localStorage.setItem('clean_console', 'false');
       window.location.reload();
     },
-
+    
     /**
      * Desativa modo debug
      */
@@ -140,20 +145,19 @@
       window.location.reload();
     }
   };
-
+  
   // Expõe globalmente
   window.ConsoleCleaner = ConsoleCleaner;
-
+  
   // Funções de debug globais
   window.enableDebugMode = function() {
     ConsoleCleaner.enableDebug();
   };
-
+  
   window.disableDebugMode = function() {
     ConsoleCleaner.disableDebug();
   };
-
+  
   // Inicializa automaticamente
   ConsoleCleaner.init();
-
 })();
