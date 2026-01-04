@@ -507,7 +507,7 @@
     // ============================================
     const appState = {
         searchTerm: "",
-        filterCategory: "all",
+        filterType: "all",
         sortOrder: "az"
     };
 
@@ -543,14 +543,16 @@
         };
         
         const colors = typeColors[type] || typeColors.calculator;
+        const label = typeLabels[type] || typeLabels.calculator;
         
-        return `<span class="category-badge" style="background-color: ${colors.bg}; color: ${colors.text}">${escapeHtml(item.category)}</span>`;
+        // Usar type como label se category não existir
+        return `<span class="category-badge" style="background-color: ${colors.bg}; color: ${colors.text}">${escapeHtml(label)}</span>`;
     }
 
     function isHighlighted(item, options) {
-        return options && options.filterCategory && 
-               options.filterCategory !== 'all' && 
-               item.category === options.filterCategory;
+        return options && options.filterType && 
+               options.filterType !== 'all' && 
+               item.type === options.filterType;
     }
 
     // ============================================
@@ -608,7 +610,7 @@
     // ============================================
     const SortManager = (function() {
         let currentSortOrder = 'az';
-        const sortOptions = ['az', 'za', 'category'];
+        const sortOptions = ['az', 'za', 'type'];
         const STORAGE_KEY = 'sortPreference';
 
         function init() {
@@ -663,9 +665,9 @@
                         return a.name.localeCompare(b.name);
                     case 'za':
                         return b.name.localeCompare(a.name);
-                    case 'category':
-                        const catCompare = a.category.localeCompare(b.category);
-                        if (catCompare !== 0) return catCompare;
+                    case 'type':
+                        const typeCompare = a.type.localeCompare(b.type);
+                        if (typeCompare !== 0) return typeCompare;
                         return a.name.localeCompare(b.name);
                     default:
                         return 0;
@@ -864,20 +866,12 @@
             return item.type === itemType;
         });
         
-        // Aplicar filtro de categoria
-        if (appState.filterCategory !== 'all') {
-            filteredItems = filteredItems.filter(function(item) {
-                return item.category === appState.filterCategory;
-            });
-        }
-        
         // Aplicar busca
         if (appState.searchTerm) {
             const searchLower = appState.searchTerm.toLowerCase();
             filteredItems = filteredItems.filter(function(item) {
                 return item.name.toLowerCase().includes(searchLower) ||
-                       item.description.toLowerCase().includes(searchLower) ||
-                       item.category.toLowerCase().includes(searchLower);
+                       item.description.toLowerCase().includes(searchLower);
             });
         }
         
@@ -930,6 +924,156 @@
     }
 
     // ============================================
+    // CRIAÇÃO DOS CONTROLES DE VISUALIZAÇÃO
+    // ============================================
+    function createControlsHTML() {
+        return `
+            <div id="controls-container" class="mb-8">
+                <div id="controls-wrapper" class="flex flex-wrap items-center justify-between gap-4 p-4 bg-white rounded-lg shadow-sm border border-gray-200">
+                    
+                    <!-- Grupo de Classificação -->
+                    <div class="controls-group flex items-center gap-2">
+                        <span class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                            <i class="fas fa-sort-alpha-down text-gray-500" aria-hidden="true"></i>
+                            Classificar:
+                        </span>
+                        <div class="relative inline-flex">
+                            <button type="button" 
+                                    id="sort-dropdown-btn"
+                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#1A3E74] focus:border-[#1A3E74]"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                <span id="sort-current-label">Ordem Alfabética (A-Z)</span>
+                                <i class="fas fa-chevron-down ml-2 text-gray-500" aria-hidden="true"></i>
+                            </button>
+                            <div id="sort-dropdown" 
+                                 class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border border-gray-200"
+                                 role="menu">
+                                <button type="button" 
+                                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                        data-sort="az"
+                                        role="menuitem">
+                                    <i class="fas fa-sort-alpha-down w-5 text-gray-400" aria-hidden="true"></i>
+                                    Ordem Alfabética (A-Z)
+                                </button>
+                                <button type="button" 
+                                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                        data-sort="za"
+                                        role="menuitem">
+                                    <i class="fas fa-sort-alpha-up w-5 text-gray-400" aria-hidden="true"></i>
+                                    Ordem Alfabética (Z-A)
+                                </button>
+                                <button type="button" 
+                                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                        data-sort="type"
+                                        role="menuitem">
+                                    <i class="fas fa-layer-group w-5 text-gray-400" aria-hidden="true"></i>
+                                    Por Tipo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Toggle de Ícones -->
+                    <div id="show-icons-toggle-container" class="flex items-center gap-2">
+                        <label for="toggle-icons-btn" class="text-sm font-medium text-gray-700 flex items-center gap-2 cursor-pointer">
+                            <i class="fas fa-icons text-gray-500" aria-hidden="true"></i>
+                            Ícones:
+                        </label>
+                        <button type="button" 
+                                id="toggle-icons-btn"
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#1A3E74] focus:border-[#1A3E74]"
+                                aria-pressed="false"
+                                aria-label="Ocultar ícones dos cards">
+                            <i class="fas fa-eye" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Grupo de Visualização -->
+                    <div class="controls-group flex items-center gap-2">
+                        <span class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                            <i class="fas fa-th-large text-gray-500" aria-hidden="true"></i>
+                            Visualização:
+                        </span>
+                        <div class="flex rounded-md shadow-sm" role="group">
+                            <button type="button" 
+                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#1A3E74] focus:z-10 view-grid-btn active"
+                                    data-view="grid"
+                                    aria-pressed="true"
+                                    aria-label="Visualização em grade">
+                                <i class="fas fa-th-large" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" 
+                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-r border-gray-300 rounded-r-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#1A3E74] focus:z-10 view-list-btn"
+                                    data-view="list"
+                                    aria-pressed="false"
+                                    aria-label="Visualização em lista">
+                                <i class="fas fa-list" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        `;
+    }
+    
+    // ============================================
+    // FUNÇÕES DE CONTROLE DE DROPDOWNS
+    // ============================================
+    function setupDropdowns() {
+        const sortBtn = document.getElementById('sort-dropdown-btn');
+        const sortDropdown = document.getElementById('sort-dropdown');
+        
+        if (sortBtn && sortDropdown) {
+            sortBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !isExpanded);
+                sortDropdown.classList.toggle('hidden');
+            });
+            
+            // Fechar ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (!sortBtn.contains(e.target) && !sortDropdown.contains(e.target)) {
+                    sortBtn.setAttribute('aria-expanded', 'false');
+                    sortDropdown.classList.add('hidden');
+                }
+            });
+        }
+    }
+    
+    function updateSortLabel() {
+        const sortLabel = document.getElementById('sort-current-label');
+        const currentOrder = SortManager.getCurrentOrder();
+        
+        if (sortLabel) {
+            const labels = {
+                'az': 'Ordem Alfabética (A-Z)',
+                'za': 'Ordem Alfabética (Z-A)',
+                'type': 'Por Tipo'
+            };
+            sortLabel.textContent = labels[currentOrder] || labels['az'];
+        }
+    }
+    
+    // Sobrescrever updateSortButtons para também atualizar o label
+    const originalSortManagerInit = SortManager.init;
+    SortManager.init = function() {
+        originalSortManagerInit();
+        updateSortLabel();
+        
+        // Adicionar listener para atualizar label quando a ordem mudar
+        document.addEventListener('sortChanged', updateSortLabel);
+    };
+    
+    const originalSortButtonsUpdate = SortManager.updateSortButtons;
+    SortManager.updateSortButtons = function() {
+        originalSortButtonsUpdate();
+        updateSortLabel();
+    };
+
+    // ============================================
     // INICIALIZAÇÃO
     // ============================================
     function init() {
@@ -937,6 +1081,13 @@
         const styleElement = document.createElement('style');
         styleElement.textContent = cssStyles;
         document.head.appendChild(styleElement);
+        
+        // Injetar controles de visualização
+        const controlsContainer = document.getElementById('tools-controls-container');
+        if (controlsContainer) {
+            controlsContainer.innerHTML = createControlsHTML();
+            setupDropdowns();
+        }
         
         // Inicializar módulos
         SortManager.init();

@@ -1,6 +1,7 @@
 /**
  * ============================================
  * UTILS.JS - Calculadoras de Enfermagem
+ * Portal de Ferramentas Clínicas
  * 
  * Funcionalidades:
  * - Renderização de cards com diferenciação por tipo
@@ -95,11 +96,12 @@ const Utils = {
         };
         
         const colorSet = colors || defaultColors[type] || defaultColors.other;
+        const label = typeLabels[type] || typeLabels.calculator;
         
         return `
             <span class="category-badge" 
                   style="background-color: ${colorSet.bg}; color: ${colorSet.text}">
-                ${this.escapeHtml(item.category)}
+                ${this.escapeHtml(label)}
             </span>
         `;
     },
@@ -108,9 +110,9 @@ const Utils = {
      * Verifica se o card deve ser destacado
      */
     isHighlighted: function(item, options) {
-        return options && options.filterCategory && 
-               options.filterCategory !== 'all' && 
-               item.category === options.filterCategory;
+        return options && options.filterType && 
+               options.filterType !== 'all' && 
+               item.type === options.filterType;
     },
 
     /**
@@ -303,7 +305,7 @@ const Utils = {
 const SortManager = (function() {
     // Estado do classificador
     let currentSortOrder = 'az';
-    let sortOptions = ['az', 'za', 'category'];
+    let sortOptions = ['az', 'za', 'type'];
     const STORAGE_KEY = 'sortPreference';
 
     /**
@@ -380,9 +382,9 @@ const SortManager = (function() {
                     return a.name.localeCompare(b.name);
                 case 'za':
                     return b.name.localeCompare(a.name);
-                case 'category':
-                    const catCompare = a.category.localeCompare(b.category);
-                    if (catCompare !== 0) return catCompare;
+                case 'type':
+                    const typeCompare = a.type.localeCompare(b.type);
+                    if (typeCompare !== 0) return typeCompare;
                     return a.name.localeCompare(b.name);
                 default:
                     return 0;
