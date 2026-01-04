@@ -35,9 +35,24 @@
             }
             
             try {
-                const basePath = window.location.pathname.includes('/Calculadoras-de-Enfermagem/')
-                    ? '/Calculadoras-de-Enfermagem/'
-                    : '';
+                // Determina o caminho base dinamicamente
+                let basePath = '';
+                const pathname = window.location.pathname;
+                
+                // Remove trailing slash para obter o diretório
+                let cleanPath = pathname.endsWith('/') 
+                    ? pathname.slice(0, -1) 
+                    : pathname;
+                
+                const filename = cleanPath.substring(cleanPath.lastIndexOf('/') + 1);
+                
+                // Se há um nome de arquivo, obtém o diretório
+                if (filename && filename.length > 0 && filename.includes('.')) {
+                    basePath = cleanPath.substring(0, cleanPath.lastIndexOf('/') + 1);
+                } else if (cleanPath.includes('/')) {
+                    // É um diretório, adiciona trailing slash
+                    basePath = cleanPath + '/';
+                }
                 
                 const response = await fetch(`${basePath}${componentPath}`);
                 if (!response.ok) {
@@ -76,6 +91,7 @@
         checkAllLoaded: function() {
             if (this.loadedCount >= this.totalComponents) {
                 console.log('[TemplateEngine] Todos os componentes carregados');
+                window.dispatchEvent(new CustomEvent('ModulesLoaded'));
                 window.dispatchEvent(new CustomEvent('TemplateEngine:Ready'));
             }
         },
