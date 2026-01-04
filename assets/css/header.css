@@ -274,7 +274,7 @@
 }
 
 /* ============================================
-   MEGA PANEL STYLES
+   MEGA PANEL STYLES (UNIFORM HEIGHT)
    ============================================ */
 .mega-panel {
     display: none;
@@ -283,6 +283,7 @@
     right: 0;
     top: 100%;
     width: 100%;
+    height: 400px;
     max-height: 70vh;
     background-color: var(--bg-mega-panel);
     border-top: 1px solid var(--border-color);
@@ -295,9 +296,33 @@
 }
 
 .mega-panel.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
     opacity: 1;
     visibility: visible;
+}
+
+/* All mega panels same height - specific for mega-panel-biblioteca with more tabs */
+.mega-panel-sobre-nos,
+.mega-panel-ferramentas,
+.mega-panel-biblioteca,
+.mega-panel-carreiras,
+.mega-panel-fale-conosco,
+.mega-panel-idiomas,
+.mega-search-panel {
+    height: 400px;
+    max-height: 70vh;
+}
+
+.mega-panel-sobre-nos.active,
+.mega-panel-ferramentas.active,
+.mega-panel-biblioteca.active,
+.mega-panel-carreiras.active,
+.mega-panel-fale-conosco.active,
+.mega-panel-idiomas.active,
+.mega-search-panel.active {
+    display: flex;
+    flex-direction: column;
 }
 
 .panel-standard-height {
@@ -307,14 +332,17 @@
     max-width: 1400px;
     margin: 0 auto;
     height: 100%;
-    max-height: 70vh;
+    max-height: none;
     overflow: hidden;
+    padding: 8px 0;
+    flex-shrink: 0;
 }
 
 .panel-sidebar {
     width: 20%;
     min-width: 200px;
     max-width: 260px;
+    height: 100%;
     background-color: var(--bg-secondary);
     border-right: 1px solid var(--border-color);
     overflow-y: auto;
@@ -322,14 +350,15 @@
 }
 
 .menu-tabs {
-    padding: 12px 0;
+    padding: 6px 0;
+    height: 100%;
 }
 
 .menu-tab-trigger {
     display: block;
     width: 100%;
     text-align: left;
-    padding: 8px 20px;
+    padding: 6px 16px;
     background: transparent;
     border: none;
     border-left: 3px solid transparent;
@@ -338,15 +367,15 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    border-radius: 0 20px 20px 0;
-    margin-bottom: 2px;
+    border-radius: 0 16px 16px 0;
+    margin-bottom: 1px;
     margin-right: -1px;
 }
 
 .menu-tab-trigger:hover {
     color: var(--color-primary);
     background-color: var(--bg-tertiary);
-    padding-left: 1.75rem;
+    padding-left: 1.25rem;
 }
 
 .menu-tab-trigger:focus {
@@ -358,25 +387,26 @@
     color: var(--color-accent);
     border-left-color: var(--color-accent-glow);
     font-weight: 700;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
     border-right: 1px solid var(--bg-mega-panel);
 }
 
 .panel-main-content {
     flex: 1;
-    padding: 16px 24px;
+    height: 100%;
+    padding: 8px 20px;
     overflow-y: auto;
     overflow-x: hidden;
     min-width: 0;
 }
 
 .content-title {
-    font-size: calc(15px * var(--font-size-scale));
+    font-size: calc(13px * var(--font-size-scale));
     font-weight: 700;
     color: var(--color-primary);
-    margin: 0 0 12px 0;
-    padding-bottom: 6px;
-    border-bottom: 2px solid var(--border-color);
+    margin: 0 0 6px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border-color);
     white-space: nowrap;
 }
 
@@ -386,16 +416,20 @@
     padding: 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem 1.5rem;
+    gap: 0.25rem 1rem;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    align-content: start;
 }
 
 .content-links li a {
     display: flex;
     align-items: center;
-    padding: 0.2rem 0;
+    padding: 0.15rem 0;
     color: #475569;
     text-decoration: none;
-    font-size: calc(12px * var(--font-size-scale));
+    font-size: calc(11px * var(--font-size-scale));
     border-bottom: 1px solid transparent;
     transition: all 0.2s;
     white-space: nowrap;
@@ -405,7 +439,7 @@
 
 .content-links li a:hover {
     color: var(--color-accent);
-    transform: translateX(4px);
+    transform: translateX(2px);
     border-bottom-color: var(--color-accent);
 }
 
@@ -416,19 +450,21 @@
 
 .tab-content {
     display: none;
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.2s ease;
     height: 100%;
+    min-height: 0;
 }
 
 .tab-content.active {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateX(8px);
+        transform: translateX(4px);
     }
     to {
         opacity: 1;
@@ -437,10 +473,11 @@
 }
 
 .panel-promo-area {
-    width: 280px;
-    min-width: 280px;
-    max-width: 280px;
-    padding: 16px;
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+    height: 100%;
+    padding: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -451,8 +488,7 @@
 .glowing-frame {
     width: 100%;
     height: 100%;
-    max-height: 250px;
-    border-radius: 2rem 0 2rem 0;
+    border-radius: 1.5rem 0 1.5rem 0;
     border: 2px solid var(--border-color);
     overflow: hidden;
     position: relative;
@@ -461,12 +497,12 @@
     align-items: center;
     justify-content: center;
     background: var(--bg-secondary);
-    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.05);
 }
 
 .glowing-frame:hover {
     border-color: var(--color-accent-glow);
-    box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 6px 16px -3px rgba(59, 130, 246, 0.2);
 }
 
 .frame-image-container {
@@ -474,21 +510,21 @@
     height: 100%;
     position: relative;
     overflow: hidden;
-    border-radius: 2.5rem 0 2.5rem 0;
+    border-radius: 2rem 0 2rem 0;
 }
 
 .frame-image-container img {
     width: 100%;
     height: 100%;
     max-width: 100%;
-    max-height: 250px;
+    max-height: none;
     object-fit: cover;
     object-position: center;
-    transition: transform 0.7s ease;
+    transition: transform 0.5s ease;
 }
 
 .glowing-frame:hover .frame-image-container img {
-    transform: scale(1.08);
+    transform: scale(1.05);
 }
 
 /* ============================================
@@ -523,10 +559,11 @@
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
-    height: 400px;
-    max-height: 70vh;
+    height: 100%;
+    max-height: none;
     overflow: hidden;
     padding: 8px 0;
+    flex-shrink: 0;
 }
 
 .panel-sidebar {
