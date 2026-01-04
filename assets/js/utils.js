@@ -1,7 +1,6 @@
 /**
  * ============================================
  * UTILS.JS - Calculadoras de Enfermagem
- * Portal de Ferramentas Clínicas
  * 
  * Funcionalidades:
  * - Renderização de cards com diferenciação por tipo
