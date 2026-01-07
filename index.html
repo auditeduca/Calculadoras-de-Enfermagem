@@ -72,9 +72,29 @@
         }
         .animate-slide-in-up { animation: slideInUp 0.8s ease-out; }
         
-        /* Previne FOUC (Flash of Unstyled Content) escondendo containers até carregarem */
-        .component-loading { min-height: 100px; opacity: 0; transition: opacity 0.3s; }
-        .component-loaded { opacity: 1; }
+        /* Sistema de loading visual */
+        .component-loading { 
+            min-height: 100px; 
+            opacity: 0; 
+            transition: opacity 0.5s ease-in-out; 
+        }
+        .component-loaded { 
+            opacity: 1; 
+        }
+        
+        /* Debug visual - mostra quando está em loading */
+        .component-loading::before {
+            content: 'Carregando...';
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+            color: #999;
+            font-size: 14px;
+        }
+        .component-loaded::before {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 dark:bg-audit-bgDark dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-300 selection:bg-audit-gold selection:text-audit-navy">
@@ -109,37 +129,118 @@
 
     <!-- Script de Orquestração Centralizada -->
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            console.log('DOM pronto. Iniciando carregamento modular...');
+        // Função para mostrar todos os componentes
+        function showAllComponents() {
+            console.log('[Orquestration] Executando showAllComponents()...');
             
-            // Verifica se o templateEngine existe
+            const components = document.querySelectorAll('.component-loading');
+            console.log(`[Orquestration] Encontrados ${components.length} componentes em loading`);
+            
+            components.forEach((el, index) => {
+                // Verifica se o elemento tem conteúdo real (não está vazio)
+                const hasContent = el.innerHTML.trim().length > 0 || el.children.length > 0;
+                const id = el.id || `elemento-${index}`;
+                
+                console.log(`[Orquestration] ${id}: temConteudo=${hasContent}`);
+                
+                if (hasContent) {
+                    el.classList.remove('component-loading');
+                    el.classList.add('component-loaded');
+                    console.log(`[Orquestration] ${id}: classe removida, opacity deve ser 1`);
+                } else {
+                    console.warn(`[Orquestration] ${id}: está vazio, mantendo invisível`);
+                }
+            });
+        }
+
+        // Função para verificar se componentes foram injetados
+        function checkComponentsInjected() {
+            const header = document.getElementById('header-container');
+            const footer = document.getElementById('footer-container');
+            const main = document.getElementById('main-container');
+            
+            return {
+                header: header && header.innerHTML.trim().length > 0,
+                footer: footer && footer.innerHTML.trim().length > 0,
+                main: main && main.innerHTML.trim().length > 0
+            };
+        }
+
+        // Função de carregamento principal
+        async function loadAllComponents() {
+            console.log('[Orquestration] loadAllComponents() iniciada');
+            
+            // Aguarda um pequeno delay para garantir que template-engine.js foi carregado
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
             if (typeof loadComponent === 'function') {
+                console.log('[Orquestration] Função loadComponent encontrada');
+                
                 try {
-                    // Carrega componentes críticos em paralelo
-                    await Promise.all([
-                        loadComponent('header', 'header-container'),
-                        loadComponent('footer', 'footer-container'),
-                        loadComponent('accessibility', 'accessibility-container'),
-                        loadComponent('main-content', 'main-container')
-                    ]);
-
-                    console.log('Todos os componentes HTML carregados.');
-
-                    // Dispara evento para avisar aos scripts (header.js, footer.js) que o DOM está preenchido
-                    document.dispatchEvent(new Event('componentsLoaded'));
-
-                    // Remove classes de loading para fade-in suave
-                    document.querySelectorAll('.component-loading').forEach(el => {
-                        el.classList.remove('component-loading');
-                        el.classList.add('component-loaded');
-                    });
-
+                    // Carrega componentes um por um para melhor controle
+                    console.log('[Orquestration] Carregando header...');
+                    await loadComponent('header', 'header-container');
+                    console.log('[Orquestration] Header carregado');
+                    
+                    console.log('[Orquestration] Carregando footer...');
+                    await loadComponent('footer', 'footer-container');
+                    console.log('[Orquestration] Footer carregado');
+                    
+                    console.log('[Orquestration] Carregando accessibility...');
+                    await loadComponent('accessibility', 'accessibility-container');
+                    console.log('[Orquestration] Accessibility carregado');
+                    
+                    console.log('[Orquestration] Carregando main-content...');
+                    await loadComponent('main-content', 'main-container');
+                    console.log('[Orquestration] Main-content carregado');
+                    
+                    console.log('[Orquestration] Todos os componentes carregados com sucesso');
+                    
                 } catch (error) {
-                    console.error('Erro no carregamento modular:', error);
+                    console.error('[Orquestration] Erro ao carregar componentes:', error);
                 }
             } else {
-                console.warn('Função loadComponent não encontrada. Verifique template-engine.js');
+                console.warn('[Orquestration] Função loadComponent NÃO encontrada');
+                console.warn('[Orquestration] Verificando se componentes já existem no DOM...');
+                
+                // Verifica se componentes já existem (carregamento tradicional)
+                const injected = checkComponentsInjected();
+                console.log('[Orquestration] Estado da injeção:', injected);
             }
+            
+            // Sempre tenta mostrar os componentes (seja por loadComponent ou existentes)
+            showAllComponents();
+            
+            // Dispara evento para avisar aos scripts que o DOM está preenchido
+            console.log('[Orquestration] Dispatando evento componentsLoaded');
+            document.dispatchEvent(new Event('componentsLoaded'));
+        }
+
+        // Inicialização quando DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('========================================');
+            console.log('[Orquestration] DOM pronto');
+            console.log('[Orquestration] Iniciando orquestração...');
+            console.log('========================================');
+            
+            // Inicia carregamento
+            loadAllComponents();
+            
+            // Fallback de segurança: após 3 segundos, força a exibição
+            setTimeout(() => {
+                console.log('[Orquestration] Fallback de segurança executado');
+                showAllComponents();
+                
+                // Verifica se ainda há componentes invisíveis
+                const stillHidden = document.querySelectorAll('.component-loading');
+                if (stillHidden.length > 0) {
+                    console.warn(`[Orquestration] ALERTA: ${stillHidden.length} componentes ainda estão invisíveis`);
+                    stillHidden.forEach(el => {
+                        const id = el.id || el.tagName;
+                        console.warn(`  - ${id}: ${el.innerHTML.substring(0, 50)}...`);
+                    });
+                }
+            }, 3000);
         });
     </script>
 
