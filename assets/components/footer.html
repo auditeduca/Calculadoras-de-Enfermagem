@@ -1,320 +1,471 @@
-<!-- ========================================
-     FOOTER.HTML
-     Componente de Rodapé
-     Calculadoras de Enfermagem
-     ======================================== -->
-
-<footer id="footer">
-  <div class="footer-container">
+<!-- Componente Footer - Sistema Modular V8.0 -->
+<!-- Este conteúdo será carregado dentro de #footer-container -->
+<div id="footer" class="bg-gray-900 text-white py-8 relative z-40">
+    <!-- Logotipo e Linha Divisória -->
     <div class="footer-header">
-      <img src="https://www.calculadorasdeenfermagem.com.br/iconpages.webp" alt="Calculadoras de Enfermagem" class="footer-logo">
-      <div class="footer-divider"></div>
+        <img 
+            src="https://www.calculadorasdeenfermagem.com.br/iconrodape1.webp" 
+            alt="Logotipo Calculadoras de Enfermagem" 
+            class="footer-logo" 
+            height="64" 
+            style="height: 64px; width: auto; object-fit: contain; display: block; max-width: 240px;"
+            onerror="this.onerror=null;this.src='https://placehold.co/240x64/FFFFFF/1A3E74?text=Logo'"
+        >
+        <div class="footer-divider"></div>
     </div>
+
+    <!-- Banner de Cookies -->
+    <div id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Aviso de Cookies" aria-describedby="cookie-description">
+        <div class="cookie-content">
+            <p id="cookie-description">
+                Seu conhecimento importa e sua privacidade também.
+                Nós da Calculadora de Enfermagem utilizamos cookies para aprimorar sua experiência de navegação e analisar nosso tráfego. Queremos assegurar-lhe a melhor utilização possível e a melhoria contínua do nosso website. Assim, podemos também apresentar-lhe conteúdo e publicidade baseados no seu perfil de utilização, e, para isso, trabalhamos em conjunto com parceiro selecionado (Google).
+            </p>
+            <p class="cookie-consent-note">
+                Pode retirar o seu consentimento a qualquer momento. Mais informações e opções de alteração das suas definições podem ser encontradas em Personalizar e nas nossas informações de proteção de dados.
+            </p>
+        </div>
+        <div class="cookie-actions">
+            <button id="cookie-settings" class="cookie-btn cookie-btn-secondary" aria-label="Personalizar configurações de cookies">
+                Personalizar
+            </button>
+            <button id="cookie-accept" class="cookie-btn cookie-btn-primary" aria-label="Aceitar todos os cookies">
+                Aceitar
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlay do Modal de Cookies -->
+    <div id="cookie-overlay" class="cookie-overlay hidden" aria-hidden="true"></div>
     
-    <div class="footer-content">
-      <section class="footer-section">
-        <h3>Navegação</h3>
-        <ul class="footer-links">
-          <li><a href="index.html">Início</a></li>
-          <li><a href="#calculadoras">Calculadoras</a></li>
-          <li><a href="#escalas">Escalas Clínicas</a></li>
-          <li><a href="#vacinas">Calendário Vacinal</a></li>
-        </ul>
-      </section>
-      
-      <section class="footer-section">
-        <h3>Institucional</h3>
-        <ul class="footer-links">
-          <li><a href="#">Sobre Nós</a></li>
-          <li><a href="#">Mapa do Site</a></li>
-          <li><a href="#">Políticas do Site</a></li>
-          <li><a href="#">Termos e Condições</a></li>
-        </ul>
-      </section>
-      
-      <section class="footer-section">
-        <h3>Sustentabilidade Digital</h3>
-        <ul class="footer-links">
-          <li><a href="#">Nosso Compromisso</a></li>
-          <li><a href="#">Relatório de Impacto</a></li>
-          <li><a href="#">Tecnologia Verde</a></li>
-        </ul>
-      </section>
-      
-      <section class="footer-section">
-        <h3>Acessibilidade Digital</h3>
-        <ul class="footer-links">
-          <li><a href="#">Política de Acessibilidade</a></li>
-          <li><a href="#">Recursos de Acessibilidade</a></li>
-        </ul>
-      </section>
-      
-      <section class="footer-section footer-contact-section">
-        <h3>Contato</h3>
-        <ul class="footer-contact">
-          <li>
-            <i class="fas fa-envelope"></i>
-            <span>contato@calculadorasdeenfermagem.com.br</span>
-          </li>
-          <li>
-            <i class="fas fa-map-marker-alt"></i>
-            <span>Brasil</span>
-          </li>
-        </ul>
-        
-        <div class="social-links">
-          <a href="https://www.linkedin.com/company/calculadoras-de-enfermagem" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a href="https://www.instagram.com/calculadorasdeenfermagem/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="https://www.tiktok.com/@calculadorasdeenf" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-            <i class="fab fa-tiktok"></i>
-          </a>
-          <a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-            <i class="fab fa-youtube"></i>
-          </a>
-        </div>
-      </section>
-    </div>
-    
-    <div class="footer-bottom">
-      <div class="footer-copyright">
-        <p>© <span id="current-year">2025</span> Calculadoras de Enfermagem. Todos os direitos reservados.</p>
-        <div class="footer-legal-links">
-          <a href="#">Central de Privacidade</a>
-          <a href="#">Notificações Legais</a>
-          <a href="#">Configurações</a>
-        </div>
-      </div>
-      
-      <div class="footer-seals">
-        <img src="https://www.calculadorasdeenfermagem.com.br/img/seloacessibilidade-80.webp" alt="Selo de Acessibilidade" class="footer-seal">
-        <img src="https://www.calculadorasdeenfermagem.com.br/img/selosustentabilidade-80.webp" alt="Selo de Sustentabilidade" class="footer-seal">
-        <img src="https://www.calculadorasdeenfermagem.com.br/img/selolgpd-80.webp" alt="Selo LGPD" class="footer-seal">
-      </div>
-    </div>
-  </div>
-  
-  <!-- Cookie Banner -->
-  <div id="cookie-banner" class="cookie-banner hidden" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-description">
-    <div class="cookie-banner-container">
-      <div class="cookie-info">
-        <div class="cookie-icon">
-          <i class="fas fa-cookie-bite"></i>
-        </div>
-        <div class="cookie-text">
-          <strong id="cookie-title">Utilizamos cookies</strong>
-          <p id="cookie-description">
-            Seu conhecimento importa e sua privacidade também. Utilizamos cookies para aprimorar sua experiência de navegação e analisar nosso tráfego.
-          </p>
-          <p class="cookie-consent-note">
-            Pode retirar o seu consentimento a qualquer momento.
-          </p>
-        </div>
-      </div>
-      <div class="cookie-actions">
-        <button type="button" class="cookie-btn cookie-btn-secondary" id="cookie-settings">
-          Personalizar
-        </button>
-        <button type="button" class="cookie-btn cookie-btn-primary" id="cookie-accept">
-          Aceitar
-        </button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Cookie Overlay -->
-  <div id="cookie-overlay" class="cookie-overlay hidden" aria-hidden="true"></div>
-  
-  <!-- Cookie Preferences Modal -->
-  <div id="cookie-modal" class="cookie-modal hidden" role="dialog" aria-labelledby="cookie-modal-title">
-    <div class="cookie-modal-header">
-      <h3 id="cookie-modal-title">Preferências de Cookies</h3>
-      <button type="button" class="cookie-modal-close" id="cookie-modal-close" aria-label="Fechar">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div class="cookie-modal-body">
-      <div class="cookie-category">
-        <div class="cookie-category-header">
-          <h4>Tecnicamente Necessário</h4>
-          <div class="cookie-category-info">
-            <label class="cookie-switch">
-              <input type="checkbox" id="check-necessary" checked disabled>
-              <span class="cookie-slider"></span>
-            </label>
-            <button type="button" class="cookie-expand-btn" data-accordion-target="necessary-details" aria-expanded="false">
-              <i class="fas fa-chevron-down"></i>
+    <!-- Modal de Configurações de Cookies -->
+    <div id="cookie-modal-content" class="cookie-modal hidden" role="dialog" aria-label="Preferências de Cookies">
+        <div class="cookie-modal-header">
+            <h3>Preferências de Cookies</h3>
+            <button id="cookie-modal-close" class="cookie-modal-close" aria-label="Fechar configuração de cookies">
+                <i class="fas fa-times"></i>
             </button>
-          </div>
         </div>
-        <div id="necessary-details" class="cookie-category-description">
-          <p>As tecnologias web e cookies necessários tornam a nossa página tecnicamente acessível e utilizável.</p>
-          <div class="cookie-service-topic">
-            <span class="cookie-service-name">Google Tag Manager</span>
-            <div class="cookie-service-info">
-              <button type="button" class="cookie-info-btn" data-modal-target="gtm-details">
-                <i class="fas fa-info-circle"></i>
-              </button>
+        <div class="cookie-modal-body">
+            <!-- Tecnicamente Necessário -->
+            <div class="cookie-category">
+                <div class="cookie-category-header" role="button" tabindex="0" aria-expanded="false">
+                    <h4>Tecnicamente Necessário</h4>
+                    <div class="cookie-category-info">
+                        <button class="cookie-expand-btn" data-accordion-target="accordion-necessary" aria-label="Expandir detalhes">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <label class="cookie-switch">
+                            <input type="checkbox" id="check-necessary" checked disabled>
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="cookie-category-description" id="accordion-necessary">
+                    <p>As tecnologias web e cookies necessários tornam a nossa página tecnicamente acessível e utilizável. Tratam-se de funcionalidades básicas essenciais, como a navegação no website, a correta apresentação no seu browser ou a consulta do seu consentimento. Sem estas tecnologias web e cookies, o nosso website não funciona.</p>
+                    <div class="cookie-service-topic">
+                        <span class="cookie-service-name">Google Tag Manager | BR</span>
+                        <div class="cookie-service-info">
+                            <button class="cookie-info-btn" data-modal-target="modal-necessary" aria-label="Ver detalhes">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            
+            <!-- Análise e Estatística -->
+            <div class="cookie-category">
+                <div class="cookie-category-header" role="button" tabindex="0" aria-expanded="false">
+                    <h4>Análise e Estatística</h4>
+                    <div class="cookie-category-info">
+                        <button class="cookie-expand-btn" data-accordion-target="accordion-analytics" aria-label="Expandir detalhes">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <label class="cookie-switch">
+                            <input type="checkbox" id="check-analytics">
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="cookie-category-description" id="accordion-analytics">
+                    <p>Preferências de Privacidade: Queremos aperfeiçoar constantemente a facilidade de utilização e o desempenho dos nossos websites. Por este motivo, utilizamos tecnologias de análise (também Cookies), que medem e avaliam que funções e conteúdos dos nossos websites são utilizados e com que frequência. Assim, conseguimos melhorar as nossas páginas para os usuários e apenas mostrar o conteúdo de seu interesse.</p>
+                    <div class="cookie-service-topic">
+                        <span class="cookie-service-name">Google Analytics | BR</span>
+                        <div class="cookie-service-info">
+                            <button class="cookie-info-btn" data-modal-target="modal-analytics" aria-label="Ver detalhes">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Marketing -->
+            <div class="cookie-category">
+                <div class="cookie-category-header" role="button" tabindex="0" aria-expanded="false">
+                    <h4>Marketing</h4>
+                    <div class="cookie-category-info">
+                        <button class="cookie-expand-btn" data-accordion-target="accordion-marketing" aria-label="Expandir detalhes">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <label class="cookie-switch">
+                            <input type="checkbox" id="check-marketing">
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="cookie-category-description" id="accordion-marketing">
+                    <p>Preferências de Privacidade: Nós utilizamos cookies para várias finalidades. Trabalhamos em conjunto com parceiros selecionados (Google, LinkedIn, Salesforce, Facebook, entre outros) para apresentar conteúdos e publicidade personalizados. Através destes parceiros, é possível que receba também publicidade de outros websites.</p>
+                    <div class="cookie-service-topic">
+                        <span class="cookie-service-name">Google AdSense | BR</span>
+                        <div class="cookie-service-info">
+                            <button class="cookie-info-btn" data-modal-target="modal-marketing" aria-label="Ver detalhes">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      
-      <div class="cookie-category">
-        <div class="cookie-category-header">
-          <h4>Análise e Estatística</h4>
-          <div class="cookie-category-info">
-            <label class="cookie-switch">
-              <input type="checkbox" id="check-analytics">
-              <span class="cookie-slider"></span>
-            </label>
-            <button type="button" class="cookie-expand-btn" data-accordion-target="analytics-details" aria-expanded="false">
-              <i class="fas fa-chevron-down"></i>
+        <div class="cookie-modal-footer">
+            <button id="cookie-save-preferences" class="cookie-btn cookie-btn-secondary">
+                Salvar Preferências
             </button>
-          </div>
-        </div>
-        <div id="analytics-details" class="cookie-category-description">
-          <p>Utilizamos tecnologias de análise para medir e avaliar que funções e conteúdos são utilizados.</p>
-          <div class="cookie-service-topic">
-            <span class="cookie-service-name">Google Analytics</span>
-            <div class="cookie-service-info">
-              <button type="button" class="cookie-info-btn" data-modal-target="ga-details">
-                <i class="fas fa-info-circle"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="cookie-category">
-        <div class="cookie-category-header">
-          <h4>Marketing</h4>
-          <div class="cookie-category-info">
-            <label class="cookie-switch">
-              <input type="checkbox" id="check-marketing">
-              <span class="cookie-slider"></span>
-            </label>
-            <button type="button" class="cookie-expand-btn" data-accordion-target="marketing-details" aria-expanded="false">
-              <i class="fas fa-chevron-down"></i>
+            <button id="cookie-accept-all" class="cookie-btn cookie-btn-primary">
+                Concordar com tudo
             </button>
-          </div>
         </div>
-        <div id="marketing-details" class="cookie-category-description">
-          <p>Utilizamos cookies para apresentar conteúdos e publicidade personalizados.</p>
-          <div class="cookie-service-topic">
-            <span class="cookie-service-name">Google AdSense</span>
-            <div class="cookie-service-info">
-              <button type="button" class="cookie-info-btn" data-modal-target="adsense-details">
-                <i class="fas fa-info-circle"></i>
-              </button>
+    </div>
+
+    <!-- Modal de Detalhes - Tecnicamente Necessário (Google Tag Manager) -->
+    <div id="modal-necessary" class="cookie-detail-modal hidden" role="dialog" aria-label="Detalhes de Tecnicamente Necessário">
+        <div class="cookie-detail-header">
+            <h3>Tecnicamente Necessário</h3>
+            <h4>Google Tag Manager | BR</h4>
+            <button class="cookie-modal-close" data-close="modal-necessary" aria-label="Fechar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cookie-detail-body">
+            <div class="cookie-detail-content">
+                <div class="cookie-detail-section">
+                    <h5>Descrição do Serviço</h5>
+                    <p>Este é um sistema de gerenciamento de tags. Com isso, o usuário pode atualizar códigos de medição e fragmentos de código relacionados, conhecidos coletivamente como tags no site ou aplicativo móvel do usuário.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Empresa de processamento</h5>
+                    <p>Google Ireland Limited<br>Google Building Gordon House, 4 Barrow St, Dublin, D04 E5W5, Ireland</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Finalidades dos dados</h5>
+                    <p>Gestão de tags</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Tecnologias utilizadas</h5>
+                    <p>Pixel</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Dados recolhidos</h5>
+                    <p>Dados agregados sobre disparo de tags</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Base jurídica</h5>
+                    <p>Interesses legítimos, Art. 7(9) LGPD</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Local de processamento</h5>
+                    <p>União Europeia</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Período de retenção</h5>
+                    <p>Os dados serão excluídos após 14 dias da recuperação.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Agente de proteção de dados da empresa de processamento</h5>
+                    <p><a href="https://support.google.com/policies/contact/general_privacy_form" target="_blank" rel="noopener">https://support.google.com/policies/contact/general_privacy_form</a></p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Transferência para outros países</h5>
+                    <p>Taiwan, Chile, Singapura, Estados Unidos da América</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Destinatários dos dados</h5>
+                    <p>Alphabet Inc., Google LLC, Google Ireland Limited</p>
+                </div>
+                <div class="cookie-detail-links">
+                    <a href="https://business.safety.google/privacy/?hl=en" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de privacidade do processador de dados</a>
+                    <a href="https://www.google.com/intl/de/tagmanager/use-policy.html" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de cookies do processador de dados</a>
+                    <a href="https://safety.google/privacy/privacy-controls/" target="_blank" rel="noopener" class="cookie-link">Clique aqui para desativar este processador em todos os domínios</a>
+                </div>
             </div>
-          </div>
+            <div class="cookie-detail-footer">
+                <button class="cookie-btn cookie-btn-secondary cookie-detail-back" data-close="modal-necessary">
+                    Voltar
+                </button>
+            </div>
         </div>
-      </div>
     </div>
-    <div class="cookie-modal-footer">
-      <button type="button" class="cookie-btn cookie-btn-secondary" id="cookie-save-preferences">
-        Salvar Preferências
-      </button>
-      <button type="button" class="cookie-btn cookie-btn-primary" id="cookie-accept-all">
-        Concordar com tudo
-      </button>
+
+    <!-- Modal de Detalhes - Análise e Estatística (Google Analytics) -->
+    <div id="modal-analytics" class="cookie-detail-modal hidden" role="dialog" aria-label="Detalhes de Análise e Estatística">
+        <div class="cookie-detail-header">
+            <h3>Análise e Estatística</h3>
+            <h4>Google Analytics | BR</h4>
+            <button class="cookie-modal-close" data-close="modal-analytics" aria-label="Fechar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cookie-detail-body">
+            <div class="cookie-detail-content">
+                <div class="cookie-detail-section">
+                    <h5>Descrição do Serviço</h5>
+                    <p>Este é um serviço de análise da web. Com isso, o usuário pode medir o retorno sobre o investimento publicitário "ROI", bem como acompanhar o comportamento do usuário com flash, vídeo, sites e aplicativos.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Empresa de processamento</h5>
+                    <p>Google Ireland Limited<br>Google Building Gordon House, 4 Barrow St, Dublin, D04 E5W5, Ireland</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Finalidades dos dados</h5>
+                    <p>Análise de usuários, Relatórios de desempenho, Remarketing</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Tecnologias utilizadas</h5>
+                    <p>Cookies, Pixel, Local Storage</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Dados recolhidos</h5>
+                    <p>Endereço IP, informações do dispositivo, comportamento de navegação, tempo de permanência</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Base jurídica</h5>
+                    <p>Consentimento, Art. 7(1) LGPD</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Local de processamento</h5>
+                    <p>União Europeia</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Período de retenção</h5>
+                    <p>Os dados serão excluídos após 14 meses.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Agente de proteção de dados da empresa de processamento</h5>
+                    <p><a href="https://support.google.com/policies/contact/general_privacy_form" target="_blank" rel="noopener">https://support.google.com/policies/contact/general_privacy_form</a></p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Transferência para outros países</h5>
+                    <p>Taiwan, Chile, Singapura, Estados Unidos da América</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Destinatários dos dados</h5>
+                    <p>Alphabet Inc., Google LLC, Google Ireland Limited</p>
+                </div>
+                <div class="cookie-detail-links">
+                    <a href="https://business.safety.google/privacy/?hl=en" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de privacidade do processador de dados</a>
+                    <a href="https://policies.google.com/technologies/cookies?hl=en" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de cookies do processador de dados</a>
+                    <a href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener" class="cookie-link">Clique aqui para desativar este processador em todos os domínios</a>
+                </div>
+            </div>
+            <div class="cookie-detail-footer">
+                <button class="cookie-btn cookie-btn-secondary cookie-detail-back" data-close="modal-analytics">
+                    Voltar
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
-  
-  <!-- Cookie Detail Modals -->
-  <div id="gtm-details" class="cookie-detail-modal hidden" role="dialog" aria-labelledby="gtm-title">
-    <div class="cookie-detail-header">
-      <h3 id="gtm-title">Google Tag Manager</h3>
-      <button type="button" class="cookie-modal-close" aria-label="Fechar">
-        <i class="fas fa-times"></i>
-      </button>
+
+    <!-- Modal de Detalhes - Marketing (Google AdSense) -->
+    <div id="modal-marketing" class="cookie-detail-modal hidden" role="dialog" aria-label="Detalhes de Marketing">
+        <div class="cookie-detail-header">
+            <h3>Marketing</h3>
+            <h4>Google AdSense | BR</h4>
+            <button class="cookie-modal-close" data-close="modal-marketing" aria-label="Fechar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cookie-detail-body">
+            <div class="cookie-detail-content">
+                <div class="cookie-detail-section">
+                    <h5>Descrição do Serviço</h5>
+                    <p>Serviço de rede de publicidade online para exibição de anúncios relevantes baseados no conteúdo visitado e no perfil do utilizador.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Empresa de processamento</h5>
+                    <p>Google Ireland Limited<br>Google Building Gordon House, 4 Barrow St, Dublin, D04 E5W5, Ireland</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Finalidades dos dados</h5>
+                    <p>Exibição de anúncios personalizados, Remarketing, Relatórios de desempenho</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Tecnologias utilizadas</h5>
+                    <p>Cookies, DoubleClick, Pixel</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Dados recolhidos</h5>
+                    <p>Histórico de navegação, interesses do usuário, identificadores de publicidade</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Base jurídica</h5>
+                    <p>Consentimento, Art. 7(1) LGPD</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Local de processamento</h5>
+                    <p>União Europeia</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Período de retenção</h5>
+                    <p>Os dados serão excluídos após 6 meses.</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Agente de proteção de dados da empresa de processamento</h5>
+                    <p><a href="https://support.google.com/policies/contact/general_privacy_form" target="_blank" rel="noopener">https://support.google.com/policies/contact/general_privacy_form</a></p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Transferência para outros países</h5>
+                    <p>Taiwan, Chile, Singapura, Estados Unidos da América</p>
+                </div>
+                <div class="cookie-detail-section">
+                    <h5>Destinatários dos dados</h5>
+                    <p>Alphabet Inc., Google LLC, Google Ireland Limited</p>
+                </div>
+                <div class="cookie-detail-links">
+                    <a href="https://business.safety.google/privacy/?hl=en" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de privacidade do processador de dados</a>
+                    <a href="https://policies.google.com/technologies/cookies?hl=en" target="_blank" rel="noopener" class="cookie-link">Clique aqui para ler a política de cookies do processador de dados</a>
+                    <a href="https://myadcenter.google.com/controls" target="_blank" rel="noopener" class="cookie-link">Clique aqui para desativar este processador em todos os domínios</a>
+                </div>
+            </div>
+            <div class="cookie-detail-footer">
+                <button class="cookie-btn cookie-btn-secondary cookie-detail-back" data-close="modal-marketing">
+                    Voltar
+                </button>
+            </div>
+        </div>
     </div>
-    <div class="cookie-detail-body">
-      <div class="cookie-detail-content">
-        <p><strong>Descrição:</strong> Sistema de gerenciamento de tags.</p>
-        <p><strong>Empresa:</strong> Google Ireland Limited</p>
-        <p><strong>Finalidade:</strong> Gestão de tags</p>
-        <p><strong>Base jurídica:</strong> Interesses legítimos</p>
-        <h5>Links</h5>
-        <a href="https://business.safety.google/privacy/?hl=en" target="_blank" rel="noopener" class="cookie-link">Política de privacidade</a>
-        <a href="https://www.google.com/intl/de/tagmanager/use-policy.html" target="_blank" rel="noopener" class="cookie-link">Política de cookies</a>
-      </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="toast-notification hidden" role="alert">
+        <span id="toast-message"></span>
     </div>
-    <div class="cookie-detail-footer">
-      <button type="button" class="cookie-btn cookie-btn-secondary cookie-detail-back" data-close="gtm-details">
-        Voltar
-      </button>
+
+    <!-- Botão Voltar ao Topo -->
+    <button id="backToTop" class="back-to-top hidden" aria-label="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Botão Flutuante de Cookies -->
+    <button id="cookie-fab" class="cookie-fab hidden" aria-label="Abrir configurações de cookies">
+        <i class="fas fa-cookie-bite"></i>
+    </button>
+
+    <!-- Footer Content (Conteúdo Principal) -->
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <!-- Coluna 1: Institucional -->
+            <div class="footer-section">
+                <h3>Institucional</h3>
+                <ul class="footer-links">
+                    <li><a href="/">Início</a></li>
+                    <li><a href="/sobre">Sobre Nós</a></li>
+                    <li><a href="/mapa-do-site">Mapa do Site</a></li>
+                    <li><a href="/politicas">Políticas do Site</a></li>
+                    <li><a href="/termos">Termos e Condições de Uso</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 2: Sustentabilidade Digital -->
+            <div class="footer-section">
+                <h3>Sustentabilidade Digital</h3>
+                <ul class="footer-links">
+                    <li><a href="/sustentabilidade">Nosso Compromisso</a></li>
+                    <li><a href="/relatorio-impacto">Relatório de Impacto</a></li>
+                    <li><a href="/tecnologia-verde">Tecnologia Verde</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 3: Acessibilidade Digital -->
+            <div class="footer-section">
+                <h3>Acessibilidade Digital</h3>
+                <ul class="footer-links">
+                    <li><a href="/acessibilidade">Política de Acessibilidade</a></li>
+                    <li><a href="/recursos-acessibilidade">Recursos de Acessibilidade</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 4: Nosso Compromisso -->
+            <div class="footer-section">
+                <h3>Nosso Compromisso</h3>
+                <p class="text-gray-400 text-sm mt-2">
+                    Nosso site adota como princípio de governança, o comprometimento com elevados padrões de acessibilidade digital, sustentabilidade digital e proteção de dados.
+                </p>
+                <div class="footer-seals mt-4">
+                    <img 
+                        src="https://www.calculadorasdeenfermagem.com.br/seloacessibilidade.webp" 
+                        alt="Selo: Certificado de Acessibilidade Digital" 
+                        class="footer-seal" 
+                        height="64" 
+                        style="height: 64px; width: auto; object-fit: contain;"
+                        onerror="this.style.display='none'"
+                    >
+                    
+                    <img 
+                        src="https://www.calculadorasdeenfermagem.com.br/selosustentabilidade.webp" 
+                        alt="Selo: Certificado de Sustentabilidade Digital" 
+                        class="footer-seal" 
+                        height="64" 
+                        style="height: 64px; width: auto; object-fit: contain;"
+                        onerror="this.style.display='none'"
+                    >
+                    
+                    <img 
+                        src="https://www.calculadorasdeenfermagem.com.br/selolgpd.webp" 
+                        alt="Selo: Certificado de Proteção de Dados e LGPD" 
+                        class="footer-seal" 
+                        height="64" 
+                        style="height: 64px; width: auto; object-fit: contain;"
+                        onerror="this.onerror=null;this.src='https://placehold.co/64x64/1A3E74/FFFFFF?text=Selo'"
+                    >
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                <p>&copy; <span id="current-year">2026</span> Calculadoras de Enfermagem. Todos os direitos reservados.</p>
+                <div class="footer-legal-links">
+                    <a href="https://www.calculadorasdeenfermagem.com.br/politica.html">Central de Privacidade</a>
+                    <a href="https://www.calculadorasdeenfermagem.com.br/notificacoes-legais.html">Notificações Legais</a>
+                    <a href="https://www.calculadorasdeenfermagem.com.br/termos.html">Configurações</a>
+                </div>
+            </div>
+            <div class="social-links-container" style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem;">
+                <span class="social-links-label">Siga-nos</span>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/company/calculadoras-de-enfermagem" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    
+                    <a href="https://www.instagram.com/calculadorasdeenfermagem/" target="_blank" rel="noopener" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+
+                    <a href="https://www.tiktok.com/@calculadorasdeenf?_t=ZM-8y94b3VAz2M&_r=1" target="_blank" rel="noopener" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+
+                    <a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" target="_blank" rel="noopener" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  
-  <div id="ga-details" class="cookie-detail-modal hidden" role="dialog" aria-labelledby="ga-title">
-    <div class="cookie-detail-header">
-      <h3 id="ga-title">Google Analytics</h3>
-      <button type="button" class="cookie-modal-close" aria-label="Fechar">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div class="cookie-detail-body">
-      <div class="cookie-detail-content">
-        <p><strong>Descrição:</strong> Serviço de análise da web.</p>
-        <p><strong>Empresa:</strong> Google Ireland Limited</p>
-        <p><strong>Finalidades:</strong> Análise de usuários, Relatórios de desempenho, Remarketing</p>
-        <p><strong>Base jurídica:</strong> Consentimento</p>
-        <h5>Links</h5>
-        <a href="https://business.safety.google/privacy/?hl=en" target="_blank" rel="noopener" class="cookie-link">Política de privacidade</a>
-        <a href="https://policies.google.com/technologies/cookies?hl=en" target="_blank" rel="noopener" class="cookie-link">Política de cookies</a>
-        <a href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener" class="cookie-link">Desativar</a>
-      </div>
-    </div>
-    <div class="cookie-detail-footer">
-      <button type="button" class="cookie-btn cookie-btn-secondary cookie-detail-back" data-close="ga-details">
-        Voltar
-      </button>
-    </div>
-  </div>
-  
-  <div id="adsense-details" class="cookie-detail-modal hidden" role="dialog" aria-labelledby="adsense-title">
-    <div class="cookie-detail-header">
-      <h3 id="adsense-title">Google AdSense</h3>
-      <button type="button" class="cookie-modal-close" aria-label="Fechar">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div class="cookie-detail-body">
-      <div class="cookie-detail-content">
-        <p><strong>Descrição:</strong> Serviço de rede de publicidade online.</p>
-        <p><strong>Empresa:</strong> Google Ireland Limited</p>
-        <p><strong>Finalidades:</strong> Exibição de anúncios personalizados, Remarketing</p>
-        <p><strong>Base jurídica:</strong> Consentimento</p>
-        <h5>Links</h5>
-        <a href="https://business.safety.google/privacy/?hl=en" target="_blank" rel="noopener" class="cookie-link">Política de privacidade</a>
-        <a href="https://policies.google.com/technologies/cookies?hl=en" target="_blank" rel="noopener" class="cookie-link">Política de cookies</a>
-        <a href="https://myadcenter.google.com/controls" target="_blank" rel="noopener" class="cookie-link">Desativar</a>
-      </div>
-    </div>
-    <div class="cookie-detail-footer">
-      <button type="button" class="cookie-btn cookie-btn-secondary cookie-detail-back" data-close="adsense-details">
-        Voltar
-      </button>
-    </div>
-  </div>
-  
-  <!-- Toast Notification -->
-  <div id="toast-notification" class="toast-notification hidden" role="alert">
-    <span id="toast-message"></span>
-  </div>
-  
-  <!-- Back to Top Button -->
-  <button type="button" id="backToTop" class="back-to-top hidden" aria-label="Voltar ao topo">
-    <i class="fas fa-arrow-up"></i>
-  </button>
-  
-  <!-- Cookie FAB -->
-  <button type="button" id="cookie-fab" class="cookie-fab hidden" aria-label="Configurar cookies">
-    <i class="fas fa-cookie-bite"></i>
-  </button>
-</footer>
