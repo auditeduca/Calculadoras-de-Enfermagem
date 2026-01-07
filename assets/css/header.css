@@ -528,26 +528,22 @@
 }
 
 /* ============================================
-   DECORATIVE SVG BACKGROUND (Compact Positioning)
+   DECORATIVE SVG BACKGROUND (Hidden - No Layout Impact)
    ============================================ */
 .decorative-svg-bg {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 45px;
+    width: 0;
+    height: 0;
     overflow: hidden;
     pointer-events: none;
-    z-index: 1;
+    z-index: -1;
+    visibility: hidden;
 }
 
 .decorative-svg-bg svg {
-    width: 100%;
-    height: 45px;
-    max-width: none;
-    max-height: none;
-    opacity: 0.15;
-    preserveAspectRatio: none;
+    display: none;
 }
 
 /* ============================================
