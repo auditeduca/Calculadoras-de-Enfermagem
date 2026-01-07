@@ -71,6 +71,10 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .animate-slide-in-up { animation: slideInUp 0.8s ease-out; }
+        
+        /* Previne FOUC (Flash of Unstyled Content) escondendo containers até carregarem */
+        .component-loading { min-height: 100px; opacity: 0; transition: opacity 0.3s; }
+        .component-loaded { opacity: 1; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 dark:bg-audit-bgDark dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-300 selection:bg-audit-gold selection:text-audit-navy">
@@ -79,28 +83,65 @@
     <div id="preload-container"></div>
     
     <!-- Header Container -->
-    <div id="header-container"></div>
+    <header id="header-container" class="component-loading"></header>
     
     <!-- Main Container -->
-    <main id="main-container" class="flex-1"></main>
+    <main id="main-container" class="flex-1 component-loading relative z-10"></main>
     
     <!-- Footer Container -->
-    <div id="footer-container"></div>
+    <footer id="footer-container" class="component-loading"></footer>
     
     <!-- Accessibility Container -->
     <div id="accessibility-container"></div>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="assets/js/console-cleaner.js"></script>
-    <script src="assets/js/utils.js"></script>
-    <script src="assets/js/template-engine.js"></script>
-    <script src="assets/js/preload.js"></script>
-    <script src="assets/js/header.js"></script>
-    <script src="assets/js/footer.js"></script>
-    <script src="assets/js/accessibility.js"></script>
-    <script src="assets/js/global-main.js"></script>
-    <script src="assets/js/global-main-index.js"></script>
+    <!-- Scripts com defer para garantir ordem de execução após parse do HTML -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="assets/js/utils.js" defer></script>
+    <script src="assets/js/console-cleaner.js" defer></script>
+    
+    <script src="assets/js/template-engine.js" defer></script>
+    <script src="assets/js/preload.js" defer></script>
+    <script src="assets/js/header.js" defer></script>
+    <script src="assets/js/footer.js" defer></script>
+    <script src="assets/js/accessibility.js" defer></script>
+    <script src="assets/js/global-main.js" defer></script>
+    <script src="assets/js/global-main-index.js" defer></script>
+
+    <!-- Script de Orquestração Centralizada -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('DOM pronto. Iniciando carregamento modular...');
+            
+            // Verifica se o templateEngine existe
+            if (typeof loadComponent === 'function') {
+                try {
+                    // Carrega componentes críticos em paralelo
+                    await Promise.all([
+                        loadComponent('header', 'header-container'),
+                        loadComponent('footer', 'footer-container'),
+                        loadComponent('accessibility', 'accessibility-container'),
+                        loadComponent('main-content', 'main-container')
+                    ]);
+
+                    console.log('Todos os componentes HTML carregados.');
+
+                    // Dispara evento para avisar aos scripts (header.js, footer.js) que o DOM está preenchido
+                    document.dispatchEvent(new Event('componentsLoaded'));
+
+                    // Remove classes de loading para fade-in suave
+                    document.querySelectorAll('.component-loading').forEach(el => {
+                        el.classList.remove('component-loading');
+                        el.classList.add('component-loaded');
+                    });
+
+                } catch (error) {
+                    console.error('Erro no carregamento modular:', error);
+                }
+            } else {
+                console.warn('Função loadComponent não encontrada. Verifique template-engine.js');
+            }
+        });
+    </script>
 
 </body>
 </html>

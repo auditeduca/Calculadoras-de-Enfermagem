@@ -247,7 +247,7 @@
 
     /**
      * Salva as preferências de consentimento do usuário
-     * @param {string} type - Tipo de consentimento: 'all', 'reject' ou 'custom'
+     * @param {string} type - Tipo de consentimento: 'all', 'reject' e 'custom'
      */
     function saveConsent(type) {
         let preferences = {};
@@ -493,26 +493,17 @@
     }
 
     /**
-     * Função principal de inicialização
+     * Função principal de inicialização do footer
      */
-    function run() {
-        console.log('[Footer] run() iniciada');
+    function initFooter() {
+        console.log('[Footer] initFooter() iniciada');
+        
         initElements();
         
         // Verifica se os elementos foram encontrados
         if (!state.elements.banner && !state.elements.modal) {
             console.log('[Footer] Elementos não encontrados na primeira tentativa');
-            // Não retorna, continua para tentar inicializar
         }
-        
-        initializeFooter();
-    }
-
-    /**
-     * Inicializa o footer após os elementos estarem disponíveis
-     */
-    function initializeFooter() {
-        console.log('[Footer] initializeFooter() iniciada');
         
         // Atualiza o ano no copyright do footer
         if (state.elements.yearSpan) {
@@ -555,7 +546,7 @@
             
             if (state.elements.banner || state.elements.modal) {
                 console.log('[Footer] Elementos encontrados!');
-                initializeFooter();
+                initFooter();
             } else if (currentAttempt < attempts) {
                 console.log(`[Footer] Elementos não encontrados, tentando novamente em ${delay}ms...`);
                 setTimeout(tryInit, delay);
@@ -567,9 +558,15 @@
         tryInit();
     }
 
-    // Inicialização híbrida: funciona tanto com carregamento normal quanto modular
-    function startInitialization() {
-        console.log('[Footer] startInitialization()');
+    // ============================================
+    // ORQUESTRAÇÃO DE CARREGAMENTO
+    // ============================================
+
+    /**
+     * Função de inicialização compatível com orquestração componentsLoaded
+     */
+    function startFooterInitialization() {
+        console.log('[Footer] startFooterInitialization()');
         
         // Se AppLoader existe, espera AppReady
         if (window.AppLoader) {
@@ -586,17 +583,17 @@
                 }
             }, 3000);
         } else {
-            // Sem AppLoader, tenta diretamente
-            console.log('[Footer] AppLoader não detectado, iniciando diretamente');
+            // Sem AppLoader, tenta diretamente com retry
             tryInitWithRetry(10, 300);
         }
     }
 
-    // Inicia a inicialização
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', startInitialization);
-    } else {
-        startInitialization();
+    // Ouve o evento que disparamos no index.html (orquestração modular)
+    document.addEventListener('componentsLoaded', startFooterInitialization);
+
+    // Fallback: Se o evento já tiver passado, tenta rodar direto
+    if (document.querySelector('#footer-container') || document.querySelector('.main-footer')) {
+        startFooterInitialization();
     }
 
 })();

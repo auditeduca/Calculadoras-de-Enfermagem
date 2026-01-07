@@ -2,6 +2,7 @@
  * GLOBAL-MAIN-INDEX.JS
  * Funcionalidades do Índice Principal
  * Calculadoras de Enfermagem
+ * @version Com suporte a orquestração componentsLoaded
  */
 
 (function() {
@@ -179,27 +180,38 @@
     }
   }
   
-  function init() {
+  /**
+   * Inicialização principal do global-main-index
+   */
+  function initGlobalMainIndex() {
+    console.log('[GlobalMainIndex] Inicializando...');
+    
     if (typeof Utils !== "undefined") {
       initSearchControls();
       renderAllTools();
+      console.log('[GlobalMainIndex] Ferramentas renderizadas com sucesso');
+    } else {
+      console.warn('[GlobalMainIndex] Utils não disponível');
     }
+  }
+
+  // ============================================
+  // ORQUESTRAÇÃO DE CARREGAMENTO
+  // ============================================
+  
+  // Ouve o evento que disparamos no index.html (orquestração modular)
+  document.addEventListener('componentsLoaded', function() {
+    console.log('[GlobalMainIndex] Evento componentsLoaded recebido');
+    initGlobalMainIndex();
+  });
+
+  // Fallback: Se o evento já tiver passado, tenta rodar direto
+  if (document.querySelector('#main-container') || document.querySelector('.main-content')) {
+    // Pequeno delay para garantir que outros módulos estejam prontos
+    setTimeout(initGlobalMainIndex, 100);
   }
   
   window.renderAllTools = renderAllTools;
   window.renderTools = renderTools;
   
-  document.addEventListener("ModulesLoaded", function() {
-    setTimeout(init, 100);
-  });
-  
-  Utils.onReady(function() {
-    setTimeout(function() {
-      if (document.getElementById("calculadoras-grid") &&
-          document.getElementById("escalas-grid") &&
-          document.getElementById("vacinas-grid")) {
-        init();
-      }
-    }, 500);
-  });
 })();

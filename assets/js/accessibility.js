@@ -2,6 +2,7 @@
  * ACCESSIBILITY.JS
  * Painel de Controle de Acessibilidade
  * Calculadoras de Enfermagem
+ * @version Com suporte a orquestração componentsLoaded
  */
 
 window.AccessControl = window.AccessControl || (function() {
@@ -490,7 +491,10 @@ window.AccessControl = window.AccessControl || (function() {
     return "chrome";
   }
   
-  function init() {
+  /**
+   * Inicialização principal do módulo de acessibilidade
+   */
+  function initAccessibility() {
     ensureElements();
     
     if (elements.toggleBtn) {
@@ -541,8 +545,23 @@ window.AccessControl = window.AccessControl || (function() {
     console.log("[AccessControl] Módulo de acessibilidade inicializado");
   }
   
+  // ============================================
+  // ORQUESTRAÇÃO DE CARREGAMENTO
+  // ============================================
+  
+  // Ouve o evento que disparamos no index.html (orquestração modular)
+  document.addEventListener('componentsLoaded', function() {
+    console.log('[AccessControl] Evento componentsLoaded recebido');
+    initAccessibility();
+  });
+
+  // Fallback: Se o evento já tiver passado, tenta rodar direto
+  if (document.querySelector('#accessibility-container') || document.querySelector('.accessibility-panel')) {
+    initAccessibility();
+  }
+  
   return {
-    init,
+    init: initAccessibility,
     togglePanel,
     closePanel,
     increaseFontSize,

@@ -2,6 +2,7 @@
  * Módulo Unificado de Header e Acessibilidade
  * Substitui header.js com integração total ao AccessControl
  * Resolve conflitos entre módulos e corrige problemas de menu
+ * @version Com suporte a orquestração componentsLoaded
  */
 (function() {
     "use strict";
@@ -1038,7 +1039,7 @@
     // ============================================
     // INICIALIZAÇÃO PRINCIPAL
     // ============================================
-    function initialize() {
+    function initHeader() {
         if (State.loaded) return;
 
         console.log('[HeaderModule] Inicializando módulo unificado...');
@@ -1077,7 +1078,7 @@
     window.HeaderModule = {
         init: function() {
             State.loaded = false;
-            initialize();
+            initHeader();
         },
         setFontSize: function(size) {
             applyFontSize(size);
@@ -1102,11 +1103,17 @@
         }
     };
 
-    // Inicializar quando o DOM estiver pronto
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initialize);
-    } else {
-        initialize();
+    // ============================================
+    // ORQUESTRAÇÃO DE CARREGAMENTO
+    // ============================================
+    
+    // Ouve o evento que disparamos no index.html (orquestração modular)
+    document.addEventListener('componentsLoaded', initHeader);
+
+    // Fallback: Se o evento já tiver passado (carregamento síncrono), tenta rodar direto
+    // Verifica se os elementos principais do header existem
+    if (document.querySelector('.main-header') || document.querySelector('#header-container')) {
+        initHeader();
     }
 
 })();
