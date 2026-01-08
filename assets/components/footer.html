@@ -604,28 +604,110 @@ function initCookieButtonsOnce() {
     
     // Aplicar consentimento aos scripts de tracking
     function applyConsentToScripts(consent) {
-        // ATENÇÃO: Esta função deve ser personalizada conforme os scripts do seu site
-        // Exemplo de implementação:
-        
+        // =========================================
+        // GOOGLE ANALYTICS
+        // =========================================
         if (consent.analytics) {
-            // Ativar Google Analytics
-            console.log('[Footer] Ativando Analytics por consentimento salvo');
-            // enableAnalytics();
+            // Ativar Google Analytics - carregar script
+            if (!document.getElementById('ga-script')) {
+                loadGoogleAnalytics();
+            }
+            console.log('[Footer] Analytics ativado');
         } else {
-            // Desativar Google Analytics
-            console.log('[Footer] Analytics desativado por consentimento');
-            // disableAnalytics();
+            // Desativar Google Analytics - remover script e limpar dados
+            disableGoogleAnalytics();
+            console.log('[Footer] Analytics desativado');
         }
         
+        // =========================================
+        // GOOGLE ADSENSE
+        // =========================================
         if (consent.marketing) {
-            // Ativar Google AdSense
-            console.log('[Footer] Ativando Marketing por consentimento salvo');
-            // enableMarketing();
+            // Ativar Google AdSense - carregar script
+            if (!document.getElementById('adsense-script')) {
+                loadGoogleAdSense();
+            }
+            console.log('[Footer] Marketing ativado');
         } else {
-            // Desativar Marketing
-            console.log('[Footer] Marketing desativado por consentimento');
-            // disableMarketing();
+            // Desativar Google AdSense - remover script e anúncios
+            disableGoogleAdSense();
+            console.log('[Footer] Marketing desativado');
         }
+    }
+    
+    // =========================================
+    // FUNÇÕES DE CARREGAMENTO DE SCRIPTS
+    // =========================================
+    
+    // Carregar Google Analytics
+    function loadGoogleAnalytics() {
+        // Criar e inserir script do GA4
+        var gaScript = document.createElement('script');
+        gaScript.id = 'ga-script';
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX'; // SUBSTITUIR PELO SEU ID
+        gaScript.onload = function() {
+            // Inicializar gtag após carregar
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', 'G-XXXXXXXXXX'); // SUBSTITUIR PELO SEU ID
+            console.log('[Footer] Google Analytics carregado');
+        };
+        document.head.appendChild(gaScript);
+    }
+    
+    // Desativar Google Analytics
+    function disableGoogleAnalytics() {
+        // Remover script do GA
+        var gaScript = document.getElementById('ga-script');
+        if (gaScript) {
+            gaScript.remove();
+        }
+        
+        // Remover window.gtag para impedir envios
+        window.gtag = function() {
+            console.log('[Footer] Analytics bloqueado - sem consentimento');
+        };
+        
+        // Limpar cookies do Analytics (opcional)
+        // document.cookie = '_ga=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+        // document.cookie = '_gid=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+    }
+    
+    // Carregar Google AdSense
+    function loadGoogleAdSense() {
+        // Criar e inserir script do AdSense
+        var adsenseScript = document.createElement('script');
+        adsenseScript.id = 'adsense-script';
+        adsenseScript.async = true;
+        adsenseScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX'; // SUBSTITUIR PELO SEU ID
+        adsenseScript.onload = function() {
+            console.log('[Footer] Google AdSense carregado');
+        };
+        document.head.appendChild(adsenseScript);
+    }
+    
+    // Desativar Google AdSense
+    function disableGoogleAdSense() {
+        // Remover script do AdSense
+        var adsenseScript = document.getElementById('adsense-script');
+        if (adsenseScript) {
+            adsenseScript.remove();
+        }
+        
+        // Remover anúncios do AdSense da página
+        var ads = document.querySelectorAll('.adsbygoogle, [data-ad-client]');
+        ads.forEach(function(ad) {
+            ad.remove();
+        });
+        
+        // Limpar anúncios inseridos pelo AdSense
+        var adFrames = document.querySelectorAll('iframe[src*="googlesyndication"]');
+        adFrames.forEach(function(frame) {
+            frame.remove();
+        });
     }
     
     // Verificar e aplicar preferências ao iniciar
