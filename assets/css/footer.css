@@ -730,15 +730,15 @@
     right: 2rem;
     width: 56px;
     height: 56px;
-    background: #ffffff;
-    color: #1e293b;
-    border: 2px solid #1e293b;
+    background: #60a5fa;
+    color: #ffffff;
+    border: none;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px rgba(96, 165, 250, 0.4);
     z-index: 999998;
     opacity: 1;
     visibility: visible;
@@ -762,14 +762,14 @@
 
 .back-to-top:hover {
     transform: translateY(-4px);
-    background: #1e293b;
-    color: #ffffff;
+    background: #3b82f6;
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
 }
 
 .back-to-top i,
 .back-to-top svg {
-    color: #1e293b !important;
-    font-size: 1.25rem;
+    color: #ffffff !important;
+    font-size: 1.35rem;
     width: 24px;
     height: 24px;
     display: flex;
@@ -783,8 +783,9 @@
     color: #ffffff !important;
 }
 
+/* Quando banner está aberto: back to top fica acima do banner */
 body.cookie-banner-open .back-to-top {
-    bottom: 140px;
+    bottom: calc(280px + 2rem);
 }
 
 /* =========================================
@@ -796,7 +797,7 @@ body.cookie-banner-open .back-to-top {
     right: 2rem;
     width: 56px;
     height: 56px;
-    background: #f59e0b;
+    background: #60a5fa;
     color: #ffffff;
     border: none;
     border-radius: 50%;
@@ -804,7 +805,7 @@ body.cookie-banner-open .back-to-top {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+    box-shadow: 0 4px 20px rgba(96, 165, 250, 0.4);
     z-index: 999998;
     opacity: 1;
     visibility: visible;
@@ -827,13 +828,14 @@ body.cookie-banner-open .back-to-top {
 
 .cookie-fab:hover {
     transform: scale(1.1);
-    box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5);
+    background: #3b82f6;
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
 }
 
 .cookie-fab i,
 .cookie-fab svg {
     color: #ffffff !important;
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     width: 24px;
     height: 24px;
     display: flex;
@@ -841,15 +843,12 @@ body.cookie-banner-open .back-to-top {
     justify-content: center;
 }
 
+/* FAB ocultado quando banner está ativo */
 body.cookie-banner-open .cookie-fab {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transform: scale(0.8);
-}
-
-body.cookie-banner-open .back-to-top {
-    bottom: calc(280px + 2rem);
 }
 
 /* =========================================
@@ -1343,17 +1342,17 @@ body.cookie-banner-open .back-to-top {
         border: none;
         box-shadow: 0 4px 20px rgba(96, 165, 250, 0.4);
     }
-    
+
     .back-to-top:hover {
         transform: translateY(-3px);
         background: #3b82f6;
     }
-    
+
     .back-to-top:hover i,
     .back-to-top:hover svg {
         color: #ffffff !important;
     }
-    
+
     .back-to-top i,
     .back-to-top svg {
         font-size: 1.25rem;
@@ -1361,21 +1360,22 @@ body.cookie-banner-open .back-to-top {
         height: 24px;
         color: #ffffff !important;
     }
-    
+
     .cookie-fab {
         bottom: 5.5rem;
         right: 1.25rem;
         width: 52px;
         height: 52px;
-        background: #3b82f6;
-        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.35);
+        background: #60a5fa;
+        box-shadow: 0 4px 20px rgba(96, 165, 250, 0.4);
     }
-    
+
     .cookie-fab:hover {
         transform: scale(1.08);
-        box-shadow: 0 8px 30px rgba(59, 130, 246, 0.45);
+        background: #3b82f6;
+        box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
     }
-    
+
     .cookie-fab i,
     .cookie-fab svg {
         font-size: 1.25rem;
@@ -1383,14 +1383,16 @@ body.cookie-banner-open .back-to-top {
         height: 24px;
         color: #ffffff !important;
     }
-    
+
+    /* FAB ocultado quando banner está ativo */
     body.cookie-banner-open .cookie-fab {
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
         transform: scale(0.8);
     }
-    
+
+    /* Back to top posicionado acima do banner quando ativo */
     body.cookie-banner-open .back-to-top {
         bottom: calc(200px + 1.25rem);
     }
