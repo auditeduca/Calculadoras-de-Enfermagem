@@ -182,56 +182,54 @@ body.dark-theme{
   --footer-border: rgba(255, 255, 255, 0.1);
 }
 
-/* ------------------------------------------------
-   CAMADA 5: COOKIES - Tokens Específicos do Componente
-   O modal de cookies tem aparência independente do tema
-   ------------------------------------------------ */
+/* =========================================
+   COOKIES - Tokens Específicos do Componente
+   Arquitetura de Tokens Semânticos (Segue padrão do projeto)
+   ========================================= */
 :root{
-  /* Tokens do Banner de Cookies */
-  --cookie-banner-bg: #1f2937;
-  --cookie-banner-text: #f9fafb;
-  --cookie-banner-text-muted: #d1d5db;
-  --cookie-banner-link: #60a5fa;
-  --cookie-btn-primary-bg: #3b82f6;
-  --cookie-btn-primary-text: #ffffff;
-  --cookie-btn-primary-border: #3b82f6;
-  --cookie-btn-primary-hover: #2563eb;
-  --cookie-btn-secondary-text: #3b82f6;
-  --cookie-btn-secondary-border: #3b82f6;
-  --cookie-btn-secondary-hover: rgba(59, 130, 246, 0.1);
+  /* Tokens do Banner de Cookies - Tema Claro */
+  --cookie-banner-bg: var(--primitive-gray-50);
+  --cookie-banner-text: var(--primitive-primary);
+  --cookie-banner-text-muted: var(--primitive-gray-600);
+  --cookie-banner-link: var(--primitive-primary-light);
+  --cookie-btn-primary-bg: var(--primitive-primary-dark-hover);
+  --cookie-btn-primary-text: var(--primitive-primary);
+  --cookie-btn-primary-border: var(--primitive-primary-dark-hover);
+  --cookie-btn-primary-hover: var(--primitive-primary-dark);
+  --cookie-btn-secondary-text: var(--primitive-primary);
+  --cookie-btn-secondary-border: var(--primitive-primary-dark-hover);
+  --cookie-btn-secondary-hover: rgba(147, 197, 253, 0.15);
 
-  /* Tokens do Modal de Cookies */
-  --cookie-modal-bg: #1f2937;
-  --cookie-modal-text: #f9fafb;
-  --cookie-modal-border: #374151;
-  --cookie-modal-header-bg: #374151;
-  --cookie-modal-header-text: #f9fafb;
-  --cookie-modal-close-color: #9ca3af;
-  --cookie-modal-close-hover: #f9fafb;
-  --cookie-modal-close-hover-bg: #4b5563;
+  /* Tokens do Modal de Cookies - Tema Claro */
+  --cookie-modal-bg: var(--theme-bg-panel);
+  --cookie-modal-text: var(--primitive-primary);
+  --cookie-modal-border: var(--theme-border-color);
+  --cookie-modal-header-bg: var(--primitive-gray-50);
+  --cookie-modal-header-text: var(--primitive-primary);
+  --cookie-modal-close-color: var(--primitive-primary);
+  --cookie-modal-close-hover: var(--primitive-primary-hover);
+  --cookie-modal-close-hover-bg: var(--primitive-gray-200);
 
   /* Tokens das Categorias de Cookies */
-  --cookie-category-bg: #111827;
-  --cookie-category-header-bg: #374151;
-  --cookie-category-header-hover: #4b5563;
-  --cookie-category-header-text: #f9fafb;
-  --cookie-category-description-text: #d1d5db;
+  --cookie-category-bg: var(--theme-bg-panel);
+  --cookie-category-header-bg: var(--primitive-gray-50);
+  --cookie-category-header-hover: var(--primitive-gray-200);
+  --cookie-category-header-text: var(--primitive-primary);
+  --cookie-category-description-text: var(--primitive-gray-600);
 
   /* Tokens dos Botões e Controles */
-  --cookie-btn-border: #4b5563;
-  --cookie-btn-text: #9ca3af;
-  --cookie-switch-bg: #4b5563;
-  --cookie-focus: #3b82f6;
+  --cookie-btn-border: var(--primitive-primary);
+  --cookie-btn-text: var(--primitive-primary);
+  --cookie-switch-bg: var(--primitive-gray-300);
+  --cookie-switch-checked: var(--primitive-primary);
+  --cookie-focus: var(--primitive-primary-light);
 
   /* Tokens do Overlay */
-  --cookie-overlay-bg: rgba(0, 0, 0, 0.7);
-
-  /* Tokens do Toast */
-  --toast-bg: #059669;
+  --cookie-overlay-bg: rgba(15, 36, 68, 0.6);
 
   /* Scrollbars dos Cookies */
-  --cookie-scroll-thumb: #64748b;
-  --cookie-scroll-thumb-hover: #3b82f6;
+  --cookie-scroll-thumb: var(--primitive-gray-300);
+  --cookie-scroll-thumb-hover: var(--primitive-gray-400);
 
   /* Z-Index específico para Cookies */
   --z-back-to-top: 40;
@@ -239,6 +237,49 @@ body.dark-theme{
   --z-cookie-overlay: 55;
   --z-cookie-modal: 56;
   --z-cookie-detail: 57;
+}
+
+/* Dark Theme para Cookies */
+body.dark-theme{
+  /* Banner de Cookies - Tema Escuro */
+  --cookie-banner-bg: var(--primitive-gray-800);
+  --cookie-banner-text: var(--primitive-gray-100);
+  --cookie-banner-text-muted: var(--primitive-gray-400);
+  --cookie-banner-link: var(--primitive-primary-dark);
+  --cookie-btn-primary-bg: var(--primitive-primary);
+  --cookie-btn-primary-text: var(--primitive-gray-50);
+  --cookie-btn-primary-border: var(--primitive-primary);
+  --cookie-btn-primary-hover: var(--primitive-primary-light);
+  --cookie-btn-secondary-text: var(--primitive-primary-dark);
+  --cookie-btn-secondary-border: var(--primitive-primary-dark);
+  --cookie-btn-secondary-hover: rgba(26, 74, 138, 0.3);
+
+  /* Modal de Cookies - Tema Escuro */
+  --cookie-modal-bg: var(--primitive-gray-800);
+  --cookie-modal-text: var(--primitive-gray-100);
+  --cookie-modal-border: var(--primitive-gray-700);
+  --cookie-modal-header-bg: var(--primitive-gray-700);
+  --cookie-modal-header-text: var(--primitive-gray-100);
+  --cookie-modal-close-color: var(--primitive-gray-300);
+  --cookie-modal-close-hover: var(--primitive-gray-100);
+  --cookie-modal-close-hover-bg: var(--primitive-gray-600);
+
+  /* Categorias de Cookies - Tema Escuro */
+  --cookie-category-bg: var(--primitive-gray-800);
+  --cookie-category-header-bg: var(--primitive-gray-700);
+  --cookie-category-header-hover: var(--primitive-gray-600);
+  --cookie-category-header-text: var(--primitive-gray-100);
+  --cookie-category-description-text: var(--primitive-gray-400);
+
+  /* Botões e Controles - Tema Escuro */
+  --cookie-btn-border: var(--primitive-gray-600);
+  --cookie-btn-text: var(--primitive-gray-300);
+  --cookie-switch-bg: var(--primitive-gray-600);
+  --cookie-switch-checked: var(--primitive-primary-dark);
+
+  /* Scrollbars dos Cookies - Tema Escuro */
+  --cookie-scroll-thumb: var(--primitive-gray-600);
+  --cookie-scroll-thumb-hover: var(--primitive-gray-500);
 }
 
 /* ------------------------------------------------

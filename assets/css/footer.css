@@ -1,6 +1,9 @@
 /* =========================================
    FOOTER - Sistema Modular V8.0
    Arquitetura de Tokens Semânticos
+   
+   Este arquivo utiliza tokens do global.css para todas as cores,
+   seguindo o padrão de temas claro/escuro da aplicação.
    ========================================= */
 
 /* =========================================
@@ -32,33 +35,26 @@ body > *:not(#footer) {
 }
 
 /* =========================================
-   CONTAINER DO FOOTER
+   DEFINIÇÃO DE CORES (FOOTER E COOKIE BANNER)
    ========================================= */
+#footer {
+    background-color: var(--footer-bg, var(--primitive-primary));
+    color: var(--footer-text, var(--primitive-gray-50));
+}
+
 #footer .container {
     position: relative;
     z-index: 10;
 }
 
-/* Garante que o conteúdo do footer não seja sobreposto */
 #footer .container > * {
     position: relative;
     z-index: 10;
 }
 
-/* Container do conteúdo principal do footer */
 #footer .container.mx-auto {
     padding-top: 2rem;
     padding-bottom: 2rem;
-}
-
-/* =========================================
-   VARIÁVEIS CSS DO COMPONENTE (Escopadas)
-   O footer usa tokens escopados definidos em global.css
-   ========================================= */
-#footer {
-    /* Cores do Footer - Usando tokens escopados */
-    background-color: var(--footer-bg, #111827);
-    color: var(--footer-text, #f9fafb);
 }
 
 /* =========================================
@@ -74,11 +70,6 @@ body > *:not(#footer) {
     z-index: 10;
 }
 
-/**
- * CORREÇÃO: Logotipo - Usa width fixo para preservar proporção
- * height: auto mantém a proporção original da imagem
- * object-fit: contain evita distorção
- */
 .footer-logo {
     width: 200px;
     height: auto;
@@ -92,7 +83,7 @@ body > *:not(#footer) {
 .footer-divider {
     width: 100%;
     height: 1px;
-    background-color: var(--footer-border, rgba(255, 255, 255, 0.3));
+    background-color: rgba(255, 255, 255, 0.2);
     opacity: 0.3;
 }
 
@@ -100,7 +91,7 @@ body > *:not(#footer) {
    SEÇÕES E LINKS DO FOOTER
    ========================================= */
 .footer-section h3 {
-    color: var(--footer-text);
+    color: #f8fafc;
     font-size: 1rem;
     margin-bottom: 0.75rem;
     font-weight: 600;
@@ -121,14 +112,14 @@ body > *:not(#footer) {
 }
 
 .footer-links a {
-    color: var(--footer-text-muted);
+    color: var(--footer-text-muted, var(--primitive-gray-400));
     font-size: 0.875rem;
     text-decoration: none;
-    transition: color var(--transition-fast);
+    transition: color 0.2s ease;
 }
 
 .footer-links a:hover {
-    color: var(--footer-text);
+    color: var(--footer-text, var(--primitive-gray-50));
 }
 
 /* =========================================
@@ -144,7 +135,7 @@ body > *:not(#footer) {
 .social-links-label {
     display: block;
     font-size: 0.688rem;
-    color: var(--footer-text-muted);
+    color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: 1px;
     white-space: nowrap;
@@ -164,8 +155,8 @@ body > *:not(#footer) {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--footer-text);
-    transition: all var(--transition-fast);
+    color: #f8fafc;
+    transition: all 0.2s ease;
     text-decoration: none;
 }
 
@@ -185,10 +176,6 @@ body > *:not(#footer) {
     flex-wrap: wrap;
 }
 
-/**
- * Estilo base para todos os selos
- * Altura fixa para uniformidade visual
- */
 .footer-seal {
     height: 52px;
     width: auto;
@@ -204,20 +191,12 @@ body > *:not(#footer) {
     transform: scale(1.1);
 }
 
-/**
- * CORREÇÃO: Selo de Sustentabilidade
- * Usa atributo alt como seletor para garantir aplicação
- * Altura ligeiramente menor para equilíbrio visual
- */
 .footer-seal[alt*="Sustentabilidade"],
 .footer-seal[alt*="sustentabilidade"],
 .footer-seal[src*="sustentabilidade"] {
     height: 48px;
 }
 
-/**
- * CORREÇÃO: Ajuste fino para o selo de LGPD
- */
 .footer-seal[alt*="LGPD"],
 .footer-seal[alt*="lgpd"],
 .footer-seal[src*="lgpd"] {
@@ -228,7 +207,7 @@ body > *:not(#footer) {
    COPYRIGHT E LINKS LEGAIS
    ========================================= */
 .footer-bottom {
-    border-top: 1px solid var(--footer-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     display: flex;
@@ -250,7 +229,7 @@ body > *:not(#footer) {
 .footer-copyright p {
     margin: 0;
     font-size: 0.813rem;
-    color: var(--footer-text-muted);
+    color: var(--footer-text-muted, var(--primitive-gray-400));
 }
 
 .footer-legal-links {
@@ -262,58 +241,39 @@ body > *:not(#footer) {
 
 .footer-legal-links a {
     font-size: 0.813rem;
-    color: var(--footer-text-muted);
+    color: var(--footer-text-muted, var(--primitive-gray-400));
     text-decoration: none;
-    transition: color var(--transition-fast);
+    transition: color 0.2s ease;
 }
 
 .footer-legal-links a:hover {
-    color: var(--footer-text);
-}
-
-/* =========================================
-   CONTAINER DO FOOTER
-   ========================================= */
-footer#footer .container {
-    position: relative;
-    z-index: 10;
-}
-
-/* Garante que o conteúdo do footer não seja sobreposto */
-footer#footer .container > * {
-    position: relative;
-    z-index: 10;
-}
-
-/* Container do conteúdo principal do footer */
-footer#footer .container.mx-auto {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    color: var(--footer-text, var(--primitive-gray-50));
 }
 
 /* =========================================
    BANNER DE COOKIES
-   Usa tokens escopados para evitar conflitos
+   Usa tokens do global.css (--cookie-banner-*)
    ========================================= */
 .cookie-banner {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: var(--cookie-banner-bg);
+    background: var(--cookie-banner-bg, var(--primitive-gray-50));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    color: var(--cookie-banner-text);
+    color: var(--cookie-banner-text, var(--primitive-primary));
     padding: 1rem 1.5rem;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
     transform: translateY(100%);
-    z-index: var(--z-cookie-banner);
+    z-index: var(--z-cookie-banner, 50);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
-    min-height: 70px;
+    min-height: var(--cookie-banner-height, 70px);
     transition: transform 0.3s ease;
+    border-top: 3px solid var(--cookie-banner-text, var(--primitive-primary));
 }
 
 .cookie-banner.visible {
@@ -333,17 +293,17 @@ footer#footer .container.mx-auto {
     margin: 0;
     font-size: 0.875rem;
     line-height: 1.6;
-    color: var(--cookie-banner-text);
+    color: var(--cookie-banner-text, var(--primitive-primary));
 }
 
 .cookie-consent-note {
     margin-top: 0.5rem !important;
     font-size: 0.813rem !important;
-    color: var(--cookie-banner-text-muted) !important;
+    color: var(--cookie-banner-text-muted, var(--primitive-gray-600)) !important;
 }
 
 .cookie-content a {
-    color: var(--cookie-banner-link);
+    color: var(--cookie-banner-link, var(--primitive-primary-light));
     font-weight: 500;
     text-decoration: none;
 }
@@ -365,9 +325,9 @@ footer#footer .container.mx-auto {
     padding: 0.625rem 1.25rem;
     font-size: 0.875rem;
     font-weight: 600;
-    border-radius: var(--border-radius-md);
+    border-radius: 6px;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: all 0.2s ease;
     border: 2px solid transparent;
     display: flex;
     align-items: center;
@@ -375,30 +335,32 @@ footer#footer .container.mx-auto {
     white-space: nowrap;
 }
 
+/* Botão Primário */
 .cookie-btn-primary {
-    background: var(--cookie-btn-primary-bg);
-    color: var(--cookie-btn-primary-text);
-    border-color: var(--cookie-btn-primary-border);
+    background: var(--cookie-btn-primary-bg, var(--primitive-primary-dark-hover));
+    color: var(--cookie-btn-primary-text, var(--primitive-primary));
+    border-color: var(--cookie-btn-primary-border, var(--primitive-primary-dark-hover));
 }
 
 .cookie-btn-primary:hover {
-    background: var(--cookie-btn-primary-hover);
-    border-color: var(--cookie-btn-primary-hover);
+    background: var(--cookie-btn-primary-hover, var(--primitive-primary-dark));
+    border-color: var(--cookie-btn-primary-hover, var(--primitive-primary-dark));
 }
 
+/* Botão Secundário */
 .cookie-btn-secondary {
     background: transparent;
-    color: var(--cookie-btn-secondary-text);
-    border-color: var(--cookie-btn-secondary-border);
+    color: var(--cookie-btn-secondary-text, var(--primitive-primary));
+    border-color: var(--cookie-btn-secondary-border, var(--primitive-primary-dark-hover));
 }
 
 .cookie-btn-secondary:hover {
-    background: var(--cookie-btn-secondary-hover);
+    background: var(--cookie-btn-secondary-hover, rgba(147, 197, 253, 0.15));
 }
 
 /* =========================================
-   SCROLLBARS PERSONALIZADAS
-   Usando tokens semânticos do componente
+   SCROLLBARS PERSONALIZADAS (MODAL DE COOKIES)
+   Usa tokens do global.css (--cookie-scroll-*)
    ========================================= */
 .cookie-modal::-webkit-scrollbar,
 .cookie-detail-modal::-webkit-scrollbar,
@@ -409,32 +371,33 @@ footer#footer .container.mx-auto {
 .cookie-modal::-webkit-scrollbar-track,
 .cookie-detail-modal::-webkit-scrollbar-track,
 .cookie-modal-body::-webkit-scrollbar-track {
-    background: transparent;
+    background: var(--primitive-gray-100);
 }
 
 .cookie-modal::-webkit-scrollbar-thumb,
 .cookie-detail-modal::-webkit-scrollbar-thumb,
 .cookie-modal-body::-webkit-scrollbar-thumb {
-    background: var(--cookie-scroll-thumb);
+    background: var(--cookie-scroll-thumb, var(--primitive-gray-300));
     border-radius: 3px;
 }
 
 .cookie-modal::-webkit-scrollbar-thumb:hover,
 .cookie-detail-modal::-webkit-scrollbar-thumb:hover,
 .cookie-modal-body::-webkit-scrollbar-thumb:hover {
-    background: var(--cookie-scroll-thumb-hover);
+    background: var(--cookie-scroll-thumb-hover, var(--primitive-gray-400));
 }
 
 /* =========================================
    OVERLAY DO MODAL DE COOKIES
+   Usa token do global.css (--cookie-overlay-bg)
    ========================================= */
 .cookie-overlay {
     position: fixed;
     inset: 0;
-    background: var(--cookie-overlay-bg);
+    background: var(--cookie-overlay-bg, rgba(15, 36, 68, 0.6));
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    z-index: var(--z-cookie-overlay);
+    z-index: var(--z-cookie-overlay, 55);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -451,27 +414,27 @@ footer#footer .container.mx-auto {
 
 /* =========================================
    MODAL DE PREFERÊNCIAS DE COOKIES
-   Usa tokens escopados para evitar conflitos com outros modais
+   Usa tokens do global.css (--cookie-modal-*)
    ========================================= */
 .cookie-modal {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.95);
-    background: var(--cookie-modal-bg);
+    background: var(--cookie-modal-bg, var(--theme-bg-panel));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: var(--border-radius-lg);
+    border-radius: 12px;
     width: 90%;
     max-width: 720px;
     max-height: 85vh;
     overflow: hidden;
-    z-index: var(--z-cookie-modal);
+    z-index: var(--z-cookie-modal, 56);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-    color: var(--cookie-modal-text);
+    color: var(--cookie-modal-text, var(--primitive-primary));
 }
 
 .cookie-modal.visible {
@@ -490,8 +453,8 @@ footer#footer .container.mx-auto {
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--cookie-modal-border);
-    background: var(--cookie-modal-header-bg);
+    border-bottom: 1px solid var(--cookie-modal-border, var(--theme-border-color));
+    background: var(--cookie-modal-header-bg, var(--primitive-gray-50));
     flex-shrink: 0;
     position: sticky;
     top: 0;
@@ -501,7 +464,7 @@ footer#footer .container.mx-auto {
 .cookie-modal-header h3 {
     margin: 0;
     font-size: 1.25rem;
-    color: var(--cookie-modal-header-text);
+    color: var(--cookie-modal-header-text, var(--primitive-primary));
     font-weight: 600;
 }
 
@@ -509,7 +472,7 @@ footer#footer .container.mx-auto {
 .cookie-modal-close {
     background: none;
     border: none;
-    color: var(--cookie-modal-close-color);
+    color: var(--cookie-modal-close-color, var(--primitive-primary));
     font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -523,19 +486,19 @@ footer#footer .container.mx-auto {
 }
 
 .cookie-modal-close:hover {
-    color: var(--cookie-modal-close-hover);
-    background: var(--cookie-modal-close-hover-bg);
+    color: var(--cookie-modal-close-hover, var(--primitive-primary-hover));
+    background: var(--cookie-modal-close-hover-bg, var(--primitive-gray-200));
 }
 
 .cookie-modal-close:focus {
-    outline: 3px solid var(--cookie-focus);
+    outline: 3px solid var(--cookie-focus, var(--primitive-primary-light));
     outline-offset: 2px;
 }
 
 /* Corpo do Modal */
 .cookie-modal-body {
     padding: 1.5rem;
-    color: var(--cookie-modal-text);
+    color: var(--cookie-modal-text, var(--primitive-primary));
     flex: 1;
     overflow-y: auto;
     max-height: calc(85vh - 140px);
@@ -543,13 +506,14 @@ footer#footer .container.mx-auto {
 
 /* =========================================
    CATEGORIAS DE COOKIES (Accordion)
+   Usa tokens do global.css (--cookie-category-*)
    ========================================= */
 .cookie-category {
-    border: 1px solid var(--cookie-modal-border);
+    border: 1px solid var(--cookie-modal-border, var(--theme-border-color));
     border-radius: 0.75rem;
     margin-bottom: 1rem;
     overflow: hidden;
-    background: var(--cookie-category-bg);
+    background: var(--cookie-category-bg, var(--theme-bg-panel));
     transition: box-shadow 0.2s ease;
 }
 
@@ -567,20 +531,20 @@ footer#footer .container.mx-auto {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.25rem;
-    background: var(--cookie-category-header-bg);
+    background: var(--cookie-category-header-bg, var(--primitive-gray-50));
     border-bottom: 1px solid transparent;
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
 .cookie-category-header:hover {
-    background: var(--cookie-category-header-hover);
+    background: var(--cookie-category-header-hover, var(--primitive-gray-200));
 }
 
 .cookie-category-header h4 {
     margin: 0;
     font-size: 0.938rem;
-    color: var(--cookie-category-header-text);
+    color: var(--cookie-category-header-text, var(--primitive-primary));
     font-weight: 600;
     flex: 1;
 }
@@ -595,8 +559,8 @@ footer#footer .container.mx-auto {
 /* Botão Expandir */
 .cookie-expand-btn {
     background: none;
-    border: 1px solid var(--cookie-btn-border);
-    color: var(--cookie-btn-text);
+    border: 1px solid var(--cookie-btn-border, var(--primitive-primary));
+    color: var(--cookie-btn-text, var(--primitive-primary));
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -611,13 +575,12 @@ footer#footer .container.mx-auto {
 }
 
 .cookie-expand-btn:hover {
-    background: var(--cookie-btn-primary-bg);
-    border-color: var(--cookie-btn-primary-border);
-    color: var(--cookie-btn-primary-text);
+    background: var(--primitive-primary);
+    color: var(--primitive-gray-50);
 }
 
 .cookie-expand-btn:focus {
-    outline: 3px solid var(--cookie-focus);
+    outline: 3px solid var(--cookie-focus, var(--primitive-primary-light));
     outline-offset: 2px;
 }
 
@@ -632,8 +595,8 @@ footer#footer .container.mx-auto {
 /* Botão Info */
 .cookie-info-btn {
     background: none;
-    border: 1px solid var(--cookie-btn-border);
-    color: var(--cookie-btn-text);
+    border: 1px solid var(--cookie-btn-border, var(--primitive-primary));
+    color: var(--cookie-btn-text, var(--primitive-primary));
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -648,13 +611,12 @@ footer#footer .container.mx-auto {
 }
 
 .cookie-info-btn:hover {
-    background: var(--cookie-btn-primary-bg);
-    border-color: var(--cookie-btn-primary-border);
-    color: var(--cookie-btn-primary-text);
+    background: var(--primitive-primary);
+    color: var(--primitive-gray-50);
 }
 
 .cookie-info-btn:focus {
-    outline: 3px solid var(--cookie-focus);
+    outline: 3px solid var(--cookie-focus, var(--primitive-primary-light));
     outline-offset: 2px;
 }
 
@@ -677,7 +639,7 @@ footer#footer .container.mx-auto {
     position: absolute;
     cursor: pointer;
     inset: 0;
-    background-color: var(--cookie-switch-bg);
+    background-color: var(--cookie-switch-bg, var(--primitive-gray-300));
     transition: 0.2s ease;
     border-radius: 30px;
 }
@@ -689,14 +651,14 @@ footer#footer .container.mx-auto {
     width: 24px;
     left: 3px;
     bottom: 3px;
-    background-color: #fff;
+    background-color: var(--theme-bg-panel);
     transition: 0.2s ease;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .cookie-switch input:checked + .cookie-slider {
-    background-color: var(--cookie-btn-primary-bg);
+    background-color: var(--cookie-switch-checked, var(--primitive-primary));
 }
 
 .cookie-switch input:checked + .cookie-slider:before {
@@ -709,7 +671,7 @@ footer#footer .container.mx-auto {
 }
 
 .cookie-switch input:focus-visible + .cookie-slider {
-    outline: 3px solid var(--cookie-focus);
+    outline: 3px solid var(--cookie-focus, var(--primitive-primary-light));
     outline-offset: 2px;
 }
 
@@ -718,19 +680,19 @@ footer#footer .container.mx-auto {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease, padding 0.2s ease;
-    background: var(--cookie-category-bg);
+    background: var(--cookie-category-bg, var(--theme-bg-panel));
 }
 
 .cookie-category-description.expanded {
     max-height: 500px;
     padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--cookie-modal-border);
+    border-bottom: 1px solid var(--cookie-modal-border, var(--theme-border-color));
 }
 
 .cookie-category-description p {
     margin: 0;
     font-size: 0.813rem;
-    color: var(--cookie-category-description-text);
+    color: var(--cookie-category-description-text, var(--primitive-gray-600));
     line-height: 1.6;
 }
 
@@ -740,13 +702,13 @@ footer#footer .container.mx-auto {
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 0;
-    border-top: 1px dashed var(--cookie-modal-border);
+    border-top: 1px dashed var(--cookie-modal-border, var(--theme-border-color));
     margin-top: 0.75rem;
 }
 
 .cookie-service-name {
     font-size: 0.813rem;
-    color: var(--cookie-modal-text);
+    color: var(--cookie-category-header-text, var(--primitive-primary));
     font-weight: 500;
 }
 
@@ -758,20 +720,21 @@ footer#footer .container.mx-auto {
 
 /* =========================================
    MODAL DE DETALHES (Submodal)
+   Usa tokens do global.css (--cookie-modal-*)
    ========================================= */
 .cookie-detail-modal {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.95);
-    background: var(--cookie-modal-bg);
+    background: var(--cookie-modal-bg, var(--theme-bg-panel));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: var(--border-radius-lg);
+    border-radius: 12px;
     width: 90%;
     max-width: 600px;
     max-height: 85vh;
-    z-index: var(--z-cookie-detail);
+    z-index: var(--z-cookie-detail, 57);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -779,7 +742,7 @@ footer#footer .container.mx-auto {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    color: var(--cookie-modal-text);
+    color: var(--cookie-modal-text, var(--primitive-primary));
 }
 
 .cookie-detail-modal.visible {
@@ -797,15 +760,15 @@ footer#footer .container.mx-auto {
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--cookie-modal-border);
-    background: var(--cookie-modal-header-bg);
+    border-bottom: 1px solid var(--cookie-modal-border, var(--theme-border-color));
+    background: var(--cookie-modal-header-bg, var(--primitive-gray-50));
     flex-shrink: 0;
 }
 
 .cookie-detail-header h3 {
     margin: 0;
     font-size: 1.125rem;
-    color: var(--cookie-modal-header-text);
+    color: var(--cookie-modal-header-text, var(--primitive-primary));
     font-weight: 600;
     padding-right: 1rem;
 }
@@ -817,7 +780,7 @@ footer#footer .container.mx-auto {
 .cookie-detail-body {
     padding: 1.5rem;
     overflow-y: auto;
-    color: var(--cookie-modal-text);
+    color: var(--cookie-modal-text, var(--primitive-primary));
     flex: 1;
     max-height: calc(85vh - 100px);
 }
@@ -829,7 +792,7 @@ footer#footer .container.mx-auto {
 
 .cookie-detail-content p {
     margin: 0 0 1rem 0;
-    color: var(--cookie-category-description-text);
+    color: var(--cookie-category-description-text, var(--primitive-gray-600));
 }
 
 .cookie-detail-content p:last-of-type {
@@ -837,11 +800,11 @@ footer#footer .container.mx-auto {
 }
 
 .cookie-detail-content strong {
-    color: var(--cookie-modal-header-text);
+    color: var(--cookie-modal-text, var(--primitive-primary));
 }
 
 .cookie-detail-content a {
-    color: var(--cookie-banner-link);
+    color: var(--cookie-banner-link, var(--primitive-primary-light));
     text-decoration: none;
 }
 
@@ -852,7 +815,7 @@ footer#footer .container.mx-auto {
 .cookie-detail-content h5 {
     font-size: 0.813rem;
     font-weight: 600;
-    color: var(--cookie-modal-header-text);
+    color: var(--cookie-modal-text, var(--primitive-primary));
     margin: 1.5rem 0 0.5rem 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -869,13 +832,13 @@ footer#footer .container.mx-auto {
 .cookie-detail-links {
     margin-top: 1.5rem;
     padding-top: 1rem;
-    border-top: 1px solid var(--cookie-modal-border);
+    border-top: 1px solid var(--cookie-modal-border, var(--theme-border-color));
 }
 
 .cookie-link {
     display: block;
     font-size: 0.813rem;
-    color: var(--cookie-banner-link);
+    color: var(--cookie-banner-link, var(--primitive-primary-light));
     margin-bottom: 0.5rem;
     text-decoration: none;
     font-weight: 500;
@@ -888,8 +851,8 @@ footer#footer .container.mx-auto {
 
 .cookie-detail-footer {
     padding: 1rem 1.5rem;
-    border-top: 1px solid var(--cookie-modal-border);
-    background: var(--cookie-modal-header-bg);
+    border-top: 1px solid var(--cookie-modal-border, var(--theme-border-color));
+    background: var(--cookie-modal-header-bg, var(--primitive-gray-50));
     display: flex;
     justify-content: flex-start;
     flex-shrink: 0;
@@ -900,8 +863,8 @@ footer#footer .container.mx-auto {
    ========================================= */
 .cookie-modal-footer {
     padding: 1.25rem 1.5rem;
-    border-top: 1px solid var(--cookie-modal-border);
-    background: var(--cookie-modal-header-bg);
+    border-top: 1px solid var(--cookie-modal-border, var(--theme-border-color));
+    background: var(--cookie-modal-header-bg, var(--primitive-gray-50));
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
@@ -916,18 +879,15 @@ footer#footer .container.mx-auto {
 }
 
 .cookie-modal-footer .cookie-btn:focus-visible {
-    outline: 3px solid var(--cookie-focus);
+    outline: 3px solid var(--cookie-focus, var(--primitive-primary-light));
     outline-offset: 2px;
 }
 
 /* =========================================
    ELEMENTOS FLUTUANTES
+   Usa tokens primários para consistência visual
    ========================================= */
 
-/**
- * CORREÇÃO: Botão Voltar ao Topo
- * Posicionamento dinâmico via JavaScript + CSS
- */
 .back-to-top {
     position: fixed;
     bottom: 30px;
@@ -935,8 +895,8 @@ footer#footer .container.mx-auto {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--cookie-btn-primary-bg);
-    color: var(--cookie-btn-primary-text);
+    background: var(--cookie-btn-primary-bg, var(--primitive-primary-dark-hover));
+    color: var(--cookie-btn-primary-text, var(--primitive-primary));
     border: none;
     cursor: pointer;
     display: flex;
@@ -948,7 +908,7 @@ footer#footer .container.mx-auto {
     visibility: hidden;
     transform: translateY(20px);
     transition: all 0.3s ease;
-    z-index: var(--z-back-to-top);
+    z-index: var(--z-back-to-top, 40);
 }
 
 .back-to-top.visible {
@@ -958,32 +918,24 @@ footer#footer .container.mx-auto {
 }
 
 .back-to-top:hover {
-    background: var(--cookie-btn-primary-hover);
+    background: var(--cookie-btn-primary-hover, var(--primitive-primary-dark));
     transform: translateY(-3px);
 }
 
 .back-to-top:focus {
-    outline: 3px solid var(--cookie-focus);
+    outline: 3px solid var(--cookie-focus, var(--primitive-primary-light));
     outline-offset: 2px;
 }
 
-/**
- * CORREÇÃO: Ajuste de posição quando banner de cookies está visível
- * O botão deve ficar ACIMA do banner (z-index maior) e mais acima (bottom maior)
- */
 body.cookie-banner-open .back-to-top {
     bottom: 150px;
-    z-index: var(--z-modal);
+    z-index: var(--z-cookie-modal, 56);
 }
 
-/**
- * CORREÇÃO: Botão FAB de Cookies
- * Escondido quando banner está ativo para evitar duplicidade
- */
 body.cookie-banner-open .back-to-top,
 body.cookie-banner-open ~ .cookie-fab {
     bottom: 150px;
-    z-index: var(--z-modal);
+    z-index: var(--z-cookie-modal, 56);
 }
 
 .cookie-fab {
@@ -993,8 +945,8 @@ body.cookie-banner-open ~ .cookie-fab {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--cookie-btn-primary-bg);
-    color: var(--cookie-btn-primary-text);
+    background: var(--cookie-btn-primary-bg, var(--primitive-primary-dark-hover));
+    color: var(--cookie-btn-primary-text, var(--primitive-primary));
     border: none;
     cursor: pointer;
     display: flex;
@@ -1006,16 +958,16 @@ body.cookie-banner-open ~ .cookie-fab {
     visibility: visible;
     transform: translateY(0);
     transition: all 0.3s ease;
-    z-index: var(--z-back-to-top);
+    z-index: var(--z-back-to-top, 40);
 }
 
 .cookie-fab:hover {
-    background: var(--cookie-btn-primary-hover);
+    background: var(--cookie-btn-primary-hover, var(--primitive-primary-dark));
     transform: translateY(-3px);
 }
 
 .cookie-fab:focus {
-    outline: 3px solid var(--cookie-focus);
+    outline: 3px solid var(--cookie-focus, var(--primitive-primary-light));
     outline-offset: 2px;
 }
 
@@ -1029,10 +981,6 @@ body.cookie-banner-open .cookie-fab {
     pointer-events: none;
 }
 
-/**
- * Ajuste do FAB quando banner está visível
- * Posicionado acima do banner para acesso
- */
 .cookie-banner.visible ~ .cookie-fab,
 .cookie-banner.visible + .cookie-overlay ~ .cookie-fab {
     bottom: 200px;
@@ -1040,17 +988,18 @@ body.cookie-banner-open .cookie-fab {
 
 /* =========================================
    TOAST NOTIFICATION
+   Usa tokens do footer
    ========================================= */
 .toast-notification {
     position: fixed;
     bottom: 7rem;
     right: 1.5rem;
-    background: var(--toast-bg);
-    color: #fff;
+    background: var(--primitive-primary);
+    color: var(--primitive-gray-50);
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    z-index: var(--z-cookie-banner);
+    z-index: var(--z-cookie-banner, 50);
     transform: translateX(120%);
     transition: transform 0.3s ease-in-out;
     font-size: 0.875rem;
@@ -1205,19 +1154,19 @@ body.cookie-banner-open .cookie-fab {
     /* Ajustes quando banner ativo no mobile */
     body.cookie-banner-open .back-to-top {
         bottom: 150px;
-        z-index: var(--z-modal);
+        z-index: 10001;
     }
     
     .cookie-banner.visible ~ .back-to-top,
     .cookie-banner.visible + .cookie-overlay ~ .back-to-top {
         bottom: 150px;
-        z-index: var(--z-modal);
+        z-index: 10001;
     }
     
     .cookie-banner.visible ~ .cookie-fab,
     .cookie-banner.visible + .cookie-overlay ~ .cookie-fab {
         bottom: 200px;
-        z-index: var(--z-modal);
+        z-index: 10001;
     }
 }
 
@@ -1294,13 +1243,14 @@ body.cookie-banner-open .cookie-fab {
 
 /* =========================================
    FOCO VISÍVEL (Acessibilidade)
+   Usa token do global.css (--cookie-focus)
    ========================================= */
 .cookie-banner:focus-visible,
 .cookie-modal:focus-visible,
 .cookie-detail-modal:focus-visible,
 .back-to-top:focus-visible,
 .cookie-fab:focus-visible {
-    outline: 3px solid var(--cookie-focus);
+    outline: 3px solid var(--cookie-focus, var(--primitive-primary-light));
     outline-offset: 2px;
 }
 
