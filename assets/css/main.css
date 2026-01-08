@@ -3,6 +3,7 @@
  * Estilos Principais da Página
  * Calculadoras de Enfermagem
  * Arquitetura de Tokens Semânticos
+ * Consolidação de global-main.css e global-main-index.css
  */
 
 /* =========================================
@@ -21,6 +22,46 @@ h1 {
   line-height: 1.2;
   color: var(--theme-text-primary);
   margin-bottom: 1rem;
+}
+
+/* =========================================
+   HERO SECTION (de global-main-index.css)
+   ========================================= */
+
+.hero-section {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: var(--color-white);
+  padding: var(--spacing-2xl) var(--spacing-lg);
+  text-align: center;
+}
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--spacing-md);
+}
+
+/* =========================================
+   CATEGORIES SECTION (de global-main-index.css)
+   ========================================= */
+
+.categories-section {
+  padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-lg);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.category-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--spacing-sm);
 }
 
 h2, h3, h4, h5, h6 {
@@ -97,6 +138,29 @@ section {
 }
 
 /* =========================================
+   SECTION TITLE (de global-main.css)
+   ========================================= */
+
+.section-title {
+  font-family: var(--font-heading, 'Nunito Sans', sans-serif);
+  font-size: var(--font-size-2xl, 1.75rem);
+  color: var(--theme-color-primary);
+  margin-bottom: var(--spacing-md, 1.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* =========================================
+   CALCULATORS GRID (de global-main.css)
+   ========================================= */
+
+.calculators-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-md, 1.5rem);
+}
+
+/* =========================================
    BOTÕES (Usando tokens semânticos)
    ========================================= */
 
@@ -153,6 +217,23 @@ section {
   .grid-cols-3,
   .grid-cols-4 {
     grid-template-columns: 1fr;
+  }
+
+  /* Responsive styles from global-main.css */
+  .main-container {
+    padding: var(--spacing-md, 1rem);
+  }
+
+  .calculators-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-2xl);
   }
 }
 

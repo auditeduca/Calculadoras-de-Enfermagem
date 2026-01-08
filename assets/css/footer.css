@@ -253,18 +253,17 @@ body > *:not(#footer) {
 /* =========================================
    BANNER DE COOKIES
    Usa tokens do global.css (--cookie-banner-*)
+   Fundo com gradiente sutil (sem glassmorphism)
    ========================================= */
 .cookie-banner {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: var(--cookie-banner-bg, var(--primitive-gray-50));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: linear-gradient(180deg, var(--cookie-banner-bg, var(--primitive-gray-50)) 0%, var(--primitive-gray-100) 100%);
     color: var(--cookie-banner-text, var(--primitive-primary));
     padding: 1rem 1.5rem;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
     transform: translateY(100%);
     z-index: var(--z-cookie-banner, 50);
     display: flex;
@@ -433,7 +432,7 @@ body > *:not(#footer) {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
     color: var(--cookie-modal-text, var(--primitive-primary));
 }
 
@@ -468,12 +467,11 @@ body > *:not(#footer) {
     font-weight: 600;
 }
 
-/* Botão Fechar */
+/* Botão Fechar - Estilo Elegante e Profissional */
 .cookie-modal-close {
-    background: none;
+    background: var(--cookie-modal-close-hover-bg, var(--primitive-gray-200));
     border: none;
     color: var(--cookie-modal-close-color, var(--primitive-primary));
-    font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
     width: 40px;
@@ -483,16 +481,29 @@ body > *:not(#footer) {
     justify-content: center;
     border-radius: 50%;
     flex-shrink: 0;
+    opacity: 0.8;
+}
+
+.cookie-modal-close svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
 }
 
 .cookie-modal-close:hover {
+    opacity: 1;
+    background: var(--cookie-modal-close-hover-bg, var(--primitive-gray-300));
     color: var(--cookie-modal-close-hover, var(--primitive-primary-hover));
-    background: var(--cookie-modal-close-hover-bg, var(--primitive-gray-200));
+    transform: scale(1.05);
 }
 
 .cookie-modal-close:focus {
-    outline: 3px solid var(--cookie-focus, var(--primitive-primary-light));
+    outline: 2px solid var(--cookie-focus, var(--primitive-primary-light));
     outline-offset: 2px;
+}
+
+.cookie-modal-close:active {
+    transform: scale(0.95);
 }
 
 /* Corpo do Modal */
