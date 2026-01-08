@@ -2,7 +2,6 @@
  * Módulo Unificado de Header e Acessibilidade
  * Substitui header.js com integração total ao AccessControl
  * Resolve conflitos entre módulos e corrige problemas de menu
- * @version Com suporte a orquestração componentsLoaded
  */
 (function() {
     "use strict";
@@ -12,17 +11,21 @@
     // ============================================
     const Config = {
         defaultFontSize: 16,
-        minFontSize: 12,
-        maxFontSize: 24,
+        minFontSize: 13,
+        maxFontSize: 32,
         fontStep: 2,
         fontStorageKey: "nursing_calc_font_size",
         themeStorageKey: "nursing_calc_theme",
         animationDuration: 300,
-        megaMenuBreakpoint: 1024
+        megaMenuBreakpoint: 1024,
+        // Níveis de fonte cycling
+        fontSizeLevels: [13, 16, 19, 24, 32], // 85%, 100%, 120%, 150%, 200%
+        fontSizeLabels: ['85%', '100%', '120%', '150%', '200%']
     };
 
     const State = {
         currentFontSize: Config.defaultFontSize,
+        currentFontIndex: 1, // Começa em 100% (índice 1)
         isDarkMode: false,
         loaded: false,
         activeMegaPanel: null,
@@ -77,7 +80,10 @@
     // ============================================
     function saveFontSize() {
         try {
-            localStorage.setItem(Config.fontStorageKey, State.currentFontSize.toString());
+            localStorage.setItem(Config.fontStorageKey, JSON.stringify({
+                size: State.currentFontSize,
+                index: State.currentFontIndex
+            }));
         } catch (e) {
             console.warn('[Header] Erro ao salvar tamanho da fonte:', e);
         }
@@ -87,9 +93,11 @@
         try {
             const saved = localStorage.getItem(Config.fontStorageKey);
             if (saved) {
-                const parsed = parseInt(saved, 10);
-                if (!isNaN(parsed) && parsed >= Config.minFontSize && parsed <= Config.maxFontSize) {
-                    State.currentFontSize = parsed;
+                const data = JSON.parse(saved);
+                if (data && typeof data.index === 'number') {
+                    const validIndex = Math.max(0, Math.min(Config.fontSizeLevels.length - 1, data.index));
+                    State.currentFontIndex = validIndex;
+                    State.currentFontSize = Config.fontSizeLevels[validIndex];
                     return true;
                 }
             }
@@ -97,6 +105,7 @@
             console.warn('[Header] Erro ao carregar tamanho da fonte:', e);
         }
         State.currentFontSize = Config.defaultFontSize;
+        State.currentFontIndex = 1;
         return false;
     }
 
@@ -152,9 +161,25 @@
         }
     }
 
-    function applyFontSize(size) {
-        const clampedSize = Math.max(Config.minFontSize, Math.min(Config.maxFontSize, size));
+    function applyFontSize(size, index) {
+        // Usar tamanho ou índice fornecido
+        if (size !== undefined) {
+            State.currentFontSize = size;
+        }
+        if (index !== undefined) {
+            State.currentFontIndex = index;
+            State.currentFontSize = Config.fontSizeLevels[index];
+        }
+
+        const clampedSize = Math.max(Config.minFontSize, Math.min(Config.maxFontSize, State.currentFontSize));
         State.currentFontSize = clampedSize;
+
+        // Atualizar índice baseado no tamanho aplicado
+        State.currentFontIndex = Config.fontSizeLevels.indexOf(clampedSize);
+        if (State.currentFontIndex === -1) {
+            State.currentFontIndex = 1; // Fallback para 100%
+            State.currentFontSize = Config.defaultFontSize;
+        }
 
         // Aplicar ao documento
         document.documentElement.style.fontSize = clampedSize + 'px';
@@ -166,8 +191,9 @@
 
         // Atualizar estado do body para compatibilidade
         document.body.setAttribute('data-font-scale', scale.toString());
+        document.body.setAttribute('data-font-size-index', State.currentFontIndex.toString());
 
-        // Atualizar botões de controle
+        // Atualizar visualização dos botões
         updateFontButtons();
 
         // Salvar no storage
@@ -175,27 +201,48 @@
 
         // Sincronizar com AccessControl se disponível
         if (window.AccessControl && window.AccessControl.state) {
-            window.AccessControl.state.fontSize = { 16: 1, 18: 2, 20: 3, 24: 4 }[clampedSize] || 1;
+            window.AccessControl.state.fontSize = { 16: 1, 19: 2, 24: 3, 32: 4 }[clampedSize] || 1;
         }
 
         // Feedback para leitores de tela
-        announceToScreenReader(`Tamanho da fonte ajustado para ${clampedSize} pixels`);
+        const label = Config.fontSizeLabels[State.currentFontIndex] || '100%';
+        announceToScreenReader(`Tamanho da fonte ajustado para ${label}`);
     }
 
+    // Ciclo de AUMENTAR fonte (avança no índice)
     function increaseFontSize(e) {
         if (e) {
             e.preventDefault();
             e.stopPropagation();
         }
-        applyFontSize(State.currentFontSize + Config.fontStep);
+
+        // Ciclo: 100% → 120% → 150% → 200% → 100%
+        let newIndex = State.currentFontIndex + 1;
+
+        // Se passou do último, volta para o primeiro (85%)
+        if (newIndex >= Config.fontSizeLevels.length) {
+            newIndex = 0; // Volta para 85%
+        }
+
+        applyFontSize(undefined, newIndex);
     }
 
+    // Ciclo de REDUZIR fonte (retrocede no índice)
     function decreaseFontSize(e) {
         if (e) {
             e.preventDefault();
             e.stopPropagation();
         }
-        applyFontSize(State.currentFontSize - Config.fontStep);
+
+        // Ciclo reverso: 200% → 150% → 120% → 100% → 85% → 200%
+        let newIndex = State.currentFontIndex - 1;
+
+        // Se passou do primeiro, vai para o último (200%)
+        if (newIndex < 0) {
+            newIndex = Config.fontSizeLevels.length - 1; // Vai para 200%
+        }
+
+        applyFontSize(undefined, newIndex);
     }
 
     function updateFontButtons() {
@@ -208,22 +255,37 @@
             getElement('mobile-font-reduce')
         ];
 
-        const isMaxSize = State.currentFontSize >= Config.maxFontSize;
-        const isMinSize = State.currentFontSize <= Config.minFontSize;
-
+        // Mostrar nível atual nos botões
+        const currentLabel = Config.fontSizeLabels[State.currentFontIndex] || '100%';
+        
         increaseBtns.forEach(btn => {
             if (btn) {
-                btn.disabled = isMaxSize;
-                btn.style.opacity = isMaxSize ? '0.5' : '1';
-                btn.style.cursor = isMaxSize ? 'not-allowed' : 'pointer';
+                // Atualizar texto ou tooltip para mostrar próximo nível
+                const nextIndex = (State.currentFontIndex + 1) % Config.fontSizeLevels.length;
+                const nextLabel = Config.fontSizeLabels[nextIndex];
+                btn.title = `Aumentar fonte para ${nextLabel}`;
+                
+                // Atualizar visual state
+                const isMaxLevel = State.currentFontIndex === Config.fontSizeLevels.length - 1;
+                btn.classList.toggle('at-max-level', isMaxLevel);
             }
         });
 
         decreaseBtns.forEach(btn => {
             if (btn) {
-                btn.disabled = isMinSize;
-                btn.style.opacity = isMinSize ? '0.5' : '1';
-                btn.style.cursor = isMinSize ? 'not-allowed' : 'pointer';
+                // Atualizar texto ou tooltip para mostrar próximo nível
+                const prevIndex = State.currentFontIndex - 1;
+                let prevLabel;
+                if (prevIndex < 0) {
+                    prevLabel = Config.fontSizeLabels[Config.fontSizeLabels.length - 1];
+                } else {
+                    prevLabel = Config.fontSizeLabels[prevIndex];
+                }
+                btn.title = `Reduzir fonte para ${prevLabel}`;
+
+                // Atualizar visual state
+                const isMinLevel = State.currentFontIndex === 0;
+                btn.classList.toggle('at-min-level', isMinLevel);
             }
         });
     }
@@ -520,7 +582,6 @@
                 backIndicator = document.createElement('li');
                 backIndicator.className = 'submenu-back-item';
                 backIndicator.innerHTML = '<a href="#" class="submenu-back-link"><i class="fas fa-arrow-left"></i> Voltar</a>';
-                backIndicator.style.cssText = 'display: none; padding: 12px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 8px;';
                 submenu.insertBefore(backIndicator, submenu.firstChild);
 
                 // Evento do botão Voltar
@@ -570,7 +631,12 @@
                 toggleBtn.setAttribute('aria-expanded', !isExpanded);
                 subItem.classList.toggle('active', !isExpanded);
                 submenu.classList.toggle('active', !isExpanded);
-                backIndicator.style.display = !isExpanded ? 'block' : 'none';
+                
+                // Mostrar/ocultar botão Voltar
+                const backIndicator = submenu.querySelector('.submenu-back-item');
+                if (backIndicator) {
+                    backIndicator.style.display = !isExpanded ? 'block' : 'none';
+                }
 
                 // Ocultar submenu pai
                 const parentSubmenu = subItem.closest('.mobile-submenu');
@@ -1039,10 +1105,19 @@
     // ============================================
     // INICIALIZAÇÃO PRINCIPAL
     // ============================================
-    function initHeader() {
+    function initialize() {
         if (State.loaded) return;
 
         console.log('[HeaderModule] Inicializando módulo unificado...');
+
+        // Verificar se os elementos do header existem antes de inicializar
+        const hasMegaMenuItems = $$('.has-mega-menu').length > 0;
+        const hasMobileMenu = getElement('mobile-menu') !== null;
+        
+        if (!hasMegaMenuItems && !hasMobileMenu) {
+            console.log('[HeaderModule] Elementos do header não encontrados ainda, adiando inicialização...');
+            return;
+        }
 
         // Carregar estados salvos
         loadFontSize();
@@ -1074,11 +1149,42 @@
         console.log('[HeaderModule] Módulo inicializado com sucesso');
     }
 
+    // Observer para detectar quando o header é carregado dinamicamente
+    function setupHeaderObserver() {
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.addedNodes.length > 0) {
+                    // Verificar se os elementos do header foram adicionados
+                    const hasMegaMenu = $$('.has-mega-menu').length > 0;
+                    const hasMobileMenu = getElement('mobile-menu') !== null;
+                    
+                    if ((hasMegaMenu || hasMobileMenu) && !State.loaded) {
+                        console.log('[HeaderModule] Elementos do header detectados via MutationObserver');
+                        initialize();
+                    }
+                }
+            });
+        });
+
+        // Observar o body para detectar inserção do header
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    // ============================================
+    // AUTO-INICIALIZAÇÃO E EXPOSIÇÃO DA API
+    // ============================================
+    
+    // Configurar observer antes da inicialização automática
+    setupHeaderObserver();
+
     // Expor API pública
     window.HeaderModule = {
         init: function() {
             State.loaded = false;
-            initHeader();
+            initialize();
         },
         setFontSize: function(size) {
             applyFontSize(size);
@@ -1103,17 +1209,11 @@
         }
     };
 
-    // ============================================
-    // ORQUESTRAÇÃO DE CARREGAMENTO
-    // ============================================
-    
-    // Ouve o evento que disparamos no index.html (orquestração modular)
-    document.addEventListener('componentsLoaded', initHeader);
-
-    // Fallback: Se o evento já tiver passado (carregamento síncrono), tenta rodar direto
-    // Verifica se os elementos principais do header existem
-    if (document.querySelector('.main-header') || document.querySelector('#header-container')) {
-        initHeader();
+    // Inicializar quando o DOM estiver pronto
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialize);
+    } else {
+        initialize();
     }
 
 })();
