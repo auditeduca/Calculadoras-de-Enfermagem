@@ -225,17 +225,51 @@
     }
 
     // ==========================================
-    // INICIALIZAÇÃO
+    // INICIALIZAÇÃO COM VERIFICAÇÃO DE DOM
     // ==========================================
+    
+    // Função para aguardar o elemento #model-canvas no DOM
+    function waitForModelCanvas(callback, maxAttempts = 50, interval = 100) {
+        var attempts = 0;
+        
+        function checkElement() {
+            attempts++;
+            var modelCanvas = document.getElementById('model-canvas');
+            
+            if (modelCanvas) {
+                callback(modelCanvas);
+                return;
+            }
+            
+            if (attempts < maxAttempts) {
+                setTimeout(checkElement, interval);
+            } else {
+                console.warn('Elemento #model-canvas não encontrado após ' + maxAttempts + ' tentativas');
+            }
+        }
+        
+        // Iniciar verificação após pequeno delay para garantir carregamento inicial
+        setTimeout(checkElement, interval);
+    }
+    
+    // Inicialização principal
     function init() {
-        initModel3D();
-        initPreloadManager();
+        waitForModelCanvas(function(modelCanvas) {
+            initModel3D();
+            initPreloadManager();
+            console.log('Preload inicializado com sucesso');
+        });
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
+    // Aguardar DOM estar pronto antes de iniciar verificação
+    function startInit() {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     }
+    
+    startInit();
 
 })();
