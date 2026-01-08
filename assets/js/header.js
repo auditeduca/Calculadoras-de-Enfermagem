@@ -134,6 +134,27 @@
     // ============================================
     // CONTROLE DE FONTE - INTEGRAÇÃO COM ACCESSCONTROL
     // ============================================
+    // FUNÇÕES DE AUMENTAR/REDUZIR FONTE - Usam AccessControl
+    function applyFontSizeFromAccessControl() {
+        // Delegar AO AccessControl para lógica de fonte
+        if (window.AccessControl && window.AccessControl.increaseFontSize) {
+            window.AccessControl.increaseFontSize();
+        }
+    }
+
+    function decreaseFontSizeFromHeader() {
+        // Esta lógica fica no header (requisito do usuário)
+        // Ciclo reverso: 200% → 150% → 120% → 100% → 85% → 200%
+        let newIndex = State.currentFontIndex - 1;
+
+        // Se passou do primeiro, vai para o último (200%)
+        if (newIndex < 0) {
+            newIndex = Config.fontSizeLevels.length - 1; // Vai para 200%
+        }
+
+        applyFontSize(undefined, newIndex);
+    }
+
     function syncWithAccessControl() {
         // Verificar se AccessControl está disponível
         if (!window.AccessControl || !window.AccessControl.state) {
@@ -209,22 +230,43 @@
         announceToScreenReader(`Tamanho da fonte ajustado para ${label}`);
     }
 
-    // Ciclo de AUMENTAR fonte (avança no índice)
+    // Ciclo de AUMENTAR fonte (avança no índice) - USA ACCESS CONTROL
     function increaseFontSize(e) {
         if (e) {
             e.preventDefault();
             e.stopPropagation();
         }
 
-        // Ciclo: 100% → 120% → 150% → 200% → 100%
-        let newIndex = State.currentFontIndex + 1;
+        // Usa a lógica do AccessControl (requisito do usuário)
+        if (window.AccessControl && window.AccessControl.increaseFontSize) {
+            window.AccessControl.increaseFontSize();
+            // Sincroniza estado local após operação do AccessControl
+            syncFontStateFromAccessControl();
+            return;
+        }
 
-        // Se passou do último, volta para o primeiro (85%)
+        // Fallback se AccessControl não estiver disponível
+        let newIndex = State.currentFontIndex + 1;
         if (newIndex >= Config.fontSizeLevels.length) {
             newIndex = 0; // Volta para 85%
         }
-
         applyFontSize(undefined, newIndex);
+    }
+
+    // Sincroniza estado da fonte com AccessControl
+    function syncFontStateFromAccessControl() {
+        if (window.AccessControl && window.AccessControl.state) {
+            const acState = window.AccessControl.state;
+            if (acState.fontSize !== undefined) {
+                const scaleMap = { 1: 1, 2: 2, 3: 3, 4: 4 };
+                const fontIndexFromScale = scaleMap[acState.fontSize] || 1;
+                if (State.currentFontIndex !== fontIndexFromScale) {
+                    State.currentFontIndex = fontIndexFromScale;
+                    State.currentFontSize = Config.fontSizeLevels[fontIndexFromScale] || Config.defaultFontSize;
+                    updateFontButtons();
+                }
+            }
+        }
     }
 
     // Ciclo de REDUZIR fonte (retrocede no índice)
@@ -296,8 +338,8 @@
             { btn: getElement('mobile-font-increase'), handler: increaseFontSize }
         ];
         const decreaseBtns = [
-            { btn: getElement('font-reduce'), handler: decreaseFontSize },
-            { btn: getElement('mobile-font-reduce'), handler: decreaseFontSize }
+            { btn: getElement('font-reduce'), handler: decreaseFontSizeFromHeader },
+            { btn: getElement('mobile-font-reduce'), handler: decreaseFontSizeFromHeader }
         ];
 
         increaseBtns.forEach(({ btn, handler }) => {
@@ -330,9 +372,12 @@
     // Esta função apenas sincroniza com o AccessControl
 
     function applyTheme(isDark) {
-        // Delegar ao AccessControl ThemeManager
+        // Delegar AO AccessControl ThemeManager
         if (window.AccessControl && window.AccessControl.ThemeManager) {
             window.AccessControl.ThemeManager.applyTheme(isDark ? 'dark' : 'light');
+        } else {
+            // Fallback se AccessControl não estiver disponível
+            document.body.classList.toggle('dark-theme', isDark);
         }
 
         // Atualizar estado local para ícones
@@ -372,11 +417,40 @@
             e.stopPropagation();
         }
 
-        // Delegar ao AccessControl e deixar ele gerenciar o estado
+        // Usa a lógica do AccessControl ThemeManager
         if (window.AccessControl && window.AccessControl.ThemeManager) {
             const currentTheme = window.AccessControl.ThemeManager.getTheme();
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             window.AccessControl.ThemeManager.applyTheme(newTheme);
+            
+            // Atualiza ícones após mudança do AccessControl
+            const isDark = newTheme === 'dark';
+            State.isDarkMode = isDark;
+            updateThemeIcons(isDark);
+        } else {
+            // Fallback
+            applyTheme(!State.isDarkMode);
+        }
+    }
+
+    // Atualiza ícones do tema
+    function updateThemeIcons(isDark) {
+        const themeToggle = getElement('theme-toggle');
+        if (themeToggle) {
+            const icon = themeToggle.querySelector('i');
+            if (icon) {
+                icon.classList.remove('fa-moon', 'fa-sun');
+                icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
+            }
+        }
+
+        const mobileThemeToggle = getElement('mobile-theme-toggle');
+        if (mobileThemeToggle) {
+            const icon = mobileThemeToggle.querySelector('i');
+            if (icon) {
+                icon.classList.remove('fa-moon', 'fa-sun');
+                icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
+            }
         }
     }
 
@@ -1087,26 +1161,17 @@
             State.isDarkMode = isDark;
             
             // Atualizar ícones do tema
-            const themeToggle = getElement('theme-toggle');
-            if (themeToggle) {
-                const icon = themeToggle.querySelector('i');
-                if (icon) {
-                    icon.classList.remove('fa-moon', 'fa-sun');
-                    icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
-                }
-            }
-            
-            const mobileThemeToggle = getElement('mobile-theme-toggle');
-            if (mobileThemeToggle) {
-                const icon = mobileThemeToggle.querySelector('i');
-                if (icon) {
-                    icon.classList.remove('fa-moon', 'fa-sun');
-                    icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
-                }
-            }
+            updateThemeIcons(isDark);
             
             console.log('[HeaderModule] Ícones do tema atualizados via evento theme:changed');
         });
+
+        // Também ouvir mudanças de tema do AccessControl diretamente
+        if (window.AccessControl && window.AccessControl.ThemeManager) {
+            const savedTheme = window.AccessControl.ThemeManager.getTheme();
+            const isDark = savedTheme === 'dark' || (savedTheme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            updateThemeIcons(isDark);
+        }
     }
 
     // ============================================
