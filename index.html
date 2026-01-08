@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -100,155 +100,17 @@
             },
             { 
                 id: 'component-main-index', 
-                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/main-content.html' 
+                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/main-index.html' 
             },
             { 
                 id: 'component-footer', 
-                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer.html' 
-            },
-            { 
-                id: 'component-preload', 
-                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/preload.html' 
-            }
-        ];
 
-        async function loadComponents() {
-            const fetchPromises = components.map(async (comp) => {
-                const element = document.getElementById(comp.id);
-                if (!element) return;
 
-                try {
-                    const response = await fetch(comp.url);
-                    if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
-                    
-                    const html = await response.text();
-                    element.innerHTML = html;
-                    element.classList.remove('component-placeholder');
-                    console.log(`Componente carregado: ${comp.id}`);
-                } catch (error) {
-                    console.error(`Falha ao carregar ${comp.url}:`, error);
-                }
-            });
-
-            await Promise.all(fetchPromises);
-            document.dispatchEvent(new Event('componentsLoaded'));
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Inicia o carregamento dos componentes
-            loadComponents();
-
-            // 2. Lógica do Temporizador do Preload (5 Segundos)
-            setTimeout(() => {
-                const preloadElement = document.getElementById('component-preload');
-                if (preloadElement) {
-                    // Inicia a transição de fade-out
-                    preloadElement.classList.add('fade-out');
-                    console.log("Preload iniciando transição de saída.");
-                    
-                    // Aguarda a transição de 500ms terminar ANTES de disparar o evento
-                    setTimeout(() => {
-                        // DISPARA O EVENTO que habilita os botões flutuantes e banner de cookies
-                        document.dispatchEvent(new Event('preloadFinalizado'));
-                        console.log("Evento preloadFinalizado disparado.");
-                    }, 550); // 550ms para garantir que a transição terminou
-                }
-            }, 5000);
-        });
-
+@@ -170,6 +170,7 @@
+    
+    <!-- Script de carregamento da página principal -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index-loader.js"></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/module-loader.js"></script>
 
-    <!-- ============================================ -->
-    <!-- SCRIPT PÓS-PRELOAD                           -->
-    <!-- ============================================ -->
-    <!-- 
-        Este script ativa os elementos que devem aparecer 
-        somente após o preload: FAB de cookies, back to top, etc.
-    -->
-    <script>
-        /**
-         * Controlador de Elementos Pós-Preload
-         * Ativa FAB de cookies, back to top e banner de cookies
-         * após a conclusão do preload.
-         */
-        
-        (function() {
-            'use strict';
-
-            // Elementos a serem ativados após o preload
-            const ELEMENTS = {
-                cookieFab: 'cookie-fab',
-                backToTop: 'backToTop',
-                cookieBanner: 'cookie-banner'
-            };
-
-            /**
-             * Ativa um elemento removendo classes de ocultação
-             */
-            function activateElement(id) {
-                const element = document.getElementById(id);
-                if (!element) {
-                    console.warn(`Elemento ${id} não encontrado`);
-                    return false;
-                }
-
-                // Remove classes de ocultação
-                element.classList.remove('hidden');
-                element.classList.add('visible');
-                
-                console.log(`Elemento ${id} ativado`);
-                return true;
-            }
-
-            /**
-             * Tenta ativar os elementos pós-preload
-             */
-            function activatePostPreloadElements() {
-                // Ativa FAB de cookies
-                activateElement(ELEMENTS.cookieFab);
-                
-                // Ativa back to top (funcionalidade de scroll será gerenciada pelo footer.js)
-                activateElement(ELEMENTS.backToTop);
-                
-                // Dispara evento para banner de cookies (se ainda não tiver escolha)
-                const hasCookieChoice = localStorage.getItem('ce_cookie_consent_v8_2025');
-                if (!hasCookieChoice) {
-                    // Pequeno delay para garantir que o banner está pronto
-                    setTimeout(() => {
-                        const banner = document.getElementById(ELEMENTS.cookieBanner);
-                        if (banner) {
-                            banner.classList.remove('hidden');
-                            banner.classList.add('visible');
-                            console.log('Banner de cookies ativado');
-                        }
-                    }, 300);
-                }
-            }
-
-            // Escuta o evento preloadFinalizado
-            document.addEventListener('preloadFinalizado', () => {
-                console.log('Evento preloadFinalizado recebido - ativando elementos');
-                
-                // Tenta ativar imediatamente
-                activatePostPreloadElements();
-
-                // Tenta novamente após delay (fallback)
-                setTimeout(activatePostPreloadElements, 500);
-            });
-
-            // Fallback: se o preload já terminou antes deste script carregar
-            setTimeout(() => {
-                const preload = document.getElementById('component-preload');
-                if (preload && preload.classList.contains('fade-out')) {
-                    console.log('Preload já terminou - ativando elementos (fallback)');
-                    activatePostPreloadElements();
-                }
-            }, 1000);
-
-            console.log('Controlador de elementos pós-preload inicializado');
-        })();
-    </script>
 
 </body>
 </html>
