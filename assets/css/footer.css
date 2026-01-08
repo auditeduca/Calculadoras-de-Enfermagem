@@ -1,71 +1,87 @@
 /* =========================================
-   FOOTER COMPLETO - Corrigido
-   Fundo Azul #1A3E74, Modais Lindos, Accordion Funcional
+   FOOTER - Identidade Visual Atualizada
+   Fundo Azul #1A3E74, Fonte Branca
    ========================================= */
 
 /* =========================================
-   FUNDO AZUL FORÇADO - !important para garantir
-   ========================================= */
-#footer,
-.footer-main,
-.footer-section-main {
-    background-color: #1A3E74 !important;
-    background: #1A3E74 !important;
-    background-image: none !important;
-    background-color: #1A3E74 !important;
-}
-
-/* =========================================
-   VARIÁVEIS CSS
+   VARIÁVEIS CSS - Identidade Institucional
    ========================================= */
 :root {
+    /* Cores Principais */
     --footer-bg: #1A3E74;
     --footer-text: #ffffff;
-    --footer-text-muted: rgba(255, 255, 255, 0.8);
-    --footer-divider: rgba(255, 255, 255, 0.3);
-    --cookie-primary: #1A3E74;
-    --cookie-white: #ffffff;
+    --footer-text-muted: rgba(255, 255, 255, 0.75);
+    
+    /* Elementos Decorativos */
+    --footer-divider: rgba(255, 255, 255, 0.25);
+    --footer-link-hover: #ffffff;
+    
+    /* Cookies */
+    --cookie-banner-bg: #ffffff;
+    --cookie-banner-text: #1A3E74;
+    --cookie-modal-header-bg: #1A3E74;
+    --cookie-modal-header-text: #ffffff;
+    
+    /* Z-Index */
+    --z-cookie-banner: 10050;
+    --z-cookie-overlay: 10055;
+    --z-cookie-modal: 10056;
+    --z-cookie-detail: 10057;
+    --z-back-to-top: 10040;
+    --z-fab-cookie: 10045;
 }
 
 /* =========================================
-   FOOTER PRINCIPAL - FUNDO AZUL
+   VISIBILIDADE BASE
+   ========================================= */
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: block !important;
+}
+
+.flex-visible {
+    display: flex !important;
+}
+
+/* =========================================
+   FOOTER PRINCIPAL
    ========================================= */
 #footer {
     position: relative;
     z-index: 1;
     margin-top: auto;
-    background-color: #1A3E74 !important;
-    color: #ffffff;
-    padding-top: 3rem;
-    padding-bottom: 2rem;
-    min-height: 300px;
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    padding-top: 2.5rem;
+    padding-bottom: 1.5rem;
 }
 
-#footer * {
-    background-color: transparent !important;
-}
-
-.footer-container {
+#footer .container {
+    position: relative;
+    z-index: 10;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 1.5rem;
 }
 
-/* Linha divisória suave */
+/* Linha divisória suave do logotipo */
 .footer-logo-divider {
     width: 100%;
     height: 1px;
     background: linear-gradient(90deg, 
         transparent 0%, 
-        rgba(255, 255, 255, 0.3) 20%, 
-        rgba(255, 255, 255, 0.3) 80%, 
+        var(--footer-divider) 15%, 
+        var(--footer-divider) 85%, 
         transparent 100%
     );
     margin: 1.5rem 0;
 }
 
 /* =========================================
-   LAYOUT DO FOOTER
+   LAYOUT DO FOOTER - Desktop
    ========================================= */
 .footer-content {
     display: grid;
@@ -75,7 +91,7 @@
 }
 
 /* =========================================
-   LOGOTIPO E REDES SOCIAIS
+   SEÇÃO DO LOGOTIPO E REDES SOCIAIS
    ========================================= */
 .footer-brand-section {
     display: flex;
@@ -87,19 +103,33 @@
 .footer-logo {
     width: 200px;
     height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
     filter: brightness(0) invert(1);
 }
 
+.footer-tagline {
+    font-size: 0.875rem;
+    color: var(--footer-text-muted);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Redes Sociais - Ícones Brancos */
 .social-links-container {
     margin-top: 1.5rem;
 }
 
 .social-links-label {
+    display: block;
     font-size: 0.75rem;
     color: var(--footer-text-muted);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 0.75rem;
+    font-weight: 600;
 }
 
 .social-links {
@@ -111,41 +141,52 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffffff;
+    color: var(--footer-text);
     text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
 }
 
 .social-links a:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.2);
     transform: translateY(-3px);
+    border-color: var(--footer-link-hover);
+}
+
+.social-links a:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
 }
 
 .social-links .fab {
-    color: #ffffff;
     font-size: 1.125rem;
+    color: var(--footer-text);
 }
 
 /* =========================================
-   TÍTULOS COM TRAÇO BRANCO
+   TÍTULOS DAS SEÇÕES - Com traço branco
    ========================================= */
+.footer-section {
+    display: flex;
+    flex-direction: column;
+}
+
 .footer-section h3 {
-    color: #ffffff;
+    color: var(--footer-text);
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 1.25rem;
     padding-bottom: 0.75rem;
-    border-bottom: 2px solid #ffffff;
+    border-bottom: 2px solid var(--footer-text);
     position: relative;
 }
 
 /* =========================================
-   LINKS SEM ÍCONES - ANIMAÇÃO UNIFICADA
+   LINKS DO FOOTER - Sem ícones, animação unificada
    ========================================= */
 .footer-links {
     list-style: none;
@@ -168,12 +209,12 @@
     position: relative;
 }
 
-/* Remover ícones */
+/* Remover ícones antes dos links */
 .footer-links a::before {
     display: none !important;
 }
 
-/* Animação de hover */
+/* Animação de hover unificada */
 .footer-links a::after {
     content: '';
     position: absolute;
@@ -181,12 +222,12 @@
     left: 0;
     width: 0;
     height: 1px;
-    background: #ffffff;
+    background: var(--footer-link-hover);
     transition: width 0.3s ease;
 }
 
 .footer-links a:hover {
-    color: #ffffff;
+    color: var(--footer-text);
     padding-left: 0.25rem;
 }
 
@@ -195,22 +236,110 @@
 }
 
 /* =========================================
-   BANNER DE COOKIES - 2 COLUNAS
+   SELOS
+   ========================================= */
+.footer-seals {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.footer-seal {
+    height: 48px;
+    width: auto;
+    max-width: 90px;
+    object-fit: contain;
+    border-radius: 6px;
+    transition: transform 0.2s ease;
+    display: inline-block;
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+}
+
+.footer-seal:hover {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+/* =========================================
+   COPYRIGHT E LINKS LEGAIS
+   ========================================= */
+.footer-bottom {
+    border-top: 1px solid var(--footer-divider);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-copyright {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.footer-copyright p {
+    margin: 0;
+    font-size: 0.813rem;
+    color: var(--footer-text-muted);
+}
+
+.footer-copyright p:first-child {
+    color: var(--footer-text);
+    font-weight: 500;
+}
+
+.footer-legal-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.footer-legal-links a {
+    font-size: 0.813rem;
+    color: var(--footer-text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-legal-links a:hover {
+    color: var(--footer-text);
+}
+
+.footer-legal-links a::before {
+    content: '';
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.2s ease;
+}
+
+.footer-legal-links a:hover::before {
+    width: 6px;
+}
+
+/* =========================================
+   BANNER DE COOKIES - 2 Colunas
    ========================================= */
 .cookie-banner {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: #ffffff !important;
-    color: #1A3E74 !important;
+    background: var(--cookie-banner-bg);
+    color: var(--cookie-banner-text);
     padding: 1.25rem 2rem;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
-    z-index: 10050;
+    z-index: var(--z-cookie-banner);
     transform: translateY(100%);
     opacity: 0;
     transition: all 0.3s ease;
-    border-top: 4px solid #1A3E74;
+    border-top: 4px solid var(--cookie-banner-text);
 }
 
 .cookie-banner.visible {
@@ -222,7 +351,7 @@
     display: none !important;
 }
 
-/* Container 2 colunas */
+/* Container de 2 colunas */
 .cookie-banner-container {
     display: flex;
     justify-content: space-between;
@@ -232,6 +361,7 @@
     margin: 0 auto;
 }
 
+/* Coluna 1 - Texto */
 .cookie-content {
     flex: 1;
 }
@@ -240,7 +370,7 @@
     margin: 0;
     font-size: 0.938rem;
     line-height: 1.6;
-    color: #1A3E74;
+    color: var(--cookie-banner-text);
 }
 
 .cookie-consent-note {
@@ -249,6 +379,17 @@
     color: rgba(26, 62, 116, 0.7);
 }
 
+.cookie-content a {
+    color: var(--cookie-banner-text);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.cookie-content a:hover {
+    text-decoration: underline;
+}
+
+/* Coluna 2 - Botões */
 .cookie-actions {
     display: flex;
     gap: 0.75rem;
@@ -256,7 +397,7 @@
     align-items: center;
 }
 
-/* Botões mesma altura */
+/* Botões com mesma altura */
 .cookie-btn {
     min-width: 140px;
     height: 44px;
@@ -273,10 +414,11 @@
     white-space: nowrap;
 }
 
+/* Botão Primário (Aceitar Todos) */
 .cookie-btn-primary {
-    background: #1A3E74;
-    color: #ffffff;
-    border-color: #1A3E74;
+    background: var(--cookie-banner-text);
+    color: var(--cookie-banner-bg);
+    border-color: var(--cookie-banner-text);
 }
 
 .cookie-btn-primary:hover {
@@ -284,24 +426,31 @@
     border-color: #0f2744;
 }
 
+/* Botão Secundário (Personalizar) */
 .cookie-btn-secondary {
     background: transparent;
-    color: #1A3E74;
-    border-color: #1A3E74;
+    color: var(--cookie-banner-text);
+    border-color: var(--cookie-banner-text);
 }
 
 .cookie-btn-secondary:hover {
     background: rgba(26, 62, 116, 0.08);
 }
 
+.cookie-btn:focus {
+    outline: 3px solid rgba(26, 62, 116, 0.3);
+    outline-offset: 2px;
+}
+
 /* =========================================
-   OVERLAY ESCURO
+   OVERLAY DO MODAL DE COOKIES
    ========================================= */
 .cookie-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(15, 39, 68, 0.85);
-    z-index: 10055;
+    background: rgba(15, 39, 68, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: var(--z-cookie-overlay);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -312,8 +461,12 @@
     visibility: visible;
 }
 
+.cookie-overlay.hidden {
+    display: none !important;
+}
+
 /* =========================================
-   MODAL DE PREFERÊNCIAS - ESTILO LINDO
+   MODAL DE PREFERÊNCIAS DE COOKIES
    ========================================= */
 .cookie-modal {
     position: fixed;
@@ -321,16 +474,16 @@
     left: 50%;
     transform: translate(-50%, -50%) scale(0.95);
     background: #ffffff;
-    border-radius: 16px;
+    border-radius: 12px;
     width: 90%;
     max-width: 700px;
     max-height: 85vh;
     overflow: hidden;
-    z-index: 10056;
+    z-index: var(--z-cookie-modal);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    box-shadow: 0 25px 60px rgba(26, 62, 116, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .cookie-modal.visible {
@@ -339,91 +492,93 @@
     transform: translate(-50%, -50%) scale(1);
 }
 
-/* Header azul lindão */
+.cookie-modal.hidden {
+    display: none !important;
+}
+
+/* Header do Modal - Azul Institucional */
 .cookie-modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2rem;
-    background: #1A3E74 !important;
-    color: #ffffff !important;
+    padding: 1.25rem 1.5rem;
+    background: var(--cookie-modal-header-bg);
+    color: var(--cookie-modal-header-text);
 }
 
 .cookie-modal-header h3 {
     margin: 0;
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 600;
-    color: #ffffff !important;
 }
 
-/* Botão fechar */
+/* Botão Fechar */
 .cookie-modal-close {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
     border: none;
-    color: #ffffff;
+    color: var(--cookie-modal-header-text);
     cursor: pointer;
+    transition: all 0.2s ease;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+    opacity: 0.8;
 }
 
 .cookie-modal-close:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
 }
 
-/* Corpo do modal */
+.cookie-modal-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Corpo do Modal */
 .cookie-modal-body {
-    padding: 2rem;
+    padding: 1.5rem;
     color: #1A3E74;
-    max-height: calc(85vh - 150px);
+    max-height: calc(85vh - 140px);
     overflow-y: auto;
-    background: #ffffff !important;
 }
 
 /* =========================================
-   CATEGORIAS - ACCORDION FUNCIONAL
+   CATEGORIAS DE COOKIES (Accordion)
    ========================================= */
 .cookie-category {
-    border: 2px solid #e8ecf4;
-    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
     margin-bottom: 1rem;
     overflow: hidden;
-    background: #f8fafc;
-    transition: all 0.3s ease;
+    background: #fafafa;
 }
 
-.cookie-category:hover {
-    border-color: #1A3E74;
+.cookie-category:last-of-type {
+    margin-bottom: 0;
 }
 
-.cookie-category.active {
-    border-color: #1A3E74;
-    box-shadow: 0 4px 12px rgba(26, 62, 116, 0.15);
-}
-
-/* Header da categoria */
 .cookie-category-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 1.5rem;
-    background: #ffffff;
+    padding: 1rem 1.25rem;
+    background: #f5f5f5;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.2s ease;
 }
 
 .cookie-category-header:hover {
-    background: #f0f4f8;
+    background: #eeeeee;
 }
 
 .cookie-category-header h4 {
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.938rem;
     font-weight: 600;
     color: #1A3E74;
     flex: 1;
@@ -433,13 +588,14 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-shrink: 0;
 }
 
-/* Switch toggle */
+/* Switch Toggle */
 .cookie-switch {
     position: relative;
     display: inline-block;
-    width: 52px;
+    width: 50px;
     height: 28px;
 }
 
@@ -454,7 +610,7 @@
     cursor: pointer;
     inset: 0;
     background-color: #ccc;
-    transition: 0.3s ease;
+    transition: 0.2s ease;
     border-radius: 28px;
 }
 
@@ -466,7 +622,7 @@
     left: 3px;
     bottom: 3px;
     background-color: white;
-    transition: 0.3s ease;
+    transition: 0.2s ease;
     border-radius: 50%;
 }
 
@@ -475,19 +631,19 @@
 }
 
 .cookie-switch input:checked + .cookie-slider:before {
-    transform: translateX(24px);
+    transform: translateX(22px);
 }
 
-/* Botão info */
+/* Botão de informação */
 .cookie-info-btn {
-    background: #1A3E74;
-    border: none;
-    color: #ffffff;
-    width: 32px;
-    height: 32px;
+    background: none;
+    border: 1px solid #1A3E74;
+    color: #1A3E74;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -496,33 +652,33 @@
 }
 
 .cookie-info-btn:hover {
-    background: #0f2744;
-    transform: scale(1.1);
+    background: #1A3E74;
+    color: #ffffff;
 }
 
-/* Descrição expandível */
+/* Descrição da Categoria */
 .cookie-category-description {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.3s ease;
-    background: #f8fafc;
+    transition: max-height 0.3s ease, padding 0.2s ease;
+    background: #ffffff;
+    border-top: 1px solid #e0e0e0;
 }
 
 .cookie-category-description.expanded {
-    max-height: 400px;
-    padding: 1.25rem 1.5rem;
-    border-top: 1px solid #e8ecf4;
+    max-height: 300px;
+    padding: 1rem 1.25rem;
 }
 
 .cookie-category-description p {
     margin: 0;
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: #4a5568;
+    font-size: 0.813rem;
+    color: #666;
+    line-height: 1.6;
 }
 
 /* =========================================
-   MODAL DE DETALHES (SUBMODAL)
+   MODAL DE DETALHES (Submodal)
    ========================================= */
 .cookie-detail-modal {
     position: fixed;
@@ -530,15 +686,17 @@
     left: 50%;
     transform: translate(-50%, -50%) scale(0.95);
     background: #ffffff;
-    border-radius: 16px;
+    border-radius: 12px;
     width: 90%;
     max-width: 550px;
     max-height: 85vh;
-    z-index: 10057;
+    z-index: var(--z-cookie-modal);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    box-shadow: 0 20px 50px rgba(26, 62, 116, 0.35);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
 }
 
@@ -548,49 +706,62 @@
     transform: translate(-50%, -50%) scale(1);
 }
 
+.cookie-detail-modal.hidden {
+    display: none !important;
+}
+
 .cookie-detail-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.5rem;
-    background: #1A3E74 !important;
-    color: #ffffff !important;
+    background: var(--cookie-modal-header-bg);
+    color: var(--cookie-modal-header-text);
 }
 
 .cookie-detail-header h3 {
     margin: 0;
-    font-size: 1.15rem;
+    font-size: 1.125rem;
     font-weight: 600;
-    color: #ffffff !important;
+    padding-right: 1rem;
 }
 
 .cookie-detail-body {
     padding: 1.5rem;
-    color: #1A3E74;
-    max-height: calc(85vh - 100px);
     overflow-y: auto;
-    background: #ffffff !important;
+    color: #1A3E74;
+    flex: 1;
+    max-height: calc(85vh - 100px);
 }
 
 .cookie-detail-content {
-    font-size: 0.9rem;
-    line-height: 1.8;
+    font-size: 0.875rem;
+    line-height: 1.7;
 }
 
 .cookie-detail-content p {
     margin: 0 0 1rem 0;
-    color: #4a5568;
+    color: #555;
 }
 
 .cookie-detail-content strong {
     color: #1A3E74;
 }
 
+.cookie-detail-content a {
+    color: #1A3E74;
+    text-decoration: none;
+}
+
+.cookie-detail-content a:hover {
+    text-decoration: underline;
+}
+
 .cookie-detail-content h5 {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: #1A3E74;
-    margin: 1.5rem 0 0.75rem 0;
+    margin: 1.5rem 0 0.5rem 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -599,13 +770,21 @@
     margin-top: 0;
 }
 
+.cookie-detail-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e0e0e0;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: flex-start;
+}
+
 /* =========================================
-   FOOTER DO MODAL
+   FOOTER DO MODAL DE PREFERÊNCIAS
    ========================================= */
 .cookie-modal-footer {
     padding: 1.25rem 1.5rem;
-    border-top: 1px solid #e8ecf4;
-    background: #f8fafc;
+    border-top: 1px solid #e0e0e0;
+    background: #f5f5f5;
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
@@ -613,18 +792,67 @@
 
 .cookie-modal-footer .cookie-btn {
     min-width: 150px;
-    height: 48px;
+    height: 44px;
+}
+
+.cookie-modal-footer .cookie-btn:focus-visible {
+    outline: 3px solid rgba(26, 62, 116, 0.3);
+    outline-offset: 2px;
 }
 
 /* =========================================
    BOTÕES FLUTUANTES
    ========================================= */
+.fab-container {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    z-index: var(--z-fab-cookie);
+    align-items: center;
+}
+
+.fab-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background-color: #1A3E74;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(26, 62, 116, 0.4);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.fab-btn:hover {
+    background-color: #0f2744;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(26, 62, 116, 0.5);
+}
+
+.fab-btn:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+.fab-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Botão Voltar ao Topo */
 .back-to-top {
     position: fixed;
     bottom: 30px;
     right: 1.5rem;
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background: #1A3E74;
     color: #ffffff;
@@ -634,12 +862,12 @@
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
-    box-shadow: 0 4px 20px rgba(26, 62, 116, 0.4);
+    box-shadow: 0 4px 15px rgba(26, 62, 116, 0.4);
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
     transition: all 0.3s ease;
-    z-index: 10040;
+    z-index: var(--z-back-to-top);
 }
 
 .back-to-top.visible {
@@ -650,22 +878,28 @@
 
 .back-to-top:hover {
     background: #0f2744;
-    transform: translateY(-5px);
+    transform: translateY(-3px);
 }
 
-/* Botão voltar ao topo ACIMA do banner quando ativo */
+.back-to-top:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* Posição quando banner está ativo - ACIMA do banner */
 .cookie-banner.visible ~ .back-to-top,
 .cookie-banner.visible + .cookie-overlay ~ .back-to-top {
-    bottom: calc(var(--cookie-banner-total-height, 100px) + 25px);
+    bottom: calc(var(--cookie-banner-total-height, 100px) + 20px);
+    z-index: calc(var(--z-cookie-banner) + 1);
 }
 
-/* FAB de Cookies */
+/* Botão FAB de Cookies */
 .cookie-fab {
     position: fixed;
     bottom: 90px;
     right: 1.5rem;
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background: #1A3E74;
     color: #ffffff;
@@ -675,9 +909,12 @@
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
-    box-shadow: 0 4px 20px rgba(26, 62, 116, 0.4);
+    box-shadow: 0 4px 15px rgba(26, 62, 116, 0.4);
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
     transition: all 0.3s ease;
-    z-index: 10045;
+    z-index: var(--z-fab-cookie);
 }
 
 .cookie-fab.visible {
@@ -686,66 +923,87 @@
 
 .cookie-fab:hover {
     background: #0f2744;
-    transform: translateY(-5px);
+    transform: translateY(-3px);
 }
 
-/* FAB oculto quando banner ativo */
+.cookie-fab:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+.cookie-fab.hidden {
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* FAB oculto quando banner está ativo */
 .cookie-banner.visible ~ .cookie-fab,
 .cookie-banner.visible + .cookie-overlay ~ .cookie-fab {
     display: none !important;
 }
 
 /* =========================================
-   TOAST
+   TOAST NOTIFICATION
    ========================================= */
 .toast-notification {
     position: fixed;
-    bottom: 130px;
+    bottom: 120px;
     right: 1.5rem;
     background: #1A3E74;
     color: #ffffff;
     padding: 1rem 1.5rem;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    z-index: 10060;
+    z-index: calc(var(--z-cookie-banner) + 10);
     transform: translateX(120%);
-    transition: transform 0.3s ease;
-    font-size: 0.9rem;
+    transition: transform 0.3s ease-in-out;
+    font-size: 0.875rem;
     font-weight: 500;
+    max-width: 350px;
 }
 
 .toast-notification.visible {
     transform: translateX(0);
 }
 
-/* =========================================
-   SCROLLBAR
-   ========================================= */
-.cookie-modal-body::-webkit-scrollbar,
-.cookie-detail-body::-webkit-scrollbar {
-    width: 8px;
+.toast-notification.hidden {
+    display: none !important;
 }
 
-.cookie-modal-body::-webkit-scrollbar-track,
-.cookie-detail-body::-webkit-scrollbar-track {
+/* =========================================
+   SCROLLBARS PERSONALIZADAS
+   ========================================= */
+.cookie-modal::-webkit-scrollbar,
+.cookie-detail-modal::-webkit-scrollbar,
+.cookie-modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.cookie-modal::-webkit-scrollbar-track,
+.cookie-detail-modal::-webkit-scrollbar-track,
+.cookie-modal-body::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 4px;
 }
 
-.cookie-modal-body::-webkit-scrollbar-thumb,
-.cookie-detail-body::-webkit-scrollbar-thumb {
-    background: #c1c9d6;
-    border-radius: 4px;
+.cookie-modal::-webkit-scrollbar-thumb,
+.cookie-detail-modal::-webkit-scrollbar-thumb,
+.cookie-modal-body::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
 }
 
-.cookie-modal-body::-webkit-scrollbar-thumb:hover,
-.cookie-detail-body::-webkit-scrollbar-thumb:hover {
-    background: #a0aab8;
+.cookie-modal::-webkit-scrollbar-thumb:hover,
+.cookie-detail-modal::-webkit-scrollbar-thumb:hover,
+.cookie-modal-body::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
 }
 
 /* =========================================
-   RESPONSIVIDADE
+   MEDIA QUERIES (RESPONSIVIDADE)
    ========================================= */
+
 @media (max-width: 1024px) {
     .footer-content {
         grid-template-columns: 1.5fr 1fr 1fr;
@@ -756,17 +1014,21 @@
         grid-column: 1 / -1;
         flex-direction: row;
         align-items: flex-start;
+        gap: 2rem;
     }
     
     .social-links-container {
         margin-left: auto;
+        margin-top: 0;
     }
 }
 
 @media (max-width: 768px) {
+    /* Footer Layout Mobile */
     .footer-content {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        padding: 1.5rem 0;
     }
     
     .footer-brand-section {
@@ -784,11 +1046,15 @@
         justify-content: center;
     }
     
-    /* Banner 1 coluna */
+    /* Banner de Cookies - Coluna única */
     .cookie-banner-container {
         flex-direction: column;
         text-align: left;
         gap: 1.25rem;
+    }
+    
+    .cookie-content {
+        max-width: 100%;
     }
     
     .cookie-actions {
@@ -798,35 +1064,51 @@
     
     .cookie-btn {
         flex: 1;
+        min-width: 0;
     }
     
+    .footer-bottom {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-top: 2rem;
+        padding-bottom: 80px;
+    }
+    
+    .footer-copyright {
+        align-items: center;
+        width: 100%;
+    }
+    
+    .footer-legal-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+    }
+    
+    /* Botões flutuantes */
     .back-to-top,
     .cookie-fab {
-        width: 48px;
-        height: 48px;
-    }
-    
-    .cookie-modal {
-        width: 95%;
-        max-height: 80vh;
-    }
-    
-    .cookie-modal-header,
-    .cookie-detail-header {
-        padding: 1.25rem 1.5rem;
-    }
-    
-    .cookie-modal-body {
-        padding: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .cookie-btn {
-        min-width: auto;
-        padding: 0 1rem;
-        font-size: 0.85rem;
+        width: 44px;
         height: 44px;
+        font-size: 1.125rem;
+    }
+    
+    .toast-notification {
+        left: 1rem;
+        right: 1rem;
+        bottom: 6rem;
+        max-width: none;
+    }
+    
+    .cookie-modal-footer {
+        flex-direction: column;
+    }
+    
+    .cookie-modal-footer .cookie-btn {
+        width: 100%;
+        min-width: auto;
     }
     
     .back-to-top {
@@ -835,13 +1117,50 @@
     }
     
     .cookie-fab {
-        bottom: 80px;
+        bottom: 75px;
         right: 1rem;
+    }
+    
+    /* Ajuste quando banner ativo no mobile */
+    .cookie-banner.visible ~ .back-to-top,
+    .cookie-banner.visible + .cookie-overlay ~ .back-to-top {
+        bottom: calc(var(--cookie-banner-total-height, 150px) + 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .cookie-btn {
+        min-width: auto;
+        padding: 0 1rem;
+        font-size: 0.813rem;
+        height: 42px;
+    }
+    
+    .back-to-top {
+        bottom: 20px;
+        right: 0.5rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .cookie-fab {
+        bottom: 75px;
+        right: 0.5rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .footer-legal-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
     }
 }
 
 /* =========================================
-   ACESSIBILIDADE
+   ACESSIBILIDADE - MOTION REDUCED
    ========================================= */
 @media (prefers-reduced-motion: reduce) {
     .cookie-banner,
@@ -849,12 +1168,18 @@
     .cookie-detail-modal,
     .back-to-top,
     .cookie-fab,
+    .toast-notification,
     .cookie-category-description,
+    .fab-btn,
     .footer-links a {
         transition: none !important;
+        animation: none !important;
     }
 }
 
+/* =========================================
+   FOCO VISÍVEL (Acessibilidade)
+   ========================================= */
 .cookie-banner:focus-visible,
 .cookie-modal:focus-visible,
 .cookie-detail-modal:focus-visible,
@@ -863,4 +1188,10 @@
 .cookie-btn:focus-visible {
     outline: 3px solid rgba(26, 62, 116, 0.5);
     outline-offset: 2px;
+}
+
+.cookie-btn:focus:not(:focus-visible),
+.cookie-switch input:focus:not(:focus-visible),
+.cookie-info-btn:focus:not(:focus-visible) {
+    outline: none;
 }
