@@ -447,9 +447,9 @@
         });
     }
 
-    // ==========================================
+    // ==================================
     // INICIALIZAÇÃO
-    // ==========================================
+    // ==================================
 
     /**
      * Atualiza o ano no copyright do footer
@@ -472,47 +472,28 @@
                              document.getElementById(CONFIG.selectors.modal);
         if (!footerContent) return;
 
+        // Proteção de Cookie (Usa o Polyfill do Index)
+        let consent = null;
+        try { consent = getCookie(CONFIG.cookieName); } catch(e) {}
+
         state.initialized = true;
         updateYear();
         setupEventListeners();
 
-        // Verifica se o usuário já tem consentimento salvo
-        const consent = getCookie(CONFIG.cookieName);
-
         if (!consent) {
-            // Usuário ainda não consentiu: mostra banner
-            setTimeout(function() {
-                toggleBanner(true);
-            }, 300);
+            setTimeout(() => toggleBanner(true), 300);
         } else {
-            // Usuário já consentiu: mostra botão FAB para reconfigurar
             const cookieFab = document.getElementById(CONFIG.selectors.cookieFab);
-            if (cookieFab) {
-                cookieFab.style.display = '';
-            }
+            if (cookieFab) cookieFab.style.display = 'flex';
         }
     }
 
-    // ==========================================
+    // ==================================
     // EXECUÇÃO
-    // ==========================================
+    // ==================================
 
-    /**
-     * Inicialização imediata
-     * O HTML já existe no DOM quando este script é executado
-     */
-    function startInitialization() {
-        // Pequeno atraso para garantir que todos os elementos estão disponíveis
-        setTimeout(function() {
-            initFooter();
-        }, 50);
-    }
-
-    // Executa quando o DOM estiver pronto
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', startInitialization);
-    } else {
-        startInitialization();
-    }
+    // Inicializa via evento de módulo ou imediato
+    window.addEventListener('Module:footer-container:Ready', initFooter);
+    if (document.querySelector('.footer-content')) initFooter();
 
 })();
