@@ -1,259 +1,241 @@
 /**
-* PRELOAD.JS
-* Animação de Pré-carregamento com Modelo 3D
-* Calculadoras de Enfermagem
-*/
+ * PRELOAD.JS - Calculadoras de Enfermagem
+ * 
+ * Funcionalidades:
+ * - Renderização do modelo 3D (logo)
+ * - Sistema de cores: Azul Escuro (#1E3A8A)
+ * - Sistema de encerramento do preload (5 segundos)
+ * 
+ * Dependências: Three.js, OBJLoader, MTLLoader
+ */
+
 (function() {
-    "use strict";
+    'use strict';
 
-    let canvas, renderer, scene, camera, model, animationId;
-    let isHidden = false;
-    const animationDuration = 5000;
+    // ==========================================
+    // CONFIGURAÇÃO DE CORES - AZUL ESCURO
+    // ==========================================
+    var COLORS = {
+        primary: 0x1E3A8A,
+        accent: 0x3B82F6,
+        highlight: 0x60A5FA
+    };
 
-    function init() {
-        console.log("[Preload] Inicializando...");
-        canvas = document.getElementById("model-canvas");
-        
-        if (!canvas) {
-            console.warn("[Preload] Canvas não encontrado");
-            setTimeout(hidePreload, animationDuration);
-            return;
-        }
+    var MODEL_URLS = {
+        obj: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/animation/Health_Calculator_0815105642_texture.obj',
+        mtl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/animation/Health_Calculator_0815105642_texture.mtl',
+        texture: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/animation/Health_Calculator_0815105642_texture.png'
+    };
 
-        // Verificar se Three.js está disponível
-        if (typeof THREE === "undefined") {
-            console.warn("[Preload] Three.js não encontrado, criando geometria fallback");
-            createFallbackAnimation();
-            return;
-        }
+    // ==========================================
+    // VISUALIZAÇÃO DO MODELO 3D (LOGO)
+    // ==========================================
+    function initModel3D() {
+        var modelCanvas = document.getElementById('model-canvas');
+        if (!modelCanvas) return;
 
-        setupThreeJS();
-        startAnimation();
-        
-        // Tentar carregar o modelo 3D se os loaders estiverem disponíveis
-        if (THREE.OBJLoader && THREE.MTLLoader) {
-            loadModel3D();
-        } else {
-            console.warn("[Preload] OBJLoader/MTLLoader não disponíveis");
-            createFallbackGeometry();
-        }
-        
-        setTimeout(hidePreload, animationDuration);
-    }
+        var modelScene = new THREE.Scene();
+        var modelCamera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+        modelCamera.position.z = 5;
 
-    function setupThreeJS() {
-        scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xFFFFFF);
-
-        camera = new THREE.PerspectiveCamera(
-            45,
-            window.innerWidth / window.innerHeight,
-            0.1,
-            1000
-        );
-        camera.position.z = 50;
-
-        renderer = new THREE.WebGLRenderer({
-            canvas: canvas,
-            alpha: false,
+        var modelRenderer = new THREE.WebGLRenderer({
+            canvas: modelCanvas,
+            alpha: true,
             antialias: true
         });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setClearColor(0xFFFFFF);
+        modelRenderer.setSize(400, 400);
+        modelRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // Adicionar iluminação
-        const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.6);
-        scene.add(ambientLight);
+        // Iluminação suave e profissional
+        var ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        modelScene.add(ambientLight);
 
-        const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.8);
-        directionalLight.position.set(10, 10, 10);
-        scene.add(directionalLight);
+        var directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        directionalLight.position.set(5, 5, 5);
+        modelScene.add(directionalLight);
 
-        const directionalLight2 = new THREE.DirectionalLight(0xFFFFFF, 0.5);
-        directionalLight2.position.set(-10, -10, 5);
-        scene.add(directionalLight2);
-    }
+        var directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.4);
+        directionalLight2.position.set(-5, 3, -5);
+        modelScene.add(directionalLight2);
 
-    function loadModel3D() {
-        const objLoader = new THREE.OBJLoader();
-        const mtlLoader = new THREE.MTLLoader();
+        var model = null;
+        var mouseX = 0;
+        var mouseY = 0;
+        var targetRotationX = 0;
+        var targetRotationY = 0;
 
-        // URLs dos arquivos 3D
-        const basePath = "assets/images/animation/";
-        const objUrl = basePath + "Health_Calculator_0815105642_texture.obj";
-        const mtlUrl = basePath + "Health_Calculator_0815105642_texture.mtl";
+        // Flag para controlar a animação
+        var isAnimating = true;
 
-        // Carregar arquivo MTL primeiro
-        mtlLoader.load(
-            mtlUrl,
-            function(materials) {
-                materials.preload();
-                
-                // Carregar arquivo OBJ com materiais
-                objLoader.setMaterials(materials);
-                loadOBJ(objLoader, objUrl);
-            },
-            function(error) {
-                console.warn("[Preload] Erro ao carregar MTL:", error);
-                loadOBJ(objLoader, objUrl);
-            }
-        );
-    }
-
-    function loadOBJ(objLoader, url) {
-        objLoader.load(
-            url,
-            function(object) {
-                model = object;
-                
-                // Centralizar e escalar o modelo
-                const box = new THREE.Box3().setFromObject(model);
-                const center = box.getCenter(new THREE.Vector3());
-                const size = box.getSize(new THREE.Vector3());
-                
-                const maxDim = Math.max(size.x, size.y, size.z);
-                const scale = 30 / maxDim;
-                model.scale.set(scale, scale, scale);
-                
-                model.position.sub(center.multiplyScalar(scale));
-                model.rotation.y = Math.PI;
-
-                scene.add(model);
-                console.log("[Preload] Modelo 3D carregado com sucesso");
-            },
-            function(xhr) {
-                console.log("[Preload] Carregando modelo: " + (xhr.loaded / xhr.total * 100).toFixed(0) + "%");
-            },
-            function(error) {
-                console.warn("[Preload] Erro ao carregar OBJ:", error);
-                createFallbackGeometry();
-            }
-        );
-    }
-
-    function createFallbackGeometry() {
-        // Criar geometria fallback - TorusKnot animado
-        const geometry = new THREE.TorusKnotGeometry(8, 2.5, 100, 16);
-        const material = new THREE.MeshPhongMaterial({
-            color: 0x1A3E74,
-            emissive: 0x87CEEB,
-            emissiveIntensity: 0.3,
-            shininess: 100,
-            flatShading: false
+        // Carregar textura
+        var textureLoader = new THREE.TextureLoader();
+        textureLoader.load(MODEL_URLS.texture, function() {
+            console.log('Textura carregada com sucesso');
         });
-        model = new THREE.Mesh(geometry, material);
-        scene.add(model);
-        console.log("[Preload] Geometria fallback criada");
-    }
 
-    function createFallbackAnimation() {
-        // Versão simples com CSS para caso Three.js não esteja disponível
-        const container = document.getElementById("preload-container");
-        if (container) {
-            container.innerHTML = '<div class="simple-loader"></div>';
+        // Configurar o modelo após carregamento
+        function setupModel(object) {
+            model = object;
             
-            // Adicionar estilos inline para o loader simples
-            const style = document.createElement("style");
-            style.textContent = `
-                .simple-loader {
-                    width: 80px;
-                    height: 80px;
-                    border: 4px solid #1A3E74;
-                    border-top: 4px solid #87CEEB;
-                    border-radius: 50%;
-                    animation: spin 1s linear infinite;
+            // Aplicar textura ao modelo
+            model.traverse(function(child) {
+                if (child.isMesh) {
+                    child.material.needsUpdate = true;
                 }
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-            `;
-            document.head.appendChild(style);
-        }
-        
-        setTimeout(hidePreload, animationDuration);
-    }
+            });
 
-    function animate() {
-        animationId = requestAnimationFrame(animate);
-
-        if (model) {
-            // Animação de rotação contínua
-            model.rotation.y += 0.01;
-            model.rotation.x += 0.005;
-
-            // Efeito de pulsação suave
-            const time = Date.now() * 0.001;
-            const pulseScale = 1 + Math.sin(time * 2) * 0.05;
-            model.scale.set(
-                model.scale.x * (1 + (pulseScale - 1) * 0.01),
-                model.scale.y * (1 + (pulseScale - 1) * 0.01),
-                model.scale.z * (1 + (pulseScale - 1) * 0.01)
-            );
-        }
-
-        if (renderer && scene && camera) {
-            renderer.render(scene, camera);
-        }
-    }
-
-    function startAnimation() {
-        if (!animationId) {
-            animate();
-        }
-    }
-
-    function hidePreload() {
-        if (isHidden) return;
-        isHidden = true;
-
-        const preloadContainer = document.getElementById("preload-container");
-        if (preloadContainer) {
-            console.log("[Preload] Escondendo preload...");
-            preloadContainer.style.transition = "opacity 0.8s ease-out";
-            preloadContainer.style.opacity = "0";
+            // Centralizar e dimensionar o modelo
+            var box = new THREE.Box3().setFromObject(model);
+            var center = box.getCenter(new THREE.Vector3());
+            var size = box.getSize(new THREE.Vector3());
             
-            setTimeout(function() {
-                preloadContainer.style.display = "none";
+            var maxDim = Math.max(size.x, size.y, size.z);
+            var scale = 3.0 / maxDim;
+            model.scale.setScalar(scale);
+            
+            model.position.x = -center.x * scale;
+            model.position.y = -center.y * scale;
+            model.position.z = -center.z * scale;
+
+            modelScene.add(model);
+        }
+
+        // Tentar carregar com materiais MTL
+        var mtlLoader = new THREE.MTLLoader();
+        mtlLoader.load(MODEL_URLS.mtl, function(materials) {
+            materials.preload();
+
+            var objLoader = new THREE.OBJLoader();
+            objLoader.setMaterials(materials);
+            
+            objLoader.load(MODEL_URLS.obj, setupModel, function(xhr) {
+                // Progresso de carregamento
+            }, function(err) {
+                console.warn('Erro ao carregar MTL, tentando sem materiais');
+                var objLoader2 = new THREE.OBJLoader();
+                objLoader2.load(MODEL_URLS.obj, setupModel);
+            });
+        }, undefined, function(err) {
+            // Tentar carregar apenas o OBJ
+            var objLoader = new THREE.OBJLoader();
+            objLoader.load(MODEL_URLS.obj, setupModel);
+        });
+
+        // Interação com o mouse para rotação suave
+        function onModelMouseMove(event) {
+            var rect = modelCanvas.getBoundingClientRect();
+            mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        }
+
+        modelCanvas.addEventListener('mousemove', onModelMouseMove);
+
+        // Animação do modelo 3D - continua até o preload finalizar
+        function animateModel() {
+            if (!isAnimating) return;
+            
+            requestAnimationFrame(animateModel);
+
+            if (model) {
+                // Rotação contínua automática
+                model.rotation.y += 0.008;
                 
-                // Limpar recursos Three.js
-                if (renderer) {
-                    renderer.dispose();
-                }
-            }, 800);
-        } else {
-            console.warn("[Preload] Container de preload não encontrado");
+                // Movimento suave baseado no mouse
+                targetRotationX += (mouseY * 0.3 - targetRotationX) * 0.05;
+                targetRotationY += (mouseX * 0.3 - targetRotationY) * 0.05;
+                
+                model.rotation.x = targetRotationX * 0.2;
+            }
+
+            modelRenderer.render(modelScene, modelCamera);
         }
+
+        animateModel();
+
+        // Responsividade
+        window.addEventListener('resize', function() {
+            var size = Math.min(400, window.innerWidth * 0.7);
+            modelCanvas.width = size;
+            modelCanvas.height = size;
+            modelRenderer.setSize(size, size);
+            modelCamera.aspect = 1;
+            modelCamera.updateProjectionMatrix();
+        });
+
+        // Expor função para parar a animação quando o preload finalizar
+        window.stopModelAnimation = function() {
+            isAnimating = false;
+        };
     }
 
-    // Event listeners para redimensionamento
-    window.addEventListener("resize", function() {
-        if (!camera || !renderer) return;
+    // ==========================================
+    // SISTEMA DE FECHAMENTO DO PRELOAD
+    // ==========================================
+    function initPreloadManager() {
+        var preloadHidden = false;
         
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+        function hidePreloader() {
+            if (preloadHidden) return;
+            preloadHidden = true;
+            
+            var preload = document.getElementById('preload-container');
+            if (preload) {
+                preload.style.transition = 'opacity 0.5s ease-out';
+                preload.style.opacity = '0';
+                setTimeout(function() {
+                    preload.style.display = 'none';
+                    // Parar a animação do modelo 3D
+                    if (typeof window.stopModelAnimation === 'function') {
+                        window.stopModelAnimation();
+                    }
+                }, 500);
+            }
+        }
 
-    // Eventos de inicialização do site
-    window.addEventListener("TemplateEngine:Ready", function() {
-        console.log("[Preload] TemplateEngine:Ready recebido");
-        setTimeout(hidePreload, 300);
-    });
+        // 1. Módulos carregados (evento do ComponentLoader)
+        window.addEventListener('ModulesLoaded', hidePreloader);
 
-    window.addEventListener("ModulesLoaded", function() {
-        console.log("[Preload] ModulesLoaded recebido");
-        setTimeout(hidePreload, 300);
-    });
+        // 2. Timeout fixo de 5 segundos
+        setTimeout(hidePreloader, 5000);
 
-    window.addEventListener("load", function() {
-        console.log("[Preload] Window load");
-        setTimeout(hidePreload, 500);
-    });
+        // 3. Verificação periódica do DOM (fallback adicional)
+        var pollCount = 0;
+        var maxPollCount = 25;
+        
+        function pollDOM() {
+            pollCount++;
+                
+            var mainContainer = document.getElementById('main-container');
+            var headerContainer = document.getElementById('header-container');
+            
+            var mainLoaded = mainContainer && mainContainer.innerHTML.trim().length > 50;
+            var headerLoaded = headerContainer && headerContainer.innerHTML.trim().length > 50;
+            
+            if (mainLoaded || headerLoaded) {
+                hidePreloader();
+                return;
+            }
+            
+            if (pollCount < maxPollCount) {
+                setTimeout(pollDOM, 200);
+            }
+        }
+        
+        setTimeout(pollDOM, 500);
+    }
 
-    document.addEventListener("DOMContentLoaded", function() {
-        console.log("[Preload] DOMContentLoaded");
-        setTimeout(init, 100);
-    });
+    // ==========================================
+    // INICIALIZAÇÃO
+    // ==========================================
+    function init() {
+        initModel3D();
+        initPreloadManager();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
 })();

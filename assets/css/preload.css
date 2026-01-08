@@ -1,39 +1,100 @@
-/* ========================================
-PRELOAD.CSS - Estilos de Pré-carregamento
-Calculadoras de Enfermagem
-======================================== */
+/* ==========================================
+   PRELOAD.CSS - Calculadoras de Enfermagem
+   Identidade Visual: Azul Escuro (#1E3A8A)
+   ========================================== */
 
+/* Reset e Variáveis */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-blue: #1E3A8A;
+    --accent-blue: #3B82F6;
+    --light-blue: #60A5FA;
+    --background-white: #ffffff;
+    --text-primary: #1E3A8A;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--background-white);
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Container Principal */
 #preload-container {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: var(--z-preload, 99999);
-    background: var(--color-white);
+    width: 100vw;
+    height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.8s ease-out;
+    z-index: 1;
+    background: var(--background-white);
 }
 
-#preload-container.preload-hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
+/* Canvas do Modelo 3D (Logo) */
 #model-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
+    width: 400px;
+    height: 400px;
+    filter: drop-shadow(0 0 40px rgba(30, 58, 138, 0.4));
 }
 
+/* Texto de Carregamento */
+.preload-text {
+    color: var(--text-primary);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-align: center;
+    animation: text-pulse 2s ease-in-out infinite;
+    margin-top: 30px;
+}
+
+@keyframes text-pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* ==========================================
+   ESTADOS DE REDUÇÃO DE MOVIMENTO
+   ========================================== */
 @media (prefers-reduced-motion: reduce) {
-    #model-canvas {
+    .preload-text {
         animation: none;
+    }
+}
+
+/* ==========================================
+   RESPONSIVIDADE
+   ========================================== */
+@media (max-width: 768px) {
+    #model-canvas {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .preload-text {
+        font-size: 16px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    #model-canvas {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .preload-text {
+        font-size: 14px;
+        margin-top: 15px;
     }
 }
