@@ -7,6 +7,13 @@
     <meta name="description" content="Ferramentas e calculadoras para profissionais de enfermagem.">
 
     <!-- ============================================ -->
+    <!-- BIBLIOTECAS EXTERNAS (CDN)                  -->
+    <!-- ============================================ -->
+    
+    <!-- THREE.js - DEVE vir antes do preload.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- ============================================ -->
     <!-- ESTILOS (CSS)                                -->
     <!-- ============================================ -->
     
@@ -28,13 +35,13 @@
 
         /* Configuração do Preload para cobrir a tela inteira */
         #component-preload {
-            position: fixed; /* Fixado na janela, cobre tudo mesmo rolando */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 99999; /* Z-index altíssimo para ficar acima de tudo */
-            background-color: #ffffff; /* Fundo branco para esconder o carregamento do site */
+            z-index: 99999;
+            background-color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -49,7 +56,7 @@
         #component-preload.fade-out {
             opacity: 0;
             visibility: hidden;
-            pointer-events: none; /* Permite clicar nos elementos abaixo após sumir */
+            pointer-events: none;
         }
     </style>
 </head>
@@ -138,7 +145,7 @@
                     preloadElement.classList.add('fade-out');
                     console.log("Preload removido após 5 segundos.");
                 }
-            }, 5000); // 5000 milissegundos = 5 segundos
+            }, 5000);
         });
     </script>
 
@@ -147,17 +154,21 @@
     <!-- SCRIPTS (JS)                                 -->
     <!-- ============================================ -->
     
+    <!-- Scripts utilitários -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js"></script>
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/console-cleaner.js"></script>
 
+    <!-- THREE.js já está carregado no head, agora carrega o preload.js -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/preload.js"></script>
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js"></script>
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js"></script>
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js"></script>
 
+    <!-- Scripts globais -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main.js"></script>
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js"></script>
     
+    <!-- Script de carregamento da página principal -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index-loader.js"></script>
 
 </body>
