@@ -1,62 +1,70 @@
 /**
  * UTILS.JS
- * Funções Utilitárias
+ * Funcoes Utilitarias
  * Calculadoras de Enfermagem
  */
 
 var Utils = {
-  renderCard: function(e, t, a) {
-    var n = this.isHighlighted(e, t) ? "highlighted" : "";
-    var c = e.category.toLowerCase().replace(/\s+/g, "-");
-    var i = this.getActionButtonText(a);
-    var s = this.generateCategoryTags(e, a);
+  /**
+   * Renderiza um card de ferramenta
+   * @param {Object} tool - Dados da ferramenta
+   * @param {Object} sectionState - Estado da secao (viewMode, showIcons, etc)
+   * @param {string} type - Tipo da ferramenta (calculator, scale, other)
+   */
+  renderCard: function(tool, sectionState, type) {
+    var highlighted = this.isHighlighted(tool, sectionState) ? "highlighted" : "";
+    var categoryClass = tool.category.toLowerCase().replace(/\s+/g, "-");
+    var actionHtml = this.getActionButton(type);
+    var iconHtml = '';
     
-    return '<div class="tool-card ' + n + '" data-category="' + c + '">' +
-      '<div class="tool-icon">' +
-        '<i class="' + e.icon + '"></i>' +
-      '</div>' +
+    // Verifica se deve mostrar icones
+    if (sectionState.showIcons !== false) {
+      iconHtml = '<div class="tool-icon"><i class="' + tool.icon + '"></i></div>';
+    }
+    
+    return '<a href="pages/' + tool.filename + '" class="tool-card ' + highlighted + '" data-category="' + categoryClass + '">' +
+      iconHtml +
       '<div class="tool-info">' +
-        '<h3 class="tool-name">' + this.escapeHtml(e.name) + '</h3>' +
-        '<span class="tool-category">' + this.escapeHtml(e.category) + '</span>' +
-        '<p class="tool-description">' + this.escapeHtml(e.description) + '</p>' +
-        s +
-        '<a href="pages/' + e.filename + '" class="tool-button">' + i + '</a>' +
+        '<h3 class="tool-name">' + this.escapeHtml(tool.name) + '</h3>' +
+        '<p class="tool-description">' + this.escapeHtml(tool.description) + '</p>' +
+        actionHtml +
       '</div>' +
-    '</div>';
+    '</a>';
   },
   
-  getActionButtonText: function(e) {
+  /**
+   * Retorna o botao de acao com icone e estilo
+   */
+  getActionButton: function(type) {
+    var icons = {
+      calculator: "fas fa-calculator",
+      scale: "fas fa-clipboard-list",
+      other: "fas fa-calendar-check"
+    };
+    
     var texts = {
       calculator: "Calcular",
       scale: "Classificar",
       other: "Consultar"
     };
-    return texts[e] || "Acessar";
-  },
-  
-  generateCategoryTags: function(e, t) {
-    var a = {
-      calculator: "Calculadora",
-      scale: "Escala",
-      other: "Informação"
-    };
-    var r = {
-      calculator: "blue",
-      scale: "emerald",
-      other: "amber"
-    };
     
-    return '<div class="tool-tags">' +
-      '<span class="tool-type tag-' + (r[t] || "blue") + '">' + (a[t] || "Ferramenta") + '</span>' +
-      '<span class="tool-category-tag">' + this.escapeHtml(e.category) + '</span>' +
-    '</div>';
+    var iconClass = icons[type] || "fas fa-arrow-right";
+    var text = texts[type] || "Acessar";
+    
+    return '<span class="tool-action-btn"><i class="' + iconClass + '"></i> ' + text + '</span>';
   },
   
-  isHighlighted: function(e, t) {
-    if (!t || !t.filterCategory || t.filterCategory === "all") return false;
-    return e.category === t.filterCategory;
+  /**
+   * Verifica se o card deve ser destacado
+   */
+  isHighlighted: function(tool, sectionState) {
+    if (!sectionState || !sectionState.filterCategory || sectionState.filterCategory === "all") return false;
+    return tool.category === sectionState.filterCategory;
   },
   
+  /**
+   * Debounce - Atraso na execução da função
+   */
   debounce: function(func, wait) {
     var timeout;
     return function() {
@@ -69,6 +77,9 @@ var Utils = {
     };
   },
   
+  /**
+   * Throttle - Limita a frequência de execução
+   */
   throttle: function(func, limit) {
     var inThrottle;
     return function() {
@@ -84,6 +95,9 @@ var Utils = {
     };
   },
   
+  /**
+   * Callback quando o DOM está pronto
+   */
   onReady: function(callback) {
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", callback);
@@ -92,6 +106,9 @@ var Utils = {
     }
   },
   
+  /**
+   * Cria um elemento DOM
+   */
   createElement: function(tag, attributes, children) {
     var element = document.createElement(tag);
     
@@ -118,23 +135,35 @@ var Utils = {
     return element;
   },
   
+  /**
+   * Escapa caracteres HTML
+   */
   escapeHtml: function(text) {
     var div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
   },
   
+  /**
+   * Formata uma data
+   */
   formatDate: function(dateStr) {
     var date = new Date(dateStr);
     var options = { day: "2-digit", month: "2-digit", year: "numeric" };
     return date.toLocaleDateString("pt-BR", options);
   },
   
+  /**
+   * Obtém parâmetro da URL
+   */
   getUrlParam: function(param) {
     var urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
   },
   
+  /**
+   * Scroll suave até um elemento
+   */
   scrollTo: function(target, offset) {
     var element;
     if (typeof target === "string") {
@@ -154,6 +183,9 @@ var Utils = {
     }
   },
   
+  /**
+   * Copia texto para o clipboard
+   */
   copyToClipboard: function(text) {
     return new Promise(function(resolve) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -168,6 +200,9 @@ var Utils = {
     });
   },
   
+  /**
+   * Verifica se o elemento está visível na viewport
+   */
   isElementInViewport: function(el) {
     var rect = el.getBoundingClientRect();
     var winHeight = window.innerHeight || document.documentElement.clientHeight;

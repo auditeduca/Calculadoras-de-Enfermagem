@@ -1,0 +1,162 @@
+<!-- ========================================
+     MAIN-CONTENT.HTML
+     Conteúdo Principal da Página Inicial
+     Inclui hero, stats, painel de controles e ferramentas
+     ======================================== -->
+
+<!-- Skip Link para Acessibilidade -->
+<a href="#main-container" class="sr-only focus:not-sr-only" style="position:absolute;top:0;left:0;background:var(--theme-color-primary);color:white;padding:1rem;z-index:9999;">
+  Pular para o conteúdo principal
+</a>
+
+<section class="hero-section">
+  <h1 class="hero-title">Calculadoras de Enfermagem</h1>
+  <p class="hero-subtitle">Ferramentas e conteúdo técnico para profissionais de saúde.</p>
+  <p class="hero-description">Acesse calculadoras clínicas, escalas de avaliação e calendários vacinais.</p>
+  
+  <div class="hero-actions">
+    <a href="#calculadoras" class="hero-btn primary">
+      <i class="fas fa-calculator"></i>
+      Calculadoras
+    </a>
+    <a href="#escalas" class="hero-btn secondary">
+      <i class="fas fa-clipboard-list"></i>
+      Escalas Clínicas
+    </a>
+  </div>
+  
+  <div class="hero-image">
+    <img src="https://placehold.co/600x400/1A3E74/white?text=Calculadoras+de+Enfermagem" alt="Calculadoras de Enfermagem">
+  </div>
+</section>
+
+<section class="stats-section">
+  <div class="stat-item">
+    <span class="stat-number">63+</span>
+    <span class="stat-label">Ferramentas</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">50+</span>
+    <span class="stat-label">Escalas Clínicas</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">8</span>
+    <span class="stat-label">Categorias Vacinais</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number free">Free</span>
+    <span class="stat-label">100% Gratuito</span>
+  </div>
+</section>
+
+<!-- Painel de Controles Centralizado -->
+<div class="global-controls-panel">
+  <div class="global-controls">
+    <div class="control-group">
+      <label class="control-label">
+        <i class="fas fa-eye"></i>
+        Exibição:
+      </label>
+      <div class="view-dropdown">
+        <button class="view-dropdown-btn" id="view-dropdown-btn" aria-label="Selecionar visualização">
+          <i class="fas fa-th-large"></i>
+          <span class="view-current-label">Extra Grande</span>
+          <i class="fas fa-chevron-down dropdown-arrow"></i>
+        </button>
+        <div class="view-dropdown-menu" id="view-dropdown-menu">
+          <button class="view-dropdown-item active" data-view="xl" title="Extra Grande">
+            <i class="fas fa-th-large"></i>
+            <span>Extra Grande</span>
+          </button>
+          <button class="view-dropdown-item" data-view="lg" title="Grande">
+            <i class="fas fa-th"></i>
+            <span>Grande</span>
+          </button>
+          <button class="view-dropdown-item" data-view="md" title="Médio">
+            <i class="fas fa-square"></i>
+            <span>Médio</span>
+          </button>
+          <button class="view-dropdown-item" data-view="sm" title="Pequeno">
+            <i class="fas fa-minus-square"></i>
+            <span>Pequeno</span>
+          </button>
+          <button class="view-dropdown-item" data-view="list" title="Lista">
+            <i class="fas fa-list"></i>
+            <span>Lista</span>
+          </button>
+          <button class="view-dropdown-item" data-view="details" title="Detalhes">
+            <i class="fas fa-info-circle"></i>
+            <span>Detalhes</span>
+          </button>
+          <button class="view-dropdown-item" data-view="blocks" title="Blocos">
+            <i class="fas fa-border-all"></i>
+            <span>Blocos</span>
+          </button>
+          <button class="view-dropdown-item" data-view="compact" title="Compacto">
+            <i class="fas fa-compress-arrows-alt"></i>
+            <span>Compacto</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <label class="control-label">
+        <i class="fas fa-sort-alpha-down"></i>
+        Ordenar:
+      </label>
+      <div class="sort-dropdown">
+        <button class="sort-dropdown-btn" id="sort-dropdown-btn" aria-label="Selecionar ordenação">
+          <i class="fas fa-sort-alpha-down"></i>
+          <span class="sort-current-label">A-Z (Crescente)</span>
+          <i class="fas fa-chevron-down dropdown-arrow"></i>
+        </button>
+        <div class="sort-dropdown-menu" id="sort-dropdown-menu">
+          <button class="sort-dropdown-item active" data-sort="az" title="A-Z (Crescente)">
+            <i class="fas fa-sort-alpha-down"></i>
+            <span>A-Z (Crescente)</span>
+          </button>
+          <button class="sort-dropdown-item" data-sort="za" title="Z-A (Decrescente)">
+            <i class="fas fa-sort-alpha-up"></i>
+            <span>Z-A (Decrescente)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <label class="toggle-label">
+        <input type="checkbox" id="global-show-icons" class="toggle-input" checked>
+        <span class="toggle-slider"></span>
+        <span class="toggle-text"><i class="fas fa-icons"></i> Ícones</span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<section id="calculadoras" class="tools-section">
+  <h2 class="section-title">Calculadoras Clínicas</h2>
+  <div id="calculadoras-grid" class="calculators-grid view-xl">
+    <!-- Calculadoras serão renderizadas via JavaScript -->
+  </div>
+</section>
+
+<section id="escalas" class="tools-section">
+  <h2 class="section-title">Escalas Clínicas</h2>
+  <div id="escalas-grid" class="calculators-grid view-xl">
+    <!-- Escalas serão renderizadas via JavaScript -->
+  </div>
+</section>
+
+<section id="vacinas" class="tools-section">
+  <h2 class="section-title">Calendário Vacinal</h2>
+  <div id="vacinas-grid" class="calculators-grid view-xl">
+    <!-- Conteúdo injetado via JavaScript -->
+  </div>
+</section>
+
+<!-- Botão Voltar ao Topo -->
+<button id="back-to-top-btn" class="back-to-top" aria-label="Voltar ao topo">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
