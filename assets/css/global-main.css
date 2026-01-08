@@ -1,25 +1,27 @@
 /* ========================================
    GLOBAL-MAIN.CSS - Estilos Globais Principais
    Calculadoras de Enfermagem
+   Arquitetura de Tokens Semânticos
    ======================================== */
 
 .main-container{
   max-width:1200px;
   margin:0 auto;
-  padding:var(--spacing-lg,2rem)
+  padding:var(--spacing-lg,2rem);
 }
 
 .card{
-  background:var(--bg-card,#fff);
-  border-radius:var(--radius-md,8px);
-  box-shadow:var(--shadow-card,0 2px 8px rgba(0,0,0,0.1));
+  background:var(--theme-bg-panel);
+  border-radius:var(--border-radius-md,8px);
+  box-shadow:var(--shadow-md,0 4px 6px rgba(0,0,0,0.1));
   padding:var(--spacing-md,1.5rem);
-  transition:transform .2s ease,box-shadow .2s ease
+  transition:transform .2s ease,box-shadow .2s ease;
+  border:1px solid var(--theme-border-color);
 }
 
 .card:hover{
   transform:translateY(-2px);
-  box-shadow:var(--shadow-card-hover,0 4px 16px rgba(0,0,0,0.15))
+  box-shadow:var(--shadow-lg,0 10px 15px rgba(0,0,0,0.1));
 }
 
 .calculators-grid{
@@ -29,10 +31,12 @@
 }
 
 .section-title{
-  font-family:var(--font-heading,'Montserrat',sans-serif);
+  font-family:var(--font-heading,'Nunito Sans',sans-serif);
   font-size:var(--font-size-2xl,1.75rem);
-  color:var(--color-primary,#1A3E74);
-  margin-bottom:var(--spacing-md,1.5rem)
+  color:var(--theme-color-primary);
+  margin-bottom:var(--spacing-md,1.5rem);
+  font-weight:700;
+  line-height:1.2;
 }
 
 @media(max-width:768px){
@@ -41,5 +45,8 @@
   }
   .calculators-grid{
     grid-template-columns:1fr
+  }
+  .section-title{
+    font-size:1.5rem;
   }
 }

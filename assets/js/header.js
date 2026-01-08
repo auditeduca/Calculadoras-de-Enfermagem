@@ -324,13 +324,19 @@
     }
 
     // ============================================
-    // CONTROLE DE TEMA - INTEGRAÇÃO COM ACCESSCONTROL
+    // CONTROLE DE TEMA - DELEGADO AO ACCESSCONTROL
     // ============================================
-    function applyTheme(isDark) {
-        State.isDarkMode = isDark;
+    // O ThemeManager foi unificado no accessibility.js
+    // Esta função apenas sincroniza com o AccessControl
 
-        // Aplicar classe dark-theme ao body
-        document.body.classList.toggle('dark-theme', isDark);
+    function applyTheme(isDark) {
+        // Delegar ao AccessControl ThemeManager
+        if (window.AccessControl && window.AccessControl.ThemeManager) {
+            window.AccessControl.ThemeManager.applyTheme(isDark ? 'dark' : 'light');
+        }
+
+        // Atualizar estado local para ícones
+        State.isDarkMode = isDark;
 
         // Atualizar ícone do tema desktop
         const themeToggle = getElement('theme-toggle');
@@ -352,11 +358,6 @@
             }
         }
 
-        // Sincronizar com AccessControl
-        if (window.AccessControl && window.AccessControl.ThemeManager) {
-            window.AccessControl.ThemeManager.applyTheme(isDark ? 'dark' : 'light');
-        }
-
         // Salvar no storage
         saveTheme();
 
@@ -370,7 +371,13 @@
             e.preventDefault();
             e.stopPropagation();
         }
-        applyTheme(!State.isDarkMode);
+
+        // Delegar ao AccessControl e deixar ele gerenciar o estado
+        if (window.AccessControl && window.AccessControl.ThemeManager) {
+            const currentTheme = window.AccessControl.ThemeManager.getTheme();
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            window.AccessControl.ThemeManager.applyTheme(newTheme);
+        }
     }
 
     function initThemeControls() {
@@ -383,11 +390,6 @@
 
         if (mobileToggle) {
             mobileToggle.addEventListener('click', toggleTheme, { passive: false });
-        }
-
-        // Aplicar tema inicial se necessário
-        if (State.isDarkMode) {
-            applyTheme(true);
         }
     }
 
@@ -1077,28 +1079,33 @@
     }
 
     // ============================================
-    // LISTENER PARA MUDANÇAS NO ACCESSCONTROL
+    // LISTENER PARA MUDANÇAS DE TEMA DO ACCESSCONTROL
     // ============================================
-    function setupAccessControlListener() {
-        // Observar mudanças no AccessControl
-        window.addEventListener('Accessibility:Reset', function() {
-            // Resetar para valores padrão
-            applyFontSize(Config.defaultFontSize);
-            applyTheme(false);
-        });
-
-        // Observer para mudanças no tema do sistema
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        mediaQuery.addEventListener('change', function(e) {
-            // Só aplicar automaticamente se estiver no modo sistema
-            try {
-                const savedTheme = localStorage.getItem(Config.themeStorageKey);
-                if (!savedTheme) {
-                    applyTheme(e.matches);
+    function setupThemeListener() {
+        window.addEventListener('theme:changed', function(e) {
+            const isDark = e.detail.isDark;
+            State.isDarkMode = isDark;
+            
+            // Atualizar ícones do tema
+            const themeToggle = getElement('theme-toggle');
+            if (themeToggle) {
+                const icon = themeToggle.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-moon', 'fa-sun');
+                    icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
                 }
-            } catch (err) {
-                console.warn('[Header] Erro ao detectar mudança de tema do sistema:', err);
             }
+            
+            const mobileThemeToggle = getElement('mobile-theme-toggle');
+            if (mobileThemeToggle) {
+                const icon = mobileThemeToggle.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-moon', 'fa-sun');
+                    icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
+                }
+            }
+            
+            console.log('[HeaderModule] Ícones do tema atualizados via evento theme:changed');
         });
     }
 
@@ -1123,11 +1130,11 @@
         loadFontSize();
         loadTheme();
 
-        // Aplicar configurações iniciais
+        // Aplicar configurações iniciais de fonte
         document.documentElement.style.fontSize = State.currentFontSize + 'px';
-        if (State.isDarkMode) {
-            document.body.classList.add('dark-theme');
-        }
+
+        // Nota: A classe dark-theme é gerenciada pelo AccessControl ThemeManager
+        // Não precisamos adicionar/remover aqui
 
         // Inicializar controles
         initFontControls();
@@ -1140,7 +1147,7 @@
         initMobileSearch();
         initSearch();
         initScrollEffects();
-        setupAccessControlListener();
+        setupThemeListener();
 
         // Sincronizar com AccessControl após um pequeno delay
         setTimeout(syncWithAccessControl, 100);

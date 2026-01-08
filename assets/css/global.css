@@ -1,66 +1,297 @@
 /* ========================================
-   GLOBAL.CSS - Estilos Globais
+   GLOBAL.CSS - Arquitetura de Tokens Semânticos
    Calculadoras de Enfermagem
    ======================================== */
 
-*,
-*::before,
-*::after{
-  box-sizing: border-box
-}
-
-html{
-  scroll-behavior: smooth
-}
-
+/* ------------------------------------------------
+   CAMADA 1: PRIMITIVOS (Cores Base)
+   Estas são as cores fundamentais da paleta.
+   NÃO devem ser usadas diretamente nos componentes.
+   ------------------------------------------------ */
 :root{
-  --color-primary: #1A3E74;
-  --color-primary-hover: #112b52;
-  --color-primary-light: #2563eb;
-  --color-secondary: #334155;
-  --color-tertiary: #475569;
-  --color-accent: #00bcd4;
-  --color-accent-glow: #1a4a8a;
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-  --bg-body: #F9FAFB;
-  --bg-panel: #ffffff;
-  --bg-secondary: #f1f5f9;
-  --bg-tertiary: #e2e8f0;
-  --bg-top-bar: #f8fafc;
-  --bg-main-header: #ffffff;
-  --bg-mega-panel: #ffffff;
-  --bg-footer: #0f172a;
-  --bg-mobile-menu: #ffffff;
-  --bg-mobile-overlay: rgba(15, 23, 42, 0.6);
-  --text-body: #334155;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --text-muted: #9ca3af;
-  --text-light: #ffffff;
-  --text-footer: #e2e8f0;
-  --text-footer-muted: #94a3b8;
-  --border-color: #e2e8f0;
-  --border-header: #e2e8f0;
-  --border-focus: #3b82f6;
-  --border-radius-sm: 4px;
-  --border-radius-md: 6px;
-  --border-radius-lg: 12px;
-  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-heading: 'Montserrat', var(--font-primary);
+  /* Primitivos - Cores Primárias */
+  --primitive-primary: #1A3E74;
+  --primitive-primary-hover: #112b52;
+  --primitive-primary-light: #2563eb;
+  --primitive-primary-dark: #60a5fa;
+  --primitive-primary-dark-hover: #93c5fd;
+
+  /* Primitivos - Cores Neutras */
+  --primitive-gray-50: #f8fafc;
+  --primitive-gray-100: #f1f5f9;
+  --primitive-gray-200: #e2e8f0;
+  --primitive-gray-300: #cbd5e1;
+  --primitive-gray-400: #94a3b8;
+  --primitive-gray-500: #64748b;
+  --primitive-gray-600: #475569;
+  --primitive-gray-700: #334155;
+  --primitive-gray-800: #1e293b;
+  --primitive-gray-900: #0f172a;
+  --primitive-gray-950: #020617;
+
+  /* Primitivos - Cores Secundárias */
+  --primitive-secondary: #334155;
+  --primitive-tertiary: #475569;
+
+  /* Primitivos - Cores de Feedback */
+  --primitive-accent: #00bcd4;
+  --primitive-accent-glow: #1a4a8a;
+  --primitive-success: #10b981;
+  --primitive-success-dark: #059669;
+  --primitive-warning: #f59e0b;
+  --primitive-error: #ef4444;
+
+  /* Primitivos - Fontes */
+  --font-nunito: 'Nunito Sans', sans-serif;
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ------------------------------------------------
+   CAMADA 2: TIPOGRAFIA (Padronizada)
+   H1 usa Nunito Sans, h2-h6 usam Inter
+   ------------------------------------------------ */
+:root{
+  --font-primary: var(--font-inter);
+  --font-heading: var(--font-nunito);
   --font-size-base: 16px;
   --font-size-scale: 1;
   --font-scale: 1;
   --letter-spacing: 0;
   --line-height: 1.6;
+}
+
+h1, .h1 {
+  font-family: var(--font-heading, 'Nunito Sans', sans-serif);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h2, h3, h4, h5, h6, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--font-primary, 'Inter', sans-serif);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+/* ------------------------------------------------
+   CAMADA 3: SEMÂNTICOS - TEMAS (Light/Dark)
+   Tokens de tema que podem mudar com dark mode.
+   ------------------------------------------------ */
+:root{
+  /* Semânticos de Tema - Light (Padrão) */
+  --theme-bg-body: #F9FAFB;
+  --theme-bg-panel: #ffffff;
+  --theme-bg-secondary: #f1f5f9;
+  --theme-bg-tertiary: #e2e8f0;
+  --theme-bg-top-bar: #f8fafc;
+  --theme-bg-main-header: #ffffff;
+  --theme-bg-mega-panel: #ffffff;
+  --theme-bg-mobile-menu: #ffffff;
+  --theme-bg-mobile-overlay: rgba(15, 23, 42, 0.6);
+  --theme-bg-footer: #0f172a;
+
+  --theme-text-body: #334155;
+  --theme-text-primary: #1e293b;
+  --theme-text-secondary: #64748b;
+  --theme-text-muted: #9ca3af;
+  --theme-text-light: #ffffff;
+  --theme-text-footer: #e2e8f0;
+  --theme-text-footer-muted: #94a3b8;
+
+  --theme-border-color: #e2e8f0;
+  --theme-border-header: #e2e8f0;
+  --theme-border-focus: #3b82f6;
+
+  --theme-color-primary: #1A3E74;
+  --theme-color-primary-hover: #112b52;
+}
+
+/* Dark Theme - Sobrescreve apenas os tokens de tema */
+body.dark-theme{
+  --theme-bg-body: #0f172a;
+  --theme-bg-panel: #1e293b;
+  --theme-bg-secondary: #334155;
+  --theme-bg-tertiary: #475569;
+  --theme-bg-top-bar: #1e293b;
+  --theme-bg-main-header: #1e293b;
+  --theme-bg-mega-panel: #1e293b;
+  --theme-bg-mobile-menu: #1e293b;
+  --theme-bg-mobile-overlay: rgba(15, 23, 42, 0.8);
+  --theme-bg-footer: #020617;
+
+  --theme-text-body: #e2e8f0;
+  --theme-text-primary: #f1f5f9;
+  --theme-text-secondary: #94a3b8;
+  --theme-text-muted: #64748b;
+  --theme-text-light: #ffffff;
+  --theme-text-footer: #e2e8f0;
+  --theme-text-footer-muted: #94a3b8;
+
+  --theme-border-color: #334155;
+  --theme-border-header: #334155;
+
+  --theme-color-primary: #60a5fa;
+  --theme-color-primary-hover: #93c5fd;
+}
+
+body.dark-theme .top-bar-divider{
+  background-color: #334155
+}
+
+/* ------------------------------------------------
+   CAMADA 4: SEMÂNTICOS - COMPONENTES (Escopados)
+   Tokens específicos por componente.
+   ------------------------------------------------ */
+:root{
+  /* Tokens do Modal - Escopados */
+  --modal-bg: var(--theme-bg-panel);
+  --modal-text: var(--theme-text-primary);
+  --modal-text-secondary: var(--theme-text-secondary);
+  --modal-border: var(--theme-border-color);
+  --modal-overlay-bg: var(--theme-bg-mobile-overlay);
+
+  /* Tokens do Footer - Escopados */
+  --footer-bg: var(--theme-bg-footer);
+  --footer-text: var(--theme-text-footer);
+  --footer-text-muted: var(--theme-text-footer-muted);
+  --footer-border: rgba(255, 255, 255, 0.1);
+
+  /* Tokens do Header - Escopados */
+  --header-bg: var(--theme-bg-main-header);
+  --header-border: var(--theme-border-header);
+  --header-text: var(--theme-text-primary);
+
+  /* Tokens da Top Bar - Escopados */
+  --top-bar-bg: var(--theme-bg-top-bar);
+  --top-bar-text: var(--theme-text-secondary);
+  --top-bar-divider: var(--theme-border-color);
+
+  /* Tokens do Mega Menu - Escopados */
+  --mega-panel-bg: var(--theme-bg-mega-panel);
+}
+
+body.dark-theme{
+  /* Footer escopado - reage ao dark theme */
+  --footer-bg: #020617;
+  --footer-border: rgba(255, 255, 255, 0.1);
+}
+
+/* ------------------------------------------------
+   CAMADA 5: COOKIES - Tokens Específicos do Componente
+   O modal de cookies tem aparência independente do tema
+   ------------------------------------------------ */
+:root{
+  /* Tokens do Banner de Cookies */
+  --cookie-banner-bg: #1f2937;
+  --cookie-banner-text: #f9fafb;
+  --cookie-banner-text-muted: #d1d5db;
+  --cookie-banner-link: #60a5fa;
+  --cookie-btn-primary-bg: #3b82f6;
+  --cookie-btn-primary-text: #ffffff;
+  --cookie-btn-primary-border: #3b82f6;
+  --cookie-btn-primary-hover: #2563eb;
+  --cookie-btn-secondary-text: #3b82f6;
+  --cookie-btn-secondary-border: #3b82f6;
+  --cookie-btn-secondary-hover: rgba(59, 130, 246, 0.1);
+
+  /* Tokens do Modal de Cookies */
+  --cookie-modal-bg: #1f2937;
+  --cookie-modal-text: #f9fafb;
+  --cookie-modal-border: #374151;
+  --cookie-modal-header-bg: #374151;
+  --cookie-modal-header-text: #f9fafb;
+  --cookie-modal-close-color: #9ca3af;
+  --cookie-modal-close-hover: #f9fafb;
+  --cookie-modal-close-hover-bg: #4b5563;
+
+  /* Tokens das Categorias de Cookies */
+  --cookie-category-bg: #111827;
+  --cookie-category-header-bg: #374151;
+  --cookie-category-header-hover: #4b5563;
+  --cookie-category-header-text: #f9fafb;
+  --cookie-category-description-text: #d1d5db;
+
+  /* Tokens dos Botões e Controles */
+  --cookie-btn-border: #4b5563;
+  --cookie-btn-text: #9ca3af;
+  --cookie-switch-bg: #4b5563;
+  --cookie-focus: #3b82f6;
+
+  /* Tokens do Overlay */
+  --cookie-overlay-bg: rgba(0, 0, 0, 0.7);
+
+  /* Tokens do Toast */
+  --toast-bg: #059669;
+
+  /* Scrollbars dos Cookies */
+  --cookie-scroll-thumb: #64748b;
+  --cookie-scroll-thumb-hover: #3b82f6;
+
+  /* Z-Index específico para Cookies */
+  --z-back-to-top: 40;
+  --z-cookie-banner: 50;
+  --z-cookie-overlay: 55;
+  --z-cookie-modal: 56;
+  --z-cookie-detail: 57;
+}
+
+/* ------------------------------------------------
+   CAMADA 6: ACESSIBILIDADE - Tokens Específicos
+   Estes tokens são gerenciados pelo módulo de acessibilidade
+   e não devem ser sobrescritos pelo global.css
+   ------------------------------------------------ */
+:root{
+  /* Tokens do Painel de Acessibilidade - Light */
+  --acc-panel-bg: rgba(240, 249, 255, 0.92);
+  --acc-panel-border: rgba(255, 255, 255, 0.6);
+  --acc-text-main: #334155;
+  --acc-text-muted: #64748b;
+  --acc-card-bg: rgba(255, 255, 255, 0.75);
+  --acc-card-hover: rgba(255, 255, 255, 0.95);
+  --acc-card-active: rgba(219, 234, 254, 0.8);
+  --acc-header-shine: linear-gradient(90deg, transparent, #3b82f6, transparent);
+}
+
+/* Dark Theme para Acessibilidade - Escopado ao módulo */
+body.dark-theme #accessibility-panel,
+body.dark-theme #accessibility-module{
+  --acc-panel-bg: rgba(15, 23, 42, 0.95);
+  --acc-panel-border: rgba(255, 255, 255, 0.1);
+  --acc-text-main: #f1f5f9;
+  --acc-text-muted: #94a3b8;
+  --acc-card-bg: rgba(30, 41, 59, 0.7);
+  --acc-card-hover: rgba(51, 65, 85, 0.9);
+  --acc-card-active: rgba(26, 62, 116, 0.6);
+  --acc-header-shine: linear-gradient(90deg, transparent, #60a5fa, transparent);
+}
+
+/* ------------------------------------------------
+   CAMADA 7: UTILIDADES E CONFIGURAÇÕES
+   ------------------------------------------------ */
+:root{
+  /* Border Radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 12px;
+
+  /* Transições */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
   --transition-slow: 0.4s ease;
+
+  /* Sombras */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Z-Index */
   --z-dropdown: 100;
   --z-sticky: 500;
   --z-mega-panel: 900;
@@ -71,55 +302,55 @@ html{
   --z-accessibility: 9500;
   --z-toast: 9999;
   --z-preload: 99999;
+
+  /* Dimensões */
   --top-bar-height: 30px;
   --header-height: 60px;
   --header-height-offset: 6.25rem;
   --mega-panel-height: 350px;
   --cookie-banner-height: 70px;
   --mobile-menu-width: 320px;
+
+  /* Scroll */
   --header-scroll-track: #f1f5f9;
   --header-scroll-thumb: #cbd5e1;
-  --cursor-scale: 1
+
+  /* Acessibilidade */
+  --cursor-scale: 1;
+  --border-focus: #3b82f6;
 }
 
 body.dark-theme{
-  --color-primary: #60a5fa;
-  --color-primary-hover: #93c5fd;
-  --bg-body: #0f172a;
-  --bg-panel: #1e293b;
-  --bg-secondary: #334155;
-  --bg-tertiary: #475569;
-  --bg-top-bar: #1e293b;
-  --bg-main-header: #1e293b;
-  --bg-mega-panel: #1e293b;
-  --bg-mobile-menu: #1e293b;
-  --text-body: #e2e8f0;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --border-color: #334155;
-  --border-header: #334155;
   --header-scroll-track: #1e293b;
-  --header-scroll-thumb: #475569
+  --header-scroll-thumb: #475569;
 }
 
-body.dark-theme .top-bar-divider{
-  background-color: #334155
+/* ------------------------------------------------
+   ESTILOS GLOBAIS
+   ------------------------------------------------ */
+*,
+*::before,
+*::after{
+  box-sizing: border-box
+}
+
+html{
+  scroll-behavior: smooth
 }
 
 body{
   margin: 0;
-  font-family: var(--font-primary);
+  font-family: var(--font-primary, 'Inter', sans-serif);
   font-size: calc(var(--font-size-base) * var(--font-scale));
   letter-spacing: var(--letter-spacing);
   line-height: var(--line-height);
-  color: var(--text-body);
-  background-color: var(--bg-body);
+  color: var(--theme-text-body);
+  background-color: var(--theme-bg-body);
   transition: background-color var(--transition-normal), color var(--transition-normal)
 }
 
 *:focus-visible{
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--primitive-accent);
   outline-offset: 2px
 }
 
@@ -159,6 +390,9 @@ body{
   }
 }
 
+/* ------------------------------------------------
+   MEDIA QUERIES
+   ------------------------------------------------ */
 @media (max-width: 1024px){
   :root{
     --mega-panel-height: auto;
@@ -184,12 +418,12 @@ body{
 
 @media (prefers-contrast: high){
   :root{
-    --border-color: #000000;
-    --text-secondary: #333333
+    --theme-border-color: #000000;
+    --theme-text-secondary: #333333
   }
   body.dark-theme{
-    --border-color: #ffffff;
-    --text-secondary: #cccccc
+    --theme-border-color: #ffffff;
+    --theme-text-secondary: #cccccc
   }
   .font-btn,
   .theme-toggle,

@@ -193,6 +193,14 @@ window.AccessControl = window.AccessControl || (function() {
       document.body.classList.toggle("dark-theme", isDark);
       localStorage.setItem("acc_theme", theme);
       state.theme = theme;
+      
+      // Disparar evento para módulos externos (como header.js)
+      window.dispatchEvent(new CustomEvent('theme:changed', {
+        detail: {
+          theme: theme,
+          isDark: isDark
+        }
+      }));
     },
     
     init() {
