@@ -88,17 +88,44 @@ body > *:not(#footer) {
 }
 
 /* =========================================
-   SEÇÕES E LINKS DO FOOTER
+   LAYOUT DO FOOTER - Desktop Horizontal
+   Organiza as seções lado a lado horizontalmente
    ========================================= */
-.footer-section h3 {
-    color: #f8fafc;
-    font-size: 1rem;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 2.5rem 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 
 .footer-section {
-    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+}
+
+.footer-section h4 {
+    color: var(--footer-text, #f8fafc);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+    position: relative;
+}
+
+.footer-section h4::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--color-accent, #3b82f6);
 }
 
 .footer-links {
@@ -108,61 +135,136 @@ body > *:not(#footer) {
 }
 
 .footer-links li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.625rem;
 }
 
 .footer-links a {
-    color: var(--footer-text-muted, var(--primitive-gray-400));
+    color: var(--footer-text-muted, #94a3b8);
     font-size: 0.875rem;
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+}
+
+.footer-links a::before {
+    content: '';
+    width: 0;
+    height: 2px;
+    background: var(--color-accent, #3b82f6);
+    transition: width 0.2s ease;
+    border-radius: 1px;
 }
 
 .footer-links a:hover {
-    color: var(--footer-text, var(--primitive-gray-50));
+    color: var(--footer-text, #f8fafc);
+    padding-left: 0.25rem;
+}
+
+.footer-links a:hover::before {
+    width: 12px;
 }
 
 /* =========================================
-   REDES SOCIAIS
+   SEÇÃO DO LOGOTIPO E REDES SOCIAIS
+   ========================================= */
+.footer-brand-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+}
+
+.footer-logo {
+    width: 200px;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
+    margin-bottom: 0.75rem;
+    filter: var(--footer-logo-filter);
+}
+
+.footer-tagline {
+    font-size: 0.813rem;
+    color: var(--footer-text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.footer-tagline {
+    font-size: 0.813rem;
+    color: var(--footer-text-muted, #94a3b8);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* =========================================
+   REDES SOCIAIS - ÍCONES VISÍVEIS
    ========================================= */
 .social-links-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 0.25rem;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 1rem;
 }
 
 .social-links-label {
     display: block;
     font-size: 0.688rem;
-    color: #94a3b8;
+    color: var(--footer-text-muted, #94a3b8);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     white-space: nowrap;
+    font-weight: 600;
 }
 
 .social-links {
     display: flex;
-    gap: 0.625rem;
+    gap: 0.75rem;
     flex-shrink: 0;
 }
 
 .social-links a {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #f8fafc;
-    transition: all 0.2s ease;
+    color: var(--social-icon-color);
+    transition: all 0.3s ease;
     text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1rem;
 }
 
 .social-links a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: scale(1.1);
+    background: var(--social-icon-hover-bg);
+    color: var(--social-icon-hover-color);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(59, 130, 246, 0.35);
+    border-color: transparent;
+}
+
+.social-links a:focus {
+    outline: 2px solid var(--social-icon-focus-outline);
+    outline-offset: 2px;
+}
+
+.social-links a .fab {
+    font-size: 1.125rem;
 }
 
 /* =========================================
@@ -171,50 +273,54 @@ body > *:not(#footer) {
 .footer-seals {
     display: flex;
     align-items: center;
-    gap: 0.625rem;
-    margin-top: 0.75rem;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
     flex-wrap: wrap;
 }
 
 .footer-seal {
-    height: 52px;
+    height: 48px;
     width: auto;
-    max-width: 100px;
+    max-width: 90px;
     object-fit: contain;
     border-radius: 6px;
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease;
     display: inline-block;
     vertical-align: middle;
+    filter: var(--footer-logo-filter);
+    opacity: var(--footer-seal-opacity);
 }
 
 .footer-seal:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
+    opacity: var(--footer-seal-hover-opacity);
 }
 
 .footer-seal[alt*="Sustentabilidade"],
 .footer-seal[alt*="sustentabilidade"],
 .footer-seal[src*="sustentabilidade"] {
-    height: 48px;
+    height: 44px;
 }
 
 .footer-seal[alt*="LGPD"],
 .footer-seal[alt*="lgpd"],
 .footer-seal[src*="lgpd"] {
-    height: 52px;
+    height: 48px;
 }
 
 /* =========================================
    COPYRIGHT E LINKS LEGAIS
    ========================================= */
 .footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 1.5rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .footer-copyright {
@@ -229,7 +335,12 @@ body > *:not(#footer) {
 .footer-copyright p {
     margin: 0;
     font-size: 0.813rem;
-    color: var(--footer-text-muted, var(--primitive-gray-400));
+    color: var(--footer-text-muted, #94a3b8);
+}
+
+.footer-copyright p:first-child {
+    color: var(--footer-text, #f8fafc);
+    font-weight: 500;
 }
 
 .footer-legal-links {
@@ -241,13 +352,28 @@ body > *:not(#footer) {
 
 .footer-legal-links a {
     font-size: 0.813rem;
-    color: var(--footer-text-muted, var(--primitive-gray-400));
+    color: var(--footer-text-muted, #94a3b8);
     text-decoration: none;
     transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
 }
 
 .footer-legal-links a:hover {
-    color: var(--footer-text, var(--primitive-gray-50));
+    color: var(--footer-text, #f8fafc);
+}
+
+.footer-legal-links a::before {
+    content: '';
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.2s ease;
+}
+
+.footer-legal-links a:hover::before {
+    width: 8px;
 }
 
 /* =========================================
@@ -895,10 +1021,54 @@ body > *:not(#footer) {
 }
 
 /* =========================================
-   ELEMENTOS FLUTUANTES
-   Usa tokens primários para consistência visual
+   BOTÕES FAB (FLYING ACTION BUTTONS)
+   Agrupados em container para melhor organização
+   Usa tokens do global.css (--fab-*)
    ========================================= */
+.fab-container {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    z-index: var(--z-back-to-top, 40);
+    align-items: center;
+}
 
+.fab-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--fab-bg, var(--primitive-primary-dark-hover));
+    color: var(--fab-text, var(--primitive-primary));
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px var(--fab-shadow, rgba(37, 99, 235, 0.4));
+    transition: all var(--transition-fast);
+    text-decoration: none;
+}
+
+.fab-btn:hover {
+    background-color: var(--fab-hover-bg, var(--primitive-primary-dark));
+    transform: var(--fab-hover-transform, translateY(-3px));
+    box-shadow: 0 6px 16px var(--fab-hover-shadow, rgba(37, 99, 235, 0.5));
+}
+
+.fab-btn:focus-visible {
+    outline: 2px solid var(--fab-focus-outline, var(--primitive-primary-light));
+    outline-offset: 2px;
+}
+
+.fab-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Botão Voltar ao Topo */
 .back-to-top {
     position: fixed;
     bottom: 30px;
@@ -938,17 +1108,7 @@ body > *:not(#footer) {
     outline-offset: 2px;
 }
 
-body.cookie-banner-open .back-to-top {
-    bottom: 150px;
-    z-index: var(--z-cookie-modal, 56);
-}
-
-body.cookie-banner-open .back-to-top,
-body.cookie-banner-open ~ .cookie-fab {
-    bottom: 150px;
-    z-index: var(--z-cookie-modal, 56);
-}
-
+/* Botão FAB de Cookies */
 .cookie-fab {
     position: fixed;
     bottom: 80px;
@@ -986,15 +1146,31 @@ body.cookie-banner-open ~ .cookie-fab {
     display: none;
 }
 
-body.cookie-banner-open .cookie-fab {
+/* =========================================
+   ELEMENTOS FLUTUANTES - LEGADO
+   Mantidos para compatibilidade com código existente
+   ========================================= */
+
+/* Cookie FAB oculto quando banner de cookies está ativo */
+body.cookie-banner-open .cookie-fab,
+.cookie-banner.visible ~ .cookie-fab,
+.cookie-banner.visible + .cookie-overlay ~ .cookie-fab {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    transform: translateY(20px);
 }
 
-.cookie-banner.visible ~ .cookie-fab,
-.cookie-banner.visible + .cookie-overlay ~ .cookie-fab {
-    bottom: 200px;
+/* Ajuste de posição quando banner de cookies está visível */
+body.cookie-banner-open .back-to-top {
+    bottom: calc(var(--cookie-banner-total-height, 102px) + 1rem);
+    z-index: var(--z-cookie-modal, 56);
+}
+
+body.cookie-banner-open .back-to-top,
+body.cookie-banner-open ~ .cookie-fab {
+    bottom: calc(var(--cookie-banner-total-height, 102px) + 1rem);
+    z-index: var(--z-cookie-modal, 56);
 }
 
 /* =========================================
@@ -1003,7 +1179,7 @@ body.cookie-banner-open .cookie-fab {
    ========================================= */
 .toast-notification {
     position: fixed;
-    bottom: 7rem;
+    bottom: calc(var(--cookie-banner-total-height, 102px) + 1rem);
     right: 1.5rem;
     background: var(--primitive-primary);
     color: var(--primitive-gray-50);
@@ -1031,6 +1207,30 @@ body.cookie-banner-open .cookie-fab {
    ========================================= */
 
 @media (max-width: 1024px) {
+    .footer-content {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .footer-brand-section {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 1rem;
+    }
+    
+    .footer-logo-container {
+        margin-bottom: 0;
+    }
+    
+    .social-links-container {
+        margin-top: 0;
+        align-items: flex-end;
+    }
+    
     .footer-bottom {
         flex-direction: column;
         align-items: flex-start;
@@ -1049,6 +1249,65 @@ body.cookie-banner-open .cookie-fab {
 }
 
 @media (max-width: 768px) {
+    /* Footer Layout Mobile */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.5rem 1rem;
+    }
+    
+    .footer-brand-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-logo {
+        width: 180px;
+    }
+    
+    .footer-logo-container {
+        align-items: center;
+    }
+    
+    .footer-logo {
+        object-position: center;
+    }
+    
+    .social-links-container {
+        align-items: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .footer-seals {
+        justify-content: center;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+    
+    .footer-section h4 {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0.75rem;
+    }
+    
+    .footer-section h4::after {
+        display: none;
+    }
+    
+    .footer-links {
+        text-align: center;
+    }
+    
+    .footer-links a {
+        justify-content: center;
+    }
+    
     /* Banner de Cookies */
     .cookie-banner {
         flex-direction: column;
@@ -1086,17 +1345,17 @@ body.cookie-banner-open .cookie-fab {
         margin-left: auto;
     }
     
-    /* Footer */
+    /* Footer Bottom */
     .footer-bottom {
         flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
+        align-items: center;
+        text-align: center;
         padding-top: 2rem;
         padding-bottom: 80px;
     }
     
     .footer-copyright {
-        align-items: flex-start;
+        align-items: center;
         width: 100%;
     }
     
@@ -1104,28 +1363,8 @@ body.cookie-banner-open .cookie-fab {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 1rem;
-        justify-content: flex-start;
+        justify-content: center;
         margin-top: 0.5rem;
-    }
-    
-    .social-links {
-        display: none;
-    }
-    
-    .footer-section {
-        text-align: left;
-    }
-    
-    .footer-section h3 {
-        text-align: left;
-    }
-    
-    .footer-links {
-        text-align: left;
-    }
-    
-    .footer-seals {
-        justify-content: flex-start;
     }
     
     /* Botões flutuantes */
@@ -1151,32 +1390,39 @@ body.cookie-banner-open .cookie-fab {
         width: 100%;
         min-width: auto;
     }
-    
+
+    /* Token específico para mobile (banner com mais padding) */
+    body.cookie-banner-open {
+        --cookie-banner-total-height: 110px;
+    }
+
     .back-to-top {
         bottom: 30px;
         right: 1rem;
     }
-    
+
     .cookie-fab {
         bottom: 80px;
         right: 1rem;
     }
-    
-    /* Ajustes quando banner ativo no mobile */
-    body.cookie-banner-open .back-to-top {
-        bottom: 150px;
-        z-index: 10001;
-    }
-    
-    .cookie-banner.visible ~ .back-to-top,
-    .cookie-banner.visible + .cookie-overlay ~ .back-to-top {
-        bottom: 150px;
-        z-index: 10001;
-    }
-    
+
+    /* Cookie FAB oculto quando banner ativo no mobile */
     .cookie-banner.visible ~ .cookie-fab,
     .cookie-banner.visible + .cookie-overlay ~ .cookie-fab {
-        bottom: 200px;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    /* Ajustes quando banner ativo no mobile - usam o token calculado */
+    body.cookie-banner-open .back-to-top {
+        bottom: calc(var(--cookie-banner-total-height, 110px) + 1rem);
+        z-index: 10001;
+    }
+
+    .cookie-banner.visible ~ .back-to-top,
+    .cookie-banner.visible + .cookie-overlay ~ .back-to-top {
+        bottom: calc(var(--cookie-banner-total-height, 110px) + 1rem);
         z-index: 10001;
     }
 }
@@ -1187,7 +1433,7 @@ body.cookie-banner-open .cookie-fab {
         padding: 0.5rem 0.75rem;
         font-size: 0.813rem;
     }
-    
+
     .back-to-top {
         bottom: 30px;
         right: 0.75rem;
@@ -1195,7 +1441,7 @@ body.cookie-banner-open .cookie-fab {
         height: 40px;
         font-size: 1rem;
     }
-    
+
     .cookie-fab {
         bottom: 80px;
         right: 0.75rem;
@@ -1203,17 +1449,21 @@ body.cookie-banner-open .cookie-fab {
         height: 40px;
         font-size: 1rem;
     }
-    
+
+    /* Ajustes quando banner ativo - usam o token calculado */
     .cookie-banner.visible ~ .back-to-top,
     .cookie-banner.visible + .cookie-overlay ~ .back-to-top {
-        bottom: 150px;
+        bottom: calc(var(--cookie-banner-total-height, 110px) + 1rem);
     }
-    
+
+    /* Cookie FAB oculto quando banner ativo */
     .cookie-banner.visible ~ .cookie-fab,
     .cookie-banner.visible + .cookie-overlay ~ .cookie-fab {
-        bottom: 200px;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
     }
-    
+
     .footer-header {
         align-items: flex-start;
         padding: 0 0.5rem;
