@@ -1,518 +1,247 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e conteúdo técnico para profissionais e estudantes de enfermagem. Calculadoras clínicas, escalas de avaliação, protocolos e procedimentos.">
-    <meta name="keywords" content="enfermagem, calculadoras, escalas clínicas, gasometria, balanço hídrico, protocolos de enfermagem, procedimentos, avaliação clínica">
-    <meta name="author" content="Calculadoras de Enfermagem">
-    <meta name="robots" content="index, follow">
+    <title>Calculadoras de Enfermagem</title>
+    
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e conteúdo técnico para profissionais de saúde">
+    <meta name="keywords" content="enfermagem, calculadoras, escalas clínicas, gasometria, balanço hídrico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/" />
+    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
     
     <!-- Hreflang -->
-    <link rel="alternate" hreflang="pt-BR" href="https://www.calculadorasdeenfermagem.com.br/" />
-    <link rel="alternate" hreflang="en" href="https://www.calculadorasdeenfermagem.com.br/en/" />
-    <link rel="alternate" hreflang="es" href="https://www.calculadorasdeenfermagem.com.br/es/" />
-    <link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/" />
+    <link rel="alternate" hreflang="pt-BR" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
+    <link rel="alternate" hreflang="en" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
+    <link rel="alternate" hreflang="es" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
+    <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
     
     <!-- Favicon -->
     <link rel="icon" type="image/webp" href="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
     
-    <title>Calculadoras de Enfermagem - Ferramentas Essenciais para Profissionais de Saúde</title>
+    <!-- Font Awesome e Fontes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (Development CDN - Remove for production) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'audit-gold': '#D4AF37',
+                        'audit-navy': '#1E3A8A',
+                        'audit-blue': '#3B82F6',
+                        'audit-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- CSS Globais -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/preload.css">
+    <link rel="stylesheet" href="assets/css/accessibility.css">
+    <link rel="stylesheet" href="assets/css/global-main.css">
+    <link rel="stylesheet" href="assets/css/global-main-index.css">
     
-    <!-- Global CSS Variables -->
-    <link rel="stylesheet" href="global.css">
-    
-    <!-- Header CSS -->
-    <link rel="stylesheet" href="header.css">
-    
-    <!-- Inline styles for page content -->
     <style>
-        /* Page Content Styles */
-        html {
-            scroll-behavior: smooth;
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-down { animation: fadeInDown 1s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in { animation: fadeIn 1.5s ease-out; }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in-up { animation: slideInUp 0.8s ease-out; }
+        
+        /* Sistema de loading visual */
+        .component-loading { 
+            min-height: 100px; 
+            opacity: 0; 
+            transition: opacity 0.5s ease-in-out; 
+        }
+        .component-loaded { 
+            opacity: 1; 
         }
         
-        /* Main Content Area */
-        .main-content {
-            flex: 1;
+        /* Debug visual - mostra quando está em loading */
+        .component-loading::before {
+            content: 'Carregando...';
             display: flex;
-            flex-direction: column;
-        }
-        
-        /* Page Sections */
-        .page-section {
-            padding: 40px 24px;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        
-        .page-section h1 {
-            font-size: 2rem;
-            color: var(--color-primary);
-            margin-bottom: 24px;
-        }
-        
-        .page-section h2 {
-            font-size: 1.75rem;
-            color: var(--color-primary);
-            margin-bottom: 16px;
-        }
-        
-        .page-section p {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-        }
-        
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-glow) 100%);
-            color: white;
-            padding: 60px 24px;
-            text-align: center;
-        }
-        
-        .hero-section h1 {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-            color: white;
-        }
-        
-        .hero-section p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto 32px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
             justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .hero-btn {
-            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: white;
-            color: var(--color-primary);
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
+            min-height: 100px;
+            color: #999;
+            font-size: 14px;
         }
-        
-        .hero-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        .hero-btn-secondary {
-            background: transparent;
-            border: 2px solid white;
-            color: white;
-        }
-        
-        .hero-btn-secondary:hover {
-            background: white;
-            color: var(--color-primary);
-        }
-        
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
-        
-        .feature-card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid var(--border-color);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-card .icon {
-            width: 56px;
-            height: 56px;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-            color: var(--color-primary);
-            font-size: 24px;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.25rem;
-            color: var(--color-primary);
-            margin-bottom: 8px;
-        }
-        
-        .feature-card p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 0;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-section h1 {
-                font-size: 2rem;
-            }
-            
-            .hero-section p {
-                font-size: 1rem;
-            }
-            
-            .page-section {
-                padding: 24px 16px;
-            }
-            
-            .page-section h1,
-            .page-section h2 {
-                font-size: 1.5rem;
-            }
+        .component-loaded::before {
+            display: none;
         }
     </style>
 </head>
-<body>
-    <!-- Header Module -->
-    <header id="main-header">
-        <!-- Header content will be loaded here -->
-    </header>
+<body class="bg-gray-100 text-gray-800 dark:bg-audit-bgDark dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-300 selection:bg-audit-gold selection:text-audit-navy">
+
+    <!-- Preload Container -->
+    <div id="preload-container"></div>
     
-    <!-- Main Content Area -->
-    <main id="main-content" class="main-content" role="main">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <h1>Calculadoras de Enfermagem</h1>
-            <p>Ferramentas essenciais para profissionais e estudantes de enfermagem. Calculadoras, escalas de avaliação, protocolos e muito mais.</p>
-            <div class="hero-buttons">
-                <a href="#calculadoras" class="hero-btn">
-                    <i class="fas fa-calculator"></i>
-                    Calculadoras
-                </a>
-                <a href="#escalas" class="hero-btn hero-btn-secondary">
-                    <i class="fas fa-list-alt"></i>
-                    Escalas
-                </a>
-            </div>
-        </section>
-        
-        <!-- Features Section -->
-        <section class="page-section" id="calculadoras">
-            <h2>Calculadoras Clínicas</h2>
-            <p>Ferramentas de cálculo essenciais para a prática clínica de enfermagem.</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-tint"></i>
-                    </div>
-                    <h3>Balanço Hídrico</h3>
-                    <p>Calculadora para monitoramento do equilíbrio hídrico do paciente.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-pills"></i>
-                    </div>
-                    <h3>Cálculo de Medicamentos</h3>
-                    <p>Regra de 3 e cálculos de dosagem de medicamentos.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <h3>Gasometria Arterial</h3>
-                    <p>Interpretação e análise de resultados de gasometria.</p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Escalas Section -->
-        <section class="page-section" id="escalas">
-            <h2>Escalas de Avaliação</h2>
-            <p>Escalas validadas para avaliação clínica e assistencial.</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3>Escala de Glasgow</h3>
-                    <p>Avaliação do nível de consciência do paciente.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-procedures"></i>
-                    </div>
-                    <h3>Escala de Braden</h3>
-                    <p>Avaliação do risco para úlceras por pressão.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-stethoscope"></i>
-                    </div>
-                    <h3>Escala de Morse</h3>
-                    <p>Avaliação do risco de quedas em pacientes.</p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Biblioteca Section -->
-        <section class="page-section">
-            <h2>Biblioteca de Enfermagem</h2>
-            <p>Conhecimento teórico e científico para enriquecer sua prática.</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-book-medical"></i>
-                    </div>
-                    <h3>Teorias de Enfermagem</h3>
-                    <p>Florence Nightingale, Wanda Horta, Callista Roy e outras teorias.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-file-medical-alt"></i>
-                    </div>
-                    <h3>Protocolos</h3>
-                    <p>Protocolos assistenciais e diretrizes clínicas.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-syringe"></i>
-                    </div>
-                    <h3>Procedimentos</h3>
-                    <p>Orientações para procedimentos de enfermagem.</p>
-                </div>
-            </div>
-        </section>
-    </main>
+    <!-- Header Container -->
+    <header id="header-container" class="component-loading"></header>
     
-    <!-- Footer Module -->
-    <footer class="main-footer" role="contentinfo">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Sobre Nós</h4>
-                <ul>
-                    <li><a href="missao.html">Missão, Visão e Valores</a></li>
-                    <li><a href="objetivo.html">Objetivo do Site</a></li>
-                    <li><a href="mapa-do-site.html">Mapa do Site</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Ferramentas</h4>
-                <ul>
-                    <li><a href="balancohidrico.html">Balanço Hídrico</a></li>
-                    <li><a href="gotejamento.html">Gotejamento</a></li>
-                    <li><a href="imc.html">IMC</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Biblioteca</h4>
-                <ul>
-                    <li><a href="biblioteca/teorias-de-enfermagem.html">Teorias</a></li>
-                    <li><a href="biblioteca/calculo-de-dosagem-de-medicamentos-enfermagem.html">Cálculos</a></li>
-                    <li><a href="biblioteca/protocolo-de-rcp-adulto-2020-aha.html">Protocolos</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Suporte</h4>
-                <ul>
-                    <li><a href="politicadeacessibilidade.html">Acessibilidade</a></li>
-                    <li><a href="politica.html">Política de Privacidade</a></li>
-                    <li><a href="fale.html">Fale Conosco</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Calculadoras de Enfermagem. Todos os direitos reservados.</p>
-            <p>Compromisso com a acessibilidade digital e sustentabilidade.</p>
-        </div>
-    </footer>
+    <!-- Main Container -->
+    <main id="main-container" class="flex-1 component-loading relative z-10"></main>
     
-    <!-- Cookie Banner -->
-    <div id="cookie-banner" class="hidden">
-        <div class="cookie-banner-container">
-            <div class="cookie-info">
-                <div class="cookie-icon">
-                    <i class="fas fa-cookie-bite"></i>
-                </div>
-                <div class="cookie-text">
-                    <p>Utilizamos cookies para melhorar sua experiência em nosso site. Ao continuar navegando, você concorda com nossa <strong>Política de Cookies</strong>.</p>
-                </div>
-            </div>
-            <div class="cookie-actions">
-                <button class="cookie-btn cookie-btn-secondary" id="cookie-reject">Recusar</button>
-                <button class="cookie-btn cookie-btn-primary" id="cookie-accept">Aceitar</button>
-            </div>
-        </div>
-    </div>
+    <!-- Footer Container -->
+    <footer id="footer-container" class="component-loading"></footer>
     
-    <!-- Header Module Script -->
-    <script src="header.js"></script>
+    <!-- Accessibility Container -->
+    <div id="accessibility-container"></div>
+
+    <!-- Scripts com defer para garantir ordem de execução após parse do HTML -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="assets/js/utils.js" defer></script>
+    <script src="assets/js/console-cleaner.js" defer></script>
+    
+    <script src="assets/js/preload.js" defer></script>
+    <script src="assets/js/header.js" defer></script>
+    <script src="assets/js/footer.js" defer></script>
+    <script src="assets/js/accessibility.js" defer></script>
+    <script src="assets/js/global-main.js" defer></script>
+    <script src="assets/js/global-main-index.js" defer></script>
+
+    <!-- Script de Orquestração Centralizada -->
     <script>
-        // Initialize header when DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load header content from header.html
-            loadHeaderModule();
+        // Função para mostrar todos os componentes
+        function showAllComponents() {
+            console.log('[Orquestration] Executando showAllComponents()...');
             
-            // Initialize cookie banner
-            initCookieBanner();
-        });
-        
-        // Function to load header module
-        async function loadHeaderModule() {
-            const headerContainer = document.getElementById('main-header');
+            const components = document.querySelectorAll('.component-loading');
+            console.log(`[Orquestration] Encontrados ${components.length} componentes em loading`);
             
-            try {
-                const response = await fetch('header.html');
-                if (response.ok) {
-                    const headerHTML = await response.text();
-                    headerContainer.innerHTML = headerHTML;
-                    
-                    // Initialize header module after HTML is loaded
-                    // HeaderModule auto-initializes, but we force it to ensure it runs
-                    if (window.HeaderModule) {
-                        HeaderModule.init();
-                    }
+            components.forEach((el, index) => {
+                // Verifica se o elemento tem conteúdo real (não está vazio)
+                const hasContent = el.innerHTML.trim().length > 0 || el.children.length > 0;
+                const id = el.id || `elemento-${index}`;
+                
+                console.log(`[Orquestration] ${id}: temConteudo=${hasContent}`);
+                
+                if (hasContent) {
+                    el.classList.remove('component-loading');
+                    el.classList.add('component-loaded');
+                    console.log(`[Orquestration] ${id}: classe removida, opacity deve ser 1`);
                 } else {
-                    console.error('Failed to load header.html');
-                    // Fallback: use inline header content
-                    headerContainer.innerHTML = getInlineHeaderFallback();
-                    if (window.HeaderModule) {
-                        HeaderModule.init();
-                    }
+                    console.warn(`[Orquestration] ${id}: está vazio, mantendo invisível`);
                 }
-            } catch (error) {
-                console.error('Error loading header module:', error);
-                // Fallback: use inline header content
-                headerContainer.innerHTML = getInlineHeaderFallback();
-                if (window.HeaderModule) {
-                    HeaderModule.init();
-                }
-            }
-        }
-        
-        // Inline fallback for header (in case fetch fails)
-        function getInlineHeaderFallback() {
-            return `
-                <div class="top-bar" id="top-bar">
-                    <div class="top-bar-container">
-                        <div class="accessibility-controls" role="group" aria-label="Controles de acessibilidade">
-                            <div class="font-size-controls" role="group" aria-label="Controle de tamanho da fonte">
-                                <button type="button" class="font-btn font-btn-reduce" id="font-reduce" aria-label="Reduzir fonte" title="Reduzir fonte">
-                                    <span class="font-btn-icon">A-</span>
-                                </button>
-                                <button type="button" class="font-btn font-btn-increase" id="font-increase" aria-label="Aumentar fonte" title="Aumentar fonte">
-                                    <span class="font-btn-icon">A+</span>
-                                </button>
-                            </div>
-                            <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
-                                <i class="fas fa-moon" aria-hidden="true"></i>
-                            </button>
-                            <div class="top-bar-divider" aria-hidden="true"></div>
-                        </div>
-                        <div class="skip-controls" role="group" aria-label="Navegação rápida">
-                            <a href="#main-header" class="skip-btn" id="skip-top" aria-label="Ir para o topo da página">
-                                <i class="fas fa-arrow-up" aria-hidden="true"></i>
-                                <span class="skip-label">Topo</span>
-                            </a>
-                            <a href="#main-content" class="skip-btn" id="skip-content" aria-label="Ir para o conteúdo principal">
-                                <i class="fas fa-arrow-down" aria-hidden="true"></i>
-                                <span class="skip-label">Conteúdo</span>
-                            </a>
-                            <a href="#footer" class="skip-btn" id="skip-footer" aria-label="Ir para o rodapé">
-                                <i class="fas fa-arrow-down" aria-hidden="true"></i>
-                                <span class="skip-label">Rodapé</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <header class="main-header" id="main-header">
-                    <div class="header-container">
-                        <a href="index.html" class="site-logo" aria-label="Calculadoras de Enfermagem - Página Inicial">
-                            <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="logo-image">
-                        </a>
-                        <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
-                            <ul class="nav-list">
-                                <li class="nav-item">
-                                    <a href="index.html" class="nav-link">Início</a>
-                                </li>
-                                <li class="nav-item has-mega-menu">
-                                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="sobre-nos">Sobre Nós</button>
-                                </li>
-                                <li class="nav-item has-mega-menu">
-                                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="ferramentas">Ferramentas</button>
-                                </li>
-                                <li class="nav-item has-mega-menu">
-                                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="biblioteca">Biblioteca</button>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </header>
-            `;
-        }
-        
-        // Cookie banner functionality
-        function initCookieBanner() {
-            const cookieBanner = document.getElementById('cookie-banner');
-            const acceptBtn = document.getElementById('cookie-accept');
-            const rejectBtn = document.getElementById('cookie-reject');
-            
-            if (!cookieBanner || !acceptBtn || !rejectBtn) return;
-            
-            // Check if user already made a choice
-            const cookieChoice = localStorage.getItem('cookie_choice');
-            
-            if (!cookieChoice) {
-                cookieBanner.classList.remove('hidden');
-            } else if (cookieChoice === 'accepted') {
-                enableAnalytics();
-            }
-            
-            acceptBtn.addEventListener('click', function() {
-                localStorage.setItem('cookie_choice', 'accepted');
-                cookieBanner.classList.add('hidden');
-                enableAnalytics();
-            });
-            
-            rejectBtn.addEventListener('click', function() {
-                localStorage.setItem('cookie_choice', 'rejected');
-                cookieBanner.classList.add('hidden');
             });
         }
-        
-        function enableAnalytics() {
-            // Enable analytics scripts if needed
-            console.log('Analytics enabled');
+
+        // Função para verificar se componentes foram injetados
+        function checkComponentsInjected() {
+            const header = document.getElementById('header-container');
+            const footer = document.getElementById('footer-container');
+            const main = document.getElementById('main-container');
+            
+            return {
+                header: header && header.innerHTML.trim().length > 0,
+                footer: footer && footer.innerHTML.trim().length > 0,
+                main: main && main.innerHTML.trim().length > 0
+            };
         }
+
+        // Função de carregamento principal
+        async function loadAllComponents() {
+            console.log('[Orquestration] loadAllComponents() iniciada');
+            
+            // Aguarda um pequeno delay para garantir que template-engine.js foi carregado
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            if (typeof loadComponent === 'function') {
+                console.log('[Orquestration] Função loadComponent encontrada');
+                
+                try {
+                    // Carrega componentes um por um para melhor controle
+                    console.log('[Orquestration] Carregando header...');
+                    await loadComponent('header', 'header-container');
+                    console.log('[Orquestration] Header carregado');
+                    
+                    console.log('[Orquestration] Carregando footer...');
+                    await loadComponent('footer', 'footer-container');
+                    console.log('[Orquestration] Footer carregado');
+                    
+                    console.log('[Orquestration] Carregando accessibility...');
+                    await loadComponent('accessibility', 'accessibility-container');
+                    console.log('[Orquestration] Accessibility carregado');
+                    
+                    console.log('[Orquestration] Carregando main-content...');
+                    await loadComponent('main-content', 'main-container');
+                    console.log('[Orquestration] Main-content carregado');
+                    
+                    console.log('[Orquestration] Todos os componentes carregados com sucesso');
+                    
+                } catch (error) {
+                    console.error('[Orquestration] Erro ao carregar componentes:', error);
+                }
+            } else {
+                console.warn('[Orquestration] Função loadComponent NÃO encontrada');
+                console.warn('[Orquestration] Verificando se componentes já existem no DOM...');
+                
+                // Verifica se componentes já existem (carregamento tradicional)
+                const injected = checkComponentsInjected();
+                console.log('[Orquestration] Estado da injeção:', injected);
+            }
+            
+            // Sempre tenta mostrar os componentes (seja por loadComponent ou existentes)
+            showAllComponents();
+            
+            // Dispara evento para avisar aos scripts que o DOM está preenchido
+            console.log('[Orquestration] Dispatando evento componentsLoaded');
+            document.dispatchEvent(new Event('componentsLoaded'));
+        }
+
+        // Inicialização quando DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('========================================');
+            console.log('[Orquestration] DOM pronto');
+            console.log('[Orquestration] Iniciando orquestração...');
+            console.log('========================================');
+            
+            // Inicia carregamento
+            loadAllComponents();
+            
+            // Fallback de segurança: após 3 segundos, força a exibição
+            setTimeout(() => {
+                console.log('[Orquestration] Fallback de segurança executado');
+                showAllComponents();
+                
+                // Verifica se ainda há componentes invisíveis
+                const stillHidden = document.querySelectorAll('.component-loading');
+                if (stillHidden.length > 0) {
+                    console.warn(`[Orquestration] ALERTA: ${stillHidden.length} componentes ainda estão invisíveis`);
+                    stillHidden.forEach(el => {
+                        const id = el.id || el.tagName;
+                        console.warn(`  - ${id}: ${el.innerHTML.substring(0, 50)}...`);
+                    });
+                }
+            }, 3000);
+        });
     </script>
+
 </body>
 </html>
