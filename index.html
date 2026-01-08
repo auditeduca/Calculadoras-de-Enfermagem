@@ -1,247 +1,165 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadoras de Enfermagem</title>
+    <meta name="description" content="Ferramentas e calculadoras para profissionais de enfermagem.">
+
+    <!-- ============================================ -->
+    <!-- ESTILOS (CSS)                                -->
+    <!-- ============================================ -->
     
-    <!-- Meta Tags para SEO -->
-    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e conteúdo técnico para profissionais de saúde">
-    <meta name="keywords" content="enfermagem, calculadoras, escalas clínicas, gasometria, balanço hídrico">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
-    
-    <!-- Hreflang -->
-    <link rel="alternate" hreflang="pt-BR" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
-    <link rel="alternate" hreflang="en" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
-    <link rel="alternate" hreflang="es" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
-    <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/" />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/webp" href="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
-    
-    <!-- Font Awesome e Fontes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS (Development CDN - Remove for production) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                    },
-                    colors: {
-                        'audit-gold': '#D4AF37',
-                        'audit-navy': '#1E3A8A',
-                        'audit-blue': '#3B82F6',
-                        'audit-bgDark': '#0F172A',
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- CSS Globais -->
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/preload.css">
-    <link rel="stylesheet" href="assets/css/accessibility.css">
-    <link rel="stylesheet" href="assets/css/global-main.css">
-    <link rel="stylesheet" href="assets/css/global-main-index.css">
-    
+    <!-- Estilos Globais -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main-index.css">
+
+    <!-- Estilos de Componentes -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
+
+    <!-- Estilos Inline para comportamento do Preload -->
     <style>
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .component-placeholder {
+            min-height: 50px;
         }
-        .animate-fade-in-down { animation: fadeInDown 1s ease-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .animate-fade-in { animation: fadeIn 1.5s ease-out; }
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-slide-in-up { animation: slideInUp 0.8s ease-out; }
-        
-        /* Sistema de loading visual */
-        .component-loading { 
-            min-height: 100px; 
-            opacity: 0; 
-            transition: opacity 0.5s ease-in-out; 
-        }
-        .component-loaded { 
-            opacity: 1; 
-        }
-        
-        /* Debug visual - mostra quando está em loading */
-        .component-loading::before {
-            content: 'Carregando...';
+
+        /* Configuração do Preload para cobrir a tela inteira */
+        #component-preload {
+            position: fixed; /* Fixado na janela, cobre tudo mesmo rolando */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 99999; /* Z-index altíssimo para ficar acima de tudo */
+            background-color: #ffffff; /* Fundo branco para esconder o carregamento do site */
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100px;
-            color: #999;
-            font-size: 14px;
+            
+            /* Transição suave para desaparecer */
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-        .component-loaded::before {
-            display: none;
+
+        /* Classe que será adicionada via JS para esconder o preload */
+        #component-preload.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none; /* Permite clicar nos elementos abaixo após sumir */
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 dark:bg-audit-bgDark dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-300 selection:bg-audit-gold selection:text-audit-navy">
+<body>
 
-    <!-- Preload Container -->
-    <div id="preload-container"></div>
-    
-    <!-- Header Container -->
-    <header id="header-container" class="component-loading"></header>
-    
-    <!-- Main Container -->
-    <main id="main-container" class="flex-1 component-loading relative z-10"></main>
-    
-    <!-- Footer Container -->
-    <footer id="footer-container" class="component-loading"></footer>
-    
-    <!-- Accessibility Container -->
-    <div id="accessibility-container"></div>
+    <!-- ============================================ -->
+    <!-- ESTRUTURA MODULAR (Placeholders)             -->
+    <!-- ============================================ -->
 
-    <!-- Scripts com defer para garantir ordem de execução após parse do HTML -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-    <script src="assets/js/utils.js" defer></script>
-    <script src="assets/js/console-cleaner.js" defer></script>
-    
-    <script src="assets/js/preload.js" defer></script>
-    <script src="assets/js/header.js" defer></script>
-    <script src="assets/js/footer.js" defer></script>
-    <script src="assets/js/accessibility.js" defer></script>
-    <script src="assets/js/global-main.js" defer></script>
-    <script src="assets/js/global-main-index.js" defer></script>
+    <!-- 1. Acessibilidade -->
+    <div id="component-accessibility" class="component-placeholder"></div>
 
-    <!-- Script de Orquestração Centralizada -->
+    <!-- 2. Header -->
+    <header id="component-header" class="component-placeholder"></header>
+
+    <!-- 3. Conteúdo Principal (Main Index) -->
+    <main id="component-main-index" class="component-placeholder"></main>
+
+    <!-- 4. Footer -->
+    <footer id="component-footer" class="component-placeholder"></footer>
+
+    <!-- 5. Preload (Cobre a tela inteira) -->
+    <div id="component-preload" class="component-placeholder"></div>
+
+
+    <!-- ============================================ -->
+    <!-- SCRIPT DE CARREGAMENTO MODULAR               -->
+    <!-- ============================================ -->
     <script>
-        // Função para mostrar todos os componentes
-        function showAllComponents() {
-            console.log('[Orquestration] Executando showAllComponents()...');
-            
-            const components = document.querySelectorAll('.component-loading');
-            console.log(`[Orquestration] Encontrados ${components.length} componentes em loading`);
-            
-            components.forEach((el, index) => {
-                // Verifica se o elemento tem conteúdo real (não está vazio)
-                const hasContent = el.innerHTML.trim().length > 0 || el.children.length > 0;
-                const id = el.id || `elemento-${index}`;
-                
-                console.log(`[Orquestration] ${id}: temConteudo=${hasContent}`);
-                
-                if (hasContent) {
-                    el.classList.remove('component-loading');
-                    el.classList.add('component-loaded');
-                    console.log(`[Orquestration] ${id}: classe removida, opacity deve ser 1`);
-                } else {
-                    console.warn(`[Orquestration] ${id}: está vazio, mantendo invisível`);
+        /**
+         * Carregador Simples de Componentes
+         */
+        const components = [
+            { 
+                id: 'component-accessibility', 
+                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility.html' 
+            },
+            { 
+                id: 'component-header', 
+                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header.html' 
+            },
+            { 
+                id: 'component-main-index', 
+                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/main-index.html' 
+            },
+            { 
+                id: 'component-footer', 
+                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer.html' 
+            },
+            { 
+                id: 'component-preload', 
+                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/preload.html' 
+            }
+        ];
+
+        async function loadComponents() {
+            const fetchPromises = components.map(async (comp) => {
+                const element = document.getElementById(comp.id);
+                if (!element) return;
+
+                try {
+                    const response = await fetch(comp.url);
+                    if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+                    
+                    const html = await response.text();
+                    element.innerHTML = html;
+                    element.classList.remove('component-placeholder');
+                    console.log(`Componente carregado: ${comp.id}`);
+                } catch (error) {
+                    console.error(`Falha ao carregar ${comp.url}:`, error);
                 }
             });
-        }
 
-        // Função para verificar se componentes foram injetados
-        function checkComponentsInjected() {
-            const header = document.getElementById('header-container');
-            const footer = document.getElementById('footer-container');
-            const main = document.getElementById('main-container');
-            
-            return {
-                header: header && header.innerHTML.trim().length > 0,
-                footer: footer && footer.innerHTML.trim().length > 0,
-                main: main && main.innerHTML.trim().length > 0
-            };
-        }
-
-        // Função de carregamento principal
-        async function loadAllComponents() {
-            console.log('[Orquestration] loadAllComponents() iniciada');
-            
-            // Aguarda um pequeno delay para garantir que template-engine.js foi carregado
-            await new Promise(resolve => setTimeout(resolve, 100));
-            
-            if (typeof loadComponent === 'function') {
-                console.log('[Orquestration] Função loadComponent encontrada');
-                
-                try {
-                    // Carrega componentes um por um para melhor controle
-                    console.log('[Orquestration] Carregando header...');
-                    await loadComponent('header', 'header-container');
-                    console.log('[Orquestration] Header carregado');
-                    
-                    console.log('[Orquestration] Carregando footer...');
-                    await loadComponent('footer', 'footer-container');
-                    console.log('[Orquestration] Footer carregado');
-                    
-                    console.log('[Orquestration] Carregando accessibility...');
-                    await loadComponent('accessibility', 'accessibility-container');
-                    console.log('[Orquestration] Accessibility carregado');
-                    
-                    console.log('[Orquestration] Carregando main-content...');
-                    await loadComponent('main-content', 'main-container');
-                    console.log('[Orquestration] Main-content carregado');
-                    
-                    console.log('[Orquestration] Todos os componentes carregados com sucesso');
-                    
-                } catch (error) {
-                    console.error('[Orquestration] Erro ao carregar componentes:', error);
-                }
-            } else {
-                console.warn('[Orquestration] Função loadComponent NÃO encontrada');
-                console.warn('[Orquestration] Verificando se componentes já existem no DOM...');
-                
-                // Verifica se componentes já existem (carregamento tradicional)
-                const injected = checkComponentsInjected();
-                console.log('[Orquestration] Estado da injeção:', injected);
-            }
-            
-            // Sempre tenta mostrar os componentes (seja por loadComponent ou existentes)
-            showAllComponents();
-            
-            // Dispara evento para avisar aos scripts que o DOM está preenchido
-            console.log('[Orquestration] Dispatando evento componentsLoaded');
+            await Promise.all(fetchPromises);
             document.dispatchEvent(new Event('componentsLoaded'));
         }
 
-        // Inicialização quando DOM estiver pronto
-        document.addEventListener('DOMContentLoaded', async () => {
-            console.log('========================================');
-            console.log('[Orquestration] DOM pronto');
-            console.log('[Orquestration] Iniciando orquestração...');
-            console.log('========================================');
-            
-            // Inicia carregamento
-            loadAllComponents();
-            
-            // Fallback de segurança: após 3 segundos, força a exibição
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Inicia o carregamento dos componentes
+            loadComponents();
+
+            // 2. Lógica do Temporizador do Preload (5 Segundos)
             setTimeout(() => {
-                console.log('[Orquestration] Fallback de segurança executado');
-                showAllComponents();
-                
-                // Verifica se ainda há componentes invisíveis
-                const stillHidden = document.querySelectorAll('.component-loading');
-                if (stillHidden.length > 0) {
-                    console.warn(`[Orquestration] ALERTA: ${stillHidden.length} componentes ainda estão invisíveis`);
-                    stillHidden.forEach(el => {
-                        const id = el.id || el.tagName;
-                        console.warn(`  - ${id}: ${el.innerHTML.substring(0, 50)}...`);
-                    });
+                const preloadElement = document.getElementById('component-preload');
+                if (preloadElement) {
+                    preloadElement.classList.add('fade-out');
+                    console.log("Preload removido após 5 segundos.");
                 }
-            }, 3000);
+            }, 5000); // 5000 milissegundos = 5 segundos
         });
     </script>
+
+
+    <!-- ============================================ -->
+    <!-- SCRIPTS (JS)                                 -->
+    <!-- ============================================ -->
+    
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/console-cleaner.js"></script>
+
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/preload.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js"></script>
+
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main.js"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js"></script>
+    
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index-loader.js"></script>
 
 </body>
 </html>
