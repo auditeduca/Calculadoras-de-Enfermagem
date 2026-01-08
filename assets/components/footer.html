@@ -1,71 +1,69 @@
 <!-- Componente Footer - Sistema Modular V8.0 -->
 <!-- Este conteúdo será carregado dentro de #footer-container -->
-<link rel="stylesheet" href="footer.css">
+<link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
-<!-- Fallback JavaScript para garantir visibilidade dos botões -->
+<!-- Fallback JavaScript para garantir visibilidade dos botões APÓS o preload -->
 <script>
 (function() {
-    function showFallbackButtons() {
-        // Mostrar FAB de cookies após 1 segundo
+    'use strict';
+
+    // Função para mostrar os botões (chamada após preload)
+    function showPostPreloadButtons() {
         var fab = document.getElementById('cookie-fab');
         if (fab) {
             fab.classList.remove('hidden');
             fab.classList.add('visible');
         }
-        
-        // Mostrar back to top após scroll ou 2 segundos (sempre mostrar para fallback)
-        var backToTop = document.getElementById('backToTop');
-        if (backToTop) {
-            backToTop.classList.remove('hidden');
-            backToTop.classList.add('visible');
-        }
     }
-    
-    // Executar após DOM estar pronto
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(showFallbackButtons, 500);
-        });
-    } else {
-        setTimeout(showFallbackButtons, 500);
-    }
-    
-    // Listener para scroll - mostra/esconde back to top
-    window.addEventListener('scroll', function() {
-        var backToTop = document.getElementById('backToTop');
-        if (backToTop) {
-            if (window.scrollY > 300) {
-                backToTop.classList.remove('hidden');
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-                backToTop.classList.add('hidden');
-            }
-        }
-    });
-    
-    // Clique no back to top - com fallback para garantir funcionamento
+
+    // Função para inicializar back to top
     function initBackToTop() {
         var backToTop = document.getElementById('backToTop');
         if (backToTop) {
             // Remove listeners antigos para evitar duplicação
             var newBtn = backToTop.cloneNode(true);
             backToTop.parentNode.replaceChild(newBtn, backToTop);
-            
+
             newBtn.addEventListener('click', function() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 console.log('[Footer] Botão Voltar ao Topo clicado');
             });
+
+            // Listener para scroll - mostra/esconde back to top
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    newBtn.classList.remove('hidden');
+                    newBtn.classList.add('visible');
+                } else {
+                    newBtn.classList.remove('visible');
+                    newBtn.classList.add('hidden');
+                }
+            });
         }
     }
-    
-    // Inicializar back to top
+
+    // Inicializa back to top quando DOM estiver pronto
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initBackToTop);
     } else {
         initBackToTop();
     }
+
+    // ESCUTA O EVENTO preloadFinalizado PARA MOSTRAR BOTÕES
+    document.addEventListener('preloadFinalizado', function() {
+        console.log('[Footer] preloadFinalizado detectado - mostrando botões');
+        showPostPreloadButtons();
+    });
+
+    // Fallback: se o preload já terminou, mostra os botões
+    setTimeout(function() {
+        var preload = document.getElementById('component-preload');
+        if (preload && (preload.classList.contains('fade-out') || preload.style.display === 'none')) {
+            console.log('[Footer] Preload já terminou (fallback) - mostrando botões');
+            showPostPreloadButtons();
+        }
+    }, 6000); // 6 segundos para garantir que o preload terminou
 })();
 </script>
 
@@ -510,29 +508,21 @@
 
 <!-- Fallback inline handlers - estes garantem que os botões funcionem mesmo se footer.js não carregar -->
 <script>
-// Função global para garantir que os botões sempre funcionem
-function initCookieButtonsOnce() {
-    if (window.cookieButtonsInitialized) return;
-    window.cookieButtonsInitialized = true;
-    
-    var btnSettings = document.getElementById('cookie-settings');
-    var btnAccept = document.getElementById('cookie-accept');
-    var btnSavePrefs = document.getElementById('cookie-save-preferences');
-    var btnModalClose = document.getElementById('cookie-modal-close');
-    var btnAcceptAll = document.getElementById('cookie-accept-all');
-    var overlay = document.getElementById('cookie-overlay');
-    var modal = document.getElementById('cookie-modal-content');
-    var banner = document.getElementById('cookie-banner');
-    
-    // Variável global para controlar estado do modal (usado para ESC)
-    window.isCookieModalOpen = false;
-    
+// ============================================
+// CONTROLADOR DE BOTÕES DE COOKIES
+// Usa event delegation para garantir funcionamento
+// ============================================
+
+(function() {
+    'use strict';
+
+    // Variável global para controle
+    window.cookieButtonsInitialized = false;
+
     // =========================================
-    // GERENCIAMENTO DE CONSENTIMENTO (localStorage)
-    // O site não salva dados - tudo fica apenas no navegador do usuário
+    // GERENCIAMENTO DE CONSENTIMENTO
     // =========================================
     
-    // Ler consentimento do localStorage
     function getCookieConsent() {
         try {
             var stored = localStorage.getItem('ce_cookie_consent_v8_2025');
@@ -540,181 +530,67 @@ function initCookieButtonsOnce() {
                 return JSON.parse(stored);
             }
         } catch (e) {
-            console.log('[Footer] Erro ao ler consentimento:', e);
+            console.log('[Cookies] Erro ao ler consentimento:', e);
         }
         return null;
     }
     
-    // Salvar consentimento no localStorage
     function saveCookieConsent(consent) {
         try {
             localStorage.setItem('ce_cookie_consent_v8_2025', JSON.stringify(consent));
-            console.log('[Footer] Consentimento salvo em localStorage:', consent);
+            console.log('[Cookies] Consentimento salvo:', consent);
         } catch (e) {
-            console.log('[Footer] Erro ao salvar consentimento:', e);
+            console.log('[Cookies] Erro ao salvar consentimento:', e);
         }
     }
     
-    // Excluir consentimento (direito de esquecimento LGPD)
-    function deleteCookieConsent() {
-        try {
-            localStorage.removeItem('ce_cookie_consent_v8_2025');
-            console.log('[Footer] Consentimento excluído do localStorage');
-        } catch (e) {
-            console.log('[Footer] Erro ao excluir consentimento:', e);
-        }
-    }
-    
-    // Aplicar preferências salvas ao carregar página
-    function applySavedPreferences() {
-        var consent = getCookieConsent();
-        
-        if (consent) {
-            // Consentimento existe - aplicar às checkboxes
-            var checkAnalytics = document.getElementById('check-analytics');
-            var checkMarketing = document.getElementById('check-marketing');
-            
-            if (checkAnalytics) checkAnalytics.checked = !!consent.analytics;
-            if (checkMarketing) checkMarketing.checked = !!consent.marketing;
-            
-            // Esconder banner de consentimento
-            if (banner) {
-                banner.classList.remove('visible');
-                banner.classList.add('hidden');
-            }
-            
-            console.log('[Footer] Preferências aplicadas do cookie:', consent);
-            
-            // Aqui você pode adicionar chamadas para ativar/desativar scripts de tracking
-            // com base nas preferências do usuário
-            applyConsentToScripts(consent);
-            
-        } else {
-            // Nenhum consentimento - mostrar banner
-            if (banner) {
-                // Pequeno delay para evitar flash
-                setTimeout(function() {
-                    banner.classList.remove('hidden');
-                    banner.classList.add('visible');
-                }, 500);
-            }
-            console.log('[Footer] Nenhum consentimento encontrado - mostrando banner');
-        }
-    }
-    
-    // Aplicar consentimento aos scripts de tracking
     function applyConsentToScripts(consent) {
-        // =========================================
-        // GOOGLE ANALYTICS
-        // =========================================
+        // Google Analytics
         if (consent.analytics) {
-            // Ativar Google Analytics - carregar script
             if (!document.getElementById('ga-script')) {
-                loadGoogleAnalytics();
+                var gaScript = document.createElement('script');
+                gaScript.id = 'ga-script';
+                gaScript.async = true;
+                gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+                gaScript.onload = function() {
+                    window.dataLayer = window.dataLayer || [];
+                    window.gtag = function(){dataLayer.push(arguments);};
+                    gtag('js', new Date());
+                    gtag('config', 'G-XXXXXXXXXX');
+                };
+                document.head.appendChild(gaScript);
             }
-            console.log('[Footer] Analytics ativado');
-        } else {
-            // Desativar Google Analytics - remover script e limpar dados
-            disableGoogleAnalytics();
-            console.log('[Footer] Analytics desativado');
+            console.log('[Cookies] Analytics ativado');
         }
         
-        // =========================================
-        // GOOGLE ADSENSE
-        // =========================================
+        // Google AdSense
         if (consent.marketing) {
-            // Ativar Google AdSense - carregar script
             if (!document.getElementById('adsense-script')) {
-                loadGoogleAdSense();
+                var adsenseScript = document.createElement('script');
+                adsenseScript.id = 'adsense-script';
+                adsenseScript.async = true;
+                adsenseScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX';
+                document.head.appendChild(adsenseScript);
             }
-            console.log('[Footer] Marketing ativado');
-        } else {
-            // Desativar Google AdSense - remover script e anúncios
-            disableGoogleAdSense();
-            console.log('[Footer] Marketing desativado');
+            console.log('[Cookies] Marketing ativado');
         }
     }
-    
+
     // =========================================
-    // FUNÇÕES DE CARREGAMENTO DE SCRIPTS
+    // FUNÇÕES DE UI
     // =========================================
-    
-    // Carregar Google Analytics
-    function loadGoogleAnalytics() {
-        // Criar e inserir script do GA4
-        var gaScript = document.createElement('script');
-        gaScript.id = 'ga-script';
-        gaScript.async = true;
-        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX'; // SUBSTITUIR PELO SEU ID
-        gaScript.onload = function() {
-            // Inicializar gtag após carregar
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            window.gtag = gtag;
-            gtag('js', new Date());
-            gtag('config', 'G-XXXXXXXXXX'); // SUBSTITUIR PELO SEU ID
-            console.log('[Footer] Google Analytics carregado');
-        };
-        document.head.appendChild(gaScript);
-    }
-    
-    // Desativar Google Analytics
-    function disableGoogleAnalytics() {
-        // Remover script do GA
-        var gaScript = document.getElementById('ga-script');
-        if (gaScript) {
-            gaScript.remove();
+
+    function hideBanner() {
+        var banner = document.getElementById('cookie-banner');
+        if (banner) {
+            banner.classList.remove('visible');
+            banner.classList.add('hidden');
         }
-        
-        // Remover window.gtag para impedir envios
-        window.gtag = function() {
-            console.log('[Footer] Analytics bloqueado - sem consentimento');
-        };
-        
-        // Limpar cookies do Analytics (opcional)
-        // document.cookie = '_ga=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
-        // document.cookie = '_gid=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
     }
-    
-    // Carregar Google AdSense
-    function loadGoogleAdSense() {
-        // Criar e inserir script do AdSense
-        var adsenseScript = document.createElement('script');
-        adsenseScript.id = 'adsense-script';
-        adsenseScript.async = true;
-        adsenseScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX'; // SUBSTITUIR PELO SEU ID
-        adsenseScript.onload = function() {
-            console.log('[Footer] Google AdSense carregado');
-        };
-        document.head.appendChild(adsenseScript);
-    }
-    
-    // Desativar Google AdSense
-    function disableGoogleAdSense() {
-        // Remover script do AdSense
-        var adsenseScript = document.getElementById('adsense-script');
-        if (adsenseScript) {
-            adsenseScript.remove();
-        }
-        
-        // Remover anúncios do AdSense da página
-        var ads = document.querySelectorAll('.adsbygoogle, [data-ad-client]');
-        ads.forEach(function(ad) {
-            ad.remove();
-        });
-        
-        // Limpar anúncios inseridos pelo AdSense
-        var adFrames = document.querySelectorAll('iframe[src*="googlesyndication"]');
-        adFrames.forEach(function(frame) {
-            frame.remove();
-        });
-    }
-    
-    // Verificar e aplicar preferências ao iniciar
-    applySavedPreferences();
-    
-    // Função para abrir modal
-    function openCookieModal() {
+
+    function showModal() {
+        var overlay = document.getElementById('cookie-overlay');
+        var modal = document.getElementById('cookie-modal-content');
         if (overlay && modal) {
             overlay.classList.remove('hidden');
             overlay.classList.add('visible');
@@ -725,9 +601,10 @@ function initCookieButtonsOnce() {
             window.isCookieModalOpen = true;
         }
     }
-    
-    // Função para fechar modal
-    function closeCookieModal() {
+
+    function closeModal() {
+        var overlay = document.getElementById('cookie-overlay');
+        var modal = document.getElementById('cookie-modal-content');
         if (modal) {
             modal.classList.remove('visible');
             modal.classList.add('hidden');
@@ -740,260 +617,165 @@ function initCookieButtonsOnce() {
         document.body.style.overflow = '';
         window.isCookieModalOpen = false;
     }
-    
-    // Clique no overlay fecha o modal
-    if (overlay) {
-        overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) {
-                closeCookieModal();
-            }
-        });
-    }
-    
-    // Botão Settings
-    if (btnSettings) {
-        btnSettings.addEventListener('click', function() {
-            openCookieModal();
-        });
-    }
-    
-    // Botão Accept (aceitar todos)
-    if (btnAccept) {
-        btnAccept.addEventListener('click', function() {
-            if (banner) {
-                banner.classList.remove('visible');
-                banner.classList.add('hidden');
-            }
-            // Salvar consentimento com todos os cookies ativados
-            var consent = {necessary: true, analytics: true, marketing: true};
-            saveCookieConsent(consent);
-            applyConsentToScripts(consent);
-            console.log('[Footer] Todos os cookies aceitos');
-        });
-    }
-    
-    // Botão Modal Close (X)
-    if (btnModalClose) {
-        btnModalClose.addEventListener('click', function() {
-            closeCookieModal();
-        });
-    }
-    
-    // Botão FAB de Cookies
-    var btnFab = document.getElementById('cookie-fab');
-    if (btnFab) {
-        btnFab.addEventListener('click', function() {
-            openCookieModal();
-            console.log('[Footer] Modal aberto via botão FAB');
-        });
-    }
-    
-    // Botão Save Preferences
-    if (btnSavePrefs) {
-        btnSavePrefs.addEventListener('click', function() {
-            var analytics = document.getElementById('check-analytics')?.checked || false;
-            var marketing = document.getElementById('check-marketing')?.checked || false;
-            var consent = {necessary: true, analytics: analytics, marketing: marketing};
-            saveCookieConsent(consent);
-            applyConsentToScripts(consent);
-            closeCookieModal();
-            console.log('[Footer] Preferências salvas:', consent);
-        });
-    }
-    
-    // Botão Accept All no modal
-    if (btnAcceptAll) {
-        btnAcceptAll.addEventListener('click', function() {
-            if (banner) {
-                banner.classList.remove('visible');
-                banner.classList.add('hidden');
-            }
-            var consent = {necessary: true, analytics: true, marketing: true};
-            saveCookieConsent(consent);
-            applyConsentToScripts(consent);
-            closeCookieModal();
-            console.log('[Footer] Todos os cookies aceitos via modal');
-        });
-    }
-    
-    // Suporte à tecla ESC para fechar qualquer modal aberto
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            // Fechar modal de preferências
-            if (window.isCookieModalOpen) {
-                closeCookieModal();
-                console.log('[Footer] Modal de preferências fechado via ESC');
-                return;
-            }
-            
-            // Fechar modais de detalhe abertos
-            var visibleDetailModals = document.querySelectorAll('.cookie-detail-modal.visible');
-            visibleDetailModals.forEach(function(detailModal) {
-                detailModal.classList.remove('visible');
-                detailModal.classList.add('hidden');
-                detailModal.setAttribute('aria-hidden', 'true');
-                console.log('[Footer] Modal de detalhe fechado via ESC');
-            });
-        }
-    });
-    
-    // Clique fora dos modais de detalhe para fechar
-    document.querySelectorAll('.cookie-detail-modal').forEach(function(detailModal) {
-        detailModal.addEventListener('click', function(e) {
-            if (e.target === detailModal) {
-                detailModal.classList.remove('visible');
-                detailModal.classList.add('hidden');
-                detailModal.setAttribute('aria-hidden', 'true');
-                console.log('[Footer] Modal de detalhe fechado ao clicar fora');
-            }
-        });
-    });
-    
-    // Accordion functionality - expandir/colapsar seções
-    document.querySelectorAll('.cookie-category-header').forEach(function(header) {
-        header.addEventListener('click', function() {
-            var category = this.closest('.cookie-category');
-            if (category) {
-                var wasActive = category.classList.contains('active');
-                // Fechar todos primeiro
-                document.querySelectorAll('.cookie-category').forEach(function(cat) {
-                    cat.classList.remove('active');
-                });
-                // Se não estava ativo, abrir este
-                if (!wasActive) {
-                    category.classList.add('active');
-                }
-            }
-        });
-    });
-    
-    // Botões de informação (i) - abrir modais de detalhe
-    document.querySelectorAll('.cookie-info-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var modalId = this.getAttribute('data-modal-target');
-            if (modalId) {
-                var modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.remove('hidden');
-                    modal.classList.add('visible');
-                    modal.setAttribute('aria-hidden', 'false');
-                    console.log('[Footer] Modal de detalhe aberto:', modalId);
-                }
-            }
-        });
-    });
-    
-    // Botões de fechar modais de detalhe
-    document.querySelectorAll('[data-close]').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var modalId = this.getAttribute('data-close');
-            if (modalId) {
-                var modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.remove('visible');
-                    modal.classList.add('hidden');
-                    modal.setAttribute('aria-hidden', 'true');
-                }
-            }
-        });
-    });
-    
-    // Botões Voltar nos modais de detalhe
-    document.querySelectorAll('.cookie-detail-back').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var modalId = this.getAttribute('data-close');
-            if (modalId) {
-                var modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.remove('visible');
-                    modal.classList.add('hidden');
-                    modal.setAttribute('aria-hidden', 'true');
-                }
-            }
-        });
-    });
-    
-    // Gerenciar classe do body para posicionar botões quando banner estiver visível
-    function updateBodyCookieState() {
-        if (banner && banner.classList.contains('visible') && !banner.classList.contains('hidden')) {
-            document.body.classList.add('cookie-banner-open');
-        } else {
-            document.body.classList.remove('cookie-banner-open');
-        }
-    }
-    
-    // Observar mudanças no banner
-    var bannerObserver = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                updateBodyCookieState();
-            }
-        });
-    });
-    
-    if (banner) {
-        bannerObserver.observe(banner, { attributes: true });
-        updateBodyCookieState();
-    }
-    
+
     // =========================================
-    // FUNÇÕES GLOBAIS ACESSÍVEIS EXTERNAMENTE
-    // (Permitem integração com outros scripts)
+    // HANDLERS DE BOTÕES (Event Delegation)
     // =========================================
-    
-    // Expor função para abrir preferências de cookies
-    window.openCookiePreferences = function() {
-        openCookieModal();
-    };
-    
-    // Expor função para resetar consentimento (direito de esquecimento LGPD)
-    window.resetCookieConsent = function() {
-        deleteCookieConsent();
-        // Resetar checkboxes
-        var checkAnalytics = document.getElementById('check-analytics');
-        var checkMarketing = document.getElementById('check-marketing');
-        if (checkAnalytics) checkAnalytics.checked = false;
-        if (checkMarketing) checkMarketing.checked = false;
-        // Mostrar banner
-        if (banner) {
-            banner.classList.remove('hidden');
-            banner.classList.add('visible');
+
+    function handleCookieButtonClick(e) {
+        var target = e.target.closest('button');
+        if (!target) return;
+
+        var btnId = target.id;
+
+        // Botão ACEITAR (banner principal)
+        if (btnId === 'cookie-accept') {
+            console.log('[Cookies] Botão Aceitar clicado');
+            var consent = { necessary: true, analytics: true, marketing: true };
+            saveCookieConsent(consent);
+            applyConsentToScripts(consent);
+            hideBanner();
+            e.preventDefault();
+            return;
         }
-        console.log('[Footer] Consentimento resetado pelo usuário');
-    };
-    
-    // Expor função para obter status atual do consentimento
-    window.getCookieConsentStatus = function() {
-        return getCookieConsent();
-    };
-    
-    // Handler para link "Central de Privacidade" - abrir preferências de cookies
-    var privacyLink = document.getElementById('link-privacy-center');
-    if (privacyLink) {
-        privacyLink.addEventListener('click', function(e) {
-            // Se o usuário já tiver consentimento, perguntar se deseja alterar
+
+        // Botão CONCORDAR COM TUDO (modal)
+        if (btnId === 'cookie-accept-all') {
+            console.log('[Cookies] Botão Concordar com Tudo clicado');
+            var consent = { necessary: true, analytics: true, marketing: true };
+            saveCookieConsent(consent);
+            applyConsentToScripts(consent);
+            closeModal();
+            hideBanner();
+            e.preventDefault();
+            return;
+        }
+
+        // Botão SALVAR PREFERÊNCIAS
+        if (btnId === 'cookie-save-preferences') {
+            console.log('[Cookies] Botão Salvar Preferências clicado');
+            var checkAnalytics = document.getElementById('check-analytics');
+            var checkMarketing = document.getElementById('check-marketing');
+            var consent = {
+                necessary: true,
+                analytics: checkAnalytics ? checkAnalytics.checked : false,
+                marketing: checkMarketing ? checkMarketing.checked : false
+            };
+            saveCookieConsent(consent);
+            applyConsentToScripts(consent);
+            closeModal();
+            hideBanner();
+            e.preventDefault();
+            return;
+        }
+
+        // Botão PERSONALIZAR (abre modal)
+        if (btnId === 'cookie-settings') {
+            console.log('[Cookies] Botão Personalizar clicado');
+            showModal();
+            e.preventDefault();
+            return;
+        }
+
+        // Botão FECHAR MODAL (X)
+        if (btnId === 'cookie-modal-close') {
+            console.log('[Cookies] Botão Fechar modal clicado');
+            closeModal();
+            e.preventDefault();
+            return;
+        }
+
+        // Botão FAB de cookies
+        if (btnId === 'cookie-fab') {
+            console.log('[Cookies] Botão FAB clicado');
+            showModal();
+            e.preventDefault();
+            return;
+        }
+    }
+
+    // =========================================
+    // INICIALIZAÇÃO
+    // =========================================
+
+    function initCookieButtons() {
+        // Usa event delegation no document para garantir funcionamento
+        // mesmo se os elementos forem carregados depois
+        document.addEventListener('click', handleCookieButtonClick, false);
+        
+        // Suporte à tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && window.isCookieModalOpen) {
+                closeModal();
+            }
+        });
+
+        // Clique fora do modal para fechar
+        document.addEventListener('click', function(e) {
+            var modal = document.getElementById('cookie-modal-content');
+            var overlay = document.getElementById('cookie-overlay');
+            if (modal && overlay && 
+                e.target === overlay && 
+                overlay.classList.contains('visible')) {
+                closeModal();
+            }
+        });
+
+        window.cookieButtonsInitialized = true;
+        console.log('[Cookies] Controlador de botões inicializado (event delegation)');
+    }
+
+    // Inicializa quando DOM estiver pronto
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCookieButtons);
+    } else {
+        initCookieButtons();
+    }
+
+})();
+</script>
+
+    <!-- ============================================
+         GERENCIAMENTO PÓS-PRELOAD
+         Aplica preferências e mostra banner após preload
+    ============================================ -->
+    <script>
+    (function() {
+        function getCookieConsent() {
+            try {
+                var stored = localStorage.getItem('ce_cookie_consent_v8_2025');
+                return stored ? JSON.parse(stored) : null;
+            } catch (e) { return null; }
+        }
+
+        function applyPreferencesAfterPreload() {
             var consent = getCookieConsent();
             if (consent) {
-                e.preventDefault();
-                if (confirm('Deseja revisar suas preferências de cookies?')) {
-                    openCookieModal();
-                } else {
-                    // Continuar para a página de privacidade
-                    window.location.href = this.href;
+                var checkAnalytics = document.getElementById('check-analytics');
+                var checkMarketing = document.getElementById('check-marketing');
+                if (checkAnalytics) checkAnalytics.checked = !!consent.analytics;
+                if (checkMarketing) checkMarketing.checked = !!consent.marketing;
+            } else {
+                var banner = document.getElementById('cookie-banner');
+                if (banner) {
+                    setTimeout(function() {
+                        banner.classList.remove('hidden');
+                        banner.classList.add('visible');
+                    }, 300);
                 }
             }
-            // Se não tiver consentimento, o link funciona normalmente
-        });
-    }
-    
-    console.log('[Footer] Inline handlers inicializados com sucesso');
-}
+        }
 
-// Inicializar após DOM estar pronto
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCookieButtonsOnce);
-} else {
-    // Pequeno delay para garantir que footer.js não conflitou
-    setTimeout(initCookieButtonsOnce, 100);
-}
-</script>
+        document.addEventListener('preloadFinalizado', function() {
+            applyPreferencesAfterPreload();
+        });
+
+        setTimeout(function() {
+            var preload = document.getElementById('component-preload');
+            if (preload && (preload.classList.contains('fade-out') || preload.style.display === 'none')) {
+                applyPreferencesAfterPreload();
+            }
+        }, 6000);
+    })();
+    </script>
+
