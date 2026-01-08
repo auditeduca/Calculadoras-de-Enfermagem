@@ -18,16 +18,42 @@
     // Elementos que devem aparecer após o preload
     const POST_PRELOAD_ELEMENTS = [
         'cookie-fab',
-        'backToTop',
-        'cookie-banner'
+        'backToTop'
     ];
 
+    // Nome do cookie de consentimento
+    const COOKIE_CONSENT_NAME = 'ce_cookie_consent_v8_2025';
+
     /**
-     * Ativa todos os elementos pós-preload
+     * Verifica se há consentimento de cookies salvo
+     */
+    function hasCookieConsent() {
+        try {
+            // Verifica cookie
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === COOKIE_CONSENT_NAME && value) {
+                    return true;
+                }
+            }
+            // Verifica localStorage
+            if (localStorage.getItem(COOKIE_CONSENT_NAME)) {
+                return true;
+            }
+        } catch (e) {
+            console.log('[PreloadControl] Erro ao verificar consentimento:', e);
+        }
+        return false;
+    }
+
+    /**
+     * Ativa os elementos que devem aparecer após o preload
      */
     function activatePostPreloadElements() {
         console.log('[PreloadControl] Ativando elementos pós-preload');
 
+        // Ativa FAB e backToTop
         POST_PRELOAD_ELEMENTS.forEach(function(id) {
             const element = document.getElementById(id);
             if (element) {
@@ -38,17 +64,29 @@
                 console.warn('[PreloadControl] Elemento ' + id + ' não encontrado');
             }
         });
+
+        // Verifica se deve mostrar o banner de cookies
+        if (!hasCookieConsent()) {
+            const banner = document.getElementById('cookie-banner');
+            if (banner) {
+                // Pequeno delay para garantir transição suave
+                setTimeout(function() {
+                    banner.classList.remove('hidden');
+                    banner.classList.add('visible');
+                    console.log('[PreloadControl] Banner de cookies ativado');
+                }, 300);
+            }
+        } else {
+            console.log('[PreloadControl] Usuário já tem consentimento, banner não será mostrado');
+        }
     }
 
     /**
-     * Verifica o estado do preload
+     * Verifica se o preload já terminou
      */
-    function checkPreloadState() {
+    function isPreloadFinished() {
         var preload = document.getElementById('component-preload');
-        if (preload && preload.classList.contains('fade-out')) {
-            return true;
-        }
-        return false;
+        return preload && preload.classList.contains('fade-out');
     }
 
     /**
@@ -65,7 +103,7 @@
 
         // Fallback: verifica se o preload já terminou
         setTimeout(function() {
-            if (checkPreloadState()) {
+            if (isPreloadFinished()) {
                 console.log('[PreloadControl] Preload já terminou (fallback)');
                 activatePostPreloadElements();
             }

@@ -149,6 +149,7 @@
                     // Aguarda a transição de 500ms terminar ANTES de disparar o evento
                     setTimeout(() => {
                         // DISPARA O EVENTO que habilita os botões flutuantes e banner de cookies
+                        // O controle desses elementos está no footer.html
                         document.dispatchEvent(new Event('preloadFinalizado'));
                         console.log("Evento preloadFinalizado disparado.");
                     }, 550); // 550ms para garantir que a transição terminou
@@ -179,97 +180,6 @@
     <!-- Script de carregamento da página principal -->
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index-loader.js"></script>
     <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/module-loader.js"></script>
-
-    <!-- ============================================ -->
-    <!-- SCRIPT PÓS-PRELOAD                           -->
-    <!-- ============================================ -->
-    <!-- 
-        Este script ativa os elementos que devem aparecer 
-        somente após o preload: FAB de cookies, back to top, etc.
-    -->
-    <script>
-        /**
-         * Controlador de Elementos Pós-Preload
-         * Ativa FAB de cookies, back to top e banner de cookies
-         * após a conclusão do preload.
-         */
-        
-        (function() {
-            'use strict';
-
-            // Elementos a serem ativados após o preload
-            const ELEMENTS = {
-                cookieFab: 'cookie-fab',
-                backToTop: 'backToTop',
-                cookieBanner: 'cookie-banner'
-            };
-
-            /**
-             * Ativa um elemento removendo classes de ocultação
-             */
-            function activateElement(id) {
-                const element = document.getElementById(id);
-                if (!element) {
-                    console.warn(`Elemento ${id} não encontrado`);
-                    return false;
-                }
-
-                // Remove classes de ocultação
-                element.classList.remove('hidden');
-                element.classList.add('visible');
-                
-                console.log(`Elemento ${id} ativado`);
-                return true;
-            }
-
-            /**
-             * Tenta ativar os elementos pós-preload
-             */
-            function activatePostPreloadElements() {
-                // Ativa FAB de cookies
-                activateElement(ELEMENTS.cookieFab);
-                
-                // Ativa back to top (funcionalidade de scroll será gerenciada pelo footer.js)
-                activateElement(ELEMENTS.backToTop);
-                
-                // Dispara evento para banner de cookies (se ainda não tiver escolha)
-                const hasCookieChoice = localStorage.getItem('ce_cookie_consent_v8_2025');
-                if (!hasCookieChoice) {
-                    // Pequeno delay para garantir que o banner está pronto
-                    setTimeout(() => {
-                        const banner = document.getElementById(ELEMENTS.cookieBanner);
-                        if (banner) {
-                            banner.classList.remove('hidden');
-                            banner.classList.add('visible');
-                            console.log('Banner de cookies ativado');
-                        }
-                    }, 300);
-                }
-            }
-
-            // Escuta o evento preloadFinalizado
-            document.addEventListener('preloadFinalizado', () => {
-                console.log('Evento preloadFinalizado recebido - ativando elementos');
-                
-                // Tenta ativar imediatamente
-                activatePostPreloadElements();
-
-                // Tenta novamente após delay (fallback)
-                setTimeout(activatePostPreloadElements, 500);
-            });
-
-            // Fallback: se o preload já terminou antes deste script carregar
-            setTimeout(() => {
-                const preload = document.getElementById('component-preload');
-                if (preload && preload.classList.contains('fade-out')) {
-                    console.log('Preload já terminou - ativando elementos (fallback)');
-                    activatePostPreloadElements();
-                }
-            }, 1000);
-
-            console.log('Controlador de elementos pós-preload inicializado');
-        })();
-    </script>
 
 </body>
 </html>
