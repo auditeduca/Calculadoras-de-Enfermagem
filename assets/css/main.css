@@ -76,7 +76,7 @@ a:hover {
   line-height: 1.2;
   color: var(--theme-color-primary);
   margin-bottom: 0.75rem;
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: clamp(2rem, 5vw, 2.75rem);
   position: relative;
   display: inline-block;
   padding-bottom: 0.75rem;
@@ -915,27 +915,28 @@ section {
 .calculators-grid {
   display: grid;
   gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
   transition: all var(--transition-normal);
 }
 
 /* View Extra Large (XL) */
 .view-xl {
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
 }
 
 /* View Large (LG) */
 .view-lg {
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
 }
 
 /* View Medium (MD) */
 .view-md {
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
 }
 
 /* View Small (SM) */
 .view-sm {
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
 }
 
 /* View List */
@@ -945,17 +946,17 @@ section {
 
 /* View Details */
 .view-details {
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
 }
 
 /* View Blocks */
 .view-blocks {
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
 }
 
 /* View Compact */
 .view-compact {
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 
@@ -1101,92 +1102,6 @@ section {
 
 .tool-card:hover .tool-action::after {
   transform: translateX(4px);
-}
-
-/* Botao de acao - Estilo novo com icone */
-.tool-action-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, var(--theme-color-primary), var(--theme-color-primary-hover));
-  color: var(--theme-text-light);
-  font-family: var(--font-inter, 'Inter', sans-serif);
-  font-size: 0.875rem;
-  font-weight: 600;
-  border-radius: 10px;
-  margin-top: auto;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(26, 62, 116, 0.3);
-}
-
-.tool-action-btn i {
-  font-size: 1rem;
-}
-
-.tool-action-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(26, 62, 116, 0.4);
-  color: var(--theme-text-light);
-}
-  background: rgba(16, 185, 129, 0.15);
-  color: #059669;
-}
-
-.tool-action {
-  font-family: var(--font-inter, 'Inter', sans-serif);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--theme-color-primary);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin-top: auto;
-}
-
-.tool-action::after {
-  content: '\f054';
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 900;
-  font-size: 0.75rem;
-  transition: transform var(--transition-fast);
-}
-
-.tool-card:hover .tool-action::after {
-  transform: translateX(4px);
-}
-
-/* Botao de acao - Estilo novo com icone */
-.tool-action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  background: var(--theme-color-primary);
-  color: var(--theme-text-light);
-  font-family: var(--font-inter, 'Inter', sans-serif);
-  font-size: 0.875rem;
-  font-weight: 600;
-  border-radius: var(--border-radius-md, 8px);
-  margin-top: auto;
-  transition: all var(--transition-fast);
-  cursor: pointer;
-  text-decoration: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.tool-action-btn i {
-  font-size: 1rem;
-}
-
-.tool-action-btn:hover {
-  background: var(--theme-color-primary-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  color: var(--theme-text-light);
 }
 
 /* =========================================
@@ -1379,13 +1294,6 @@ section {
   display: none;
 }
 
-.view-compact .tool-category,
-.view-compact .tool-description,
-.view-compact .tool-tags,
-.view-compact .tool-action {
-  display: none;
-}
-
 /* =========================================
    MODAL - ESTILOS SIMPLES SEM HEADER/FOOTER
    ========================================= */
@@ -1421,6 +1329,8 @@ section {
   overflow: hidden;
   transform: scale(0.9) translateY(20px);
   transition: transform var(--transition-normal);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .modal-overlay.active .modal {
@@ -1428,7 +1338,7 @@ section {
 }
 
 .modal-body {
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 .modal-body p {
@@ -1571,6 +1481,17 @@ section {
   .global-controls {
     gap: 1rem;
   }
+  
+  /* Grid em 2 colunas para tablets */
+  .view-xl,
+  .view-lg,
+  .view-md,
+  .view-sm,
+  .view-details,
+  .view-blocks,
+  .view-compact {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
@@ -1611,6 +1532,7 @@ section {
     font-size: 1.75rem;
   }
   
+  /* Grid em 1 coluna para dispositivos móveis */
   .view-xl,
   .view-lg,
   .view-md,
@@ -1675,41 +1597,12 @@ section {
     font-size: 1.75rem;
   }
   
-  .stat-number {
-    font-size: 1.5rem;
-  }
-  
-  .stats-section {
-    grid-template-columns: 1fr;
-  }
-  
-  .tool-card {
-    padding: 1rem;
-  }
-  
-  .tool-icon {
-    width: 56px;
-    height: 56px;
-    font-size: 1.25rem;
-  }
-  
-  .tool-action-btn {
-    padding: 0.625rem 1.25rem;
-    font-size: 0.8125rem;
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.75rem;
-  }
-  
   h2 {
     font-size: 1.5rem;
   }
   
   .stat-number {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   
   .stats-section {
@@ -1724,6 +1617,11 @@ section {
     width: 48px;
     height: 48px;
     font-size: 1rem;
+  }
+  
+  .tool-action-btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8125rem;
   }
 }
 
