@@ -462,29 +462,86 @@
     }
 
     /**
+     * Diagnóstico: Verifica se elementos e CSS estão carregados
+     */
+    function diagnoseFooter() {
+        console.log('[Footer] === DIAGNÓSTICO ===');
+        
+        // Verificar elementos
+        const elements = [
+            'cookie-banner',
+            'cookie-overlay',
+            'cookie-modal-content',
+            'cookie-fab',
+            'backToTop',
+            'footer'
+        ];
+        
+        elements.forEach(id => {
+            const el = document.getElementById(id);
+            console.log(`[Footer] #${id}: ${el ? 'ENCONTRADO' : 'NÃO ENCONTRADO'}`);
+            if (el) {
+                const style = window.getComputedStyle(el);
+                console.log(`[Footer]   - display: ${style.display}`);
+                console.log(`[Footer]   - position: ${style.position}`);
+                console.log(`[Footer]   - z-index: ${style.zIndex}`);
+            }
+        });
+        
+        // Verificar CSS
+        const banner = document.getElementById('cookie-banner');
+        if (banner) {
+            const bg = window.getComputedStyle(banner).backgroundColor;
+            console.log(`[Footer] Banner background: ${bg}`);
+        }
+        
+        console.log('[Footer] === FIM DIAGNÓSTICO ===');
+    }
+
+    /**
      * Inicializa o footer
      */
     function initFooter() {
         if (state.initialized) return;
 
+        console.log('[Footer] Iniciando...');
+        
         // Verificação de segurança: sai silenciosamente se os elementos ainda não existirem
         const footerContent = document.querySelector('.footer-content') || 
                              document.getElementById(CONFIG.selectors.modal);
-        if (!footerContent) return;
+        if (!footerContent) {
+            console.warn('[Footer] Elementos do footer não encontrados');
+            return;
+        }
+
+        console.log('[Footer] Elementos encontrados');
 
         // Proteção de Cookie (Usa o Polyfill do Index)
         let consent = null;
-        try { consent = getCookie(CONFIG.cookieName); } catch(e) {}
+        try { 
+            consent = getCookie(CONFIG.cookieName); 
+            console.log(`[Footer] Cookie encontrado: ${consent}`);
+        } catch(e) {
+            console.warn('[Footer] Erro ao ler cookie:', e);
+        }
 
         state.initialized = true;
         updateYear();
         setupEventListeners();
 
+        // Executar diagnóstico
+        setTimeout(diagnoseFooter, 500);
+
         if (!consent) {
-            setTimeout(() => toggleBanner(true), 300);
+            console.log('[Footer] Sem consentimento - mostrando banner');
+            setTimeout(() => toggleBanner(true), 500);
         } else {
+            console.log('[Footer] Com consentimento - mostrando FAB');
             const cookieFab = document.getElementById(CONFIG.selectors.cookieFab);
-            if (cookieFab) cookieFab.style.display = 'flex';
+            if (cookieFab) {
+                cookieFab.style.display = 'flex';
+                cookieFab.classList.add('visible');
+            }
         }
     }
 

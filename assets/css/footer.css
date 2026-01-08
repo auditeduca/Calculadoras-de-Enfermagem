@@ -7,39 +7,110 @@
    ========================================= */
 
 /* =========================================
+   FALLBACKS LOCAIS (SEGURANÇA)
+   Garante funcionamento mesmo se global.css falhar
+   ========================================= */
+:root {
+    /* Fallbacks para cores do footer */
+    --footer-bg: #1A3E74;
+    --footer-text: #ffffff;
+    --footer-text-muted: #94a3b8;
+    
+    /* Fallbacks para cookies */
+    --cookie-banner-bg: #f8fafc;
+    --cookie-banner-text: #1A3E74;
+    --cookie-modal-bg: #ffffff;
+    --cookie-overlay-bg: rgba(15, 36, 68, 0.6);
+    
+    /* Fallbacks para FAB */
+    --fab-bg: #1A3E74;
+    --fab-text: #ffffff;
+    --fab-shadow: rgba(26, 62, 116, 0.4);
+    
+    /* Z-index críticos */
+    --z-cookie-banner: 10050;
+    --z-cookie-overlay: 10055;
+    --z-cookie-modal: 10056;
+    --z-cookie-detail: 10057;
+    --z-back-to-top: 10040;
+}
+
+/* =========================================
+   VISIBILIDADE GARANTIDA (ALTA PRIORIDADE)
+   ========================================= */
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: block !important;
+}
+
+/* Cookie Banner - Forçar display none por padrão */
+#cookie-banner,
+.cookie-banner {
+    display: none !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: var(--z-cookie-banner, 10050) !important;
+}
+
+#cookie-banner.visible,
+.cookie-banner.visible {
+    display: flex !important;
+}
+
+/* Cookie FAB - Forçar display none por padrão */
+#cookie-fab,
+.cookie-fab {
+    display: none !important;
+    position: fixed !important;
+    z-index: var(--z-back-to-top, 10040) !important;
+}
+
+#cookie-fab.visible,
+.cookie-fab.visible {
+    display: flex !important;
+}
+
+/* Cookie Modal */
+#cookie-modal-content,
+.cookie-modal {
+    display: none !important;
+    position: fixed !important;
+    z-index: var(--z-cookie-modal, 10056) !important;
+}
+
+#cookie-modal-content.visible,
+.cookie-modal.visible {
+    display: block !important;
+}
+
+/* Cookie Overlay */
+#cookie-overlay,
+.cookie-overlay {
+    display: none !important;
+    position: fixed !important;
+    z-index: var(--z-cookie-overlay, 10055) !important;
+}
+
+#cookie-overlay.visible,
+.cookie-overlay.visible {
+    display: block !important;
+}
+
+/* =========================================
    CORREÇÃO: POSICIONAMENTO DO FOOTER
    Garante que o footer fique abaixo do conteúdo principal
-   e não seja sobreposto por elementos fixos
    ========================================= */
 #footer {
     position: relative;
     z-index: 1;
     margin-top: auto;
-}
-
-/* Garante que o body/html tenham altura mínima para empilhamento correto */
-html, body {
-    min-height: 100%;
-}
-
-/* Ajuste para páginas com pouco conteúdo */
-body {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-}
-
-/* O conteúdo principal deve crescer para empurrar o footer para baixo */
-body > *:not(#footer) {
-    flex: 1;
-}
-
-/* =========================================
-   DEFINIÇÃO DE CORES (FOOTER E COOKIE BANNER)
-   ========================================= */
-#footer {
-    background-color: var(--footer-bg, var(--primitive-primary));
-    color: var(--footer-text, var(--primitive-gray-50));
+    background-color: var(--footer-bg, #1A3E74);
+    color: var(--footer-text, #ffffff);
 }
 
 #footer .container {
