@@ -2,7 +2,9 @@
  * MODULE-LOADER.JS
  * Sistema de Carregamento de Módulos HTML
  * Calculadoras de Enfermagem
- * Arquitetura Modular Simples
+ * 
+ * ATENÇÃO: Este arquivo carrega módulos para páginas internas.
+ * A página index.html usa carregamento modular próprio.
  */
 
 (function() {
@@ -12,11 +14,8 @@
     // Cache de módulos carregados
     modulesCache: {},
     
-    // Módulos a serem carregados (ordem de renderização)
+    // Módulos a serem carregados (apenas os que existem)
     modules: [
-      'top-bar',
-      'header',
-      'mobile-menu',
       'main-content',
       'footer'
     ],
@@ -42,10 +41,16 @@
         return this.modulesCache[moduleName];
       }
       
-      // Define o caminho do módulo - main-content.html está na pasta pages/
-      var modulePath = moduleName === 'main-content' 
-        ? `assets/pages/${moduleName}.html`
-        : `assets/pages/modules/${moduleName}.html`;
+      // Define o caminho do módulo com URLs completas do GitHub Pages
+      let modulePath;
+      
+      if (moduleName === 'footer') {
+        // Footer fica em assets/components/
+        modulePath = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer.html';
+      } else {
+        // main-content fica em assets/pages/
+        modulePath = `https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/${moduleName}.html`;
+      }
       
       try {
         const response = await fetch(modulePath);
