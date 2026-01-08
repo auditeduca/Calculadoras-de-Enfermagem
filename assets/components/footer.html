@@ -3,78 +3,93 @@
 <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
-<!-- Fallback JavaScript para garantir visibilidade dos botões APÓS o preload -->
+<!-- =========================================
+     GERENCIAMENTO PÓS-PRELOAD
+     Controla FAB, backToTop e banner de cookies
+========================================= -->
 <script>
 (function() {
     'use strict';
 
-    // Função para mostrar os botões (chamada após preload)
-    function showPostPreloadButtons() {
-        var fab = document.getElementById('cookie-fab');
-        if (fab) {
-            fab.classList.remove('hidden');
-            fab.classList.add('visible');
-        }
+    // =========================================
+    // CONTROLE DE VISIBILIDADE PÓS-PRELOAD
+    // =========================================
+
+    // Elementos que devem aparecer após o preload
+    const POST_PRELOAD_ELEMENTS = [
+        'cookie-fab',
+        'backToTop',
+        'cookie-banner'
+    ];
+
+    /**
+     * Ativa todos os elementos pós-preload
+     */
+    function activatePostPreloadElements() {
+        console.log('[PreloadControl] Ativando elementos pós-preload');
+
+        POST_PRELOAD_ELEMENTS.forEach(function(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.classList.remove('hidden');
+                element.classList.add('visible');
+                console.log('[PreloadControl] Elemento ' + id + ' ativado');
+            } else {
+                console.warn('[PreloadControl] Elemento ' + id + ' não encontrado');
+            }
+        });
     }
 
-    // Função para inicializar back to top
-    function initBackToTop() {
-        var backToTop = document.getElementById('backToTop');
-        if (backToTop) {
-            // Remove listeners antigos para evitar duplicação
-            var newBtn = backToTop.cloneNode(true);
-            backToTop.parentNode.replaceChild(newBtn, backToTop);
-
-            newBtn.addEventListener('click', function() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                console.log('[Footer] Botão Voltar ao Topo clicado');
-            });
-
-            // Listener para scroll - mostra/esconde back to top
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 300) {
-                    newBtn.classList.remove('hidden');
-                    newBtn.classList.add('visible');
-                } else {
-                    newBtn.classList.remove('visible');
-                    newBtn.classList.add('hidden');
-                }
-            });
-        }
-    }
-
-    // Inicializa back to top quando DOM estiver pronto
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBackToTop);
-    } else {
-        initBackToTop();
-    }
-
-    // ESCUTA O EVENTO preloadFinalizado PARA MOSTRAR BOTÕES
-    document.addEventListener('preloadFinalizado', function() {
-        console.log('[Footer] preloadFinalizado detectado - mostrando botões');
-        showPostPreloadButtons();
-    });
-
-    // Fallback: se o preload já terminou, mostra os botões
-    setTimeout(function() {
+    /**
+     * Verifica o estado do preload
+     */
+    function checkPreloadState() {
         var preload = document.getElementById('component-preload');
-        if (preload && (preload.classList.contains('fade-out') || preload.style.display === 'none')) {
-            console.log('[Footer] Preload já terminou (fallback) - mostrando botões');
-            showPostPreloadButtons();
+        if (preload && preload.classList.contains('fade-out')) {
+            return true;
         }
-    }, 6000); // 6 segundos para garantir que o preload terminou
+        return false;
+    }
+
+    /**
+     * Inicializa o controle de elementos pós-preload
+     */
+    function initPostPreloadControl() {
+        console.log('[PreloadControl] Inicializando controle pós-preload');
+
+        // Escuta o evento preloadFinalizado
+        document.addEventListener('preloadFinalizado', function() {
+            console.log('[PreloadControl] Evento preloadFinalizado recebido');
+            activatePostPreloadElements();
+        });
+
+        // Fallback: verifica se o preload já terminou
+        setTimeout(function() {
+            if (checkPreloadState()) {
+                console.log('[PreloadControl] Preload já terminou (fallback)');
+                activatePostPreloadElements();
+            }
+        }, 6000);
+    }
+
+    // Inicializa quando DOM estiver pronto
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPostPreloadControl);
+    } else {
+        initPostPreloadControl();
+    }
+
 })();
 </script>
 
 <div id="footer" class="bg-gray-900 text-white py-8 relative z-40">
     <!-- Logotipo e Linha Divisória -->
     <div class="footer-header">
-        <img 
-            src="https://www.calculadorasdeenfermagem.com.br/iconrodape1.webp" 
-            alt="Logotipo Calculadoras de Enfermagem" 
-            class="footer-logo" 
-            height="64" 
+        <img
+            src="https://www.calculadorasdeenfermagem.com.br/iconrodape1.webp"
+            alt="Logotipo Calculadoras de Enfermagem"
+            class="footer-logo"
+            height="64"
             style="height: 64px; width: auto; object-fit: contain; display: block; max-width: 240px;"
             onerror="this.onerror=null;this.src='https://placehold.co/240x64/FFFFFF/1A3E74?text=Logo'"
         >
@@ -125,29 +140,29 @@
                     Nosso site adota como princípio de governança, o comprometimento com elevados padrões de acessibilidade digital, sustentabilidade digital e proteção de dados.
                 </p>
                 <div class="footer-seals mt-4">
-                    <img 
-                        src="https://www.calculadorasdeenfermagem.com.br/seloacessibilidade.webp" 
-                        alt="Selo: Certificado de Acessibilidade Digital" 
-                        class="footer-seal" 
-                        height="64" 
+                    <img
+                        src="https://www.calculadorasdeenfermagem.com.br/seloacessibilidade.webp"
+                        alt="Selo: Certificado de Acessibilidade Digital"
+                        class="footer-seal"
+                        height="64"
                         style="height: 64px; width: auto; object-fit: contain;"
                         onerror="this.style.display='none'"
                     >
-                    
-                    <img 
-                        src="https://www.calculadorasdeenfermagem.com.br/selosustentabilidade.webp" 
-                        alt="Selo: Certificado de Sustentabilidade Digital" 
-                        class="footer-seal" 
-                        height="64" 
+
+                    <img
+                        src="https://www.calculadorasdeenfermagem.com.br/selosustentabilidade.webp"
+                        alt="Selo: Certificado de Sustentabilidade Digital"
+                        class="footer-seal"
+                        height="64"
                         style="height: 64px; width: auto; object-fit: contain;"
                         onerror="this.style.display='none'"
                     >
-                    
-                    <img 
-                        src="https://www.calculadorasdeenfermagem.com.br/selolgpd.webp" 
-                        alt="Selo: Certificado de Proteção de Dados e LGPD" 
-                        class="footer-seal" 
-                        height="64" 
+
+                    <img
+                        src="https://www.calculadorasdeenfermagem.com.br/selolgpd.webp"
+                        alt="Selo: Certificado de Proteção de Dados e LGPD"
+                        class="footer-seal"
+                        height="64"
                         style="height: 64px; width: auto; object-fit: contain;"
                         onerror="this.onerror=null;this.src='https://placehold.co/64x64/1A3E74/FFFFFF?text=Selo'"
                     >
@@ -171,7 +186,7 @@
                     <a href="https://www.linkedin.com/company/calculadoras-de-enfermagem" target="_blank" rel="noopener" aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    
+
                     <a href="https://www.instagram.com/calculadorasdeenfermagem/" target="_blank" rel="noopener" aria-label="Instagram">
                         <i class="fab fa-instagram"></i>
                     </a>
@@ -190,12 +205,12 @@
 </div>
 
 <!-- =========================================
-     COMPONENTES DE COOKIES (Mover para fora do footer para posicionamento correto)
-     Estes componentes devem estar fora da div #footer para funcionar corretamente
+     COMPONENTES DE COOKIES
+     Estes componentes devem estar fora da div #footer
 ========================================= -->
 
-<!-- Banner de Cookies -->
-<div id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Aviso de Cookies" aria-describedby="cookie-description">
+<!-- Banner de Cookies - OCULTO inicialmente (será ativado após preload) -->
+<div id="cookie-banner" class="cookie-banner hidden" role="dialog" aria-label="Aviso de Cookies" aria-describedby="cookie-description">
     <div class="cookie-content">
         <div class="cookie-title">
             <svg class="cookie-title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -261,7 +276,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Análise e Estatística -->
         <div class="cookie-category">
             <div class="cookie-category-header" role="button" tabindex="0" aria-expanded="false">
@@ -290,7 +305,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Marketing -->
         <div class="cookie-category">
             <div class="cookie-category-header" role="button" tabindex="0" aria-expanded="false">
@@ -491,291 +506,17 @@
     <span id="toast-message"></span>
 </div>
 
-<!-- Botão Voltar ao Topo -->
+<!-- Botão Voltar ao Topo - OCULTO inicialmente -->
 <button id="backToTop" class="back-to-top hidden" aria-label="Voltar ao topo">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 19V5M5 12L12 5L19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 </button>
 
-<!-- Botão Flutuante de Cookies -->
+<!-- Botão Flutuante de Cookies - OCULTO inicialmente -->
 <button id="cookie-fab" class="cookie-fab hidden" aria-label="Abrir configurações de cookies">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2C10.3431 2 9 3.34315 9 5C9 6.34315 10.3431 7.5 12 7.5C13.6569 7.5 15 6.34315 15 5C15 3.34315 13.6569 2 12 2Z" fill="currentColor"/>
         <path d="M20.7578 10.6569C21.4536 10.1569 22 9.40685 22 8.5C22 6.567 20.433 5 18.5 5C17.5931 5 16.8431 4.4536 16.3431 3.7578C16.1431 3.4378 16.2981 3 16.6591 3C16.9501 3 17.2381 3.1759 17.3981 3.4509C17.6731 4.0009 18.4141 4.5 18.5 4.5C19.8807 4.5 21 5.61929 21 7C21 7.55228 20.5523 8 20 8C19.4477 8 19 7.55228 19 7C19 6.44772 18.5523 6 18 6C17.4477 6 17 5.55228 17 5C17 4.44772 16.5523 4 16 4C15.4477 4 15 4.44772 15 5C15 5.55228 14.5523 6 14 6C13.4477 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 10.5523 6 10 6C9.44772 6 9 5.55228 9 5C9 4.44772 8.55228 4 8 4C7.44772 4 7 4.44772 7 5C7 5.55228 6.55228 6 6 6C5.44772 6 5 5.55228 5 5C5 3.89543 5.89543 3 7 3C7.89543 3 8.5 3.5 9 4C9.5 4.5 10.1716 4.5 10.5 4.5C10.5859 4.5 11.4141 4.5 11.5 4.5C11.8284 4.5 12.5 4.5 13 4C13.5 3.5 14.1046 3 15 3C16.1046 3 17 3.89543 17 5C17 5.55228 17.4477 6 18 6C18.5523 6 19 6.44772 19 7C19 7.55228 19.4477 8 20 8C20.5523 8 21 8.44772 21 9C21 10.1046 20.1046 11 19 11C18.6569 11 18.3431 10.8909 18.0781 10.7071C17.8121 10.5233 17.5931 10.2422 17.4571 9.9142C17.3211 9.5862 17.2821 9.2192 17.3451 8.8552C17.4081 8.4912 17.5701 8.1462 17.8081 7.8562C18.0461 7.5662 18.3491 7.3432 18.6791 7.2122C19.0091 7.0812 19.3521 7.0482 19.6651 7.1172C19.9781 7.1862 20.2471 7.3522 20.4361 7.5882C20.6251 7.8242 20.7251 8.1102 20.7221 8.4012C20.7221 8.4072 20.7221 8.4122 20.7211 8.4182C20.7131 8.7082 20.6571 8.9892 20.5591 9.2542C20.4611 9.5192 20.3211 9.7612 20.1471 9.9702C19.9731 10.1792 19.7651 10.3502 19.5331 10.4762C19.3011 10.6022 19.0451 10.6792 18.7771 10.7032C18.5091 10.7272 18.2381 10.6972 17.9771 10.6152C17.7161 10.5332 17.4701 10.4012 17.2501 10.2252C17.0301 10.0492 16.8401 9.8312 16.6881 9.5812C16.5361 9.3312 16.4231 9.0532 16.3541 8.7622C16.2851 8.4712 16.2601 8.1712 16.2801 7.8722C16.3001 7.5732 16.3641 7.2792 16.4681 7.0022C16.5721 6.7252 16.7141 6.4692 16.8881 6.2432C17.0621 6.0172 17.2661 5.8242 17.4901 5.6722C17.7141 5.5202 17.9541 5.4112 18.1971 5.3502C18.4401 5.2892 18.6821 5.2762 18.9201 5.3122C19.1581 5.3482 19.3871 5.4312 19.5951 5.5572C19.8031 5.6832 19.9841 5.8502 20.1291 6.0482C20.2741 6.2462 20.3801 6.4712 20.4401 6.7112C20.5001 6.9512 20.5121 7.2002 20.4751 7.4442C20.4381 7.6882 20.3521 7.9202 20.2221 8.1292C20.0921 8.3382 19.9191 8.5182 19.7121 8.6592C19.5051 8.8002 19.2701 8.8982 19.0191 8.9472" fill="currentColor"/>
     </svg>
 </button>
-
-<!-- Fallback inline handlers - estes garantem que os botões funcionem mesmo se footer.js não carregar -->
-<script>
-// ============================================
-// CONTROLADOR DE BOTÕES DE COOKIES
-// Usa event delegation para garantir funcionamento
-// ============================================
-
-(function() {
-    'use strict';
-
-    // Variável global para controle
-    window.cookieButtonsInitialized = false;
-
-    // =========================================
-    // GERENCIAMENTO DE CONSENTIMENTO
-    // =========================================
-    
-    function getCookieConsent() {
-        try {
-            var stored = localStorage.getItem('ce_cookie_consent_v8_2025');
-            if (stored) {
-                return JSON.parse(stored);
-            }
-        } catch (e) {
-            console.log('[Cookies] Erro ao ler consentimento:', e);
-        }
-        return null;
-    }
-    
-    function saveCookieConsent(consent) {
-        try {
-            localStorage.setItem('ce_cookie_consent_v8_2025', JSON.stringify(consent));
-            console.log('[Cookies] Consentimento salvo:', consent);
-        } catch (e) {
-            console.log('[Cookies] Erro ao salvar consentimento:', e);
-        }
-    }
-    
-    function applyConsentToScripts(consent) {
-        // Google Analytics
-        if (consent.analytics) {
-            if (!document.getElementById('ga-script')) {
-                var gaScript = document.createElement('script');
-                gaScript.id = 'ga-script';
-                gaScript.async = true;
-                gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
-                gaScript.onload = function() {
-                    window.dataLayer = window.dataLayer || [];
-                    window.gtag = function(){dataLayer.push(arguments);};
-                    gtag('js', new Date());
-                    gtag('config', 'G-XXXXXXXXXX');
-                };
-                document.head.appendChild(gaScript);
-            }
-            console.log('[Cookies] Analytics ativado');
-        }
-        
-        // Google AdSense
-        if (consent.marketing) {
-            if (!document.getElementById('adsense-script')) {
-                var adsenseScript = document.createElement('script');
-                adsenseScript.id = 'adsense-script';
-                adsenseScript.async = true;
-                adsenseScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX';
-                document.head.appendChild(adsenseScript);
-            }
-            console.log('[Cookies] Marketing ativado');
-        }
-    }
-
-    // =========================================
-    // FUNÇÕES DE UI
-    // =========================================
-
-    function hideBanner() {
-        var banner = document.getElementById('cookie-banner');
-        if (banner) {
-            banner.classList.remove('visible');
-            banner.classList.add('hidden');
-        }
-    }
-
-    function showModal() {
-        var overlay = document.getElementById('cookie-overlay');
-        var modal = document.getElementById('cookie-modal-content');
-        if (overlay && modal) {
-            overlay.classList.remove('hidden');
-            overlay.classList.add('visible');
-            modal.classList.remove('hidden');
-            modal.classList.add('visible');
-            modal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-            window.isCookieModalOpen = true;
-        }
-    }
-
-    function closeModal() {
-        var overlay = document.getElementById('cookie-overlay');
-        var modal = document.getElementById('cookie-modal-content');
-        if (modal) {
-            modal.classList.remove('visible');
-            modal.classList.add('hidden');
-            modal.setAttribute('aria-hidden', 'true');
-        }
-        if (overlay) {
-            overlay.classList.remove('visible');
-            overlay.classList.add('hidden');
-        }
-        document.body.style.overflow = '';
-        window.isCookieModalOpen = false;
-    }
-
-    // =========================================
-    // HANDLERS DE BOTÕES (Event Delegation)
-    // =========================================
-
-    function handleCookieButtonClick(e) {
-        var target = e.target.closest('button');
-        if (!target) return;
-
-        var btnId = target.id;
-
-        // Botão ACEITAR (banner principal)
-        if (btnId === 'cookie-accept') {
-            console.log('[Cookies] Botão Aceitar clicado');
-            var consent = { necessary: true, analytics: true, marketing: true };
-            saveCookieConsent(consent);
-            applyConsentToScripts(consent);
-            hideBanner();
-            e.preventDefault();
-            return;
-        }
-
-        // Botão CONCORDAR COM TUDO (modal)
-        if (btnId === 'cookie-accept-all') {
-            console.log('[Cookies] Botão Concordar com Tudo clicado');
-            var consent = { necessary: true, analytics: true, marketing: true };
-            saveCookieConsent(consent);
-            applyConsentToScripts(consent);
-            closeModal();
-            hideBanner();
-            e.preventDefault();
-            return;
-        }
-
-        // Botão SALVAR PREFERÊNCIAS
-        if (btnId === 'cookie-save-preferences') {
-            console.log('[Cookies] Botão Salvar Preferências clicado');
-            var checkAnalytics = document.getElementById('check-analytics');
-            var checkMarketing = document.getElementById('check-marketing');
-            var consent = {
-                necessary: true,
-                analytics: checkAnalytics ? checkAnalytics.checked : false,
-                marketing: checkMarketing ? checkMarketing.checked : false
-            };
-            saveCookieConsent(consent);
-            applyConsentToScripts(consent);
-            closeModal();
-            hideBanner();
-            e.preventDefault();
-            return;
-        }
-
-        // Botão PERSONALIZAR (abre modal)
-        if (btnId === 'cookie-settings') {
-            console.log('[Cookies] Botão Personalizar clicado');
-            showModal();
-            e.preventDefault();
-            return;
-        }
-
-        // Botão FECHAR MODAL (X)
-        if (btnId === 'cookie-modal-close') {
-            console.log('[Cookies] Botão Fechar modal clicado');
-            closeModal();
-            e.preventDefault();
-            return;
-        }
-
-        // Botão FAB de cookies
-        if (btnId === 'cookie-fab') {
-            console.log('[Cookies] Botão FAB clicado');
-            showModal();
-            e.preventDefault();
-            return;
-        }
-    }
-
-    // =========================================
-    // INICIALIZAÇÃO
-    // =========================================
-
-    function initCookieButtons() {
-        // Usa event delegation no document para garantir funcionamento
-        // mesmo se os elementos forem carregados depois
-        document.addEventListener('click', handleCookieButtonClick, false);
-        
-        // Suporte à tecla ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && window.isCookieModalOpen) {
-                closeModal();
-            }
-        });
-
-        // Clique fora do modal para fechar
-        document.addEventListener('click', function(e) {
-            var modal = document.getElementById('cookie-modal-content');
-            var overlay = document.getElementById('cookie-overlay');
-            if (modal && overlay && 
-                e.target === overlay && 
-                overlay.classList.contains('visible')) {
-                closeModal();
-            }
-        });
-
-        window.cookieButtonsInitialized = true;
-        console.log('[Cookies] Controlador de botões inicializado (event delegation)');
-    }
-
-    // Inicializa quando DOM estiver pronto
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initCookieButtons);
-    } else {
-        initCookieButtons();
-    }
-
-})();
-</script>
-
-    <!-- ============================================
-         GERENCIAMENTO PÓS-PRELOAD
-         Aplica preferências e mostra banner após preload
-    ============================================ -->
-    <script>
-    (function() {
-        function getCookieConsent() {
-            try {
-                var stored = localStorage.getItem('ce_cookie_consent_v8_2025');
-                return stored ? JSON.parse(stored) : null;
-            } catch (e) { return null; }
-        }
-
-        function applyPreferencesAfterPreload() {
-            var consent = getCookieConsent();
-            if (consent) {
-                var checkAnalytics = document.getElementById('check-analytics');
-                var checkMarketing = document.getElementById('check-marketing');
-                if (checkAnalytics) checkAnalytics.checked = !!consent.analytics;
-                if (checkMarketing) checkMarketing.checked = !!consent.marketing;
-            } else {
-                var banner = document.getElementById('cookie-banner');
-                if (banner) {
-                    setTimeout(function() {
-                        banner.classList.remove('hidden');
-                        banner.classList.add('visible');
-                    }, 300);
-                }
-            }
-        }
-
-        document.addEventListener('preloadFinalizado', function() {
-            applyPreferencesAfterPreload();
-        });
-
-        setTimeout(function() {
-            var preload = document.getElementById('component-preload');
-            if (preload && (preload.classList.contains('fade-out') || preload.style.display === 'none')) {
-                applyPreferencesAfterPreload();
-            }
-        }, 6000);
-    })();
-    </script>
-
