@@ -108,7 +108,7 @@ body > *:not(#footer) {
     margin-bottom: 0;
 }
 
-.footer-section h3 {
+.footer-section h4 {
     color: var(--footer-text, #f8fafc);
     font-size: 1rem;
     margin-bottom: 1rem;
@@ -118,7 +118,7 @@ body > *:not(#footer) {
     position: relative;
 }
 
-.footer-section h3::after {
+.footer-section h4::after {
     content: '';
     position: absolute;
     bottom: -2px;
@@ -214,8 +214,9 @@ body > *:not(#footer) {
 .social-links-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5rem;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 1rem;
 }
 
 .social-links-label {
@@ -238,27 +239,27 @@ body > *:not(#footer) {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--social-icon-bg, rgba(255, 255, 255, 0.1));
+    background: rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--social-icon-color, #f8fafc);
+    color: var(--social-icon-color);
     transition: all 0.3s ease;
     text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 1rem;
 }
 
 .social-links a:hover {
-    background: var(--social-icon-hover-bg, var(--primitive-primary));
-    color: var(--social-icon-hover-color, #ffffff);
+    background: var(--social-icon-hover-bg);
+    color: var(--social-icon-hover-color);
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35);
+    box-shadow: 0 6px 15px rgba(59, 130, 246, 0.35);
     border-color: transparent;
 }
 
 .social-links a:focus {
-    outline: 2px solid var(--social-icon-focus-outline, #60a5fa);
+    outline: 2px solid var(--social-icon-focus-outline);
     outline-offset: 2px;
 }
 
@@ -1075,15 +1076,15 @@ body > *:not(#footer) {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--fab-bg, var(--primitive-primary-dark-hover));
-    color: var(--fab-text, var(--primitive-primary));
+    background: var(--cookie-btn-primary-bg, var(--primitive-primary-dark-hover));
+    color: var(--cookie-btn-primary-text, var(--primitive-primary));
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
-    box-shadow: 0 4px 15px var(--fab-shadow, rgba(37, 99, 235, 0.4));
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
@@ -1098,12 +1099,12 @@ body > *:not(#footer) {
 }
 
 .back-to-top:hover {
-    background: var(--fab-hover-bg, var(--primitive-primary-dark));
+    background: var(--cookie-btn-primary-hover, var(--primitive-primary-dark));
     transform: translateY(-3px);
 }
 
 .back-to-top:focus {
-    outline: 3px solid var(--fab-focus-outline, var(--primitive-primary-light));
+    outline: 3px solid var(--cookie-focus, var(--primitive-primary-light));
     outline-offset: 2px;
 }
 
@@ -1115,15 +1116,15 @@ body > *:not(#footer) {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--fab-bg, var(--primitive-primary-dark-hover));
-    color: var(--fab-text, var(--primitive-primary));
+    background: var(--cookie-btn-primary-bg, var(--primitive-primary-dark-hover));
+    color: var(--cookie-btn-primary-text, var(--primitive-primary));
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
-    box-shadow: 0 4px 15px var(--fab-shadow, rgba(37, 99, 235, 0.4));
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -1132,12 +1133,12 @@ body > *:not(#footer) {
 }
 
 .cookie-fab:hover {
-    background: var(--fab-hover-bg, var(--primitive-primary-dark));
+    background: var(--cookie-btn-primary-hover, var(--primitive-primary-dark));
     transform: translateY(-3px);
 }
 
 .cookie-fab:focus {
-    outline: 3px solid var(--fab-focus-outline, var(--primitive-primary-light));
+    outline: 3px solid var(--cookie-focus, var(--primitive-primary-light));
     outline-offset: 2px;
 }
 
@@ -1289,13 +1290,13 @@ body.cookie-banner-open ~ .cookie-fab {
         text-align: center;
     }
     
-    .footer-section h3 {
+    .footer-section h4 {
         border-bottom: none;
         padding-bottom: 0;
         margin-bottom: 0.75rem;
     }
-
-    .footer-section h3::after {
+    
+    .footer-section h4::after {
         display: none;
     }
     

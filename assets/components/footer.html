@@ -368,7 +368,7 @@
 
     <!-- Footer Content (Conteúdo Principal) -->
     <div class="container mx-auto px-4">
-        <div class="footer-content">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <!-- Coluna 1: Institucional -->
             <div class="footer-section">
                 <h3>Institucional</h3>
@@ -381,16 +381,7 @@
                 </ul>
             </div>
 
-            <!-- Coluna 2: Acessibilidade Digital -->
-            <div class="footer-section">
-                <h3>Acessibilidade Digital</h3>
-                <ul class="footer-links">
-                    <li><a href="/acessibilidade">Política de Acessibilidade</a></li>
-                    <li><a href="/recursos-acessibilidade">Recursos de Acessibilidade</a></li>
-                </ul>
-            </div>
-
-            <!-- Coluna 3: Sustentabilidade Digital -->
+            <!-- Coluna 2: Sustentabilidade Digital -->
             <div class="footer-section">
                 <h3>Sustentabilidade Digital</h3>
                 <ul class="footer-links">
@@ -400,13 +391,22 @@
                 </ul>
             </div>
 
+            <!-- Coluna 3: Acessibilidade Digital -->
+            <div class="footer-section">
+                <h3>Acessibilidade Digital</h3>
+                <ul class="footer-links">
+                    <li><a href="/acessibilidade">Política de Acessibilidade</a></li>
+                    <li><a href="/recursos-acessibilidade">Recursos de Acessibilidade</a></li>
+                </ul>
+            </div>
+
             <!-- Coluna 4: Nosso Compromisso -->
-            <div class="footer-section footer-brand-section">
+            <div class="footer-section">
                 <h3>Nosso Compromisso</h3>
-                <p class="footer-tagline">
+                <p class="text-gray-400 text-sm mt-2">
                     Nosso site adota como princípio de governança, o comprometimento com elevados padrões de acessibilidade digital, sustentabilidade digital e proteção de dados.
                 </p>
-                <div class="footer-seals">
+                <div class="footer-seals mt-4">
                     <img 
                         src="https://www.calculadorasdeenfermagem.com.br/seloacessibilidade.webp" 
                         alt="Selo: Certificado de Acessibilidade Digital" 
@@ -447,7 +447,7 @@
                     <a href="https://www.calculadorasdeenfermagem.com.br/termos.html">Configurações</a>
                 </div>
             </div>
-            <div class="social-links-container">
+            <div class="social-links-container" style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem;">
                 <span class="social-links-label">Siga-nos</span>
                 <div class="social-links">
                     <a href="https://www.linkedin.com/company/calculadoras-de-enfermagem" target="_blank" rel="noopener" aria-label="LinkedIn">
