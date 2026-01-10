@@ -15,6 +15,7 @@
     --color-primary-hover: #0d2847;
     --color-accent: #00bcd4;
     --color-accent-glow: #00bcd4;
+    --color-accent-light: #7dd3fc;
     
     /* Background Colors */
     --bg-main-header: #ffffff;
@@ -30,6 +31,7 @@
     
     /* Border Colors */
     --border-color: #e2e8f0;
+    --border-color-accent: #1A3E74;
     
     /* Header Dimensions */
     --top-bar-height: 48px;
@@ -43,10 +45,13 @@
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
+    --transition-slow: 0.4s ease;
     
-    /* Scrollbar Colors */
-    --header-scroll-track: #f1f5f9;
-    --header-scroll-thumb: #cbd5e1;
+    /* Scrollbar Colors - Matching Cookie Modal Style */
+    --scrollbar-track: #f1f1f1;
+    --scrollbar-thumb: #c1c9d6;
+    --scrollbar-thumb-hover: #a0aab8;
+    --scrollbar-width: 8px;
     
     /* White Color */
     --color-white: #ffffff;
@@ -54,6 +59,7 @@
     /* Font Size Scale (for accessibility) */
     --font-size-scale: 1;
 }
+
 .loading-placeholder {
     display: flex;
     justify-content: center;
@@ -261,12 +267,28 @@
     outline-offset: 2px;
 }
 
+/* Animação de hover com luz azul clara */
+.font-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.font-btn:hover::after {
+    left: 100%;
+}
+
 /* Animação de clique - ripple azul */
 .font-btn.clicked {
     animation: btnClickAnimation 0.4s ease-out;
 }
 
-.font-btn.clicked::after {
+.font-btn.clicked::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -317,19 +339,6 @@
 }
 
 /* Efeito de brilho branco ao passar o mouse */
-.font-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.4s ease, height 0.4s ease;
-}
-
 .font-btn:active::before {
     width: 150%;
     height: 150%;
@@ -347,112 +356,88 @@
 }
 
 /* ============================================
-   THEME TOGGLE - SWITCH ESTILO TOGGLE
+   THEME TOGGLE - BOTÃO BRANCO COM ÍCONE AZUL ESCURO (MESMO ESTILO FONT-BTN)
    ============================================ */
 .theme-toggle {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: auto;
-    height: auto;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    color: inherit;
+    gap: 2px;
+    min-width: 36px;
+    height: 32px;
+    padding: 0 8px;
+    background-color: #ffffff;
+    border: 2px solid #1A3E74;
+    border-radius: 8px;
+    color: #1A3E74;
     cursor: pointer;
     transition: all 0.3s ease;
-    padding: 0;
+    font-weight: 700;
+    font-size: 0.75rem;
+    box-shadow: 0 2px 4px rgba(26, 62, 116, 0.15);
+    position: relative;
+    overflow: hidden;
 }
 
 .theme-toggle:hover {
-    background: transparent;
-    border-color: transparent;
-    transform: none;
-}
-
-.theme-toggle:focus {
-    outline: 3px solid rgba(255, 255, 255, 0.5);
-    outline-offset: 3px;
-    border-radius: 4px;
-}
-
-/* Animação de clique do theme toggle */
-.theme-toggle.clicked .theme-switch {
-    animation: toggleClickAnimation 0.4s ease-out;
-}
-
-@keyframes toggleClickAnimation {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(0.92);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Container do switch (formato de pílula) */
-.theme-switch {
-    position: relative;
-    width: 72px;
-    height: 36px;
     background-color: #ffffff;
-    border: 2px solid #1A3E74;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    padding: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(26, 62, 116, 0.15);
-}
-
-.theme-switch:hover {
+    border-color: #1A3E74;
     box-shadow: 0 4px 12px rgba(26, 62, 116, 0.25);
     transform: translateY(-2px);
 }
 
-/* Círculo branco (indicador ativo - handle) */
-.switch-handle {
+.theme-toggle:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(26, 62, 116, 0.15);
+}
+
+.theme-toggle:focus {
+    outline: 3px solid rgba(26, 62, 116, 0.4);
+    outline-offset: 2px;
+}
+
+/* Animação de hover com luz azul clara */
+.theme-toggle::after {
+    content: '';
     position: absolute;
-    left: 4px;
-    width: 26px;
-    height: 26px;
-    background-color: #1A3E74;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.theme-toggle:hover::after {
+    left: 100%;
+}
+
+/* Animação de clique - ripple azul */
+.theme-toggle.clicked {
+    animation: btnClickAnimation 0.4s ease-out;
+}
+
+.theme-toggle.clicked::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(26, 62, 116, 0.3);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    transition: transform 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, -50%);
+    animation: rippleEffect 0.5s ease-out;
 }
 
-/* Ícone do sol dentro do handle */
-.switch-handle .fa-sun {
-    font-size: 12px;
-    color: #ffffff;
-}
-
-/* Ícone da lua (fixo no container do switch) */
-.theme-switch > .fa-moon {
-    position: absolute;
-    right: 10px;
+.theme-toggle i {
     font-size: 14px;
     color: #1A3E74;
-    transition: color 0.3s ease;
-    z-index: 1;
+    transition: all 0.3s ease;
 }
 
-.theme-switch:hover > .fa-moon {
+.theme-toggle:hover i {
     color: #1A3E74;
-}
-
-/* Estado ativo do switch (quando mover para direita) */
-.theme-switch.active .switch-handle {
-    transform: translateX(34px);
 }
 
 /* ============================================
@@ -503,12 +488,28 @@
     outline-offset: 2px;
 }
 
+/* Animação de hover com luz azul clara */
+.skip-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.skip-btn:hover::after {
+    left: 100%;
+}
+
 /* Animação de clique - ripple azul */
 .skip-btn.clicked {
     animation: btnClickAnimation 0.4s ease-out;
 }
 
-.skip-btn.clicked::after {
+.skip-btn.clicked::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -647,17 +648,16 @@
 }
 
 /* ============================================
-   MEGA PANEL STYLES (UNIFORM HEIGHT)
+   MEGA PANEL STYLES - LARGURA ADEQUADA E PADDING LATERAL
    ============================================ */
 .mega-panel {
     display: flex;
     flex-direction: column;
     position: fixed;
-    left: 0;
-    right: 0;
+    left: 50%;
     top: 100%;
-    width: 100vw;
-    max-width: 100vw;
+    width: 100%;
+    max-width: 1400px;
     height: 400px;
     max-height: 70vh;
     background-color: var(--bg-mega-panel, #ffffff);
@@ -669,6 +669,10 @@
     visibility: hidden;
     overflow: hidden;
     pointer-events: none;
+    transform: translateX(-50%);
+    border-radius: 0 0 16px 16px;
+    /* Padding lateral para conteúdo respeitar */
+    padding: 0 24px;
 }
 
 .mega-panel:not([style*="background"]),
@@ -681,7 +685,7 @@
     flex-direction: column;
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
     background-color: var(--bg-mega-panel, #ffffff) !important;
     pointer-events: auto;
 }
@@ -703,7 +707,7 @@
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
-    transform: translateY(-10px);
+    transform: translateX(-50%) translateY(-10px);
 }
 
 .mega-panel-sobre-nos.active,
@@ -720,9 +724,9 @@
 .panel-standard-height {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: calc(100% + 48px);
     max-width: 1400px;
-    margin: 0 auto;
+    margin: 0 -24px;
     height: 100%;
     max-height: none;
     overflow: hidden;
@@ -739,6 +743,7 @@
     border-right: 1px solid var(--border-color, #e0e0e0);
     overflow-y: auto;
     flex-shrink: 0;
+    padding: 0 8px;
 }
 
 .menu-tabs {
@@ -746,12 +751,15 @@
     height: 100%;
 }
 
+/* ============================================
+   MEGA MENU MARKER ICONS & TAB STYLES
+   ============================================ */
 .menu-tab-trigger {
     display: flex;
     align-items: center;
     width: 100%;
     text-align: left;
-    padding: 10px 20px;
+    padding: 10px 16px;
     background: transparent;
     border: none;
     border-left: 3px solid transparent;
@@ -779,6 +787,35 @@
     background: var(--color-accent);
     border-radius: 0 2px 2px 0;
     transition: height var(--transition-fast);
+}
+
+/* Marker icon styling */
+.tab-marker-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.tab-marker-icon .fas,
+.tab-marker-icon .far {
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.menu-tab-trigger:hover .tab-marker-icon .fas,
+.menu-tab-trigger:hover .tab-marker-icon .far {
+    color: var(--color-accent);
+}
+
+.menu-tab-trigger.active .tab-marker-icon .fas,
+.menu-tab-trigger.active .tab-marker-icon .far {
+    color: var(--color-accent);
 }
 
 .menu-tab-trigger:hover {
@@ -815,6 +852,26 @@
     overflow-y: auto;
     overflow-x: hidden;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Fix content gaps in mega menu */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.2s ease;
+    height: 100%;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.tab-content.active {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 .content-title {
@@ -822,10 +879,11 @@
     font-weight: 700;
     color: var(--color-primary);
     margin: 0 0 6px 0;
-    padding-bottom: 4px;
+    padding: 0 0 4px 0;
     border-bottom: 1px solid var(--border-color);
     white-space: nowrap;
     font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    flex-shrink: 0;
 }
 
 .content-links {
@@ -834,11 +892,12 @@
     padding: 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.25rem 1rem;
+    gap: 0.15rem 1rem;
     flex: 1;
     min-height: 0;
     overflow-y: auto;
     align-content: start;
+    padding-right: 8px;
 }
 
 .content-links li a {
@@ -904,6 +963,17 @@
     border-left: 1px solid var(--border-color, #e0e0e0);
     background-color: var(--bg-secondary, #f5f7fa);
     overflow: hidden;
+    margin-left: auto;
+}
+
+/* Ensure mega panels expand to the right */
+.mega-panel .panel-standard-height {
+    padding-right: 0;
+}
+
+.mega-panel .panel-promo-area {
+    padding-right: 0;
+    margin-right: 0;
 }
 
 .glowing-frame {
@@ -921,6 +991,19 @@
     box-shadow: none;
 }
 
+/* Mega Menu Image Frame - Enhanced with Leaf Effect and Blue Border */
+.mega-image-frame {
+    border: 2px solid var(--color-primary, #1A3E74);
+    border-radius: 0 30px 0 30px;
+    box-shadow: 0 4px 12px rgba(26, 62, 116, 0.15), 0 2px 6px rgba(26, 62, 116, 0.1);
+    background: var(--bg-main-header);
+}
+
+.mega-image-frame:hover {
+    box-shadow: 0 8px 24px rgba(26, 62, 116, 0.2), 0 4px 8px rgba(26, 62, 116, 0.15);
+    border-color: var(--color-accent, #00bcd4);
+}
+
 .glowing-frame:hover {
     box-shadow: 0 6px 16px -3px rgba(59, 130, 246, 0.2);
 }
@@ -931,6 +1014,19 @@
     position: relative;
     overflow: hidden;
     border-radius: 0;
+}
+
+/* Mega Image Container - Leaf Effect */
+.mega-image-container {
+    border-radius: 0 28px 0 28px;
+    overflow: hidden;
+    padding: 8px 8px 8px 8px;
+    background: var(--bg-main-header);
+}
+
+.mega-image-container img {
+    border-radius: 0 22px 0 22px;
+    border: 1px solid rgba(26, 62, 116, 0.2);
 }
 
 .frame-image-container img {
@@ -1077,9 +1173,9 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1152px;
     margin: 0 auto;
-    padding: 24px 40px;
+    padding: 24px 24px;
     gap: 40px;
 }
 
@@ -1163,8 +1259,8 @@
 }
 
 .mega-idiomas-panel .panel-promo-area {
-    width: 280px;
-    min-width: 280px;
+    width: 240px;
+    min-width: 240px;
     flex-shrink: 0;
 }
 
@@ -1742,7 +1838,7 @@
 }
 
 /* ============================================
-   SCROLLBARS
+   SCROLLBARS - MATCHING COOKIE MODAL STYLE
    ============================================ */
 .custom-scroll::-webkit-scrollbar,
 .header-scroll::-webkit-scrollbar {
@@ -1751,14 +1847,14 @@
 
 .custom-scroll::-webkit-scrollbar-track,
 .header-scroll::-webkit-scrollbar-track {
-    background: var(--header-scroll-track);
+    background: var(--scrollbar-track, #f1f1f1);
 }
 
 .custom-scroll::-webkit-scrollbar-thumb,
 .header-scroll::-webkit-scrollbar-thumb {
-    background-color: var(--header-scroll-thumb);
+    background-color: var(--scrollbar-thumb, #c1c9d6);
     border-radius: 10px;
-    border: 2px solid var(--header-scroll-track);
+    border: 2px solid var(--scrollbar-track, #f1f1f1);
 }
 
 .panel-sidebar,
@@ -1766,7 +1862,7 @@
 .mobile-menu-content,
 .idiomas-grid {
     scrollbar-width: thin;
-    scrollbar-color: var(--header-scroll-thumb) var(--header-scroll-track);
+    scrollbar-color: var(--scrollbar-thumb, #c1c9d6) var(--scrollbar-track, #f1f1f1);
 }
 
 .panel-sidebar::-webkit-scrollbar,
@@ -1780,16 +1876,16 @@
 .panel-main-content::-webkit-scrollbar-track,
 .mobile-menu-content::-webkit-scrollbar-track,
 .idiomas-grid::-webkit-scrollbar-track {
-    background: var(--header-scroll-track);
+    background: var(--scrollbar-track, #f1f1f1);
 }
 
 .panel-sidebar::-webkit-scrollbar-thumb,
 .panel-main-content::-webkit-scrollbar-thumb,
 .mobile-menu-content::-webkit-scrollbar-thumb,
 .idiomas-grid::-webkit-scrollbar-thumb {
-    background-color: var(--header-scroll-thumb);
+    background-color: var(--scrollbar-thumb, #c1c9d6);
     border-radius: 10px;
-    border: 2px solid var(--header-scroll-track);
+    border: 2px solid var(--scrollbar-track, #f1f1f1);
 }
 
 /* ============================================
@@ -1819,6 +1915,72 @@ body:has(.hero-carousel) .main-content {
     /* Página Inicial - Tablet */
     body:has(.hero-carousel) .main-content {
         padding-top: 0;
+    }
+}
+
+/* ============================================
+   RESPONSIVE: TABLET (769px - 1024px)
+   ============================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .top-bar-container {
+        padding: 0 16px;
+    }
+    
+    .header-container {
+        padding: 0 16px;
+    }
+    
+    .mega-panel {
+        max-width: 95vw;
+        padding: 0 16px;
+    }
+    
+    .panel-standard-height {
+        max-width: 100%;
+        width: calc(100% + 32px);
+        margin: 0 -16px;
+    }
+    
+    .panel-sidebar {
+        min-width: 160px;
+        max-width: 200px;
+    }
+    
+    .panel-promo-area {
+        width: 180px;
+        min-width: 180px;
+        max-width: 180px;
+    }
+    
+    .content-links {
+        grid-template-columns: 1fr;
+        gap: 0.15rem 0.5rem;
+    }
+    
+    .nav-link {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .font-btn {
+        min-width: 32px;
+        height: 28px;
+        padding: 0 6px;
+    }
+    
+    .theme-toggle {
+        min-width: 32px;
+        height: 28px;
+        padding: 0 6px;
+    }
+    
+    .skip-btn {
+        min-width: 80px;
+        padding: 5px 10px;
+    }
+    
+    .skip-label {
+        font-size: 0.7rem;
     }
 }
 
@@ -1858,6 +2020,8 @@ body:has(.hero-carousel) .main-content {
         max-width: 100vw;
         z-index: 2147483647;
         transform: none;
+        border-radius: 0;
+        padding: 0 16px;
     }
 
     .mega-panel.active {
@@ -1965,12 +2129,28 @@ body:has(.hero-carousel) .main-content {
         overflow: hidden;
     }
 
+    /* Animação de hover com luz azul clara */
+    .mobile-font-btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.4), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .mobile-font-btn:hover::after {
+        left: 100%;
+    }
+
     /* Animação de clique mobile */
     .mobile-font-btn.clicked {
         animation: btnClickAnimation 0.4s ease-out;
     }
 
-    .mobile-font-btn.clicked::after {
+    .mobile-font-btn.clicked::before {
         content: '';
         position: absolute;
         top: 50%;
@@ -2021,61 +2201,87 @@ body:has(.hero-carousel) .main-content {
         border-color: rgba(26, 62, 116, 0.5);
     }
 
-    /* Mobile theme toggle - SWITCH TOGGLE */
+    /* Mobile theme toggle - BOTÃO BRANCO COM ÍCONE AZUL ESCURO (MESMO ESTILO FONT-BTN) */
     .mobile-theme-btn {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: auto;
-        height: auto;
-        padding: 0;
-        background: transparent;
-        border: none;
-        border-radius: 0;
+        gap: 2px;
+        min-width: 32px;
+        height: 28px;
+        padding: 0 6px;
+        background-color: #ffffff;
+        border: 2px solid #1A3E74;
+        border-radius: 6px;
+        color: #1A3E74;
         cursor: pointer;
         transition: all 0.3s ease;
+        font-weight: 700;
+        font-size: 12px;
+        box-shadow: 0 2px 4px rgba(26, 62, 116, 0.15);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Animação de hover com luz azul clara */
+    .mobile-theme-btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.4), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .mobile-theme-btn:hover::after {
+        left: 100%;
     }
 
     .mobile-theme-btn:hover {
-        background: transparent;
-        transform: none;
+        background-color: #ffffff;
+        border-color: #1A3E74;
+        box-shadow: 0 4px 12px rgba(26, 62, 116, 0.25);
+        transform: translateY(-2px);
+    }
+
+    .mobile-theme-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(26, 62, 116, 0.15);
     }
 
     .mobile-theme-btn:focus {
         outline: 3px solid rgba(26, 62, 116, 0.4);
-        outline-offset: 3px;
-        border-radius: 4px;
+        outline-offset: 2px;
     }
 
     /* Animação de clique mobile theme toggle */
-    .mobile-theme-btn.clicked .theme-switch {
-        animation: toggleClickAnimation 0.4s ease-out;
+    .mobile-theme-btn.clicked {
+        animation: btnClickAnimation 0.4s ease-out;
     }
 
-    /* Mobile theme switch - menor que desktop */
-    .mobile-theme-btn .theme-switch {
-        width: 56px;
-        height: 28px;
-        border-radius: 14px;
-        border-width: 2px;
+    .mobile-theme-btn.clicked::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(26, 62, 116, 0.3);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        animation: rippleEffect 0.5s ease-out;
     }
 
-    .mobile-theme-btn .switch-handle {
-        width: 20px;
-        height: 20px;
+    .mobile-theme-btn i {
+        font-size: 12px;
+        color: #1A3E74;
+        transition: all 0.3s ease;
     }
 
-    .mobile-theme-btn .switch-handle .fa-sun {
-        font-size: 10px;
-    }
-
-    .mobile-theme-btn .theme-switch > .fa-moon {
-        font-size: 11px;
-        right: 8px;
-    }
-
-    .mobile-theme-btn .theme-switch.active .switch-handle {
-        transform: translateX(26px);
+    .mobile-theme-btn:hover i {
+        color: #1A3E74;
     }
 
     /* Mobile search button - BOTÃO BRANCO COM ÍCONE AZUL ESCURO */
@@ -2096,12 +2302,28 @@ body:has(.hero-carousel) .main-content {
         overflow: hidden;
     }
 
+    /* Animação de hover com luz azul clara */
+    .mobile-search-btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.4), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .mobile-search-btn:hover::after {
+        left: 100%;
+    }
+
     /* Animação de clique mobile search */
     .mobile-search-btn.clicked {
         animation: btnClickAnimation 0.4s ease-out;
     }
 
-    .mobile-search-btn.clicked::after {
+    .mobile-search-btn.clicked::before {
         content: '';
         position: absolute;
         top: 50%;
@@ -2213,7 +2435,7 @@ body:has(.hero-carousel) .main-content {
         animation: btnClickAnimation 0.4s ease-out;
     }
 
-    .mobile-menu-toggle.clicked::after {
+    .mobile-menu-toggle.clicked::before {
         content: '';
         position: absolute;
         top: 50%;
@@ -2550,6 +2772,27 @@ body:has(.hero-carousel) .main-content {
     .search-btn {
         width: 100%;
     }
+    
+    /* Ajustes para tablet pequeno */
+    .mobile-font-btn,
+    .mobile-font-btn:disabled,
+    .mobile-theme-btn {
+        min-width: 28px;
+        height: 26px;
+        padding: 0 4px;
+    }
+    
+    .mobile-search-btn {
+        width: 28px;
+        height: 26px;
+    }
+    
+    .mobile-font-btn .fa-font,
+    .mobile-font-btn .fa-minus,
+    .mobile-font-btn .fa-plus,
+    .mobile-theme-btn i {
+        font-size: 10px;
+    }
 }
 
 /* ============================================
@@ -2589,12 +2832,12 @@ body:has(.hero-carousel) .main-content {
     }
 
     .mobile-band-1-container {
-        padding: 6px 1.5rem;
+        padding: 6px 1rem;
         gap: 8px;
     }
 
     .mobile-band-2 {
-        padding: 8px 1.5rem;
+        padding: 8px 1rem;
     }
 
     .mobile-header-logo img {
@@ -2670,6 +2913,33 @@ body:has(.hero-carousel) .main-content {
         padding: 10px 16px;
         font-size: 14px;
     }
+    
+    /* Botões ainda menores para mobile */
+    .mobile-font-controls {
+        gap: 4px;
+    }
+    
+    .mobile-font-btn,
+    .mobile-font-btn:disabled,
+    .mobile-theme-btn {
+        min-width: 26px;
+        height: 24px;
+        padding: 0 4px;
+        font-size: 11px;
+    }
+    
+    .mobile-search-btn {
+        width: 26px;
+        height: 24px;
+    }
+    
+    .mobile-font-btn .fa-font,
+    .mobile-font-btn .fa-minus,
+    .mobile-font-btn .fa-plus,
+    .mobile-theme-btn i,
+    .mobile-search-btn i {
+        font-size: 10px;
+    }
 }
 
 /* ============================================
@@ -2703,5 +2973,140 @@ body:has(.hero-carousel) .main-content {
     .mobile-nav-link {
         font-size: 14px;
         padding: 12px 0;
+    }
+    
+    /* Tamanho mínimo para botões */
+    .mobile-font-btn,
+    .mobile-font-btn:disabled,
+    .mobile-theme-btn {
+        min-width: 24px;
+        height: 22px;
+        padding: 0 2px;
+    }
+    
+    .mobile-search-btn {
+        width: 24px;
+        height: 22px;
+    }
+}
+
+/* ============================================
+   ANIMAÇÕES DE HOVER PARA TÍTULOS (Similar aos títulos do site)
+   ============================================ */
+
+/* Efeito de brilho azul claro nos títulos do mega menu */
+.content-title {
+    position: relative;
+    overflow: hidden;
+}
+
+.content-title::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.content-title:hover::after {
+    left: 100%;
+}
+
+/* Efeito de hover nos links do conteúdo */
+.content-links li a {
+    position: relative;
+    overflow: hidden;
+}
+
+.content-links li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: var(--color-accent);
+    transition: left 0.3s ease;
+}
+
+.content-links li a:hover::after {
+    left: 0;
+}
+
+/* Animações para abas do menu */
+.menu-tab-trigger {
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-tab-trigger::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.15), transparent);
+    transition: left 0.5s ease;
+    pointer-events: none;
+}
+
+.menu-tab-trigger:hover::after {
+    left: 100%;
+}
+
+/* Animação para botão de idioma no painel */
+.idioma-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.idioma-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.2), transparent);
+    transition: left 0.5s ease;
+    pointer-events: none;
+}
+
+.idioma-item:hover::after {
+    left: 100%;
+}
+
+/* ============================================
+   PADDING LATERAL CONSISTENTE PARA MEGA MENU
+   ============================================ */
+
+/* Desktop */
+.mega-panel {
+    padding-left: max(24px, calc((100vw - 1200px) / 2));
+    padding-right: max(24px, calc((100vw - 1200px) / 2));
+}
+
+.panel-standard-height {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .mega-panel {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .mega-panel {
+        padding-left: 16px;
+        padding-right: 16px;
     }
 }

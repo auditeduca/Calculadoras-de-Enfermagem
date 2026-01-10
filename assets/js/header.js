@@ -29,7 +29,8 @@
         isDarkMode: false,
         loaded: false,
         activeMegaPanel: null,
-        activeMobileSubmenu: null
+        activeMobileSubmenu: null,
+        currentLanguage: 'pt-br' // Idioma atual salvo/carregado
     };
 
     // ============================================
@@ -1017,6 +1018,11 @@
 
             currentOpenPanel = panel;
             currentOpenTrigger = trigger;
+
+            // Se for o painel de idiomas, atualizar indicadores de idioma ativo
+            if (panel.classList.contains('mega-panel-idiomas')) {
+                onIdiomasPanelOpen();
+            }
         }
 
         function hidePanel(trigger, panel) {
@@ -1166,33 +1172,149 @@
     }
 
     // ============================================
-    // SELETOR DE IDIOMA
+    // SELETOR DE IDIOMA - INDICADOR DE IDIOMA ATIVO
     // ============================================
+    
+    /**
+     * Atualiza os indicadores visuais de idioma ativo
+     * @param {string} langCode - Código do idioma (ex: 'pt-br', 'en', 'es')
+     */
+    function updateActiveLanguageIndicators(langCode) {
+        if (!langCode) {
+            langCode = State.currentLanguage;
+        }
+        
+        // Atualizar estado interno
+        State.currentLanguage = langCode;
+        
+        // Desktop: Atualizar links no mega panel de idiomas
+        const desktopLangLinks = document.querySelectorAll('.mega-panel-idiomas .idiomas-list li a');
+        desktopLangLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-lang') === langCode) {
+                link.classList.add('active');
+            }
+        });
+        
+        // Desktop: Atualizar itens no grid de idiomas
+        const desktopLangItems = document.querySelectorAll('.mega-panel-idiomas .idioma-item');
+        desktopLangItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('data-lang') === langCode) {
+                item.classList.add('active');
+            }
+        });
+        
+        // Mobile: Atualizar itens no grid de idiomas
+        const mobileLangItems = document.querySelectorAll('.mobile-language-grid .language-flag-item');
+        mobileLangItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('data-lang') === langCode) {
+                item.classList.add('active');
+            }
+        });
+        
+        // Mobile: Atualizar indicador atual
+        const mobileIdiomasCurrent = getElement('mobile-idiomas-current');
+        if (mobileIdiomasCurrent) {
+            const activeMobileItem = document.querySelector(`.mobile-language-grid .language-flag-item[data-lang="${langCode}"]`);
+            if (activeMobileItem) {
+                const img = activeMobileItem.querySelector('img');
+                if (img) {
+                    mobileIdiomasCurrent.innerHTML = img.outerHTML + '<span>' + img.alt + '</span>';
+                }
+            }
+        }
+        
+        // Atualizar bandeira no seletor do menu desktop
+        const activeLangFlag = getElement('active-lang-flag');
+        if (activeLangFlag) {
+            const activeDesktopItem = document.querySelector(`.mega-panel-idiomas .idioma-item[data-lang="${langCode}"]`);
+            if (activeDesktopItem) {
+                const flagImg = activeDesktopItem.querySelector('.idioma-flag');
+                if (flagImg) {
+                    activeLangFlag.src = flagImg.src;
+                    activeLangFlag.alt = flagImg.alt;
+                }
+            }
+        }
+        
+        console.log('[Header] Indicadores de idioma ativo atualizados para:', langCode);
+    }
+    
+    /**
+     * Salva o idioma selecionado no localStorage
+     * @param {string} langCode - Código do idioma
+     */
+    function saveSelectedLanguage(langCode) {
+        try {
+            localStorage.setItem('nursing_calc_lang', langCode);
+            State.currentLanguage = langCode;
+            console.log('[Header] Idioma salvo:', langCode);
+        } catch (err) {
+            console.warn('[Header] Erro ao salvar idioma:', err);
+        }
+    }
+    
+    /**
+     * Carrega o idioma salvo do localStorage
+     * @returns {string} Código do idioma salvo ou padrão
+     */
+    function loadSavedLanguage() {
+        try {
+            const savedLang = localStorage.getItem('nursing_calc_lang') || 'pt-br';
+            State.currentLanguage = savedLang;
+            return savedLang;
+        } catch (err) {
+            console.warn('[Header] Erro ao carregar idioma salvo:', err);
+            State.currentLanguage = 'pt-br';
+            return 'pt-br';
+        }
+    }
+    
+    /**
+     * Atualiza indicadores de idioma quando o mega panel de idiomas é aberto
+     */
+    function onIdiomasPanelOpen() {
+        updateActiveLanguageIndicators();
+    }
     function initLanguageSelector() {
+        // Carregar idioma salvo e atualizar indicadores visuais
+        const savedLang = loadSavedLanguage();
+        updateActiveLanguageIndicators(savedLang);
+        
         // Desktop mega panel
         const languageLinks = $$('.mega-panel-idiomas .idiomas-list li a');
         const activeLangFlag = getElement('active-lang-flag');
-
+    
         if (languageLinks.length > 0) {
             languageLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
-
+    
                     languageLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
-
+    
                     const flagImg = this.querySelector('.idioma-flag-link');
+                    const langCode = this.getAttribute('data-lang');
+                    
+                    // Salvar idioma e atualizar indicadores
+                    if (langCode) {
+                        saveSelectedLanguage(langCode);
+                        updateActiveLanguageIndicators(langCode);
+                    }
+                    
                     if (flagImg && activeLangFlag) {
                         activeLangFlag.src = flagImg.src;
                         activeLangFlag.alt = flagImg.alt;
                     }
-
+    
                     // Fechar mega panel
                     const megaPanel = this.closest('.mega-panel');
                     if (megaPanel) {
                         megaPanel.classList.remove('active');
                     }
-
+    
                     const trigger = document.querySelector('[data-menu="idiomas"]');
                     if (trigger) {
                         trigger.setAttribute('aria-expanded', 'false');
@@ -1200,46 +1322,54 @@
                 });
             });
         }
-
+    
         // Mobile language section
         const mobileIdiomasSection = getElement('mobile-idiomas-section');
         const mobileIdiomasToggle = getElement('mobile-idiomas-toggle');
         const mobileIdiomasList = getElement('mobile-idiomas-list');
         const mobileIdiomasArrow = getElement('mobile-idiomas-arrow');
-
+    
         if (mobileIdiomasToggle && mobileIdiomasList) {
             mobileIdiomasToggle.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-
+    
                 const isExpanded = mobileIdiomasSection.classList.contains('expanded');
                 mobileIdiomasSection.classList.toggle('expanded', !isExpanded);
                 mobileIdiomasList.style.display = isExpanded ? 'none' : 'grid';
                 mobileIdiomasToggle.setAttribute('aria-expanded', !isExpanded);
-
+    
                 if (mobileIdiomasArrow) {
                     mobileIdiomasArrow.classList.toggle('fa-chevron-down', isExpanded);
                     mobileIdiomasArrow.classList.toggle('fa-chevron-up', !isExpanded);
                 }
             });
         }
-
+    
         // Mobile language selection
         const languageFlagItems = $$('.language-flag-item');
         const mobileIdiomasCurrent = getElement('mobile-idiomas-current');
-
+    
         languageFlagItems.forEach(item => {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
-
+    
                 languageFlagItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
-
+    
                 const img = this.querySelector('img');
+                const langCode = this.getAttribute('data-lang');
+                
+                // Salvar idioma e atualizar indicadores
+                if (langCode) {
+                    saveSelectedLanguage(langCode);
+                    updateActiveLanguageIndicators(langCode);
+                }
+    
                 if (img && mobileIdiomasCurrent) {
                     mobileIdiomasCurrent.innerHTML = img.outerHTML + '<span>' + img.alt + '</span>';
                 }
-
+    
                 // Salvar idioma no localStorage
                 try {
                     const lang = this.getAttribute('data-lang');
@@ -1262,21 +1392,6 @@
                 }
             });
         });
-
-        // Initialize saved language
-        try {
-            const savedLang = localStorage.getItem('nursing_calc_lang') || 'pt-br';
-            const activeItem = mobileIdiomasList?.querySelector('[data-lang="' + savedLang + '"]');
-            if (activeItem) {
-                activeItem.classList.add('active');
-                const img = activeItem.querySelector('img');
-                if (img && mobileIdiomasCurrent) {
-                    mobileIdiomasCurrent.innerHTML = img.outerHTML + '<span>' + img.alt + '</span>';
-                }
-            }
-        } catch (err) {
-            console.warn('[Header] Erro ao carregar idioma ativo:', err);
-        }
     }
 
     // ============================================
