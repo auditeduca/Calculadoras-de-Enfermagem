@@ -1,1627 +1,552 @@
-/* ========================================
-   ACCESSIBILITY.CSS - Sistema Centralizado de Acessibilidade
-   Calculadoras de Enfermagem
-   
-   ARQUITETURA:
-   - Todos os recursos de acessibilidade são definidos neste arquivo
-   - Usa filtros CSS para evitar reflows (sem mudanças de dimensões)
-   - Afeta header, main, footer, banner de cookies e todos os modais
-   - O painel de accessibility NÃO é afetado pelos filtros
-   ======================================== */
+/* ============================================
+   ACCESSIBILITY.CSS
+   Sistema de Painel de Acessibilidade Modular
+   ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap');
-@import url('https://fonts.cdnfonts.com/css/opendyslexic');
-
-/* =========================================
-   SELETORES UNIFICADOS PARA ACESSIBILIDADE
-   Estes seletores são usados por todos os recursos
-   para garantir impacto consistente em toda a aplicação.
-   ========================================= */
-
-/* Área principal afetada por recursos de acessibilidade */
-.acc-target,
-body.acc-mode header:not(#accessibility-panel *),
-body.acc-mode .top-bar,
-body.acc-mode .main-header,
-body.acc-mode .mobile-main-header,
-body.acc-mode main,
-body.acc-mode .main-content,
-body.acc-mode article,
-body.acc-mode .content,
-body.acc-mode footer,
-body.acc-mode #footer,
-body.acc-mode .site-footer,
-body.acc-mode #cookie-banner,
-body.acc-mode .cookie-banner,
-body.acc-mode [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.acc-mode .modal-overlay:not(#accessibility-panel *),
-body.acc-mode .mega-panel,
-body.acc-mode .mobile-menu {
-  /* Área que será afetada pelos filtros */
+/* VARIÁVEIS DO COMPONENTE */
+:root {
+    --acc-primary: #1A3E74;
+    --acc-primary-hover: #112b52;
+    
+    /* Cores do painel (Light Mode) */
+    --acc-panel-bg: rgba(240, 249, 255, 0.85);
+    --acc-panel-bg-header: rgba(255, 255, 255, 0.5);
+    --acc-panel-border: rgba(255, 255, 255, 0.6);
+    --acc-text-main: #334155;
+    --acc-text-muted: #94a3b8;
+    --acc-card-bg: rgba(255, 255, 255, 0.7);
+    --acc-card-hover: rgba(255, 255, 255, 0.95);
+    --acc-card-active: rgba(240, 244, 250, 0.8);
+    
+    /* Scrollbar */
+    --acc-scroll-track: rgba(241, 245, 249, 0.5);
+    --acc-scroll-thumb: #93c5fd;
+    
+    /* Linha divisória header */
+    --acc-header-shine: linear-gradient(90deg, transparent, #3b82f6, #3b82f6, #3b82f6, transparent);
 }
 
-/* =========================================
-   INVERSÃO DE CORES
-   Usa filter: invert() + hue-rotate() para manter as cores
-   relativamente normais após inversão, sem causar reflow.
-   ========================================= */
-
-body.inverted .acc-target,
-body.inverted header:not(#accessibility-panel *):not(.mobile-menu-header),
-body.inverted .top-bar,
-body.inverted .main-header,
-body.inverted .mobile-main-header,
-body.inverted main,
-body.inverted .main-content,
-body.inverted article,
-body.inverted .content,
-body.inverted footer,
-body.inverted #footer,
-body.inverted .site-footer,
-body.inverted #cookie-banner,
-body.inverted .cookie-banner,
-body.inverted [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.inverted .modal-overlay:not(#accessibility-panel *),
-body.inverted .mega-panel,
-body.inverted .mobile-menu {
-  filter: invert(1) hue-rotate(180deg);
+/* TEMA ESCURO (Ativado via JS) */
+body.contrast-dark, body.contrast-inverted {
+    --acc-panel-bg: rgba(15, 23, 42, 0.9);
+    --acc-panel-bg-header: rgba(255, 255, 255, 0.05);
+    --acc-panel-border: rgba(255, 255, 255, 0.1);
+    --acc-text-main: #f1f5f9;
+    --acc-text-muted: #94a3b8;
+    --acc-card-bg: rgba(30, 41, 59, 0.6);
+    --acc-card-hover: rgba(51, 65, 85, 0.8);
+    --acc-card-active: rgba(26, 62, 116, 0.5);
+    
+    --acc-scroll-track: rgba(30, 41, 59, 0.5);
+    --acc-scroll-thumb: #475569;
+    
+    --acc-header-shine: linear-gradient(90deg, transparent, #60a5fa, #93c5fd, #60a5fa, transparent);
 }
 
-/* Imagens, vídeos e elementos com transparência */
-body.inverted img:not(.cookie-icon *),
-body.inverted video,
-body.inverted iframe,
-body.inverted svg:not(.icon-slot *),
-body.inverted picture {
-  filter: invert(1) hue-rotate(180deg);
+/* Ajustes específicos para modo escuro */
+body.contrast-dark .accessibility-card,
+body.contrast-inverted .accessibility-card {
+    color: #fff;
 }
 
-/* =========================================
-   ALTO CONTRASTE - MODO ESCURO
-   Usa filter: contrast() brightness() para evitar reflow
-   ========================================= */
-
-body.dark-contrast .acc-target,
-body.dark-contrast header:not(#accessibility-panel *),
-body.dark-contrast .top-bar,
-body.dark-contrast .main-header,
-body.dark-contrast .mobile-main-header,
-body.dark-contrast main,
-body.dark-contrast .main-content,
-body.dark-contrast article,
-body.dark-contrast .content,
-body.dark-contrast footer,
-body.dark-contrast #footer,
-body.dark-contrast .site-footer,
-body.dark-contrast #cookie-banner,
-body.dark-contrast .cookie-banner,
-body.dark-contrast [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.dark-contrast .mega-panel,
-body.dark-contrast .mobile-menu {
-  filter: contrast(1.4) brightness(1.2);
-  background: #000 !important;
-  color: #fff !important;
+body.contrast-dark .accessibility-card .icon-slot,
+body.contrast-inverted .accessibility-card .icon-slot {
+    color: #93c5fd;
 }
 
-/* Links em alto contraste escuro */
-body.dark-contrast a {
-  color: #87CEEB !important;
+body.contrast-dark .accessibility-card.active,
+body.contrast-inverted .accessibility-card.active {
+    border-color: #60a5fa;
 }
 
-/* =========================================
-   ALTO CONTRASTE - MODO CLARO
-   Usa filter: contrast() brightness() para evitar reflow
-   ========================================= */
-
-body.light-contrast .acc-target,
-body.light-contrast header:not(#accessibility-panel *),
-body.light-contrast .top-bar,
-body.light-contrast .main-header,
-body.light-contrast .mobile-main-header,
-body.light-contrast main,
-body.light-contrast .main-content,
-body.light-contrast article,
-body.light-contrast .content,
-body.light-contrast footer,
-body.light-contrast #footer,
-body.light-contrast .site-footer,
-body.light-contrast #cookie-banner,
-body.light-contrast .cookie-banner,
-body.light-contrast [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.light-contrast .mega-panel,
-body.light-contrast .mobile-menu {
-  filter: contrast(1.3) brightness(1.1);
+body.contrast-dark .section-title,
+body.contrast-inverted .section-title {
+    color: #94a3b8;
 }
 
-/* =========================================
-   FILTROS DE DALTONISMO
-   Usa SVG filters via URL para precisão
-   ========================================= */
-
-body.deuteranopia .acc-target,
-body.deuteranopia header:not(#accessibility-panel *),
-body.deuteranopia .top-bar,
-body.deuteranopia .main-header,
-body.deuteranopia .mobile-main-header,
-body.deuteranopia main,
-body.deuteranopia .main-content,
-body.deuteranopia article,
-body.deuteranopia .content,
-body.deuteranopia footer,
-body.deuteranopia #footer,
-body.deuteranopia .site-footer,
-body.deuteranopia #cookie-banner,
-body.deuteranopia .cookie-banner,
-body.deuteranopia [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.deuteranopia .mega-panel,
-body.deuteranopia .mobile-menu {
-  filter: url('#deuteranopia-filter') saturate(1.2);
+body.contrast-dark .card-label,
+body.contrast-inverted .card-label {
+    color: #fff;
 }
 
-body.protanopia .acc-target,
-body.protanopia header:not(#accessibility-panel *),
-body.protanopia .top-bar,
-body.protanopia .main-header,
-body.protanopia .mobile-main-header,
-body.protanopia main,
-body.protanopia .main-content,
-body.protanopia article,
-body.protanopia .content,
-body.protanopia footer,
-body.protanopia #footer,
-body.protanopia .site-footer,
-body.protanopia #cookie-banner,
-body.protanopia .cookie-banner,
-body.protanopia [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.protanopia .mega-panel,
-body.protanopia .mobile-menu {
-  filter: url('#protanopia-filter') saturate(1.2);
-}
-
-body.tritanopia .acc-target,
-body.tritanopia header:not(#accessibility-panel *),
-body.tritanopia .top-bar,
-body.tritanopia .main-header,
-body.tritanopia .mobile-main-header,
-body.tritanopia main,
-body.tritanopia .main-content,
-body.tritanopia article,
-body.tritanopia .content,
-body.tritanopia footer,
-body.tritanopia #footer,
-body.tritanopia .site-footer,
-body.tritanopia #cookie-banner,
-body.tritanopia .cookie-banner,
-body.tritanopia [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.tritanopia .mega-panel,
-body.tritanopia .mobile-menu {
-  filter: url('#tritanopia-filter') saturate(1.2);
-}
-
-/* =========================================
-   SATURAÇÃO BAIXA
-   ========================================= */
-
-body.saturation-low .acc-target,
-body.saturation-low header:not(#accessibility-panel *),
-body.saturation-low .top-bar,
-body.saturation-low .main-header,
-body.saturation-low .mobile-main-header,
-body.saturation-low main,
-body.saturation-low .main-content,
-body.saturation-low article,
-body.saturation-low .content,
-body.saturation-low footer,
-body.saturation-low #footer,
-body.saturation-low .site-footer,
-body.saturation-low #cookie-banner,
-body.saturation-low .cookie-banner,
-body.saturation-low [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.saturation-low .mega-panel,
-body.saturation-low .mobile-menu {
-  filter: saturate(0.4);
-}
-
-/* =========================================
-   SATURAÇÃO ALTA
-   ========================================= */
-
-body.saturation-high .acc-target,
-body.saturation-high header:not(#accessibility-panel *),
-body.saturation-high .top-bar,
-body.saturation-high .main-header,
-body.saturation-high .mobile-main-header,
-body.saturation-high main,
-body.saturation-high .main-content,
-body.saturation-high article,
-body.saturation-high .content,
-body.saturation-high footer,
-body.saturation-high #footer,
-body.saturation-high .site-footer,
-body.saturation-high #cookie-banner,
-body.saturation-high .cookie-banner,
-body.saturation-high [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.saturation-high .mega-panel,
-body.saturation-high .mobile-menu {
-  filter: saturate(1.8);
-}
-
-/* =========================================
-   MONOCROMÁTICO (ESCALA DE CINZA)
-   ========================================= */
-
-body.monochrome .acc-target,
-body.monochrome header:not(#accessibility-panel *),
-body.monochrome .top-bar,
-body.monochrome .main-header,
-body.monochrome .mobile-main-header,
-body.monochrome main,
-body.monochrome .main-content,
-body.monochrome article,
-body.monochrome .content,
-body.monochrome footer,
-body.monochrome #footer,
-body.monochrome .site-footer,
-body.monochrome #cookie-banner,
-body.monochrome .cookie-banner,
-body.monochrome [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.monochrome .mega-panel,
-body.monochrome .mobile-menu {
-  filter: grayscale(100%);
-}
-
-/* =========================================
-   TIPOGRAFIA ACESSÍVEL
-   Usa font-family que não causa reflow
-   ========================================= */
-
-body.font-atkinson .acc-target,
-body.font-atkinson header:not(#accessibility-panel *):not(.mobile-menu-header),
-body.font-atkinson .top-bar,
-body.font-atkinson .main-header,
-body.font-atkinson .mobile-main-header,
-body.font-atkinson main,
-body.font-atkinson .main-content,
-body.font-atkinson article,
-body.font-atkinson .content,
-body.font-atkinson footer,
-body.font-atkinson #footer,
-body.font-atkinson .site-footer,
-body.font-atkinson #cookie-banner,
-body.font-atkinson .cookie-banner,
-body.font-atkinson [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.font-atkinson .mega-panel,
-body.font-atkinson .mobile-menu,
-body.font-atkinson h1,
-body.font-atkinson h2,
-body.font-atkinson h3,
-body.font-atkinson h4,
-body.font-atkinson h5,
-body.font-atkinson h6,
-body.font-atkinson p,
-body.font-atkinson span:not(.fas):not(.far):not(.fab):not(.fa):not([class*="fa-"]):not(.icon-slot *),
-body.font-atkinson a:not(.fas):not(.far):not(.fab):not(.fa):not([class*="fa-"]),
-body.font-atkinson li,
-body.font-atkinson td,
-body.font-atkinson th {
-  font-family: 'Atkinson Hyperlegible', sans-serif !important;
-}
-
-body.font-newsreader .acc-target,
-body.font-newsreader header:not(#accessibility-panel *):not(.mobile-menu-header),
-body.font-newsreader .top-bar,
-body.font-newsreader .main-header,
-body.font-newsreader .mobile-main-header,
-body.font-newsreader main,
-body.font-newsreader .main-content,
-body.font-newsreader article,
-body.font-newsreader .content,
-body.font-newsreader footer,
-body.font-newsreader #footer,
-body.font-newsreader .site-footer,
-body.font-newsreader #cookie-banner,
-body.font-newsreader .cookie-banner,
-body.font-newsreader [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.font-newsreader .mega-panel,
-body.font-newsreader .mobile-menu,
-body.font-newsreader h1,
-body.font-newsreader h2,
-body.font-newsreader h3,
-body.font-newsreader h4,
-body.font-newsreader h5,
-body.font-newsreader h6,
-body.font-newsreader p,
-body.font-newsreader span:not(.fas):not(.far):not(.fab):not(.fa):not([class*="fa-"]):not(.icon-slot *),
-body.font-newsreader a:not(.fas):not(.far):not(.fab):not(.fa):not([class*="fa-"]),
-body.font-newsreader li,
-body.font-newsreader td,
-body.font-newsreader th {
-  font-family: 'Newsreader', Georgia, serif !important;
-}
-
-body.font-opendyslexic .acc-target,
-body.font-opendyslexic header:not(#accessibility-panel *):not(.mobile-menu-header),
-body.font-opendyslexic .top-bar,
-body.font-opendyslexic .main-header,
-body.font-opendyslexic .mobile-main-header,
-body.font-opendyslexic main,
-body.font-opendyslexic .main-content,
-body.font-opendyslexic article,
-body.font-opendyslexic .content,
-body.font-opendyslexic footer,
-body.font-opendyslexic #footer,
-body.font-opendyslexic .site-footer,
-body.font-opendyslexic #cookie-banner,
-body.font-opendyslexic .cookie-banner,
-body.font-opendyslexic [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.font-opendyslexic .mega-panel,
-body.font-opendyslexic .mobile-menu,
-body.font-opendyslexic h1,
-body.font-opendyslexic h2,
-body.font-opendyslexic h3,
-body.font-opendyslexic h4,
-body.font-opendyslexic h5,
-body.font-opendyslexic h6,
-body.font-opendyslexic p,
-body.font-opendyslexic span:not(.fas):not(.far):not(.fab):not(.fa):not([class*="fa-"]):not(.icon-slot *),
-body.font-opendyslexic a:not(.fas):not(.far):not(.fab):not(.fa):not([class*="fa-"]),
-body.font-opendyslexic li,
-body.font-opendyslexic td,
-body.font-opendyslexic th {
-  font-family: 'OpenDyslexic', 'Comic Sans MS', cursive !important;
-}
-
-/* Ícones SEMPRE usam Font Awesome */
-body.font-atkinson .fas,
-body.font-atkinson .far,
-body.font-atkinson .fab,
-body.font-atkinson .fa,
-body.font-atkinson [class*="fa-"],
-body.font-newsreader .fas,
-body.font-newsreader .far,
-body.font-newsreader .fab,
-body.font-newsreader .fa,
-body.font-newsreader [class*="fa-"],
-body.font-opendyslexic .fas,
-body.font-opendyslexic .far,
-body.font-opendyslexic .fab,
-body.font-opendyslexic .fa,
-body.font-opendyslexic [class*="fa-"] {
-  font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', FontAwesome !important;
-  font-style: normal !important;
-}
-
-/* =========================================
-   TEXTO EM NEGRITO
-   Usa font-weight sem causar reflow
-   ========================================= */
-
-body.bold-text .acc-target,
-body.bold-text header:not(#accessibility-panel *),
-body.bold-text .top-bar,
-body.bold-text .main-header,
-body.bold-text .mobile-main-header,
-body.bold-text main,
-body.bold-text .main-content,
-body.bold-text article,
-body.bold-text .content,
-body.bold-text footer,
-body.bold-text #footer,
-body.bold-text .site-footer,
-body.bold-text #cookie-banner,
-body.bold-text .cookie-banner,
-body.bold-text [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.bold-text .mega-panel,
-body.bold-text .mobile-menu,
-body.bold-text h1,
-body.bold-text h2,
-body.bold-text h3,
-body.bold-text h4,
-body.bold-text h5,
-body.bold-text h6,
-body.bold-text p,
-body.bold-text span,
-body.bold-text a {
-  font-weight: 700 !important;
-}
-
-/* =========================================
-   DESTAQUE DE LINKS
-   Usa background e color via filtros/overlays, não alterando dimensões
-   ========================================= */
-
-body.highlight-links .acc-target a,
-body.highlight-links header:not(#accessibility-panel *) a,
-body.highlight-links .top-bar a,
-body.highlight-links .main-header a,
-body.highlight-links .mobile-main-header a,
-body.highlight-links main a,
-body.highlight-links .main-content a,
-body.highlight-links article a,
-body.highlight-links .content a,
-body.highlight-links footer a,
-body.highlight-links #footer a,
-body.highlight-links .site-footer a,
-body.highlight-links #cookie-banner a,
-body.highlight-links .cookie-banner a,
-body.highlight-links [id*="modal"]:not(#accessibility-panel *) a,
-body.highlight-links .mega-panel a,
-body.highlight-links .mobile-menu a {
-  background: linear-gradient(90deg, #fef08a, #fde047);
-  color: #000 !important;
-  padding: 2px 6px;
-  border-radius: 3px;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  font-weight: 600;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* =========================================
-   DESTAQUE DE CABEÇALHOS
-   Usa background com CSS puro, sem alterar layout
-   ========================================= */
-
-body.highlight-headers .acc-target h1,
-body.highlight-headers .acc-target h2,
-body.highlight-headers .acc-target h3,
-body.highlight-headers .acc-target h4,
-body.highlight-headers .acc-target h5,
-body.highlight-headers .acc-target h6,
-body.highlight-headers header:not(#accessibility-panel *) h1,
-body.highlight-headers header:not(#accessibility-panel *) h2,
-body.highlight-headers header:not(#accessibility-panel *) h3,
-body.highlight-headers header:not(#accessibility-panel *) h4,
-body.highlight-headers header:not(#accessibility-panel *) h5,
-body.highlight-headers header:not(#accessibility-panel *) h6,
-body.highlight-headers main h1,
-body.highlight-headers main h2,
-body.highlight-headers main h3,
-body.highlight-headers main h4,
-body.highlight-headers main h5,
-body.highlight-headers main h6,
-body.highlight-headers .main-content h1,
-body.highlight-headers .main-content h2,
-body.highlight-headers .main-content h3,
-body.highlight-headers .main-content h4,
-body.highlight-headers .main-content h5,
-body.highlight-headers .main-content h6,
-body.highlight-headers article h1,
-body.highlight-headers article h2,
-body.highlight-headers article h3,
-body.highlight-headers article h4,
-body.highlight-headers article h5,
-body.highlight-headers article h6,
-body.highlight-headers footer h1,
-body.highlight-headers footer h2,
-body.highlight-headers footer h3,
-body.highlight-headers footer h4,
-body.highlight-headers footer h5,
-body.highlight-headers footer h6 {
-  background: linear-gradient(90deg, #dbeafe, #bfdbfe);
-  padding: 8px 12px;
-  border-left: 4px solid var(--color-primary);
-  border-radius: 4px;
-  margin-left: -12px;
-}
-
-body.dark-theme.highlight-headers .acc-target h1,
-body.dark-theme.highlight-headers .acc-target h2,
-body.dark-theme.highlight-headers .acc-target h3,
-body.dark-theme.highlight-headers .acc-target h4,
-body.dark-theme.highlight-headers .acc-target h5,
-body.dark-theme.highlight-headers .acc-target h6,
-body.dark-theme.highlight-headers header h1,
-body.dark-theme.highlight-headers header h2,
-body.dark-theme.highlight-headers header h3,
-body.dark-theme.highlight-headers header h4,
-body.dark-theme.highlight-headers header h5,
-body.dark-theme.highlight-headers header h6,
-body.dark-theme.highlight-headers main h1,
-body.dark-theme.highlight-headers main h2,
-body.dark-theme.highlight-headers main h3,
-body.dark-theme.highlight-headers main h4,
-body.dark-theme.highlight-headers main h5,
-body.dark-theme.highlight-headers main h6 {
-  background: linear-gradient(90deg, rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.15));
-}
-
-/* =========================================
-   TAMANHOS DE CURSOR
-   Usa cursor property, não afeta layout
-   ========================================= */
-
-body.big-cursor-medium,
-body.big-cursor-medium * {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 24 24' fill='black' stroke='white' stroke-width='1'%3E%3Cpath d='M4 4l7.07 17 2.51-7.39L21 11.07z'/%3E%3C/svg%3E") 4 4, auto !important;
-}
-
-body.big-cursor-large,
-body.big-cursor-large * {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='black' stroke='white' stroke-width='1'%3E%3Cpath d='M4 4l7.07 17 2.51-7.39L21 11.07z'/%3E%3C/svg%3E") 6 6, auto !important;
-}
-
-body.big-cursor-xlarge,
-body.big-cursor-xlarge * {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 24 24' fill='black' stroke='white' stroke-width='1'%3E%3Cpath d='M4 4l7.07 17 2.51-7.39L21 11.07z'/%3E%3C/svg%3E") 8 8, auto !important;
-}
-
-/* =========================================
-   MÁSCARA DE LEITURA
-   Usa position: fixed, não causa reflow
-   ========================================= */
-
-.reading-mask,
-#reading-mask-top,
-#reading-mask-bottom {
-  position: fixed;
-  left: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: 9990;
-  pointer-events: none;
-  display: none;
-}
-
-#reading-mask-top {
-  top: 0;
-}
-
-#reading-mask-bottom {
-  bottom: 0;
-}
-
-.reading-guide,
-#reading-guide {
-  position: fixed;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  z-index: 9990;
-  pointer-events: none;
-  display: none;
-  box-shadow: 0 0 10px currentColor;
-}
-
-#reading-guide.guide-azul {
-  background: #1e3a8a;
-  box-shadow: 0 0 15px rgba(30, 58, 138, 0.6);
-}
-
-#reading-guide.guide-laranja {
-  background: #ea580c;
-  box-shadow: 0 0 15px rgba(234, 88, 12, 0.6);
-}
-
-#reading-guide.guide-preto {
-  background: #000;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-}
-
-/* =========================================
-   MODO DE LEITURA
-   Usa display: none para elementos secundários
-   ========================================= */
-
-body.magnifier-active {
-  cursor: zoom-in;
-}
-
-body.reading-mode header:not(#accessibility-panel *):not(.panel-header):not(.shortcuts-header),
-body.reading-mode footer:not(#accessibility-module footer),
-body.reading-mode nav:not(#accessibility-module nav),
-body.reading-mode aside:not(#accessibility-panel),
-body.reading-mode .sidebar,
-body.reading-mode .advertisement,
-body.reading-mode .ads,
-body.reading-mode .banner:not(#cookie-banner),
-body.reading-mode .popup {
-  display: none !important;
-}
-
-body.reading-mode .side-widgets-container,
-body.reading-mode #accessibility-panel,
-body.reading-mode #accessibility-module {
-  display: flex !important;
-}
-
-body.reading-mode .acc-target,
-body.reading-mode main,
-body.reading-mode article,
-body.reading-mode .content {
-  max-width: 700px !important;
-  margin: 2rem auto !important;
-  padding: 2rem !important;
-  background: var(--bg-panel) !important;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1) !important;
-  border-radius: 8px !important;
-}
-
-@media (prefers-color-scheme: dark) {
-  body.reading-mode .acc-target,
-  body.reading-mode main,
-  body.reading-mode article,
-  body.reading-mode .content {
-    background: #1e293b !important;
-    color: #e2e8f0 !important;
-  }
-}
-
-/* =========================================
-   ESCONDER IMAGENS
-   Usa visibility: hidden, não causa reflow
-   ========================================= */
-
-body.hide-images img,
-body.hide-images picture,
-body.hide-images [role="img"],
-body.hide-images figure,
-body.hide-images svg:not(.icon-slot):not([aria-hidden="true"]) {
-  visibility: hidden !important;
-  opacity: 0 !important;
-}
-
-/* =========================================
-   PARAR ANIMAÇÕES
-   Usa animation: none, não causa reflow
-   ========================================= */
-
-body.stop-anim,
-body.stop-anim *,
-body.stop-anim *::before,
-body.stop-anim *::after {
-  animation: none !important;
-  animation-play-state: paused !important;
-  transition: none !important;
-}
-
-/* =========================================
-   AUMENTO DE ESPAÇAMENTO DE LINHAS
-   Usa line-height via font, não causa reflow significativo
-   ========================================= */
-
-body.line-spacing-increased .acc-target,
-body.line-spacing-increased header:not(#accessibility-panel *),
-body.line-spacing-increased .top-bar,
-body.line-spacing-increased .main-header,
-body.line-spacing-increased .mobile-main-header,
-body.line-spacing-increased main,
-body.line-spacing-increased .main-content,
-body.line-spacing-increased article,
-body.line-spacing-increased .content,
-body.line-spacing-increased footer,
-body.line-spacing-increased #footer,
-body.line-spacing-increased .site-footer,
-body.line-spacing-increased #cookie-banner,
-body.line-spacing-increased .cookie-banner,
-body.line-spacing-increased [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.line-spacing-increased .mega-panel,
-body.line-spacing-increased .mobile-menu,
-body.line-spacing-increased p,
-body.line-spacing-increased li,
-body.line-spacing-increased td,
-body.line-spacing-increased th {
-  line-height: 2 !important;
-}
-
-body.line-spacing-double .acc-target,
-body.line-spacing-double header:not(#accessibility-panel *),
-body.line-spacing-double .top-bar,
-body.line-spacing-double .main-header,
-body.line-spacing-double .mobile-main-header,
-body.line-spacing-double main,
-body.line-spacing-double .main-content,
-body.line-spacing-double article,
-body.line-spacing-double .content,
-body.line-spacing-double footer,
-body.line-spacing-double #footer,
-body.line-spacing-double .site-footer,
-body.line-spacing-double #cookie-banner,
-body.line-spacing-double .cookie-banner,
-body.line-spacing-double [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.line-spacing-double .mega-panel,
-body.line-spacing-double .mobile-menu,
-body.line-spacing-double p,
-body.line-spacing-double li,
-body.line-spacing-double td,
-body.line-spacing-double th {
-  line-height: 2.5 !important;
-}
-
-/* =========================================
-   ALINHAMENTO DE TEXTO JUSTIFICADO
-   ========================================= */
-
-body.text-justified .acc-target,
-body.text-justified header:not(#accessibility-panel *),
-body.text-justified .top-bar,
-body.text-justified .main-header,
-body.text-justified .mobile-main-header,
-body.text-justified main,
-body.text-justified .main-content,
-body.text-justified article,
-body.text-justified .content,
-body.text-justified footer,
-body.text-justified #footer,
-body.text-justified .site-footer,
-body.text-justified #cookie-banner,
-body.text-justified .cookie-banner,
-body.text-justified [id*="modal"]:not(#accessibility-panel *):not(.shortcuts-modal):not(.shortcuts-modal *),
-body.text-justified .mega-panel,
-body.text-justified .mobile-menu,
-body.text-justified p {
-  text-align: justify !important;
-}
-
-/* =========================================
-   FOCOS VISÍVEIS
-   Usa outline e box-shadow, não causa reflow
-   ========================================= */
-
-body.visible-focus .acc-target *:focus,
-body.visible-focus header:not(#accessibility-panel *) *:focus,
-body.visible-focus .top-bar *:focus,
-body.visible-focus .main-header *:focus,
-body.visible-focus .mobile-main-header *:focus,
-body.visible-focus main *:focus,
-body.visible-focus .main-content *:focus,
-body.visible-focus article *:focus,
-body.visible-focus .content *:focus,
-body.visible-focus footer *:focus,
-body.visible-focus #footer *:focus,
-body.visible-focus .site-footer *:focus,
-body.visible-focus #cookie-banner *:focus,
-body.visible-focus .cookie-banner *:focus,
-body.visible-focus [id*="modal"]:not(#accessibility-panel *) *:focus,
-body.visible-focus .mega-panel *:focus,
-body.visible-focus .mobile-menu *:focus {
-  outline: 3px solid #ff6b00 !important;
-  outline-offset: 2px !important;
-}
-
-/* =========================================
-   PAINEL DE ACESSIBILIDADE
-   O painel NUNCA é afetado pelos filtros de acessibilidade
-   ========================================= */
-
-#accessibility-panel,
-#accessibility-panel *,
-.shortcuts-modal,
-.shortcuts-modal * {
-  font-size: revert;
-  letter-spacing: normal;
-  line-height: normal;
-}
-
-/* Reset de filtros para o painel */
-#accessibility-panel,
-#accessibility-panel *,
-.shortcuts-modal,
-.shortcuts-modal *,
-.side-widgets-container {
-  filter: none !important;
-}
-
-/* =========================================
-   WIDGETS FLUTUANTES
-   ========================================= */
+/* ============================================
+   WIDGETS LATERAIS
+   ============================================ */
 
 .side-widgets-container {
-  position: fixed;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 900;
-  display: flex;
-  flex-direction: column;
-  transition: opacity 0.3s, transform 0.3s;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 900;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .side-widgets-hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(20px, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(20px, -50%);
 }
 
 .accessibility-widget {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  filter: drop-shadow(-2px 2px 6px rgba(0, 0, 0, 0.15));
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    filter: drop-shadow(-2px 2px 4px rgba(0,0,0,0.15));
 }
 
 .accessibility-widget button {
-  background: var(--color-primary);
-  color: #fff;
-  border: none;
-  width: 52px;
-  height: 52px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
+    background-color: var(--acc-primary);
+    color: white;
+    border: none;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: background-color 0.2s, width 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .accessibility-widget button:first-child {
-  border-radius: 8px 0 0 0;
+    border-top-left-radius: 0.5rem;
 }
 
 .accessibility-widget button:last-child {
-  border-radius: 0 0 0 8px;
+    border-bottom-left-radius: 0.5rem;
 }
 
 .accessibility-widget button:hover {
-  background: var(--color-primary-hover);
-  width: 58px;
+    background-color: var(--acc-primary-hover);
+    width: 55px;
 }
 
-/* =========================================
-   ESTILOS DO PAINEL DE ACESSIBILIDADE
-   ========================================= */
+/* Tooltip */
+.accessibility-widget button::after {
+    content: attr(aria-label);
+    position: absolute;
+    right: 110%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    font-family: var(--font-body, system-ui, sans-serif);
+}
+
+.accessibility-widget button:hover::after {
+    opacity: 1;
+}
+
+/* ============================================
+   PAINEL PRINCIPAL
+   ============================================ */
 
 #accessibility-panel {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  width: 450px;
-  max-height: calc(100vh - 2rem);
-  border-radius: 1rem;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  z-index: var(--z-accessibility, 1000);
-  background: rgba(240, 249, 255, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  color: #334155;
-  transform: translateX(120%);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  font-size: 16px !important;
-  letter-spacing: 0 !important;
-  line-height: 1.5 !important;
-}
-
-body.dark-theme #accessibility-panel {
-  background: rgba(15, 23, 42, 0.95);
-  border-color: rgba(255, 255, 255, 0.1);
-  color: #f1f5f9;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: 320px;
+    max-height: calc(100vh - 6rem);
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    z-index: 9995;
+    
+    /* Glassmorphism */
+    background: var(--acc-panel-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--acc-panel-border);
+    color: var(--acc-text-main);
+    
+    /* Transição de abertura/fechamento */
+    transform: translateX(150%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s ease, background-color 0.3s, border-color 0.3s;
 }
 
 #accessibility-panel:not(.accessibility-panel-hidden) {
-  transform: translateX(0);
+    transform: translateX(0);
 }
 
-.panel-expanded {
-  width: 90vw !important;
-  max-width: 700px !important;
-  transition: width 0.3s ease, max-width 0.3s ease;
-}
-
+/* Header do Painel */
 .panel-header {
-  padding: 0.75rem 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(255, 255, 255, 0.3);
-  position: relative;
-  min-height: 56px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--acc-panel-bg-header);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    flex-shrink: 0;
 }
 
-body.dark-theme .panel-header {
-  background: rgba(0, 0, 0, 0.2);
+/* Linha Reluzente */
+.shiny-header-border {
+    position: relative;
 }
 
 .shiny-header-border::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-}
-
-.panel-logo {
-  width: 40px;
-  height: 40px;
-  background: var(--color-primary);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 1.25rem;
-}
-
-.panel-logo-img {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-.panel-title-text {
-  font-size: 1rem;
-  font-weight: 700;
-  margin: 0;
-  color: inherit;
-}
-
-.panel-subtitle {
-  font-size: 0.7rem;
-  color: #64748b;
-}
-
-body.dark-theme .panel-subtitle {
-  color: #94a3b8;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--acc-header-shine);
+    box-shadow: 0 1px 3px rgba(59, 130, 246, 0.5);
+    z-index: 10;
 }
 
 .icon-btn {
-  padding: 0.5rem;
-  border-radius: 6px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: inherit;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-  min-height: 36px;
-  transition: background 0.2s;
+    padding: 0.375rem;
+    border-radius: 0.25rem;
+    color: var(--acc-text-main);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
 .icon-btn:hover {
-  background: rgba(0, 0, 0, 0.08);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
-body.dark-theme .icon-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+body.contrast-dark .icon-btn:hover,
+body.contrast-inverted .icon-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
+
+/* ============================================
+   CONTEÚDO DO PAINEL
+   ============================================ */
 
 .panel-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem;
-  padding-bottom: 140px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    padding-bottom: 10rem;
 }
 
-.custom-scrollbar::-webkit-scrollbar,
-.shortcuts-body::-webkit-scrollbar,
-.glossary-list::-webkit-scrollbar,
-.alphabet-letters::-webkit-scrollbar {
-  width: 6px;
+/* Scrollbar personalizada */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track,
-.shortcuts-body::-webkit-scrollbar-track,
-.glossary-list::-webkit-scrollbar-track,
-.alphabet-letters::-webkit-scrollbar-track {
-  background: transparent;
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--acc-scroll-track);
+    border-radius: 4px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb,
-.shortcuts-body::-webkit-scrollbar-thumb,
-.glossary-list::-webkit-scrollbar-thumb,
-.alphabet-letters::-webkit-scrollbar-thumb {
-  background: #64748b;
-  border-radius: 3px;
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--acc-scroll-thumb);
+    border-radius: 4px;
 }
 
-body.dark-theme .custom-scrollbar::-webkit-scrollbar-thumb,
-body.dark-theme .shortcuts-body::-webkit-scrollbar-thumb,
-body.dark-theme .glossary-list::-webkit-scrollbar-thumb,
-body.dark-theme .alphabet-letters::-webkit-scrollbar-thumb {
-  background: #94a3b8;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover,
-.shortcuts-body::-webkit-scrollbar-thumb:hover,
-.glossary-list::-webkit-scrollbar-thumb:hover,
-.alphabet-letters::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--acc-primary);
 }
 
 .section-title {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: none;
-  letter-spacing: normal;
-  margin-bottom: 1.25rem;
-  color: #64748b;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+    padding-left: 0.25rem;
+    color: var(--acc-text-muted);
 }
 
-body.dark-theme .section-title {
-  color: #94a3b8;
-}
+/* ============================================
+   CARDS DE ACESSIBILIDADE
+   ============================================ */
 
 .accessibility-card {
-  background: rgba(255, 255, 255, 0.75);
-  border: 2px solid transparent;
-  border-radius: 12px;
-  padding: 0.75rem;
-  height: 6.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.2s;
-  font-family: inherit;
-  text-align: left;
-  color: inherit;
-}
-
-body.dark-theme .accessibility-card {
-  background: rgba(30, 41, 59, 0.7);
+    background-color: var(--acc-card-bg);
+    border: 2px solid transparent;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    height: 7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .accessibility-card:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-body.dark-theme .accessibility-card:hover {
-  background: rgba(51, 65, 85, 0.9);
+    transform: translateY(-2px);
+    background-color: var(--acc-card-hover);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
 }
 
 .accessibility-card.active {
-  border-color: var(--color-primary);
-  background: rgba(219, 234, 254, 0.8);
-}
-
-body.dark-theme .accessibility-card.active {
-  background: rgba(26, 62, 116, 0.6);
+    border-color: var(--acc-primary);
+    background-color: var(--acc-card-active);
 }
 
 .accessibility-card.active .icon-slot {
-  color: var(--color-primary);
+    color: var(--acc-primary);
+}
+
+body.contrast-dark .accessibility-card.active .icon-slot,
+body.contrast-inverted .accessibility-card.active .icon-slot {
+    color: #93c5fd;
 }
 
 .card-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  line-height: 1.2;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--acc-text-main);
+    text-transform: capitalize;
 }
 
-.card-hint {
-  font-size: 0.6rem;
-  color: #64748b;
-  margin-top: 2px;
+.card-label-ext {
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--acc-text-main);
 }
 
-body.dark-theme .card-hint {
-  color: #94a3b8;
-}
-
-.icon-slot {
-  font-size: 1.5rem;
-  color: #64748b;
-  transition: color 0.2s;
-}
-
-body.dark-theme .icon-slot {
-  color: #94a3b8;
-}
+/* ============================================
+   INDICADORES E BADGES
+   ============================================ */
 
 .level-indicator {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  display: flex;
-  gap: 3px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 3px;
+    justify-content: flex-end;
 }
 
 .dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.15);
-  transition: background 0.2s;
-}
-
-body.dark-theme .dot {
-  background: rgba(255, 255, 255, 0.2);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
 }
 
 .dot.active {
-  background: var(--color-primary);
+    background-color: var(--acc-primary);
+}
+
+body.contrast-dark .dot,
+body.contrast-inverted .dot {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.contrast-dark .dot.active,
+body.contrast-inverted .dot.active {
+    background-color: var(--acc-primary);
 }
 
 .level-badge {
-  position: absolute;
-  top: 20px;
-  right: 8px;
-  background: var(--color-primary);
-  color: #fff;
-  font-size: 0.55rem;
-  padding: 2px 6px;
-  border-radius: 10px;
-  font-weight: 700;
-  display: none;
+    position: absolute;
+    top: 22px;
+    right: 8px;
+    background-color: var(--acc-primary);
+    color: white;
+    font-size: 0.6rem;
+    padding: 1px 5px;
+    border-radius: 999px;
+    font-weight: bold;
+    display: none;
+    pointer-events: none;
 }
 
 .accessibility-card.active .level-badge {
-  display: block;
+    display: block;
 }
 
-.grid-cols-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-body[data-font-scale="2"] #accessibility-panel .grid-cols-2,
-#accessibility-panel.font-large .grid-cols-2 {
-  grid-template-columns: 1fr;
-}
-
-body[data-font-scale="2"] #accessibility-panel .accessibility-card,
-#accessibility-panel.font-large .accessibility-card {
-  height: auto;
-  min-height: 5rem;
-  flex-direction: row;
-  align-items: center;
-  gap: 1rem;
-}
-
-body[data-font-scale="2"] #accessibility-panel .accessibility-card .icon-slot,
-#accessibility-panel.font-large .accessibility-card .icon-slot {
-  font-size: 1.25rem;
-  flex-shrink: 0;
-}
+/* ============================================
+   OVERLAY DO RODAPÉ
+   ============================================ */
 
 .menu-cta-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
-  background: rgba(128, 128, 128, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  display: flex;
-  align-items: flex-end;
-  padding: 1.25rem;
-  border-radius: 0 0 1rem 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-body.dark-theme .menu-cta-overlay {
-  background: rgba(0, 0, 0, 0.25);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 140px;
+    background: linear-gradient(to top, rgba(26, 62, 116, 0.95) 0%, rgba(26, 62, 116, 0.3) 60%, transparent 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 2rem;
+    pointer-events: none;
+    z-index: 50;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
 }
 
 .btn-restore {
-  background: var(--color-primary);
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 0.875rem 1.5rem;
-  border-radius: 10px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.1s;
+    pointer-events: auto;
+    background-color: white;
+    color: var(--acc-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s, background-color 0.2s;
+    border: none;
+    cursor: pointer;
 }
 
 .btn-restore:hover {
-  background: var(--color-primary-hover);
-  transform: scale(1.02);
+    background-color: #f8fafc;
 }
 
 .btn-restore:active {
-  transform: scale(0.98);
+    transform: scale(0.95);
 }
 
-/* =========================================
-   GLOSSÁRIO MODAL
-   ========================================= */
-
-#glossary-modal[hidden] {
-  display: none;
+.btn-restore:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
 }
 
-.glossary-content {
-  background: var(--bg-panel);
-  border-radius: 16px;
-  width: 90%;
-  max-width: 700px;
-  max-height: 80vh;
-  overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-}
-
-.glossary-body {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
-
-.glossary-alphabet {
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-secondary);
-  border-right: 1px solid var(--border-color);
-  transition: width 0.2s;
-  width: 50px;
-  flex-shrink: 0;
-}
-
-.glossary-alphabet.collapsed {
-  width: 36px;
-}
-
-.glossary-alphabet.collapsed .alphabet-letters {
-  display: none;
-}
-
-.alphabet-toggle {
-  padding: 10px 8px;
-  border: none;
-  background: var(--bg-tertiary);
-  cursor: pointer;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.alphabet-toggle:hover {
-  background: var(--color-primary);
-  color: #fff;
-}
-
-.alphabet-toggle i {
-  animation: pulseArrow 1.5s ease-in-out infinite;
-}
-
-.glossary-alphabet.collapsed .alphabet-toggle i {
-  animation: pulseArrowRight 1.5s ease-in-out infinite;
-}
-
-@keyframes pulseArrow {
-  0%, 100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  50% {
-    transform: translateX(-3px);
-    opacity: 0.6;
-  }
-}
-
-@keyframes pulseArrowRight {
-  0%, 100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  50% {
-    transform: translateX(3px);
-    opacity: 0.6;
-  }
-}
-
-.alphabet-letters {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  flex: 1;
-}
-
-.alphabet-letter {
-  padding: 4px 8px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  transition: all 0.15s;
-}
-
-.alphabet-letter:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-body);
-}
-
-.alphabet-letter.active {
-  background: var(--color-primary);
-  color: #fff;
-}
-
-.glossary-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-width: 0;
-}
-
-.glossary-search {
-  padding: 1rem;
-  border-bottom: 1px solid var(--border-color);
-  flex-shrink: 0;
-}
-
-.glossary-search input {
-  width: 100%;
-  padding: 10px 14px;
-  border: 2px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s;
-  box-sizing: border-box;
-}
-
-.glossary-search input:focus {
-  border-color: var(--color-primary);
-}
-
-.glossary-list {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.glossary-item {
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--border-color);
-  transition: background 0.15s;
-}
-
-.glossary-item:hover {
-  background: var(--bg-secondary);
-}
-
-.glossary-item:last-child {
-  border-bottom: none;
-}
-
-.glossary-term {
-  font-weight: 700;
-  color: var(--color-primary);
-  font-size: 1rem;
-  margin-bottom: 4px;
-}
-
-.glossary-definition {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  word-wrap: break-word;
-}
-
-.glossary-empty {
-  padding: 2rem;
-  text-align: center;
-  color: var(--text-muted);
-}
-
-[data-definition],
-abbr[title] {
-  border-bottom: 2px dotted var(--color-primary);
-  cursor: help;
-  text-decoration: none;
-}
-
-/* =========================================
-   SHORTCUTS MODAL
-   ========================================= */
-
-.shortcuts-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-  backdrop-filter: blur(4px);
-}
-
-.shortcuts-modal[hidden] {
-  display: none;
-}
-
-.shortcuts-content {
-  background: var(--bg-panel);
-  border-radius: 16px;
-  width: 90%;
-  max-width: 480px;
-  max-height: 80vh;
-  overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-}
-
-.shortcuts-header {
-  padding: 1.25rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.shortcuts-header h2 {
-  margin: 0;
-  font-size: 1.1rem;
-  color: var(--text-body);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.shortcuts-body {
-  padding: 1rem 1.25rem;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-
-.browser-tabs {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 1rem;
-  background: var(--bg-secondary);
-  padding: 4px;
-  border-radius: 8px;
-}
-
-.browser-tab {
-  flex: 1;
-  padding: 8px 12px;
-  border: none;
-  background: transparent;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.browser-tab:hover {
-  color: var(--text-body);
-}
-
-.browser-tab.active {
-  background: var(--bg-panel);
-  color: var(--color-primary);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.shortcuts-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.shortcut-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid var(--border-color);
-  font-size: 0.85rem;
-}
-
-.shortcut-item:last-child {
-  border-bottom: none;
-}
-
-.shortcut-item kbd {
-  background: var(--bg-secondary);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 0.7rem;
-  border: 1px solid var(--border-color);
-  min-width: 24px;
-  text-align: center;
-  font-weight: 600;
-}
-
-.shortcut-item span {
-  color: var(--text-secondary);
-  margin-left: auto;
-  font-size: 0.8rem;
-}
-
-.shortcuts-note {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  background: var(--bg-secondary);
-  border-radius: 8px;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.shortcuts-note kbd {
-  background: var(--bg-tertiary);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-family: monospace;
-  font-size: 0.7rem;
-}
-
-/* =========================================
-   MAGNIFIER TOOLTIP
-   ========================================= */
-
-.magnifier-tooltip,
-#magnifier-tooltip {
-  position: absolute;
-  background: var(--color-primary);
-  color: #fff;
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-size: 1.25rem;
-  font-weight: 500;
-  max-width: 400px;
-  z-index: 9992;
-  pointer-events: none;
-  display: none;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  line-height: 1.4;
-}
-
-/* =========================================
-   FILTROS SVG PARA DALTONISMO
-   Estes filtros são aplicados via URL e não causam reflow
-   ========================================= */
-
-.daltonism-filters {
-  position: absolute;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
-/* =========================================
+/* ============================================
    RESPONSIVIDADE
-   ========================================= */
+   ============================================ */
 
 @media (max-width: 640px) {
-  .sm-hidden {
-    display: none !important;
-  }
-  #accessibility-panel {
-    width: calc(100% - 2rem) !important;
-    right: 1rem !important;
-    max-height: calc(100vh - 2rem);
-  }
-  .panel-expanded {
-    width: calc(100% - 2rem) !important;
-  }
-  .browser-tabs {
-    flex-wrap: wrap;
-  }
-  .browser-tab {
-    font-size: 0.65rem;
-    padding: 6px 8px;
-  }
+    .sm-hidden {
+        display: none !important;
+    }
+    
+    #accessibility-panel {
+        width: 90% !important;
+        right: 5% !important;
+        top: 20px;
+        max-height: calc(100vh - 40px);
+    }
+    
+    .panel-expanded {
+        width: 90% !important;
+    }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
+@media (min-width: 641px) {
+    .panel-expanded {
+        width: 450px !important;
+    }
+}
+
+/* ============================================
+   UTILITÁRIOS DE ACESSIBILIDADE
+   ============================================ */
+
+/* Fontes Alternativas */
+.font-atkinson {
+    font-family: 'Atkinson Hyperlegible', sans-serif !important;
+}
+
+.font-newsreader {
+    font-family: 'Newsreader', serif !important;
+}
+
+.font-dyslexic {
+    font-family: 'OpenDyslexic', sans-serif !important;
+}
+
+/* Recursos de Acessibilidade */
+.highlight-links a {
+    background-color: #ffeb3b;
+    color: #000;
+    font-weight: bold;
+    padding: 0 2px;
+    border-radius: 2px;
+    border: 1px dashed #000;
+}
+
+.highlight-headers h1,
+.highlight-headers h2,
+.highlight-headers h3 {
+    text-decoration: underline;
+    text-decoration-color: var(--acc-primary);
+    text-decoration-thickness: 3px;
+}
+
+.hide-images img {
+    opacity: 0 !important;
+}
+
+.bold-text * {
+    font-weight: 700 !important;
+}
+
+.stop-anim * {
+    animation-play-state: paused !important;
+    transition: none !important;
+}
+
+/* Máscaras de Leitura */
+#reading-mask-top,
+#reading-mask-bottom {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9998;
+    pointer-events: none;
+    display: none;
+}
+
+/* ============================================
+   VLIBRAS
+   ============================================ */
+
+/* Esconder o botão padrão do VLibras mas permitir que seja clicado via script */
+[vw-access-button] {
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
+}
+
+/* Quando o VLibras estiver ativo, mostrar o wrapper */
+.vw-plugin-wrapper {
+    display: none;
+}
+
+.vw-plugin-wrapper.active {
+    display: block;
+}
+
+/* Botão customizado VLibras no painel de acessibilidade */
+.accessibility-widget button[onclick="toggleLibras()"] {
+    cursor: pointer;
+}
+
+.accessibility-widget button[onclick="toggleLibras()"]:focus {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
 }
