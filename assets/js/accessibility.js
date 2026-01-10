@@ -1,1739 +1,1418 @@
 /**
- * Módulo Unificado de Header e Acessibilidade
- * Substitui header.js com integração total ao AccessControl
- * Resolve conflitos entre módulos e corrige problemas de menu
+ * ACCESSIBILITY.JS
+ * Módulo Master de Controle de Acessibilidade
+ * Calculadoras de Enfermagem
+ * 
+ * Este é o módulo MASTER - Single Source of Truth (SSOT)
+ * Gerencia todo o estado, localStorage, UI e funcionalidades do sistema.
+ * Todos os outros módulos (header.js, footer.js, main-index.js) delegam para este módulo.
+ * 
+ * PRINCÍPIO FUNDAMENTAL: A estrutura padrão (HTML, CSS, JS) prevalece até que
+ * o usuário ative explicitamente um recurso assistivo. Apenas ações do usuário
+ * podem modificar o estado visual e funcional do sistema.
  */
-(function() {
-    "use strict";
 
-    // ============================================
-    // CONFIGURAÇÕES E CONSTANTES
-    // ============================================
-    const Config = {
-        defaultFontSize: 16,
-        minFontSize: 13,
-        maxFontSize: 32,
-        fontStep: 2,
-        fontStorageKey: "nursing_calc_font_size",
-        themeStorageKey: "nursing_calc_theme",
-        animationDuration: 300,
-        megaMenuBreakpoint: 1024,
-        // Níveis de fonte cycling
-        fontSizeLevels: [13, 16, 19, 24, 32], // 85%, 100%, 120%, 150%, 200%
-        fontSizeLabels: ['85%', '100%', '120%', '150%', '200%']
+(function(window, document) {
+  'use strict';
+
+  // ============================================
+  // CONFIGURAÇÕES E CONSTANTES
+  // ============================================
+  const Config = {
+    // Chave unificada do localStorage (SSOT)
+    storageKey: 'nursing_accessibility_state',
+    themeStorageKey: 'nursing_accessibility_theme',
+    
+    // Chaves de consentimento de cookies
+    cookieConsentKey: 'ce_cookie_consent_v8_2025',
+    cookieFabKey: 'ce_cookie_fab_enabled',
+    
+    // Níveis de fonte (especificados pelo usuário)
+    // Botão Reduzir: 150% → 120% → 100%
+    // Botão Aumentar: 120% → 150% → 200%
+    fontSizeLevels: [16, 19.2, 24], // 100%, 120%, 150%
+    fontSizeIncreaseLevels: [19.2, 24, 32], // 120%, 150%, 200%
+    
+    // Labels para os níveis
+    fontSizeLabels: ['100%', '120%', '150%'],
+    fontIncreaseLabels: ['120%', '150%', '200%'],
+    
+    // Configurações de tema
+    themeOptions: ['light', 'dark', 'system'],
+    
+    // Breakpoints
+    megaMenuBreakpoint: 1024
+  };
+
+  // ============================================
+  // STATE MANAGEMENT (SSOT)
+  // ============================================
+  const state = {
+    // Estado da fonte (índice 0 = 100%, 1 = 120%, 2 = 150%)
+    // Valor 0 = padrão, não modifica nada até que usuário ative
+    fontSizeIndex: 0,
+    fontIncreaseIndex: 0,
+    
+    // Estado do tema
+    theme: 'system',
+    
+    // Estado dos recursos de acessibilidade
+    // 0/false = recurso desativado (padrão)
+    contrast: 0,
+    colorblind: 0,
+    saturation: 0,
+    bigCursor: 0,
+    readingMask: 0,
+    readingGuide: 0,
+    highlightLinks: false,
+    highlightHeaders: false,
+    boldText: false,
+    stopAnim: false,
+    hideImages: false,
+    readingMode: false,
+    fontStyle: 0,
+    
+    // Estado do painel de UI
+    panelOpen: false,
+    
+    // Estado interno
+    _initialized: false
+  };
+
+  // ============================================
+  // GLOSSARY DATA - Termos de Enfermagem
+  // ============================================
+  const glossaryData = [
+    { term: 'Acidose', definition: 'Condição caracterizada pelo aumento da concentração de íons hidrogênio no sangue, resultando em pH arterial inferior a 7,35.' },
+    { term: 'Agudo', definition: 'Condição de início súbito e geralmente curta duração, com sintomas intensos.' },
+    { term: 'Alcalose', definition: 'Distúrbio metabólico caracterizado pela diminuição de íons hidrogênio no sangue, com pH arterial superior a 7,45.' },
+    { term: 'Anamnese', definition: 'Conjunto de informações obtidas através de entrevista com o paciente, incluindo histórico médico e queixas atuais.' },
+    { term: 'Anúria', definition: 'Cessação completa da produção de urina, geralmente definida como menos de 100ml em 24 horas.' },
+    { term: 'Bradicardia', definition: 'Frequência cardíaca anormalmente lenta, geralmente inferior a 60 batimentos por minuto em adultos.' },
+    { term: 'Bradipneia', definition: 'Respiração anormalmente lenta, com frequência respiratória inferior a 12 incursões por minuto.' },
+    { term: 'Cianose', definition: 'Coloração azulada ou púrpura da pele e mucosas, causada pela desoxigenação do sangue ou hemoglobina anormal.' },
+    { term: 'Diurese', definition: 'Produção e eliminação de urina pelos rins. Pode ser influenciada por medicamentos diuréticos.' },
+    { term: 'Dispneia', definition: 'Sensação subjetiva de falta de ar ou dificuldade respiratória.' },
+    { term: 'Edema', definition: 'Acúmulo anormal de líquido no espaço intersticial, causando inchaço nos tecidos.' },
+    { term: 'Eritrócito', definition: 'Célula sanguínea vermelha, também chamada de hemácia ou glóbulo vermelho, responsável pelo transporte de oxigênio.' },
+    { term: 'Febre', definition: 'Elevação da temperatura corporal acima do normal, geralmente acima de 37,8°C.' },
+    { term: 'Glicemia', definition: 'Concentração de glicose no sangue, importante indicador metabólico.' },
+    { term: 'Hematócrito', definition: 'Percentual do volume sanguíneo ocupado pelos eritrócitos.' },
+    { term: 'Hemoglobina', definition: 'Proteína presente nos eritrócitos responsável pelo transporte de oxigênio.' },
+    { term: 'Hipertensão', definition: 'Pressão arterial elevada, geralmente acima de 140/90 mmHg.' },
+    { term: 'Hipotensão', definition: 'Pressão arterial anormalmente baixa, geralmente inferior a 90/60 mmHg.' },
+    { term: 'Hipóxia', definition: 'Deficiência de oxigênio nos tecidos do organismo.' },
+    { term: 'Infusão', definition: 'Administração lenta de líquidos ou medicamentos diretamente na corrente sanguínea.' },
+    { term: 'Leucócito', definition: 'Célula sanguínea branca, parte fundamental do sistema imunológico.' },
+    { term: 'Monitorização', definition: 'Observação contínua ou periódica de parâmetros fisiológicos do paciente.' },
+    { term: 'Nefro', definition: 'Prefixo relacionado aos rins. Ex: nefrologia, nefrotoxicidade.' },
+    { term: 'Nível de Consciência', definition: 'Grau de alerta e responsividade do paciente, avaliado através de escalas padronizadas.' },
+    { term: 'Oligúria', definition: 'Redução da produção de urina, geralmente definida como menos de 400ml em 24 horas.' },
+    { term: 'Oxigenação', definition: 'Processo de saturação do sangue com oxigênio.' },
+    { term: 'PA', definition: 'Pressão Arterial - força exercida pelo sangue contra as paredes das artérias.' },
+    { term: 'Plaquetas', definition: 'Fragmentos celulares envolvidos na coagulação sanguínea.' },
+    { term: 'Polarização', definition: 'Estado de repouso elétrico de células excitáveis como neurônios e células musculares.' },
+    { term: 'Proteinúria', definition: 'Presença de proteína na urina, indicativo de disfunção renal.' },
+    { term: 'Pulso', definition: 'Expansão e retração rítmica das artérias, sincronizada com os batimentos cardíacos.' },
+    { term: 'Retenção', definition: 'Acúmulo de substâncias no organismo devido à incapacidade de eliminá-las adequadamente.' },
+    { term: 'SatO2', definition: 'Saturação de Oxigênio - percentagem de hemoglobina ligada ao oxigênio no sangue.' },
+    { term: 'Sinais Vitais', definition: 'Parâmetros fisiológicos básicos: pressão arterial, frequência cardíaca, frequência respiratória e temperatura.' },
+    { term: 'Taquicardia', definition: 'Frequência cardíaca acelerada, geralmente superior a 100 batimentos por minuto em adultos.' },
+    { term: 'Taquipneia', definition: 'Respiração anormalmente acelerada, com frequência superior a 20 incursões por minuto.' },
+    { term: 'Tônus', definition: 'Estado de tensão ou elasticidade residual em músculos ou tecidos.' },
+    { term: 'Valsalva', definition: 'Maneuver de expiração forçada com glote fechada, aumenta a pressão intratorácica.' }
+  ];
+
+  // ============================================
+  // KEYBOARD SHORTCUTS
+  // ============================================
+  const shortcutsByBrowser = {
+    chrome: [
+      { keys: ['Alt', 'A'], desc: 'Abrir/Fechar menu acessibilidade', action: 'togglePanel' },
+      { keys: ['Alt', '1'], desc: 'Aumentar fonte', action: 'increaseFont' },
+      { keys: ['Alt', '2'], desc: 'Diminuir fonte', action: 'decreaseFont' },
+      { keys: ['Alt', 'C'], desc: 'Alto contraste', action: 'toggleContrast' },
+      { keys: ['Alt', 'L'], desc: 'Destacar links', action: 'toggleLinks' },
+      { keys: ['Alt', 'H'], desc: 'Destacar títulos', action: 'toggleHeaders' },
+      { keys: ['Alt', 'M'], desc: 'Máscara de leitura', action: 'toggleMask' },
+      { keys: ['Alt', 'G'], desc: 'Guia de leitura', action: 'toggleGuide' },
+      { keys: ['Alt', 'R'], desc: 'Modo leitura', action: 'toggleReading' },
+      { keys: ['Alt', 'T'], desc: 'Alternar tema', action: 'toggleTheme' },
+      { keys: ['Alt', 'I'], desc: 'Esconder imagens', action: 'toggleImages' },
+      { keys: ['Alt', '0'], desc: 'Restaurar tudo', action: 'reset' },
+      { keys: ['Esc'], desc: 'Fechar painéis', action: 'closeAll' }
+    ],
+    firefox: [
+      { keys: ['Alt', 'Shift', 'A'], desc: 'Abrir/Fechar menu acessibilidade', action: 'togglePanel' },
+      { keys: ['Alt', 'Shift', '1'], desc: 'Aumentar fonte', action: 'increaseFont' },
+      { keys: ['Alt', 'Shift', '2'], desc: 'Diminuir fonte', action: 'decreaseFont' },
+      { keys: ['Alt', 'Shift', 'C'], desc: 'Alto contraste', action: 'toggleContrast' },
+      { keys: ['Alt', 'Shift', 'L'], desc: 'Destacar links', action: 'toggleLinks' },
+      { keys: ['Alt', 'Shift', 'H'], desc: 'Destacar títulos', action: 'toggleHeaders' },
+      { keys: ['Alt', 'Shift', 'M'], desc: 'Máscara de leitura', action: 'toggleMask' },
+      { keys: ['Alt', 'Shift', 'G'], desc: 'Guia de leitura', action: 'toggleGuide' },
+      { keys: ['Alt', 'Shift', 'R'], desc: 'Modo leitura', action: 'toggleReading' },
+      { keys: ['Alt', 'Shift', 'T'], desc: 'Alternar tema', action: 'toggleTheme' },
+      { keys: ['Alt', 'Shift', 'I'], desc: 'Esconder imagens', action: 'toggleImages' },
+      { keys: ['Alt', 'Shift', '0'], desc: 'Restaurar tudo', action: 'reset' },
+      { keys: ['Esc'], desc: 'Fechar painéis', action: 'closeAll' }
+    ],
+    safari: [
+      { keys: ['Ctrl', 'Option', 'A'], desc: 'Abrir/Fechar menu acessibilidade', action: 'togglePanel' },
+      { keys: ['Ctrl', 'Option', '1'], desc: 'Aumentar fonte', action: 'increaseFont' },
+      { keys: ['Ctrl', 'Option', '2'], desc: 'Diminuir fonte', action: 'decreaseFont' },
+      { keys: ['Ctrl', 'Option', 'C'], desc: 'Alto contraste', action: 'toggleContrast' },
+      { keys: ['Ctrl', 'Option', 'L'], desc: 'Destacar links', action: 'toggleLinks' },
+      { keys: ['Ctrl', 'Option', 'H'], desc: 'Destacar títulos', action: 'toggleHeaders' },
+      { keys: ['Ctrl', 'Option', 'M'], desc: 'Máscara de leitura', action: 'toggleMask' },
+      { keys: ['Ctrl', 'Option', 'G'], desc: 'Guia de leitura', action: 'toggleGuide' },
+      { keys: ['Ctrl', 'Option', 'R'], desc: 'Modo leitura', action: 'toggleReading' },
+      { keys: ['Ctrl', 'Option', 'T'], desc: 'Alternar tema', action: 'toggleTheme' },
+      { keys: ['Ctrl', 'Option', 'I'], desc: 'Esconder imagens', action: 'toggleImages' },
+      { keys: ['Ctrl', 'Option', '0'], desc: 'Restaurar tudo', action: 'reset' },
+      { keys: ['Esc'], desc: 'Fechar painéis', action: 'closeAll' }
+    ]
+  };
+
+  // ============================================
+  // UTILITÁRIOS
+  // ============================================
+  function $(selector) {
+    return document.querySelector(selector);
+  }
+
+  function $$(selector) {
+    return document.querySelectorAll(selector);
+  }
+
+  function getElement(id) {
+    return document.getElementById(id) || null;
+  }
+
+  function announceToScreenReader(message) {
+    let announcer = document.getElementById('sr-announcer');
+    if (!announcer) {
+      announcer = document.createElement('div');
+      announcer.id = 'sr-announcer';
+      announcer.setAttribute('role', 'status');
+      announcer.setAttribute('aria-live', 'polite');
+      announcer.setAttribute('aria-atomic', 'true');
+      announcer.className = 'sr-only';
+      document.body.appendChild(announcer);
+    }
+    announcer.textContent = '';
+    setTimeout(function() {
+      announcer.textContent = message;
+    }, 100);
+  }
+
+  function isDesktop() {
+    return window.matchMedia('(min-width: ' + (Config.megaMenuBreakpoint + 1) + 'px)').matches;
+  }
+
+  function getBrowser() {
+    const ua = navigator.userAgent;
+    if (ua.includes('Firefox')) return 'firefox';
+    if (ua.includes('Safari') && !ua.includes('Chrome')) return 'safari';
+    return 'chrome';
+  }
+
+  function sanitizeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function debounce(fn, delay) {
+    let timeout;
+    return function() {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(function() {
+        fn.apply(context, args);
+      }, delay);
     };
+  }
 
-    const State = {
-        currentFontSize: Config.defaultFontSize,
-        currentFontIndex: 1, // Começa em 100% (índice 1)
-        isDarkMode: false,
-        loaded: false,
-        activeMegaPanel: null,
-        activeMobileSubmenu: null,
-        currentLanguage: 'pt-br' // Idioma atual salvo/carregado
-    };
-
-    // ============================================
-    // UTILITÁRIOS DOM
-    // ============================================
-    function $(selector) {
-        return document.querySelector(selector);
+  // ============================================
+  // PERSISTÊNCIA DE DADOS (SSOT)
+  // ============================================
+  function saveState() {
+    try {
+      localStorage.setItem(Config.storageKey, JSON.stringify({
+        fontSizeIndex: state.fontSizeIndex,
+        fontIncreaseIndex: state.fontIncreaseIndex,
+        theme: state.theme,
+        contrast: state.contrast,
+        colorblind: state.colorblind,
+        saturation: state.saturation,
+        bigCursor: state.bigCursor,
+        readingMask: state.readingMask,
+        readingGuide: state.readingGuide,
+        highlightLinks: state.highlightLinks,
+        highlightHeaders: state.highlightHeaders,
+        boldText: state.boldText,
+        stopAnim: state.stopAnim,
+        hideImages: state.hideImages,
+        readingMode: state.readingMode,
+        fontStyle: state.fontStyle
+      }));
+    } catch (e) {
+      console.warn('[AccessControl] Erro ao salvar estado:', e);
     }
+  }
 
-    function $$(selector) {
-        return document.querySelectorAll(selector);
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(Config.storageKey);
+      if (saved) {
+        var data = JSON.parse(saved);
+        Object.assign(state, data);
+        return true;
+      }
+    } catch (e) {
+      console.warn('[AccessControl] Erro ao carregar estado:', e);
     }
+    return false;
+  }
 
-    function getElement(id) {
-        return document.getElementById(id);
-    }
+  // ============================================
+  // THEMEMANAGER (SSOT)
+  // ============================================
+  var ThemeManager = {
+    detectSystemTheme: function() {
+      var matchMedia = window.matchMedia;
+      if (matchMedia) {
+        return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      return 'light';
+    },
 
-    function isDesktop() {
-        return window.matchMedia(`(min-width: ${Config.megaMenuBreakpoint + 1}px)`).matches;
-    }
+    getTheme: function() {
+      var saved = localStorage.getItem(Config.themeStorageKey);
+      return saved || 'system';
+    },
 
-    function isMobile() {
-        return window.matchMedia(`(max-width: ${Config.megaMenuBreakpoint}px)`).matches;
-    }
+    applyTheme: function(theme) {
+      state.theme = theme;
+      var isDark = theme === 'dark' || (theme === 'system' && this.detectSystemTheme() === 'dark');
+      
+      if (isDark) {
+        document.body.classList.add('dark-theme');
+      } else {
+        document.body.classList.remove('dark-theme');
+      }
+      
+      localStorage.setItem(Config.themeStorageKey, theme);
+      
+      // Disparar evento para outros módulos
+      var event = new CustomEvent('theme:changed', {
+        detail: { theme: theme, isDark: isDark }
+      });
+      window.dispatchEvent(event);
+    },
 
-    // ============================================
-    // ACESSIBILIDADE - SCREEN READER
-    // ============================================
-    function announceToScreenReader(message) {
-        let announcer = document.getElementById('sr-announcer');
-        if (!announcer) {
-            announcer = document.createElement('div');
-            announcer.id = 'sr-announcer';
-            announcer.setAttribute('role', 'status');
-            announcer.setAttribute('aria-live', 'polite');
-            announcer.setAttribute('aria-atomic', 'true');
-            announcer.className = 'sr-only';
-            document.body.appendChild(announcer);
-        }
-        announcer.textContent = '';
-        setTimeout(() => {
-            announcer.textContent = message;
-        }, 100);
-    }
+    toggle: function() {
+      var current = this.getTheme();
+      var next = current === 'dark' ? 'light' : 'dark';
+      this.applyTheme(next);
+      return next;
+    },
 
-    // ============================================
-    // PERSISTÊNCIA DE DADOS
-    // ============================================
-    function saveFontSize() {
-        try {
-            localStorage.setItem(Config.fontStorageKey, JSON.stringify({
-                size: State.currentFontSize,
-                index: State.currentFontIndex
-            }));
-        } catch (e) {
-            console.warn('[Header] Erro ao salvar tamanho da fonte:', e);
-        }
-    }
+    isDarkMode: function() {
+      return document.body.classList.contains('dark-theme');
+    },
 
-    function loadFontSize() {
-        try {
-            const saved = localStorage.getItem(Config.fontStorageKey);
-            if (saved) {
-                const data = JSON.parse(saved);
-                if (data && typeof data.index === 'number') {
-                    const validIndex = Math.max(0, Math.min(Config.fontSizeLevels.length - 1, data.index));
-                    State.currentFontIndex = validIndex;
-                    State.currentFontSize = Config.fontSizeLevels[validIndex];
-                    return true;
-                }
+    init: function() {
+      var mediaQuery = null;
+      var self = this;
+      
+      this.applyTheme(this.getTheme());
+      
+      // Escutar mudanças no tema do sistema
+      var matchMedia = window.matchMedia;
+      if (matchMedia) {
+        mediaQuery = matchMedia('(prefers-color-scheme: dark)');
+        if (mediaQuery.addEventListener) {
+          mediaQuery.addEventListener('change', function() {
+            if (self.getTheme() === 'system') {
+              self.applyTheme('system');
             }
-        } catch (e) {
-            console.warn('[Header] Erro ao carregar tamanho da fonte:', e);
+          });
+        } else if (mediaQuery.addListener) {
+          // Fallback para navegadores mais antigos
+          mediaQuery.addListener(function() {
+            if (self.getTheme() === 'system') {
+              self.applyTheme('system');
+            }
+          });
         }
-        State.currentFontSize = Config.defaultFontSize;
-        State.currentFontIndex = 1;
+      }
+
+      // Disparar evento de prontidão
+      window.dispatchEvent(new CustomEvent('ThemeManager:Ready'));
+    }
+  };
+
+  // ============================================
+  // CONTROLE DE CONSENTIMENTO DE COOKIES (SSOT)
+  // ============================================
+  var CookieConsentManager = {
+    saveConsent: function(preferences) {
+      try {
+        localStorage.setItem(Config.cookieConsentKey, JSON.stringify(preferences));
+        
+        window.dispatchEvent(new CustomEvent('CookieConsent:Saved', {
+          detail: { preferences: preferences }
+        }));
+        
+        return true;
+      } catch (e) {
+        console.warn('[CookieConsent] Erro ao salvar consentimento:', e);
         return false;
-    }
-
-    function saveTheme() {
-        try {
-            localStorage.setItem(Config.themeStorageKey, State.isDarkMode ? "dark" : "light");
-        } catch (e) {
-            console.warn('[Header] Erro ao salvar tema:', e);
+      }
+    },
+    
+    getConsent: function() {
+      try {
+        var saved = localStorage.getItem(Config.cookieConsentKey);
+        if (saved) {
+          return JSON.parse(saved);
         }
-    }
-
-    function loadTheme() {
-        try {
-            const saved = localStorage.getItem(Config.themeStorageKey);
-            if (saved) {
-                State.isDarkMode = saved === "dark";
-                return true;
-            }
-        } catch (e) {
-            console.warn('[Header] Erro ao carregar tema:', e);
-        }
-        State.isDarkMode = false;
+      } catch (e) {
+        console.warn('[CookieConsent] Erro ao obter consentimento:', e);
+      }
+      return null;
+    },
+    
+    hasConsent: function() {
+      return this.getConsent() !== null;
+    },
+    
+    clearConsent: function() {
+      try {
+        localStorage.removeItem(Config.cookieConsentKey);
+        
+        window.dispatchEvent(new CustomEvent('CookieConsent:Cleared'));
+        
+        return true;
+      } catch (e) {
+        console.warn('[CookieConsent] Erro ao limpar consentimento:', e);
         return false;
-    }
-
-    // ============================================
-    // CONTROLE DE FONTE - INTEGRAÇÃO COM ACCESSCONTROL
-    // ============================================
-    // FUNÇÕES DE AUMENTAR/REDUZIR FONTE - Usam AccessControl
-    function applyFontSizeFromAccessControl() {
-        // Delegar AO AccessControl para lógica de fonte
-        if (window.AccessControl && window.AccessControl.increaseFontSize) {
-            window.AccessControl.increaseFontSize();
-        }
-    }
-
-    function decreaseFontSizeFromHeader() {
-        // Esta lógica fica no header (requisito do usuário)
-        // Ciclo reverso: 200% → 150% → 120% → 100% → 85% → 200%
-        let newIndex = State.currentFontIndex - 1;
-
-        // Se passou do primeiro, vai para o último (200%)
-        if (newIndex < 0) {
-            newIndex = Config.fontSizeLevels.length - 1; // Vai para 200%
-        }
-
-        applyFontSize(undefined, newIndex);
-    }
-
-    function syncWithAccessControl() {
-        // Verificar se AccessControl está disponível
-        if (!window.AccessControl || !window.AccessControl.state) {
-            return;
-        }
-
-        const acState = window.AccessControl.state;
-
-        // Sincronizar tamanho da fonte se necessário
-        if (acState.fontSize && acState.fontSize > 0) {
-            const scaleMap = { 1: 16, 2: 18, 3: 20, 4: 24 };
-            const fontSizeFromScale = scaleMap[acState.fontSize];
-            if (fontSizeFromScale && State.currentFontSize !== fontSizeFromScale) {
-                applyFontSize(fontSizeFromScale);
-            }
-        }
-
-        // Sincronizar tema
-        const acTheme = window.AccessControl.ThemeManager?.getTheme?.() || acState.theme;
-        if (acTheme) {
-            const shouldBeDark = acTheme === 'dark' || (acTheme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-            if (State.isDarkMode !== shouldBeDark) {
-                applyTheme(shouldBeDark);
-            }
-        }
-    }
-
-    function applyFontSize(size, index) {
-        // Usar tamanho ou índice fornecido
-        if (size !== undefined) {
-            State.currentFontSize = size;
-        }
-        if (index !== undefined) {
-            State.currentFontIndex = index;
-            State.currentFontSize = Config.fontSizeLevels[index];
-        }
-
-        const clampedSize = Math.max(Config.minFontSize, Math.min(Config.maxFontSize, State.currentFontSize));
-        State.currentFontSize = clampedSize;
-
-        // Atualizar índice baseado no tamanho aplicado
-        State.currentFontIndex = Config.fontSizeLevels.indexOf(clampedSize);
-        if (State.currentFontIndex === -1) {
-            State.currentFontIndex = 1; // Fallback para 100%
-            State.currentFontSize = Config.defaultFontSize;
-        }
-
-        // Aplicar ao documento
-        document.documentElement.style.fontSize = clampedSize + 'px';
-        document.documentElement.style.setProperty('--font-size-base', clampedSize + 'px');
-
-        // Atualizar variável CSS global para consistência
-        const scale = clampedSize / Config.defaultFontSize;
-        document.documentElement.style.setProperty('--font-scale', scale.toString());
-
-        // Atualizar estado do body para compatibilidade
-        document.body.setAttribute('data-font-scale', scale.toString());
-        document.body.setAttribute('data-font-size-index', State.currentFontIndex.toString());
-
-        // Atualizar visualização dos botões
-        updateFontButtons();
-
-        // Salvar no storage
-        saveFontSize();
-
-        // Sincronizar com AccessControl se disponível
-        if (window.AccessControl && window.AccessControl.state) {
-            window.AccessControl.state.fontSize = { 16: 1, 19: 2, 24: 3, 32: 4 }[clampedSize] || 1;
-        }
-
-        // Feedback para leitores de tela
-        const label = Config.fontSizeLabels[State.currentFontIndex] || '100%';
-        announceToScreenReader(`Tamanho da fonte ajustado para ${label}`);
-    }
-
-    // Ciclo de AUMENTAR fonte (avança no índice) - USA ACCESS CONTROL
-    function increaseFontSize(e) {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        // Usa a lógica do AccessControl (requisito do usuário)
-        if (window.AccessControl && window.AccessControl.increaseFontSize) {
-            window.AccessControl.increaseFontSize();
-            // Sincroniza estado local após operação do AccessControl
-            syncFontStateFromAccessControl();
-            return;
-        }
-
-        // Fallback se AccessControl não estiver disponível
-        let newIndex = State.currentFontIndex + 1;
-        if (newIndex >= Config.fontSizeLevels.length) {
-            newIndex = 0; // Volta para 85%
-        }
-        applyFontSize(undefined, newIndex);
-    }
-
-    // Sincroniza estado da fonte com AccessControl
-    function syncFontStateFromAccessControl() {
-        if (window.AccessControl && window.AccessControl.state) {
-            const acState = window.AccessControl.state;
-            if (acState.fontSize !== undefined) {
-                const scaleMap = { 1: 1, 2: 2, 3: 3, 4: 4 };
-                const fontIndexFromScale = scaleMap[acState.fontSize] || 1;
-                if (State.currentFontIndex !== fontIndexFromScale) {
-                    State.currentFontIndex = fontIndexFromScale;
-                    State.currentFontSize = Config.fontSizeLevels[fontIndexFromScale] || Config.defaultFontSize;
-                    updateFontButtons();
-                }
-            }
-        }
-    }
-
-    // Ciclo de REDUZIR fonte (retrocede no índice)
-    function decreaseFontSize(e) {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        // Ciclo reverso: 200% → 150% → 120% → 100% → 85% → 200%
-        let newIndex = State.currentFontIndex - 1;
-
-        // Se passou do primeiro, vai para o último (200%)
-        if (newIndex < 0) {
-            newIndex = Config.fontSizeLevels.length - 1; // Vai para 200%
-        }
-
-        applyFontSize(undefined, newIndex);
-    }
-
-    function updateFontButtons() {
-        const increaseBtns = [
-            getElement('font-increase'),
-            getElement('mobile-font-increase')
-        ];
-        const decreaseBtns = [
-            getElement('font-reduce'),
-            getElement('mobile-font-reduce')
-        ];
-
-        // Mostrar nível atual nos botões
-        const currentLabel = Config.fontSizeLabels[State.currentFontIndex] || '100%';
-        
-        increaseBtns.forEach(btn => {
-            if (btn) {
-                // Atualizar texto ou tooltip para mostrar próximo nível
-                const nextIndex = (State.currentFontIndex + 1) % Config.fontSizeLevels.length;
-                const nextLabel = Config.fontSizeLabels[nextIndex];
-                btn.title = `Aumentar fonte para ${nextLabel}`;
-                
-                // Atualizar visual state
-                const isMaxLevel = State.currentFontIndex === Config.fontSizeLevels.length - 1;
-                btn.classList.toggle('at-max-level', isMaxLevel);
-            }
-        });
-
-        decreaseBtns.forEach(btn => {
-            if (btn) {
-                // Atualizar texto ou tooltip para mostrar próximo nível
-                const prevIndex = State.currentFontIndex - 1;
-                let prevLabel;
-                if (prevIndex < 0) {
-                    prevLabel = Config.fontSizeLabels[Config.fontSizeLabels.length - 1];
-                } else {
-                    prevLabel = Config.fontSizeLabels[prevIndex];
-                }
-                btn.title = `Reduzir fonte para ${prevLabel}`;
-
-                // Atualizar visual state
-                const isMinLevel = State.currentFontIndex === 0;
-                btn.classList.toggle('at-min-level', isMinLevel);
-            }
-        });
-    }
-
-    function initFontControls() {
-        const increaseBtns = [
-            { btn: getElement('font-increase'), handler: increaseFontSize },
-            { btn: getElement('mobile-font-increase'), handler: increaseFontSize }
-        ];
-        const decreaseBtns = [
-            { btn: getElement('font-reduce'), handler: decreaseFontSizeFromHeader },
-            { btn: getElement('mobile-font-reduce'), handler: decreaseFontSizeFromHeader }
-        ];
-
-        increaseBtns.forEach(({ btn, handler }) => {
-            if (btn) {
-                btn.addEventListener('click', handler, { passive: false });
-                btn.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                    handler();
-                }, { passive: false });
-            }
-        });
-
-        decreaseBtns.forEach(({ btn, handler }) => {
-            if (btn) {
-                btn.addEventListener('click', handler, { passive: false });
-                btn.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                    handler();
-                }, { passive: false });
-            }
-        });
-
-        updateFontButtons();
-    }
-
-    // ============================================
-    // CONTROLE DE TEMA - DELEGADO AO ThemeManager (accessibility.js)
-    // ============================================
-
-    function applyTheme(isDark) {
-        // Delegar AO ThemeManager do accessibility.js
-        if (window.ThemeManager) {
-            const newTheme = isDark ? 'dark' : 'light';
-            window.ThemeManager.applyTheme(newTheme);
-        } else {
-            // Fallback se ThemeManager não estiver disponível
-            document.body.classList.toggle('dark-theme', isDark);
-        }
-
-        // Atualizar estado local para ícones
-        State.isDarkMode = isDark;
-
-        // Atualizar ícone do tema desktop
-        const themeToggle = getElement('theme-toggle');
-        if (themeToggle) {
-            const icon = themeToggle.querySelector('i');
-            if (icon) {
-                icon.classList.remove('fa-moon', 'fa-sun');
-                icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
-            }
-        }
-
-        // Atualizar ícone do tema mobile
-        const mobileThemeToggle = getElement('mobile-theme-toggle');
-        if (mobileThemeToggle) {
-            const icon = mobileThemeToggle.querySelector('i');
-            if (icon) {
-                icon.classList.remove('fa-moon', 'fa-sun');
-                icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
-            }
-            
-            // Atualizar status text
-            const status = mobileThemeToggle.querySelector('.theme-status');
-            if (status) {
-                status.textContent = isDark ? 'Modo Escuro' : 'Modo Claro';
-            }
-        }
-
-        // Salvar no storage
-        saveTheme();
-
-        // Feedback para leitores de tela
-        const themeName = isDark ? 'escuro' : 'claro';
-        announceToScreenReader(`Tema ${themeName} ativado`);
-    }
-
-    function toggleTheme(e) {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        // Usa a lógica do ThemeManager
-        if (window.ThemeManager) {
-            const newTheme = window.ThemeManager.toggle();
-            const isDark = newTheme === 'dark';
-            State.isDarkMode = isDark;
-            updateThemeIcons(isDark);
-        } else {
-            // Fallback
-            applyTheme(!State.isDarkMode);
-        }
-    }
-
-    // Atualiza ícones do tema
-    function updateThemeIcons(isDark) {
-        const themeToggle = getElement('theme-toggle');
-        if (themeToggle) {
-            const icon = themeToggle.querySelector('i');
-            if (icon) {
-                icon.classList.remove('fa-moon', 'fa-sun');
-                icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
-            }
-        }
-
-        const mobileThemeToggle = getElement('mobile-theme-toggle');
-        if (mobileThemeToggle) {
-            const icon = mobileThemeToggle.querySelector('i');
-            if (icon) {
-                icon.classList.remove('fa-moon', 'fa-sun');
-                icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
-            }
-            
-            const status = mobileThemeToggle.querySelector('.theme-status');
-            if (status) {
-                status.textContent = isDark ? 'Modo Escuro' : 'Modo Claro';
-            }
-        }
-    }
-
-    // Inicializar controles de tema
-    function initThemeControls() {
-        const desktopToggle = getElement('theme-toggle');
-        const mobileToggle = getElement('mobile-theme-toggle');
-
-        if (desktopToggle) {
-            desktopToggle.addEventListener('click', toggleTheme, { passive: false });
-        }
-
-        if (mobileToggle) {
-            mobileToggle.addEventListener('click', toggleTheme, { passive: false });
-        }
-        
-        // Sincronizar com ThemeManager se disponível
-        if (window.ThemeManager) {
-            const isDark = window.ThemeManager.isDarkMode();
-            updateThemeIcons(isDark);
-            State.isDarkMode = isDark;
-        }
-    }
-
-    // ============================================
-    // INJEÇÃO DO BOTÃO DE TEMA NO HEADER
-    // ============================================
-    function injectThemeToggle() {
-        // Desktop toggle - injetar na barra superior direita
-        const topBarRight = document.querySelector('.top-bar-right');
-        if (topBarRight) {
-            // Verificar se já existe
-            if (!document.getElementById('theme-toggle')) {
-                const themeToggle = document.createElement('button');
-                themeToggle.id = 'theme-toggle';
-                themeToggle.className = 'theme-toggle';
-                themeToggle.setAttribute('aria-label', 'Alternar para tema escuro');
-                themeToggle.setAttribute('title', 'Alternar tema');
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                
-                // Inserir antes do primeiro elemento de controle de fonte
-                const fontControls = topBarRight.querySelector('.font-controls');
-                if (fontControls && fontControls.parentNode === topBarRight) {
-                    topBarRight.insertBefore(themeToggle, fontControls);
-                } else {
-                    // Se não houver controles de fonte, adicionar no início
-                    topBarRight.insertBefore(themeToggle, topBarRight.firstChild);
-                }
-                
-                console.log('[Header] Botão de tema desktop injetado');
-            }
-        }
-        
-        // Mobile toggle - injetar no menu mobile (na seção de idioma ou ações)
-        const mobileActions = document.querySelector('.mobile-menu-actions');
-        const mobileIdiomasSection = document.getElementById('mobile-idiomas-section');
-        
-        if (mobileIdiomasSection && !document.getElementById('mobile-theme-toggle')) {
-            const mobileThemeToggle = document.createElement('button');
-            mobileThemeToggle.id = 'mobile-theme-toggle';
-            mobileThemeToggle.className = 'mobile-theme-toggle';
-            mobileThemeToggle.setAttribute('aria-label', 'Alternar tema');
-            mobileThemeToggle.innerHTML = `
-                <span class="theme-icon-container">
-                    <i class="fas fa-moon"></i>
-                </span>
-                <span class="theme-label">
-                    <span>Tema</span>
-                    <span class="theme-status">Modo Claro</span>
-                </span>
-                <i class="fas fa-chevron-right mobile-chevron"></i>
-            `;
-            
-            // Inserir antes da seção de idiomas
-            mobileIdiomasSection.parentNode.insertBefore(mobileThemeToggle, mobileIdiomasSection);
-            console.log('[Header] Botão de tema mobile injetado');
-        }
-    }
-
-    // ============================================
-    // EVENTOS DO THEMEMANAGER
-    // ============================================
-    function setupThemeManagerEvents() {
-        // Escutar eventos do ThemeManager
-        window.addEventListener('theme:changed', function(e) {
-            const isDark = e.detail.isDark;
-            State.isDarkMode = isDark;
-            updateThemeIcons(isDark);
-            console.log('[Header] Tema atualizado via ThemeManager:', e.detail.theme);
-        });
-        
-        // Escutar quando ThemeManager estiver pronto
-        window.addEventListener('ThemeManager:Ready', function() {
-            const isDark = window.ThemeManager.isDarkMode();
-            updateThemeIcons(isDark);
-            State.isDarkMode = isDark;
-            console.log('[Header] ThemeManager detectado e sincronizado');
-        });
-    }
-
-    // ============================================
-    // ANIMAÇÕES DE CLIQUE - BOTÕES COM RIPPLE AZUL
-    // ============================================
-    function addClickAnimation(button) {
-        if (!button) return;
-        
-        // Remove classe existente se houver
-        button.classList.remove('clicked');
-        
-        // Força reflow para permitir re-animação
-        void button.offsetWidth;
-        
-        // Adiciona classe de animação
-        button.classList.add('clicked');
-        
-        // Remove classe após animação completar
-        setTimeout(() => {
-            button.classList.remove('clicked');
-        }, 500);
-    }
-
-    function initClickAnimations() {
-        // Botões de fonte desktop
-        const fontBtns = document.querySelectorAll('.font-btn');
-        fontBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                addClickAnimation(this);
-            });
-        });
-
-        // Botões de tema desktop
-        const themeToggles = document.querySelectorAll('.theme-toggle');
-        themeToggles.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                addClickAnimation(this);
-            });
-        });
-
-        // Botões skip desktop
-        const skipBtns = document.querySelectorAll('.skip-btn');
-        skipBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                addClickAnimation(this);
-            });
-        });
-
-        // Botões de fonte mobile
-        const mobileFontBtns = document.querySelectorAll('.mobile-font-btn');
-        mobileFontBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                addClickAnimation(this);
-            });
-        });
-
-        // Botões de tema mobile
-        const mobileThemeBtns = document.querySelectorAll('.mobile-theme-btn');
-        mobileThemeBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                addClickAnimation(this);
-            });
-        });
-
-        // Botão de busca mobile
-        const mobileSearchBtn = document.getElementById('mobile-search-toggle');
-        if (mobileSearchBtn) {
-            mobileSearchBtn.addEventListener('click', function(e) {
-                addClickAnimation(this);
-            });
-        }
-
-        // Botão de menu mobile
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        if (mobileMenuToggle) {
-            mobileMenuToggle.addEventListener('click', function(e) {
-                addClickAnimation(this);
-            });
-        }
-    }
-
-    // ============================================
-    // SKIP LINKS
-    // ============================================
-    function setupSkipLinks() {
-        function setupSkipLink(link, targetId) {
-            if (!link || !targetId) return;
-
-            const target = getElement(targetId);
-            if (!target) return;
-
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                target.setAttribute('tabindex', '-1');
-                target.focus();
-
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            });
-        }
-
-        setupSkipLink(getElement('skip-top'), 'main-header');
-        setupSkipLink(getElement('skip-content'), 'main-content');
-        setupSkipLink(getElement('skip-footer'), 'footer');
-    }
-
-    // ============================================
-    // MENU MOBILE - BRIDGE PATTERN
-    // Garante que cliques funcionem após injeção dinâmica do header
-    // ============================================
-    function setupMobileMenuBridge() {
-        // Flag para evitar múltiplas inicializações
-        if (window.__mobileMenuBridgeInitialized) {
-            return;
-        }
-        window.__mobileMenuBridgeInitialized = true;
-
-        // MutationObserver para detectar quando o header é injetado
-        const observer = new MutationObserver(function(mutationsList) {
-            for (const mutation of mutationsList) {
-                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                    // Verificar se o header ou o botão mobile foi adicionado
-                    const headerContainer = document.getElementById('header-container');
-                    if (headerContainer && headerContainer.querySelector('.main-header')) {
-                        observer.disconnect();
-                        initMobileMenu();
-                        return;
-                    }
-                }
-            }
-        });
-
-        // Observar o body para detectar injeção do header
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-
-        // Fallback: verificar a cada 100ms se o header existe (para casos onde o observer não detecta)
-        let attempts = 0;
-        const maxAttempts = 50; // 5 segundos máximo
-        const checkInterval = setInterval(function() {
-            attempts++;
-            const headerContainer = document.getElementById('header-container');
-            if (headerContainer && headerContainer.querySelector('.main-header')) {
-                clearInterval(checkInterval);
-                observer.disconnect();
-                window.__mobileMenuBridgeInitialized = false;
-                // Reinicializar para garantir que os eventos estão conectados
-                setTimeout(function() {
-                    setupMobileMenuBridge();
-                }, 100);
-            } else if (attempts >= maxAttempts) {
-                clearInterval(checkInterval);
-                observer.disconnect();
-                window.__mobileMenuBridgeInitialized = false;
-            }
-        }, 100);
-    }
-
-    // ============================================
-    // MENU MOBILE - CORREÇÃO PRINCIPAL
-    // ============================================
-    function initMobileMenu() {
-        // Verificar se já foi inicializado para evitar duplicação
-        if (window.__mobileMenuInitialized) {
-            return;
-        }
-        window.__mobileMenuInitialized = true;
-
-        const menuToggle = getElement('mobile-menu-toggle');
-        const menuClose = getElement('mobile-menu-close');
-        const menuOverlay = getElement('mobile-menu-overlay');
-        const mobileMenu = getElement('mobile-menu');
-
-        if (!mobileMenu) {
-            console.warn('[Header] Elemento mobile-menu não encontrado');
-            return;
-        }
-
-        function openMenu() {
-            mobileMenu.classList.add('active');
-            mobileMenu.setAttribute('aria-expanded', 'true');
-
-            if (menuOverlay) {
-                menuOverlay.classList.add('active');
-            }
-
-            document.body.style.overflow = 'hidden';
-
-            if (menuToggle) {
-                menuToggle.classList.add('active');
-                menuToggle.setAttribute('aria-expanded', 'true');
-            }
-        }
-
-        function closeMenu() {
-            mobileMenu.classList.remove('active');
-            mobileMenu.setAttribute('aria-expanded', 'false');
-
-            if (menuOverlay) {
-                menuOverlay.classList.remove('active');
-            }
-
-            document.body.style.overflow = '';
-
-            if (menuToggle) {
-                menuToggle.classList.remove('active');
-                menuToggle.setAttribute('aria-expanded', 'false');
-            }
-
-            // Fechar todos os submenus
-            closeAllSubmenus();
-        }
-
-        function toggleMenu() {
-            if (mobileMenu.classList.contains('active')) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        }
-
-        // Event listeners principais
-        if (menuToggle) {
-            menuToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                toggleMenu();
-            });
-        }
-
-        if (menuClose) {
-            menuClose.addEventListener('click', function(e) {
-                e.preventDefault();
-                closeMenu();
-            });
-        }
-
-        if (menuOverlay) {
-            menuOverlay.addEventListener('click', function(e) {
-                e.preventDefault();
-                closeMenu();
-            });
-        }
-
-        // Fechar com ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-                closeMenu();
-            }
-        });
-
-        // Configurar submenus
-        setupMobileSubmenus();
-    }
-
-    function closeAllSubmenus() {
-        const allSubmenus = $$('.mobile-submenu');
-        const allItems = $$('.mobile-nav-item, .mobile-submenu-item');
-        const allToggles = $$('.mobile-nav-dropdown, .mobile-submenu-dropdown');
-
-        allSubmenus.forEach(submenu => {
-            submenu.classList.remove('active');
-        });
-
-        allItems.forEach(item => {
-            item.classList.remove('active');
-        });
-
-        allToggles.forEach(toggle => {
-            toggle.setAttribute('aria-expanded', 'false');
-        });
-    }
-
-    function setupMobileSubmenus() {
-        // Primeiro nível - itens principais do menu
-        const mainNavItems = $$('.mobile-nav-item.has-mobile-submenu');
-
-        mainNavItems.forEach(navItem => {
-            const toggleBtn = navItem.querySelector('.mobile-nav-dropdown');
-            const submenu = navItem.querySelector('.mobile-submenu');
-
-            if (!toggleBtn || !submenu) return;
-
-            toggleBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-
-                // Fechar outros submenus do mesmo nível
-                mainNavItems.forEach(otherItem => {
-                    if (otherItem !== navItem) {
-                        const otherBtn = otherItem.querySelector('.mobile-nav-dropdown');
-                        const otherSubmenu = otherItem.querySelector('.mobile-submenu');
-                        if (otherBtn && otherSubmenu) {
-                            otherBtn.setAttribute('aria-expanded', 'false');
-                            otherItem.classList.remove('active');
-                            otherSubmenu.classList.remove('active');
-                        }
-                    }
-                });
-
-                // Toggle estado atual
-                toggleBtn.setAttribute('aria-expanded', !isExpanded);
-                navItem.classList.toggle('active', !isExpanded);
-                submenu.classList.toggle('active', !isExpanded);
-
-                // Animar flecha
-                animateChevron(toggleBtn, !isExpanded);
-            });
-        });
-
-        // Segundo nível - submenus dentro dos submenus
-        const submenuItems = $$('.mobile-submenu-item.has-mobile-submenu');
-
-        submenuItems.forEach(subItem => {
-            const toggleBtn = subItem.querySelector('.mobile-submenu-dropdown');
-            const submenu = subItem.querySelector('.mobile-submenu.level-3');
-
-            if (!toggleBtn || !submenu) return;
-
-            // Adicionar indicador de "Voltar" se não existir
-            let backIndicator = submenu.querySelector('.submenu-back-item');
-            if (!backIndicator) {
-                backIndicator = document.createElement('li');
-                backIndicator.className = 'submenu-back-item';
-                backIndicator.innerHTML = '<a href="#" class="submenu-back-link"><i class="fas fa-arrow-left"></i> Voltar</a>';
-                submenu.insertBefore(backIndicator, submenu.firstChild);
-
-                // Evento do botão Voltar
-                const backLink = backIndicator.querySelector('.submenu-back-link');
-                if (backLink) {
-                    backLink.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        toggleBtn.setAttribute('aria-expanded', 'false');
-                        subItem.classList.remove('active');
-                        submenu.classList.remove('active');
-                        backIndicator.style.display = 'none';
-
-                        // Mostrar submenu pai
-                        const parentSubmenu = subItem.closest('.mobile-submenu');
-                        if (parentSubmenu) {
-                            parentSubmenu.classList.add('active');
-                        }
-                    });
-                }
-            }
-
-            toggleBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-
-                // Fechar outros submenus do mesmo nível
-                submenuItems.forEach(otherItem => {
-                    if (otherItem !== subItem) {
-                        const otherBtn = otherItem.querySelector('.mobile-submenu-dropdown');
-                        const otherSubmenu = otherItem.querySelector('.mobile-submenu.level-3');
-                        if (otherBtn && otherSubmenu) {
-                            otherBtn.setAttribute('aria-expanded', 'false');
-                            otherItem.classList.remove('active');
-                            otherSubmenu.classList.remove('active');
-
-                            const back = otherSubmenu.querySelector('.submenu-back-item');
-                            if (back) back.style.display = 'none';
-                        }
-                    }
-                });
-
-                // Toggle estado atual
-                toggleBtn.setAttribute('aria-expanded', !isExpanded);
-                subItem.classList.toggle('active', !isExpanded);
-                submenu.classList.toggle('active', !isExpanded);
-                
-                // Mostrar/ocultar botão Voltar
-                const backIndicator = submenu.querySelector('.submenu-back-item');
-                if (backIndicator) {
-                    backIndicator.style.display = !isExpanded ? 'block' : 'none';
-                }
-
-                // Ocultar submenu pai
-                const parentSubmenu = subItem.closest('.mobile-submenu');
-                if (parentSubmenu && !isExpanded) {
-                    parentSubmenu.classList.remove('active');
-                }
-
-                // Animar flecha
-                animateChevron(toggleBtn, !isExpanded);
-            });
-        });
-    }
-
-    function animateChevron(button, expanded) {
-        const arrow = button.querySelector('.submenu-arrow');
-        if (arrow) {
-            const chevron = arrow.querySelector('i');
-            if (chevron) {
-                if (expanded) {
-                    chevron.classList.remove('fa-chevron-down');
-                    chevron.classList.add('fa-chevron-up');
-                } else {
-                    chevron.classList.remove('fa-chevron-up');
-                    chevron.classList.add('fa-chevron-down');
-                }
-            }
-        }
-    }
-
-    // ============================================
-    // MEGA MENU DESKTOP - CORREÇÃO PRINCIPAL
-    // ============================================
-    function initMegaMenu() {
-        const megaMenuItems = $$('.has-mega-menu');
-
-        if (megaMenuItems.length === 0) return;
-
-        let hoverTimeout;
-        let currentOpenPanel = null;
-        let currentOpenTrigger = null;
-
-        function closeAllPanels() {
-            megaMenuItems.forEach(item => {
-                const panel = item.querySelector('.mega-panel');
-                const trigger = item.querySelector('.nav-link-dropdown');
-                if (panel && trigger) {
-                    panel.classList.remove('active');
-                    trigger.setAttribute('aria-expanded', 'false');
-                    trigger.classList.remove('active');
-                }
-            });
-            currentOpenPanel = null;
-            currentOpenTrigger = null;
-            document.body.classList.remove('mega-menu-active');
-        }
-
-        function showPanel(trigger, panel) {
-            // Fechar painel atual se diferente
-            if (currentOpenPanel && currentOpenPanel !== panel) {
-                currentOpenPanel.classList.remove('active');
-                if (currentOpenTrigger) {
-                    currentOpenTrigger.setAttribute('aria-expanded', 'false');
-                    currentOpenTrigger.classList.remove('active');
-                }
-            }
-
-            // Abrir novo painel
-            panel.classList.add('active');
-            trigger.setAttribute('aria-expanded', 'true');
-            trigger.classList.add('active');
-            document.body.classList.add('mega-menu-active');
-
-            currentOpenPanel = panel;
-            currentOpenTrigger = trigger;
-
-            // Se for o painel de idiomas, atualizar indicadores de idioma ativo
-            if (panel.classList.contains('mega-panel-idiomas')) {
-                onIdiomasPanelOpen();
-            }
-        }
-
-        function hidePanel(trigger, panel) {
-            panel.classList.remove('active');
-            trigger.setAttribute('aria-expanded', 'false');
-            trigger.classList.remove('active');
-
-            if (currentOpenPanel === panel) {
-                currentOpenPanel = null;
-            }
-            if (currentOpenTrigger === trigger) {
-                currentOpenTrigger = null;
-            }
-
-            // Remover classe do body apenas se não houver outros painéis abertos
-            const anyOpen = $$('.mega-panel.active').length === 0;
-            if (anyOpen) {
-                document.body.classList.remove('mega-menu-active');
-            }
-        }
-
-        // Aplicar event listeners a cada item do mega menu
-        megaMenuItems.forEach(item => {
-            const trigger = item.querySelector('.nav-link-dropdown');
-            const panel = item.querySelector('.mega-panel');
-
-            if (!trigger || !panel) return;
-
-            // Handler para mouseenter (apenas desktop)
-            trigger.addEventListener('mouseenter', function(e) {
-                if (!isDesktop()) return;
-
-                clearTimeout(hoverTimeout);
-                showPanel(trigger, panel);
-            });
-
-            // Handler para mouseleave (apenas desktop)
-            trigger.addEventListener('mouseleave', function(e) {
-                if (!isDesktop()) return;
-
-                hoverTimeout = setTimeout(() => {
-                    if (currentOpenPanel === panel) {
-                        hidePanel(trigger, panel);
-                    }
-                }, 300); // 300ms para evitar fechamento acidental
-            });
-
-            // Handler para click (mobile/tablet)
-            trigger.addEventListener('click', function(e) {
-                if (isDesktop()) return;
-
-                e.preventDefault();
-
-                const isActive = panel.classList.contains('active');
-
-                if (isActive) {
-                    hidePanel(trigger, panel);
-                } else {
-                    closeAllPanels();
-                    showPanel(trigger, panel);
-                }
-            });
-
-            // Handler para focus (accessibilidade)
-            trigger.addEventListener('focus', function() {
-                if (isDesktop()) {
-                    showPanel(trigger, panel);
-                }
-            });
-
-            // Manter painel aberto quando mouse está sobre ele
-            panel.addEventListener('mouseenter', function() {
-                if (!isDesktop()) return;
-                clearTimeout(hoverTimeout);
-            });
-
-            panel.addEventListener('mouseleave', function() {
-                if (!isDesktop()) return;
-                hoverTimeout = setTimeout(() => {
-                    hidePanel(trigger, panel);
-                }, 300); // 300ms para evitar fechamento acidental
-            });
-        });
-
-        // Fechar ao pressionar ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && currentOpenPanel) {
-                closeAllPanels();
-                if (currentOpenTrigger) {
-                    currentOpenTrigger.focus();
-                }
-            }
-        });
-
-        // Fechar ao clicar fora
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.has-mega-menu') && currentOpenPanel) {
-                closeAllPanels();
-            }
-        });
-
-        // Listener para redimensionamento da janela
-        window.addEventListener('resize', function() {
-            if (isMobile() && currentOpenPanel) {
-                closeAllPanels();
-            }
-        });
-    }
-
-    // ============================================
-    // MENU TABS (DENTRO DOS MEGA PANELS)
-    // ============================================
-    function initMenuTabs() {
-        const tabContainers = $$('.menu-tabs');
-
-        tabContainers.forEach(container => {
-            if (!container || !container.parentElement) return;
-
-            const parent = container.parentElement.parentElement;
-            if (!parent) return;
-
-            const tabContents = parent.querySelectorAll('.tab-content');
-            const triggers = container.querySelectorAll('.menu-tab-trigger');
-
-            triggers.forEach(trigger => {
-                trigger.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-
-                    // Atualizar triggers
-                    triggers.forEach(t => {
-                        t.classList.remove('active');
-                        t.setAttribute('aria-selected', 'false');
-                    });
-                    this.classList.add('active');
-                    this.setAttribute('aria-selected', 'true');
-
-                    // Atualizar conteúdos
-                    tabContents.forEach(content => {
-                        content.classList.remove('active');
-                        if (content.id === 'tab-' + tabId) {
-                            content.classList.add('active');
-                        }
-                    });
-                });
-            });
-        });
-    }
-
-    // ============================================
-    // SELETOR DE IDIOMA - INDICADOR DE IDIOMA ATIVO
-    // ============================================
+      }
+    },
     
-    /**
-     * Atualiza os indicadores visuais de idioma ativo
-     * @param {string} langCode - Código do idioma (ex: 'pt-br', 'en', 'es')
-     */
-    function updateActiveLanguageIndicators(langCode) {
-        if (!langCode) {
-            langCode = State.currentLanguage;
-        }
+    applyConsent: function() {
+      var consent = this.getConsent();
+      
+      if (consent) {
+        window.dispatchEvent(new CustomEvent('CookieConsent:Applied', {
+          detail: { preferences: consent }
+        }));
         
-        // Atualizar estado interno
-        State.currentLanguage = langCode;
-        
-        // Desktop: Atualizar links no mega panel de idiomas
-        const desktopLangLinks = document.querySelectorAll('.mega-panel-idiomas .idiomas-list li a');
-        desktopLangLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('data-lang') === langCode) {
-                link.classList.add('active');
-            }
-        });
-        
-        // Desktop: Atualizar itens no grid de idiomas
-        const desktopLangItems = document.querySelectorAll('.mega-panel-idiomas .idioma-item');
-        desktopLangItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('data-lang') === langCode) {
-                item.classList.add('active');
-            }
-        });
-        
-        // Mobile: Atualizar itens no grid de idiomas
-        const mobileLangItems = document.querySelectorAll('.mobile-language-grid .language-flag-item');
-        mobileLangItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('data-lang') === langCode) {
-                item.classList.add('active');
-            }
-        });
-        
-        // Mobile: Atualizar indicador atual
-        const mobileIdiomasCurrent = getElement('mobile-idiomas-current');
-        if (mobileIdiomasCurrent) {
-            const activeMobileItem = document.querySelector(`.mobile-language-grid .language-flag-item[data-lang="${langCode}"]`);
-            if (activeMobileItem) {
-                const img = activeMobileItem.querySelector('img');
-                if (img) {
-                    mobileIdiomasCurrent.innerHTML = img.outerHTML + '<span>' + img.alt + '</span>';
-                }
-            }
-        }
-        
-        // Atualizar bandeira no seletor do menu desktop
-        const activeLangFlag = getElement('active-lang-flag');
-        if (activeLangFlag) {
-            const activeDesktopItem = document.querySelector(`.mega-panel-idiomas .idioma-item[data-lang="${langCode}"]`);
-            if (activeDesktopItem) {
-                const flagImg = activeDesktopItem.querySelector('.idioma-flag');
-                if (flagImg) {
-                    activeLangFlag.src = flagImg.src;
-                    activeLangFlag.alt = flagImg.alt;
-                }
-            }
-        }
-        
-        console.log('[Header] Indicadores de idioma ativo atualizados para:', langCode);
+        return consent;
+      }
+      
+      return null;
+    }
+  };
+
+  // ============================================
+  // CONTROLE DO FAB DE COOKIES (SSOT)
+  // ============================================
+  function saveFabPreference(enabled) {
+    try {
+      localStorage.setItem(Config.cookieFabKey, JSON.stringify(enabled));
+      
+      window.dispatchEvent(new CustomEvent('CookieFab:PreferenceChanged', {
+        detail: { enabled: enabled }
+      }));
+      
+      return true;
+    } catch (e) {
+      console.warn('[CookieFab] Erro ao salvar preferência:', e);
+      return false;
+    }
+  }
+  
+  function getFabPreference() {
+    try {
+      var saved = localStorage.getItem(Config.cookieFabKey);
+      return saved !== null ? JSON.parse(saved) : true; // Padrão: visível
+    } catch (e) {
+      return true;
+    }
+  }
+  
+  function clearFabPreference() {
+    try {
+      localStorage.removeItem(Config.cookieFabKey);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // ============================================
+  // CONTROLE DE FONTE (SSOT)
+  // ============================================
+  function resetFontVariables() {
+    document.documentElement.style.fontSize = '';
+    document.documentElement.style.setProperty('--font-size-base', '');
+    document.documentElement.style.setProperty('--font-scale', '');
+    document.body.removeAttribute('data-font-scale');
+    document.body.removeAttribute('data-font-size-index');
+    document.body.removeAttribute('data-font-size-increase-index');
+  }
+
+  function applyFontSize(index) {
+    if (index < 0 || index >= Config.fontSizeLevels.length) {
+      index = 0;
     }
     
-    /**
-     * Salva o idioma selecionado no localStorage
-     * @param {string} langCode - Código do idioma
-     */
-    function saveSelectedLanguage(langCode) {
-        try {
-            localStorage.setItem('nursing_calc_lang', langCode);
-            State.currentLanguage = langCode;
-            console.log('[Header] Idioma salvo:', langCode);
-        } catch (err) {
-            console.warn('[Header] Erro ao salvar idioma:', err);
-        }
+    state.fontSizeIndex = index;
+    var fontSize = Config.fontSizeLevels[index];
+    
+    document.documentElement.style.fontSize = fontSize + 'px';
+    document.documentElement.style.setProperty('--font-size-base', fontSize + 'px');
+    
+    var scale = fontSize / 16;
+    document.documentElement.style.setProperty('--font-scale', scale.toString());
+    
+    document.body.setAttribute('data-font-scale', scale.toString());
+    document.body.setAttribute('data-font-size-index', index.toString());
+    
+    saveState();
+    
+    var label = Config.fontSizeLabels[index] || '100%';
+    announceToScreenReader('Tamanho da fonte reduzido para ' + label);
+  }
+
+  function applyFontSizeIncrease(index) {
+    if (index < 0 || index >= Config.fontSizeIncreaseLevels.length) {
+      index = 0;
     }
     
-    /**
-     * Carrega o idioma salvo do localStorage
-     * @returns {string} Código do idioma salvo ou padrão
-     */
-    function loadSavedLanguage() {
-        try {
-            const savedLang = localStorage.getItem('nursing_calc_lang') || 'pt-br';
-            State.currentLanguage = savedLang;
-            return savedLang;
-        } catch (err) {
-            console.warn('[Header] Erro ao carregar idioma salvo:', err);
-            State.currentLanguage = 'pt-br';
-            return 'pt-br';
-        }
+    state.fontIncreaseIndex = index;
+    var fontSize = Config.fontSizeIncreaseLevels[index];
+    
+    document.documentElement.style.fontSize = fontSize + 'px';
+    document.documentElement.style.setProperty('--font-size-base', fontSize + 'px');
+    
+    var scale = fontSize / 16;
+    document.documentElement.style.setProperty('--font-scale', scale.toString());
+    
+    document.body.setAttribute('data-font-scale', scale.toString());
+    document.body.setAttribute('data-font-size-increase-index', index.toString());
+    
+    saveState();
+    
+    var label = Config.fontIncreaseLabels[index] || '100%';
+    announceToScreenReader('Tamanho da fonte aumentado para ' + label);
+  }
+
+  function decreaseFontSize() {
+    var newIndex = state.fontSizeIndex - 1;
+    
+    if (newIndex < 0) {
+      newIndex = Config.fontSizeLevels.length - 1;
     }
     
-    /**
-     * Atualiza indicadores de idioma quando o mega panel de idiomas é aberto
-     */
-    function onIdiomasPanelOpen() {
-        updateActiveLanguageIndicators();
+    applyFontSize(newIndex);
+    updateHeaderFontButtons();
+  }
+
+  function increaseFontSize() {
+    var newIndex = state.fontSizeIndex + 1;
+    
+    if (newIndex >= Config.fontSizeLevels.length) {
+      newIndex = 0;
     }
-    function initLanguageSelector() {
-        // Carregar idioma salvo e atualizar indicadores visuais
-        const savedLang = loadSavedLanguage();
-        updateActiveLanguageIndicators(savedLang);
+    
+    applyFontSize(newIndex);
+    updateHeaderFontButtons();
+  }
+
+  function increaseFontSizeFromButton() {
+    var newIndex = state.fontIncreaseIndex + 1;
+    
+    if (newIndex >= Config.fontSizeIncreaseLevels.length) {
+      newIndex = 0;
+    }
+    
+    applyFontSizeIncrease(newIndex);
+    updateHeaderFontButtons();
+  }
+
+  function decreaseFontSizeFromButton() {
+    var newIndex = state.fontIncreaseIndex - 1;
+    
+    if (newIndex < 0) {
+      newIndex = Config.fontSizeIncreaseLevels.length - 1;
+    }
+    
+    applyFontSizeIncrease(newIndex);
+    updateHeaderFontButtons();
+  }
+
+  function updateHeaderFontButtons() {
+    var reduceBtn = getElement('font-reduce');
+    var mobileReduceBtn = getElement('mobile-font-reduce');
+    
+    if (reduceBtn) {
+      var prevIndex = state.fontSizeIndex - 1;
+      var prevLabel;
+      if (prevIndex < 0) {
+        prevLabel = Config.fontSizeLabels[Config.fontSizeLabels.length - 1];
+      } else {
+        prevLabel = Config.fontSizeLabels[prevIndex];
+      }
+      reduceBtn.title = 'Reduzir fonte para ' + prevLabel;
+      reduceBtn.classList.toggle('at-min-level', state.fontSizeIndex === 0);
+    }
+    
+    if (mobileReduceBtn) {
+      mobileReduceBtn.title = 'Reduzir fonte para ' + (Config.fontSizeLabels[state.fontSizeIndex] || '100%');
+    }
+    
+    var increaseBtn = getElement('font-increase');
+    var mobileIncreaseBtn = getElement('mobile-font-increase');
+    
+    if (increaseBtn) {
+      var nextIndex = (state.fontIncreaseIndex + 1) % Config.fontSizeIncreaseLevels.length;
+      var nextLabel = Config.fontIncreaseLabels[nextIndex];
+      increaseBtn.title = 'Aumentar fonte para ' + nextLabel;
+      increaseBtn.classList.toggle('at-max-level', state.fontIncreaseIndex === Config.fontSizeIncreaseLevels.length - 1);
+    }
+    
+    if (mobileIncreaseBtn) {
+      mobileIncreaseBtn.title = 'Aumentar fonte para ' + (Config.fontIncreaseLabels[state.fontIncreaseIndex] || '120%');
+    }
+  }
+
+  function resetFontSize() {
+    state.fontSizeIndex = 0;
+    state.fontIncreaseIndex = 0;
+    
+    resetFontVariables();
+    
+    saveState();
+    
+    announceToScreenReader('Tamanho da fonte restaurado ao padrão');
+    
+    updateHeaderFontButtons();
+  }
+
+  // ============================================
+  // CONTRASTE E ACESSIBILIDADE
+  // ============================================
+  var allClasses = [
+    'inverted', 'dark-contrast', 'light-contrast', 
+    'protanopia', 'deuteranopia', 'tritanopia',
+    'saturation-low', 'saturation-high', 'monochrome', 
+    'highlight-links', 'highlight-headers',
+    'bold-text', 'stop-anim', 'stop-sounds', 'hide-images', 
+    'font-atkinson', 'font-newsreader', 'font-opendyslexic', 
+    'reading-mode', 'glossary', 'magnifier-active', 
+    'reading-guide-azul', 'reading-guide-laranja', 'reading-guide-preto',
+    'big-cursor-medium', 'big-cursor-large', 'big-cursor-xlarge'
+  ];
+
+  function resetAllAccessibilityFeatures() {
+    var i, len;
+    
+    document.body.classList.remove('inverted', 'dark-contrast', 'light-contrast');
+    document.body.classList.remove('deuteranopia', 'protanopia', 'tritanopia');
+    document.body.classList.remove('highlight-links', 'highlight-headers', 'bold-text');
+    document.body.classList.remove('stop-anim', 'hide-images', 'reading-mode');
+    
+    state.contrast = 0;
+    state.colorblind = 0;
+    state.saturation = 0;
+    state.bigCursor = 0;
+    state.readingMask = 0;
+    state.readingGuide = 0;
+    state.highlightLinks = false;
+    state.highlightHeaders = false;
+    state.boldText = false;
+    state.stopAnim = false;
+    state.hideImages = false;
+    state.readingMode = false;
+    state.fontStyle = 0;
+    
+    resetFontVariables();
+    state.fontSizeIndex = 0;
+    state.fontIncreaseIndex = 0;
+    
+    saveState();
+    
+    announceToScreenReader('Todas as configurações de acessibilidade restauradas ao padrão');
+  }
+
+  function deactivateAllCards() {
+    var cards = document.querySelectorAll('[data-action][data-param]');
+    var i, len = cards.length;
+    for (i = 0; i < len; i++) {
+      cards[i].classList.remove('active');
+    }
+  }
+
+  function toggleContrast(mode) {
+    var modes = ['inverted', 'dark-contrast', 'light-contrast'];
+    var i, len = modes.length;
+    
+    for (i = 0; i < len; i++) {
+      document.body.classList.remove(modes[i]);
+    }
+    
+    deactivateAllCards();
+    
+    var isSameMode = state.contrast === modes.indexOf(mode);
+    if (!isSameMode) {
+      document.body.classList.add(mode);
+      var card = document.querySelector('[data-action="contrast"][data-param="' + mode + '"]');
+      if (card) {
+        card.classList.add('active');
+      }
+      state.contrast = modes.indexOf(mode);
+      announceToScreenReader('Contraste ' + mode + ' ativado');
+    } else {
+      state.contrast = 0;
+      announceToScreenReader('Contraste restaurado ao padrão');
+    }
+    saveState();
+  }
+
+  function toggleColorblind(mode) {
+    var modes = ['deuteranopia', 'protanopia', 'tritanopia'];
+    var i, len = modes.length;
+    
+    for (i = 0; i < len; i++) {
+      document.body.classList.remove(modes[i]);
+    }
+    
+    deactivateAllCards();
+    
+    var isSameMode = state.colorblind === modes.indexOf(mode);
+    if (!isSameMode) {
+      document.body.classList.add(mode);
+      var card = document.querySelector('[data-action="colorblind"][data-param="' + mode + '"]');
+      if (card) {
+        card.classList.add('active');
+      }
+      state.colorblind = modes.indexOf(mode);
+      announceToScreenReader('Filtro ' + mode + ' ativado');
+    } else {
+      state.colorblind = 0;
+      announceToScreenReader('Filtro de daltonismo desativado');
+    }
+    saveState();
+  }
+
+  function toggleHighlightLinks() {
+    state.highlightLinks = !state.highlightLinks;
+    
+    if (state.highlightLinks) {
+      document.body.classList.add('highlight-links');
+    } else {
+      document.body.classList.remove('highlight-links');
+    }
+    
+    var card = document.querySelector('[data-action="highlight-links"]');
+    if (card) {
+      card.classList.toggle('active', state.highlightLinks);
+    }
+    
+    announceToScreenReader('Destaque em links ' + (state.highlightLinks ? 'ativado' : 'desativado'));
+    saveState();
+  }
+
+  function toggleHighlightHeaders() {
+    state.highlightHeaders = !state.highlightHeaders;
+    
+    if (state.highlightHeaders) {
+      document.body.classList.add('highlight-headers');
+    } else {
+      document.body.classList.remove('highlight-headers');
+    }
+    
+    var card = document.querySelector('[data-action="highlight-headers"]');
+    if (card) {
+      card.classList.toggle('active', state.highlightHeaders);
+    }
+    
+    announceToScreenReader('Destaque em títulos ' + (state.highlightHeaders ? 'ativado' : 'desativado'));
+    saveState();
+  }
+
+  function toggleBoldText() {
+    state.boldText = !state.boldText;
+    
+    if (state.boldText) {
+      document.body.classList.add('bold-text');
+    } else {
+      document.body.classList.remove('bold-text');
+    }
+    
+    var card = document.querySelector('[data-action="bold-text"]');
+    if (card) {
+      card.classList.toggle('active', state.boldText);
+    }
+    
+    announceToScreenReader('Texto em negrito ' + (state.boldText ? 'ativado' : 'desativado'));
+    saveState();
+  }
+
+  function toggleStopAnimations() {
+    state.stopAnim = !state.stopAnim;
+    
+    if (state.stopAnim) {
+      document.body.classList.add('stop-anim');
+    } else {
+      document.body.classList.remove('stop-anim');
+    }
+    
+    var card = document.querySelector('[data-action="stop-anim"]');
+    if (card) {
+      card.classList.toggle('active', state.stopAnim);
+    }
+    
+    announceToScreenReader('Animações ' + (state.stopAnim ? 'pausadas' : 'ativas'));
+    saveState();
+  }
+
+  function toggleHideImages() {
+    state.hideImages = !state.hideImages;
+    
+    if (state.hideImages) {
+      document.body.classList.add('hide-images');
+    } else {
+      document.body.classList.remove('hide-images');
+    }
+    
+    var card = document.querySelector('[data-action="hide-images"]');
+    if (card) {
+      card.classList.toggle('active', state.hideImages);
+    }
+    
+    announceToScreenReader('Imagens ' + (state.hideImages ? 'ocultas' : 'visíveis'));
+    saveState();
+  }
+
+  function toggleReadingMode() {
+    state.readingMode = !state.readingMode;
+    
+    if (state.readingMode) {
+      document.body.classList.add('reading-mode');
+    } else {
+      document.body.classList.remove('reading-mode');
+    }
+    
+    announceToScreenReader('Modo de leitura ' + (state.readingMode ? 'ativado' : 'desativado'));
+    saveState();
+  }
+
+  // ============================================
+  // PAINEL DE ACESSIBILIDADE (UI)
+  // ============================================
+  var readingGuideElement = null;
+
+  function togglePanel() {
+    var panel = getElement('accessibility-panel');
+    var toggleBtn = getElement('accessibility-toggle');
+    
+    if (!panel) return;
+    
+    var isHidden = panel.classList.contains('accessibility-panel-hidden');
+    
+    if (isHidden) {
+      panel.classList.remove('accessibility-panel-hidden');
+      panel.hidden = false;
+      panel.setAttribute('aria-hidden', 'false');
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
+      state.panelOpen = true;
+      announceToScreenReader('Painel de acessibilidade aberto');
+    } else {
+      closePanel();
+    }
+  }
+
+  function closePanel() {
+    var panel = getElement('accessibility-panel');
+    var toggleBtn = getElement('accessibility-toggle');
+    
+    if (panel) {
+      panel.classList.add('accessibility-panel-hidden');
+      panel.setAttribute('aria-hidden', 'true');
+      panel.hidden = true;
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+      state.panelOpen = false;
+      announceToScreenReader('Painel de acessibilidade fechado');
+    }
+  }
+
+  function closeAllPanels() {
+    closePanel();
+    hideShortcutsModal();
+    hideGlossaryModal();
+  }
+
+  // ============================================
+  // MODAL DE ATAȘHOS DE TECLADO
+  // ============================================
+  function showShortcutsModal() {
+    var modal = getElement('shortcuts-modal');
+    var list = getElement('shortcuts-list');
+    
+    if (modal) {
+      modal.hidden = false;
+      renderShortcutsList();
+      announceToScreenReader('Atalhos de teclado mostrados');
+    }
+  }
+
+  function hideShortcutsModal() {
+    var modal = getElement('shortcuts-modal');
+    if (modal) {
+      modal.hidden = true;
+    }
+  }
+
+  function renderShortcutsList() {
+    var list = getElement('shortcuts-list');
+    if (!list) return;
+    
+    var browser = getBrowser();
+    var shortcuts = shortcutsByBrowser[browser] || shortcutsByBrowser.chrome;
+    
+    list.innerHTML = shortcuts.map(function(shortcut) {
+      return '<div class="shortcut-item"><kbd>' + shortcut.keys.join(' + ') + '</kbd><span>' + shortcut.desc + '</span></div>';
+    }).join('');
+  }
+
+  // ============================================
+  // MODAL DE GLOSSÁRIO
+  // ============================================
+  function showGlossaryModal() {
+    var modal = getElement('glossary-modal');
+    if (modal) {
+      modal.hidden = false;
+      renderGlossaryList();
+      announceToScreenReader('Dicionário de termos aberto');
+    }
+  }
+
+  function hideGlossaryModal() {
+    var modal = getElement('glossary-modal');
+    if (modal) {
+      modal.hidden = true;
+    }
+  }
+
+  function renderGlossaryList(letter, searchTerm) {
+    var list = getElement('glossary-list');
+    if (!list) return;
+    
+    var terms = glossaryData;
+    
+    if (letter && letter !== 'all') {
+      terms = terms.filter(function(term) {
+        return term.term.toUpperCase().startsWith(letter);
+      });
+    }
+    
+    if (searchTerm) {
+      var term = searchTerm.toLowerCase();
+      terms = terms.filter(function(t) {
+        return t.term.toLowerCase().includes(term) || t.definition.toLowerCase().includes(term);
+      });
+    }
+    
+    if (terms.length === 0) {
+      list.innerHTML = '';
+      var emptyEl = getElement('glossary-empty');
+      if (emptyEl) emptyEl.style.display = 'block';
+    } else {
+      var emptyEl = getElement('glossary-empty');
+      if (emptyEl) emptyEl.style.display = 'none';
+      
+      list.innerHTML = terms.map(function(item) {
+        return '<li class="glossary-item" data-term="' + sanitizeHTML(item.term) + '">' +
+          '<div class="glossary-term">' + sanitizeHTML(item.term) + '</div>' +
+          '<div class="glossary-definition">' + sanitizeHTML(item.definition) + '</div>' +
+          '</li>';
+      }).join('');
+    }
+  }
+
+  function filterGlossaryByLetter(letter) {
+    document.querySelectorAll('.alphabet-letter').forEach(function(btn) {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+    });
+    
+    var activeBtn = document.querySelector('.alphabet-letter[data-letter="' + letter + '"]');
+    if (activeBtn) {
+      activeBtn.classList.add('active');
+      activeBtn.setAttribute('aria-selected', 'true');
+    }
+    
+    var searchInput = getElement('glossary-search-input');
+    var searchTerm = searchInput ? searchInput.value : '';
+    renderGlossaryList(letter, searchTerm);
+  }
+
+  // ============================================
+  // EXECUTOR DE AÇÕES DO TECLADO
+  // ============================================
+  function executeAction(action) {
+    switch (action) {
+      case 'togglePanel':
+        togglePanel();
+        break;
+      case 'increaseFont':
+        increaseFontSize();
+        break;
+      case 'decreaseFont':
+        decreaseFontSize();
+        break;
+      case 'toggleContrast':
+        toggleContrast('dark-contrast');
+        break;
+      case 'toggleLinks':
+        toggleHighlightLinks();
+        break;
+      case 'toggleHeaders':
+        toggleHighlightHeaders();
+        break;
+      case 'toggleMask':
+        toggleReadingMask();
+        break;
+      case 'toggleGuide':
+        toggleReadingGuide();
+        break;
+      case 'toggleReading':
+        toggleReadingMode();
+        break;
+      case 'toggleTheme':
+        ThemeManager.toggle();
+        break;
+      case 'toggleImages':
+        toggleHideImages();
+        break;
+      case 'reset':
+        resetAllAccessibilityFeatures();
+        break;
+      case 'closeAll':
+        closeAllPanels();
+        break;
+    }
+  }
+
+  function handleKeyboard(e) {
+    // Don't interfere with form inputs
+    if (e.target.matches && e.target.matches('input, textarea, [contenteditable]')) return;
+    
+    var browser = getBrowser();
+    var shortcuts = shortcutsByBrowser[browser] || shortcutsByBrowser.chrome;
+    
+    for (var i = 0; i < shortcuts.length; i++) {
+      var shortcut = shortcuts[i];
+      var keysPressed = [];
+      if (e.altKey) keysPressed.push('Alt');
+      if (e.ctrlKey) keysPressed.push('Ctrl');
+      if (e.shiftKey) keysPressed.push('Shift');
+      
+      var requiredKeys = shortcut.keys.filter(function(k) {
+        return k !== 'Alt' && k !== 'Ctrl' && k !== 'Shift';
+      });
+      var extraKeys = shortcut.keys.filter(function(k) {
+        return k === 'Alt' || k === 'Ctrl' || k === 'Shift';
+      });
+      
+      var allRequiredPressed = requiredKeys.every(function(k) {
+        return keysPressed.indexOf(k) !== -1;
+      });
+      var modifiersMatch = extraKeys.every(function(k) {
+        return keysPressed.indexOf(k) !== -1;
+      });
+      
+      if (allRequiredPressed && modifiersMatch && requiredKeys.length > 0) {
+        e.preventDefault();
+        executeAction(shortcut.action);
+        return;
+      }
+    }
+  }
+
+  // ============================================
+  // FUNÇÕES AUXILIARES DO PAINEL
+  // ============================================
+  function toggleReadingMask() {
+    var mask = document.getElementById('reading-mask');
+    var isActive = mask && mask.style.display !== 'none';
+    
+    if (isActive) {
+      if (mask) mask.style.display = 'none';
+      state.readingMask = 0;
+      announceToScreenReader('Máscara de leitura desativada');
+    } else {
+      if (!mask) {
+        mask = document.createElement('div');
+        mask.id = 'reading-mask';
+        mask.innerHTML = '<div id="reading-mask-top"></div><div id="reading-mask-bottom"></div>';
+        mask.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9990';
+        document.body.appendChild(mask);
+      }
+      var top = document.getElementById('reading-mask-top');
+      var bottom = document.getElementById('reading-mask-bottom');
+      if (top) top.style.height = '50%';
+      if (bottom) bottom.style.height = '50%';
+      mask.style.display = 'block';
+      state.readingMask = 1;
+      announceToScreenReader('Máscara de leitura ativada');
+    }
+  }
+
+  function toggleReadingGuide() {
+    if (!readingGuideElement) {
+      readingGuideElement = document.createElement('div');
+      readingGuideElement.id = 'reading-guide';
+      readingGuideElement.style.cssText = 'position:fixed;left:0;width:100%;height:3px;z-index:9990;pointer-events:none;box-shadow:0 0 10px currentColor';
+      document.body.appendChild(readingGuideElement);
+      
+      document.addEventListener('mousemove', function(e) {
+        if (state.readingGuide && readingGuideElement) {
+          readingGuideElement.style.top = e.clientY + 'px';
+        }
+      });
+    }
+    
+    state.readingGuide = state.readingGuide ? 0 : 1;
+    
+    if (state.readingGuide) {
+      readingGuideElement.style.display = 'block';
+      readingGuideElement.style.backgroundColor = '#2196F3';
+      announceToScreenReader('Guia de leitura ativada');
+    } else {
+      readingGuideElement.style.display = 'none';
+      announceToScreenReader('Guia de leitura desativada');
+    }
+  }
+
+  // ============================================
+  // EVENTOS DO THEMEMANAGER
+  // ============================================
+  function setupThemeManagerEvents() {
+    window.addEventListener('theme:changed', function(e) {
+      console.log('[AccessControl] Tema alterado:', e.detail.theme);
+    });
+    
+    window.addEventListener('ThemeManager:Ready', function() {
+      console.log('[AccessControl] ThemeManager está pronto');
+    });
+  }
+
+  // ============================================
+  // CONFIGURAÇÃO DE EVENT LISTENERS
+  // ============================================
+  function bindEvents() {
+    // Botões principais do painel
+    var toggleBtn = getElement('accessibility-toggle');
+    var closeBtn = getElement('accessibility-close');
+    var restoreBtn = getElement('accessibility-restore');
+    
+    if (toggleBtn) toggleBtn.addEventListener('click', togglePanel);
+    if (closeBtn) closeBtn.addEventListener('click', closePanel);
+    if (restoreBtn) restoreBtn.addEventListener('click', resetAllAccessibilityFeatures);
+    
+    // Botões de fonte no header
+    var fontIncrease = getElement('font-increase');
+    var fontDecrease = getElement('font-decrease');
+    
+    if (fontIncrease) fontIncrease.addEventListener('click', increaseFontSize);
+    if (fontDecrease) fontDecrease.addEventListener('click', decreaseFontSize);
+    
+    // Botão de tema
+    var themeToggle = getElement('theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function() {
+        ThemeManager.toggle();
+      });
+    }
+    
+    // Botões de ação de acessibilidade
+    document.querySelectorAll('[data-action]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var action = this.getAttribute('data-action');
+        var param = this.getAttribute('data-param');
         
-        // Desktop mega panel
-        const languageLinks = $$('.mega-panel-idiomas .idiomas-list li a');
-        const activeLangFlag = getElement('active-lang-flag');
-    
-        if (languageLinks.length > 0) {
-            languageLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-    
-                    languageLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-    
-                    const flagImg = this.querySelector('.idioma-flag-link');
-                    const langCode = this.getAttribute('data-lang');
-                    
-                    // Salvar idioma e atualizar indicadores
-                    if (langCode) {
-                        saveSelectedLanguage(langCode);
-                        updateActiveLanguageIndicators(langCode);
-                    }
-                    
-                    if (flagImg && activeLangFlag) {
-                        activeLangFlag.src = flagImg.src;
-                        activeLangFlag.alt = flagImg.alt;
-                    }
-    
-                    // Fechar mega panel
-                    const megaPanel = this.closest('.mega-panel');
-                    if (megaPanel) {
-                        megaPanel.classList.remove('active');
-                    }
-    
-                    const trigger = document.querySelector('[data-menu="idiomas"]');
-                    if (trigger) {
-                        trigger.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            });
+        switch (action) {
+          case 'font-size':
+            if (param === 'increase') increaseFontSize();
+            else if (param === 'decrease') decreaseFontSize();
+            else if (param === 'reset') resetFontSize();
+            break;
+          case 'contrast':
+            toggleContrast(param);
+            break;
+          case 'colorblind':
+            toggleColorblind(param);
+            break;
+          case 'reading-mask':
+            toggleReadingMask();
+            break;
+          case 'reading-guide':
+            toggleReadingGuide();
+            break;
+          case 'reading-mode':
+            toggleReadingMode();
+            break;
+          case 'highlight-links':
+            toggleHighlightLinks();
+            break;
+          case 'highlight-headers':
+            toggleHighlightHeaders();
+            break;
+          case 'bold-text':
+            toggleBoldText();
+            break;
+          case 'stop-anim':
+            toggleStopAnimations();
+            break;
+          case 'hide-images':
+            toggleHideImages();
+            break;
         }
+      });
+    });
     
-        // Mobile language section
-        const mobileIdiomasSection = getElement('mobile-idiomas-section');
-        const mobileIdiomasToggle = getElement('mobile-idiomas-toggle');
-        const mobileIdiomasList = getElement('mobile-idiomas-list');
-        const mobileIdiomasArrow = getElement('mobile-idiomas-arrow');
+    // Botões de atalhos e glossário
+    var shortcutsBtn = getElement('shortcuts-btn');
+    var glossaryBtn = getElement('glossary-btn');
     
-        if (mobileIdiomasToggle && mobileIdiomasList) {
-            mobileIdiomasToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
+    if (shortcutsBtn) shortcutsBtn.addEventListener('click', showShortcutsModal);
+    if (glossaryBtn) glossaryBtn.addEventListener('click', showGlossaryModal);
     
-                const isExpanded = mobileIdiomasSection.classList.contains('expanded');
-                mobileIdiomasSection.classList.toggle('expanded', !isExpanded);
-                mobileIdiomasList.style.display = isExpanded ? 'none' : 'grid';
-                mobileIdiomasToggle.setAttribute('aria-expanded', !isExpanded);
+    // Fechar modal de atalhos
+    var shortcutsClose = getElement('shortcuts-close');
+    if (shortcutsClose) shortcutsClose.addEventListener('click', hideShortcutsModal);
     
-                if (mobileIdiomasArrow) {
-                    mobileIdiomasArrow.classList.toggle('fa-chevron-down', isExpanded);
-                    mobileIdiomasArrow.classList.toggle('fa-chevron-up', !isExpanded);
-                }
-            });
-        }
-    
-        // Mobile language selection
-        const languageFlagItems = $$('.language-flag-item');
-        const mobileIdiomasCurrent = getElement('mobile-idiomas-current');
-    
-        languageFlagItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-    
-                languageFlagItems.forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-    
-                const img = this.querySelector('img');
-                const langCode = this.getAttribute('data-lang');
-                
-                // Salvar idioma e atualizar indicadores
-                if (langCode) {
-                    saveSelectedLanguage(langCode);
-                    updateActiveLanguageIndicators(langCode);
-                }
-    
-                if (img && mobileIdiomasCurrent) {
-                    mobileIdiomasCurrent.innerHTML = img.outerHTML + '<span>' + img.alt + '</span>';
-                }
-    
-                // Salvar idioma no localStorage
-                try {
-                    const lang = this.getAttribute('data-lang');
-                    localStorage.setItem('nursing_calc_lang', lang);
-                } catch (err) {
-                    console.warn('[Header] Erro ao salvar idioma:', err);
-                }
-
-                // Fechar a lista
-                if (mobileIdiomasSection && mobileIdiomasList) {
-                    mobileIdiomasSection.classList.remove('expanded');
-                    mobileIdiomasList.style.display = 'none';
-                    if (mobileIdiomasToggle) {
-                        mobileIdiomasToggle.setAttribute('aria-expanded', 'false');
-                    }
-                    if (mobileIdiomasArrow) {
-                        mobileIdiomasArrow.classList.add('fa-chevron-down');
-                        mobileIdiomasArrow.classList.remove('fa-chevron-up');
-                    }
-                }
-            });
+    // Tabs de navegador no modal de atalhos
+    document.querySelectorAll('.browser-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.browser-tab').forEach(function(t) {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
         });
+        this.classList.add('active');
+        this.setAttribute('aria-selected', 'true');
+        renderShortcutsList();
+      });
+    });
+    
+    // Navegação por letra no glossário
+    document.querySelectorAll('.alphabet-letter').forEach(function(letter) {
+      letter.addEventListener('click', function() {
+        filterGlossaryByLetter(this.getAttribute('data-letter'));
+      });
+    });
+    
+    // Toggle do alfabeto
+    var alphabetToggle = document.querySelector('.alphabet-toggle');
+    if (alphabetToggle) {
+      alphabetToggle.addEventListener('click', function() {
+        var alphabet = document.querySelector('.glossary-alphabet');
+        if (alphabet) {
+          alphabet.classList.toggle('collapsed');
+          var isCollapsed = alphabet.classList.contains('collapsed');
+          this.setAttribute('aria-expanded', !isCollapsed);
+        }
+      });
     }
-
-    // ============================================
-    // BUSCA MOBILE
-    // ============================================
-    function initMobileSearch() {
-        const searchToggle = getElement('mobile-search-toggle');
-        const searchContainer = getElement('mobile-search-container');
-        const searchInput = getElement('mobile-menu-search-input');
-
-        if (!searchToggle || !searchContainer) return;
-
-        function toggleSearch() {
-            const isExpanded = searchContainer.classList.contains('expanded');
-            searchContainer.classList.toggle('expanded', !isExpanded);
-            searchToggle.classList.toggle('active', !isExpanded);
-            searchToggle.setAttribute('aria-expanded', !isExpanded);
-
-            if (!isExpanded && searchInput) {
-                setTimeout(() => searchInput.focus(), 100);
-            }
-        }
-
-        searchToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleSearch();
-        });
-
-        // Fechar ao pressionar ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && searchContainer.classList.contains('expanded')) {
-                toggleSearch();
-            }
-        });
+    
+    // Busca no glossário
+    var glossarySearch = getElement('glossary-search-input');
+    if (glossarySearch) {
+      glossarySearch.addEventListener('input', debounce(function() {
+        var activeLetter = document.querySelector('.alphabet-letter.active');
+        var letter = activeLetter ? activeLetter.getAttribute('data-letter') : 'all';
+        renderGlossaryList(letter, this.value);
+      }, 200));
     }
-
-    // ============================================
-    // SEARCH DESKTOP
-    // ============================================
-    function initSearch() {
-        const searchContainer = $('.search-container');
-        if (!searchContainer) return;
-
-        const searchInput = searchContainer.querySelector('.search-input');
-        const searchBtn = searchContainer.querySelector('.search-btn');
-
-        if (searchBtn && searchInput) {
-            searchBtn.addEventListener('click', function() {
-                const query = searchInput.value.trim();
-                if (query) {
-                    console.log('[Search] Buscando:', query);
-                }
-            });
-
-            searchInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    searchBtn.click();
-                }
-            });
-        }
+    
+    // Fechar modais ao clicar no backdrop
+    var shortcutsModal = getElement('shortcuts-modal');
+    var glossaryModal = getElement('glossary-modal');
+    
+    if (shortcutsModal) {
+      shortcutsModal.addEventListener('click', function(e) {
+        if (e.target === this) hideShortcutsModal();
+      });
     }
-
-    // ============================================
-    // HEADER SCROLL EFFECTS
-    // ============================================
-    function initScrollEffects() {
-        const header = $('.main-header');
-        if (!header) return;
-
-        let lastScrollY = 0;
-        let ticking = false;
-
-        function updateHeader() {
-            const scrollY = window.pageYOffset;
-
-            // Add/remove scrolled class
-            if (scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-
-            // Hide/show on scroll
-            if (scrollY > 100 && scrollY > lastScrollY) {
-                header.classList.add('header-hidden');
-            } else {
-                header.classList.remove('header-hidden');
-            }
-
-            lastScrollY = scrollY;
-            ticking = false;
-        }
-
-        function onScroll() {
-            if (!ticking) {
-                requestAnimationFrame(updateHeader);
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        updateHeader();
+    
+    if (glossaryModal) {
+      glossaryModal.addEventListener('click', function(e) {
+        if (e.target === this) hideGlossaryModal();
+      });
     }
+    
+    // Fechar com Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeAllPanels();
+      }
+    });
+    
+    // Atalhos de teclado globais
+    document.addEventListener('keydown', handleKeyboard);
+  }
 
-    // ============================================
-    // EVENTOS DO THEMEMANAGER
-    // ============================================
-    function setupThemeManagerEvents() {
-        // Escutar eventos do ThemeManager
-        window.addEventListener('theme:changed', function(e) {
-            const isDark = e.detail.isDark;
-            State.isDarkMode = isDark;
-            updateThemeIcons(isDark);
-            console.log('[Header] Tema atualizado via ThemeManager:', e.detail.theme);
-        });
-        
-        // Escutar quando ThemeManager estiver pronto
-        window.addEventListener('ThemeManager:Ready', function() {
-            const isDark = window.ThemeManager.isDarkMode();
-            updateThemeIcons(isDark);
-            State.isDarkMode = isDark;
-            console.log('[Header] ThemeManager detectado e sincronizado');
-        });
+  // ============================================
+  // INICIALIZAÇÃO
+  // ============================================
+  function init() {
+    if (state._initialized) {
+      console.log('[AccessControl] Módulo já inicializado');
+      return;
     }
+    
+    // Carregar estado salvo (apenas dados, não aplica estilos automaticamente)
+    loadState();
+    
+    // Inicializar ThemeManager (aplica tema salvo, mas isso é esperado)
+    ThemeManager.init();
+    setupThemeManagerEvents();
+    
+    // Configurar eventos de UI
+    bindEvents();
+    
+    // NÃO aplicar estado da fonte automaticamente
+    // O princípio é: estrutura padrão prevalece até que usuário ative um recurso
+    
+    state._initialized = true;
+    
+    // Disparar evento de prontidão para outros módulos
+    window.dispatchEvent(new CustomEvent('AccessControl:Ready'));
+    
+    console.log('[AccessControl] Módulo master inicializado com sucesso');
+    console.log('[AccessControl] Estado atual:', state);
+  }
 
-    // ============================================
-    // INICIALIZAÇÃO PRINCIPAL
-    // ============================================
-    function initialize() {
-        // Verificar se os elementos do header existem
-        const hasMegaMenuItems = $$('.has-mega-menu').length > 0;
-        const hasMobileMenu = getElement('mobile-menu') !== null;
+  // ============================================
+  // API PÚBLICA (SSOT)
+  // ============================================
+  window.AccessControl = {
+    // Inicialização
+    init: init,
+    isLoaded: function() {
+      return state._initialized;
+    },
+    
+    // Estado (apenas leitura)
+    getState: function() {
+      return {
+        fontSizeIndex: state.fontSizeIndex,
+        fontIncreaseIndex: state.fontIncreaseIndex,
+        theme: state.theme,
+        contrast: state.contrast,
+        colorblind: state.colorblind,
+        saturation: state.saturation,
+        bigCursor: state.bigCursor,
+        readingMask: state.readingMask,
+        readingGuide: state.readingGuide,
+        highlightLinks: state.highlightLinks,
+        highlightHeaders: state.highlightHeaders,
+        boldText: state.boldText,
+        stopAnim: state.stopAnim,
+        hideImages: state.hideImages,
+        readingMode: state.readingMode,
+        fontStyle: state.fontStyle,
+        panelOpen: state.panelOpen
+      };
+    },
+    
+    Config: Config,
+    
+    // Theme Manager
+    ThemeManager: ThemeManager,
+    getTheme: function() {
+      return ThemeManager.getTheme();
+    },
+    setTheme: function(theme) {
+      ThemeManager.applyTheme(theme);
+    },
+    
+    // Font Controls
+    applyFontSize: applyFontSize,
+    applyFontSizeIncrease: applyFontSizeIncrease,
+    decreaseFontSize: decreaseFontSize,
+    increaseFontSize: increaseFontSize,
+    increaseFontSizeFromButton: increaseFontSizeFromButton,
+    decreaseFontSizeFromButton: decreaseFontSizeFromButton,
+    resetFontSize: resetFontSize,
+    
+    // Accessibility Features
+    toggleContrast: toggleContrast,
+    toggleColorblind: toggleColorblind,
+    toggleHighlightLinks: toggleHighlightLinks,
+    toggleHighlightHeaders: toggleHighlightHeaders,
+    toggleBoldText: toggleBoldText,
+    toggleStopAnimations: toggleStopAnimations,
+    toggleHideImages: toggleHideImages,
+    toggleReadingMode: toggleReadingMode,
+    
+    // Resetar todos os recursos
+    resetAll: resetAllAccessibilityFeatures,
+    
+    // Panel Controls
+    togglePanel: togglePanel,
+    closePanel: closePanel,
+    closeAllPanels: closeAllPanels,
+    
+    // Modals
+    showShortcuts: showShortcutsModal,
+    hideShortcuts: hideShortcutsModal,
+    showGlossary: showGlossaryModal,
+    hideGlossary: hideGlossaryModal,
+    
+    // Cookie Consent Management (SSOT)
+    CookieConsentManager: CookieConsentManager,
+    saveCookieConsent: function(preferences) {
+      return CookieConsentManager.saveConsent(preferences);
+    },
+    getCookieConsent: function() {
+      return CookieConsentManager.getConsent();
+    },
+    hasCookieConsent: function() {
+      return CookieConsentManager.hasConsent();
+    },
+    clearCookieConsent: function() {
+      return CookieConsentManager.clearConsent();
+    },
+    applyCookieConsent: function() {
+      return CookieConsentManager.applyConsent();
+    },
+    
+    // FAB Cookie Management (SSOT)
+    saveFabPreference: saveFabPreference,
+    getFabPreference: getFabPreference,
+    clearFabPreference: clearFabPreference,
+    
+    // Utilities
+    announceToScreenReader: announceToScreenReader,
+    saveState: saveState,
+    loadState: loadState
+  };
 
-        if (!hasMegaMenuItems && !hasMobileMenu) {
-            console.log('[HeaderModule] Elementos do header não encontrados');
-            return;
-        }
+  // ============================================
+  // AUTO-INICIALIZAÇÃO
+  // ============================================
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
-        // Verificação DUPLA para evitar inicialização dupla:
-        // Se State.loaded já está true, alguém já inicializou (fallback ou init())
-        // Não inicializar novamente para evitar conflitos
-        if (State.loaded) {
-            console.log('[HeaderModule] Já inicializado, ignorando chamada');
-            return;
-        }
-
-        console.log('[HeaderModule] Inicializando módulo...');
-
-        // Carregar estados salvos
-        loadFontSize();
-        loadTheme();
-
-        // Aplicar configurações iniciais de fonte
-        document.documentElement.style.fontSize = State.currentFontSize + 'px';
-
-        // Inicializar controles apenas se os elementos existirem
-        initFontControls();
-        initThemeControls();
-        setupSkipLinks();
-        initClickAnimations();
-        setupMobileMenuBridge();
-        initMegaMenu();
-        initMenuTabs();
-        initLanguageSelector();
-        initMobileSearch();
-        initSearch();
-        initScrollEffects();
-        setupThemeManagerEvents();
-        injectThemeToggle();
-
-        // Sincronizar com AccessControl e ThemeManager após um pequeno delay
-        setTimeout(function() {
-            syncWithAccessControl();
-            // Sincronizar com ThemeManager
-            if (window.ThemeManager) {
-                const isDark = window.ThemeManager.isDarkMode();
-                State.isDarkMode = isDark;
-                updateThemeIcons(isDark);
-            }
-        }, 100);
-
-        State.loaded = true;
-        console.log('[HeaderModule] Módulo inicializado com sucesso');
-    }
-
-    // Observer para detectar quando o header é carregado dinamicamente
-    // Este observer fica ativo e tenta inicializar quando os elementos são detectados
-    function setupHeaderObserver() {
-        // Usar MutationObserver para detectar inserção do header
-        if (typeof MutationObserver !== 'undefined') {
-            const observer = new MutationObserver(function(mutations) {
-                let foundNewElements = false;
-                
-                mutations.forEach(function(mutation) {
-                    if (mutation.addedNodes.length > 0) {
-                        // Verificar se os elementos do header foram adicionados
-                        const hasMegaMenu = $$('.has-mega-menu').length > 0;
-                        const hasMobileMenu = getElement('mobile-menu') !== null;
-                        
-                        if (hasMegaMenu || hasMobileMenu) {
-                            foundNewElements = true;
-                        }
-                    }
-                });
-
-                if (foundNewElements && !State.loaded) {
-                    console.log('[HeaderModule] Elementos do header detectados via MutationObserver');
-                    initialize();
-                }
-            });
-
-            // Observar o body para detectar inserção do header
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-            
-            console.log('[HeaderModule] MutationObserver configurado');
-        }
-        
-        // Fallback: verificar periodicamente se os elementos foram carregados
-        // Apenas se MutationObserver não estiver disponível ou falhar
-        if (typeof MutationObserver === 'undefined') {
-            let attempts = 0;
-            const maxAttempts = 100; // 10 segundos máximo
-
-            const checkInterval = setInterval(function() {
-                attempts++;
-                const hasMegaMenu = $$('.has-mega-menu').length > 0;
-                const hasMobileMenu = getElement('mobile-menu') !== null;
-
-                // Só inicializar via fallback se State.loaded for false
-                if ((hasMegaMenu || hasMobileMenu) && !State.loaded && attempts < maxAttempts) {
-                    console.log('[HeaderModule] Fallback: elementos detectados após', attempts, 'tentativas');
-                    clearInterval(checkInterval);
-                    initialize();
-                } else if (attempts >= maxAttempts) {
-                    console.log('[HeaderModule] Fallback: limite de tentativas atingido');
-                    clearInterval(checkInterval);
-                }
-            }, 100);
-        }
-    }
-
-    // ============================================
-    // EXPOSIÇÃO DA API PÚBLICA
-    // ============================================
-
-    // Expor API pública globalmente ANTES de iniciar o observer
-    window.HeaderModule = {
-        /**
-         * Inicializa o módulo do header
-         * Deve ser chamado após a injeção do HTML via innerHTML
-         */
-        init: function() {
-            console.log('[HeaderModule.init()] Chamado explicitamente');
-
-            // Verificar se os elementos existem
-            const hasMegaMenuItems = $$('.has-mega-menu').length > 0;
-            const hasMobileMenu = getElement('mobile-menu') !== null;
-
-            if (!hasMegaMenuItems && !hasMobileMenu) {
-                console.log('[HeaderModule.init()] Elementos não encontrados ainda');
-                return false;
-            }
-
-            // Verificar se já foi inicializado (pelo fallback ou outra chamada)
-            if (State.loaded) {
-                console.log('[HeaderModule.init()] Já inicializado pelo fallback, sincronizando...');
-                // Sincronizar com AccessControl e retornar
-                setTimeout(syncWithAccessControl, 100);
-                return true;
-            }
-
-            // Inicializar diretamente sem delay
-            initialize();
-
-            return true;
-        },
-
-        /**
-         * Define o tamanho da fonte
-         * @param {number} size - Tamanho em pixels
-         */
-        setFontSize: function(size) {
-            applyFontSize(size);
-        },
-
-        /**
-         * Aumenta o tamanho da fonte para o próximo nível
-         */
-        increaseFontSize: function() {
-            increaseFontSize();
-        },
-
-        /**
-         * Reduz o tamanho da fonte para o nível anterior
-         */
-        decreaseFontSize: function() {
-            decreaseFontSize();
-        },
-
-        /**
-         * Alterna entre tema claro e escuro
-         */
-        toggleTheme: function() {
-            toggleTheme();
-        },
-
-        /**
-         * Retorna o tamanho da fonte atual
-         * @returns {number}
-         */
-        getFontSize: function() {
-            return State.currentFontSize;
-        },
-
-        /**
-         * Retorna se o tema escuro está ativo
-         * @returns {boolean}
-         */
-        isDarkMode: function() {
-            return State.isDarkMode;
-        },
-
-        /**
-         * Sincroniza estado com AccessControl
-         */
-        syncWithAccessControl: function() {
-            syncWithAccessControl();
-        },
-
-        /**
-         * Verifica se o módulo está inicializado
-         * @returns {boolean}
-         */
-        isLoaded: function() {
-            return State.loaded;
-        }
-    };
-
-    // Configurar observer DEPOIS de expor a API
-    setupHeaderObserver();
-
-})();
+})(window, document);

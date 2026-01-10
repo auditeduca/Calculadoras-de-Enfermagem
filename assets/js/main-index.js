@@ -2,7 +2,10 @@
  * main-index.js - Main Application Logic
  * Sistema Modular de Carregamento e Renderização
  * Calculadoras de Enfermagem
- * Inclui funções utilitárias anteriormente em utils.js
+ * 
+ * Este é um módulo DELEGATE - delega funcionalidades de acessibilidade
+ * para o módulo master AccessControl (accessibility.js).
+ * Gerencia a renderização das ferramentas e controles de visualização.
  */
 
 (function() {
@@ -10,6 +13,7 @@
 
   // ============================================
   // Utility Functions (from utils.js)
+  // Mantidos pois são específicos da aplicação
   // ============================================
   
   const Utils = (function() {
@@ -226,7 +230,7 @@
      * @param {number} offset - Offset in pixels
      */
     function scrollTo(target, offset = 100) {
-      const element = typeof target === 'string' 
+      const element = typeof target === string 
         ? document.querySelector(target) 
         : target;
       
@@ -246,7 +250,7 @@
         await navigator.clipboard.writeText(text);
         return true;
       } catch (err) {
-        console.error('Failed to copy:', err);
+        console.warn('[MainIndex] Failed to copy:', err);
         return false;
       }
     }
@@ -294,40 +298,7 @@
       return JSON.parse(JSON.stringify(obj));
     }
 
-    /**
-     * Local storage wrapper with error handling
-     */
-    const Storage = {
-      get(key, defaultValue = null) {
-        try {
-          const item = localStorage.getItem(key);
-          return item ? JSON.parse(item) : defaultValue;
-        } catch (e) {
-          console.warn('Storage get error:', e);
-          return defaultValue;
-        }
-      },
-      set(key, value) {
-        try {
-          localStorage.setItem(key, JSON.stringify(value));
-          return true;
-        } catch (e) {
-          console.warn('Storage set error:', e);
-          return false;
-        }
-      },
-      remove(key) {
-        try {
-          localStorage.removeItem(key);
-          return true;
-        } catch (e) {
-          console.warn('Storage remove error:', e);
-          return false;
-        }
-      }
-    };
-
-    // Public API
+    // Public API - Removido Storage pois delega para AccessControl
     return {
       renderCard,
       getActionButton,
@@ -344,8 +315,7 @@
       isElementInViewport,
       generateId,
       clamp,
-      deepClone,
-      Storage
+      deepClone
     };
   })();
 
@@ -418,16 +388,20 @@
   ];
 
   // ============================================
-  // Global State
+  // State Management (Page-specific)
+  // Este estado é específico da página de índice e não interfere com o AccessControl
   // ============================================
-  let state = {
+  const state = {
     searchTerm: '',
     filterCategory: 'all',
-    sortOrder: 'az',
+    sortOrder: 'asc',
     showIcons: true,
     viewMode: 'medio',
     loaded: false
   };
+
+  // Chave específica para esta página
+  const STORAGE_KEY = 'main_index_view_state';
 
   // ============================================
   // Hero Slides Configuration
@@ -609,15 +583,16 @@
     `;
   }
 
-
-
   // ============================================
   // Render Functions
   // ============================================
 
   function renderAllTools() {
     const app = document.getElementById('app');
-    if (!app) return;
+    if (!app) {
+      console.warn('[MainIndex] Elemento #app não encontrado');
+      return;
+    }
 
     // Sort function based on state.sortOrder
     const sortTools = (tools) => {
@@ -692,7 +667,8 @@
     state.loaded = true;
     initializeEventListeners();
 
-    window.dispatchEvent(new CustomEvent('Page:Ready'));
+    // Disparar evento de prontidão para outros módulos
+    window.dispatchEvent(new CustomEvent('MainIndex:Ready'));
   }
 
   // ============================================
@@ -946,26 +922,26 @@
   })();
 
   // ============================================
-  // State Management
+  // State Management (Page-specific)
   // ============================================
 
   function saveState() {
     try {
-      localStorage.setItem('toolsViewState', JSON.stringify(state));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch (e) {
-      console.warn('Failed to save state:', e);
+      console.warn('[MainIndex] Falha ao salvar estado:', e);
     }
   }
 
   function loadState() {
     try {
-      const saved = localStorage.getItem('toolsViewState');
+      const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         state = { ...state, ...parsed };
       }
     } catch (e) {
-      console.warn('Failed to load state:', e);
+      console.warn('[MainIndex] Falha ao carregar estado:', e);
     }
   }
 
@@ -974,8 +950,21 @@
   // ============================================
 
   function init() {
+    // Aguardar o AccessControl estar pronto (delegação)
+    if (window.AccessControl && typeof window.AccessControl.isLoaded === 'function') {
+      if (!window.AccessControl.isLoaded()) {
+        window.addEventListener('AccessControl:Ready', handleInit, { once: true });
+        return;
+      }
+    }
+    
+    handleInit();
+  }
+
+  function handleInit() {
     loadState();
     renderAllTools();
+    console.log('[MainIndex] Módulo inicializado');
   }
 
   // Run when DOM is ready
@@ -985,7 +974,10 @@
     init();
   }
 
-  // Global API
+  // ============================================
+  // Global API (Page-specific)
+  // Não interfere com AccessControl
+  // ============================================
   window.App = {
     renderAllTools,
     setViewMode: function(mode) {

@@ -44,6 +44,42 @@
         </button>
     </div>
     <div class="cookie-modal-body">
+        <!-- Navigation Section -->
+        <div id="modal-navigation-section" class="modal-navigation-section">
+            <div class="modal-navigation-header">
+                <h4><i class="fas fa-compass"></i> Navegação</h4>
+            </div>
+            <div class="modal-navigation-actions">
+                <button id="modal-back-to-top" class="cookie-btn cookie-btn-secondary">
+                    <i class="fas fa-arrow-up"></i> Voltar ao Topo
+                </button>
+            </div>
+        </div>
+
+        <!-- FAB Settings Section -->
+        <div id="modal-fab-settings" class="modal-fab-settings">
+            <div class="modal-fab-header">
+                <h4><i class="fas fa-sliders-h"></i> Configurações do Interface</h4>
+            </div>
+            <div class="modal-fab-content">
+                <div class="modal-fab-row">
+                    <div class="modal-fab-label">
+                        <label for="modal-cookie-fab">
+                            <i class="fas fa-cookie-bite"></i>
+                            <span>Exibir botão de cookies</span>
+                        </label>
+                        <p class="modal-fab-description">Mostrar botão flutuante para acesso rápido às preferências de cookies</p>
+                    </div>
+                    <div class="modal-fab-toggle">
+                        <label class="cookie-switch">
+                            <input type="checkbox" id="modal-cookie-fab" checked>
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="cookie-categories">
             <!-- Necessary (Always enabled) -->
             <div class="cookie-category cookie-category-active">
@@ -62,6 +98,7 @@
                         <p class="cookie-service-name">Google Tag Manager | BR</p>
                         <button class="cookie-info-btn" data-modal-target="modal-necessary">
                             <i class="fas fa-info-circle"></i>
+                            <span class="cookie-info-tooltip">Clique para ver detalhes do serviço</span>
                         </button>
                     </div>
                 </div>
@@ -87,6 +124,7 @@
                         <p class="cookie-service-name">Google Analytics | BR</p>
                         <button class="cookie-info-btn" data-modal-target="modal-analytics">
                             <i class="fas fa-info-circle"></i>
+                            <span class="cookie-info-tooltip">Clique para ver detalhes do serviço</span>
                         </button>
                     </div>
                 </div>
@@ -112,6 +150,7 @@
                         <p class="cookie-service-name">Google AdSense | BR</p>
                         <button class="cookie-info-btn" data-modal-target="modal-marketing">
                             <i class="fas fa-info-circle"></i>
+                            <span class="cookie-info-tooltip">Clique para ver detalhes do serviço</span>
                         </button>
                     </div>
                 </div>
@@ -208,7 +247,7 @@
                 <h5>Tecnologias</h5>
                 <p>Cookies, Pixel, Local Storage</p>
             </div>
-            <div dobra do cookie-detail-section">
+            <div class="cookie-detail-section">
                 <h5>Dados Recolhidos</h5>
                 <p>Endereço IP, informações do dispositivo, comportamento de navegação</p>
             </div>
