@@ -1,3 +1,35 @@
+<div class="top-bar" id="top-bar">
+    <div class="top-bar-container">
+        <div class="accessibility-controls" role="group" aria-label="Controles de acessibilidade">
+            <div class="font-size-controls" role="group" aria-label="Controle de tamanho da fonte">
+                <button type="button" class="font-btn font-btn-reduce" id="font-reduce" aria-label="Reduzir fonte" title="Reduzir fonte">
+                    <span class="font-btn-icon">A-</span>
+                </button>
+                <button type="button" class="font-btn font-btn-increase" id="font-increase" aria-label="Aumentar fonte" title="Aumentar fonte">
+                    <span class="font-btn-icon">A+</span>
+                </button>
+            </div>
+            <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+                <i class="fas fa-moon" aria-hidden="true"></i>
+            </button>
+            <div class="top-bar-divider" aria-hidden="true"></div>
+        </div>
+        <div class="skip-controls" role="group" aria-label="Navegação rápida">
+            <a href="#main-header" class="skip-btn" id="skip-top" aria-label="Ir para o topo da página">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+                <span class="skip-label">Topo</span>
+            </a>
+            <a href="#main-content" class="skip-btn" id="skip-content" aria-label="Ir para o conteúdo principal">
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                <span class="skip-label">Conteúdo</span>
+            </a>
+            <a href="#footer" class="skip-btn" id="skip-footer" aria-label="Ir para o rodapé">
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                <span class="skip-label">Rodapé</span>
+            </a>
+        </div>
+    </div>
+</div>
 <header class="main-header" id="main-header">
     <div class="header-container">
         <a href="index.html" class="site-logo" aria-label="Calculadoras de Enfermagem - Página Inicial">
@@ -227,37 +259,91 @@
                                     <ul class="content-links">
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teorias-de-enfermagem.html">Teorias de Enfermagem</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/florence-nightngale-enfermeira-patrona-da-enfermagem.html">Florence Nightingale - Patrona</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/florence-nightngale-teoria-ambiental.html">Florence Nightingale - Teoria Ambiental</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/wanda-de-aguiar-horta-necessidades-humanas-basicas.html">Wanda de Aguiar Horta - Necessidades Humanas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teoria-das-necessidades-humanas-basicas-wanda.html">Teoria das Necessidades Humanas Básicas</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/callista-roy-teoria-da-adaptacao.html">Callista Roy - Teoria da Adaptação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teoria-da-adaptacao-enfermagem.html">Teoria da Adaptação</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/dorothea-orem-teoria-do-defict-do-auto-cuidado.html">Dorothea Orem - Autocuidado</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teoria-do-auto-cuidado-dorothea.html">Teoria do Autocuidado</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/hildegard-peplau-teoria-das-relacoes-interpessoais.html">Hildegard Peplau - Relações Interpessoais</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teoria-das-relacoes-interpessoais.html">Teoria das Relações Interpessoais</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/jean-watson-teoria-do-cuidado-humano.html">Jean Watson - Cuidado Humano</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teoria-do-cuidado-humano.html">Teoria do Cuidado Humano</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/madeleine-leininger-teoria-do-cuidado-transcultural.html">Madeleine Leininger - Cuidado Transcultural</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teoria-do-cuidado-transcultural.html">Teoria do Cuidado Transcultural</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/imogene-m-king-teoria-do-sistema-de-metas.html">Imogene King - Sistema de Metas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teoria-do-sistema-de-metas.html">Teoria do Sistema de Metas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/martha-elizabeth-rogers-teoria-do-sistemas-de-metas.html">Martha Rogers</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teoria-dos-sistemas-enfermagem.html">Teoria dos Sistemas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/myra-estrin-levine-teoria-holistica.html">Myra Levine - Teoria Holística</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teoria-holistica-enfermagem.html">Teoria Holística</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/merle-mishel-teoria-da-incerteza-da-doenca.html">Merle Mishel - Incerteza da Doença</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teoria-da-incerteza-da-doenca.html">Teoria da Incerteza</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-escalas">
                                     <h3 class="content-title">Escalas de Avaliação</h3>
                                     <ul class="content-links">
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-aldrete-e-kroulik.html">Escala de Aldrete e Kroulik</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/aldrete-e-kroulik.html">Aldrete e Kroulik</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-apache-ii.html">Escala de Apache II</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-apache.html">Escala de Apache</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-apgar.html">Escala de Apgar</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-asa-centro-cirurgico.html">Escala ASA</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/avaliacao-de-asa-american-society-of-anesthesiologists.html">ASA - American Society</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-ballard.html">Escala de Ballard</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-barthel.html">Escala de Barthel</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-berg-bbs.html">Escala de Berg - BBS</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-equilibrio-de-berg.html">Equilíbrio de Berg</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-braden.html">Escala de Braden</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-cam-icu.html">Escala de CAM-ICU</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-cincinnati.html">Escala de Cincinnati</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-cornell-enfermagem.html">Escala de Cornell</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-cries.html">Escala de CRIES</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-curb-65.html">Escala de CURB-65</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-dor-bps.html">Escala de Dor BPS</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-dor-em-pacientes-criticos-de-bps.html">Dor em Pacientes Críticos</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-fugulin.html">Escala de Fugulin</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/katz-scale-nurse.html">Escala de Katz</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/indice-de-bishop.html">Índice de Bishop</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/metodo-de-capurro.html">Método de Capurro</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/metodo-de-capurro-evalucion-de-la-edad-gestacional.html">Capurro - Idade Gestacional</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/tabela-de-metodo-de-capurro.html">Tabela de Capurro</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/mini-exame-do-estado-mental-meem.html">Mini-Exame do Estado Mental</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/mini-exame-do-estado-mental-formulario-rio.html">MEEM - Formulário</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/formulario-meem-rio.html">MEEM - Rio</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-calculos">
                                     <h3 class="content-title">Cálculos de Enfermagem</h3>
                                     <ul class="content-links">
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calculo-de-dosagem-de-medicamentos-enfermagem.html">Cálculo de Dosagem</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calculo-de-dosagem-de-medicamentos.html">Dosagem de Medicamentos</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calculo-de-medicamentos-regra-de-3.html">Regra de 3</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calculo-de-medicamentos.html">Cálculo de Medicamentos</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calculos-de-enfermagem.html">Cálculos de Enfermagem</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/regra-de-3-calculo-de-medicamentos-enfermagem.html">Regra de 3</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/regla-de-3-calculo-de-medicamentos-enfermagem-espanol.html">Regla de 3 - Español</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/regola-del-tre-illustrata-calcolo-dei-farmaci.html">Regola del Tre - Italiano</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calculo-de-gotejamento.html">Cálculo de Gotejamento</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/micro-e-macro-gotas.html">Micro e Macrogotas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/atencao-ao-gotejamento.html">Atenção ao Gotejamento</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/tempodegotejamento.html">Tempo de Gotejamento</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/tempo-di-gocciolamento.html">Tempo di Gocciolamento</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/gotejamentoimagem.html">Gotejamento - Imagem</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/gotejamentoko.html">Gotejamento KO</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/gotejamentoru.html">Gotejamento RU</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/goteo.html">Goteo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/erklarende-infografik-zu-tropfformeln.html">Tropfformeln</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/dreisatz-illustration.html">Dreisatz</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/ilustracaogotejamentoalemao.html">Ilustração Gotejamento Alemão</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/ilustracaogotejamentocoreano.html">Ilustração Gotejamento Coreano</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/ilustracaogotejamentofrances.html">Ilustração Gotejamento Francês</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/ilustracaogotejamentoingles.html">Ilustração Gotejamento Inglês</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/ilustracaogotejamentoitaliano.html">Ilustração Gotejamento Italiano</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/indice-de-massa-corporal-imc.html">Índice de Massa Corporal</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/indice-de-massa-corporal-ilustracao.html">IMC - Ilustração</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-protocolos">
@@ -265,8 +351,30 @@
                                     <ul class="content-links">
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/metas-internacionais-de-seguranca-do-paciente.html">Metas Internacionais de Segurança</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/protocolo-de-rcp-adulto-2020-aha.html">RCP Adulto 2020 AHA</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/suportebasicodevida.html">Suporte Básico de Vida</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/slide-suporte-basico-de-vida-aha-2020.html">SBV - Slide AHA 2020</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/protocolo-de-news-enfermagem-saude.html">Protocolo NEWS</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/pagina-calculadoras-de-enfermagem-protocolo-de-news.html">Protocolo NEWS - Página</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/protocolo-de-news-horizontalizada.html">NEWS - Horizontalizada</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diretrizesaha2020.html">Diretrizes AHA 2020</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diretrizesaharcp2020.html">Diretrizes AHA RCP 2020</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/doencas-de-notificacao-compulsoria.html">Doenças de Notificação Compulsória</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/sistema-de-informacao-de-agravos-de-notificacao-sinan.html">SINAN</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/dimensionamento-da-equipe-de-enfermagem.html">Dimensionamento de Pessoal</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/5-hs-da-parada-cardiorespiratoria.html">5 Hs da Parada Cardiorrespiratória</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/5-hs-da-parada-carddiorespiratoria-causas-provaveis.html">Causas Prováveis PCR</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/hipocalemia-cuidados-pcr.html">Hipocalemia - PCR</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/hipercalemia-cuidados-pcr.html">Hipercalemia - PCR</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/hipotermia-cuidados-pcr.html">Hipotermia - PCR</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/hipovolemia-cuidados-pcr.html">Hipovolemia - PCR</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/hipoxia-cuidados-pcr.html">Hipóxia - PCR</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/h-cuidados-pcr.html">H - Cuidados PCR</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/acionando-o-time-de-resposta-rapida.html">Acionando o Time de Resposta Rápida</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/criterios-para-o-acionamento-do-time-de-resposta-rapida.html">Critérios para Acionamento</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vantagens-do-time-de-resposta-rapida-no-hospital.html">Vantagens do Time de Resposta</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/equipe-do-time-de-resposta-rapida-hospital.html">Equipe do Time de Resposta</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/vigilancia.html">Vigilância</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/time-de-resposta-rapida.html">Time de Resposta Rápida</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-procedimentos">
@@ -274,17 +382,47 @@
                                     <ul class="content-links">
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/higienizacao-das-maos.html">Higienização das Mãos</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/preparo-e-administracao-de-medicamento.html">Preparo e Administração</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/medicacao-certa-na-enfermagem.html">Medicação Certa</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/dosagem-correta-do-medicamento.html">Dosagem Correta</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/curativo-enfermagem.html">Curativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/propedeutica-de-enfermagem-exame-do-abdome-parte-1.html">Propedêutica - Abdome</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/enfermagem-sinais-vitais.html">Sinais Vitais</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/verificacao-periodica-de-sinais-vitais.html">Verificação de Sinais Vitais</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/temperatura-sinais-vitais-enfermagem.html">Temperatura</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/frequencia-cardiaca-enfermagem.html">Frequência Cardíaca</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/enfermagem-verificar-pressao.html">Verificar Pressão</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/verificar-pressao-arterial.html">Pressão Arterial</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/nivel-de-consciencia-enfermagem.html">Nível de Consciência</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/ausculta-enfermagem.html">Ausculta</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/checagem.html">Checagem</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/checklist-de-enfermagem.html">Checklist</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/ciclo-pdca-hospital-enfermagem.html">Ciclo PDCA</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/controle-de-dor-enfermagem.html">Controle de Dor</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/controle-hidrico-enfermagem.html">Controle Hídrico</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/balanco-hidrico.html">Balanço Hídrico</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/balanco-hidrico-ilustrativo.html">Balanço Hídrico - Ilustrativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/balanco-hidrico-icone.html">Balanço Hídrico - Ícone</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/impresso-de-balanco-hidrico.html">Impresso de Balanço</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/fluid-balance-illustration.html">Fluid Balance</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/ilustracion-sobre-balance-hidrico.html">Balance Hídrico - Español</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/bilancio-idrico-imagem.html">Bilancio Idrico</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/idade-gestacional-e-data-provavel-do-parto.html">Idade Gestacional</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-gasometria">
                                     <h3 class="content-title">Gasometria Arterial</h3>
                                     <ul class="content-links">
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/gasometria-arterial-enfermagem.html">Gasometria Arterial</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/gasometria-arterial.html">Gasometria Arterial - Página</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/a-importancia-da-compressao-adequada-apos-coleta-de-gasometria-na-uti-adulto.html">Compressão Adequada</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/a-importancia-da-compressao-adequada-apos-coleta-de-gasometria-na-uti-adulto-01.html">Compressão - UTI Adulto</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/troca-gasosa-enfermagem.html">Troca Gasosa</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/fundamentos-da-enfermagem-em-uti.html">Fundamentos em UTI</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/pulmao-enfermagem.html">Pulmão</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/saude-do-coracao-enfermagem.html">Saúde do Coração</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/saude-do-coracao.html">Coração</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/coracao-desenho-saude.html">Coração - Desenho</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/funcao-renal-saude.html">Função Renal</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-genograma">
@@ -292,6 +430,16 @@
                                     <ul class="content-links">
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/genograma-e-ecomapa.html">Genograma e Ecomapa</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/genograma-e-ecomapa-como-ferramentas-terapeuticas.html">Ferramentas Terapêuticas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/genogramaeecomapa.html">Genograma Ecomapa</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/admin-genograma-e-ecomapa.html">Admin Genograma</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/admin-genograma-e-ecomapa-1.html">Admin Genograma 1</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/admin-genograma-e-ecomapa-copia.html">Admin Genograma - Cópia</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/admin-genograma-e-ecomapa-1-copia.html">Admin Genograma 1 - Cópia</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/genogramaeecomapa.html">Genograma e Ecomapa - Raiz</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/genogramaeecomapa.html">Genograma e Ecomapa</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/checagem.html">Checagem</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/admin-rep-2011-377.html">Admin REP 2011-377</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/admin-rep-2011-377-copia.html">Admin REP - Cópia</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-geriatria">
@@ -299,36 +447,88 @@
                                     <ul class="content-links">
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/enfermagem-em-geriatria.html">Enfermagem em Geriatria</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cuidados-de-enfermagem-com-idosos.html">Cuidados com Idosos</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cuidados-com-idoso.html">Cuidados com o Idoso</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cuidador-de-idoso-enfermagem.html">Cuidador de Idoso</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/atividades-basicas-de-vida-diaria-idoso.html">AVDI - Atividades Diárias</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/atividades-de-vida-diaria.html">Atividades de Vida Diária</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/depressao-na-terceira-idade.html">Depressão na Terceira Idade</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/idoso-com-depressao.html">Idoso com Depressão</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/fisioterapia-idoso.html">Fisioterapia para Idoso</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/idoso-realizando-avd.html">Idoso Realizando AVD</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-vacinas">
                                     <h3 class="content-title">Vacinação</h3>
                                     <ul class="content-links">
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/imunizacao-enfermagem.html">Imunização</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/aplicacao-de-vacina-enfermagem.html">Aplicação de Vacina</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/sala-de-vacina.html">Sala de Vacina</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calendario-vacinal.html">Calendário Vacinal</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/importancia-das-vacinas.html">Importância das Vacinas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cartilha-de-vacinacao.html">Cartilha de Vacinação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/modo-de-aplicacao-das-vacinas.html">Modo de Aplicação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/armazenamento-das-vacinas.html">Armazenamento das Vacinas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cuidado-pos-vacina.html">Cuidado Pós-Vacina</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-e-o-sistema-imunologico.html">Vacinas e Sistema Imunológico</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/reacoes-mais-comuns-pos-vacina.html">Reações Pós-Vacina</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/conheca-os-tipos-de-vacinas.html">Tipos de Vacinas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/principais-contraindicacoes-das-vacinas.html">Contraindicações</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/principais-vacinas-aplicadas-no-brasil.html">Vacinas no Brasil</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-aplicadas-na-infancia.html">Vacinas na Infância</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-aplicadas-na-adolescencia.html">Vacinas na Adolescência</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-aplicadas-na-adulto.html">Vacinas no Adulto</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-aplicadas-no-idoso.html">Vacinas no Idoso</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-aplicadas-na-gestante.html">Vacinas na Gestante</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-especiais.html">Vacinas Especiais</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-de-viajantes.html">Vacinas de Viajantes</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cartilha-nacional-de-vacinacao.html">Cartilha Nacional</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calendario-nacional-de-vacinacao.html">Calendário Nacional</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-diagnosticos">
                                     <h3 class="content-title">Diagnósticos NANDA</h3>
                                     <ul class="content-links">
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnostico-de-enfermagem-nanda.html">Diagnóstico de Enfermagem NANDA</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/sistematizacao-da-assistencia-de-enfermagem-sae.html">Sistematização da Assistência</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem.html">Diagnósticos de Enfermagem</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/como-elaborar-um-diagnostico-de-enfermagem.html">Elaborar Diagnóstico</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-respiracao.html">Diagnósticos - Respiração</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-circulacao.html">Diagnósticos - Circulação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-alimentacao.html">Diagnósticos - Alimentação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-hidratacao.html">Diagnósticos - Hidratação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-eliminacao.html">Diagnósticos - Eliminação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-higiene.html">Diagnósticos - Higiene</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-mobilidade-fisica.html">Diagnósticos - Mobilidade</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-comunicacao.html">Diagnósticos - Comunicação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-seguranca.html">Diagnósticos - Segurança</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-materiais">
-                                    <h3 class="content-title">Materiais</h3>
+                                    <h3 class="content-title">Materiais de Enfermagem</h3>
                                     <ul class="content-links">
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/material-de-enfermagem.html">Material de Enfermagem</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cme-central-de-materiais-e-esterelizacao.html">CME</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/material-de-cura.html">Material de Curativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/material-de-injecao.html">Material de Injeção</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/avaliacao-do-equipamento-de-protecao-individual.html">EPI - Equipamento de Proteção Individual</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/seringas-de-insulina.html">Seringas de Insulina</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cateteres.html">Cateteres</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/drenos.html">Drenos</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/sondas.html">Sondas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/equipamentos-de-protecao-individual.html">EPIs</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/luvas.html">Luvas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/mascaras.html">Máscaras</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/degraus-de-material-de-cura.html">Degraus de Curativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/tesoura-de-material-de-cura.html">Tesoura de Curativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/pinca-de-material-de-cura.html">Pinça de Curativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cuba-rim.html">Cuba Rim</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/bandeja-de-material-de-cura.html">Bandeja de Curativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/jaleco.html">Jaleco</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/oculos-de-protecao.html">Óculos de Proteção</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/touca.html">Touca</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/avental.html">Avental</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cuidado-com-os-materiais-de-enfermagem.html">Cuidado com Materiais</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/descarte-de-materiais-de-enfermagem.html">Descarte de Materiais</a></li>
                                     </ul>
                                 </div>
                             </main>
                             <aside class="panel-promo-area">
                                 <div class="glowing-frame mega-image-frame">
                                     <div class="frame-image-container mega-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-biblioteca.webp" alt="Biblioteca" loading="lazy">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-biblioteca.webp" alt="Biblioteca de Enfermagem" loading="lazy">
                                     </div>
                                 </div>
                             </aside>
@@ -423,6 +623,166 @@
                     </div>
                 </li>
                 <li class="nav-item has-mega-menu">
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="idiomas" id="nav-idiomas">
+                        <i class="fas fa-globe" aria-hidden="true"></i>
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)" class="active-lang-flag" id="active-lang-flag" loading="lazy">
+                    </button>
+                    <div class="mega-panel mega-panel-idiomas" id="mega-panel-idiomas" data-menu="idiomas">
+                        <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
+                            <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+                                <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+                            </svg>
+                        </div>
+                        <div class="panel-standard-height">
+                            <aside class="panel-sidebar header-scroll">
+                                <nav class="menu-tabs" aria-label="Regiões de Idiomas">
+                                    <button type="button" class="menu-tab-trigger active" data-tab="idiomas-americas" aria-selected="true">Américas</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="idiomas-europa" aria-selected="false">Europa</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="idiomas-asia" aria-selected="false">Ásia</button>
+                                </nav>
+                            </aside>
+                            <main class="panel-main-content header-scroll">
+                                <div class="tab-content active" id="tab-idiomas-americas">
+                                    <h3 class="content-title">Américas</h3>
+                                    <ul class="content-links idiomas-list">
+                                        <li>
+                                            <a href="#" data-lang="pt-br" onclick="selectLanguage(event, 'pt-br')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)" class="idioma-flag-link">
+                                                Português (Brasil)
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="es" onclick="selectLanguage(event, 'es')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-espanha.webp" alt="Español" class="idioma-flag-link">
+                                                Español
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="en" onclick="selectLanguage(event, 'en')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-eua.webp" alt="English" class="idioma-flag-link">
+                                                English
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-idiomas-europa">
+                                    <h3 class="content-title">Europa</h3>
+                                    <ul class="content-links idiomas-list">
+                                        <li>
+                                            <a href="#" data-lang="de" onclick="selectLanguage(event, 'de')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-alemanha.webp" alt="Deutsch" class="idioma-flag-link">
+                                                Deutsch
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="fr" onclick="selectLanguage(event, 'fr')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-franca.webp" alt="Français" class="idioma-flag-link">
+                                                Français
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="it" onclick="selectLanguage(event, 'it')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-italia.webp" alt="Italiano" class="idioma-flag-link">
+                                                Italiano
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="nl" onclick="selectLanguage(event, 'nl')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-holanda.webp" alt="Nederlands" class="idioma-flag-link">
+                                                Nederlands
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="pl" onclick="selectLanguage(event, 'pl')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-polonia.webp" alt="Polski" class="idioma-flag-link">
+                                                Polski
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="ru" onclick="selectLanguage(event, 'ru')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-russia.webp" alt="Русский" class="idioma-flag-link">
+                                                Русский
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="sv" onclick="selectLanguage(event, 'sv')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-suecia.webp" alt="Svenska" class="idioma-flag-link">
+                                                Svenska
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="tr" onclick="selectLanguage(event, 'tr')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-turquia.webp" alt="Türkçe" class="idioma-flag-link">
+                                                Türkçe
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-idiomas-asia">
+                                    <h3 class="content-title">Ásia</h3>
+                                    <ul class="content-links idiomas-list">
+                                        <li>
+                                            <a href="#" data-lang="zh" onclick="selectLanguage(event, 'zh')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-china.webp" alt="中文" class="idioma-flag-link">
+                                                中文
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="ja" onclick="selectLanguage(event, 'ja')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-japao.webp" alt="日本語" class="idioma-flag-link">
+                                                日本語
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="ko" onclick="selectLanguage(event, 'ko')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-coreia.webp" alt="한국어" class="idioma-flag-link">
+                                                한국어
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="ar" onclick="selectLanguage(event, 'ar')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-arabia.webp" alt="العربية" class="idioma-flag-link">
+                                                العربية
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="hi" onclick="selectLanguage(event, 'hi')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-india.webp" alt="हिन्दी" class="idioma-flag-link">
+                                                हिन्दी
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="id" onclick="selectLanguage(event, 'id')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-indonesia.webp" alt="Bahasa Indonesia" class="idioma-flag-link">
+                                                Bahasa Indonesia
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="vi" onclick="selectLanguage(event, 'vi')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-vietna.webp" alt="Tiếng Việt" class="idioma-flag-link">
+                                                Tiếng Việt
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="uk" onclick="selectLanguage(event, 'uk')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-ucrania.webp" alt="Українська" class="idioma-flag-link">
+                                                Українська
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </main>
+                            <aside class="panel-promo-area">
+                                <div class="glowing-frame mega-image-frame">
+                                    <div class="frame-image-container mega-image-container">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-idiomas.webp" alt="Idiomas" loading="lazy">
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-mega-menu">
                     <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="buscar">
                         <i class="fas fa-search" aria-hidden="true"></i>
                     </button>
@@ -464,17 +824,36 @@
     </div>
 </header>
 
-<!-- Mobile Header -->
+<!-- Mobile Header with Two Bands -->
 <div class="mobile-main-header">
-    <!-- Logo and Hamburger Menu -->
+    <!-- Faixa 1: Accessibility Controls and Search -->
+    <div class="mobile-band-1">
+        <div class="mobile-band-1-container">
+            <div class="mobile-band-1-left">
+                <div class="mobile-font-controls">
+                    <button type="button" class="mobile-font-btn" id="mobile-font-reduce" aria-label="Reduzir fonte">
+                        <span class="font-btn-icon">A-</span>
+                    </button>
+                    <button type="button" class="mobile-font-btn" id="mobile-font-increase" aria-label="Aumentar fonte">
+                        <span class="font-btn-icon">A+</span>
+                    </button>
+                </div>
+                <button type="button" class="mobile-theme-btn" id="mobile-theme-toggle" aria-label="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <button type="button" class="mobile-search-btn" id="mobile-search-toggle" aria-label="Buscar">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Faixa 2: Logo and Hamburger Menu -->
     <div class="mobile-band-2">
         <div class="mobile-band-2-container">
             <a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/index.html" class="mobile-header-logo">
                 <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem">
             </a>
-            <button type="button" class="mobile-search-btn" id="mobile-search-toggle" aria-label="Buscar">
-                <i class="fas fa-search"></i>
-            </button>
             <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Abrir menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
@@ -587,10 +966,64 @@
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/aldrete.html">Aldrete</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/apache.html">Apache</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/apgar.html">Apgar</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/asa.html">ASA</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ballard.html">Ballard</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/barthel.html">Barthel</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/berg.html">Berg</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/bishop.html">Bishop</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/bps.html">BPS</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/braden.html">Braden</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/cam.html">CAM</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/capurro.html">Capurro</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/cincinnati.html">Cincinnati</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/cornell.html">Cornell</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/cries.html">CRIES</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/curb-65.html">CURB-65</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/downes.html">Downes</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/downton.html">Downton</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/elpo.html">ELPO</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/escalanumerica.html">Escala Numérica</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/fast.html">FAST</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/flacc.html">FLACC</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/four.html">FOUR</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/fugulin.html">Fugulin</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/gds.html">GDS</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/glasgow.html">Glasgow</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/gosnell.html">Gosnell</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/hamilton.html">Hamilton</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/humpty.html">Humpty Dumpty</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/johns.html">Johns</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/jouvet.html">Jouvet</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/katz.html">Katz</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/lachs.html">Lachs</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/lanss.html">LANSS</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/lawton.html">Lawton</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/manchester.html">Manchester</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/meem.html">MEEM</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/meows.html">MEOWS</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/morse.html">Morse</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/news.html">NEWS</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/nihss.html">NIHSS</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/nips.html">NIPS</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/norton.html">Norton</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ofras.html">OFRAS</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/painad.html">PAINAD</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/pelod.html">PELOD</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/perroca.html">Perroca</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/pews.html">PEWS</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/prism.html">PRISM</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/qsofa.html">qSOFA</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ramsay.html">Ramsay</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/rancholosamigos.html">Ranchos Los Amigos</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/richmond.html">Richmond</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/saps.html">SAPS</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/silverman.html">Silverman</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/sofa.html">SOFA</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/tinetti.html">Tinetti</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/waterlow.html">Waterlow</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/zarit.html">Zarit</a></li>
                     </ul>
                 </li>
                 <li class="mobile-submenu-item has-mobile-submenu">
@@ -599,9 +1032,26 @@
                         <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calendariovacinalprematuros.html">Calendário Vacinal de Prematuros</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calendariovacinalcriancas.html">Calendário Vacinal de Crianças</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calendariovacinaladolescentes.html">Calendário Vacinal de Adolescentes</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calendariovacinaladultos.html">Calendário Vacinal de Adultos</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calendariovacinalidosos.html">Calendário Vacinal de Idosos</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calendariovacinalgestantes.html">Calendário Vacinal de Gestantes</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calendariovacinalespeciais.html">Calendário Vacinal de Pacientes Especiais</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calendariovacinalocupacional.html">Calendário Vacinal de Ocupacionais</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/vacinaspneumococicas.html">Vacinas Pneumocócicas</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Ferramentas Específicas</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/notificacao-compulsoria.html">Notificações Compulsórias</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/diagnosticosnanda.html">Plano de Enfermagem</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/cronometro.html">Cronometro</a></li>
                     </ul>
                 </li>
             </ul>
@@ -621,6 +1071,12 @@
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teorias-de-enfermagem.html">Teorias de Enfermagem</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/florence-nightngale-enfermeira-patrona-da-enfermagem.html">Florence Nightingale</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/wanda-de-aguiar-horta-necessidades-humanas-basicas.html">Wanda de Aguiar Horta</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/callista-roy-teoria-da-adaptacao.html">Callista Roy</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/dorothea-orem-teoria-do-defict-do-auto-cuidado.html">Dorothea Orem</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/hildegard-peplau-teoria-das-relacoes-interpessoais.html">Hildegard Peplau</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/jean-watson-teoria-do-cuidado-humano.html">Jean Watson</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/madeleine-leininger-teoria-do-cuidado-transcultural.html">Madeleine Leininger</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/imogene-m-king-teoria-do-sistema-de-metas.html">Imogene King</a></li>
                     </ul>
                 </li>
                 <li class="mobile-submenu-item has-mobile-submenu">
@@ -629,9 +1085,28 @@
                         <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-aldrete-e-kroulik.html">Aldrete e Kroulik</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-apache-ii.html">Apache II</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-apgar.html">Apgar</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-ballard.html">Ballard</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-barthel.html">Barthel</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-braden.html">Braden</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-fugulin.html">Fugulin</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/metodo-de-capurro.html">Capurro</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/mini-exame-do-estado-mental-meem.html">MEEM</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Cálculos de Enfermagem</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calculo-de-dosagem-de-medicamentos-enfermagem.html">Cálculo de Dosagem</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/regra-de-3-calculo-de-medicamentos-enfermagem.html">Regra de 3</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calculo-de-gotejamento.html">Gotejamento</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/micro-e-macro-gotas.html">Micro e Macrogotas</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/indice-de-massa-corporal-imc.html">IMC</a></li>
                     </ul>
                 </li>
                 <li class="mobile-submenu-item has-mobile-submenu">
@@ -640,8 +1115,10 @@
                         <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/metas-internacionais-de-seguranca-do-paciente.html">Metas de Segurança</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/protocolo-de-rcp-adulto-2020-aha.html">RCP Adulto AHA</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/protocolo-de-news-enfermagem-saude.html">Protocolo NEWS</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/doencas-de-notificacao-compulsoria.html">Notificação Compulsória</a></li>
                     </ul>
                 </li>
             </ul>
@@ -670,9 +1147,22 @@
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/adicional-noturno.html">Adicional Noturno</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/clt-pj.html">CLT x PJ</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ferias.html">Férias</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/decimoterceiroesalario.html">13º Salário</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/hora-extra.html">Hora Extra</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/rescisao.html">Rescisão</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/salario-hora.html">Salário Hora</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/salario-liquido.html">Salário Líquido</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Desenvolvimento Profissional</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/curriculo.html">Currículo</a></li>
                     </ul>
                 </li>
             </ul>
@@ -681,4 +1171,77 @@
             <a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/fale.html" class="mobile-nav-link">Fale Conosco</a>
         </li>
     </ul>
+    
+    <!-- Language Selector Section (Mobile Only) -->
+    <div class="mobile-language-section" id="mobile-idiomas-section">
+        <span class="mobile-language-label">Selecionar idioma</span>
+        <button type="button" class="mobile-language-toggle" id="mobile-idiomas-toggle" aria-expanded="false">
+            <span class="language-icon"><i class="fas fa-globe"></i></span>
+            <span class="language-current" id="mobile-idiomas-current">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)" style="width:20px;height:15px;border-radius:2px;margin-right:8px;vertical-align:middle">
+                <span>Português (Brasil)</span>
+            </span>
+            <span class="language-arrow"><i class="fas fa-chevron-down" id="mobile-idiomas-arrow"></i></span>
+        </button>
+        <div class="mobile-language-grid" id="mobile-idiomas-list" style="display:none">
+            <!-- 19 Idiomas disponíveis em linhas horizontais -->
+            <a href="#" data-lang="pt-br" class="language-flag-item active" title="Português (Brasil)">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)">
+            </a>
+            <a href="#" data-lang="es" class="language-flag-item" title="Español">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-espanha.webp" alt="Español">
+            </a>
+            <a href="#" data-lang="en" class="language-flag-item" title="English">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-eua.webp" alt="English">
+            </a>
+            <a href="#" data-lang="de" class="language-flag-item" title="Deutsch">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-alemanha.webp" alt="Deutsch">
+            </a>
+            <a href="#" data-lang="fr" class="language-flag-item" title="Français">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-franca.webp" alt="Français">
+            </a>
+            <a href="#" data-lang="it" class="language-flag-item" title="Italiano">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-italia.webp" alt="Italiano">
+            </a>
+            <a href="#" data-lang="nl" class="language-flag-item" title="Nederlands">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-holanda.webp" alt="Nederlands">
+            </a>
+            <a href="#" data-lang="pl" class="language-flag-item" title="Polski">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-polonia.webp" alt="Polski">
+            </a>
+            <a href="#" data-lang="ru" class="language-flag-item" title="Русский">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-russia.webp" alt="Русский">
+            </a>
+            <a href="#" data-lang="sv" class="language-flag-item" title="Svenska">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-suecia.webp" alt="Svenska">
+            </a>
+            <a href="#" data-lang="tr" class="language-flag-item" title="Türkçe">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-turquia.webp" alt="Türkçe">
+            </a>
+            <a href="#" data-lang="zh" class="language-flag-item" title="中文">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-china.webp" alt="中文">
+            </a>
+            <a href="#" data-lang="ja" class="language-flag-item" title="日本語">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-japao.webp" alt="日本語">
+            </a>
+            <a href="#" data-lang="ko" class="language-flag-item" title="한국어">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-coreia.webp" alt="한국어">
+            </a>
+            <a href="#" data-lang="ar" class="language-flag-item" title="العربية">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-arabia.webp" alt="العربية">
+            </a>
+            <a href="#" data-lang="hi" class="language-flag-item" title="हिन्दी">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-india.webp" alt="हिन्दी">
+            </a>
+            <a href="#" data-lang="id" class="language-flag-item" title="Bahasa Indonesia">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-indonesia.webp" alt="Bahasa Indonesia">
+            </a>
+            <a href="#" data-lang="vi" class="language-flag-item" title="Tiếng Việt">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-vietna.webp" alt="Tiếng Việt">
+            </a>
+            <a href="#" data-lang="uk" class="language-flag-item" title="Українська">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-ucrania.webp" alt="Українська">
+            </a>
+        </div>
+    </div>
 </nav>
