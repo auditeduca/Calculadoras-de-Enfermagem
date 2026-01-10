@@ -12,6 +12,7 @@
     background-color: #1A3E74 !important;
     background: #1A3E74 !important;
     background-image: none !important;
+    background-color: #1A3E74 !important;
 }
 
 /* =========================================
@@ -477,120 +478,6 @@
 }
 
 /* =========================================
-   SEÇÃO DE NAVEGAÇÃO DO MODAL
-   ========================================= */
-.modal-navigation-section {
-    background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
-    border: 2px solid #1A3E74;
-    border-radius: 12px;
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-}
-
-.modal-navigation-header {
-    padding: 1rem 1.5rem;
-    background: linear-gradient(135deg, #1A3E74 0%, #0f2744 100%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.modal-navigation-header h4 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.modal-navigation-actions {
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    background: #f8fafc;
-}
-
-.modal-navigation-actions .cookie-btn {
-    min-width: auto;
-    height: 44px;
-    padding: 0 1.25rem;
-}
-
-/* =========================================
-   SEÇÃO DE CONFIGURAÇÕES DO FAB
-   ========================================= */
-.modal-fab-settings {
-    background: #f8fafc;
-    border: 2px solid #e8ecf4;
-    border-radius: 12px;
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.modal-fab-settings:hover {
-    border-color: #1A3E74;
-}
-
-.modal-fab-header {
-    padding: 1rem 1.5rem;
-    background: #ffffff;
-    border-bottom: 1px solid #e8ecf4;
-}
-
-.modal-fab-header h4 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1A3E74;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.modal-fab-content {
-    padding: 1.25rem 1.5rem;
-    background: #ffffff;
-}
-
-.modal-fab-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-}
-
-.modal-fab-label {
-    flex: 1;
-}
-
-.modal-fab-label label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #1A3E74;
-    cursor: pointer;
-}
-
-.modal-fab-label .fas {
-    color: #1A3E74;
-}
-
-.modal-fab-description {
-    font-size: 0.8rem;
-    color: #6b7280;
-    margin: 0.35rem 0 0 1.75rem;
-    line-height: 1.5;
-}
-
-.modal-fab-toggle {
-    flex-shrink: 0;
-}
-
-/* =========================================
    CATEGORIAS - ACCORDION FUNCIONAL
    ========================================= */
 .cookie-category {
@@ -792,13 +679,8 @@
 }
 
 /* =========================================
-   TOOLTIP DO BOTÃO INFO
+   MODAL DE DETALHES (SUBMODAL) - Mesmo tamanho do modal principal
    ========================================= */
-.cookie-info-tooltip {
-    position: absolute;
-    background: #1A3E74;
-    color: #ffffff;
-    padding: 0.5rem 0.75rem;
     border-radius: 8px;
     font-size: 0.8rem;
     font-weight: 500;
@@ -809,18 +691,10 @@
     z-index: 100;
     transition: all 0.3s ease;
     margin-bottom: 10px;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.cookie-info-btn:hover .cookie-info-tooltip {
-    opacity: 1;
-    visibility: visible;
 }
 
 /* =========================================
-   MODAL DE DETALHES (SUBMODAL)
+   MODAL DE DETALHES (SUBMODAL) - Mesmo tamanho do modal principal
    ========================================= */
 .cookie-detail-modal {
     position: fixed;
