@@ -24,8 +24,8 @@
         #shortcuts-modal,
         .glossary-wrapper,
         .shortcuts-wrapper,
-        [id*="glossary"], /* Pega qualquer ID que contenha glossary */
-        [id*="shortcut"]  /* Pega qualquer ID que contenha shortcut */
+        [id*="glossary"],
+        [id*="shortcut"]
         {
             display: none !important;
             visibility: hidden !important;
@@ -68,12 +68,17 @@
         /* 4. Acessibilidade Sidebar */
         .accessibility-sidebar {
             z-index: 10006 !important;
-            transform: translateX(-100%); /* Garante fechado por padrão */
+            transform: translateX(-100%);
         }
         .accessibility-sidebar.active { transform: translateX(0); }
 
         /* 5. Loading */
         .loading-text { text-align: center; padding: 100px 20px; color: #666; }
+
+        /* 6. Correção Anti-Duplicação de Header */
+        #header-container .main-header {
+            display: block !important;
+        }
     </style>
 </head>
 <body>
@@ -124,10 +129,17 @@
                 Object.defineProperty(window, 'localStorage', { value: ls, writable: true });
             }
 
-            // 3. CARREGADOR
+            // 3. CARREGADOR - CORRIGIDO PARA EVITAR DUPLICAÇÃO
             async function load(id, url) {
                 var el = document.getElementById(id);
                 if (!el) return;
+                
+                // Verificar se já tem conteúdo (evitar duplicação)
+                if (el.innerHTML.trim() !== '') {
+                    console.log('[Load] Container ' + id + ' já tem conteúdo, pulando...');
+                    return;
+                }
+                
                 try {
                     var r = await fetch(url + '?v=' + Date.now());
                     if (!r.ok) throw new Error(r.status);
@@ -165,33 +177,36 @@
                         if (nav) { nav.classList.toggle('active'); tog.classList.toggle('active'); }
                     };
                 }
-                if (!bLib || !bEye || !tog) setTimeout(bridges, 1500);
             }
 
-            // 5. INIT
+            // 5. INIT - CORRIGIDO PARA EVITAR DUPLICAÇÃO DE HEADER
             async function init() {
                 var c = "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/";
                 var p = "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/";
 
+                // Carregar accessibility primeiro
                 await load('accessibility-container', c + 'accessibility.html');
                 
                 // --- CORREÇÃO DE MODAIS ABRINDO SOZINHOS ---
-                // Remove classe active de qualquer modal que tenha vindo aberto no HTML
                 document.querySelectorAll('.modal, .glossary-modal, #glossary-modal, #shortcuts-modal').forEach(el => {
                     el.classList.remove('active', 'show', 'open');
-                    el.style.display = 'none'; // Reforço JS
+                    el.style.display = 'none';
                 });
 
+                // Carregar header - O MutationObserver foi removido do header.js
+                // O index.html agora controla completamente a inicialização
                 await load('header-container', c + 'header.html');
+
+                // Carregar os outros componentes
                 await load('main-container', p + 'main-index.html');
                 await load('footer-container', c + 'footer.html');
 
                 bridges();
 
+                // Carregar scripts (header.js foi removido - MutationObserver desnecessário)
                 var scripts = [
                     "https://vlibras.gov.br/app/vlibras-plugin.js",
                     "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js",
-                    "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js",
                     "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js",
                     "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index.js"
                 ];
@@ -202,7 +217,6 @@
                         s.src = scripts[i]; s.async = false; s.crossOrigin = "anonymous";
                         s.onload = () => {
                             if (scripts[i].includes('vlibras') && window.VLibras) new window.VLibras.Widget('https://vlibras.gov.br/app');
-                            if (scripts[i].includes('header') && window.HeaderModule) window.HeaderModule.init();
                             r();
                         };
                         s.onerror = r;

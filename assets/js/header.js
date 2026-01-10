@@ -671,55 +671,30 @@
     // ============================================
     // MENU MOBILE - BRIDGE PATTERN
     // Garante que cliques funcionem após injeção dinâmica do header
+    // O MutationObserver foi simplificado - agora chamado diretamente na inicialização
     // ============================================
     function setupMobileMenuBridge() {
-        // Flag para evitar múltiplas inicializações
-        if (window.__mobileMenuBridgeInitialized) {
-            return;
-        }
-        window.__mobileMenuBridgeInitialized = true;
-
-        // MutationObserver para detectar quando o header é injetado
-        const observer = new MutationObserver(function(mutationsList) {
-            for (const mutation of mutationsList) {
-                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                    // Verificar se o header ou o botão mobile foi adicionado
-                    const headerContainer = document.getElementById('header-container');
-                    if (headerContainer && headerContainer.querySelector('.main-header')) {
-                        observer.disconnect();
-                        initMobileMenu();
-                        return;
-                    }
+        // Verificar se os elementos já existem (caso contrário, aguardar)
+        const headerContainer = document.getElementById('header-container');
+        if (headerContainer && headerContainer.querySelector('.main-header')) {
+            // Elementos já existem, inicializar menu mobile
+            initMobileMenu();
+        } else {
+            // Fallback: aguardar elementos serem injetados
+            let attempts = 0;
+            const maxAttempts = 50;
+            const checkInterval = setInterval(function() {
+                attempts++;
+                const hc = document.getElementById('header-container');
+                if (hc && hc.querySelector('.main-header')) {
+                    clearInterval(checkInterval);
+                    initMobileMenu();
+                } else if (attempts >= maxAttempts) {
+                    clearInterval(checkInterval);
+                    console.warn('[Header] Elementos do menu mobile não encontrados');
                 }
-            }
-        });
-
-        // Observar o body para detectar injeção do header
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-
-        // Fallback: verificar a cada 100ms se o header existe (para casos onde o observer não detecta)
-        let attempts = 0;
-        const maxAttempts = 50; // 5 segundos máximo
-        const checkInterval = setInterval(function() {
-            attempts++;
-            const headerContainer = document.getElementById('header-container');
-            if (headerContainer && headerContainer.querySelector('.main-header')) {
-                clearInterval(checkInterval);
-                observer.disconnect();
-                window.__mobileMenuBridgeInitialized = false;
-                // Reinicializar para garantir que os eventos estão conectados
-                setTimeout(function() {
-                    setupMobileMenuBridge();
-                }, 100);
-            } else if (attempts >= maxAttempts) {
-                clearInterval(checkInterval);
-                observer.disconnect();
-                window.__mobileMenuBridgeInitialized = false;
-            }
-        }, 100);
+            }, 100);
+        }
     }
 
     // ============================================
@@ -1558,70 +1533,13 @@
         console.log('[HeaderModule] Módulo inicializado com sucesso');
     }
 
-    // Observer para detectar quando o header é carregado dinamicamente
-    // Este observer fica ativo e tenta inicializar quando os elementos são detectados
-    function setupHeaderObserver() {
-        // Usar MutationObserver para detectar inserção do header
-        if (typeof MutationObserver !== 'undefined') {
-            const observer = new MutationObserver(function(mutations) {
-                let foundNewElements = false;
-                
-                mutations.forEach(function(mutation) {
-                    if (mutation.addedNodes.length > 0) {
-                        // Verificar se os elementos do header foram adicionados
-                        const hasMegaMenu = $$('.has-mega-menu').length > 0;
-                        const hasMobileMenu = getElement('mobile-menu') !== null;
-                        
-                        if (hasMegaMenu || hasMobileMenu) {
-                            foundNewElements = true;
-                        }
-                    }
-                });
-
-                if (foundNewElements && !State.loaded) {
-                    console.log('[HeaderModule] Elementos do header detectados via MutationObserver');
-                    initialize();
-                }
-            });
-
-            // Observar o body para detectar inserção do header
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-            
-            console.log('[HeaderModule] MutationObserver configurado');
-        }
-        
-        // Fallback: verificar periodicamente se os elementos foram carregados
-        // Apenas se MutationObserver não estiver disponível ou falhar
-        if (typeof MutationObserver === 'undefined') {
-            let attempts = 0;
-            const maxAttempts = 100; // 10 segundos máximo
-
-            const checkInterval = setInterval(function() {
-                attempts++;
-                const hasMegaMenu = $$('.has-mega-menu').length > 0;
-                const hasMobileMenu = getElement('mobile-menu') !== null;
-
-                // Só inicializar via fallback se State.loaded for false
-                if ((hasMegaMenu || hasMobileMenu) && !State.loaded && attempts < maxAttempts) {
-                    console.log('[HeaderModule] Fallback: elementos detectados após', attempts, 'tentativas');
-                    clearInterval(checkInterval);
-                    initialize();
-                } else if (attempts >= maxAttempts) {
-                    console.log('[HeaderModule] Fallback: limite de tentativas atingido');
-                    clearInterval(checkInterval);
-                }
-            }, 100);
-        }
-    }
-
     // ============================================
     // EXPOSIÇÃO DA API PÚBLICA
     // ============================================
 
-    // Expor API pública globalmente ANTES de iniciar o observer
+    // O MutationObserver foi REMOVIDO porque o index.html controla
+    // completamente o carregamento e inicialização via fetch + HeaderModule.init()
+    
     window.HeaderModule = {
         /**
          * Inicializa o módulo do header
@@ -1714,7 +1632,8 @@
         }
     };
 
-    // Configurar observer DEPOIS de expor a API
-    setupHeaderObserver();
-
+    // ============================================
+    // FIM DO MÓDULO
+    // ============================================
+    
 })();
