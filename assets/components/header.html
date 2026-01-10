@@ -3,35 +3,28 @@
         <div class="accessibility-controls" role="group" aria-label="Controles de acessibilidade">
             <div class="font-size-controls" role="group" aria-label="Controle de tamanho da fonte">
                 <button type="button" class="font-btn font-btn-reduce" id="font-reduce" aria-label="Reduzir fonte" title="Reduzir fonte">
-                    <i class="fa-solid fa-font" aria-hidden="true"></i>
-                    <i class="fa-solid fa-minus" aria-hidden="true"></i>
+                    <span class="font-btn-icon">A-</span>
                 </button>
                 <button type="button" class="font-btn font-btn-increase" id="font-increase" aria-label="Aumentar fonte" title="Aumentar fonte">
-                    <i class="fa-solid fa-font" aria-hidden="true"></i>
-                    <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                    <span class="font-btn-icon">A+</span>
                 </button>
             </div>
             <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
-                <span class="theme-switch">
-                    <span class="switch-handle">
-                        <i class="fa-solid fa-sun" aria-hidden="true"></i>
-                    </span>
-                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
-                </span>
+                <i class="fas fa-moon" aria-hidden="true"></i>
             </button>
             <div class="top-bar-divider" aria-hidden="true"></div>
         </div>
         <div class="skip-controls" role="group" aria-label="Navegação rápida">
             <a href="#main-header" class="skip-btn" id="skip-top" aria-label="Ir para o topo da página">
-                <i class="fa-solid fa-angles-up" aria-hidden="true"></i>
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
                 <span class="skip-label">Topo</span>
             </a>
             <a href="#main-content" class="skip-btn" id="skip-content" aria-label="Ir para o conteúdo principal">
-                <i class="fa-solid fa-list" aria-hidden="true"></i>
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
                 <span class="skip-label">Conteúdo</span>
             </a>
             <a href="#footer" class="skip-btn" id="skip-footer" aria-label="Ir para o rodapé">
-                <i class="fa-solid fa-angles-down" aria-hidden="true"></i>
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
                 <span class="skip-label">Rodapé</span>
             </a>
         </div>
@@ -49,11 +42,10 @@
                 </li>
                 <li class="nav-item has-mega-menu">
                     <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="sobre-nos">Sobre Nós</button>
-                    <div class="mega-panel mega-panel-sobre-nos hidden" id="mega-panel-sobre-nos" data-menu="sobre-nos">
+                    <div class="mega-panel mega-panel-sobre-nos" id="mega-panel-sobre-nos" data-menu="sobre-nos">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
                             </svg>
                         </div>
                         <div class="panel-standard-height">
@@ -98,23 +90,15 @@
                                     </ul>
                                 </div>
                             </main>
-                            <aside class="panel-promo-area">
-                                <div class="glowing-frame">
-                                    <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-sobre-nos.webp" alt="Equipe de enfermagem trabalhando" loading="lazy">
-                                    </div>
-                                </div>
-                            </aside>
                         </div>
                     </div>
                 </li>
                 <li class="nav-item has-mega-menu">
                     <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="ferramentas">Ferramentas</button>
-                    <div class="mega-panel mega-panel-ferramentas hidden" id="mega-panel-ferramentas" data-menu="ferramentas">
+                    <div class="mega-panel mega-panel-ferramentas" id="mega-panel-ferramentas" data-menu="ferramentas">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
                             </svg>
                         </div>
                         <div class="panel-standard-height">
@@ -164,7 +148,7 @@
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/downton.html">Downton</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/elpo.html">ELPO</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/escalanumerica.html">Escala Numérica</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/fa-solidt.html">FAST</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/fast.html">FAST</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/flacc.html">FLACC</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/four.html">FOUR</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/fugulin.html">Fugulin</a></li>
@@ -228,23 +212,15 @@
                                     </ul>
                                 </div>
                             </main>
-                            <aside class="panel-promo-area">
-                                <div class="glowing-frame">
-                                    <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-ferramentas.webp" alt="Ferramentas de enfermagem" loading="lazy">
-                                    </div>
-                                </div>
-                            </aside>
                         </div>
                     </div>
                 </li>
                 <li class="nav-item has-mega-menu">
                     <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="biblioteca">Biblioteca</button>
-                    <div class="mega-panel mega-panel-biblioteca hidden" id="mega-panel-biblioteca" data-menu="biblioteca">
+                    <div class="mega-panel mega-panel-biblioteca" id="mega-panel-biblioteca" data-menu="biblioteca">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
                             </svg>
                         </div>
                         <div class="panel-standard-height">
@@ -465,107 +441,85 @@
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/idoso-com-depressao.html">Idoso com Depressão</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/fisioterapia-idoso.html">Fisioterapia para Idoso</a></li>
                                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/idoso-realizando-avd.html">Idoso Realizando AVD</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/idoso-andador.html">Idoso com Andador</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/alimentacao-do-idoso-ilustracao.html">Alimentação do Idoso</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/avaliacao-antropometrica.html">Avaliação Antropométrica</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/reabilitacao-do-paciente.html">Reabilitação</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/avaliacao-saude.html">Avaliação de Saúde</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/tratamento-medicamentoso.html">Tratamento Medicamentoso</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/tratamento-medicamentoso-saude.html">Tratamento - Saúde</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/urgenicas-pediatricas.html">Urgências Pediátricas</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/traumas-em-geral-e-avaliacao-da-vitima.html">Traumas e Avaliação</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/atendimento-pre-hospitalar-transporte-e-classificacao-de-riscos-1.html">APH - Transporte e Triagem</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/gesto-1.html">Gesto</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-vacinas">
-                                    <h3 class="content-title">Calendário Vacinal</h3>
+                                    <h3 class="content-title">Vacinação</h3>
                                     <ul class="content-links">
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calendario-vacinal-do-adolescente.html">Calendário do Adolescente</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/enfermagem-em-unidades-de-hemodialise.html">Enfermagem em Hemodiálise</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/plano-de-alta-enfermagem.html">Plano de Alta</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/o-enfermeiro-em-hipotese-alguma-deve-sair-do-ambiente-onde-esta-acontecendo-a-pcr-se-precisar-de-algo-fora-do-ambiente-ele-pede-se.html">Enfermeiro na PCR</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/o-enfermeiro-sempre-deve-designar-um-colaborador-para-providenciar-prontuario-puxar-exames-de-laboratorio-no-sistema-levar-tubos-de.html">Enfermeiro - Prontuário</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/o-responsavel-pelo-carrinho-de-emergencia-deve-ter-em-mente-as-5-causas-provaveis-h-de-uma-pcr-e-assim-organizar-o-carrinho-de-emerg.html">Carrinho de Emergência</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/o-responsavel-pelos-cuidados-na-assistencia-ventilatoria-deve-preparar-circuito-de-aspiracao-orotraqueal-montado-e-testado-lar.html">Assistência Ventilatória</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/sinan.html">SINAN</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/sistema-unico-de-saude.html">Sistema Único de Saúde</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/legislacoes.html">Legislação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calendario-vacinal.html">Calendário Vacinal</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/importancia-das-vacinas.html">Importância das Vacinas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cartilha-de-vacinacao.html">Cartilha de Vacinação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/modo-de-aplicacao-das-vacinas.html">Modo de Aplicação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/armazenamento-das-vacinas.html">Armazenamento das Vacinas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cuidado-pos-vacina.html">Cuidado Pós-Vacina</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-e-o-sistema-imunologico.html">Vacinas e Sistema Imunológico</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/reacoes-mais-comuns-pos-vacina.html">Reações Pós-Vacina</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/conheca-os-tipos-de-vacinas.html">Tipos de Vacinas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/principais-contraindicacoes-das-vacinas.html">Contraindicações</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/principais-vacinas-aplicadas-no-brasil.html">Vacinas no Brasil</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-aplicadas-na-infancia.html">Vacinas na Infância</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-aplicadas-na-adolescencia.html">Vacinas na Adolescência</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-aplicadas-na-adulto.html">Vacinas no Adulto</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-aplicadas-no-idoso.html">Vacinas no Idoso</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-aplicadas-na-gestante.html">Vacinas na Gestante</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-especiais.html">Vacinas Especiais</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/vacinas-de-viajantes.html">Vacinas de Viajantes</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cartilha-nacional-de-vacinacao.html">Cartilha Nacional</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calendario-nacional-de-vacinacao.html">Calendário Nacional</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-diagnosticos">
                                     <h3 class="content-title">Diagnósticos NANDA</h3>
                                     <ul class="content-links">
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticosnanda2018.html">Diagnósticos NANDA 2018</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/lista-de-diagnosticos-de-enfermagem-da-nanda-1-2018.html">Lista NANDA 1 - 2018</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/nanda.html">NANDA</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/diagnosticosnanda.html">Diagnósticos NANDA</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem.html">Diagnósticos de Enfermagem</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/como-elaborar-um-diagnostico-de-enfermagem.html">Elaborar Diagnóstico</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-respiracao.html">Diagnósticos - Respiração</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-circulacao.html">Diagnósticos - Circulação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-alimentacao.html">Diagnósticos - Alimentação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-hidratacao.html">Diagnósticos - Hidratação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-eliminacao.html">Diagnósticos - Eliminação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-higiene.html">Diagnósticos - Higiene</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-mobilidade-fisica.html">Diagnósticos - Mobilidade</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-comunicacao.html">Diagnósticos - Comunicação</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/diagnosticos-de-enfermagem-relacionados-a-seguranca.html">Diagnósticos - Segurança</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="tab-materiais">
-                                    <h3 class="content-title">Materiais e Ícones</h3>
+                                    <h3 class="content-title">Materiais de Enfermagem</h3>
                                     <ul class="content-links">
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/seringa-enfermagem-ilustracao.html">Seringa - Ilustração</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/frasco-ampola-de-insulina-ilustracao.html">Ampola de Insulina</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/heparina-ilustracao.html">Heparina - Ilustração</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/ampola-de-medicamento-ilustracao.html">Ampola de Medicamento</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/icone-creatina.html">Ícone Creatina</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/icone-dor-enfermagem.html">Ícone Dor</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/icone-estado-nutricional.html">Ícone Estado Nutricional</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/icone-estetoscopio.html">Ícone Estetoscópio</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/icone-globolos-brancos.html">Ícone Glóbulos Brancos</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/icone-grafico-de-enfermagem.html">Ícone Gráfico</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/icone-hematrocito.html">Ícone Hematócrito</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/icone-mobilidade-do-paciente.html">Ícone Mobilidade</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/icone-potassio-k.html">Ícone Potássio</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/icone-sodio-na.html">Ícone Sódio</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/iconecapurro.html">Ícone Capurro</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/icone-desenho.html">Ícone Desenho</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/desenho-oximetro-de-pulso-enfermagem.html">Oxímetro de Pulso</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/desenho-saturacao-de-ocigenio.html">Saturação de Oxigênio</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cerebro-humano-areas-funcionais.html">Cérebro Humano</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/anatomia-e-fisiologia-humana.html">Anatomia e Fisiologia</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escovar-os-dentes.html">Escovar os Dentes</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/maos-cuidados-de-enfermagem.html">Mãos - Cuidados</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/lamparina-enfermagem.html">Lamparina</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/chapeu-de-enfermeira.html">Chapéu de Enfermeira</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/chapeuimagem.html">Chapéu - Imagem</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/leitura-desenho.html">Leitura - Desenho</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/equipe-de-enfermagem-unida.html">Equipe de Enfermagem</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/ilustracao-educacao-em-saude.html">Educação em Saúde</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/ilustracao-enfermeira-visita.html">Enfermeira - Visita</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/a-historia-da-saude.html">História da Saúde</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/comunicacao-humana-e-marketing-pessoal.html">Comunicação e Marketing</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/consciencia-enfermagem.html">Consciência</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/formulario-de-registro-do-codigo-amarelo.html">Código Amarelo</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/aquecimento-imediato-em-caso-de-hipotermia-mantas-aquecedor-portatil-manta-termica-solucao-fisiologica-aquecida.html">Aquecimento - Hipotermia</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/prova-tecnico-de-enfermagem-praia-grande-2021.html">Prova Técnico 2021</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/downloads.html">Downloads</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/metasinternacionais.html">Metas Internacionais</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/regrasmedicacoes.html">Regras de Medicações</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/lista-de-doencas-de-notificacao-compulsoria.html">Doenças de Notificação</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/tabelas-vacinas-crianca.html">Tabelas Vacinas</a></li>
-                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/en/comofuncionaosus.html">Como Funciona o SUS</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/material-de-cura.html">Material de Curativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/material-de-injecao.html">Material de Injeção</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/avaliacao-do-equipamento-de-protecao-individual.html">EPI - Equipamento de Proteção Individual</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/seringas-de-insulina.html">Seringas de Insulina</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cateteres.html">Cateteres</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/drenos.html">Drenos</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/sondas.html">Sondas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/equipamentos-de-protecao-individual.html">EPIs</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/luvas.html">Luvas</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/mascaras.html">Máscaras</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/degraus-de-material-de-cura.html">Degraus de Curativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/tesoura-de-material-de-cura.html">Tesoura de Curativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/pinca-de-material-de-cura.html">Pinça de Curativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cuba-rim.html">Cuba Rim</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/bandeja-de-material-de-cura.html">Bandeja de Curativo</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/jaleco.html">Jaleco</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/oculos-de-protecao.html">Óculos de Proteção</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/touca.html">Touca</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/avental.html">Avental</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/cuidado-com-os-materiais-de-enfermagem.html">Cuidado com Materiais</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/descarte-de-materiais-de-enfermagem.html">Descarte de Materiais</a></li>
                                     </ul>
                                 </div>
                             </main>
-                            <aside class="panel-promo-area">
-                                <div class="glowing-frame">
-                                    <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-biblioteca.webp" alt="Biblioteca de enfermagem" loading="lazy">
-                                    </div>
-                                </div>
-                            </aside>
                         </div>
                     </div>
                 </li>
                 <li class="nav-item has-mega-menu">
                     <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="carreiras">Carreiras</button>
-                    <div class="mega-panel mega-panel-carreiras hidden" id="mega-panel-carreiras" data-menu="carreiras">
+                    <div class="mega-panel mega-panel-carreiras" id="mega-panel-carreiras" data-menu="carreiras">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
                             </svg>
                         </div>
                         <div class="panel-standard-height">
@@ -605,23 +559,15 @@
                                     </ul>
                                 </div>
                             </main>
-                            <aside class="panel-promo-area">
-                                <div class="glowing-frame">
-                                    <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-carreiras.webp" alt="Carreiras em enfermagem" loading="lazy">
-                                    </div>
-                                </div>
-                            </aside>
                         </div>
                     </div>
                 </li>
                 <li class="nav-item has-mega-menu">
                     <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="fale-conosco">Fale Conosco</button>
-                    <div class="mega-panel mega-panel-fale-conosco hidden" id="mega-panel-fale-conosco" data-menu="fale-conosco">
+                    <div class="mega-panel mega-panel-fale-conosco" id="mega-panel-fale-conosco" data-menu="fale-conosco">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
                             </svg>
                         </div>
                         <div class="panel-standard-height">
@@ -638,26 +584,18 @@
                                     </ul>
                                 </div>
                             </main>
-                            <aside class="panel-promo-area">
-                                <div class="glowing-frame">
-                                    <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-fale-conosco.webp" alt="Fale com nossa equipe" loading="lazy">
-                                    </div>
-                                </div>
-                            </aside>
                         </div>
                     </div>
                 </li>
                 <li class="nav-item has-mega-menu">
-                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="idiomas">
-                        <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="idiomas" id="nav-idiomas">
+                        <i class="fas fa-globe" aria-hidden="true"></i>
                         <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)" class="active-lang-flag" id="active-lang-flag" loading="lazy">
                     </button>
-                    <div class="mega-panel mega-panel-idiomas hidden" id="mega-panel-idiomas" data-menu="idiomas">
+                    <div class="mega-panel mega-panel-idiomas" id="mega-panel-idiomas" data-menu="idiomas">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
                             </svg>
                         </div>
                         <div class="panel-standard-height">
@@ -802,7 +740,6 @@
                             <aside class="panel-promo-area">
                                 <div class="glowing-frame">
                                     <div class="frame-image-container">
-                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-idiomas.webp" alt="Idiomas disponíveis" loading="lazy">
                                     </div>
                                 </div>
                             </aside>
@@ -811,13 +748,12 @@
                 </li>
                 <li class="nav-item has-mega-menu">
                     <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="buscar">
-                        <i class="fa-solid fa-search" aria-hidden="true"></i>
+                        <i class="fas fa-search" aria-hidden="true"></i>
                     </button>
-                    <div class="mega-panel mega-search-panel hidden" id="mega-panel-buscar" data-menu="buscar">
+                    <div class="mega-panel mega-search-panel" id="mega-panel-buscar" data-menu="buscar">
                         <div class="decorative-svg-bg" role="presentation" aria-hidden="true">
                             <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
                                 <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-                                <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
                             </svg>
                         </div>
                         <div class="panel-standard-height">
@@ -825,22 +761,13 @@
                                 <div class="search-container">
                                     <h3 class="content-title">Buscar no Site</h3>
                                     <div class="search-box">
-                                        <input type="search" class="search-input" placeholder="Digite sua busca..." aria-label="Buscar no site">
-                                        <button type="button" class="search-btn" aria-label="Buscar">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="11" cy="11" r="8"></circle>
-                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                            </svg>
+                                        <input type="search" class="search-input" id="header-search-input" placeholder="Buscar no site..." aria-label="Buscar no site">
+                                        <button type="button" class="search-btn" id="header-search-btn" aria-label="Buscar">
+                                            <i class="fas fa-search"></i>
                                         </button>
                                     </div>
                                 </div>
                             </main>
-                            <aside class="panel-promo-area search-promo-area">
-                                <div class="search-logo-container">
-                                    <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="search-logo-image" loading="lazy">
-                                    <p class="search-tagline">Encontre rapidamente o que você procura</p>
-                                </div>
-                            </aside>
                         </div>
                     </div>
                 </li>
@@ -854,30 +781,21 @@
     <!-- Faixa 1: Accessibility Controls and Search -->
     <div class="mobile-band-1">
         <div class="mobile-band-1-container">
-                <div class="mobile-band-1-left">
-                    <div class="mobile-font-controls">
-                        <button type="button" class="mobile-font-btn" id="mobile-font-reduce" aria-label="Reduzir fonte">
-                            <i class="fa-solid fa-font" aria-hidden="true"></i>
-                            <i class="fa-solid fa-minus" aria-hidden="true"></i>
-                        </button>
-                        <button type="button" class="mobile-font-btn" id="mobile-font-increase" aria-label="Aumentar fonte">
-                            <i class="fa-solid fa-font" aria-hidden="true"></i>
-                            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <button type="button" class="mobile-theme-btn" id="mobile-theme-toggle" aria-label="Alternar tema">
-                        <span class="theme-switch">
-                            <span class="switch-handle">
-                                <i class="fa-solid fa-sun" aria-hidden="true"></i>
-                            </span>
-                            <i class="fa-solid fa-moon" aria-hidden="true"></i>
-                        </span>
-                    </button>
-                </div>
-                <button type="button" class="mobile-search-btn" id="mobile-search-toggle" aria-label="Buscar">
-                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <div class="mobile-font-controls">
+                <button type="button" class="mobile-font-btn" id="mobile-font-reduce" aria-label="Reduzir fonte">
+                    <span class="font-btn-icon">A-</span>
+                </button>
+                <button type="button" class="mobile-font-btn" id="mobile-font-increase" aria-label="Aumentar fonte">
+                    <span class="font-btn-icon">A+</span>
                 </button>
             </div>
+            <button type="button" class="mobile-theme-btn" id="mobile-theme-toggle" aria-label="Alternar tema">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button type="button" class="mobile-search-btn" id="mobile-search-toggle" aria-label="Buscar">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
     </div>
     
     <!-- Faixa 2: Logo and Hamburger Menu -->
@@ -887,7 +805,7 @@
                 <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem">
             </a>
             <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Abrir menu" aria-expanded="false">
-                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                <i class="fas fa-bars"></i>
             </button>
         </div>
     </div>
@@ -897,7 +815,7 @@
         <div class="search-box">
             <input type="search" class="search-input" id="mobile-menu-search-input" placeholder="Buscar no site..." aria-label="Buscar no site">
             <button type="button" class="search-btn" aria-label="Buscar">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fas fa-search"></i>
             </button>
         </div>
     </div>
@@ -910,7 +828,7 @@
             <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="mobile-menu-logo-image">
         </a>
         <button type="button" class="mobile-menu-close" id="mobile-menu-close" aria-label="Fechar menu">
-            <span class="close-icon"><i class="fa-solid fa-times"></i></span>
+            <span class="close-icon"><i class="fas fa-times"></i></span>
         </button>
     </div>
     <ul class="mobile-nav-list">
@@ -920,13 +838,13 @@
         <li class="mobile-nav-item has-mobile-submenu">
             <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
                 <span>Sobre Nós</span>
-                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
             </button>
             <ul class="mobile-submenu">
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Institucional</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/missao.html">Missão, Visão e Valores</a></li>
@@ -937,7 +855,7 @@
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Acessibilidade Digital</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/politicadeacessibilidade.html">Política de Acessibilidade Digital</a></li>
@@ -947,7 +865,7 @@
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Sustentabilidade Digital</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/nossocompromisso.html">Nosso compromisso</a></li>
@@ -958,7 +876,7 @@
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Políticas do Site</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/politica.html">Política de Privacidade</a></li>
@@ -971,13 +889,13 @@
         <li class="mobile-nav-item has-mobile-submenu">
             <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
                 <span>Ferramentas</span>
-                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
             </button>
             <ul class="mobile-submenu">
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Calculadoras Clínicas</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/heparina.html">Aspiração de Heparina</a></li>
@@ -994,7 +912,7 @@
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Escalas Clínicas</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/aldrete.html">Aldrete</a></li>
@@ -1017,7 +935,7 @@
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/downton.html">Downton</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/elpo.html">ELPO</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/escalanumerica.html">Escala Numérica</a></li>
-                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/fa-solidt.html">FAST</a></li>
+                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/fast.html">FAST</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/flacc.html">FLACC</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/four.html">FOUR</a></li>
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/fugulin.html">Fugulin</a></li>
@@ -1061,7 +979,7 @@
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Calendário Vacinal</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calendariovacinalprematuros.html">Calendário Vacinal de Prematuros</a></li>
@@ -1078,7 +996,7 @@
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Ferramentas Específicas</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/notificacao-compulsoria.html">Notificações Compulsórias</a></li>
@@ -1091,13 +1009,13 @@
         <li class="mobile-nav-item has-mobile-submenu">
             <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
                 <span>Biblioteca</span>
-                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
             </button>
             <ul class="mobile-submenu">
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Teorias de Enfermagem</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/teorias-de-enfermagem.html">Teorias de Enfermagem</a></li>
@@ -1114,7 +1032,7 @@
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Escalas de Avaliação</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/escala-de-aldrete-e-kroulik.html">Aldrete e Kroulik</a></li>
@@ -1131,7 +1049,7 @@
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Cálculos de Enfermagem</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/calculo-de-dosagem-de-medicamentos-enfermagem.html">Cálculo de Dosagem</a></li>
@@ -1144,7 +1062,7 @@
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Protocolos e Diretrizes</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/biblioteca/metas-internacionais-de-seguranca-do-paciente.html">Metas de Segurança</a></li>
@@ -1158,13 +1076,13 @@
         <li class="mobile-nav-item has-mobile-submenu">
             <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
                 <span>Carreiras</span>
-                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
             </button>
             <ul class="mobile-submenu">
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Buscar Oportunidades</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/empregos.html">Buscar Empregos</a></li>
@@ -1175,7 +1093,7 @@
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Ferramentas Trabalhistas</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/adicional-noturno.html">Adicional Noturno</a></li>
@@ -1191,7 +1109,7 @@
                 <li class="mobile-submenu-item has-mobile-submenu">
                     <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
                         <span>Desenvolvimento Profissional</span>
-                        <span class="submenu-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <ul class="mobile-submenu level-3">
                         <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/curriculo.html">Currículo</a></li>
@@ -1208,12 +1126,12 @@
     <div class="mobile-language-section" id="mobile-idiomas-section">
         <span class="mobile-language-label">Selecionar idioma</span>
         <button type="button" class="mobile-language-toggle" id="mobile-idiomas-toggle" aria-expanded="false">
-            <span class="language-icon"><i class="fa-solid fa-globe"></i></span>
+            <span class="language-icon"><i class="fas fa-globe"></i></span>
             <span class="language-current" id="mobile-idiomas-current">
                 <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)" style="width:20px;height:15px;border-radius:2px;margin-right:8px;vertical-align:middle">
                 <span>Português (Brasil)</span>
             </span>
-            <span class="language-arrow"><i class="fa-solid fa-chevron-down" id="mobile-idiomas-arrow"></i></span>
+            <span class="language-arrow"><i class="fas fa-chevron-down" id="mobile-idiomas-arrow"></i></span>
         </button>
         <div class="mobile-language-grid" id="mobile-idiomas-list" style="display:none">
             <!-- 19 Idiomas disponíveis em linhas horizontais -->
@@ -1277,11 +1195,3 @@
         </div>
     </div>
 </nav>
-
-<!-- Main Content Anchor - Used by skip links and page content -->
-<main id="main-content" class="main-content" role="main" tabindex="-1">
-    <!-- Page content should be placed here or after the header include -->
-</main>
-
-<!-- Header JavaScript - Must be loaded after the header HTML -->
-<script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js"></script>
