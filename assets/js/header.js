@@ -366,17 +366,16 @@
     }
 
     // ============================================
-    // CONTROLE DE TEMA - DELEGADO AO ACCESSCONTROL
+    // CONTROLE DE TEMA - DELEGADO AO ThemeManager (accessibility.js)
     // ============================================
-    // O ThemeManager foi unificado no accessibility.js
-    // Esta função apenas sincroniza com o AccessControl
 
     function applyTheme(isDark) {
-        // Delegar AO AccessControl ThemeManager
-        if (window.AccessControl && window.AccessControl.ThemeManager) {
-            window.AccessControl.ThemeManager.applyTheme(isDark ? 'dark' : 'light');
+        // Delegar AO ThemeManager do accessibility.js
+        if (window.ThemeManager) {
+            const newTheme = isDark ? 'dark' : 'light';
+            window.ThemeManager.applyTheme(newTheme);
         } else {
-            // Fallback se AccessControl não estiver disponível
+            // Fallback se ThemeManager não estiver disponível
             document.body.classList.toggle('dark-theme', isDark);
         }
 
@@ -401,6 +400,12 @@
                 icon.classList.remove('fa-moon', 'fa-sun');
                 icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
             }
+            
+            // Atualizar status text
+            const status = mobileThemeToggle.querySelector('.theme-status');
+            if (status) {
+                status.textContent = isDark ? 'Modo Escuro' : 'Modo Claro';
+            }
         }
 
         // Salvar no storage
@@ -417,13 +422,9 @@
             e.stopPropagation();
         }
 
-        // Usa a lógica do AccessControl ThemeManager
-        if (window.AccessControl && window.AccessControl.ThemeManager) {
-            const currentTheme = window.AccessControl.ThemeManager.getTheme();
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            window.AccessControl.ThemeManager.applyTheme(newTheme);
-            
-            // Atualiza ícones após mudança do AccessControl
+        // Usa a lógica do ThemeManager
+        if (window.ThemeManager) {
+            const newTheme = window.ThemeManager.toggle();
             const isDark = newTheme === 'dark';
             State.isDarkMode = isDark;
             updateThemeIcons(isDark);
@@ -451,9 +452,15 @@
                 icon.classList.remove('fa-moon', 'fa-sun');
                 icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
             }
+            
+            const status = mobileThemeToggle.querySelector('.theme-status');
+            if (status) {
+                status.textContent = isDark ? 'Modo Escuro' : 'Modo Claro';
+            }
         }
     }
 
+    // Inicializar controles de tema
     function initThemeControls() {
         const desktopToggle = getElement('theme-toggle');
         const mobileToggle = getElement('mobile-theme-toggle');
@@ -465,6 +472,89 @@
         if (mobileToggle) {
             mobileToggle.addEventListener('click', toggleTheme, { passive: false });
         }
+        
+        // Sincronizar com ThemeManager se disponível
+        if (window.ThemeManager) {
+            const isDark = window.ThemeManager.isDarkMode();
+            updateThemeIcons(isDark);
+            State.isDarkMode = isDark;
+        }
+    }
+
+    // ============================================
+    // INJEÇÃO DO BOTÃO DE TEMA NO HEADER
+    // ============================================
+    function injectThemeToggle() {
+        // Desktop toggle - injetar na barra superior direita
+        const topBarRight = document.querySelector('.top-bar-right');
+        if (topBarRight) {
+            // Verificar se já existe
+            if (!document.getElementById('theme-toggle')) {
+                const themeToggle = document.createElement('button');
+                themeToggle.id = 'theme-toggle';
+                themeToggle.className = 'theme-toggle';
+                themeToggle.setAttribute('aria-label', 'Alternar para tema escuro');
+                themeToggle.setAttribute('title', 'Alternar tema');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                
+                // Inserir antes do primeiro elemento de controle de fonte
+                const fontControls = topBarRight.querySelector('.font-controls');
+                if (fontControls && fontControls.parentNode === topBarRight) {
+                    topBarRight.insertBefore(themeToggle, fontControls);
+                } else {
+                    // Se não houver controles de fonte, adicionar no início
+                    topBarRight.insertBefore(themeToggle, topBarRight.firstChild);
+                }
+                
+                console.log('[Header] Botão de tema desktop injetado');
+            }
+        }
+        
+        // Mobile toggle - injetar no menu mobile (na seção de idioma ou ações)
+        const mobileActions = document.querySelector('.mobile-menu-actions');
+        const mobileIdiomasSection = document.getElementById('mobile-idiomas-section');
+        
+        if (mobileIdiomasSection && !document.getElementById('mobile-theme-toggle')) {
+            const mobileThemeToggle = document.createElement('button');
+            mobileThemeToggle.id = 'mobile-theme-toggle';
+            mobileThemeToggle.className = 'mobile-theme-toggle';
+            mobileThemeToggle.setAttribute('aria-label', 'Alternar tema');
+            mobileThemeToggle.innerHTML = `
+                <span class="theme-icon-container">
+                    <i class="fas fa-moon"></i>
+                </span>
+                <span class="theme-label">
+                    <span>Tema</span>
+                    <span class="theme-status">Modo Claro</span>
+                </span>
+                <i class="fas fa-chevron-right mobile-chevron"></i>
+            `;
+            
+            // Inserir antes da seção de idiomas
+            mobileIdiomasSection.parentNode.insertBefore(mobileThemeToggle, mobileIdiomasSection);
+            console.log('[Header] Botão de tema mobile injetado');
+        }
+    }
+
+    // ============================================
+    // EVENTOS DO THEMEMANAGER
+    // ============================================
+    function setupThemeManagerEvents() {
+        // Escutar eventos do ThemeManager
+        window.addEventListener('theme:changed', function(e) {
+            const isDark = e.detail.isDark;
+            State.isDarkMode = isDark;
+            updateThemeIcons(isDark);
+            console.log('[Header] Tema atualizado via ThemeManager:', e.detail.theme);
+        });
+        
+        // Escutar quando ThemeManager estiver pronto
+        window.addEventListener('ThemeManager:Ready', function() {
+            const isDark = window.ThemeManager.isDarkMode();
+            updateThemeIcons(isDark);
+            State.isDarkMode = isDark;
+            console.log('[Header] ThemeManager detectado e sincronizado');
+        });
     }
 
     // ============================================
@@ -576,9 +666,70 @@
     }
 
     // ============================================
+    // MENU MOBILE - BRIDGE PATTERN
+    // Garante que cliques funcionem após injeção dinâmica do header
+    // ============================================
+    function setupMobileMenuBridge() {
+        // Flag para evitar múltiplas inicializações
+        if (window.__mobileMenuBridgeInitialized) {
+            return;
+        }
+        window.__mobileMenuBridgeInitialized = true;
+
+        // MutationObserver para detectar quando o header é injetado
+        const observer = new MutationObserver(function(mutationsList) {
+            for (const mutation of mutationsList) {
+                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                    // Verificar se o header ou o botão mobile foi adicionado
+                    const headerContainer = document.getElementById('header-container');
+                    if (headerContainer && headerContainer.querySelector('.main-header')) {
+                        observer.disconnect();
+                        initMobileMenu();
+                        setupAccessibilityEnhancements();
+                        return;
+                    }
+                }
+            }
+        });
+
+        // Observar o body para detectar injeção do header
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        // Fallback: verificar a cada 100ms se o header existe (para casos onde o observer não detecta)
+        let attempts = 0;
+        const maxAttempts = 50; // 5 segundos máximo
+        const checkInterval = setInterval(function() {
+            attempts++;
+            const headerContainer = document.getElementById('header-container');
+            if (headerContainer && headerContainer.querySelector('.main-header')) {
+                clearInterval(checkInterval);
+                observer.disconnect();
+                window.__mobileMenuBridgeInitialized = false;
+                // Reinicializar para garantir que os eventos estão conectados
+                setTimeout(function() {
+                    setupMobileMenuBridge();
+                }, 100);
+            } else if (attempts >= maxAttempts) {
+                clearInterval(checkInterval);
+                observer.disconnect();
+                window.__mobileMenuBridgeInitialized = false;
+            }
+        }, 100);
+    }
+
+    // ============================================
     // MENU MOBILE - CORREÇÃO PRINCIPAL
     // ============================================
     function initMobileMenu() {
+        // Verificar se já foi inicializado para evitar duplicação
+        if (window.__mobileMenuInitialized) {
+            return;
+        }
+        window.__mobileMenuInitialized = true;
+
         const menuToggle = getElement('mobile-menu-toggle');
         const menuClose = getElement('mobile-menu-close');
         const menuOverlay = getElement('mobile-menu-overlay');
@@ -1232,25 +1383,24 @@
     }
 
     // ============================================
-    // LISTENER PARA MUDANÇAS DE TEMA DO ACCESSCONTROL
+    // EVENTOS DO THEMEMANAGER
     // ============================================
-    function setupThemeListener() {
+    function setupThemeManagerEvents() {
+        // Escutar eventos do ThemeManager
         window.addEventListener('theme:changed', function(e) {
             const isDark = e.detail.isDark;
             State.isDarkMode = isDark;
-            
-            // Atualizar ícones do tema
             updateThemeIcons(isDark);
-            
-            console.log('[HeaderModule] Ícones do tema atualizados via evento theme:changed');
+            console.log('[Header] Tema atualizado via ThemeManager:', e.detail.theme);
         });
-
-        // Também ouvir mudanças de tema do AccessControl diretamente
-        if (window.AccessControl && window.AccessControl.ThemeManager) {
-            const savedTheme = window.AccessControl.ThemeManager.getTheme();
-            const isDark = savedTheme === 'dark' || (savedTheme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        // Escutar quando ThemeManager estiver pronto
+        window.addEventListener('ThemeManager:Ready', function() {
+            const isDark = window.ThemeManager.isDarkMode();
             updateThemeIcons(isDark);
-        }
+            State.isDarkMode = isDark;
+            console.log('[Header] ThemeManager detectado e sincronizado');
+        });
     }
 
     // ============================================
@@ -1288,17 +1438,26 @@
         initThemeControls();
         setupSkipLinks();
         initClickAnimations();
-        initMobileMenu();
+        setupMobileMenuBridge();
         initMegaMenu();
         initMenuTabs();
         initLanguageSelector();
         initMobileSearch();
         initSearch();
         initScrollEffects();
-        setupThemeListener();
+        setupThemeManagerEvents();
+        injectThemeToggle();
 
-        // Sincronizar com AccessControl após um pequeno delay
-        setTimeout(syncWithAccessControl, 100);
+        // Sincronizar com AccessControl e ThemeManager após um pequeno delay
+        setTimeout(function() {
+            syncWithAccessControl();
+            // Sincronizar com ThemeManager
+            if (window.ThemeManager) {
+                const isDark = window.ThemeManager.isDarkMode();
+                State.isDarkMode = isDark;
+                updateThemeIcons(isDark);
+            }
+        }, 100);
 
         State.loaded = true;
         console.log('[HeaderModule] Módulo inicializado com sucesso');
