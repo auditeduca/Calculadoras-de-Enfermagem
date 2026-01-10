@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Calculadoras de Enfermagem - Ferramentas clínicas para profissionais de saúde">
+  <meta name="theme-color" content="#00897b">
+  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
+  
+  <!-- CSS Modules -->
+  <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/footer.css">
+  <link rel="stylesheet" href="assets/css/accessibility-v1.css">
+  <link rel="stylesheet" href="assets/css/main-index.css">
+  
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <title>Calculadoras de Enfermagem</title>
+</head>
+<body>
+
+  <!-- Header Component -->
+  <div id="header-placeholder"></div>
+
+  <!-- Accessibility Widget -->
+  <div id="accessibility-placeholder"></div>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Conteúdo carregado pelo JavaScript -->
+    <div style="padding: 2rem; text-align: center; color: #666;">
+      <p>Carregando calculadoras...</p>
+    </div>
+  </main>
+
+  <!-- Footer Component -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts - Carregados após componentes HTML existirem -->
+  <script>
+    // Debug helper
+    window.debugLog = function(label, value) {
+      console.log(`[DEBUG ${label}]`, value);
+    };
+
+    // Carregar todos os componentes HTML primeiro
+    async function loadAllComponents() {
+      try {
+        console.log('[App] Iniciando carga dos componentes...');
+        
+        // Carregar Header
+        const headerResponse = await fetch('assets/components/header-v1.html');
+        document.getElementById('header-placeholder').innerHTML = await headerResponse.text();
+        console.log('[App] Header carregado');
+        window.debugLog('Header', document.getElementById('header-placeholder').innerHTML.length + ' chars');
+
+        // Carregar Accessibility Widget
+        const accessibilityResponse = await fetch('assets/components/accessibility-v1.html');
+        document.getElementById('accessibility-placeholder').innerHTML = await accessibilityResponse.text();
+        console.log('[App] Accessibility carregado');
+
+        // Carregar Footer (inclui Cookie Consent e conteúdo do rodapé)
+        const footerResponse = await fetch('assets/components/footer.html');
+        document.getElementById('footer-placeholder').innerHTML = await footerResponse.text();
+        console.log('[App] Footer carregado');
+
+        // Todos os componentes HTML estão carregados, agora carregar scripts JS
+        await loadAllScripts();
+        
+        console.log('[App] Todos os componentes carregados e inicializados');
+        
+      } catch (error) {
+        console.error('[App] Erro ao carregar componentes:', error);
+      }
+    }
+
+    // Carregar scripts na ordem correta
+    async function loadAllScripts() {
+      const scripts = [
+        'assets/js/header-v1.js',
+        'assets/js/footer.js',
+        'assets/js/accessibility-v1.js',
+        'assets/js/main-index.js'
+      ];
+
+      for (const src of scripts) {
+        console.log(`[App] Carregando ${src}...`);
+        await new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = src;
+          script.onload = () => {
+            console.log(`[App] ${src} carregado com sucesso`);
+            resolve();
+          };
+          script.onerror = (e) => {
+            console.error(`[App] Erro ao carregar ${src}:`, e);
+            reject(new Error(`Falha ao carregar ${src}`));
+          };
+          document.body.appendChild(script);
+        });
+      }
+
+      // Após carregar todos os scripts, inicializar cada módulo
+      setTimeout(function() {
+        console.log('[App] Verificando funções globais...');
+        console.log('[App] HeaderInit existe?', typeof window.HeaderInit === 'function');
+        console.log('[App] MainInit existe?', typeof window.MainInit === 'function');
+        console.log('[App] renderAllTools existe?', typeof window.App !== 'undefined');
+
+        // Header
+        if (typeof window.HeaderInit === 'function') {
+          console.log('[App] Inicializando Header...');
+          window.HeaderInit();
+        }
+
+        // Main content
+        if (typeof window.MainInit === 'function') {
+          console.log('[App] Inicializando Main...');
+          window.MainInit();
+        }
+
+        // Verificar se conteúdo foi renderizado
+        setTimeout(function() {
+          const mainContent = document.getElementById('main-content');
+          console.log('[App] main-content innerHTML length:', mainContent.innerHTML.length);
+          console.log('[App] main-content tem hero-carousel?', mainContent.innerHTML.includes('hero-carousel'));
+          console.log('[App] main-content tem calculators-grid?', mainContent.innerHTML.includes('calculators-grid'));
+        }, 500);
+
+        console.log('[App] Inicialização completa');
+      }, 200);
+    }
+
+    // Executar quando o DOM estiver pronto
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadAllComponents);
+    } else {
+      loadAllComponents();
+    }
+  </script>
+</body>
+</html>

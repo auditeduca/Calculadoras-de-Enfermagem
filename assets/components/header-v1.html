@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<!-- Top Bar - Desktop -->
+<div class="top-bar">
+    <div class="top-bar-container">
+        <div class="top-bar-left">
+            <p class="top-bar-text">Bem-vindo ao nosso site!</p>
+        </div>
+        <div class="top-bar-right">
+            <div class="skip-controls">
+                <a id="skip-top" href="#main-header" class="skip-btn" aria-label="Pular para o cabeçalho principal">
+                    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+                    <span class="skip-label">Topo</span>
+                </a>
+                <a id="skip-content" href="#main-content" class="skip-btn" aria-label="Pular para o conteúdo principal">
+                    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                    <span class="skip-label">Conteúdo</span>
+                </a>
+                <a id="skip-footer" href="#footer-container" class="skip-btn" aria-label="Pular para o rodapé">
+                    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                    <span class="skip-label">Rodapé</span>
+                </a>
+            </div>
+            <div class="top-bar-divider"></div>
+            <div class="accessibility-controls">
+                <div class="font-size-controls" role="group" aria-label="Controles de tamanho da fonte">
+                    <button id="decrease-font" class="font-btn" aria-label="Diminuir tamanho da fonte" title="Diminuir fonte">
+                        <i class="fas fa-font" aria-hidden="true"></i>
+                        <i class="fas fa-minus" aria-hidden="true"></i>
+                    </button>
+                    <button id="reset-font" class="font-btn" aria-label="Tamanho normal da fonte" title="Tamanho normal">
+                        <i class="fas fa-font" aria-hidden="true"></i>
+                    </button>
+                    <button id="increase-font" class="font-btn" aria-label="Aumentar tamanho da fonte" title="Aumentar fonte">
+                        <i class="fas fa-font" aria-hidden="true"></i>
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="top-bar-divider"></div>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+                    <i class="fas fa-sun" aria-hidden="true"></i>
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Header - Desktop -->
+<header id="main-header" class="main-header">
+    <div class="header-container">
+        <div class="header-left">
+            <a href="/" class="site-logo" aria-label="Voltar à página inicial">
+                <img src="/assets/images/logo.svg" alt="Logo" class="logo-image">
+            </a>
+        </div>
+
+        <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
+            <ul class="nav-list" role="menubar">
+                <li class="nav-item" role="none">
+                    <a href="/" class="nav-link" role="menuitem">Início</a>
+                </li>
+                <li class="nav-item has-mega-menu" role="none">
+                    <a href="#" class="nav-link has-dropdown" role="menuitem" aria-haspopup="true" aria-expanded="false" id="produtos-menu">
+                        Produtos
+                        <i class="fas fa-chevron-down nav-link-dropdown" aria-hidden="true"></i>
+                    </a>
+                    <div class="mega-panel mega-panel-produtos" aria-labelledby="produtos-menu">
+                        <div class="panel-standard-height">
+                            <div class="panel-sidebar">
+                                <div class="menu-tabs">
+                                    <button class="menu-tab-trigger active" data-tab="eletronicos">
+                                        <span class="tab-marker-icon">
+                                            <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                                        </span>
+                                        Eletrônicos
+                                    </button>
+                                    <button class="menu-tab-trigger" data-tab="eletrodomesticos">
+                                        <span class="tab-marker-icon">
+                                            <i class="fas fa-blender" aria-hidden="true"></i>
+                                        </span>
+                                        Eletrodomésticos
+                                    </button>
+                                    <button class="menu-tab-trigger" data-tab="acessorios">
+                                        <span class="tab-marker-icon">
+                                            <i class="fas fa-headphones" aria-hidden="true"></i>
+                                        </span>
+                                        Acessórios
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="panel-main-content">
+                                <div class="tab-content active" data-tab="eletronicos">
+                                    <h3 class="content-title">Eletrônicos</h3>
+                                    <ul class="content-links">
+                                        <li><a href="/produtos/eletronicos/smartphones">
+                                            <i class="fas fa-mobile" aria-hidden="true"></i>
+                                            Smartphones
+                                        </a></li>
+                                        <li><a href="/produtos/eletronicos/tablets">
+                                            <i class="fas fa-tablet-alt" aria-hidden="true"></i>
+                                            Tablets
+                                        </a></li>
+                                        <li><a href="/produtos/eletronicos/notebooks">
+                                            <i class="fas fa-laptop" aria-hidden="true"></i>
+                                            Notebooks
+                                        </a></li>
+                                        <li><a href="/produtos/eletronicos/tvs">
+                                            <i class="fas fa-tv" aria-hidden="true"></i>
+                                            TVs
+                                        </a></li>
+                                        <li><a href="/produtos/eletronicos/audio">
+                                            <i class="fas fa-music" aria-hidden="true"></i>
+                                            Áudio
+                                        </a></li>
+                                        <li><a href="/produtos/eletronicos/games">
+                                            <i class="fas fa-gamepad" aria-hidden="true"></i>
+                                            Games
+                                        </a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" data-tab="eletrodomesticos">
+                                    <h3 class="content-title">Eletrodomésticos</h3>
+                                    <ul class="content-links">
+                                        <li><a href="/produtos/eletrodomesticos/geladeiras">
+                                            <i class="fas fa-box" aria-hidden="true"></i>
+                                            Geladeiras
+                                        </a></li>
+                                        <li><a href="/produtos/eletrodomesticos/maquinas-lavar">
+                                            <i class="fas fa-blender" aria-hidden="true"></i>
+                                            Máquinas de Lavar
+                                        </a></li>
+                                        <li><a href="/produtos/eletrodomesticos/microondas">
+                                            <i class="fas fa-wave-square" aria-hidden="true"></i>
+                                            Micro-ondas
+                                        </a></li>
+                                        <li><a href="/produtos/eletrodomesticos/ar-condicionado">
+                                            <i class="fas fa-wind" aria-hidden="true"></i>
+                                            Ar Condicionado
+                                        </a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" data-tab="acessorios">
+                                    <h3 class="content-title">Acessórios</h3>
+                                    <ul class="content-links">
+                                        <li><a href="/produtos/acessorios/fones">
+                                            <i class="fas fa-headphones" aria-hidden="true"></i>
+                                            Fones de Ouvido
+                                        </a></li>
+                                        <li><a href="/produtos/acessorios/carregadores">
+                                            <i class="fas fa-plug" aria-hidden="true"></i>
+                                            Carregadores
+                                        </a></li>
+                                        <li><a href="/produtos/acessorios/capas">
+                                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                            Capas e Cases
+                                        </a></li>
+                                        <li><a href="/produtos/acessorios/cabos">
+                                            <i class="fas fa-ethernet" aria-hidden="true"></i>
+                                            Cabos
+                                        </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel-promo-area">
+                                <div class="glowing-frame mega-image-frame">
+                                    <div class="frame-image-container mega-image-container">
+                                        <img src="/assets/images/promo-placeholder.jpg" alt="Promoção da Semana">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-mega-menu" role="none">
+                    <a href="#" class="nav-link has-dropdown" role="menuitem" aria-haspopup="true" aria-expanded="false" id="servicos-menu">
+                        Serviços
+                        <i class="fas fa-chevron-down nav-link-dropdown" aria-hidden="true"></i>
+                    </a>
+                    <div class="mega-panel mega-panel-servicos" aria-labelledby="servicos-menu">
+                        <div class="panel-standard-height">
+                            <div class="panel-sidebar">
+                                <div class="menu-tabs">
+                                    <button class="menu-tab-trigger active" data-tab="consultoria">
+                                        <span class="tab-marker-icon">
+                                            <i class="fas fa-chart-line" aria-hidden="true"></i>
+                                        </span>
+                                        Consultoria
+                                    </button>
+                                    <button class="menu-tab-trigger" data-tab="suporte">
+                                        <span class="tab-marker-icon">
+                                            <i class="fas fa-headset" aria-hidden="true"></i>
+                                        </span>
+                                        Suporte Técnico
+                                    </button>
+                                    <button class="menu-tab-trigger" data-tab="treinamentos">
+                                        <span class="tab-marker-icon">
+                                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                                        </span>
+                                        Treinamentos
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="panel-main-content">
+                                <div class="tab-content active" data-tab="consultoria">
+                                    <h3 class="content-title">Consultoria</h3>
+                                    <ul class="content-links">
+                                        <li><a href="/servicos/consultoria/estrategica">
+                                            <i class="fas fa-chess" aria-hidden="true"></i>
+                                            Consultoria Estratégica
+                                        </a></li>
+                                        <li><a href="/servicos/consultoria/gestao">
+                                            <i class="fas fa-tasks" aria-hidden="true"></i>
+                                            Gestão de Projetos
+                                        </a></li>
+                                        <li><a href="/servicos/consultoria/negocios">
+                                            <i class="fas fa-briefcase" aria-hidden="true"></i>
+                                            Desenvolvimento de Negócios
+                                        </a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" data-tab="suporte">
+                                    <h3 class="content-title">Suporte Técnico</h3>
+                                    <ul class="content-links">
+                                        <li><a href="/servicos/suporte/online">
+                                            <i class="fas fa-globe" aria-hidden="true"></i>
+                                            Suporte Online
+                                        </a></li>
+                                        <li><a href="/servicos/suporte/presencial">
+                                            <i class="fas fa-user" aria-hidden="true"></i>
+                                            Suporte Presencial
+                                        </a></li>
+                                        <li><a href="/servicos/suporte/manutencao">
+                                            <i class="fas fa-tools" aria-hidden="true"></i>
+                                            Manutenção Preventiva
+                                        </a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" data-tab="treinamentos">
+                                    <h3 class="content-title">Treinamentos</h3>
+                                    <ul class="content-links">
+                                        <li><a href="/servicos/treinamentos/cursos">
+                                            <i class="fas fa-book" aria-hidden="true"></i>
+                                            Cursos Online
+                                        </a></li>
+                                        <li><a href="/servicos/treinamentos/workshops">
+                                            <i class="fas fa-users" aria-hidden="true"></i>
+                                            Workshops
+                                        </a></li>
+                                        <li><a href="/servicos/treinamentos/certificacao">
+                                            <i class="fas fa-certificate" aria-hidden="true"></i>
+                                            Certificações
+                                        </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel-promo-area">
+                                <div class="glowing-frame mega-image-frame">
+                                    <div class="frame-image-container mega-image-container">
+                                        <img src="/assets/images/services-promo.jpg" alt="Serviços Premium">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" role="none">
+                    <a href="/sobre" class="nav-link" role="menuitem">Sobre</a>
+                </li>
+                <li class="nav-item" role="none">
+                    <a href="/blog" class="nav-link" role="menuitem">Blog</a>
+                </li>
+                <li class="nav-item" role="none">
+                    <a href="/contato" class="nav-link" role="menuitem">Contato</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="header-right">
+            <button id="search-toggle" class="search-toggle" aria-label="Abrir busca" title="Buscar">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+            <a href="/carrinho" class="cart-button" aria-label="Ver carrinho de compras" title="Carrinho">
+                <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                <span class="cart-count">0</span>
+            </a>
+            <a href="/minha-conta" class="account-button" aria-label="Minha conta" title="Minha conta">
+                <i class="fas fa-user" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Header -->
+<div class="mobile-main-header">
+    <div class="mobile-band-1">
+        <div class="mobile-band-1-container">
+            <div class="mobile-band-1-left">
+                <div class="mobile-font-controls" role="group" aria-label="Controles de tamanho da fonte">
+                    <button id="mobile-font-reduce" class="mobile-font-btn" aria-label="Diminuir tamanho da fonte">
+                        <i class="fas fa-font" aria-hidden="true"></i>
+                        <i class="fas fa-minus" aria-hidden="true"></i>
+                    </button>
+                    <button id="mobile-font-reset" class="mobile-font-btn" aria-label="Tamanho normal da fonte">
+                        <i class="fas fa-font" aria-hidden="true"></i>
+                    </button>
+                    <button id="mobile-font-increase" class="mobile-font-btn" aria-label="Aumentar tamanho da fonte">
+                        <i class="fas fa-font" aria-hidden="true"></i>
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="mobile-band-divider"></div>
+                <button id="mobile-theme-toggle" class="mobile-theme-btn" aria-label="Alternar tema claro/escuro">
+                    <i class="fas fa-sun" aria-hidden="true"></i>
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+                <div class="mobile-band-divider"></div>
+                <button id="mobile-search-toggle" class="mobile-search-btn" aria-label="Abrir busca">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-band-2">
+        <div class="mobile-band-2-container">
+            <a href="/" class="mobile-header-logo" aria-label="Voltar à página inicial">
+                <img src="/assets/images/logo.svg" alt="Logo" class="mobile-logo-image">
+            </a>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-expanded="false" aria-label="Abrir menu de navegação">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-search-container" class="mobile-search-container">
+        <div class="search-box">
+            <input id="mobile-menu-search-input" type="search" class="search-input" placeholder="O que você está buscando?" aria-label="Buscar">
+            <button class="search-btn" aria-label="Buscar">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                Buscar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+
+<!-- Mobile Menu -->
+<nav id="mobile-menu" class="mobile-menu" aria-label="Navegação móvel">
+    <div class="mobile-menu-header">
+        <a href="/" class="mobile-logo" aria-label="Voltar à página inicial">
+            <img src="/assets/images/logo.svg" alt="Logo" class="mobile-logo-image">
+        </a>
+        <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Fechar menu">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="mobile-menu-content">
+        <div class="mobile-accessibility">
+            <a href="#main-content" class="mobile-font-btn" aria-label="Pular para o conteúdo principal">
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                <span>Conteúdo</span>
+            </a>
+            <a href="#footer-container" class="mobile-font-btn" aria-label="Pular para o rodapé">
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                <span>Rodapé</span>
+            </a>
+        </div>
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item">
+                <a href="/" class="mobile-nav-link">
+                    <i class="fas fa-home" aria-hidden="true"></i>
+                    <span>Início</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item has-nested-submenu">
+                <button class="mobile-nav-link" aria-expanded="false">
+                    <span>
+                        <i class="fas fa-box" aria-hidden="true"></i>
+                        Produtos
+                    </span>
+                    <i class="fas fa-chevron-right submenu-arrow" aria-hidden="true"></i>
+                </button>
+                <ul class="mobile-submenu">
+                    <li><a href="/produtos/eletronicos">
+                        <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                        Eletrônicos
+                    </a></li>
+                    <li><a href="/produtos/eletrodomesticos">
+                        <i class="fas fa-blender" aria-hidden="true"></i>
+                        Eletrodomésticos
+                    </a></li>
+                    <li><a href="/produtos/acessorios">
+                        <i class="fas fa-headphones" aria-hidden="true"></i>
+                        Acessórios
+                    </a></li>
+                </ul>
+            </li>
+            <li class="mobile-nav-item has-nested-submenu">
+                <button class="mobile-nav-link" aria-expanded="false">
+                    <span>
+                        <i class="fas fa-concierge-bell" aria-hidden="true"></i>
+                        Serviços
+                    </span>
+                    <i class="fas fa-chevron-right submenu-arrow" aria-hidden="true"></i>
+                </button>
+                <ul class="mobile-submenu">
+                    <li><a href="/servicos/consultoria">
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        Consultoria
+                    </a></li>
+                    <li><a href="/servicos/suporte">
+                        <i class="fas fa-headset" aria-hidden="true"></i>
+                        Suporte Técnico
+                    </a></li>
+                    <li><a href="/servicos/treinamentos">
+                        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                        Treinamentos
+                    </a></li>
+                </ul>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="/sobre" class="mobile-nav-link">
+                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                    <span>Sobre</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="/blog" class="mobile-nav-link">
+                    <i class="fas fa-blog" aria-hidden="true"></i>
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="/contato" class="mobile-nav-link">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <span>Contato</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id="mobile-idiomas-section" class="mobile-language-section">
+        <button id="mobile-idiomas-toggle" class="mobile-language-toggle" aria-expanded="false">
+            <span class="language-icon">
+                <i class="fas fa-globe" aria-hidden="true"></i>
+            </span>
+            <span id="mobile-idiomas-current" class="language-current">
+                <img src="/assets/images/flags/pt-br.svg" alt="Português" class="active-lang-flag">
+                Português (BR)
+            </span>
+            <i id="mobile-idiomas-arrow" class="fas fa-chevron-down language-arrow" aria-hidden="true"></i>
+        </button>
+        <div id="mobile-idiomas-list" class="mobile-language-grid">
+            <a href="/en" class="language-flag-item" title="English">
+                <img src="/assets/images/flags/en.svg" alt="English">
+            </a>
+            <a href="/es" class="language-flag-item" title="Español">
+                <img src="/assets/images/flags/es.svg" alt="Español">
+            </a>
+            <a href="/pt-br" class="language-flag-item active" title="Português (BR)">
+                <img src="/assets/images/flags/pt-br.svg" alt="Português (BR)">
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Search Panel -->
+<div id="search-panel" class="mega-panel mega-search-panel" aria-label="Busca">
+    <div class="panel-standard-height">
+        <div class="panel-main-content">
+            <div class="search-container">
+                <h3 class="content-title">Buscar no site</h3>
+                <div class="search-box">
+                    <input type="search" class="search-input" placeholder="Digite sua busca..." aria-label="Buscar">
+                    <button class="search-btn" aria-label="Buscar">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        Buscar
+                    </button>
+                </div>
+                <div class="search-categories">
+                    <h4 class="search-category-title">Categorias Populares</h4>
+                    <ul class="content-links">
+                        <li><a href="/busca?q=smartphones">
+                            <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                            Smartphones
+                        </a></li>
+                        <li><a href="/busca?q=notebooks">
+                            <i class="fas fa-laptop" aria-hidden="true"></i>
+                            Notebooks
+                        </a></li>
+                        <li><a href="/busca?q=tvs">
+                            <i class="fas fa-tv" aria-hidden="true"></i>
+                            TVs
+                        </a></li>
+                        <li><a href="/busca?q=fones">
+                            <i class="fas fa-headphones" aria-hidden="true"></i>
+                            Fones de Ouvido
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel-promo-area search-promo-area">
+            <div class="search-logo-container">
+                <img src="/assets/images/logo.svg" alt="Logo" class="search-logo-image">
+                <p class="search-tagline">Encontre os melhores produtos e serviços</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Screen Reader Announcer -->
+<div id="sr-announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
