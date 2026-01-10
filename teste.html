@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadoras de Enfermagem - Modular</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+
+    <!-- CSS Unificado (URL Absoluta) -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/main-index.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
+
+    <style>
+        /* =========================================
+           CORREÇÕES CRÍTICAS DE MODAIS E LAYOUT
+           ========================================= */
+
+        /* 1. Forçar Modais Específicos a Iniciarem Ocultos */
+        #glossary-modal, 
+        #shortcuts-modal,
+        .glossary-wrapper,
+        .shortcuts-wrapper,
+        [id*="glossary"], /* Pega qualquer ID que contenha glossary */
+        [id*="shortcut"]  /* Pega qualquer ID que contenha shortcut */
+        {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            
+            /* Correção de Z-Index: Acima do Header (10000) e Banner (20000) */
+            z-index: 2147483647 !important; 
+            
+            /* Centralização Garantida */
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            background: white;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* 2. Regra para mostrar APENAS quando tiver a classe .active */
+        #glossary-modal.active, 
+        #shortcuts-modal.active,
+        .glossary-wrapper.active, 
+        .shortcuts-wrapper.active {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            animation: fadeInModal 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: translate(-50%, -45%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        /* 3. Header e Layout Base */
+        #header-container { z-index: 10000; position: relative; width: 100%; }
+        .mega-menu-panel { z-index: 10001 !important; }
+
+        /* 4. Acessibilidade Sidebar */
+        .accessibility-sidebar {
+            z-index: 10006 !important;
+            transform: translateX(-100%); /* Garante fechado por padrão */
+        }
+        .accessibility-sidebar.active { transform: translateX(0); }
+
+        /* 5. Loading */
+        .loading-text { text-align: center; padding: 100px 20px; color: #666; }
+    </style>
+</head>
+<body>
+
+    <div id="accessibility-container"></div>
+    
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+    </div>
+
+    <header id="header-container"></header>
+    
+    <main id="main-content-container">
+        <div id="main-container">
+            <div class="loading-text"><p><i class="fas fa-spinner fa-spin"></i> Carregando sistema...</p></div>
+        </div>
+    </main>
+    
+    <footer id="footer-container"></footer>
+
+    <!-- ORQUESTRADOR JAVASCRIPT -->
+    <script crossorigin="anonymous">
+        (function() {
+            'use strict';
+
+            // 1. UTILS
+            window.Utils = {
+                escapeHtml: function(t) { return t ? t.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])) : ""; },
+                renderCard: function(tool, state, type) {
+                    var cat = tool.category ? tool.category.toLowerCase().replace(/\s+/g, "-") : "geral";
+                    var icon = (state.showIcons !== false && tool.icon) ? ('<div class="tool-icon"><i class="' + tool.icon + '"></i></div>') : '';
+                    return '<a href="pages/' + tool.filename + '" class="tool-card" data-category="' + cat + '">' +
+                        icon +
+                        '<div class="tool-info">' +
+                            '<h3 class="tool-name">' + this.escapeHtml(tool.name) + '</h3>' +
+                            '<p class="tool-description">' + this.escapeHtml(tool.description) + '</p>' +
+                            '<button class="btn-action">Acessar</button>' +
+                        '</div>' +
+                    '</a>';
+                }
+            };
+
+            // 2. POLYFILL
+            var mem = {};
+            try { localStorage.setItem('t','1'); localStorage.removeItem('t'); } catch(e) {
+                var ls = { getItem:k=>mem[k]||null, setItem:(k,v)=>mem[k]=String(v), removeItem:k=>delete mem[k], clear:()=>mem={}, key:i=>Object.keys(mem)[i] };
+                Object.defineProperty(window, 'localStorage', { value: ls, writable: true });
+            }
+
+            // 3. CARREGADOR
+            async function load(id, url) {
+                var el = document.getElementById(id);
+                if (!el) return;
+                try {
+                    var r = await fetch(url + '?v=' + Date.now());
+                    if (!r.ok) throw new Error(r.status);
+                    el.innerHTML = await r.text();
+                    window.dispatchEvent(new CustomEvent('Module:' + id + ':Ready'));
+                } catch(e) { console.error('[Erro] ' + id, e); }
+            }
+
+            // 4. BRIDGES
+            function bridges() {
+                // Libras
+                var bLib = document.querySelector('.btn-libras') || document.querySelector('.fa-hands')?.closest('button');
+                var vLib = document.querySelector('[vw-access-button]');
+                if (bLib && vLib) {
+                    var n = bLib.cloneNode(true); bLib.parentNode.replaceChild(n, bLib);
+                    n.onclick = e => { e.preventDefault(); vLib.click(); };
+                }
+                // Olho (Sidebar)
+                var bEye = document.querySelector('.btn-assistive') || document.querySelector('.fa-eye')?.closest('button');
+                if (bEye) {
+                    var nEye = bEye.cloneNode(true); bEye.parentNode.replaceChild(nEye, bEye);
+                    nEye.onclick = e => {
+                        e.preventDefault();
+                        var p = document.getElementById('accessibility-panel') || document.querySelector('.accessibility-sidebar');
+                        if (p) p.classList.toggle('active');
+                    };
+                }
+                // Mobile Menu
+                var head = document.getElementById('header-container');
+                var tog = head?.querySelector('.hamburger, .menu-toggle');
+                if (tog) {
+                    tog.onclick = e => {
+                        e.preventDefault();
+                        var nav = head.querySelector('.nav-menu');
+                        if (nav) { nav.classList.toggle('active'); tog.classList.toggle('active'); }
+                    };
+                }
+                if (!bLib || !bEye || !tog) setTimeout(bridges, 1500);
+            }
+
+            // 5. INIT
+            async function init() {
+                var c = "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/";
+                var p = "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/";
+
+                await load('accessibility-container', c + 'accessibility.html');
+                
+                // --- CORREÇÃO DE MODAIS ABRINDO SOZINHOS ---
+                // Remove classe active de qualquer modal que tenha vindo aberto no HTML
+                document.querySelectorAll('.modal, .glossary-modal, #glossary-modal, #shortcuts-modal').forEach(el => {
+                    el.classList.remove('active', 'show', 'open');
+                    el.style.display = 'none'; // Reforço JS
+                });
+
+                await load('header-container', c + 'header.html');
+                await load('main-container', p + 'main-index.html');
+                await load('footer-container', c + 'footer.html');
+
+                bridges();
+
+                var scripts = [
+                    "https://vlibras.gov.br/app/vlibras-plugin.js",
+                    "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js",
+                    "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js",
+                    "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js",
+                    "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index.js"
+                ];
+
+                for (var i = 0; i < scripts.length; i++) {
+                    await new Promise(r => {
+                        var s = document.createElement('script');
+                        s.src = scripts[i]; s.async = false; s.crossOrigin = "anonymous";
+                        s.onload = () => {
+                            if (scripts[i].includes('vlibras') && window.VLibras) new window.VLibras.Widget('https://vlibras.gov.br/app');
+                            if (scripts[i].includes('header') && window.HeaderModule) window.HeaderModule.init();
+                            r();
+                        };
+                        s.onerror = r;
+                        document.body.appendChild(s);
+                    });
+                }
+                
+                setTimeout(() => window.dispatchEvent(new CustomEvent('preloadFinalizado')), 500);
+            }
+
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+        })();
+    </script>
+</body>
+</html>
