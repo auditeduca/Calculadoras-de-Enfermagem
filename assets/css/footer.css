@@ -1,19 +1,7 @@
 /* =========================================
-   FOOTER COMPLETO - Corrigido
+   FOOTER COMPLETO
    Fundo Azul #1A3E74, Modais Lindos, Accordion Funcional
    ========================================= */
-
-/* =========================================
-   FUNDO AZUL FORÇADO - !important para garantir
-   ========================================= */
-#footer,
-.footer-main,
-.footer-section-main {
-    background-color: #1A3E74 !important;
-    background: #1A3E74 !important;
-    background-image: none !important;
-    background-color: #1A3E74 !important;
-}
 
 /* =========================================
    VARIÁVEIS CSS
@@ -34,15 +22,11 @@
     position: relative;
     z-index: 1;
     margin-top: auto;
-    background-color: #1A3E74 !important;
+    background-color: #1A3E74;
     color: #ffffff;
     padding-top: 3rem;
     padding-bottom: 2rem;
     min-height: 300px;
-}
-
-#footer * {
-    background-color: transparent !important;
 }
 
 .footer-container {
@@ -252,8 +236,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: #ffffff !important;
-    color: #1A3E74 !important;
+    background: #ffffff;
+    color: #1A3E74;
     padding: 1.5rem 2rem;
     box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.2);
     z-index: 10050;
@@ -269,7 +253,7 @@
 }
 
 .cookie-banner.hidden {
-    display: none !important;
+    display: none;
 }
 
 /* Ícone de cookie no canto esquerdo */
@@ -437,15 +421,15 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 2rem;
-    background: #1A3E74 !important;
-    color: #ffffff !important;
+    background: #1A3E74;
+    color: #ffffff;
 }
 
 .cookie-modal-header h3 {
     margin: 0;
     font-size: 1.35rem;
     font-weight: 600;
-    color: #ffffff !important;
+    color: #ffffff;
 }
 
 /* Botão fechar */
@@ -474,7 +458,7 @@
     color: #1A3E74;
     max-height: calc(85vh - 150px);
     overflow-y: auto;
-    background: #ffffff !important;
+    background: #ffffff;
 }
 
 /* =========================================
@@ -521,7 +505,7 @@
 }
 
 .chevron-white {
-    color: #ffffff !important;
+    color: #ffffff;
 }
 
 /* Status Ativo */
@@ -679,22 +663,7 @@
 }
 
 /* =========================================
-   MODAL DE DETALHES (SUBMODAL) - Mesmo tamanho do modal principal
-   ========================================= */
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    width: 250px;
-    text-align: left;
-    line-height: 1.5;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    z-index: 100;
-    transition: all 0.3s ease;
-    margin-bottom: 10px;
-}
-
-/* =========================================
-   MODAL DE DETALHES (SUBMODAL) - Mesmo tamanho do modal principal
+   MODAL DE DETALHES DE COOKIES
    ========================================= */
 .cookie-detail-modal {
     position: fixed;
@@ -715,7 +684,7 @@
 }
 
 .cookie-detail-modal.hidden {
-    display: none !important;
+    display: none;
 }
 
 .cookie-detail-modal.visible {
@@ -729,15 +698,15 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.5rem;
-    background: #1A3E74 !important;
-    color: #ffffff !important;
+    background: #1A3E74;
+    color: #ffffff;
 }
 
 .cookie-detail-header h3 {
     margin: 0;
     font-size: 1.15rem;
     font-weight: 600;
-    color: #ffffff !important;
+    color: #ffffff;
 }
 
 .cookie-detail-body {
@@ -745,7 +714,7 @@
     color: #1A3E74;
     max-height: calc(85vh - 100px);
     overflow-y: auto;
-    background: #ffffff !important;
+    background: #ffffff;
 }
 
 .cookie-detail-content {
@@ -829,9 +798,8 @@
     transform: translateY(-5px);
 }
 
-/* Botão voltar ao topo ACIMA do banner quando ativo */
-.cookie-banner.visible ~ .back-to-top,
-.cookie-banner.visible + .cookie-overlay ~ .back-to-top {
+/* Posicionamento do botão quando banner de cookies está ativo */
+.back-to-top.cookie-banner-active {
     bottom: calc(var(--cookie-banner-total-height, 100px) + 25px);
 }
 
@@ -866,8 +834,7 @@
 }
 
 /* FAB oculto quando banner ativo */
-.cookie-banner.visible ~ .cookie-fab,
-.cookie-banner.visible + .cookie-overlay ~ .cookie-fab {
+.cookie-fab.cookie-banner-active {
     display: none !important;
 }
 
@@ -1294,7 +1261,7 @@
     .cookie-fab,
     .cookie-category-description,
     .footer-links a {
-        transition: none !important;
+        transition: none;
     }
 }
 
