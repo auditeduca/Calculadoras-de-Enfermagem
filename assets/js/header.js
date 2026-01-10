@@ -468,6 +468,85 @@
     }
 
     // ============================================
+    // ANIMAÇÕES DE CLIQUE - BOTÕES COM RIPPLE AZUL
+    // ============================================
+    function addClickAnimation(button) {
+        if (!button) return;
+        
+        // Remove classe existente se houver
+        button.classList.remove('clicked');
+        
+        // Força reflow para permitir re-animação
+        void button.offsetWidth;
+        
+        // Adiciona classe de animação
+        button.classList.add('clicked');
+        
+        // Remove classe após animação completar
+        setTimeout(() => {
+            button.classList.remove('clicked');
+        }, 500);
+    }
+
+    function initClickAnimations() {
+        // Botões de fonte desktop
+        const fontBtns = document.querySelectorAll('.font-btn');
+        fontBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                addClickAnimation(this);
+            });
+        });
+
+        // Botões de tema desktop
+        const themeToggles = document.querySelectorAll('.theme-toggle');
+        themeToggles.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                addClickAnimation(this);
+            });
+        });
+
+        // Botões skip desktop
+        const skipBtns = document.querySelectorAll('.skip-btn');
+        skipBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                addClickAnimation(this);
+            });
+        });
+
+        // Botões de fonte mobile
+        const mobileFontBtns = document.querySelectorAll('.mobile-font-btn');
+        mobileFontBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                addClickAnimation(this);
+            });
+        });
+
+        // Botões de tema mobile
+        const mobileThemeBtns = document.querySelectorAll('.mobile-theme-btn');
+        mobileThemeBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                addClickAnimation(this);
+            });
+        });
+
+        // Botão de busca mobile
+        const mobileSearchBtn = document.getElementById('mobile-search-toggle');
+        if (mobileSearchBtn) {
+            mobileSearchBtn.addEventListener('click', function(e) {
+                addClickAnimation(this);
+            });
+        }
+
+        // Botão de menu mobile
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', function(e) {
+                addClickAnimation(this);
+            });
+        }
+    }
+
+    // ============================================
     // SKIP LINKS
     // ============================================
     function setupSkipLinks() {
@@ -831,7 +910,7 @@
                     if (currentOpenPanel === panel) {
                         hidePanel(trigger, panel);
                     }
-                }, 100);
+                }, 300); // 300ms para evitar fechamento acidental
             });
 
             // Handler para click (mobile/tablet)
@@ -867,7 +946,7 @@
                 if (!isDesktop()) return;
                 hoverTimeout = setTimeout(() => {
                     hidePanel(trigger, panel);
-                }, 100);
+                }, 300); // 300ms para evitar fechamento acidental
             });
         });
 
@@ -1178,18 +1257,24 @@
     // INICIALIZAÇÃO PRINCIPAL
     // ============================================
     function initialize() {
-        if (State.loaded) return;
-
-        console.log('[HeaderModule] Inicializando módulo unificado...');
-
-        // Verificar se os elementos do header existem antes de inicializar
+        // Verificar se os elementos do header existem
         const hasMegaMenuItems = $$('.has-mega-menu').length > 0;
         const hasMobileMenu = getElement('mobile-menu') !== null;
-        
+
         if (!hasMegaMenuItems && !hasMobileMenu) {
-            console.log('[HeaderModule] Elementos do header não encontrados ainda, adiando inicialização...');
+            console.log('[HeaderModule] Elementos do header não encontrados');
             return;
         }
+
+        // Verificação DUPLA para evitar inicialização dupla:
+        // Se State.loaded já está true, alguém já inicializou (fallback ou init())
+        // Não inicializar novamente para evitar conflitos
+        if (State.loaded) {
+            console.log('[HeaderModule] Já inicializado, ignorando chamada');
+            return;
+        }
+
+        console.log('[HeaderModule] Inicializando módulo...');
 
         // Carregar estados salvos
         loadFontSize();
@@ -1198,13 +1283,11 @@
         // Aplicar configurações iniciais de fonte
         document.documentElement.style.fontSize = State.currentFontSize + 'px';
 
-        // Nota: A classe dark-theme é gerenciada pelo AccessControl ThemeManager
-        // Não precisamos adicionar/remover aqui
-
-        // Inicializar controles
+        // Inicializar controles apenas se os elementos existirem
         initFontControls();
         initThemeControls();
         setupSkipLinks();
+        initClickAnimations();
         initMobileMenu();
         initMegaMenu();
         initMenuTabs();
@@ -1222,70 +1305,162 @@
     }
 
     // Observer para detectar quando o header é carregado dinamicamente
+    // Este observer fica ativo e tenta inicializar quando os elementos são detectados
     function setupHeaderObserver() {
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.addedNodes.length > 0) {
-                    // Verificar se os elementos do header foram adicionados
-                    const hasMegaMenu = $$('.has-mega-menu').length > 0;
-                    const hasMobileMenu = getElement('mobile-menu') !== null;
-                    
-                    if ((hasMegaMenu || hasMobileMenu) && !State.loaded) {
-                        console.log('[HeaderModule] Elementos do header detectados via MutationObserver');
-                        initialize();
+        // Usar MutationObserver para detectar inserção do header
+        if (typeof MutationObserver !== 'undefined') {
+            const observer = new MutationObserver(function(mutations) {
+                let foundNewElements = false;
+                
+                mutations.forEach(function(mutation) {
+                    if (mutation.addedNodes.length > 0) {
+                        // Verificar se os elementos do header foram adicionados
+                        const hasMegaMenu = $$('.has-mega-menu').length > 0;
+                        const hasMobileMenu = getElement('mobile-menu') !== null;
+                        
+                        if (hasMegaMenu || hasMobileMenu) {
+                            foundNewElements = true;
+                        }
                     }
+                });
+
+                if (foundNewElements && !State.loaded) {
+                    console.log('[HeaderModule] Elementos do header detectados via MutationObserver');
+                    initialize();
                 }
             });
-        });
 
-        // Observar o body para detectar inserção do header
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
+            // Observar o body para detectar inserção do header
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+            
+            console.log('[HeaderModule] MutationObserver configurado');
+        }
+        
+        // Fallback: verificar periodicamente se os elementos foram carregados
+        // Apenas se MutationObserver não estiver disponível ou falhar
+        if (typeof MutationObserver === 'undefined') {
+            let attempts = 0;
+            const maxAttempts = 100; // 10 segundos máximo
+
+            const checkInterval = setInterval(function() {
+                attempts++;
+                const hasMegaMenu = $$('.has-mega-menu').length > 0;
+                const hasMobileMenu = getElement('mobile-menu') !== null;
+
+                // Só inicializar via fallback se State.loaded for false
+                if ((hasMegaMenu || hasMobileMenu) && !State.loaded && attempts < maxAttempts) {
+                    console.log('[HeaderModule] Fallback: elementos detectados após', attempts, 'tentativas');
+                    clearInterval(checkInterval);
+                    initialize();
+                } else if (attempts >= maxAttempts) {
+                    console.log('[HeaderModule] Fallback: limite de tentativas atingido');
+                    clearInterval(checkInterval);
+                }
+            }, 100);
+        }
     }
 
     // ============================================
-    // AUTO-INICIALIZAÇÃO E EXPOSIÇÃO DA API
+    // EXPOSIÇÃO DA API PÚBLICA
     // ============================================
-    
-    // Configurar observer antes da inicialização automática
-    setupHeaderObserver();
 
-    // Expor API pública
+    // Expor API pública globalmente ANTES de iniciar o observer
     window.HeaderModule = {
+        /**
+         * Inicializa o módulo do header
+         * Deve ser chamado após a injeção do HTML via innerHTML
+         */
         init: function() {
-            State.loaded = false;
+            console.log('[HeaderModule.init()] Chamado explicitamente');
+
+            // Verificar se os elementos existem
+            const hasMegaMenuItems = $$('.has-mega-menu').length > 0;
+            const hasMobileMenu = getElement('mobile-menu') !== null;
+
+            if (!hasMegaMenuItems && !hasMobileMenu) {
+                console.log('[HeaderModule.init()] Elementos não encontrados ainda');
+                return false;
+            }
+
+            // Verificar se já foi inicializado (pelo fallback ou outra chamada)
+            if (State.loaded) {
+                console.log('[HeaderModule.init()] Já inicializado pelo fallback, sincronizando...');
+                // Sincronizar com AccessControl e retornar
+                setTimeout(syncWithAccessControl, 100);
+                return true;
+            }
+
+            // Inicializar diretamente sem delay
             initialize();
+
+            return true;
         },
+
+        /**
+         * Define o tamanho da fonte
+         * @param {number} size - Tamanho em pixels
+         */
         setFontSize: function(size) {
             applyFontSize(size);
         },
+
+        /**
+         * Aumenta o tamanho da fonte para o próximo nível
+         */
         increaseFontSize: function() {
             increaseFontSize();
         },
+
+        /**
+         * Reduz o tamanho da fonte para o nível anterior
+         */
         decreaseFontSize: function() {
             decreaseFontSize();
         },
+
+        /**
+         * Alterna entre tema claro e escuro
+         */
         toggleTheme: function() {
             toggleTheme();
         },
+
+        /**
+         * Retorna o tamanho da fonte atual
+         * @returns {number}
+         */
         getFontSize: function() {
             return State.currentFontSize;
         },
+
+        /**
+         * Retorna se o tema escuro está ativo
+         * @returns {boolean}
+         */
         isDarkMode: function() {
             return State.isDarkMode;
         },
+
+        /**
+         * Sincroniza estado com AccessControl
+         */
         syncWithAccessControl: function() {
             syncWithAccessControl();
+        },
+
+        /**
+         * Verifica se o módulo está inicializado
+         * @returns {boolean}
+         */
+        isLoaded: function() {
+            return State.loaded;
         }
     };
 
-    // Inicializar quando o DOM estiver pronto
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initialize);
-    } else {
-        initialize();
-    }
+    // Configurar observer DEPOIS de expor a API
+    setupHeaderObserver();
 
 })();
