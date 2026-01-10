@@ -1,10 +1,11 @@
 /**
- * Header Styles - Unified CSS
- * Contains all header, navigation, and mega-menu styles
+ * Header Styles - Modular CSS
+ * Versão Independente - Funciona sem global.css
+ * Inclui reset de box-sizing e variáveis CSS próprias
  */
 
 /* ============================================
-   CSS CUSTOM PROPERTIES (VARIABLES)
+   CSS CUSTOM PROPERTIES (VARIÁVEIS)
    ============================================ */
 :root {
     /* Font Family */
@@ -45,12 +46,10 @@
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
-    --transition-slow: 0.4s ease;
     
-    /* Scrollbar Colors - Matching Cookie Modal Style */
+    /* Scrollbar */
     --scrollbar-track: #f1f1f1;
     --scrollbar-thumb: #c1c9d6;
-    --scrollbar-thumb-hover: #a0aab8;
     --scrollbar-width: 8px;
     
     /* White Color */
@@ -60,6 +59,23 @@
     --font-size-scale: 1;
 }
 
+/* ============================================
+   RESET DE BOX-SIZING (Substitui global.css)
+   ============================================ */
+.main-header {
+    box-sizing: border-box;
+    font-family: var(--font-nunito);
+}
+
+.main-header *,
+.main-header *::before,
+.main-header *::after {
+    box-sizing: inherit;
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
 .loading-placeholder {
     display: flex;
     justify-content: center;
@@ -91,7 +107,7 @@
 }
 
 /* ============================================
-   BASE HEADER STYLES
+   HEADER MAIN STRUCTURE
    ============================================ */
 .top-bar {
     position: relative;
@@ -160,6 +176,9 @@
     align-items: center;
 }
 
+/* ============================================
+   LOGO STYLES
+   ============================================ */
 .site-logo {
     display: flex;
     align-items: center;
@@ -215,7 +234,7 @@
 }
 
 /* ============================================
-   ACCESSIBILITY CONTROLS (TOP BAR) - BOTÕES BRANCOS COM ÍCONES AZUL ESCURO
+   ACCESSIBILITY CONTROLS
    ============================================ */
 .accessibility-controls {
     display: flex;
@@ -228,7 +247,6 @@
     gap: 4px;
 }
 
-/* Botões de fonte com fundo branco e ícones azul escuro */
 .font-btn {
     display: flex;
     align-items: center;
@@ -267,7 +285,6 @@
     outline-offset: 2px;
 }
 
-/* Animação de hover com luz azul clara */
 .font-btn::after {
     content: '';
     position: absolute;
@@ -283,7 +300,6 @@
     left: 100%;
 }
 
-/* Animação de clique - ripple azul */
 .font-btn.clicked {
     animation: btnClickAnimation 0.4s ease-out;
 }
@@ -302,15 +318,9 @@
 }
 
 @keyframes btnClickAnimation {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(0.95);
-    }
-    100% {
-        transform: scale(1);
-    }
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
 }
 
 @keyframes rippleEffect {
@@ -326,7 +336,6 @@
     }
 }
 
-/* Ícones dentro dos botões de fonte */
 .font-btn .fa-font {
     font-size: 14px;
     color: #1A3E74;
@@ -338,13 +347,6 @@
     color: #1A3E74;
 }
 
-/* Efeito de brilho branco ao passar o mouse */
-.font-btn:active::before {
-    width: 150%;
-    height: 150%;
-}
-
-/* Estados de cycling para botões de fonte */
 .font-btn.at-max-level {
     background-color: rgba(26, 62, 116, 0.15);
     border-color: #1A3E74;
@@ -356,7 +358,7 @@
 }
 
 /* ============================================
-   THEME TOGGLE - BOTÃO BRANCO COM ÍCONE AZUL ESCURO (MESMO ESTILO FONT-BTN)
+   THEME TOGGLE
    ============================================ */
 .theme-toggle {
     display: flex;
@@ -396,7 +398,6 @@
     outline-offset: 2px;
 }
 
-/* Animação de hover com luz azul clara */
 .theme-toggle::after {
     content: '';
     position: absolute;
@@ -412,7 +413,6 @@
     left: 100%;
 }
 
-/* Animação de clique - ripple azul */
 .theme-toggle.clicked {
     animation: btnClickAnimation 0.4s ease-out;
 }
@@ -441,7 +441,7 @@
 }
 
 /* ============================================
-   SKIP CONTROLS - BOTÕES DE NAVEGAÇÃO RÁPIDA
+   SKIP CONTROLS
    ============================================ */
 .skip-controls {
     display: flex;
@@ -488,7 +488,6 @@
     outline-offset: 2px;
 }
 
-/* Animação de hover com luz azul clara */
 .skip-btn::after {
     content: '';
     position: absolute;
@@ -504,7 +503,6 @@
     left: 100%;
 }
 
-/* Animação de clique - ripple azul */
 .skip-btn.clicked {
     animation: btnClickAnimation 0.4s ease-out;
 }
@@ -535,10 +533,9 @@
 .skip-label {
     color: #1A3E74;
     font-weight: 600;
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-family: var(--font-nunito);
 }
 
-/* Divisor */
 .top-bar-divider {
     width: 1px;
     height: 28px;
@@ -546,6 +543,9 @@
     margin: 0 8px;
 }
 
+/* ============================================
+   NAVIGATION
+   ============================================ */
 .main-nav {
     flex: 1;
     display: flex;
@@ -581,7 +581,7 @@
     text-decoration: none;
     font-weight: 700;
     font-size: 15px;
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-family: var(--font-nunito);
     border-radius: 8px;
     transition: all var(--transition-fast);
     background: transparent;
@@ -648,7 +648,7 @@
 }
 
 /* ============================================
-   MEGA PANEL STYLES - LARGURA ADEQUADA E PADDING LATERAL
+   MEGA PANEL STYLES
    ============================================ */
 .mega-panel {
     display: flex;
@@ -671,7 +671,6 @@
     pointer-events: none;
     transform: translateX(-50%);
     border-radius: 0 0 16px 16px;
-    /* Padding lateral para conteúdo respeitar */
     padding: 0 24px;
 }
 
@@ -701,7 +700,6 @@
     max-height: 70vh;
 }
 
-/* Ocultar painéis por padrão usando classe utilitária */
 .mega-panel.hidden {
     display: flex !important;
     opacity: 0 !important;
@@ -766,7 +764,7 @@
     color: var(--text-secondary);
     font-size: calc(11px * var(--font-size-scale));
     font-weight: 600;
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-family: var(--font-nunito);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     border-radius: 0 16px 16px 0;
@@ -789,7 +787,6 @@
     transition: height var(--transition-fast);
 }
 
-/* Marker icon styling */
 .tab-marker-icon {
     display: flex;
     align-items: center;
@@ -845,6 +842,9 @@
     height: 60%;
 }
 
+/* ============================================
+   PANEL MAIN CONTENT
+   ============================================ */
 .panel-main-content {
     flex: 1;
     height: 100%;
@@ -856,7 +856,6 @@
     flex-direction: column;
 }
 
-/* Fix content gaps in mega menu */
 .tab-content {
     display: none;
     animation: fadeIn 0.2s ease;
@@ -882,7 +881,7 @@
     padding: 0 0 4px 0;
     border-bottom: 1px solid var(--border-color);
     white-space: nowrap;
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-family: var(--font-nunito);
     flex-shrink: 0;
 }
 
@@ -907,7 +906,7 @@
     color: var(--text-secondary);
     text-decoration: none;
     font-size: calc(11px * var(--font-size-scale));
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-family: var(--font-nunito);
     border-bottom: 1px solid transparent;
     transition: all 0.2s;
     white-space: nowrap;
@@ -926,19 +925,6 @@
     outline-offset: 2px;
 }
 
-.tab-content {
-    display: none;
-    animation: fadeIn 0.2s ease;
-    height: 100%;
-    min-height: 0;
-}
-
-.tab-content.active {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -950,6 +936,9 @@
     }
 }
 
+/* ============================================
+   PANEL PROMO AREA
+   ============================================ */
 .panel-promo-area {
     width: 240px;
     min-width: 240px;
@@ -966,7 +955,6 @@
     margin-left: auto;
 }
 
-/* Ensure mega panels expand to the right */
 .mega-panel .panel-standard-height {
     padding-right: 0;
 }
@@ -991,7 +979,6 @@
     box-shadow: none;
 }
 
-/* Mega Menu Image Frame - Enhanced with Leaf Effect and Blue Border */
 .mega-image-frame {
     border: 2px solid var(--color-primary, #1A3E74);
     border-radius: 0 30px 0 30px;
@@ -1016,7 +1003,6 @@
     border-radius: 0;
 }
 
-/* Mega Image Container - Leaf Effect */
 .mega-image-container {
     border-radius: 0 28px 0 28px;
     overflow: hidden;
@@ -1044,26 +1030,7 @@
 }
 
 /* ============================================
-   DECORATIVE SVG BACKGROUND (Hidden - No Layout Impact)
-   ============================================ */
-.decorative-svg-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: -1;
-    visibility: hidden;
-}
-
-.decorative-svg-bg svg {
-    display: none;
-}
-
-/* ============================================
-   COMPACT SEARCH PANEL LAYOUT
+   SEARCH PANEL
    ============================================ */
 .mega-search-panel .panel-main-content {
     padding: 20px;
@@ -1138,7 +1105,7 @@
     font-weight: 600;
     color: var(--text-primary);
     margin: 0 0 16px 0;
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-family: var(--font-nunito);
 }
 
 .search-sidebar {
@@ -1167,7 +1134,7 @@
 }
 
 /* ============================================
-   IDIOMAS PANEL STYLES
+   IDIOMAS PANEL
    ============================================ */
 .mega-idiomas-panel .panel-standard-height {
     display: flex;
@@ -1196,7 +1163,7 @@
     margin: 0 0 16px 0;
     padding-bottom: 10px;
     border-bottom: 2px solid var(--border-color);
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-family: var(--font-nunito);
 }
 
 .idiomas-grid {
@@ -1251,7 +1218,7 @@
     color: var(--text-secondary);
     text-align: center;
     font-weight: 500;
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-family: var(--font-nunito);
 }
 
 .idioma-item:hover .idioma-name {
@@ -1265,15 +1232,12 @@
 }
 
 /* ============================================
-   MOBILE MENU TOGGLE - CONSOLIDADO E padronizado
+   MOBILE MENU TOGGLE
    ============================================ */
 .mobile-menu-toggle {
     display: none;
 }
 
-/* ============================================
-   MOBILE MENU OVERLAY
-   ============================================ */
 .mobile-menu-overlay {
     display: none;
     position: fixed;
@@ -1417,7 +1381,7 @@
     text-decoration: none;
     font-size: calc(15px * var(--font-size-scale));
     font-weight: 600;
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-family: var(--font-nunito);
     background: transparent;
     border: none;
     border-bottom: 1px solid var(--border-color);
@@ -1453,7 +1417,7 @@
 }
 
 /* ============================================
-   MOBILE SUBMENU STYLES
+   MOBILE SUBMENU
    ============================================ */
 .mobile-submenu {
     display: none;
@@ -1481,207 +1445,54 @@
     }
 }
 
-/* Botão Voltar do Submenu */
-.submenu-back-item {
-    border-bottom: 1px solid var(--border-color);
-    margin: 0 0 8px 0;
-}
-
-.submenu-back-link {
+.mobile-submenu li a {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 14px 16px;
-    color: var(--color-primary);
+    padding: 12px 16px 12px 48px;
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: calc(14px * var(--font-size-scale));
-    font-weight: 600;
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
-    background: var(--bg-tertiary);
+    font-family: var(--font-nunito);
+    border-bottom: 1px solid var(--border-color);
     transition: all var(--transition-fast);
-    border-radius: 8px;
 }
 
-.submenu-back-link:hover {
-    background: var(--color-primary);
-    color: white;
-    padding-left: 20px;
+.mobile-submenu li a:hover {
+    color: var(--color-accent);
+    background: transparent;
 }
 
-.submenu-back-link:focus {
+.mobile-submenu li a:focus {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
 }
 
-.submenu-back-link .fas {
-    font-size: 14px;
-}
-
-/* Itens do Submenu */
-.mobile-submenu-item {
-    border-bottom: 1px solid var(--border-color);
-}
-
-.mobile-submenu-item:last-child {
-    border-bottom: none;
-}
-
-.mobile-submenu-item > a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 16px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: calc(15px * var(--font-size-scale));
-    font-weight: 500;
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
-    background: transparent;
-    transition: all var(--transition-fast);
-    position: relative;
-    overflow: hidden;
-}
-
-.mobile-submenu-item > a:hover {
-    color: var(--color-accent);
-    background: transparent;
-    padding-left: 16px;
-}
-
-.mobile-submenu-item > a:hover::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 60%;
-    background: var(--color-accent);
-    border-radius: 0 2px 2px 0;
-}
-
-.mobile-submenu-item > a:focus {
-    outline: 2px solid var(--color-accent);
-    outline-offset: -2px;
-}
-
-.mobile-submenu-item > a .fas {
+.mobile-submenu li a .fas {
+    margin-right: 8px;
     font-size: 14px;
     color: var(--text-muted);
-    transition: color var(--transition-fast);
 }
 
-.mobile-submenu-item > a:hover .fas {
+.mobile-submenu li a:hover .fas {
     color: var(--color-accent);
 }
 
-/* Subtítulo do Submenu - Design Elegante e Profissional */
-.mobile-submenu-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 16px 20px 12px 20px;
-    color: var(--color-primary);
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
-    font-size: calc(13px * var(--font-size-scale));
-    font-weight: 700;
-    text-transform: none;
-    letter-spacing: 0.3px;
+.mobile-nested-submenu {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
     background: transparent;
-    position: relative;
 }
 
-.mobile-submenu-title::before {
-    content: '';
+.mobile-nested-submenu.active {
     display: block;
-    width: 4px;
-    height: 4px;
-    background: var(--color-accent);
-    border-radius: 50%;
-    flex-shrink: 0;
 }
 
-.mobile-submenu-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, var(--border-color) 0%, transparent 100%);
-    margin-left: 12px;
+.mobile-nested-submenu li a {
+    padding-left: 72px;
 }
 
-/* Subtítulos com ícones - Sem caixa cinza */
-.mobile-submenu-title.has-icon {
-    padding-left: 16px;
-}
-
-.mobile-submenu-title.has-icon::before {
-    display: none;
-}
-
-.mobile-submenu-title .title-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    height: auto;
-    background: transparent;
-    border-radius: 0;
-    margin-right: 10px;
-    flex-shrink: 0;
-}
-
-.mobile-submenu-title .title-icon .fas,
-.mobile-submenu-title .title-icon .far {
-    font-size: 18px;
-    color: var(--color-accent);
-}
-
-/* Títulos com gradiente */
-.mobile-submenu-title.gradient {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    padding-left: 0;
-}
-
-.mobile-submenu-title.gradient::before,
-.mobile-submenu-title.gradient::after {
-    display: none;
-}
-
-/* Títulos decorativos */
-.mobile-submenu-title.decorative {
-    padding-bottom: 16px;
-    margin-bottom: 4px;
-    border-bottom: 2px solid var(--border-color);
-}
-
-.mobile-submenu-title.decorative::after {
-    display: none;
-}
-
-.mobile-submenu-title.decorative::before {
-    width: 24px;
-    height: 3px;
-    background: var(--color-accent);
-    border-radius: 2px;
-    position: absolute;
-    bottom: -2px;
-    left: 20px;
-}
-
-/* Link ativo no submenu */
-.mobile-submenu-item.active > a {
-    color: var(--color-accent);
-    background: transparent;
-}
-
-.mobile-submenu-item.active > a .fas {
-    color: var(--color-accent);
-}
-
-/* Indicador de submenu aninhado */
 .has-nested-submenu > a::after {
     content: '\f054';
     font-family: 'Font Awesome 6 Free';
@@ -1714,7 +1525,7 @@
     margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    font-family: var(--font-nunito, 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-family: var(--font-nunito);
 }
 
 .mobile-language-toggle {
@@ -1838,7 +1649,7 @@
 }
 
 /* ============================================
-   SCROLLBARS - MATCHING COOKIE MODAL STYLE
+   SCROLLBARS
    ============================================ */
 .custom-scroll::-webkit-scrollbar,
 .header-scroll::-webkit-scrollbar {
@@ -1893,29 +1704,6 @@
    ============================================ */
 .mega-panel-close-btn {
     display: none;
-}
-
-/* Main Content Area */
-.main-content {
-    padding-top: var(--header-height);
-    min-height: 100vh;
-}
-
-/* Página Inicial - Remover espaçamento quando hero está presente */
-body:has(.hero-carousel) .main-content {
-    padding-top: 0;
-}
-
-@media (max-width: 1024px) {
-    .main-content {
-        padding-top: var(--mobile-header-height, 120px);
-        padding-bottom: 20px;
-    }
-    
-    /* Página Inicial - Tablet */
-    body:has(.hero-carousel) .main-content {
-        padding-top: 0;
-    }
 }
 
 /* ============================================
@@ -1988,7 +1776,6 @@ body:has(.hero-carousel) .main-content {
    RESPONSIVE: TABLET & MOBILE (max-width: 1024px)
    ============================================ */
 @media (max-width: 1024px) {
-    /* Hide desktop header, show mobile header */
     .top-bar {
         display: none;
     }
@@ -2009,7 +1796,6 @@ body:has(.hero-carousel) .main-content {
         height: 42px;
     }
 
-    /* Mega panel becomes full-screen modal */
     .mega-panel {
         position: fixed;
         top: 0;
@@ -2031,7 +1817,6 @@ body:has(.hero-carousel) .main-content {
         padding-top: 70px;
     }
 
-    /* Stack content vertically on mobile */
     .panel-standard-height {
         flex-direction: column;
         height: calc(100% - 70px);
@@ -2062,7 +1847,6 @@ body:has(.hero-carousel) .main-content {
         overflow-y: auto;
     }
 
-    /* Mobile header styles */
     .mobile-main-header {
         position: fixed;
         top: 0;
@@ -2079,7 +1863,6 @@ body:has(.hero-carousel) .main-content {
         --mobile-header-height: auto;
     }
 
-    /* Mobile band 1 - Accessibility and Theme Controls */
     .mobile-band-1 {
         background: linear-gradient(135deg, #1A3E74 0%, #0d2847 100%);
         border-bottom: 1px solid rgba(255, 255, 255, 0.15);
@@ -2106,7 +1889,6 @@ body:has(.hero-carousel) .main-content {
         gap: 4px;
     }
 
-    /* Mobile font size buttons - BOTÕES BRANCOS COM ÍCONES AZUL ESCURO */
     .mobile-font-btn,
     .mobile-font-btn:disabled {
         display: flex;
@@ -2129,7 +1911,6 @@ body:has(.hero-carousel) .main-content {
         overflow: hidden;
     }
 
-    /* Animação de hover com luz azul clara */
     .mobile-font-btn::after {
         content: '';
         position: absolute;
@@ -2145,7 +1926,6 @@ body:has(.hero-carousel) .main-content {
         left: 100%;
     }
 
-    /* Animação de clique mobile */
     .mobile-font-btn.clicked {
         animation: btnClickAnimation 0.4s ease-out;
     }
@@ -2201,7 +1981,6 @@ body:has(.hero-carousel) .main-content {
         border-color: rgba(26, 62, 116, 0.5);
     }
 
-    /* Mobile theme toggle - BOTÃO BRANCO COM ÍCONE AZUL ESCURO (MESMO ESTILO FONT-BTN) */
     .mobile-theme-btn {
         display: flex;
         align-items: center;
@@ -2223,7 +2002,6 @@ body:has(.hero-carousel) .main-content {
         overflow: hidden;
     }
 
-    /* Animação de hover com luz azul clara */
     .mobile-theme-btn::after {
         content: '';
         position: absolute;
@@ -2256,7 +2034,6 @@ body:has(.hero-carousel) .main-content {
         outline-offset: 2px;
     }
 
-    /* Animação de clique mobile theme toggle */
     .mobile-theme-btn.clicked {
         animation: btnClickAnimation 0.4s ease-out;
     }
@@ -2284,7 +2061,6 @@ body:has(.hero-carousel) .main-content {
         color: #1A3E74;
     }
 
-    /* Mobile search button - BOTÃO BRANCO COM ÍCONE AZUL ESCURO */
     .mobile-search-btn {
         display: flex;
         align-items: center;
@@ -2302,7 +2078,6 @@ body:has(.hero-carousel) .main-content {
         overflow: hidden;
     }
 
-    /* Animação de hover com luz azul clara */
     .mobile-search-btn::after {
         content: '';
         position: absolute;
@@ -2318,7 +2093,6 @@ body:has(.hero-carousel) .main-content {
         left: 100%;
     }
 
-    /* Animação de clique mobile search */
     .mobile-search-btn.clicked {
         animation: btnClickAnimation 0.4s ease-out;
     }
@@ -2363,7 +2137,6 @@ body:has(.hero-carousel) .main-content {
         color: #1A3E74;
     }
 
-    /* Mobile divider */
     .mobile-band-divider {
         width: 1px;
         height: 20px;
@@ -2430,7 +2203,6 @@ body:has(.hero-carousel) .main-content {
         overflow: hidden;
     }
 
-    /* Animação de clique - ripple azul */
     .mobile-menu-toggle.clicked {
         animation: btnClickAnimation 0.4s ease-out;
     }
@@ -2490,7 +2262,6 @@ body:has(.hero-carousel) .main-content {
         color: #1A3E74;
     }
 
-    /* Mobile search container */
     .mobile-search-container {
         display: none;
         padding: 12px 1.5rem;
@@ -2557,144 +2328,13 @@ body:has(.hero-carousel) .main-content {
         font-size: 18px;
     }
 
-    /* Mobile language section */
-    .mobile-language-section {
-        border-top: 1px solid var(--border-color);
-        padding: 16px 20px;
-        background: var(--bg-secondary);
-    }
-
-    .mobile-language-label {
-        display: block;
-        color: var(--color-primary);
-        font-size: 13px;
-        font-weight: 600;
-        margin-bottom: 10px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .mobile-language-toggle {
+    .idiomas-grid {
+        grid-template-columns: repeat(4, 1fr);
         width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 12px 16px;
-        background: var(--bg-main-header);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        color: var(--color-primary);
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all var(--transition-fast);
+        max-height: none;
+        overflow-y: visible;
     }
 
-    .mobile-language-toggle:hover {
-        background: var(--bg-tertiary);
-    }
-
-    .mobile-language-toggle:focus {
-        outline: 2px solid var(--color-accent);
-        outline-offset: 2px;
-    }
-
-    .mobile-language-toggle .language-icon {
-        margin-right: 10px;
-        font-size: 18px;
-        color: inherit;
-    }
-
-    .mobile-language-toggle .language-current {
-        display: flex;
-        align-items: center;
-        flex: 1;
-    }
-
-    .mobile-language-toggle .language-arrow {
-        font-size: 12px;
-        transition: transform var(--transition-fast);
-    }
-
-    .mobile-language-section.expanded .mobile-language-toggle .language-arrow {
-        transform: rotate(180deg);
-    }
-
-    .mobile-language-grid {
-        display: none;
-        grid-template-columns: repeat(10, 1fr);
-        gap: 10px;
-        margin-top: 12px;
-        padding-top: 12px;
-        border-top: 1px solid var(--border-color);
-    }
-
-    .mobile-language-grid.show {
-        display: grid;
-    }
-
-    .language-flag-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 8px;
-        background: var(--bg-main-header);
-        border: 1px solid var(--border-color);
-        border-radius: 6px;
-        transition: all var(--transition-fast);
-        position: relative;
-    }
-
-    .language-flag-item:hover {
-        background: var(--bg-tertiary);
-        border-color: var(--color-primary);
-        transform: scale(1.05);
-    }
-
-    .language-flag-item.active {
-        background: rgba(17, 54, 107, 0.1);
-        box-shadow: inset 0 0 0 2px var(--color-accent-glow);
-        border-color: var(--color-accent);
-    }
-
-    .language-flag-item:focus {
-        outline: 2px solid var(--color-accent);
-        outline-offset: 2px;
-    }
-
-    .language-flag-item img {
-        width: 32px;
-        height: 24px;
-        border-radius: 3px;
-        object-fit: cover;
-        display: block;
-    }
-
-    .language-flag-item::after {
-        content: attr(title);
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 4px 8px;
-        background: #333;
-        color: #fff;
-        font-size: 11px;
-        border-radius: 4px;
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s, visibility 0.2s;
-        pointer-events: none;
-        z-index: 100;
-    }
-
-    .language-flag-item:hover::after {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* idiomas mobile panel */
     .mega-idiomas-panel {
         position: fixed;
         top: 0;
@@ -2716,13 +2356,6 @@ body:has(.hero-carousel) .main-content {
         margin: 0 auto;
         height: 100%;
         overflow-y: auto;
-    }
-
-    .idiomas-grid {
-        grid-template-columns: repeat(4, 1fr);
-        width: 100%;
-        max-height: none;
-        overflow-y: visible;
     }
 
     .mega-idiomas-panel .panel-promo-area {
@@ -2773,7 +2406,6 @@ body:has(.hero-carousel) .main-content {
         width: 100%;
     }
     
-    /* Ajustes para tablet pequeno */
     .mobile-font-btn,
     .mobile-font-btn:disabled,
     .mobile-theme-btn {
@@ -2914,7 +2546,6 @@ body:has(.hero-carousel) .main-content {
         font-size: 14px;
     }
     
-    /* Botões ainda menores para mobile */
     .mobile-font-controls {
         gap: 4px;
     }
@@ -2975,7 +2606,6 @@ body:has(.hero-carousel) .main-content {
         padding: 12px 0;
     }
     
-    /* Tamanho mínimo para botões */
     .mobile-font-btn,
     .mobile-font-btn:disabled,
     .mobile-theme-btn {
@@ -2991,10 +2621,23 @@ body:has(.hero-carousel) .main-content {
 }
 
 /* ============================================
-   ANIMAÇÕES DE HOVER PARA TÍTULOS (Similar aos títulos do site)
+   PADDING LATERAL CONSISTENTE PARA MEGA MENU
    ============================================ */
+@media (min-width: 1025px) {
+    .mega-panel {
+        padding-left: max(24px, calc((100vw - 1200px) / 2));
+        padding-right: max(24px, calc((100vw - 1200px) / 2));
+    }
 
-/* Efeito de brilho azul claro nos títulos do mega menu */
+    .panel-standard-height {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+/* ============================================
+   ANIMAÇÕES DE HOVER
+   ============================================ */
 .content-title {
     position: relative;
     overflow: hidden;
@@ -3015,7 +2658,6 @@ body:has(.hero-carousel) .main-content {
     left: 100%;
 }
 
-/* Efeito de hover nos links do conteúdo */
 .content-links li a {
     position: relative;
     overflow: hidden;
@@ -3036,7 +2678,6 @@ body:has(.hero-carousel) .main-content {
     left: 0;
 }
 
-/* Animações para abas do menu */
 .menu-tab-trigger {
     position: relative;
     overflow: hidden;
@@ -3058,7 +2699,6 @@ body:has(.hero-carousel) .main-content {
     left: 100%;
 }
 
-/* Animação para botão de idioma no painel */
 .idioma-item {
     position: relative;
     overflow: hidden;
@@ -3078,35 +2718,4 @@ body:has(.hero-carousel) .main-content {
 
 .idioma-item:hover::after {
     left: 100%;
-}
-
-/* ============================================
-   PADDING LATERAL CONSISTENTE PARA MEGA MENU
-   ============================================ */
-
-/* Desktop */
-.mega-panel {
-    padding-left: max(24px, calc((100vw - 1200px) / 2));
-    padding-right: max(24px, calc((100vw - 1200px) / 2));
-}
-
-.panel-standard-height {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-/* Tablet */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .mega-panel {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .mega-panel {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
 }
