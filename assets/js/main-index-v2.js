@@ -1,10 +1,10 @@
 /**
-* main-index.js - Main Application Logic
-* Sistema Modular de Carregamento e Renderização
-* Calculadoras de Enfermagem
-* Inclui funções utilitárias anteriormente em utils.js
-* Integração com EventBus para comunicação entre módulos
-*/
+ * main-index.js - Main Application Logic
+ * Sistema Modular de Carregamento e Renderização
+ * Calculadoras de Enfermagem
+ * Inclui funções utilitárias anteriormente em utils.js
+ * Integração com EventBus para comunicação entre módulos
+ */
 (function() {
 'use strict';
 
@@ -12,115 +12,113 @@
 // EVENTBUS INTEGRATION
 // ============================================
 const MainModule = {
-    state: null,
-    initialized: false,
-    eventBusReady: false
+state: null,
+initialized: false,
+eventBusReady: false
 };
 
 function setupMainEventBusIntegration() {
-    if (!window.EventBus) {
-        // Aguardar EventBus estar pronto
-        window.addEventListener('eventbus:ready', function onEventBusReady() {
-            window.removeEventListener('eventbus:ready', onEventBusReady);
-            registerMainEventBusListeners();
-            MainModule.eventBusReady = true;
-            console.log('[Main] EventBus integration activated');
-        });
-    } else {
-        registerMainEventBusListeners();
-        MainModule.eventBusReady = true;
-    }
+if (!window.EventBus) {
+// Aguardar EventBus estar pronto
+window.addEventListener('eventbus:ready', function onEventBusReady() {
+window.removeEventListener('eventbus:ready', onEventBusReady);
+registerMainEventBusListeners();
+MainModule.eventBusReady = true;
+console.log('[Main] EventBus integration activated');
+});
+} else {
+registerMainEventBusListeners();
+MainModule.eventBusReady = true;
+}
 }
 
 function registerMainEventBusListeners() {
-    if (!window.EventBus) return;
+if (!window.EventBus) return;
 
-    // Escutar eventos de theme para atualizar visualização
-    window.EventBus.on('theme:changed', function(data) {
-        console.log('[Main] Tema alterado detectado via EventBus:', data.theme);
-        // Atualizar estilos específicos do main se necessário
-        updateMainForTheme(data.isDark);
-    }, { module: 'main' });
+// Escutar eventos de theme para atualizar visualização
+window.EventBus.on('theme:changed', function(data) {
+console.log('[Main] Tema alterado detectado via EventBus:', data.theme);
+// Atualizar estilos específicos do main se necessário
+updateMainForTheme(data.isDark);
+}, { module: 'main' });
 
-    // Escutar eventos de fonte para atualizar visualização
-    window.EventBus.on('font:changed', function(data) {
-        console.log('[Main] Fonte alterada detectada via EventBus:', data.size);
-        // Atualizar estilos específicos do main se necessário
-        updateMainForFontSize(data.size);
-    }, { module: 'main' });
+// Escutar eventos de fonte para atualizar visualização
+window.EventBus.on('font:changed', function(data) {
+console.log('[Main] Fonte alterada detectada via EventBus:', data.size);
+// Atualizar estilos específicos do main se necessário
+updateMainForFontSize(data.size);
+}, { module: 'main' });
 
-    // Escutar eventos de header ready
-    window.EventBus.on('header:ready', function(data) {
-        console.log('[Main] Header está pronto, sincronizando...');
-        // Sincronizar estado com header se necessário
-    }, { module: 'main' });
+// Escutar eventos de header ready
+window.EventBus.on('header:ready', function(data) {
+console.log('[Main] Header está pronto, sincronizando...');
+// Sincronizar estado com header se necessário
+}, { module: 'main' });
 
-    // Escutar eventos de accessibility
-    window.EventBus.on('accessibility:settings:changed', function(data) {
-        console.log('[Main] Configurações de acessibilidade alteradas via EventBus');
-        // Atualizar main para refletir mudanças de acessibilidade
-        updateMainForAccessibility(data);
-    }, { module: 'main' });
+// Escutar eventos de accessibility
+window.EventBus.on('accessibility:settings:changed', function(data) {
+console.log('[Main] Configurações de acessibilidade alteradas via EventBus');
+// Atualizar main para refletir mudanças de acessibilidade
+updateMainForAccessibility(data);
+}, { module: 'main' });
 }
 
 function emitMainEvent(eventName, data) {
-    // Emitir via EventBus
-    if (window.EventBus && MainModule.eventBusReady) {
-        window.EventBus.emit('main:' + eventName, {
-        ...data,
-        source: 'main',
-        timestamp: Date.now()
-        });
-    }
+// Emitir via EventBus
+if (window.EventBus && MainModule.eventBusReady) {
+window.EventBus.emit('main:' + eventName, {
+...data,
+source: 'main',
+timestamp: Date.now()
+});
+}
 
-    // Manter compatibilidade com CustomEvents legados
-    window.dispatchEvent(new CustomEvent('main:' + eventName, {
-        detail: {
-        ...data,
-        source: 'main'
-        }
-    }));
+// Manter compatibilidade com CustomEvents legados
+window.dispatchEvent(new CustomEvent('main:' + eventName, {
+detail: {
+...data,
+source: 'main'
+}
+}));
 }
 
 function updateMainForTheme(isDark) {
-    // Atualizar estilos do main quando tema muda
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-        // Adicionar classes específicas se necessário
-        mainContent.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    }
+// Atualizar estilos do main quando tema muda
+const mainContent = document.getElementById('main-v2-container');
+if (mainContent) {
+// Adicionar classes específicas se necessário
+mainContent.setAttribute('data-theme', isDark ? 'dark' : 'light');
+}
 }
 
 function updateMainForFontSize(size) {
-    // Atualizar estilos do main quando fonte muda
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-        mainContent.setAttribute('data-font-size', size);
-    }
+// Atualizar estilos do main quando fonte muda
+const mainContent = document.getElementById('main-v2-container');
+if (mainContent) {
+mainContent.setAttribute('data-font-size', size);
+}
 }
 
 function updateMainForAccessibility(settings) {
-    // Atualizar main quando configurações de acessibilidade mudam
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-        if (settings.highlightLinks) {
-            mainContent.classList.add('accessibility-links-highlighted');
-        } else {
-            mainContent.classList.remove('accessibility-links-highlighted');
-        }
-        
-        if (settings.highlightHeaders) {
-            mainContent.classList.add('accessibility-headers-highlighted');
-        } else {
-            mainContent.classList.remove('accessibility-headers-highlighted');
-        }
-        
-        if (settings.readingMode) {
-            mainContent.classList.add('accessibility-reading-mode');
-        } else {
-            mainContent.classList.remove('accessibility-reading-mode');
-        }
-    }
+// Atualizar main quando configurações de acessibilidade mudam
+const mainContent = document.getElementById('main-v2-container');
+if (mainContent) {
+if (settings.highlightLinks) {
+mainContent.classList.add('accessibility-links-highlighted');
+} else {
+mainContent.classList.remove('accessibility-links-highlighted');
+}
+if (settings.highlightHeaders) {
+mainContent.classList.add('accessibility-headers-highlighted');
+} else {
+mainContent.classList.remove('accessibility-headers-highlighted');
+}
+if (settings.readingMode) {
+mainContent.classList.add('accessibility-reading-mode');
+} else {
+mainContent.classList.remove('accessibility-reading-mode');
+}
+}
 }
 
 // ============================================
@@ -130,87 +128,99 @@ const Utils = (function() {
 'use strict';
 
 /**
-* Render a complete tool card with all elements
-* @param {Object} tool - Tool data object
-* @param {Object} sectionState - Current section state
-* @param {string} type - Tool type (calculator, scale, other)
-* @returns {string} HTML string for the card
-*/
+ * Render a complete tool card with all elements
+ * @param {Object} tool - Tool data object
+ * @param {Object} sectionState - Current section state
+ * @param {string} type - Tool type (calculator, scale, other)
+ * @returns {string} HTML string for the card
+ */
 function renderCard(tool, sectionState, type) {
 const icons = {
 calculator: 'fa-calculator',
 scale: 'fa-clipboard-list',
 other: 'fa-calendar-check'
 };
+
 const actionIcons = {
 calculator: 'fa-calculator',
 scale: 'fa-clipboard-list',
 other: 'fa-calendar-check'
 };
+
 const actionTexts = {
 calculator: 'Calcular',
 scale: 'Classificar',
 other: 'Consultar'
 };
+
 const tags = {
 calculator: 'calculadora',
 scale: 'escala',
 other: 'informação'
 };
+
 const iconClass = tool.icon || 'fas fa-' + (icons[type] || 'calculator');
 const actionIcon = actionIcons[type] || 'fa-calculator';
 const actionText = actionTexts[type] || 'Acessar';
 const tagText = tags[type] || 'informação';
+
 return `
-<a href="pages/${tool.filename}" class="calculator-card" role="listitem">
-  <div class="calculator-icon">
-    <i class="${iconClass}"></i>
-  </div>
-  <h3 class="calculator-title">${escapeHtml(tool.name)}</h3>
-  <p class="calculator-description">${escapeHtml(tool.description)}</p>
-  <div class="calculator-meta">
-    <span class="calculator-category-tag">${tagText}</span>
-    <span class="calculator-action">
-      <i class="fas ${actionIcon}"></i>
-      ${actionText}
-    </span>
-  </div>
-</a>
+<div class="tool-card ${type}" data-id="${tool.id}" data-category="${tool.category}">
+    <div class="tool-header">
+        <div class="tool-icon ${iconClass}" style="background-color: var(--${tool.color}-light, #e3f2fd); color: var(--${tool.color}-primary, #1976d2);">
+            <i class="${iconClass}" aria-hidden="true"></i>
+        </div>
+        <div class="tool-info">
+            <h3 class="tool-name">${escapeHtml(tool.name)}</h3>
+            <span class="tool-tag">${tagText}</span>
+        </div>
+    </div>
+    <div class="tool-body">
+        <p class="tool-description">${escapeHtml(tool.description)}</p>
+    </div>
+    <div class="tool-footer">
+        <a href="${tool.filename}" class="tool-btn" aria-label="${actionText} ${tool.name}">
+            <i class="fas ${actionIcon}" aria-hidden="true"></i>
+            <span>${actionText}</span>
+        </a>
+    </div>
+</div>
 `;
 }
 
 /**
-* Render action button based on tool type
-* @param {string} type - Tool type
-* @returns {string} Button HTML
-*/
+ * Render action button based on tool type
+ * @param {string} type - Tool type
+ * @returns {string} Button HTML
+ */
 function getActionButton(type) {
 const buttons = {
 calculator: { icon: 'fa-calculator', text: 'Calcular' },
 scale: { icon: 'fa-clipboard-list', text: 'Classificar' },
 other: { icon: 'fa-calendar-check', text: 'Consultar' }
 };
+
 const btn = buttons[type] || buttons.other;
-return `<span class="calculator-action">${btn.text} <i class="fas fa-arrow-right"></i></span>`;
+return `<button class="action-btn"><i class="fas ${btn.icon}"></i> ${btn.text}</button>`;
 }
 
 /**
-* Check if tool should be highlighted based on filter
-* @param {Object} tool - Tool data
-* @param {Object} sectionState - Current state
-* @returns {boolean}
-*/
+ * Check if tool should be highlighted based on filter
+ * @param {Object} tool - Tool data
+ * @param {Object} sectionState - Current state
+ * @returns {boolean}
+ */
 function isHighlighted(tool, sectionState) {
 if (sectionState.filterCategory === 'all') return true;
 return tool.category === sectionState.filterCategory;
 }
 
 /**
-* Debounce function - delays execution until after wait ms
-* @param {Function} func - Function to debounce
-* @param {number} wait - Delay in milliseconds
-* @returns {Function}
-*/
+ * Debounce function - delays execution until after wait ms
+ * @param {Function} func - Function to debounce
+ * @param {number} wait - Delay in milliseconds
+ * @returns {Function}
+ */
 function debounce(func, wait) {
 let timeout;
 return function executedFunction(...args) {
@@ -224,11 +234,11 @@ timeout = setTimeout(later, wait);
 }
 
 /**
-* Throttle function - limits execution to once per limit ms
-* @param {Function} func - Function to throttle
-* @param {number} limit - Limit in milliseconds
-* @returns {Function}
-*/
+ * Throttle function - limits execution to once per limit ms
+ * @param {Function} func - Function to throttle
+ * @param {number} limit - Limit in milliseconds
+ * @returns {Function}
+ */
 function throttle(func, limit) {
 let inThrottle;
 return function executedFunction(...args) {
@@ -241,9 +251,9 @@ setTimeout(() => inThrottle = false, limit);
 }
 
 /**
-* Execute callback when DOM is ready
-* @param {Function} callback - Function to execute
-*/
+ * Execute callback when DOM is ready
+ * @param {Function} callback - Function to execute
+ */
 function onReady(callback) {
 if (document.readyState === 'loading') {
 document.addEventListener('DOMContentLoaded', callback);
@@ -253,12 +263,12 @@ callback();
 }
 
 /**
-* Create a DOM element with attributes and children
-* @param {string} tag - HTML tag name
-* @param {Object} attributes - Element attributes
-* @param {string|Array} children - Child elements or text
-* @returns {HTMLElement}
-*/
+ * Create a DOM element with attributes and children
+ * @param {string} tag - HTML tag name
+ * @param {Object} attributes - Element attributes
+ * @param {string|Array} children - Child elements or text
+ * @returns {HTMLElement}
+ */
 function createElement(tag, attributes, children) {
 const element = document.createElement(tag);
 if (attributes) {
@@ -289,10 +299,10 @@ return element;
 }
 
 /**
-* Escape HTML special characters
-* @param {string} text - Text to escape
-* @returns {string} Escaped text
-*/
+ * Escape HTML special characters
+ * @param {string} text - Text to escape
+ * @returns {string} Escaped text
+ */
 function escapeHtml(text) {
 const div = document.createElement('div');
 div.textContent = text;
@@ -300,10 +310,10 @@ return div.innerHTML;
 }
 
 /**
-* Format date to Brazilian locale
-* @param {string} dateStr - Date string
-* @returns {string} Formatted date
-*/
+ * Format date to Brazilian locale
+ * @param {string} dateStr - Date string
+ * @returns {string} Formatted date
+ */
 function formatDate(dateStr) {
 const date = new Date(dateStr);
 return date.toLocaleDateString('pt-BR', {
@@ -314,25 +324,24 @@ year: 'numeric'
 }
 
 /**
-* Get URL parameter value
-* @param {string} param - Parameter name
-* @returns {string|null}
-*/
+ * Get URL parameter value
+ * @param {string} param - Parameter name
+ * @returns {string|null}
+ */
 function getUrlParam(param) {
 const urlParams = new URLSearchParams(window.location.search);
 return urlParams.get(param);
 }
 
 /**
-* Smooth scroll to element
-* @param {string|HTMLElement} target - Target element or selector
-* @param {number} offset - Offset in pixels
-*/
+ * Smooth scroll to element
+ * @param {string|HTMLElement} target - Target element or selector
+ * @param {number} offset - Offset in pixels
+ */
 function scrollTo(target, offset = 100) {
 const element = typeof target === 'string'
 ? document.querySelector(target)
 : target;
-
 if (element) {
 const top = element.getBoundingClientRect().top + window.scrollY - offset;
 window.scrollTo({ top, behavior: 'smooth' });
@@ -340,10 +349,10 @@ window.scrollTo({ top, behavior: 'smooth' });
 }
 
 /**
-* Copy text to clipboard
-* @param {string} text - Text to copy
-* @returns {Promise<boolean>}
-*/
+ * Copy text to clipboard
+ * @param {string} text - Text to copy
+ * @returns {Promise}
+ */
 async function copyToClipboard(text) {
 try {
 await navigator.clipboard.writeText(text);
@@ -355,10 +364,10 @@ return false;
 }
 
 /**
-* Check if element is fully visible in viewport
-* @param {HTMLElement} el - Element to check
-* @returns {boolean}
-*/
+ * Check if element is fully visible in viewport
+ * @param {HTMLElement} el - Element to check
+ * @returns {boolean}
+ */
 function isElementInViewport(el) {
 const rect = el.getBoundingClientRect();
 return (
@@ -370,36 +379,36 @@ rect.right <= (window.innerWidth || document.documentElement.clientWidth)
 }
 
 /**
-* Generate unique ID
-* @returns {string}
-*/
+ * Generate unique ID
+ * @returns {string}
+ */
 function generateId() {
 return 'id-' + Math.random().toString(36).substr(2, 9);
 }
 
 /**
-* Clamp value between min and max
-* @param {number} value - Value to clamp
-* @param {number} min - Minimum value
-* @param {number} max - Maximum value
-* @returns {number}
-*/
+ * Clamp value between min and max
+ * @param {number} value - Value to clamp
+ * @param {number} min - Minimum value
+ * @param {number} max - Maximum value
+ * @returns {number}
+ */
 function clamp(value, min, max) {
 return Math.min(Math.max(value, min), max);
 }
 
 /**
-* Deep clone an object
-* @param {Object} obj - Object to clone
-* @returns {Object}
-*/
+ * Deep clone an object
+ * @param {Object} obj - Object to clone
+ * @returns {Object}
+ */
 function deepClone(obj) {
 return JSON.parse(JSON.stringify(obj));
 }
 
 /**
-* Local storage wrapper with error handling
-*/
+ * Local storage wrapper with error handling
+ */
 const Storage = {
 get(key, defaultValue = null) {
 try {
@@ -544,7 +553,7 @@ buttonText: null,
 buttonUrl: '#calculadoras',
 imageIcon: 'fa-calculator',
 gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-	bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-welcome.webp'
+bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-welcome.webp'
 },
 {
 id: 'diagnosticos',
@@ -554,7 +563,7 @@ buttonText: 'Acessar Diagnósticos',
 buttonUrl: 'pages/diagnosticosnanda.html',
 imageIcon: 'fa-clipboard-list',
 gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-	bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-nanda-tools.webp'
+bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-nanda-tools.webp'
 },
 {
 id: 'simulado',
@@ -564,7 +573,7 @@ buttonText: 'Acessar Simulado',
 buttonUrl: 'pages/simulado-de-enfermagem2.html',
 imageIcon: 'fa-graduation-cap',
 gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-	bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-simulator-tools.webp'
+bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-simulator-tools.webp'
 },
 {
 id: 'biblioteca',
@@ -574,7 +583,7 @@ buttonText: 'Acessar Biblioteca',
 buttonUrl: 'pages/downloads.html',
 imageIcon: 'fa-book-open',
 gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-	bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-library-tools.webp'
+bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-library-tools.webp'
 },
 {
 id: 'notificacao',
@@ -584,7 +593,7 @@ buttonText: 'Acessar Lista de Notificações',
 buttonUrl: 'pages/notificacao-compulsoria.html',
 imageIcon: 'fa-bell',
 gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-	bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-notification-tools.webp'
+bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-notification-tools.webp'
 }
 ];
 
@@ -594,109 +603,105 @@ let slideInterval;
 // ============================================
 // Template Generators
 // ============================================
-
 function generateHeroHTML() {
 const dotsHTML = heroSlides.map((slide, index) =>
-`<span class="indicator ${index === 0 ? 'active' : ''}" data-slide="${index}" role="button" aria-label="Ir para slide ${index + 1}"></span>`
+`<button class="indicator ${index === 0 ? 'active' : ''}" data-slide="${index}" aria-label="Ir para slide ${index + 1}"></button>`
 ).join('');
 
 const slidesHTML = heroSlides.map((slide, index) => `
-<div class="carousel-item ${index === 0 ? 'active' : ''}" data-slide="${index}" aria-hidden="${index !== 0}">
-  <div class="hero-slide" style="background: ${slide.gradient} ${slide.bgImage ? `, url('${slide.bgImage}') center/cover` : ''}">
-    <div class="hero-content">
-      <h1 class="hero-title">${slide.title}</h1>
-      <p class="hero-subtitle">${slide.subtitle}</p>
-      ${slide.buttonText ? `
-      <a href="${slide.buttonUrl}" class="hero-btn">
-        <i class="fas fa-arrow-right"></i>
-        ${slide.buttonText}
-      </a>` : ''}
+<div class="carousel-item ${index === 0 ? 'active' : ''}" data-slide="${index}" style="background-image: ${slide.gradient}, url('${slide.bgImage}')">
+    <div class="carousel-content">
+        <div class="carousel-icon">
+            <i class="fas ${slide.imageIcon}" aria-hidden="true"></i>
+        </div>
+        <h2 class="carousel-title">${slide.title}</h2>
+        <p class="carousel-subtitle">${slide.subtitle}</p>
+        ${slide.buttonText ? `<a href="${slide.buttonUrl}" class="carousel-btn">${slide.buttonText}</a>` : ''}
     </div>
-  </div>
 </div>
 `).join('');
 
 return `
-<div class="hero-carousel" aria-label="Destaques">
-  <div class="carousel-inner">
-    ${slidesHTML}
-  </div>
-  <div class="carousel-indicators">
-    ${dotsHTML}
-  </div>
-  <div class="carousel-control prev" aria-label="Slide anterior">
-    <i class="fas fa-chevron-left"></i>
-  </div>
-  <div class="carousel-control next" aria-label="Próximo slide">
-    <i class="fas fa-chevron-right"></i>
-  </div>
+<div class="hero-carousel" role="region" aria-label="Destaques">
+    <div class="carousel-container">
+        ${slidesHTML}
+    </div>
+    <div class="carousel-dots" aria-label="Navegação do carrossel">
+        ${dotsHTML}
+    </div>
+    <button class="carousel-control prev" aria-label="Slide anterior">
+        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+    </button>
+    <button class="carousel-control next" aria-label="Próximo slide">
+        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+    </button>
 </div>
 `;
 }
 
 function generateSectionHTML(id, title, tools, type, icon) {
 return `
-<section id="${id}" class="section" aria-labelledby="titulo-${id}">
-  <div class="section-header">
-    <h2 class="section-title" id="titulo-${id}">
-      <i class="fas ${icon}"></i>
-      ${title}
-    </h2>
-  </div>
-  <div class="calculators-grid tools-grid view-${state.viewMode}" data-category="${id}" role="list">
-    ${tools.map(t => Utils.renderCard(t, state, type)).join('')}
-  </div>
+<section id="${id}" class="tools-section" aria-labelledby="${id}-title">
+    <header class="section-header">
+        <h2 id="${id}-title" class="section-title">
+            <i class="fas ${icon}" aria-hidden="true"></i>
+            ${title}
+        </h2>
+    </header>
+    <div class="tools-grid view-${state.viewMode} ${state.showIcons ? '' : 'hide-icons'}" role="list">
+        ${tools.map(t => Utils.renderCard(t, state, type)).join('')}
+    </div>
 </section>
 `;
 }
 
 function generateVisualizarHTML() {
 const viewModes = [
-  { value: 'extra-grande', label: 'Extra Grande', icon: 'fa-th-large' },
-  { value: 'grande', label: 'Grande', icon: 'fa-th' },
-  { value: 'medio', label: 'Médio', icon: 'fa-square' },
-  { value: 'pequeno', label: 'Pequeno', icon: 'fa-minus-square' },
-  { value: 'lista', label: 'Lista', icon: 'fa-list' },
-  { value: 'detalhes', label: 'Detalhes', icon: 'fa-info-circle' },
-  { value: 'blocos', label: 'Blocos', icon: 'fa-border-all' },
-  { value: 'compacto', label: 'Compacto', icon: 'fa-compress-arrows-alt' }
+{ value: 'extra-grande', label: 'Extra Grande', icon: 'fa-th-large' },
+{ value: 'grande', label: 'Grande', icon: 'fa-th' },
+{ value: 'medio', label: 'Médio', icon: 'fa-square' },
+{ value: 'pequeno', label: 'Pequeno', icon: 'fa-minus-square' },
+{ value: 'lista', label: 'Lista', icon: 'fa-list' },
+{ value: 'detalhes', label: 'Detalhes', icon: 'fa-info-circle' },
+{ value: 'blocos', label: 'Blocos', icon: 'fa-border-all' },
+{ value: 'compacto', label: 'Compacto', icon: 'fa-compress-arrows-alt' }
 ];
 
 const sortOptions = [
-  { value: 'asc', label: 'A-Z (Crescente)', icon: 'fa-sort-alpha-down' },
-  { value: 'desc', label: 'Z-A (Decrescente)', icon: 'fa-sort-alpha-up' }
+{ value: 'asc', label: 'A-Z (Crescente)', icon: 'fa-sort-alpha-down' },
+{ value: 'desc', label: 'Z-A (Decrescente)', icon: 'fa-sort-alpha-up' }
 ];
 
 const sortLabels = {
-  asc: 'A-Z (Crescente)',
-  desc: 'Z-A (Decrescente)'
+asc: 'A-Z (Crescente)',
+desc: 'Z-A (Decrescente)'
 };
 
 const sortIcons = {
-  asc: 'fa-sort-alpha-down',
-  desc: 'fa-sort-alpha-up'
+asc: 'fa-sort-alpha-down',
+desc: 'fa-sort-alpha-up'
 };
 
 const viewLabels = {
-  'extra-grande': 'Extra Grande',
-  'grande': 'Grande',
-  'medio': 'Médio',
-  'pequeno': 'Pequeno',
-  'lista': 'Lista',
-  'detalhes': 'Detalhes',
-  'blocos': 'Blocos',
-  'compacto': 'Compacto'
+'extra-grande': 'Extra Grande',
+'grande': 'Grande',
+'medio': 'Médio',
+'pequeno': 'Pequeno',
+'lista': 'Lista',
+'detalhes': 'Detalhes',
+'blocos': 'Blocos',
+'compacto': 'Compacto'
 };
 
 const viewIcons = {
-  'extra-grande': 'fa-th-large',
-  'grande': 'fa-th',
-  'medio': 'fa-square',
-  'pequeno': 'fa-minus-square',
-  'lista': 'fa-list',
-  'detalhes': 'fa-info-circle',
-  'blocos': 'fa-border-all',
-  'compacto': 'fa-compress-arrows-alt'
+'extra-grande': 'fa-th-large',
+'grande': 'fa-th',
+'medio': 'fa-square',
+'pequeno': 'fa-minus-square',
+'lista': 'fa-list',
+'detalhes': 'fa-info-circle',
+'blocos': 'fa-border-all',
+'compacto': 'fa-compress-arrows-alt'
 };
 
 const currentViewLabel = viewLabels[state.viewMode] || 'Médio';
@@ -705,107 +710,106 @@ const currentSortLabel = sortLabels[state.sortOrder] || 'A-Z (Crescente)';
 const currentSortIcon = sortIcons[state.sortOrder] || 'fa-sort-alpha-down';
 
 return `
-<section class="visualizar-section" aria-label="Controles de visualização">
-  <div class="visualizar-row">
-    <div class="visualizar-group">
-      <span class="visualizar-label">Exibição:</span>
-      <div class="view-dropdown">
-        <button class="view-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
-          <span class="view-current">${currentViewLabel} <i class="fas ${currentViewIcon}"></i></span>
-          <i class="fas fa-chevron-down"></i>
+<div class="visualizar-controls" role="region" aria-label="Controles de visualização">
+    <div class="view-dropdown dropdown">
+        <button class="view-btn dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-label="Exibição">
+            <i class="fas ${currentViewIcon}" aria-hidden="true"></i>
+            <span class="view-current">${currentViewLabel} <i class="fas fa-chevron-down"></i></span>
         </button>
-        <div class="dropdown-menu" role="listbox">
-          ${viewModes.map(m => `<a class="dropdown-item" data-value="${m.value}" role="option"><i class="fas ${m.icon}"></i>${m.label}</a>`).join('')}
+        <div class="dropdown-menu" role="menu">
+            ${viewModes.map(m => `
+            <button class="dropdown-item ${state.viewMode === m.value ? 'active' : ''}" data-value="${m.value}" role="menuitem">
+                <i class="fas ${m.icon}" aria-hidden="true"></i>
+                ${m.label}
+            </button>
+            `).join('')}
         </div>
-      </div>
     </div>
 
-    <div class="visualizar-group">
-      <span class="visualizar-label">Ordenar:</span>
-      <div class="sort-dropdown">
-        <button class="sort-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
-          <span class="sort-current">${currentSortLabel} <i class="fas ${currentSortIcon}"></i></span>
-          <i class="fas fa-chevron-down"></i>
+    <div class="sort-dropdown dropdown">
+        <button class="sort-btn dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-label="Ordenar">
+            <i class="fas ${currentSortIcon}" aria-hidden="true"></i>
+            <span class="sort-current">${currentSortLabel} <i class="fas fa-chevron-down"></i></span>
         </button>
-        <div class="dropdown-menu" role="listbox">
-          ${sortOptions.map(o => `<a class="dropdown-item" data-value="${o.value}" role="option"><i class="fas ${o.icon}"></i>${o.label}</a>`).join('')}
+        <div class="dropdown-menu" role="menu">
+            ${sortOptions.map(o => `
+            <button class="dropdown-item ${state.sortOrder === o.value ? 'active' : ''}" data-value="${o.value}" role="menuitem">
+                <i class="fas ${o.icon}" aria-hidden="true"></i>
+                ${o.label}
+            </button>
+            `).join('')}
         </div>
-      </div>
     </div>
 
-    <div class="visualizar-group icon-toggle">
-      <span class="visualizar-label">Ícones:</span>
-      <label class="toggle-switch">
-        <input type="checkbox" id="icon-toggle" ${state.showIcons ? 'checked' : ''}>
-        <span class="toggle-slider"></span>
-      </label>
+    <div class="icon-toggle-wrapper">
+        <label class="icon-toggle" for="icon-toggle">
+            <input type="checkbox" id="icon-toggle" ${state.showIcons ? 'checked' : ''} aria-label="Mostrar ícones">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Ícones</span>
+        </label>
     </div>
-  </div>
-</section>
+</div>
 `;
 }
 
 // ============================================
 // Render Functions
 // ============================================
-
 function renderAllTools() {
-    const mainContent = document.getElementById('main-content');
-    if (!mainContent) {
-        console.warn('[Main] Elemento #main-content não encontrado');
-        return;
-    }
+const mainContent = document.getElementById('main-v2-container');
+if (!mainContent) {
+console.warn('[Main] Elemento #main-v2-container não encontrado');
+return;
+}
 
-    console.log('[Main] Renderizando ferramentas...');
-    console.log('[Main] toolsData length:', toolsData.length);
+console.log('[Main] Renderizando ferramentas...');
+console.log('[Main] toolsData length:', toolsData.length);
 
-    // Sort function based on state.sortOrder
-    const sortTools = (tools) => {
-        const sorted = [...tools].sort((a, b) => a.name.localeCompare(b.name));
-        if (state.sortOrder === 'desc') {
-            return sorted.reverse();
-        }
-        return sorted;
-    };
+// Sort function based on state.sortOrder
+const sortTools = (tools) => {
+const sorted = [...tools].sort((a, b) => a.name.localeCompare(b.name));
+if (state.sortOrder === 'desc') {
+return sorted.reverse();
+}
+return sorted;
+};
 
-    const calculators = sortTools(toolsData.filter(t => t.type === 'calculator'));
-    const scales = sortTools(toolsData.filter(t => t.type === 'scale'));
-    const vaccines = sortTools(toolsData.filter(t => t.type === 'other'));
+const calculators = sortTools(toolsData.filter(t => t.type === 'calculator'));
+const scales = sortTools(toolsData.filter(t => t.type === 'scale'));
+const vaccines = sortTools(toolsData.filter(t => t.type === 'other'));
 
-    console.log('[Main] calculators:', calculators.length);
-    console.log('[Main] scales:', scales.length);
-    console.log('[Main] vaccines:', vaccines.length);
+console.log('[Main] calculators:', calculators.length);
+console.log('[Main] scales:', scales.length);
+console.log('[Main] vaccines:', vaccines.length);
 
-    const heroHTML = generateHeroHTML();
-    const visualizarHTML = generateVisualizarHTML();
-    const sectionCalculadoras = generateSectionHTML('calculadoras', 'Calculadoras Clínicas', calculators, 'calculator', 'fa-calculator');
-    const sectionEscalas = generateSectionHTML('escalas', 'Escalas Clínicas', scales, 'scale', 'fa-clipboard-list');
-    const sectionVacinas = generateSectionHTML('vacinas', 'Calendário Vacinal', vaccines, 'other', 'fa-calendar-check');
+const heroHTML = generateHeroHTML();
+const visualizarHTML = generateVisualizarHTML();
+const sectionCalculadoras = generateSectionHTML('calculadoras', 'Calculadoras Clínicas', calculators, 'calculator', 'fa-calculator');
+const sectionEscalas = generateSectionHTML('escalas', 'Escalas Clínicas', scales, 'scale', 'fa-clipboard-list');
+const sectionVacinas = generateSectionHTML('vacinas', 'Calendário Vacinal', vaccines, 'other', 'fa-calendar-check');
 
-    console.log('[Main] Hero HTML length:', heroHTML.length);
-    console.log('[Main] Visualizar HTML length:', visualizarHTML.length);
-    console.log('[Main] Section HTML length:', sectionCalculadoras.length + sectionEscalas.length + sectionVacinas.length);
+console.log('[Main] Hero HTML length:', heroHTML.length);
+console.log('[Main] Visualizar HTML length:', visualizarHTML.length);
+console.log('[Main] Section HTML length:', sectionCalculadoras.length + sectionEscalas.length + sectionVacinas.length);
 
-    mainContent.innerHTML = heroHTML + visualizarHTML + sectionCalculadoras + sectionEscalas + sectionVacinas;
+mainContent.innerHTML = heroHTML + visualizarHTML + sectionCalculadoras + sectionEscalas + sectionVacinas;
+console.log('[Main] Conteúdo renderizado, innerHTML length:', mainContent.innerHTML.length);
 
-    console.log('[Main] Conteúdo renderizado, innerHTML length:', mainContent.innerHTML.length);
+state.loaded = true;
+initializeEventListeners();
 
-    state.loaded = true;
-    initializeEventListeners();
+// Emitir evento de página pronta via EventBus
+emitMainEvent('ready', { loaded: true, toolsCount: toolsData.length });
 
-    // Emitir evento de página pronta via EventBus
-    emitMainEvent('ready', { loaded: true, toolsCount: toolsData.length });
-    
-    // Manter compatibilidade com CustomEvents legados
-    window.dispatchEvent(new CustomEvent('Page:Ready', {
-        detail: { loaded: true, toolsCount: toolsData.length }
-    }));
+// Manter compatibilidade com CustomEvents legados
+window.dispatchEvent(new CustomEvent('Page:Ready', {
+detail: { loaded: true, toolsCount: toolsData.length }
+}));
 }
 
 // ============================================
 // Event Handlers
 // ============================================
-
 function goToSlide(index) {
 const items = document.querySelectorAll('.carousel-item');
 const indicators = document.querySelectorAll('.indicator');
@@ -833,6 +837,7 @@ item.classList.add('prev');
 item.classList.add('next');
 }
 });
+
 indicators[currentSlide].classList.add('active');
 }
 
@@ -857,118 +862,118 @@ slideInterval = null;
 }
 
 function updateViewMode() {
-  // Update view button label
-  const viewBtn = document.querySelector('.view-btn');
-  const viewCurrent = viewBtn?.querySelector('.view-current');
-  
-  const viewLabels = {
-    'extra-grande': 'Extra Grande',
-    'grande': 'Grande',
-    'medio': 'Médio',
-    'pequeno': 'Pequeno',
-    'lista': 'Lista',
-    'detalhes': 'Detalhes',
-    'blocos': 'Blocos',
-    'compacto': 'Compacto'
-  };
-  
-  const viewIcons = {
-    'extra-grande': 'fa-th-large',
-    'grande': 'fa-th',
-    'medio': 'fa-square',
-    'pequeno': 'fa-minus-square',
-    'lista': 'fa-list',
-    'detalhes': 'fa-info-circle',
-    'blocos': 'fa-border-all',
-    'compacto': 'fa-compress-arrows-alt'
-  };
-  
-  if (viewCurrent) {
-    viewCurrent.innerHTML = `${viewLabels[state.viewMode] || 'Médio'} <i class="fas ${viewIcons[state.viewMode] || 'fa-square'}"></i>`;
-  }
-  
-  // Update grid classes
-  document.querySelectorAll('.tools-grid').forEach(grid => {
-    grid.className = `tools-grid view-${state.viewMode}`;
-    if (!state.showIcons) {
-      grid.classList.add('hide-icons');
-    }
-  });
+// Update view button label
+const viewBtn = document.querySelector('.view-btn');
+const viewCurrent = viewBtn?.querySelector('.view-current');
+
+const viewLabels = {
+'extra-grande': 'Extra Grande',
+'grande': 'Grande',
+'medio': 'Médio',
+'pequeno': 'Pequeno',
+'lista': 'Lista',
+'detalhes': 'Detalhes',
+'blocos': 'Blocos',
+'compacto': 'Compacto'
+};
+
+const viewIcons = {
+'extra-grande': 'fa-th-large',
+'grande': 'fa-th',
+'medio': 'fa-square',
+'pequeno': 'fa-minus-square',
+'lista': 'fa-list',
+'detalhes': 'fa-info-circle',
+'blocos': 'fa-border-all',
+'compacto': 'fa-compress-arrows-alt'
+};
+
+if (viewCurrent) {
+viewCurrent.innerHTML = `${viewLabels[state.viewMode] || 'Médio'} <i class="fas fa-chevron-down"></i>`;
+}
+
+// Update grid classes
+document.querySelectorAll('.tools-grid').forEach(grid => {
+grid.className = `tools-grid view-${state.viewMode}`;
+if (!state.showIcons) {
+grid.classList.add('hide-icons');
+}
+});
 }
 
 function initializeEventListeners() {
-  // View Mode Dropdown
-  const viewBtn = document.querySelector('.view-btn');
-  const viewMenu = document.querySelector('.view-dropdown .dropdown-menu');
-  
-  if (viewBtn && viewMenu) {
-    viewBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      viewMenu.classList.toggle('show');
-      sortMenu?.classList.remove('show');
-    });
-    
-    viewMenu.querySelectorAll('.dropdown-item').forEach(item => {
-      item.addEventListener('click', function(e) {
-        e.preventDefault();
-        const value = this.dataset.value;
-        if (value && value !== state.viewMode) {
-          state.viewMode = value;
-          saveState();
-          updateViewMode();
-        }
-        viewMenu.classList.remove('show');
-      });
-    });
-  }
-  
-  // Sort Dropdown
-  const sortBtn = document.querySelector('.sort-btn');
-  const sortMenu = document.querySelector('.sort-dropdown .dropdown-menu');
-  
-  if (sortBtn && sortMenu) {
-    sortBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      sortMenu.classList.toggle('show');
-      viewMenu?.classList.remove('show');
-    });
-    
-    sortMenu.querySelectorAll('.dropdown-item').forEach(item => {
-      item.addEventListener('click', function(e) {
-        e.preventDefault();
-        const value = this.dataset.value;
-        if (value && value !== state.sortOrder) {
-          state.sortOrder = value;
-          saveState();
-          renderAllTools();
-        }
-        sortMenu.classList.remove('show');
-      });
-    });
-  }
-  
-  // Icon Toggle
-  const iconToggle = document.getElementById('icon-toggle');
-  if (iconToggle) {
-    iconToggle.addEventListener('change', function() {
-      state.showIcons = this.checked;
-      saveState();
-      document.querySelectorAll('.tools-grid').forEach(grid => {
-        grid.classList.toggle('hide-icons', !state.showIcons);
-      });
-    });
-  }
-  
-  // Close dropdowns when clicking outside
-  document.addEventListener('click', function() {
-    document.querySelectorAll('.dropdown-menu').forEach(menu => {
-      menu.classList.remove('show');
-    });
-  });
+// View Mode Dropdown
+const viewBtn = document.querySelector('.view-btn');
+const viewMenu = document.querySelector('.view-dropdown .dropdown-menu');
 
-  // Hero Carousel Navigation
-  const carousel = document.querySelector('.hero-carousel');
-  if (carousel) {
+if (viewBtn && viewMenu) {
+viewBtn.addEventListener('click', function(e) {
+e.stopPropagation();
+viewMenu.classList.toggle('show');
+sortMenu?.classList.remove('show');
+});
+
+viewMenu.querySelectorAll('.dropdown-item').forEach(item => {
+item.addEventListener('click', function(e) {
+e.preventDefault();
+const value = this.dataset.value;
+if (value && value !== state.viewMode) {
+state.viewMode = value;
+saveState();
+updateViewMode();
+}
+viewMenu.classList.remove('show');
+});
+});
+}
+
+// Sort Dropdown
+const sortBtn = document.querySelector('.sort-btn');
+const sortMenu = document.querySelector('.sort-dropdown .dropdown-menu');
+
+if (sortBtn && sortMenu) {
+sortBtn.addEventListener('click', function(e) {
+e.stopPropagation();
+sortMenu.classList.toggle('show');
+viewMenu?.classList.remove('show');
+});
+
+sortMenu.querySelectorAll('.dropdown-item').forEach(item => {
+item.addEventListener('click', function(e) {
+e.preventDefault();
+const value = this.dataset.value;
+if (value && value !== state.sortOrder) {
+state.sortOrder = value;
+saveState();
+renderAllTools();
+}
+sortMenu.classList.remove('show');
+});
+});
+}
+
+// Icon Toggle
+const iconToggle = document.getElementById('icon-toggle');
+if (iconToggle) {
+iconToggle.addEventListener('change', function() {
+state.showIcons = this.checked;
+saveState();
+document.querySelectorAll('.tools-grid').forEach(grid => {
+grid.classList.toggle('hide-icons', !state.showIcons);
+});
+});
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function() {
+document.querySelectorAll('.dropdown-menu').forEach(menu => {
+menu.classList.remove('show');
+});
+});
+
+// Hero Carousel Navigation
+const carousel = document.querySelector('.hero-carousel');
+if (carousel) {
 // Dot navigation
 document.querySelectorAll('.indicator').forEach(dot => {
 dot.addEventListener('click', function() {
@@ -1038,7 +1043,6 @@ window.scrollTo({ top, behavior: 'smooth' });
 // ============================================
 // SEO - Multilingual Links
 // ============================================
-
 (function initSEO() {
 const canonical = document.querySelector('link[rel="canonical"]');
 if (!canonical) return;
@@ -1064,7 +1068,6 @@ head.appendChild(link);
 // ============================================
 // State Management
 // ============================================
-
 function saveState() {
 try {
 localStorage.setItem('toolsViewState', JSON.stringify(state));
@@ -1088,26 +1091,24 @@ console.warn('Failed to load state:', e);
 // ============================================
 // Initialization
 // ============================================
-
 function init() {
-    loadState();
-    renderAllTools();
+loadState();
+renderAllTools();
 }
 
 function initMain() {
-    const mainContent = document.getElementById('main-content');
-    if (!mainContent) {
-        console.warn('[Main] Elemento #main-content não encontrado, tentando novamente...');
-        setTimeout(initMain, 100);
-        return;
-    }
-    
-    // Iniciar integração com EventBus
-    setupMainEventBusIntegration();
-    
-    loadState();
-    renderAllTools();
-    console.log('[Main] Inicializado com sucesso');
+const mainContent = document.getElementById('main-v2-container');
+if (!mainContent) {
+console.warn('[Main] Elemento #main-v2-container não encontrado, tentando novamente...');
+setTimeout(initMain, 100);
+return;
+}
+
+// Iniciar integração com EventBus
+setupMainEventBusIntegration();
+loadState();
+renderAllTools();
+console.log('[Main] Inicializado com sucesso');
 }
 
 // Expor initMain globalmente para ser chamado após injeção do HTML
@@ -1115,11 +1116,11 @@ window.MainInit = initMain;
 
 // Run when DOM is ready - mas esperar para renderização
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-        // Não inicializar imediatamente, esperar carga dos componentes
-        // A inicialização será chamada pelo index.html
-        console.log('[Main] DOM pronto, aguardando componentes...');
-    });
+document.addEventListener('DOMContentLoaded', function() {
+// Não inicializar imediatamente, esperar carga dos componentes
+// A inicialização será chamada pelo index.html
+console.log('[Main] DOM pronto, aguardando componentes...');
+});
 }
 
 // Global API
