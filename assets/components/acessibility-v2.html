@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<!-- Side Widgets Container - LIBRAS + Acessibilidade -->
+<div class="side-widgets-container">
+  <div class="side-widgets-wrapper">
+    <!-- Botão de LIBRAS -->
+    <div class="libras-widget-top">
+      <button type="button" id="libras-toggle-top" class="libras-btn-top" aria-label="Ativar tradutor de Libras" title="Tradução em Libras">
+        <svg class="libras-icon-hands" viewBox="0 0 52 52" aria-hidden="true">
+          <!-- Mão esquerda -->
+          <path class="hand-outline" d="M16,8 L16,28 C16,32 14,36 10,38 L10,44 L20,44 L20,38 C20,34 22,30 26,28 L26,8 Z" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="hand-detail" d="M16,14 L16,24" stroke="#00bcd4" stroke-width="2" stroke-linecap="round"/>
+          <path class="hand-detail" d="M20,12 L20,22" stroke="#00bcd4" stroke-width="2" stroke-linecap="round"/>
+          <!-- Mão direita -->
+          <path class="hand-outline" d="M36,12 L36,32 C36,36 34,40 30,42 L30,48 L40,48 L40,42 C40,38 42,34 46,32 L46,12 Z" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="hand-detail" d="M36,18 L36,28" stroke="#00bcd4" stroke-width="2" stroke-linecap="round"/>
+          <path class="hand-detail" d="M40,16 L40,26" stroke="#00bcd4" stroke-width="2" stroke-linecap="round"/>
+          <!-- Detalhes de conexão -->
+          <circle class="hand-accent" cx="26" cy="20" r="2" fill="#00bcd4"/>
+          <circle class="hand-accent" cx="26" cy="26" r="2" fill="#00bcd4"/>
+        </svg>
+        <span class="libras-label-top">Libras</span>
+      </button>
+    </div>
+    
+    <!-- Widget de Acessibilidade -->
+    <div class="accessibility-widget">
+      <button type="button" id="accessibility-toggle" class="accessibility-btn" aria-label="Abrir menu de acessibilidade" title="Acessibilidade">
+        <i class="fas fa-universal-access"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Painel de Acessibilidade -->
+<div id="accessibility-panel" class="accessibility-panel-hidden" role="dialog" aria-label="Painel de Acessibilidade">
+  <div class="panel-header shiny-header-border">
+    <div class="panel-logo">
+      <img src="https://www.calculadorasdeenfermagem.com.br/iconpages.webp" alt="" class="panel-logo-img">
+    </div>
+    <div>
+      <h2 class="panel-title-text">Acessibilidade</h2>
+      <p class="panel-subtitle">Personalize sua experiência</p>
+    </div>
+    <button type="button" class="icon-btn" id="accessibility-close" aria-label="Fechar painel">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="panel-content">
+    <!-- Tamanho da Fonte -->
+    <section class="accessibility-section">
+      <h3 class="section-title">Tamanho da Fonte</h3>
+      <div class="accessibility-card" data-action="font-size" data-param="decrease">
+        <div class="card-content">
+          <span class="card-label">Diminuir</span>
+          <span class="card-hint">A-</span>
+        </div>
+        <div class="icon-slot">
+          <i class="fas fa-minus-circle"></i>
+        </div>
+      </div>
+      <div class="accessibility-card" data-action="font-size" data-param="reset">
+        <div class="card-content">
+          <span class="card-label">Normal</span>
+          <span class="card-hint">100%</span>
+        </div>
+        <div class="icon-slot">
+          <i class="fas fa-font"></i>
+        </div>
+      </div>
+      <div class="accessibility-card" data-action="font-size" data-param="increase">
+        <div class="card-content">
+          <span class="card-label">Aumentar</span>
+          <span class="card-hint">A+</span>
+        </div>
+        <div class="icon-slot">
+          <i class="fas fa-plus-circle"></i>
+        </div>
+      </div>
+    </section>
+    <!-- Contraste -->
+    <section class="accessibility-section">
+      <h3 class="section-title">Contraste</h3>
+      <div class="grid-cols-2">
+        <div class="accessibility-card" data-action="contrast" data-param="inverted">
+          <span class="card-label">Cores Invertidas</span>
+          <div class="icon-slot">
+            <i class="fas fa-adjust"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="contrast" data-param="light-contrast">
+          <span class="card-label">Alto Contraste Claro</span>
+          <div class="icon-slot">
+            <i class="fas fa-sun"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="contrast" data-param="dark-contrast">
+          <span class="card-label">Alto Contraste Escuro</span>
+          <div class="icon-slot">
+            <i class="fas fa-moon"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Filtros de Daltonismo -->
+    <section class="accessibility-section">
+      <h3 class="section-title">Filtros de Daltonismo</h3>
+      <div class="grid-cols-2">
+        <div class="accessibility-card" data-action="colorblind" data-param="protanopia">
+          <span class="card-label">Protanopia (Vermelho)</span>
+          <div class="icon-slot">
+            <i class="fas fa-eye"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="colorblind" data-param="deuteranopia">
+          <span class="card-label">Deuteranopia (Verde)</span>
+          <div class="icon-slot">
+            <i class="fas fa-leaf"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="colorblind" data-param="tritanopia">
+          <span class="card-label">Tritanopia (Azul)</span>
+          <div class="icon-slot">
+            <i class="fas fa-water"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Saturação -->
+    <section class="accessibility-section">
+      <h3 class="section-title">Saturação</h3>
+      <div class="grid-cols-2">
+        <div class="accessibility-card" data-action="saturation" data-param="low">
+          <span class="card-label">Baixa Saturação</span>
+          <div class="icon-slot">
+            <i class="fas fa-circle"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="saturation" data-param="high">
+          <span class="card-label">Alta Saturação</span>
+          <div class="icon-slot">
+            <i class="fas fa-circle" style="color:var(--color-primary)"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="saturation" data-param="monochrome">
+          <span class="card-label">Monocromático</span>
+          <div class="icon-slot">
+            <i class="fas fa-adjust" style="filter:grayscale(100%)"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Cursor -->
+    <section class="accessibility-section">
+      <h3 class="section-title">Tamanho do Cursor</h3>
+      <div class="grid-cols-2">
+        <div class="accessibility-card" data-action="cursor" data-param="medium">
+          <span class="card-label">Cursor Grande</span>
+          <div class="icon-slot">
+            <i class="fas fa-mouse-pointer"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="cursor" data-param="large">
+          <span class="card-label">Cursor Extra Grande</span>
+          <div class="icon-slot">
+            <i class="fas fa-mouse-pointer" style="font-size:1.8rem"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Guia de Leitura -->
+    <section class="accessibility-section">
+      <h3 class="section-title">Guia de Leitura</h3>
+      <div class="grid-cols-2">
+        <div class="accessibility-card" data-action="reading-guide" data-param="azul">
+          <span class="card-label">Guia Azul</span>
+          <div class="icon-slot">
+            <i class="fas fa-ruler-horizontal" style="color:#1e3a8a"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="reading-guide" data-param="laranja">
+          <span class="card-label">Guia Laranja</span>
+          <div class="icon-slot">
+            <i class="fas fa-ruler-horizontal" style="color:#ea580c"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="reading-guide" data-param="preto">
+          <span class="card-label">Guia Preto</span>
+          <div class="icon-slot">
+            <i class="fas fa-ruler-horizontal" style="color:#000"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Recursos Adicionais -->
+    <section class="accessibility-section">
+      <h3 class="section-title">Recursos Adicionais</h3>
+      <div class="grid-cols-2">
+        <div class="accessibility-card" data-action="highlight-links">
+          <span class="card-label">Destacar Links</span>
+          <div class="icon-slot">
+            <i class="fas fa-link"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="highlight-headers">
+          <span class="card-label">Destacar Títulos</span>
+          <div class="icon-slot">
+            <i class="fas fa-heading"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="bold-text">
+          <span class="card-label">Texto em Negrito</span>
+          <div class="icon-slot">
+            <i class="fas fa-bold"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="stop-anim">
+          <span class="card-label">Parar Animações</span>
+          <div class="icon-slot">
+            <i class="fas fa-pause"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="hide-images">
+          <span class="card-label">Esconder Imagens</span>
+          <div class="icon-slot">
+            <i class="fas fa-image"></i>
+          </div>
+        </div>
+        <div class="accessibility-card" data-action="reading-mode">
+          <span class="card-label">Modo Leitura</span>
+          <div class="icon-slot">
+            <i class="fas fa-book-open"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Atalhos de Teclado -->
+    <section class="accessibility-section">
+      <button type="button" class="accessibility-card full-width" id="shortcuts-btn">
+        <span class="card-label">Atalhos de Teclado</span>
+        <span class="card-hint">Ver todos os atalhos disponíveis</span>
+        <div class="icon-slot">
+          <i class="fas fa-keyboard"></i>
+        </div>
+      </button>
+    </section>
+    <!-- Dicionário de Termos -->
+    <section class="accessibility-section">
+      <button type="button" class="accessibility-card full-width" id="glossary-btn">
+        <span class="card-label">Dicionário de Termos</span>
+        <span class="card-hint">Glossário de termos de enfermagem</span>
+        <div class="icon-slot">
+          <i class="fas fa-book"></i>
+        </div>
+      </button>
+    </section>
+  </div>
+  <div class="menu-cta-overlay">
+    <button type="button" class="btn-restore" id="accessibility-restore">
+      <i class="fas fa-undo"></i>
+      Restaurar Padrões
+    </button>
+  </div>
+</div>
+<!-- Modal de Atalhos de Teclado -->
+<div id="shortcuts-modal" class="shortcuts-modal hidden" role="dialog" aria-labelledby="shortcuts-title">
+  <div class="shortcuts-content">
+    <div class="shortcuts-header">
+      <h2 id="shortcuts-title">
+        <i class="fas fa-keyboard"></i>
+        Atalhos de Teclado
+      </h2>
+      <button type="button" class="icon-btn" id="shortcuts-close" aria-label="Fechar">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="shortcuts-body">
+      <div class="browser-tabs" role="tablist">
+        <button type="button" class="browser-tab active" data-browser="chrome" role="tab" aria-selected="true">
+          Chrome
+        </button>
+        <button type="button" class="browser-tab" data-browser="firefox" role="tab" aria-selected="false">
+          Firefox
+        </button>
+        <button type="button" class="browser-tab" data-browser="safari" role="tab" aria-selected="false">
+          Safari
+        </button>
+      </div>
+      <div id="shortcuts-list" class="shortcuts-list">
+        <!-- Atalhos serão renderizados via JavaScript -->
+      </div>
+      <div class="shortcuts-note">
+        <kbd>Esc</kbd>
+        <span>Fechar painéis modais</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal de Dicionário -->
+<div id="glossary-modal" class="glossary-content hidden" role="dialog" aria-labelledby="glossary-title">
+  <div class="glossary-body">
+    <aside class="glossary-alphabet">
+      <button type="button" class="alphabet-toggle" aria-label="Contrair alfabeto">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <div class="alphabet-letters">
+        <button type="button" class="alphabet-letter active" data-letter="all">ALL</button>
+        <button type="button" class="alphabet-letter" data-letter="A">A</button>
+        <button type="button" class="alphabet-letter" data-letter="B">B</button>
+        <button type="button" class="alphabet-letter" data-letter="C">C</button>
+        <button type="button" class="alphabet-letter" data-letter="D">D</button>
+        <button type="button" class="alphabet-letter" data-letter="E">E</button>
+        <button type="button" class="alphabet-letter" data-letter="F">F</button>
+        <button type="button" class="alphabet-letter" data-letter="G">G</button>
+        <button type="button" class="alphabet-letter" data-letter="H">H</button>
+        <button type="button" class="alphabet-letter" data-letter="I">I</button>
+        <button type="button" class="alphabet-letter" data-letter="L">L</button>
+        <button type="button" class="alphabet-letter" data-letter="M">M</button>
+        <button type="button" class="alphabet-letter" data-letter="N">N</button>
+        <button type="button" class="alphabet-letter" data-letter="P">P</button>
+        <button type="button" class="alphabet-letter" data-letter="R">R</button>
+        <button type="button" class="alphabet-letter" data-letter="S">S</button>
+        <button type="button" class="alphabet-letter" data-letter="T">T</button>
+        <button type="button" class="alphabet-letter" data-letter="V">V</button>
+      </div>
+    </aside>
+    <main class="glossary-main">
+      <div class="glossary-search">
+        <input type="text" id="glossary-search-input" placeholder="Buscar termo..." aria-label="Buscar no glossário">
+      </div>
+      <ul id="glossary-list" class="glossary-list">
+        <!-- Termos serão renderizados via JavaScript -->
+      </ul>
+      <div id="glossary-empty" class="glossary-empty" style="display:none">
+        Nenhum termo encontrado
+      </div>
+    </main>
+  </div>
+</div>
+<!-- Filtros de Daltonismo (SVG) -->
+<svg style="position: absolute; width: 0; height: 0; overflow: hidden;">
+  <defs>
+    <filter id="protanopia-filter">
+      <feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0" />
+    </filter>
+    <filter id="deuteranopia-filter">
+      <feColorMatrix type="matrix" values="0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0" />
+    </filter>
+    <filter id="tritanopia-filter">
+      <feColorMatrix type="matrix" values="0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0" />
+    </filter>
+  </defs>
+</svg>
