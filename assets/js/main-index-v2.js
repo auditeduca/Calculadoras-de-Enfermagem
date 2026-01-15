@@ -84,7 +84,7 @@ source: 'main'
 
 function updateMainForTheme(isDark) {
 // Atualizar estilos do main quando tema muda
-const mainContent = document.getElementById('main-v2-container');
+const mainContent = document.getElementById('main-v2-content');
 if (mainContent) {
 // Adicionar classes específicas se necessário
 mainContent.setAttribute('data-theme', isDark ? 'dark' : 'light');
@@ -93,7 +93,7 @@ mainContent.setAttribute('data-theme', isDark ? 'dark' : 'light');
 
 function updateMainForFontSize(size) {
 // Atualizar estilos do main quando fonte muda
-const mainContent = document.getElementById('main-v2-container');
+const mainContent = document.getElementById('main-v2-content');
 if (mainContent) {
 mainContent.setAttribute('data-font-size', size);
 }
@@ -101,7 +101,7 @@ mainContent.setAttribute('data-font-size', size);
 
 function updateMainForAccessibility(settings) {
 // Atualizar main quando configurações de acessibilidade mudam
-const mainContent = document.getElementById('main-v2-container');
+const mainContent = document.getElementById('main-v2-content');
 if (mainContent) {
 if (settings.highlightLinks) {
 mainContent.classList.add('accessibility-links-highlighted');
@@ -756,7 +756,7 @@ return `
 // Render Functions
 // ============================================
 function renderAllTools() {
-const mainContent = document.getElementById('main-v2-container');
+const mainContent = document.getElementById('main-v2-content');
 if (!mainContent) {
 console.warn('[Main] Elemento #main-v2-container não encontrado');
 return;
@@ -1097,7 +1097,7 @@ renderAllTools();
 }
 
 function initMain() {
-const mainContent = document.getElementById('main-v2-container');
+const mainContent = document.getElementById('main-v2-content');
 if (!mainContent) {
 console.warn('[Main] Elemento #main-v2-container não encontrado, tentando novamente...');
 setTimeout(initMain, 100);
