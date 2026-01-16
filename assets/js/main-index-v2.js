@@ -417,36 +417,17 @@
     })();
     
     // ============================================
-    // Tool Data (Carregado via template inline no HTML)
+    // Tool Data (Carregado via template inline)
     // ============================================
     function getToolsData() {
-        // Primeiro, tentar encontrar o template no documento atual
-        let template = document.getElementById('tools-data-template');
-        
-        // Se não encontrar, tentar nos containers pais (quando injetado via fetch)
-        if (!template) {
-            const container = ModuleContext.getContainer();
-            if (container) {
-                template = container.querySelector('#tools-data-template');
-            }
-        }
-        
-        // Se ainda não encontrar, tentar encontrar em qualquer lugar do DOM
-        if (!template) {
-            template = document.querySelector('#tools-data-template');
-        }
-        
+        const template = document.getElementById('tools-data-template');
         if (template) {
             try {
-                // O conteúdo do script type="text/template" é texto, não HTML executável
                 return JSON.parse(template.textContent.trim());
             } catch (e) {
                 console.error('[Main] Erro ao parsear dados de ferramentas:', e);
-                return [];
             }
         }
-        
-        console.warn('[Main] Template tools-data-template não encontrado');
         return [];
     }
     
@@ -1029,33 +1010,9 @@
     }
     
     // ============================================
-    // Initialization State
-    // ============================================
-    let initializationState = {
-        checkCount: 0,
-        maxChecks: 100, // Máximo de 100 verificações (10 segundos)
-        pollingInterval: null,
-        isChecking: false
-    };
-    
-    function stopPolling() {
-        if (initializationState.pollingInterval) {
-            clearInterval(initializationState.pollingInterval);
-            initializationState.pollingInterval = null;
-        }
-        initializationState.isChecking = false;
-    }
-    
-    // ============================================
     // Initialization
     // ============================================
     function init() {
-        // Evitar inicialização dupla
-        if (MainModule.initialized) {
-            console.log('[Main] Módulo já inicializado, ignorando init()');
-            return true;
-        }
-        
         console.log('[Main] Inicializando módulo main-index...');
         
         // Detectar contexto de execução
@@ -1078,65 +1035,25 @@
     }
     
     function initMain() {
-        // Verificar se já está inicializando
-        if (MainModule.initialized) {
-            console.log('[Main] Módulo já inicializado, não inicializando novamente');
-            return;
-        }
-        
-        // Verificar se já está verificando para evitar múltiplas instâncias
-        if (initializationState.isChecking) {
-            console.log('[Main] Verificação já em andamento, ignorando nova chamada');
-            return;
-        }
-        
-        console.log('[Main] Iniciando verificação de dados...');
-        initializationState.isChecking = true;
-        initializationState.checkCount = 0;
-        
-        // Função de verificação com limite de tentativas
-        const checkData = () => {
-            initializationState.checkCount++;
-            
-            // Verificar limite máximo de tentativas
-            if (initializationState.checkCount >= initializationState.maxChecks) {
-                console.error('[Main] Limite de tentativas atingido. Container ou dados não encontrados.');
-                stopPolling();
-                return;
-            }
-            
-            const toolsData = getToolsData();
+        // Aguardar container estar disponível
+        const checkContainer = () => {
             const container = ModuleContext.getContainer();
             const toolsContainer = ModuleContext.getToolsContainer();
             
-            if (toolsData.length > 0 && container && toolsContainer) {
-                // Dados disponíveis e containers encontrados, inicializar
-                stopPolling();
+            if (container && toolsContainer) {
                 init();
-            } else if (!container || !toolsContainer) {
-                // Container ainda não disponível, continuar verificando
-                console.log(`[Main] Container não encontrado (tentativa ${initializationState.checkCount}/${initializationState.maxChecks})...`);
             } else {
-                // Container disponível mas sem dados, continuar verificando
-                console.log(`[Main] Dados não encontrados (tentativa ${initializationState.checkCount}/${initializationState.maxChecks})...`);
+                // Tentar novamente em breve
+                setTimeout(checkContainer, 50);
             }
         };
         
-        // Usar setInterval para polling controlado
-        initializationState.pollingInterval = setInterval(checkData, 100);
-        
-        // Verificação inicial imediata
-        checkData();
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', checkContainer);
+        } else {
+            checkContainer();
+        }
     }
-    
-    // Cleanup na saída da página
-    window.addEventListener('beforeunload', stopPolling);
-    
-    // Escutar evento de container pronto (emitido pelo teste5.html)
-    window.addEventListener('module:main-v2-content:ready', function() {
-        console.log('[Main] Container main-v2-content está pronto');
-        initMain();
-    });
     
     // Expor API pública
     window.MainInit = initMain;
