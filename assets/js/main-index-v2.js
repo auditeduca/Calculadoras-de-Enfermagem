@@ -440,7 +440,7 @@ const heroSlides = [
         buttonUrl: '#calculadoras',
         imageIcon: 'fa-calculator',
         gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-        bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-welcome.webp'
+        bgImage: 'assets/images/hero-section/hero-section-welcome.webp'
     },
     {
         id: 'diagnosticos',
@@ -450,7 +450,7 @@ const heroSlides = [
         buttonUrl: 'pages/diagnosticosnanda.html',
         imageIcon: 'fa-clipboard-list',
         gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-        bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-nanda-tools.webp'
+        bgImage: 'assets/images/hero-section/hero-section-nanda-tools.webp'
     },
     {
         id: 'simulado',
@@ -460,7 +460,7 @@ const heroSlides = [
         buttonUrl: 'pages/simulado-de-enfermagem2.html',
         imageIcon: 'fa-graduation-cap',
         gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-        bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-simulator-tools.webp'
+        bgImage: 'assets/images/hero-section/hero-section-simulator-tools.webp'
     },
     {
         id: 'biblioteca',
@@ -470,7 +470,7 @@ const heroSlides = [
         buttonUrl: 'pages/downloads.html',
         imageIcon: 'fa-book-open',
         gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-        bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-library-tools.webp'
+        bgImage: 'assets/images/hero-section/hero-section-library-tools.webp'
     },
     {
         id: 'notificacao',
@@ -480,7 +480,7 @@ const heroSlides = [
         buttonUrl: 'pages/notificacao-compulsoria.html',
         imageIcon: 'fa-bell',
         gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-        bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-notification-tools.webp'
+        bgImage: 'assets/images/hero-section/hero-section-notification-tools.webp'
     }
 ];
 
