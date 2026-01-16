@@ -3,6 +3,11 @@
  * Substitui header.js com integração total ao AccessControl
  * Resolve conflitos entre módulos e corrige problemas de menu
  * Integração com EventBus para comunicação entre módulos
+ * 
+ * CORREÇÕES DE SINCRONIZAÇÃO:
+ * - MutationObserver para detectar injeção do HTML
+ * - HeaderInit como ponto de entrada controlado
+ * - Verificações idempotentes para evitar inicialização dupla
  */
 (function() {
     "use strict";
@@ -30,6 +35,7 @@
         currentFontIndex: 1, // Começa em 100% (índice 1)
         isDarkMode: false,
         loaded: false,
+        initializationComplete: false, // NOVO: Flag para controlar inicialização
         activeMegaPanel: null,
         activeMobileSubmenu: null,
         currentLanguage: 'pt-br', // Idioma atual salvo/carregado
@@ -1080,11 +1086,18 @@
 
     // ============================================
     // MEGA MENU DESKTOP - CORREÇÃO PRINCIPAL
+    // Função corrigida para lidar com elementos que podem não existir ainda
     // ============================================
     function initMegaMenu() {
+        // CORREÇÃO: Verificar se os elementos existem antes de continuar
         const megaMenuItems = $$('.has-mega-menu');
 
-        if (megaMenuItems.length === 0) return;
+        if (megaMenuItems.length === 0) {
+            console.log('[Header] Nenhum item de mega menu encontrado, inicialização adiçada');
+            return false;
+        }
+
+        console.log('[Header] Inicializando mega menu com', megaMenuItems.length, 'itens');
 
         let hoverTimeout;
         let currentOpenPanel = null;
@@ -1235,6 +1248,8 @@
                 closeAllPanels();
             }
         });
+
+        return true;
     }
 
     // ============================================
@@ -1398,6 +1413,7 @@
     function onIdiomasPanelOpen() {
         updateActiveLanguageIndicators();
     }
+    
     function initLanguageSelector() {
         // Carregar idioma salvo e atualizar indicadores visuais
         const savedLang = loadSavedLanguage();
@@ -1497,7 +1513,7 @@
                 } catch (err) {
                     console.warn('[Header] Erro ao salvar idioma:', err);
                 }
-
+    
                 // Fechar a lista
                 if (mobileIdiomasSection && mobileIdiomasList) {
                     mobileIdiomasSection.classList.remove('expanded');
@@ -1621,13 +1637,13 @@
     // INICIALIZAÇÃO PRINCIPAL
     // ============================================
     function initialize() {
-        // Verificar se os elementos do header existem
+        // CORREÇÃO: Verificar se os elementos do header existem
         const hasMegaMenuItems = $$('.has-mega-menu').length > 0;
         const hasMobileMenu = getElement('mobile-menu') !== null;
 
         if (!hasMegaMenuItems && !hasMobileMenu) {
             console.log('[HeaderModule] Elementos do header não encontrados');
-            return;
+            return false;
         }
 
         // Verificação DUPLA para evitar inicialização dupla:
@@ -1635,7 +1651,7 @@
         // Não inicializar novamente para evitar conflitos
         if (State.loaded) {
             console.log('[HeaderModule] Já inicializado, ignorando chamada');
-            return;
+            return false;
         }
 
         console.log('[HeaderModule] Inicializando módulo...');
@@ -1656,7 +1672,13 @@
         setupSkipLinks();
         initClickAnimations();
         setupMobileMenuBridge();
-        initMegaMenu();
+        
+        // CORREÇÃO: Inicializar mega menu e verificar resultado
+        const megaMenuResult = initMegaMenu();
+        if (!megaMenuResult) {
+            console.log('[HeaderModule] Mega menu não pôde ser inicializado (elementos ausentes)');
+        }
+        
         initMenuTabs();
         initLanguageSelector();
         initMobileSearch();
@@ -1680,7 +1702,9 @@
         }, 100);
 
         State.loaded = true;
+        State.initializationComplete = true;
         console.log('[HeaderModule] Módulo inicializado com sucesso');
+        return true;
     }
 
     // ============================================
@@ -1693,7 +1717,8 @@
     window.HeaderModule = {
         /**
          * Inicializa o módulo do header
-         * Deve ser chamado após a injeção do HTML via innerHTML
+         * Deve ser chamado APÓS a injeção do HTML via innerHTML
+         * @returns {boolean} true se inicializado com sucesso, false se elementos não encontrados
          */
         init: function() {
             console.log('[HeaderModule.init()] Chamado explicitamente');
@@ -1716,9 +1741,29 @@
             }
 
             // Inicializar diretamente sem delay
-            initialize();
+            return initialize();
+        },
 
-            return true;
+        /**
+         * Reinicializa o mega menu (útil após injeção dinâmica)
+         * @returns {boolean} true se bem-sucedido
+         */
+        reinitMegaMenu: function() {
+            console.log('[HeaderModule.reinitMegaMenu()] Reinicializando mega menu...');
+            // Resetar estado do mega menu
+            window.__mobileMenuInitialized = false;
+            // Tentar inicializar novamente
+            return initMegaMenu();
+        },
+
+        /**
+         * Verifica se o módulo está pronto para inicialização
+         * @returns {boolean}
+         */
+        isReady: function() {
+            const hasMegaMenuItems = $$('.has-mega-menu').length > 0;
+            const hasMobileMenu = getElement('mobile-menu') !== null;
+            return hasMegaMenuItems || hasMobileMenu;
         },
 
         /**
@@ -1786,7 +1831,7 @@
     // OBSERVADOR DE MUTAÇÃO PARA AUTODETECÇÃO
     // ============================================
     // Observer para detectar quando os elementos do header são injetados
-    // e inicializar automaticamente o módulo
+    // e inicializar automaticamente o módulo como fallback
     const headerObserver = new MutationObserver(function(mutationsList) {
         for (const mutation of mutationsList) {
             if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
