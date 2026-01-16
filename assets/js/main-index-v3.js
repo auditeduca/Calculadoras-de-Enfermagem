@@ -137,6 +137,8 @@ function renderCard(tool, sectionState, type) {
     const actionIcon = actionIcons[type] || 'fa-calculator';
     const actionText = actionTexts[type] || 'Acessar';
     const tagText = tags[type] || 'informação';
+    // Capitalizar primeira letra da tag
+    const capitalizedTag = tagText.charAt(0).toUpperCase() + tagText.slice(1);
 
     return `
 <a href="${tool.filename}" class="calculator-card ${type}" data-id="${tool.id}" data-category="${tool.category}">
@@ -145,7 +147,7 @@ function renderCard(tool, sectionState, type) {
     </div>
     <div class="calculator-content">
         <h3 class="calculator-title">${escapeHtml(tool.name)}</h3>
-        <span class="calculator-tag">${tagText}</span>
+        <span class="calculator-tag">${capitalizedTag}</span>
         <p class="calculator-description">${escapeHtml(tool.description)}</p>
     </div>
     <div class="calculator-meta">
@@ -366,7 +368,7 @@ const toolsData = [
     { id: 'peso-ideal', name: 'Peso Ideal', category: 'Antropometria', type: 'calculator', description: 'Cálculo do peso ideal baseado em fórmulas de Lorentz, Devine e IMCP.', filename: 'peso-ideal.html', icon: 'fas fa-child', color: 'blue' },
     { id: 'queimaduras', name: 'Regra dos 9', category: 'Emergência', type: 'calculator', description: 'Cálculo da área de superfície corporal afetada por queimaduras segundo a regra dos 9.', filename: 'queimaduras.html', icon: 'fas fa-fire-flame-curved', color: 'blue' },
     { id: 'rule', name: 'RULE', category: 'Risco', type: 'calculator', description: 'Score de risco para trombose venosa profunda (TVP) em pacientes clínicos.', filename: 'rule.html', icon: 'fas fa-calculator', color: 'blue' },
-    { id: 'apache', name: 'APACHE II', category: 'UTI', type: 'calculator', description: 'Avaliação de gravidade em pacientes críticos: Acute Physiology and Chronic Health Evaluation.', filename: 'score-apache.html', icon: 'fas fa-hospital-user', color: 'blue' },
+    { id: 'apache', name: 'APACHE II', category: 'UTI', type: 'calculator', description: 'Avaliação de gravidade em pacientes críticos: Acute Physiology and Chronic Health Evaluation.', filename: 'score-apache.html', icon: 'fas fa-hospital-user', color: 'primary' },
 
     // Escalas Clínicas
     { id: 'braden', name: 'Escala de Braden', category: 'Lesões', type: 'scale', description: 'Avaliação do risco para desenvolvimento de úlceras por pressão.', filename: 'braden.html', icon: 'fas fa-bed', color: 'green' },
@@ -494,15 +496,17 @@ function generateHeroHTML() {
     ).join('');
 
     const slidesHTML = heroSlides.map((slide, index) => `
-<div class="carousel-item ${index === 0 ? 'active' : ''}" data-slide="${index}" style="background-image: ${slide.gradient}, url('${slide.bgImage}')">
-    <div class="hero-slide">
+<div class="carousel-item ${index === 0 ? 'active' : ''}" data-slide="${index}">
+    <div class="hero-slide" style="background-image: ${slide.gradient}, url('${slide.bgImage}')">
         <div class="hero-content">
-            <div class="hero-icon">
-                <i class="fas ${slide.imageIcon}" aria-hidden="true"></i>
-            </div>
             <h2 class="hero-title">${slide.title}</h2>
             <p class="hero-subtitle">${slide.subtitle}</p>
             ${slide.buttonText ? `<a href="${slide.buttonUrl}" class="hero-btn">${slide.buttonText}</a>` : ''}
+        </div>
+        <div class="hero-icon-container">
+            <div class="hero-icon">
+                <i class="fas ${slide.imageIcon}" aria-hidden="true"></i>
+            </div>
         </div>
     </div>
 </div>
@@ -527,11 +531,12 @@ function generateHeroHTML() {
 }
 
 function generateSectionHTML(id, title, tools, type, icon) {
+    const iconHTML = icon ? `<i class="fas ${icon}" aria-hidden="true"></i>` : '';
     return `
 <section id="${id}" class="section" aria-labelledby="${id}-title">
     <header class="section-header">
         <h2 id="${id}-title" class="section-title">
-            <i class="fas ${icon}" aria-hidden="true"></i>
+            ${iconHTML}
             ${title}
         </h2>
     </header>
@@ -692,9 +697,9 @@ function renderMainContent() {
     console.log('[Main] vaccines:', vaccines.length);
 
     const visualizarHTML = generateVisualizarHTML();
-    const sectionCalculadoras = generateSectionHTML('calculadoras', 'Calculadoras Clínicas', calculators, 'calculator', 'fa-calculator');
-    const sectionEscalas = generateSectionHTML('escalas', 'Escalas Clínicas', scales, 'scale', 'fa-clipboard-list');
-    const sectionVacinas = generateSectionHTML('vacinas', 'Calendário Vacinal', vaccines, 'other', 'fa-calendar-check');
+    const sectionCalculadoras = generateSectionHTML('calculadoras', 'Calculadoras Clínicas', calculators, 'calculator');
+    const sectionEscalas = generateSectionHTML('escalas', 'Escalas Clínicas', scales, 'scale');
+    const sectionVacinas = generateSectionHTML('vacinas', 'Calendário Vacinal', vaccines, 'other');
 
     console.log('[Main] Visualizar HTML length:', visualizarHTML.length);
     console.log('[Main] Section HTML length:', sectionCalculadoras.length + sectionEscalas.length + sectionVacinas.length);
@@ -859,10 +864,16 @@ function initializeCarouselEvents() {
 function initializeViewEvents() {
     const viewBtn = document.querySelector('.view-btn');
     const viewMenu = document.querySelector('.view-dropdown .dropdown-menu');
+    const sortBtn = document.querySelector('.sort-btn');
+    const sortMenu = document.querySelector('.sort-dropdown .dropdown-menu');
 
     if (viewBtn && viewMenu) {
         viewBtn.addEventListener('click', function(e) {
             e.stopPropagation();
+            // Fechar o outro dropdown antes de abrir este
+            if (sortMenu && sortMenu.classList.contains('show')) {
+                sortMenu.classList.remove('show');
+            }
             viewMenu.classList.toggle('show');
         });
 
@@ -880,12 +891,13 @@ function initializeViewEvents() {
         });
     }
 
-    const sortBtn = document.querySelector('.sort-btn');
-    const sortMenu = document.querySelector('.sort-dropdown .dropdown-menu');
-
     if (sortBtn && sortMenu) {
         sortBtn.addEventListener('click', function(e) {
             e.stopPropagation();
+            // Fechar o outro dropdown antes de abrir este
+            if (viewMenu && viewMenu.classList.contains('show')) {
+                viewMenu.classList.remove('show');
+            }
             sortMenu.classList.toggle('show');
         });
 
