@@ -125,7 +125,14 @@
     // ==========================================
     function log(message, type = "info") {
         const prefix = "[Accessibility]";
-        console[`${type}`](`${prefix} ${message}`);
+        // Validar tipo de console antes de usar
+        const validTypes = ["log", "info", "warn", "error", "debug"];
+        const validType = validTypes.includes(type) ? type : "log";
+        try {
+            console[validType](`${prefix} ${message}`);
+        } catch (e) {
+            console.log(`${prefix} ${message}`);
+        }
     }
 
     function getElement(id) {
@@ -135,9 +142,12 @@
     function getElements(selectors) {
         const result = {};
         Object.entries(selectors).forEach(([key, selector]) => {
-            result[key] = selector.startsWith("#")
-                ? getElement(selector)
-                : document.querySelectorAll(selector);
+            if (selector.startsWith("#")) {
+                const id = selector.substring(1);
+                result[key] = document.getElementById(id);
+            } else {
+                result[key] = document.querySelectorAll(selector);
+            }
         });
         return result;
     }
@@ -1799,27 +1809,34 @@
 
         log(`Container encontrado: ${container.tagName}, children: ${container.children.length}`, "debug");
 
-        // Verificar se já foi injetado (checar múltiplos indicadores)
+        // Verificar se já foi injetado/carregado (checar múltiplos indicadores)
         const existingToggle = container.querySelector('#accessibility-toggle');
         const existingPanel = container.querySelector('#accessibility-panel');
+        
         if (existingToggle && existingPanel) {
-            log('HTML de acessibilidade já injetado anteriormente');
+            log('HTML de acessibilidade já carregado');
             return true;
         }
 
         // Verificar se há HTML externo carregado
-        if (container.innerHTML.trim().length > 100 && !existingToggle) {
+        if (container.innerHTML.trim().length > 100) {
             log('HTML externo detectado, verificando estrutura...', "debug");
             // Tentar usar o HTML existente em vez de sobrescrever
             if (container.querySelector('.accessibility-panel')) {
                 log('Painel de acessibilidade encontrado no HTML existente', "debug");
                 return true;
             }
+            // Verificar outros seletores do painel
+            if (container.querySelector('[class*="accessibility"]')) {
+                log('Elementos de acessibilidade encontrados no HTML externo', "debug");
+                return true;
+            }
         }
 
-        // Injetar HTML
+        // Se não há HTML, usar o template interno como fallback
+        log('Nenhum HTML encontrado, usando template interno', "warn");
         container.innerHTML = ACCESSIBILITY_HTML;
-        log('HTML de acessibilidade injetado com sucesso');
+        log('HTML de acessibilidade injetado com sucesso (fallback)');
         return true;
     }
 
@@ -1828,12 +1845,19 @@
     // ==========================================
     function safeGetElement(selector) {
         // Tentar múltiplas formas de selecionar
-        if (selector.startsWith('#')) {
-            const id = selector.substring(1);
-            const element = document.getElementById(id);
-            if (element) return element;
+        try {
+            if (selector.startsWith('#')) {
+                const id = selector.substring(1);
+                const element = document.getElementById(id);
+                if (element) return element;
+                // Fallback para querySelector
+                return document.querySelector(selector);
+            }
+            return document.querySelector(selector);
+        } catch (e) {
+            log(`Erro ao selecionar elemento ${selector}: ${e.message}`, "warn");
+            return null;
         }
-        return document.querySelector(selector);
     }
 
     function selectAccessibilityElements() {
@@ -1848,19 +1872,29 @@
 
         const elements = {};
         let allFound = true;
+        let foundCount = 0;
+        const totalSelectors = Object.keys(selectors).length;
 
         Object.entries(selectors).forEach(([key, selector]) => {
-            const element = safeGetElement(selector);
-            if (element) {
-                elements[key] = element;
-                log(`Elemento encontrado: ${key} (${selector})`, "debug");
-            } else {
+            try {
+                const element = safeGetElement(selector);
+                if (element) {
+                    elements[key] = element;
+                    foundCount++;
+                    log(`Elemento encontrado: ${key} (${selector})`, "debug");
+                } else {
+                    elements[key] = null;
+                    allFound = false;
+                    log(`Elemento NÃO encontrado: ${key} (${selector})`, "warn");
+                }
+            } catch (e) {
                 elements[key] = null;
-                log(`Elemento NÃO encontrado: ${key} (${selector})`, "warn");
                 allFound = false;
+                log(`Erro ao buscar ${key}: ${e.message}`, "error");
             }
         });
 
+        log(`Seleção de elementos: ${foundCount}/${totalSelectors} encontrados`, "debug");
         return { elements, allFound };
     }
 
