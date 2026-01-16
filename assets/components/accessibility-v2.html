@@ -1,537 +1,71 @@
-<!-- accessibility-v2.html - Painel de Acessibilidade e Recursos Assistivos -->
-<!-- Este arquivo é injetado no elemento #accessibility-v2-container pelo script principal -->
-<!-- Inclui: Toggle principal, Toggle Libras (visual apenas), Painel de configurações, Atalhos, Dicionário -->
+<!-- Botão de Toggle Acessibilidade -->
+<button id="accessibility-toggle" 
+        aria-label="Abrir painel de acessibilidade" 
+        aria-expanded="false"
+        aria-controls="accessibility-panel"
+        title="Recursos de Acessibilidade">
+    <i class="fas fa-eye" aria-hidden="true"></i>
+</button>
 
-<!-- Container Principal dos Widgets de Acessibilidade -->
-<aside id="accessibility-v2-container" role="complementary" aria-label="Recursos de Acessibilidade">
-
-    <!-- Botão Flutuante de Acessibilidade -->
-    <button id="accessibility-toggle" class="icon-btn accessibility-btn" aria-label="Recursos de Acessibilidade" aria-expanded="false" aria-controls="accessibility-panel">
-        <span class="btn-icon">
+<!-- Painel de Acessibilidade -->
+<div id="accessibility-panel" class="accessibility-panel-hidden" role="dialog" aria-labelledby="accessibility-title">
+    
+    <!-- Header -->
+    <div class="accessibility-header">
+        <h3 id="accessibility-title">
             <i class="fas fa-eye" aria-hidden="true"></i>
-        </span>
-        <span class="btn-text">Acessibilidade</span>
-    </button>
-
-    <!-- Botão Libras (VLibras) -->
-    <!-- A funcionalidade LIBRAS está integrada -->
-    <button id="libras-toggle-top" class="icon-btn accessibility-btn" aria-label="Tradutor de Libras" aria-pressed="false" title="Tradutor de Libras">
-        <span class="btn-icon">
-            <i class="fas fa-sign-language" aria-hidden="true"></i>
-        </span>
-        <span class="btn-text">Libras</span>
-    </button>
-
-    <!-- Painel de Acessibilidade -->
-    <div id="accessibility-panel" class="accessibility-panel accessibility-panel-hidden" role="dialog" aria-label="Configurações de Acessibilidade" aria-modal="true" hidden>
-
-        <!-- Cabeçalho do Painel -->
-        <div class="accessibility-header">
-            <h2 class="accessibility-title">
-                <i class="fas fa-eye" aria-hidden="true"></i>
-                Acessibilidade
-            </h2>
-            <p class="accessibility-subtitle">Personalize sua experiência</p>
-            <button id="accessibility-close" class="icon-btn close-btn" aria-label="Fechar painel de acessibilidade">
-                <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Área de Conteúdo Scrollável -->
-        <div class="accessibility-panel-content">
+            Acessibilidade
+        </h3>
+        <button id="accessibility-close" aria-label="Fechar painel">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
+    
+    <!-- Conteúdo -->
+    <div class="accessibility-content">
         
         <!-- Tamanho da Fonte -->
-        <div class="accessibility-card" data-action="font-size" data-param="decrease" role="button" tabindex="0" aria-label="Diminuir tamanho da fonte">
-            <div class="card-icon">
-                <svg class="icon-font-decrease" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M4 6h16M4 12h10M4 18h16"/>
-                    <path d="M10 12h4"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Tamanho da Fonte</h3>
-            </div>
-            <div class="card-actions">
-                <span class="font-size-label">Diminuir</span>
-                <span class="font-size-icon">A-</span>
+        <div class="accessibility-option">
+            <label>
+                <i class="fas fa-text-height" aria-hidden="true"></i>
+                Tamanho da Fonte
+            </label>
+            <div class="font-size-controls">
+                <button id="font-decrease" aria-label="Diminuir fonte" title="Diminuir">A-</button>
+                <button id="font-reset" aria-label="Resetar fonte" title="Padrão">A</button>
+                <button id="font-increase" aria-label="Aumentar fonte" title="Aumentar">A+</button>
             </div>
         </div>
-
-        <div class="accessibility-card" data-action="font-size" data-param="reset" role="button" tabindex="0" aria-label="Restaurar tamanho normal da fonte">
-            <div class="card-icon">
-                <svg class="icon-font-normal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Normal</h3>
-            </div>
-            <div class="card-actions">
-                <span class="font-size-label">100%</span>
+        
+        <!-- Alto Contraste -->
+        <div class="accessibility-option">
+            <label for="contrast-toggle">
+                <i class="fas fa-adjust" aria-hidden="true"></i>
+                Alto Contraste
+            </label>
+            <div class="accessibility-toggle-switch">
+                <input type="checkbox" id="contrast-toggle" aria-label="Ativar alto contraste">
+                <span class="slider"></span>
             </div>
         </div>
-
-        <div class="accessibility-card" data-action="font-size" data-param="increase" role="button" tabindex="0" aria-label="Aumentar tamanho da fonte">
-            <div class="card-icon">
-                <svg class="icon-font-increase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M4 6h16M4 12h16M4 18h16"/>
-                    <path d="M12 12h8"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Aumentar</h3>
-            </div>
-            <div class="card-actions">
-                <span class="font-size-label">A+</span>
+        
+        <!-- Modo Escuro -->
+        <div class="accessibility-option">
+            <label for="dark-mode-toggle">
+                <i class="fas fa-moon" aria-hidden="true"></i>
+                Modo Escuro
+            </label>
+            <div class="accessibility-toggle-switch">
+                <input type="checkbox" id="dark-mode-toggle" aria-label="Ativar modo escuro">
+                <span class="slider"></span>
             </div>
         </div>
-
-        <!-- Contraste -->
-        <div class="accessibility-card" data-action="contrast" data-param="inverted-colors" role="button" tabindex="0" aria-label="Ativar cores invertidas">
-            <div class="card-icon">
-                <svg class="icon-contrast-inverted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 2a10 10 0 0 0 0 20"/>
-                    <path d="M2 12h20"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Contraste</h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Cores Invertidas</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="contrast" data-param="light-contrast" role="button" tabindex="0" aria-label="Ativar alto contraste claro">
-            <div class="card-icon">
-                <svg class="icon-contrast-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 2a10 10 0 0 1 0 20"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Alto Contraste Claro</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="contrast" data-param="dark-contrast" role="button" tabindex="0" aria-label="Ativar alto contraste escuro">
-            <div class="card-icon">
-                <svg class="icon-contrast-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M12 2a10 10 0 0 0 0 20"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Alto Contraste Escuro</span>
-            </div>
-        </div>
-
-        <!-- Filtros de Daltonismo -->
-        <div class="accessibility-card" data-action="colorblind" data-param="protanopia" role="button" tabindex="0" aria-label="Ativar filtro protanopia">
-            <div class="card-icon">
-                <svg class="icon-colorblind-protanopia" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 2v20"/>
-                    <path d="M2 12h20"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Filtros de Daltonismo</h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Protanopia (Vermelho)</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="colorblind" data-param="deuteranopia" role="button" tabindex="0" aria-label="Ativar filtro deuteranopia">
-            <div class="card-icon">
-                <svg class="icon-colorblind-deuteranopia" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M2 12h20"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Deuteranopia (Verde)</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="colorblind" data-param="tritanopia" role="button" tabindex="0" aria-label="Ativar filtro tritanopia">
-            <div class="card-icon">
-                <svg class="icon-colorblind-tritanopia" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 2v20"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Tritanopia (Azul)</span>
-            </div>
-        </div>
-
-        <!-- Saturação -->
-        <div class="accessibility-card" data-action="saturation" data-param="low" role="button" tabindex="0" aria-label="Ativar baixa saturação">
-            <div class="card-icon">
-                <svg class="icon-saturation-low" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M2 12h20"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Saturação</h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Baixa Saturação</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="saturation" data-param="high" role="button" tabindex="0" aria-label="Ativar alta saturação">
-            <div class="card-icon">
-                <svg class="icon-saturation-high" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 2v20"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Alta Saturação</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="saturation" data-param="monochrome" role="button" tabindex="0" aria-label="Ativar modo monocromático">
-            <div class="card-icon">
-                <svg class="icon-saturation-monochrome" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/>
-                    <path d="M3 12h18"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Monocromático</span>
-            </div>
-        </div>
-
-        <!-- Tamanho do Cursor -->
-        <div class="accessibility-card" data-action="cursor" data-param="medium" role="button" tabindex="0" aria-label="Ativar cursor grande">
-            <div class="card-icon">
-                <svg class="cursor-medium" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M4 4l16 8-8 3-3 8-3-8-4-3z"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Tamanho do Cursor</h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Cursor Grande</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="cursor" data-param="large" role="button" tabindex="0" aria-label="Ativar cursor extra grande">
-            <div class="card-icon">
-                <svg class="cursor-large" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M4 4l16 8-8 3-3 8-3-8-4-3z"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Cursor Extra Grande</span>
-            </div>
-        </div>
-
-        <!-- Guia de Leitura -->
-        <div class="accessibility-card" data-action="reading-guide" data-param="azul" role="button" tabindex="0" aria-label="Ativar guia de leitura azul">
-            <div class="card-icon">
-                <svg class="reading-guide-azul" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M2 12h20"/>
-                    <rect x="2" y="8" width="20" height="4" fill="currentColor" opacity="0.3"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Guia de Leitura</h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Guia Azul</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="reading-guide" data-param="laranja" role="button" tabindex="0" aria-label="Ativar guia de leitura laranja">
-            <div class="card-icon">
-                <svg class="reading-guide-laranja" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M2 12h20"/>
-                    <rect x="2" y="8" width="20" height="4" fill="currentColor" opacity="0.3"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Guia Laranja</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="reading-guide" data-param="preto" role="button" tabindex="0" aria-label="Ativar guia de leitura preto">
-            <div class="card-icon">
-                <svg class="reading-guide-preto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M2 12h20"/>
-                    <rect x="2" y="8" width="20" height="4" fill="currentColor" opacity="0.3"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Guia Preto</span>
-            </div>
-        </div>
-
-        <!-- Recursos Adicionais -->
-        <div class="accessibility-card" data-action="highlight-links" role="button" tabindex="0" aria-label="Destacar links da página">
-            <div class="card-icon">
-                <svg class="highlight-links" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Recursos Adicionais</h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Destacar Links</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="highlight-headers" role="button" tabindex="0" aria-label="Destacar títulos da página">
-            <div class="card-icon">
-                <svg class="highlight-headers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M4 6h16M4 12h10M4 18h16"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Destacar Títulos</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="bold-text" role="button" tabindex="0" aria-label="Ativar texto em negrito">
-            <div class="card-icon">
-                <svg class="bold-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/>
-                    <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Texto em Negrito</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="stop-anim" role="button" tabindex="0" aria-label="Parar animações">
-            <div class="card-icon">
-                <svg class="stop-anim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <rect x="6" y="4" width="4" height="16"/>
-                    <rect x="14" y="4" width="4" height="16"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Parar Animações</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="hide-images" role="button" tabindex="0" aria-label="Esconder imagens">
-            <div class="card-icon">
-                <svg class="hide-images" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/>
-                    <path d="M21 21l-18-0"/>
-                    <path d="M1 1l22 22"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Esconder Imagens</span>
-            </div>
-        </div>
-
-        <div class="accessibility-card" data-action="reading-mode" role="button" tabindex="0" aria-label="Ativar modo leitura">
-            <div class="card-icon">
-                <svg class="reading-mode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"></h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Modo Leitura</span>
-            </div>
-        </div>
-
-        <!-- Atalhos de Teclado -->
-        <div class="accessibility-card" id="shortcuts-btn" role="button" tabindex="0" aria-label="Ver atalhos de teclado">
-            <div class="card-icon">
-                <svg class="shortcuts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <rect x="2" y="4" width="20" height="16" rx="2"/>
-                    <path d="M6 8h4M10 8h4M6 12h8M10 12h8M6 16h4M10 16h4"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Atalhos de Teclado</h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Ver todos os atalhos disponíveis</span>
-            </div>
-        </div>
-
-        <!-- Dicionário -->
-        <div class="accessibility-card" id="glossary-btn" role="button" tabindex="0" aria-label="Ver dicionário de termos">
-            <div class="card-icon">
-                <svg class="glossary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Dicionário de Termos</h3>
-            </div>
-            <div class="card-actions">
-                <span class="action-label">Glossário de termos de enfermagem</span>
-            </div>
-        </div>
-
-        <!-- Restaurar Padrões -->
-        <div class="accessibility-card" id="accessibility-restore" role="button" tabindex="0" aria-label="Restaurar configurações padrão">
-            <div class="card-icon">
-                <svg class="restore" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M2.5 2v6h6M21.5 22v-6h-6"/>
-                    <path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.2"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Restaurar Padrões</h3>
-            </div>
-        </div>
-
-        </div> <!-- Fim do accessibility-panel-content -->
-
+        
+        <!-- Botão VLibras -->
+        <button id="libras-toggle-top" aria-label="Ativar tradutor de Libras">
+            <i class="fas fa-sign-language" aria-hidden="true"></i>
+            Ativar VLibras
+        </button>
+        
     </div>
-
-    <!-- Overlay para fechar painel ao clicar fora -->
-    <div class="accessibility-panel-overlay" aria-hidden="true"></div>
-
-    <!-- Modal de Atalhos de Teclado -->
-    <div id="shortcuts-modal" class="modal hidden" role="dialog" aria-label="Atalhos de Teclado" aria-modal="true" hidden>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Atalhos de Teclado</h2>
-                <button id="shortcuts-close" class="icon-btn close-btn" aria-label="Fechar">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <path d="M18 6L6 18M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Abas de Navegador -->
-            <div class="browser-tabs" role="tablist">
-                <button class="browser-tab active" data-browser="chrome" role="tab" aria-selected="true" aria-controls="chrome-panel">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="16" height="16">
-                        <circle cx="12" cy="12" r="10"/>
-                    </svg>
-                    Chrome
-                </button>
-                <button class="browser-tab" data-browser="firefox" role="tab" aria-selected="false" aria-controls="firefox-panel">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="16" height="16">
-                        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.8-.13 2.61-.36-.14-.76-.22-1.55-.22-2.36 0-3.52 1.28-6.63 3.32-8.77-1.08-.72-2.26-1.08-3.51-1.08-1.25 0-2.43.36-3.51 1.08 2.04 2.14 3.32 5.25 3.32 8.77 0 .81-.08 1.6-.22 2.36.81.23 1.68.36 2.61.36 5.5 0 10-4.5 10-10s-4.5-10-10-10z"/>
-                    </svg>
-                    Firefox
-                </button>
-                <button class="browser-tab" data-browser="safari" role="tab" aria-selected="false" aria-controls="safari-panel">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="16" height="16">
-                        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                        <path d="M12 6l8 4-8 4z"/>
-                    </svg>
-                    Safari
-                </button>
-            </div>
-
-            <div class="shortcuts-list" id="shortcuts-list" role="list">
-                <!-- Atalhos serão renderizados via JS -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Dicionário -->
-    <div id="glossary-modal" class="modal hidden" role="dialog" aria-label="Dicionário de Termos" aria-modal="true" hidden>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Dicionário de Termos</h2>
-                <button class="icon-btn close-btn" aria-label="Fechar">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <path d="M18 6L6 18M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-
-            <div class="glossary-search">
-                <input type="text" id="glossary-search-input" placeholder="Buscar termo..." aria-label="Buscar no dicionário">
-            </div>
-
-            <div class="glossary-filter" role="group" aria-label="Filtrar por letra">
-                <button class="alphabet-letter active" data-letter="all" aria-pressed="true">Todos</button>
-                <button class="alphabet-letter" data-letter="A" aria-pressed="false">A</button>
-                <button class="alphabet-letter" data-letter="B" aria-pressed="false">B</button>
-                <button class="alphabet-letter" data-letter="C" aria-pressed="false">C</button>
-                <button class="alphabet-letter" data-letter="D" aria-pressed="false">D</button>
-                <button class="alphabet-letter" data-letter="G" aria-pressed="false">G</button>
-                <button class="alphabet-letter" data-letter="H" aria-pressed="false">H</button>
-                <button class="alphabet-letter" data-letter="I" aria-pressed="false">I</button>
-                <button class="alphabet-letter" data-letter="L" aria-pressed="false">L</button>
-                <button class="alphabet-letter" data-letter="M" aria-pressed="false">M</button>
-                <button class="alphabet-letter" data-letter="N" aria-pressed="false">N</button>
-                <button class="alphabet-letter" data-letter="P" aria-pressed="false">P</button>
-                <button class="alphabet-letter" data-letter="R" aria-pressed="false">R</button>
-                <button class="alphabet-letter" data-letter="S" aria-pressed="false">S</button>
-                <button class="alphabet-letter" data-letter="T" aria-pressed="false">T</button>
-                <button class="alphabet-letter" data-letter="V" aria-pressed="false">V</button>
-            </div>
-
-            <div class="glossary-list" id="glossary-list" role="list">
-                <!-- Termos serão renderizados via JS -->
-            </div>
-
-            <div id="glossary-empty" class="glossary-empty" style="display: none;" role="status">
-                Nenhum termo encontrado
-            </div>
-        </div>
-    </div>
-
-    <!-- Announcer para Leitores de Tela -->
-    <div id="sr-announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
-
-</aside>
+</div>
