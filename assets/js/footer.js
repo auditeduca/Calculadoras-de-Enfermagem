@@ -1,12 +1,8 @@
 /**
- * Footer JavaScript - VERSÃO CORRIGIDA
- * Consentimento de Cookies Google Analytics/Ads
- * Modais com estilos de sombreamento nos botões fechar
- * Conteúdo com apenas letras iniciais maiúsculas
- * Array com expansão e retração
- * Botões voltar, salvar preferências, concordar com tudo e rejeitar não-essenciais
- * Integração com EventBus para comunicação entre módulos
+ * Footer JavaScript - Consentimento de Cookies Google Analytics/Ads
+ * Fundo azul #1A3E74, modal de preferências, accordion funcional
  */
+
 (function() {
     "use strict";
 
@@ -33,69 +29,18 @@
         }
     };
 
-    // ==========================================
-    // ESTADO
-    // ==========================================
+    // Estado
     const state = {
         modalStack: [],
         lastFocusedElement: null,
         isBannerVisible: false,
         initialized: false,
-        eventBusReady: false,
         consent: {
             necessary: true,
             analytics: false,
             marketing: false
-        },
-        expandedCategories: {}
+        }
     };
-
-    // ==========================================
-    // EVENTBUS INTEGRATION
-    // ==========================================
-    function setupFooterEventBusIntegration() {
-        if (!window.EventBus) {
-            window.addEventListener('eventbus:ready', function onEventBusReady() {
-                window.removeEventListener('eventbus:ready', onEventBusReady);
-                registerFooterEventBusListeners();
-                state.eventBusReady = true;
-                console.log('[Footer] EventBus integration activated');
-            });
-        } else {
-            registerFooterEventBusListeners();
-            state.eventBusReady = true;
-        }
-    }
-
-    function registerFooterEventBusListeners() {
-        if (!window.EventBus) return;
-
-        // Escutar eventos de theme para sincronização
-        window.EventBus.on('theme:changed', function(data) {
-            console.log('[Footer] Tema alterado detectado via EventBus:', data.theme);
-        }, { module: 'footer' });
-
-        // Escutar eventos de accessibility
-        window.EventBus.on('accessibility:settings:changed', function(data) {
-            console.log('[Footer] Configurações de acessibilidade alteradas via EventBus');
-        }, { module: 'footer' });
-    }
-
-    function emitFooterEvent(eventName, data) {
-        const eventData = {
-            ...data,
-            source: 'footer',
-            timestamp: Date.now()
-        };
-
-        if (window.EventBus && state.eventBusReady) {
-            window.EventBus.emit('footer:' + eventName, eventData);
-        }
-
-        window.dispatchEvent(new CustomEvent('footer:' + eventName, {
-            detail: eventData
-        }));
-    }
 
     // ==========================================
     // UTILITÁRIOS
@@ -126,9 +71,12 @@
     function showToast(message) {
         const toast = document.getElementById(CONFIG.selectors.toast);
         if (!toast) return;
+        
         const toastMessage = toast.querySelector?.('.toast-message') || toast;
         if (toastMessage) toastMessage.textContent = message;
+        
         toast.classList.add('visible');
+        
         setTimeout(() => {
             toast.classList.remove('visible');
         }, 3000);
@@ -137,7 +85,12 @@
     // ==========================================
     // GOOGLE ANALYTICS/ADS CONSENT MODE
     // ==========================================
+    
+    /**
+     * Configura o consentimento do Google Analytics conforme LGPD
+     */
     function setupGoogleAnalyticsConsent() {
+        // Configuração inicial de consentimento (deny por padrão)
         if (typeof gtag === 'function') {
             gtag('consent', 'default', {
                 'analytics_storage': 'denied',
@@ -150,6 +103,9 @@
         }
     }
 
+    /**
+     * Atualiza o consentimento do Google Analytics quando usuário aceita
+     */
     function updateGoogleAnalyticsConsent(consentType) {
         if (typeof gtag === 'function') {
             gtag('consent', 'update', {
@@ -162,313 +118,679 @@
         }
     }
 
-    // ==========================================
-    // GERENCIAMENTO DE MODAIS
-    // ==========================================
-    function openModal(modalId) {
-        const modal = document.getElementById(modalId);
-        const overlay = document.getElementById(CONFIG.selectors.overlay);
+    /**
+     * Carrega scripts do Google Analytics se houver consentimento
+     */
+    function loadAnalyticsScripts(consent) {
+        if (!consent.analytics) {
+            console.log('[Footer] Analytics não autorizado - scripts não serão carregados');
+            return;
+        }
+
+        console.log('[Footer] Carregando scripts do Google Analytics...');
         
-        if (!modal) return;
+        // Carregar Google Analytics
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+        document.head.appendChild(gaScript);
+
+        // Carregar Google Tag Manager se necessário
+        const gtmScript = document.createElement('script');
+        gtmScript.innerHTML = `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-XXXXXXXXXX');
+        `;
+        document.head.appendChild(gtmScript);
+
+        console.log('[Footer] Scripts do Google Analytics carregados com sucesso');
+    }
+
+    /**
+     * Remove scripts de analytics quando usuário revoga consentimento
+     */
+    function removeAnalyticsScripts() {
+        console.log('[Footer] Removendo scripts de analytics...');
+        
+        // Remover scripts do Google Analytics
+        const scripts = document.querySelectorAll('script[src*="googletagmanager"], script[src*="google-analytics"]');
+        scripts.forEach(script => script.remove());
+        
+        // Limpar dataLayer
+        window.dataLayer = [];
+        
+        console.log('[Footer] Scripts de analytics removidos');
+    }
+
+    /**
+     * Verifica e aplica consentimento salvo
+     */
+    function applyStoredConsent() {
+        try {
+            const savedConsent = getCookie(CONFIG.cookieName);
+            if (savedConsent) {
+                const consent = JSON.parse(savedConsent);
+                state.consent = consent;
+                
+                // Atualizar switches na interface
+                updateSwitchesState(consent);
+                
+                // Aplicar consentimento ao Google Analytics
+                if (consent.analytics || consent.marketing) {
+                    updateGoogleAnalyticsConsent(
+                        consent.analytics && consent.marketing ? 'all' : 
+                        consent.analytics ? 'analytics' : 'marketing'
+                    );
+                    loadAnalyticsScripts(consent);
+                } else {
+                    setupGoogleAnalyticsConsent();
+                }
+                
+                console.log('[Footer] Consentimento aplicado:', consent);
+                return true;
+            }
+        } catch (e) {
+            console.warn('[Footer] Erro ao aplicar consentimento salvo:', e);
+        }
+        return false;
+    }
+
+    /**
+     * Atualiza o estado visual dos switches baseado no consentimento
+     */
+    function updateSwitchesState(consent) {
+        const analyticsSwitch = document.getElementById('check-analytics');
+        const marketingSwitch = document.getElementById('check-marketing');
+        
+        if (analyticsSwitch) {
+            analyticsSwitch.checked = consent.analytics;
+            const slider = analyticsSwitch.nextElementSibling;
+            if (slider) {
+                slider.style.backgroundColor = consent.analytics ? '#1A3E74' : '#ccc';
+            }
+        }
+        
+        if (marketingSwitch) {
+            marketingSwitch.checked = consent.marketing;
+            const slider = marketingSwitch.nextElementSibling;
+            if (slider) {
+                slider.style.backgroundColor = consent.marketing ? '#1A3E74' : '#ccc';
+            }
+        }
+    }
+
+    // ==========================================
+    // GERENCIAMENTO DE UI
+    // ==========================================
+    function toggleBanner(show) {
+        const banner = document.getElementById(CONFIG.selectors.banner);
+        const fab = document.getElementById(CONFIG.selectors.cookieFab);
+        if (!banner) return;
+
+        state.isBannerVisible = show;
+
+        if (show) {
+            banner.classList.remove('hidden');
+            banner.classList.add('visible');
+            banner.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('cookie-banner-open');
+            
+            if (fab) {
+                fab.classList.add('hidden');
+                fab.classList.remove('visible');
+            }
+        } else {
+            banner.classList.remove('visible');
+            banner.classList.add('hidden');
+            banner.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('cookie-banner-open');
+            
+            const consent = getCookie(CONFIG.cookieName);
+            if (consent && fab) {
+                fab.classList.remove('hidden');
+                fab.classList.add('visible');
+            }
+        }
+    }
+
+    function openModal() {
+        const modal = document.getElementById(CONFIG.selectors.modal) ||
+                      document.getElementById(CONFIG.selectors.modalContent);
+        const overlay = document.getElementById(CONFIG.selectors.overlay);
+
+        if (!modal || !overlay) {
+            console.warn('[Footer] Modal não encontrado');
+            return;
+        }
 
         state.lastFocusedElement = document.activeElement;
-        state.modalStack.push(modalId);
+        state.modalStack.push(modal);
 
+        overlay.classList.remove('hidden');
+        overlay.classList.add('visible');
         modal.classList.remove('hidden');
+        modal.classList.add('visible');
         modal.setAttribute('aria-hidden', 'false');
-        
-        if (overlay) {
-            overlay.classList.remove('hidden');
-            overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        const banner = document.getElementById(CONFIG.selectors.banner);
+        if (banner && banner.classList.contains('visible')) {
+            banner.classList.remove('visible');
+            banner.classList.add('hidden');
         }
-
-        // Focar no primeiro elemento focável
-        const focusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-        if (focusable) focusable.focus();
-
-        // Capturar tecla Escape
-        document.addEventListener('keydown', handleEscapeKey);
     }
 
-    function closeModal(modalId) {
-        const modal = document.getElementById(modalId);
+    function openDetailModal(modalId) {
+        if (!modalId) return;
+        
+        const detailModal = document.getElementById(modalId);
         const overlay = document.getElementById(CONFIG.selectors.overlay);
+
+        if (!detailModal || !overlay) {
+            console.warn('[Footer] Submodal não encontrado:', modalId);
+            return;
+        }
+
+        state.lastFocusedElement = document.activeElement;
+        state.modalStack.push(detailModal);
+
+        overlay.classList.remove('hidden');
+        overlay.classList.add('visible');
+        detailModal.classList.remove('hidden');
+        detailModal.classList.add('visible');
+        detailModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDetailModal(modalId) {
+        if (!modalId) return;
         
-        if (!modal) return;
+        const detailModal = document.getElementById(modalId);
+        if (!detailModal) return;
 
-        modal.classList.add('hidden');
-        modal.setAttribute('aria-hidden', 'true');
-
-        state.modalStack = state.modalStack.filter(id => id !== modalId);
-
-        if (state.modalStack.length === 0 && overlay) {
-            overlay.classList.add('hidden');
-            overlay.setAttribute('aria-hidden', 'true');
-            document.removeEventListener('keydown', handleEscapeKey);
+        const index = state.modalStack.indexOf(detailModal);
+        if (index > -1) {
+            state.modalStack.splice(index, 1);
         }
 
-        // Restaurar foco
-        if (state.lastFocusedElement) {
-            state.lastFocusedElement.focus();
-        }
-    }
+        detailModal.classList.remove('visible');
+        detailModal.classList.add('hidden');
+        detailModal.setAttribute('aria-hidden', 'true');
 
-    function handleEscapeKey(e) {
-        if (e.key === 'Escape' && state.modalStack.length > 0) {
-            const topModal = state.modalStack[state.modalStack.length - 1];
-            closeModal(topModal);
-        }
-    }
+        if (state.modalStack.length === 0) {
+            const overlay = document.getElementById(CONFIG.selectors.overlay);
+            if (overlay) {
+                overlay.classList.remove('visible');
+                overlay.classList.add('hidden');
+            }
+            document.body.style.overflow = '';
 
-    // ==========================================
-    // BANNER DE COOKIES
-    // ==========================================
-    function showCookieBanner() {
-        const banner = document.getElementById(CONFIG.selectors.banner);
-        if (!banner) return;
-
-        banner.classList.remove('hidden');
-        banner.setAttribute('aria-hidden', 'false');
-        state.isBannerVisible = true;
-    }
-
-    function hideCookieBanner() {
-        const banner = document.getElementById(CONFIG.selectors.banner);
-        if (!banner) return;
-
-        banner.classList.add('hidden');
-        banner.setAttribute('aria-hidden', 'true');
-        state.isBannerVisible = false;
-    }
-
-    function initCookieBanner() {
-        const banner = document.getElementById(CONFIG.selectors.banner);
-        if (!banner) return;
-
-        const acceptAllBtn = banner.querySelector('#cookie-accept-all');
-        const rejectAllBtn = banner.querySelector('#cookie-reject-all');
-        const settingsBtn = banner.querySelector('#cookie-settings');
-
-        if (acceptAllBtn) {
-            acceptAllBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                acceptAllCookies();
-            });
-        }
-
-        if (rejectAllBtn) {
-            rejectAllBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                rejectNonEssentialCookies();
-            });
-        }
-
-        if (settingsBtn) {
-            settingsBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                hideCookieBanner();
-                openModal(CONFIG.selectors.modal);
-            });
-        }
-
-        // Verificar se já tem consentimento
-        const existingConsent = getCookie(CONFIG.cookieName);
-        if (!existingConsent) {
-            showCookieBanner();
-        }
-    }
-
-    // ==========================================
-    // MODAL DE PREFERÊNCIAS
-    // ==========================================
-    function initCookieModal() {
-        const modal = document.getElementById(CONFIG.selectors.modal);
-        if (!modal) return;
-
-        // Botão fechar com sombreamento
-        const closeBtn = modal.querySelector('#cookie-modal-close');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                closeModal(CONFIG.selectors.modal);
-                showCookieBanner();
-            });
-            // Adicionar classe de sombreamento
-            closeBtn.classList.add('modal-close-btn-shadow');
-        }
-
-        // Botão voltar
-        const backBtn = modal.querySelector('[data-action="back"]');
-        if (backBtn) {
-            backBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                closeModal(CONFIG.selectors.modal);
-                showCookieBanner();
-            });
-        }
-
-        // Botão salvar preferências
-        const saveBtn = modal.querySelector('[data-action="save"]');
-        if (saveBtn) {
-            saveBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                savePreferences();
-            });
-        }
-
-        // Botão concordar com tudo
-        const agreeAllBtn = modal.querySelector('[data-action="agree-all"]');
-        if (agreeAllBtn) {
-            agreeAllBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                acceptAllCookies();
-            });
-        }
-
-        // Botão rejeitar não-essenciais
-        const rejectNonEssentialBtn = modal.querySelector('[data-action="reject-non-essential"]');
-        if (rejectNonEssentialBtn) {
-            rejectNonEssentialBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                rejectNonEssentialCookies();
-            });
-        }
-
-        // Configurar categorias expansíveis
-        setupCookieCategories();
-    }
-
-    // ==========================================
-    // CATEGORIAS DE COOKIES EXPANSÍVEIS
-    // ==========================================
-    function setupCookieCategories() {
-        const categories = document.querySelectorAll('.cookie-category');
-        
-        categories.forEach(category => {
-            const header = category.querySelector('.cookie-category-header');
-            const servicesList = category.querySelector('.cookie-services-list');
-            
-            if (header && servicesList) {
-                header.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleCategoryExpansion(category);
-                });
-
-                // Acessibilidade com teclado
-                header.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        toggleCategoryExpansion(category);
-                    }
-                });
+            const mainModal = document.getElementById(CONFIG.selectors.modal) ||
+                             document.getElementById(CONFIG.selectors.modalContent);
+            if (mainModal) {
+                mainModal.classList.add('visible');
+                mainModal.classList.remove('hidden');
+                mainModal.setAttribute('aria-hidden', 'false');
+                state.modalStack.push(mainModal);
             }
 
-            // Configurar toggle de categoria
-            const toggle = category.querySelector('.cookie-switch input');
-            if (toggle) {
-                toggle.addEventListener('change', function(e) {
-                    const categoryName = category.getAttribute('data-category');
-                    state.consent[categoryName] = this.checked;
-                });
+            if (state.lastFocusedElement) {
+                state.lastFocusedElement.focus();
+            }
+        }
+    }
+
+    function closeModal() {
+        const overlay = document.getElementById(CONFIG.selectors.overlay);
+        const banner = document.getElementById(CONFIG.selectors.banner);
+
+        const currentModal = state.modalStack.pop();
+        if (currentModal) {
+            currentModal.classList.remove('visible');
+            currentModal.classList.add('hidden');
+            currentModal.setAttribute('aria-hidden', 'true');
+        }
+
+        if (state.modalStack.length === 0) {
+            if (overlay) {
+                overlay.classList.remove('visible');
+                overlay.classList.add('hidden');
+            }
+            document.body.style.overflow = '';
+
+            const hasConsent = getCookie(CONFIG.cookieName);
+            if (!hasConsent && state.isBannerVisible && banner) {
+                banner.classList.remove('hidden');
+                banner.classList.add('visible');
+            }
+
+            if (state.lastFocusedElement) {
+                state.lastFocusedElement.focus();
+            }
+        }
+    }
+
+    // ==========================================
+    // CONSENTIMENTO
+    // ==========================================
+    function saveConsent(type) {
+        let preferences = {};
+
+        if (type === 'all') {
+            preferences = { necessary: true, analytics: true, marketing: true };
+        } else if (type === 'reject') {
+            preferences = { necessary: true, analytics: false, marketing: false };
+        } else {
+            preferences = {
+                necessary: true,
+                analytics: document.getElementById('check-analytics')?.checked || false,
+                marketing: document.getElementById('check-marketing')?.checked || false
+            };
+        }
+
+        state.consent = preferences;
+        setCookie(CONFIG.cookieName, JSON.stringify(preferences), CONFIG.expirationDays);
+        
+        try {
+            localStorage.setItem(CONFIG.cookieName, JSON.stringify(preferences));
+        } catch (e) {
+            console.warn('[Footer] localStorage bloqueado:', e);
+        }
+
+        // Aplicar consentimento do Google Analytics/Ads
+        updateGoogleAnalyticsConsent(
+            preferences.analytics && preferences.marketing ? 'all' : 
+            preferences.analytics ? 'analytics' : 
+            preferences.marketing ? 'marketing' : 'reject'
+        );
+
+        // Carregar ou remover scripts baseados no consentimento
+        if (preferences.analytics) {
+            loadAnalyticsScripts(preferences);
+        } else {
+            removeAnalyticsScripts();
+        }
+
+        showToast('Preferências salvas com sucesso!');
+
+        state.isBannerVisible = false;
+
+        while (state.modalStack.length > 0) {
+            const m = state.modalStack.pop();
+            if (m) {
+                m.classList.remove('visible');
+                m.classList.add('hidden');
+                m.setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        const overlay = document.getElementById(CONFIG.selectors.overlay);
+        if (overlay) {
+            overlay.classList.remove('visible');
+            overlay.classList.add('hidden');
+        }
+        document.body.style.overflow = '';
+
+        toggleBanner(false);
+
+        const fab = document.getElementById(CONFIG.selectors.cookieFab);
+        if (fab) {
+            fab.classList.remove('hidden');
+            fab.classList.add('visible');
+        }
+
+        // Disparar evento para outras partes da aplicação
+        window.dispatchEvent(new CustomEvent('CookieConsentUpdated', { detail: preferences }));
+    }
+
+    // ==========================================
+    // EVENT LISTENERS - ACORDEON CORRIGIDO
+    // ==========================================
+    function setupEventListeners() {
+        console.log('[Footer] Configurando event listeners...');
+
+        // Clique no documento
+        document.addEventListener('click', function(e) {
+            const target = e.target;
+            const button = target.closest('button');
+            if (!button) return;
+
+            const btnId = button.id;
+
+            // Aceitar todos do banner
+            if (btnId === 'cookie-accept-all') {
+                saveConsent('all');
+                e.preventDefault();
+                return;
+            }
+
+            // Definições - abre modal de preferências
+            if (btnId === 'cookie-settings') {
+                openModal();
+                e.preventDefault();
+                return;
+            }
+
+            // Salvar preferências
+            if (btnId === 'cookie-save-preferences') {
+                saveConsent('custom');
+                e.preventDefault();
+                return;
+            }
+
+            // Fechar modal
+            if (btnId === 'cookie-modal-close') {
+                closeModal();
+                e.preventDefault();
+                return;
+            }
+
+            // Aceitar todos do modal
+            if (btnId === 'cookie-accept-all') {
+                saveConsent('all');
+                e.preventDefault();
+                return;
+            }
+
+            // Rejeitar
+            if (btnId === 'cookie-reject') {
+                saveConsent('reject');
+                e.preventDefault();
+                return;
+            }
+
+            // Rejeitar do modal
+            if (btnId === 'cookie-reject-all') {
+                saveConsent('reject');
+                e.preventDefault();
+                return;
+            }
+
+            // FAB de cookies
+            if (btnId === 'cookie-fab') {
+                openModal();
+                e.preventDefault();
+                return;
+            }
+
+            // Voltar ao topo
+            if (btnId === 'backToTop') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                e.preventDefault();
+                return;
+            }
+
+            // Botões de info (submodais)
+            const infoBtn = target.closest('.cookie-info-btn');
+            if (infoBtn) {
+                const modalTarget = infoBtn.getAttribute('data-modal-target');
+                if (modalTarget) {
+                    state.lastFocusedElement = infoBtn;
+                    openDetailModal(modalTarget);
+                    e.preventDefault();
+                }
+                return;
+            }
+
+            // Fechar submodal
+            const closeBtn = target.closest('.cookie-detail-modal .cookie-modal-close');
+            if (closeBtn) {
+                const modal = closeBtn.closest('.cookie-detail-modal');
+                if (modal && modal.id) {
+                    closeDetailModal(modal.id);
+                    e.preventDefault();
+                }
+                return;
+            }
+
+            // Voltar no submodal
+            const backBtn = target.closest('.cookie-detail-back');
+            if (backBtn) {
+                const modalTarget = backBtn.getAttribute('data-close');
+                if (modalTarget) {
+                    closeDetailModal(modalTarget);
+                    e.preventDefault();
+                }
+                return;
+            }
+        });
+
+        // Clique no overlay fecha modal de detalhe ou modal principal
+        const overlay = document.getElementById(CONFIG.selectors.overlay);
+        if (overlay) {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    // Verificar se há um modal de detalhe aberto
+                    const topModal = state.modalStack[state.modalStack.length - 1];
+                    if (topModal && topModal.classList.contains('cookie-detail-modal')) {
+                        // Fechar apenas o modal de detalhe
+                        closeDetailModal(topModal.id);
+                    } else {
+                        // Fechar o modal principal
+                        closeModal();
+                    }
+                }
+            });
+        }
+
+        // ==========================================
+        // ACORDEON DE CATEGORIAS
+        // ==========================================
+        setupAccordion();
+        
+        // Prevenir que clique no switch expanda o accordion
+        document.querySelectorAll('.cookie-switch').forEach(function(switchEl) {
+            switchEl.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+        
+        // Switches de cores
+        document.querySelectorAll('.cookie-switch input[type="checkbox"]').forEach(function(chk) {
+            chk.addEventListener('change', function(e) {
+                e.stopPropagation();
+                const slider = this.nextElementSibling;
+                if (slider) {
+                    slider.style.backgroundColor = this.checked ? '#1A3E74' : '#ccc';
+                }
+            });
+        });
+
+        // Scroll para botão topo
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById(CONFIG.selectors.backToTop);
+            if (!backToTop) return;
+
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+                backToTop.classList.remove('hidden');
+            } else {
+                backToTop.classList.remove('visible');
+                backToTop.classList.add('hidden');
+            }
+        });
+
+        // ESC fecha modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && state.modalStack.length > 0) {
+                const topModal = state.modalStack[state.modalStack.length - 1];
+                if (topModal.classList.contains('cookie-detail-modal')) {
+                    const modalId = topModal.id;
+                    if (modalId) {
+                        closeDetailModal(modalId);
+                        return;
+                    }
+                }
+                closeModal();
             }
         });
     }
 
-    function toggleCategoryExpansion(category) {
-        const isExpanded = category.classList.contains('expanded');
+    // ==========================================
+    // FUNÇÃO DO ACORDEON
+    // ==========================================
+    function setupAccordion() {
+        console.log('[Footer] Configurando accordion...');
         
-        if (isExpanded) {
-            category.classList.remove('expanded');
-            category.setAttribute('aria-expanded', 'false');
+        const headers = document.querySelectorAll('.cookie-category-header');
+        console.log('[Footer] Headers encontrados:', headers.length);
+        
+        if (headers.length === 0) {
+            console.warn('[Footer] Nenhum header de categoria encontrado');
+            return;
+        }
+        
+        for (let i = 0; i < headers.length; i++) {
+            const header = headers[i];
+            
+            header.onclick = function(e) {
+                // Não expandir se clicar no switch ou info-btn
+                if (e.target.closest('.cookie-switch') || e.target.closest('.cookie-info-btn')) {
+                    return;
+                }
+                
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const group = this.parentElement;
+                if (!group) return;
+                
+                const isExpanded = group.classList.contains('active');
+                
+                // Fechar outros accordions (exceto o primeiro que é tecnicamente necessário)
+                const allGroups = document.querySelectorAll('.cookie-category, .cookie-category-active');
+                for (let j = 0; j < allGroups.length; j++) {
+                    if (allGroups[j] !== group) {
+                        allGroups[j].classList.remove('active');
+                    }
+                }
+                
+                // Toggle do atual
+                if (isExpanded) {
+                    group.classList.remove('active');
+                } else {
+                    group.classList.add('active');
+                }
+            };
+            
+            // Enter ou Space para accessibility
+            header.onkeydown = function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            };
+        }
+        
+        console.log('[Footer] Accordion configurado com', headers.length, 'itens');
+    }
+
+    // ==========================================
+    // INICIALIZAÇÃO
+    // ==========================================
+    function updateYear() {
+        const yearSpan = document.getElementById(CONFIG.selectors.yearSpan);
+        if (yearSpan) {
+            yearSpan.textContent = new Date().getFullYear();
+        }
+    }
+
+    function diagnoseFooter() {
+        console.log('[Footer] === DIAGNÓSTICO ===');
+        
+        const elements = [
+            { id: 'cookie-banner', name: 'Banner' },
+            { id: 'cookie-overlay', name: 'Overlay' },
+            { id: 'cookie-modal', name: 'Modal' },
+            { id: 'cookie-fab', name: 'FAB' },
+            { id: 'backToTop', name: 'Topo' }
+        ];
+        
+        elements.forEach(function(item) {
+            const el = document.getElementById(item.id);
+            console.log('[Footer]', item.name + ':', el ? 'OK' : 'FALTA');
+        });
+        
+        const categories = document.querySelectorAll('.cookie-category');
+        console.log('[Footer] Categorias:', categories.length);
+        
+        const headers = document.querySelectorAll('.cookie-category-header');
+        console.log('[Footer] Headers accordion:', headers.length);
+        
+        // Verificar consentimento do Google Analytics
+        if (typeof gtag !== 'undefined') {
+            console.log('[Footer] Google Analytics detectado');
+        }
+        
+        console.log('[Footer] === FIM ===');
+    }
+
+    function initFooter() {
+        if (state.initialized) return;
+
+        console.log('[Footer] Iniciando...');
+
+        // Verificar se elementos existem
+        const hasFooter = document.querySelector('.footer-content') ||
+                          document.querySelector('.footer-brand-section') ||
+                          document.getElementById('footer');
+
+        if (!hasFooter) {
+            console.warn('[Footer] Footer não encontrado');
+            return;
+        }
+
+        // Configurar Google Analytics Consent Mode
+        setupGoogleAnalyticsConsent();
+
+        // Verificar consentimento salvo
+        const savedConsent = getCookie(CONFIG.cookieName);
+        console.log('[Footer] Consentimento salvo:', savedConsent);
+
+        // Aplicar consentimento salvo se existir
+        const hasStoredConsent = applyStoredConsent();
+
+        state.initialized = true;
+        updateYear();
+        setupEventListeners();
+
+        setTimeout(diagnoseFooter, 1000);
+
+        // Para fins de teste - remova esta linha em produção
+        const testMode = false; // Mude para true para forçar exibição do banner
+
+        if (!hasStoredConsent || testMode) {
+            console.log('[Footer] Mostrando banner...');
+            setTimeout(function() {
+                toggleBanner(true);
+                console.log('[Footer] Banner deve estar visível agora');
+                // Expor função para teste via console
+                window.showCookieBanner = function() { toggleBanner(true); };
+                window.hideCookieBanner = function() { toggleBanner(false); };
+            }, 500);
         } else {
-            category.classList.add('expanded');
-            category.setAttribute('aria-expanded', 'true');
+            console.log('[Footer] Mostrando FAB...');
+            const fab = document.getElementById(CONFIG.selectors.cookieFab);
+            if (fab) {
+                fab.classList.remove('hidden');
+                fab.classList.add('visible');
+            }
         }
     }
 
     // ==========================================
-    // AÇÕES DE CONSENTIMENTO
+    // EXECUÇÃO
     // ==========================================
-    function acceptAllCookies() {
-        state.consent = {
-            necessary: true,
-            analytics: true,
-            marketing: true
-        };
-
-        setCookie(CONFIG.cookieName, 'all', CONFIG.expirationDays);
-        updateGoogleAnalyticsConsent('all');
-        hideCookieBanner();
-        closeModal(CONFIG.selectors.modal);
-        showToast('Preferências salvas com sucesso!');
-        emitFooterEvent('consent:updated', { consent: state.consent });
-    }
-
-    function rejectNonEssentialCookies() {
-        state.consent = {
-            necessary: true,
-            analytics: false,
-            marketing: false
-        };
-
-        setCookie(CONFIG.cookieName, 'necessary', CONFIG.expirationDays);
-        updateGoogleAnalyticsConsent('necessary');
-        hideCookieBanner();
-        closeModal(CONFIG.selectors.modal);
-        showToast('Preferências salvas com sucesso!');
-        emitFooterEvent('consent:updated', { consent: state.consent });
-    }
-
-    function savePreferences() {
-        const consentString = JSON.stringify(state.consent);
-        setCookie(CONFIG.cookieName, consentString, CONFIG.expirationDays);
-        updateGoogleAnalyticsConsent(state.consent.analytics ? 'analytics' : 'necessary');
-        closeModal(CONFIG.selectors.modal);
-        showToast('Preferências salvas com sucesso!');
-        emitFooterEvent('consent:updated', { consent: state.consent });
-    }
-
-    // ==========================================
-    // INICIALIZAÇÃO PRINCIPAL
-    // ==========================================
-    function initFooter() {
-        if (state.initialized) return;
-
-        console.log('[Footer] Iniciando módulo de footer');
-
-        // Configurar Google Analytics
-        setupGoogleAnalyticsConsent();
-
-        // Inicializar EventBus
-        setupFooterEventBusIntegration();
-
-        // Inicializar componentes
-        initCookieBanner();
-        initCookieModal();
-
-        state.initialized = true;
-
-        console.log('[Footer] Módulo de footer inicializado com sucesso');
-    }
-
-    // ==========================================
-    // AUTO-INICIALIZAÇÃO
-    // ==========================================
+    window.addEventListener('Module:footer-container:Ready', initFooter);
+    
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initFooter);
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initFooter, 100);
+        });
     } else {
-        initFooter();
+        setTimeout(initFooter, 100);
     }
 
-    // Expor API pública
-    window.FooterModule = {
-        init: initFooter,
-        openModal: openModal,
-        closeModal: closeModal,
-        acceptAllCookies: acceptAllCookies,
-        rejectNonEssentialCookies: rejectNonEssentialCookies,
-        savePreferences: savePreferences,
-        state: state
-    };
 })();
