@@ -1,129 +1,94 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas clínicas para profissionais de saúde">
-    <meta name="theme-color" content="#1A3E74">
-    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    
-    <!-- CSS Principal -->
-    <link rel="stylesheet" href="main-index-v2.css">
-    
-    <style>
-        /* CSS Crítico para carregamento */
-        body { font-family: 'Nunito Sans', sans-serif; margin: 0; padding: 0; }
-        
-        /* Loader */
-        #loader-global {
-            position: fixed;
-            inset: 0;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 200000;
-            transition: opacity 0.5s;
-        }
-        
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #00897b;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Garantia de visibilidade */
-        .hidden { display: none !important; }
-    </style>
-    
-    <title>Calculadoras de Enfermagem</title>
-</head>
-<body class="light-mode">
-    <!-- Loader Global -->
-    <div id="loader-global">
-        <div class="spinner"></div>
-        <p style="margin-top: 15px; color: #00897b; font-weight: 600;">Carregando Calculadoras...</p>
-    </div>
+<!--
+  main-index-v2.html - Módulo de Conteúdo Principal
+  Este arquivo é um módulo de conteúdo que pode ser:
+  1. Carregado diretamente (modo autônomo)
+  2. Injetado como componente no teste5.html
+  
+  Quando integrado, assume que o teste5.html fornece:
+  - Header e estrutura de navegação
+  - Footer
+  - Container principal de aplicação
+-->
 
-    <!-- Skip Link para Acessibilidade -->
-    <a href="#main-v2-content" class="skip-link" style="position: absolute; top: -40px; left: 0; background: #00897b; color: white; padding: 8px; z-index: 100000; transition: top 0.3s;">Pular para o conteúdo principal</a>
-    <style>.skip-link:focus { top: 0; }</style>
-
+<!-- Container do Módulo de Conteúdo -->
+<main id="main-v2-content" class="main-content-module" role="main" aria-label="Conteúdo Principal das Calculadoras">
+    
     <!-- Hero Section - Container para os slides do carrossel -->
-    <div id="hero-container" class="hero-container">
+    <section id="hero-container" class="hero-section-container" aria-label="Destaques">
         <!-- O hero HTML será injetado pelo JavaScript -->
-    </div>
+    </section>
 
-    <!-- Área principal de conteúdo -->
-    <main id="main-v2-content" role="main" aria-label="Conteúdo Principal">
+    <!-- Seção de Ferramentas -->
+    <section id="tools-section" class="tools-section" aria-label="Ferramentas Disponíveis">
         <!-- Ferramentas serão injetadas pelo JavaScript -->
-    </main>
+    </section>
 
-    <!-- VLibras Widget -->
-    <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
-    </div>
+</main>
 
-    <!-- JavaScript Principal - caminho corrigido -->
-    <script src="main-index-v2.js"></script>
-    
-    <!-- Script de inicialização simplificado -->
-    <script>
-        (function() {
-            'use strict';
-            
-            console.log('[App] Iniciando aplicação...');
-            
-            // Inicialização após DOM estar pronto
-            function initApp() {
-                console.log('[App] DOM pronto, inicializando...');
-                
-                // Aguardar um pequeno intervalo para garantir que tudo está carregado
-                setTimeout(function() {
-                    if (typeof window.MainInit === 'function') {
-                        window.MainInit();
-                        console.log('[App] MainInit chamado com sucesso');
-                    } else {
-                        console.error('[App] MainInit não encontrado!');
-                    }
-                }, 100);
-            }
-            
-            // Verificar estado do documento
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initApp);
-            } else {
-                initApp();
-            }
-            
-            // Ocultar loader após carregamento completo
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    var loader = document.getElementById('loader-global');
-                    if (loader) {
-                        loader.style.opacity = '0';
-                        setTimeout(function() {
-                            loader.style.display = 'none';
-                        }, 500);
-                    }
-                }, 1000);
-            });
-            
-        })();
-    </script>
-</body>
-</html>
+<!-- Template Inline (será processado pelo main-index-v2.js) -->
+<script type="text/template" id="tools-data-template">
+    [
+        // Calculadoras Clínicas
+        { id: 'balanco-hidrico', name: 'Balanço Hídrico', category: 'Controle Hídrico', type: 'calculator', description: 'Controle preciso de líquidos e fluidos corporais.', filename: 'balancohidrico.html', icon: 'fa-tint', color: 'blue' },
+        { id: 'gasometria', name: 'Cálculo de Gasometria', category: 'Exames', type: 'calculator', description: 'Interpretação de gasometria arterial e distúrbios ácido-básicos.', filename: 'gasometria.html', icon: 'fa-vial', color: 'blue' },
+        { id: 'gotejamento', name: 'Cálculo de Gotejamento', category: 'Medicamentos', type: 'calculator', description: 'Velocidade de infusão de soluções parenterais.', filename: 'gotejamento.html', icon: 'fa-hand-holding-water', color: 'blue' },
+        { id: 'heparina', name: 'Cálculo de Heparina', category: 'Medicamentos', type: 'calculator', description: 'Cálculo seguro de doses de heparina.', filename: 'heparina.html', icon: 'fa-syringe', color: 'blue' },
+        { id: 'imc', name: 'Índice de Massa Corporal (IMC)', category: 'Nutrição', type: 'calculator', description: 'Avaliação nutricional e classificação de peso.', filename: 'imc.html', icon: 'fa-weight', color: 'blue' },
+        { id: 'insulina', name: 'Cálculo de Insulina', category: 'Medicamentos', type: 'calculator', description: 'Cálculo de doses e unidades de insulina.', filename: 'insulina.html', icon: 'fa-syringe', color: 'blue' },
+        { id: 'medicamentos', name: 'Cálculo de Medicamentos', category: 'Medicamentos', type: 'calculator', description: 'Regra de três para doses e diluições.', filename: 'medicamentos.html', icon: 'fa-pills', color: 'blue' },
+        { id: 'dimensionamento', name: 'Dimensionamento de Equipe', category: 'Gestão', type: 'calculator', description: 'Organização de recursos humanos segundo COFEN.', filename: 'dimensionamento.html', icon: 'fa-users-cog', color: 'blue' },
+        { id: 'gestacional', name: 'Idade Gestacional e DPP', category: 'Obstetrícia', type: 'calculator', description: 'Cálculo de DUM, DPP e idade gestacional.', filename: 'gestacional.html', icon: 'fa-baby', color: 'blue' },
+        { id: 'glicemia', name: 'Calculadora de Glicemia', category: 'Laboratorial', type: 'calculator', description: 'Conversão entre mg/dL e mmol/L, interpretação de resultados e classificação de hipoglicemia.', filename: 'glicemia.html', icon: 'fa-tint', color: 'blue' },
+        { id: 'betabloqueador', name: 'Conversão de Betabloqueador', category: 'Cardiológico', type: 'calculator', description: 'Equivalência entre diferentes betabloqueadores: carvedilol, metoprolol e propranolol.', filename: 'betabloqueador.html', icon: 'fa-heart-pulse', color: 'blue' },
+        { id: 'drip', name: 'Gotejamento', category: 'Farmácia', type: 'calculator', description: 'Cálculo de gotejamento de soro: macrogotas, microgotas e bombas de infusão.', filename: 'drip.html', icon: 'fa-droplet', color: 'blue' },
+        { id: 'peso-ideal', name: 'Peso Ideal', category: 'Antropometria', type: 'calculator', description: 'Cálculo do peso ideal baseado em fórmulas de Lorentz, Devine e IMCP.', filename: 'peso-ideal.html', icon: 'fa-child', color: 'blue' },
+        { id: 'queimaduras', name: 'Regra dos 9', category: 'Emergência', type: 'calculator', description: 'Cálculo da área de superfície corporal afetada por queimaduras segundo a regra dos 9.', filename: 'queimaduras.html', icon: 'fa-fire-flame-curved', color: 'blue' },
+        { id: 'rule', name: 'RULE', category: 'Risco', type: 'calculator', description: 'Score de risco para trombose venosa profunda (TVP) em pacientes clínicos.', filename: 'rule.html', icon: 'fa-calculator', color: 'blue' },
+        { id: 'apache', name: 'APACHE II', category: 'UTI', type: 'calculator', description: 'Avaliação de gravidade em pacientes críticos: Acute Physiology and Chronic Health Evaluation.', filename: 'score-apache.html', icon: 'fa-hospital-user', color: 'blue' },
+        
+        // Escalas Clínicas
+        { id: 'braden', name: 'Escala de Braden', category: 'Lesões', type: 'scale', description: 'Avaliação do risco para desenvolvimento de úlceras por pressão.', filename: 'braden.html', icon: 'fa-bed', color: 'green' },
+        { id: 'morse', name: 'Escala de Morse', category: 'Quedas', type: 'scale', description: 'Avaliação do risco para quedas em ambiente hospitalar.', filename: 'morse.html', icon: 'fa-person-falling', color: 'green' },
+        { id: 'hamd', name: 'Escala de Hamilton', category: 'Psiquiatria', type: 'scale', description: 'Avaliação da gravidade da depressão (HAM-D17).', filename: 'hamd.html', icon: 'fa-face-sad-tear', color: 'green' },
+        { id: 'edmonton', name: 'Escala de Edmonton', category: 'Geriatria', type: 'scale', description: 'Avaliação do estado funcional em pacientes idosos (Frailty).', filename: 'edmonton.html', icon: 'fa-stethoscope', color: 'green' },
+        { id: 'gcs', name: 'Escala de Glasgow', category: 'Neurologia', type: 'scale', description: 'Avaliação do nível de consciência e coma.', filename: 'gcs.html', icon: 'fa-brain', color: 'green' },
+        { id: 'sad', name: 'SAD', category: 'Respiratório', type: 'scale', description: 'Escala de avaliação da dispneia para triagem de emergência.', filename: 'sad.html', icon: 'fa-lungs', color: 'green' },
+        { id: 'aldrete', name: 'Escala de Aldrete', category: 'Recuperação', type: 'scale', description: 'Avaliação de recuperação pós-anestesia.', filename: 'aldrete.html', icon: 'fa-heartbeat', color: 'green' },
+        { id: 'apgar', name: 'Escala de Apgar', category: 'Neonatologia', type: 'scale', description: 'Avaliação do recém-nascido após o parto.', filename: 'apgar.html', icon: 'fa-baby-carriage', color: 'green' },
+        { id: 'asa', name: 'Classificação ASA', category: 'Anestesia', type: 'scale', description: 'Avaliação do estado físico pré-operatório.', filename: 'asa.html', icon: 'fa-user-md', color: 'green' },
+        { id: 'barthel', name: 'Índice de Barthel', category: 'Funcional', type: 'scale', description: 'Avaliação da independência em atividades diárias.', filename: 'barthel.html', icon: 'fa-shower', color: 'green' },
+        { id: 'bishop', name: 'Escala de Bishop', category: 'Obstetrícia', type: 'scale', description: 'Avaliação da prontidão cervical para indução.', filename: 'bishop.html', icon: 'fa-venus', color: 'green' },
+        { id: 'cam-icu', name: 'CAM-ICU', category: 'UTI', type: 'scale', description: 'Método de avaliação de delirium em pacientes críticos.', filename: 'cam-icu.html', icon: 'fa-brain', color: 'green' },
+        { id: 'capurro', name: 'Escala de Capurro', category: 'Neonatologia', type: 'scale', description: 'Avaliação da idade gestacional do recém-nascido.', filename: 'capurro.html', icon: 'fa-baby', color: 'green' },
+        { id: 'downton', name: 'Escala de Downton', category: 'Quedas', type: 'scale', description: 'Avaliação do risco de quedas em idosos.', filename: 'downton.html', icon: 'fa-person-falling', color: 'green' },
+        { id: 'flacc', name: 'Escala FLACC', category: 'Dor', type: 'scale', description: 'Avaliação de dor em crianças que não conseguem se expressar.', filename: 'flacc.html', icon: 'fa-child', color: 'green' },
+        { id: 'hamilton', name: 'Escala de Hamilton', category: 'Psiquiatria', type: 'scale', description: 'Avaliação da gravidade da depressão.', filename: 'hamilton.html', icon: 'fa-face-sad-tear', color: 'green' },
+        { id: 'johns', name: 'Escala de Johns', category: 'Sono', type: 'scale', description: 'Avaliação da qualidade do sono.', filename: 'johns.html', icon: 'fa-bed', color: 'green' },
+        { id: 'katz', name: 'Índice de Katz', category: 'Funcional', type: 'scale', description: 'Avaliação da independência em atividades diárias.', filename: 'katz.html', icon: 'fa-walking', color: 'green' },
+        { id: 'lachs', name: 'Escala de Lachs', category: 'Fragilidade', type: 'scale', description: 'Avaliação de fragilidade em idosos.', filename: 'lachs.html', icon: 'fa-person-cane', color: 'green' },
+        { id: 'lanss', name: 'LANSS', category: 'Dor', type: 'scale', description: 'Avaliação de dor neuropática.', filename: 'lanss.html', icon: 'fa-bolt', color: 'green' },
+        { id: 'lawton', name: 'Escala de Lawton', category: 'Funcional', type: 'scale', description: 'Avaliação da autonomia para atividades instrumentais.', filename: 'lawton.html', icon: 'fa-home', color: 'green' },
+        { id: 'meem', name: 'Mini-Mental (MEEM)', category: 'Cognitivo', type: 'scale', description: 'Avaliação do estado mental.', filename: 'meem.html', icon: 'fa-brain', color: 'green' },
+        { id: 'news', name: 'NEWS', category: 'Triagem', type: 'scale', description: 'Escala Nacional de Alerta Precoce.', filename: 'news.html', icon: 'fa-heartbeat', color: 'green' },
+        { id: 'nihss', name: 'NIHSS', category: 'AVC', type: 'scale', description: 'Avaliação da gravidade do AVC.', filename: 'nihss.html', icon: 'fa-brain', color: 'green' },
+        { id: 'norton', name: 'Escala de Norton', category: 'Lesões', type: 'scale', description: 'Avaliação do risco de úlceras por pressão.', filename: 'norton.html', icon: 'fa-bed', color: 'green' },
+        { id: 'nrs', name: 'Escala NRS', category: 'Dor', type: 'scale', description: 'Avaliação numérica da dor.', filename: 'nrs.html', icon: 'fa-face-angry', color: 'green' },
+        { id: 'pews', name: 'PEWS', category: 'Pediatria', type: 'scale', description: 'Escala de Alerta Pediátrico.', filename: 'pews.html', icon: 'fa-child', color: 'green' },
+        { id: 'prism', name: 'PRISM', category: 'UTI', type: 'scale', description: 'Índice de Mortalidade Pediátrica.', filename: 'prism.html', icon: 'fa-hospital-user', color: 'green' },
+        { id: 'qsofa', name: 'qSOFA', category: 'Sepse', type: 'scale', description: 'Avaliação rápida de sepse.', filename: 'qsofa.html', icon: 'fa-thermometer-half', color: 'green' },
+        { id: 'ramsay', name: 'Escala de Ramsay', category: 'Sedação', type: 'scale', description: 'Avaliação do nível de sedação.', filename: 'ramsay.html', icon: 'fa-bed', color: 'green' },
+        { id: 'richmond', name: 'RASS', category: 'Sedação', type: 'scale', description: 'Escala de Agitação e Sedação.', filename: 'richmond.html', icon: 'fa-bed', color: 'green' },
+        { id: 'saps', name: 'SAPS III', category: 'UTI', type: 'scale', description: 'Simplified Acute Physiology Score.', filename: 'saps.html', icon: 'fa-calculator', color: 'green' },
+        
+        // Calendário Vacinal
+        { id: 'crianca', name: 'Criança', category: 'Pediátria', type: 'other', description: 'Calendário vacinal completo para crianças de 0 a 10 anos.', filename: 'crianca.html', icon: 'fa-baby', color: 'orange' },
+        { id: 'adolescente', name: 'Adolescente', category: 'Adolescência', type: 'other', description: 'Vacinas recomendadas para adolescentes de 11 a 19 anos.', filename: 'adolescente.html', icon: 'fa-child-reaching', color: 'orange' },
+        { id: 'adulto', name: 'Adulto', category: 'Adulto', type: 'other', description: 'Calendário vacinal para adultos de 20 a 59 anos.', filename: 'adulto.html', icon: 'fa-user', color: 'orange' },
+        { id: 'idoso', name: 'Idoso', category: 'Geriatria', type: 'other', description: 'Vacinas específicas para idosos acima de 60 anos.', filename: 'idoso.html', icon: 'fa-person-cane', color: 'orange' },
+        { id: 'gestante', name: 'Gestante', category: 'Obstetrícia', type: 'other', description: 'Vacinas recomendadas durante a gravidez.', filename: 'gestante.html', icon: 'fa-person-pregnant', color: 'orange' },
+        { id: 'trabalhador', name: 'Trabalhador', category: 'Ocupacional', type: 'other', description: 'Vacinas ocupacionais e obrigatórias para trabalhadores.', filename: 'trabalhador.html', icon: 'fa-hard-hat', color: 'orange' },
+        { id: 'imunodeprimido', name: 'Imunodeprimido', category: 'Especial', type: 'other', description: 'Vacinas para pacientes imunocomprometidos.', filename: 'imunodeprimido.html', icon: 'fa-user-shield', color: 'orange' },
+        { id: 'viajante', name: 'Viajante', category: 'Travel', type: 'other', description: 'Vacinas recomendadas para viagens internacionais.', filename: 'viajante.html', icon: 'fa-plane-departure', color: 'orange' },
+        { id: 'vacinas', name: 'Calendário Vacinal 2024', category: 'Imunização', type: 'other', description: 'Calendário vacinal atualizado para 2024.', filename: 'vacinas.html', icon: 'fa-calendar-check', color: 'orange' }
+    ]
+</script>
