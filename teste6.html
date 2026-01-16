@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadoras de Enfermagem</title>
+    <meta name="description" content="Ferramentas e calculadoras para profissionais de enfermagem.">
+
+    <link rel="stylesheet" href="assets/css/variables-v2.css">
+    
+    <link rel="stylesheet" href="assets/css/accessibility-v2.css">
+    <link rel="stylesheet" href="assets/css/header-v2.css">
+    <link rel="stylesheet" href="assets/css/footer-v2.css">
+    
+    <link rel="stylesheet" href="assets/css/main-index-v2.css">
+
+    <style>
+        /* Estilos críticos para evitar FOUC (Flash of Unstyled Content) enquanto carrega */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-primary, sans-serif); /* Usa variável se existir */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1; /* Garante que o footer fique na parte inferior */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="accessibility-container"></div>
+
+    <header id="header-container"></header>
+
+    <main id="main-container">
+        <div style="text-align: center; padding: 2rem;">Carregando...</div>
+    </main>
+
+    <footer id="footer-container"></footer>
+
+    <script src="assets/js/event-bus.js"></script>
+
+    <script>
+        /**
+         * Função utilitária para carregar componentes HTML dinamicamente.
+         * @param {string} url - O caminho do arquivo HTML.
+         * @param {string} containerId - O ID do elemento onde o HTML será injetado.
+         */
+        async function loadComponent(url, containerId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`Erro ao carregar ${url}: ${response.statusText}`);
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(error);
+                document.getElementById(containerId).innerHTML = `<p style="color:red; padding:10px;">Erro ao carregar componente.</p>`;
+            }
+        }
+
+        /**
+         * Função para carregar um script JS dinamicamente após o HTML existir.
+         * Isso garante que o JS do componente encontre os elementos no DOM.
+         */
+        function loadScript(url) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = url;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.body.appendChild(script);
+            });
+        }
+
+        // Inicialização: Carrega tudo em ordem
+        async function initApp() {
+            // Passo 1: Carregar todos os fragmentos HTML (Paralelo para performance)
+            await Promise.all([
+                loadComponent('assets/components/accessibility-v2.html', 'accessibility-container'),
+                loadComponent('assets/components/header-v2.html', 'header-container'),
+                loadComponent('assets/pages/main-index-v2.html', 'main-container'),
+                loadComponent('assets/components/footer-v2.html', 'footer-container')
+            ]);
+
+            // Passo 2: Carregar os scripts JS dos componentes
+            // Nota: Carregamos sequencialmente ou conforme dependência.
+            try {
+                // Acessibilidade geralmente precisa rodar cedo para configurar fontes/temas
+                await loadScript('assets/js/accessibility-v2.js');
+                
+                // Header e Footer
+                await loadScript('assets/js/header-v2.js');
+                await loadScript('assets/js/footer-v2.js');
+                
+                // Script da página principal (Dashboard/Index)
+                await loadScript('assets/js/main-index-v2.js');
+                
+                console.log('Aplicação carregada com sucesso.');
+            } catch (error) {
+                console.error('Erro ao carregar scripts:', error);
+            }
+        }
+
+        // Inicia a aplicação quando o DOM base estiver pronto
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
