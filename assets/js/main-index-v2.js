@@ -448,7 +448,7 @@ buttonText: 'Acessar Diagnósticos',
 buttonUrl: 'pages/diagnosticosnanda.html',
 imageIcon: 'fa-clipboard-list',
 gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/shero-section-nanda-tools.webp'
+bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-nanda-tools.webp'
 },
 {
 id: 'simulado',
