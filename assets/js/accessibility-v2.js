@@ -1790,22 +1790,78 @@
     // INJEÇÃO DE HTML NO CONTAINER
     // ==========================================
     function injectAccessibilityHTML() {
-        const container = document.getElementById('accessibility-v2-container');
+        // Primeiro verificar se o container é um aside ou div
+        const container = document.getElementById('accessibility-v2-container') || document.querySelector('aside#accessibility-v2-container');
         if (!container) {
             log('Container #accessibility-v2-container não encontrado', 'error');
             return false;
         }
 
-        // Verificar se já foi injetado
-        if (container.querySelector('#accessibility-toggle')) {
+        log(`Container encontrado: ${container.tagName}, children: ${container.children.length}`, "debug");
+
+        // Verificar se já foi injetado (checar múltiplos indicadores)
+        const existingToggle = container.querySelector('#accessibility-toggle');
+        const existingPanel = container.querySelector('#accessibility-panel');
+        if (existingToggle && existingPanel) {
             log('HTML de acessibilidade já injetado anteriormente');
             return true;
+        }
+
+        // Verificar se há HTML externo carregado
+        if (container.innerHTML.trim().length > 100 && !existingToggle) {
+            log('HTML externo detectado, verificando estrutura...', "debug");
+            // Tentar usar o HTML existente em vez de sobrescrever
+            if (container.querySelector('.accessibility-panel')) {
+                log('Painel de acessibilidade encontrado no HTML existente', "debug");
+                return true;
+            }
         }
 
         // Injetar HTML
         container.innerHTML = ACCESSIBILITY_HTML;
         log('HTML de acessibilidade injetado com sucesso');
         return true;
+    }
+
+    // ==========================================
+    // SELEÇÃO DE ELEMENTOS COM FALLBACK
+    // ==========================================
+    function safeGetElement(selector) {
+        // Tentar múltiplas formas de selecionar
+        if (selector.startsWith('#')) {
+            const id = selector.substring(1);
+            const element = document.getElementById(id);
+            if (element) return element;
+        }
+        return document.querySelector(selector);
+    }
+
+    function selectAccessibilityElements() {
+        const selectors = {
+            accessibilityToggle: "#accessibility-toggle",
+            accessibilityClose: "#accessibility-close",
+            accessibilityPanel: "#accessibility-panel",
+            librasToggle: "#libras-toggle-top",
+            shortcutsModal: "#shortcuts-modal",
+            glossaryModal: "#glossary-modal"
+        };
+
+        const elements = {};
+        let allFound = true;
+
+        Object.entries(selectors).forEach(([key, selector]) => {
+            const element = safeGetElement(selector);
+            if (element) {
+                elements[key] = element;
+                log(`Elemento encontrado: ${key} (${selector})`, "debug");
+            } else {
+                elements[key] = null;
+                log(`Elemento NÃO encontrado: ${key} (${selector})`, "warn");
+                allFound = false;
+            }
+        });
+
+        return { elements, allFound };
     }
 
     // ==========================================
@@ -1825,44 +1881,76 @@
             return;
         }
 
-        log("HTML injetado com sucesso");
+        // Passo 2: Tentar selecionar elementos com retry
+        let retryCount = 0;
+        const maxRetries = 3;
+        let selectionResult = null;
 
-        // Selecionar elementos do DOM
-        const selectors = {
-            accessibilityToggle: "#accessibility-toggle",
-            accessibilityClose: "#accessibility-close",
-            accessibilityPanel: "#accessibility-panel",
-            librasToggle: "#libras-toggle-top",
-            shortcutsModal: "#shortcuts-modal",
-            glossaryModal: "#glossary-modal"
+        const trySelectElements = () => {
+            selectionResult = selectAccessibilityElements();
+            return selectionResult.allFound;
         };
 
-        state.elements = getElements(selectors);
+        // Primeira tentativa
+        let elementsFound = trySelectElements();
 
-        log("Elementos selecionados", "debug");
+        // Se não encontrou todos os elementos, tentar novamente com pequenos atrasos
+        while (!elementsFound && retryCount < maxRetries) {
+            retryCount++;
+            log(`Tentativa ${retryCount}/${maxRetries}: aguardando elementos...`, "debug");
+            
+            // Aguardar um pouco antes de tentar novamente
+            const startTime = Date.now();
+            while (Date.now() - startTime < 50) {
+                // Loop de espera ativa (simples)
+            }
+            
+            elementsFound = trySelectElements();
+        }
 
-        // Verificar se elementos essenciais existem
+        state.elements = selectionResult.elements;
+
         if (!state.elements.accessibilityPanel) {
-            log("Elementos do painel de acessibilidade não encontrados", "error");
-            log("Verificando container...", "debug");
+            log("Elementos do painel de acessibilidade não encontrados após retries", "error");
+            log("Diagnóstico do container:", "debug");
             const container = document.getElementById('accessibility-v2-container');
             if (container) {
-                log(`Container encontrado, conteúdo: ${container.innerHTML.length} caracteres`, "debug");
+                log(`  - Tag: ${container.tagName}`, "debug");
+                log(`  - Children count: ${container.children.length}`, "debug");
+                log(`  - InnerHTML length: ${container.innerHTML.length}`, "debug");
+                log(`  - Query #accessibility-toggle: ${!!container.querySelector('#accessibility-toggle')}`, "debug");
+                log(`  - Query #accessibility-panel: ${!!container.querySelector('#accessibility-panel')}`, "debug");
+                
+                // Tentar forçar injeção se necessário
+                if (container.children.length === 0) {
+                    log("Container vazio, forçando reinjeção...", "warn");
+                    container.innerHTML = ACCESSIBILITY_HTML;
+                    state.elements = selectAccessibilityElements().elements;
+                }
             } else {
-                log("Container também não encontrado!", "error");
+                log("Container não encontrado!", "error");
             }
+            
+            // Se ainda assim não encontrou, tentar último recurso: usar API global
+            if (!state.elements.accessibilityPanel) {
+                log("Último recurso: aguardando DOM via MutationObserver...", "warn");
+                observeContainerAndInit(container);
+                return;
+            }
+        }
+
+        // Se ainda não encontrou, abortar
+        if (!state.elements.accessibilityPanel) {
+            log("FALHA CRÍTICA: Não foi possível localizar elementos do painel de acessibilidade", "error");
             return;
         }
 
-        log("Elementos do DOM encontrados");
+        log("Elementos do DOM encontrados com sucesso");
 
         // Verificar se o botão toggle existe
         if (!state.elements.accessibilityToggle) {
-            log("Botão de toggle não encontrado - verificando DOM...", "error");
-            const toggle = document.querySelector('#accessibility-toggle');
-            if (toggle) {
-                log("Botão encontrado via querySelector", "debug");
-            }
+            log("Botão de toggle não encontrado - tentando recuperação...", "warn");
+            state.elements.accessibilityToggle = document.querySelector('#accessibility-toggle');
         }
 
         // Garantir que todos os modais estejam escondidos no início
@@ -1889,6 +1977,44 @@
 
         // Disparar evento de ready via EventBus e CustomEvent
         emitAccessibilityEvent('ready', { initialized: true });
+    }
+
+    // ==========================================
+    // OBSERVER PARA INICIALIZAÇÃO DIFERIDA
+    // ==========================================
+    function observeContainerAndInit(container) {
+        if (!container) {
+            log("Container nulo no observer, abortando", "error");
+            return;
+        }
+
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                for (const node of mutation.addedNodes) {
+                    if (node.nodeType === 1) {
+                        if (node.id === 'accessibility-toggle' || node.querySelector('#accessibility-panel')) {
+                            log("Elementos detectados via MutationObserver, prosseguindo com init...", "debug");
+                            observer.disconnect();
+                            // Reiniciar init sem marcado como initialized
+                            state.initialized = false;
+                            setTimeout(() => init(), 10);
+                            return;
+                        }
+                    }
+                }
+            }
+        });
+
+        observer.observe(container.parentElement || document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        // Timeout de segurança
+        setTimeout(() => {
+            observer.disconnect();
+            log("Timeout do observer atingido", "warn");
+        }, 5000);
     }
 
     // ==========================================
