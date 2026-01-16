@@ -1,129 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas clínicas para profissionais de saúde">
-    <meta name="theme-color" content="#1A3E74">
-    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    
-    <!-- CSS Principal -->
-    <link rel="stylesheet" href="main-index-v2.css">
-    
-    <style>
-        /* CSS Crítico para carregamento */
-        body { font-family: 'Nunito Sans', sans-serif; margin: 0; padding: 0; }
-        
-        /* Loader */
-        #loader-global {
-            position: fixed;
-            inset: 0;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 200000;
-            transition: opacity 0.5s;
-        }
-        
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #00897b;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Garantia de visibilidade */
-        .hidden { display: none !important; }
-    </style>
-    
-    <title>Calculadoras de Enfermagem</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Calculadoras de Enfermagem - Ferramentas clínicas para profissionais de saúde">
+  <meta name="theme-color" content="#1A3E74">
+  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
+  <link rel="stylesheet" href="../assets/css/main-index-v2.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <title>Calculadoras de Enfermagem</title>
 </head>
-<body class="light-mode">
-    <!-- Loader Global -->
-    <div id="loader-global">
-        <div class="spinner"></div>
-        <p style="margin-top: 15px; color: #00897b; font-weight: 600;">Carregando Calculadoras...</p>
-    </div>
+<body>
+  <!-- Hero Section - Container para os slides do carrossel -->
+  <div id="hero-container" class="hero-container">
+    <!-- O hero HTML será injetado pelo JavaScript -->
+  </div>
 
-    <!-- Skip Link para Acessibilidade -->
-    <a href="#main-v2-content" class="skip-link" style="position: absolute; top: -40px; left: 0; background: #00897b; color: white; padding: 8px; z-index: 100000; transition: top 0.3s;">Pular para o conteúdo principal</a>
-    <style>.skip-link:focus { top: 0; }</style>
+  <!-- Área principal de conteúdo -->
+  <main id="main-v2-content" role="main" aria-label="Conteúdo Principal">
+    <!-- Ferramentas serão injetadas pelo JavaScript -->
+  </main>
 
-    <!-- Hero Section - Container para os slides do carrossel -->
-    <div id="hero-container" class="hero-container">
-        <!-- O hero HTML será injetado pelo JavaScript -->
-    </div>
-
-    <!-- Área principal de conteúdo -->
-    <main id="main-v2-content" role="main" aria-label="Conteúdo Principal">
-        <!-- Ferramentas serão injetadas pelo JavaScript -->
-    </main>
-
-    <!-- VLibras Widget -->
-    <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
-    </div>
-
-    <!-- JavaScript Principal - caminho corrigido -->
-    <script src="main-index-v2.js"></script>
-    
-    <!-- Script de inicialização simplificado -->
-    <script>
-        (function() {
-            'use strict';
-            
-            console.log('[App] Iniciando aplicação...');
-            
-            // Inicialização após DOM estar pronto
-            function initApp() {
-                console.log('[App] DOM pronto, inicializando...');
-                
-                // Aguardar um pequeno intervalo para garantir que tudo está carregado
-                setTimeout(function() {
-                    if (typeof window.MainInit === 'function') {
-                        window.MainInit();
-                        console.log('[App] MainInit chamado com sucesso');
-                    } else {
-                        console.error('[App] MainInit não encontrado!');
-                    }
-                }, 100);
-            }
-            
-            // Verificar estado do documento
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initApp);
-            } else {
-                initApp();
-            }
-            
-            // Ocultar loader após carregamento completo
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    var loader = document.getElementById('loader-global');
-                    if (loader) {
-                        loader.style.opacity = '0';
-                        setTimeout(function() {
-                            loader.style.display = 'none';
-                        }, 500);
-                    }
-                }, 1000);
-            });
-            
-        })();
-    </script>
+  <!-- Scripts -->
+  <script src="../assets/js/main-index-v2.js" defer></script>
 </body>
 </html>
