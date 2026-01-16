@@ -438,7 +438,7 @@ buttonText: null,
 buttonUrl: '#calculadoras',
 imageIcon: 'fa-calculator',
 gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-welcome.webp'
+bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-welcome.webp'
 },
 {
 id: 'diagnosticos',
@@ -458,7 +458,7 @@ buttonText: 'Acessar Simulado',
 buttonUrl: 'pages/simulado-de-enfermagem2.html',
 imageIcon: 'fa-graduation-cap',
 gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-simulator-tools.webp'
+bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-simulator-tools.webp'
 },
 {
 id: 'biblioteca',
@@ -468,7 +468,7 @@ buttonText: 'Acessar Biblioteca',
 buttonUrl: 'pages/downloads.html',
 imageIcon: 'fa-book-open',
 gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-library-tools.webp'
+bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-library-tools.webp'
 },
 {
 id: 'notificacao',
@@ -478,7 +478,7 @@ buttonText: 'Acessar Lista de Notificações',
 buttonUrl: 'pages/notificacao-compulsoria.html',
 imageIcon: 'fa-bell',
 gradient: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.5) 100%)',
-bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section-notification-tools.webp'
+bgImage: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-notification-tools.webp'
 }
 ];
 
