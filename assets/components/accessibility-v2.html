@@ -5,23 +5,16 @@
 <!-- Botão Flutuante de Acessibilidade -->
 <button id="accessibility-toggle" class="icon-btn accessibility-btn" aria-label="Recursos de Acessibilidade" aria-expanded="false" aria-controls="accessibility-panel">
     <span class="btn-icon">
-        <svg class="icon-accessibility" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <circle cx="12" cy="4" r="2"></circle>
-            <path d="M12 6v6m0 0l-3 5m3-5l3 5m-5 6h4m-4-10l2 8h1"></path>
-        </svg>
+        <!-- AJUSTE A: Adicionado aria-hidden="true" (1.1.1) -->
+        <i class="fas fa-eye" aria-hidden="true"></i>
     </span>
-    <span class="btn-text">Acessibilidade</span>
 </button>
 
 <!-- Botão Libras (VLibras) -->
 <button id="libras-toggle-top" class="icon-btn accessibility-btn" aria-label="Tradutor de Libras" aria-pressed="false" title="Tradutor de Libras">
     <span class="btn-icon">
-        <svg class="icon-libras" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <!-- Ícone representando mãos em Libras -->
-            <path d="M8 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
-            <path d="M12 6v3m0 0l-2 4m2-4l2 4"/>
-            <path d="M6 9v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/>
-        </svg>
+        <!-- AJUSTE A: Adicionado aria-hidden="true" (1.1.1) -->
+        <i class="fas fa-sign-language" aria-hidden="true"></i>
     </span>
 </button>
 
@@ -31,10 +24,7 @@
     <!-- Cabeçalho do Painel -->
     <div class="accessibility-header">
         <h2 class="accessibility-title">
-            <svg class="icon-accessibility-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <circle cx="12" cy="4" r="2"></circle>
-                <path d="M12 6v6m0 0l-3 5m3-5l3 5m-5 6h4m-4-10l2 8h1"></path>
-            </svg>
+            <i class="fas fa-eye" aria-hidden="true"></i>
             Acessibilidade
         </h2>
         <p class="accessibility-subtitle">Personalize sua experiência</p>
