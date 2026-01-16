@@ -762,7 +762,7 @@
         document.addEventListener("DOMContentLoaded", init);
     } else {
         // DOM já carregado
-        setTimeout(init, 10);
+        init();
     }
-
+    
 })();
