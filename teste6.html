@@ -3,109 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadoras de Enfermagem</title>
-    <meta name="description" content="Ferramentas e calculadoras para profissionais de enfermagem.">
-
-    <link rel="stylesheet" href="assets/css/variables-v2.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas clínicas para profissionais de saúde">
+    <meta name="theme-color" content="#1A3E74">
+    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
     
-    <link rel="stylesheet" href="assets/css/accessibility-v2.css">
-    <link rel="stylesheet" href="assets/css/header-v2.css">
-    <link rel="stylesheet" href="assets/css/footer-v2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="assets/css/main-index-v2.css">
-
+    <link rel="stylesheet" href="main-index-v2.css">
+    <link rel="stylesheet" href="accessibility-v2.css">
+    
     <style>
-        /* Estilos críticos para evitar FOUC (Flash of Unstyled Content) enquanto carrega */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-primary, sans-serif); /* Usa variável se existir */
+        /* CSS Crítico para o Loader Inicial */
+        body { font-family: 'Nunito Sans', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        
+        #loader-global {
+            position: fixed;
+            inset: 0;
+            background: #fff;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            z-index: 200000;
+            transition: opacity 0.5s;
         }
-        main {
-            flex: 1; /* Garante que o footer fique na parte inferior */
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #00897b;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
         }
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
+    
+    <title>Calculadoras de Enfermagem | Modular V5</title>
 </head>
-<body>
+<body class="light-mode">
 
-    <div id="accessibility-container"></div>
+    <div id="loader-global">
+        <div class="spinner"></div>
+        <p style="margin-top: 15px; color: #00897b; font-weight: 600;">Carregando Módulos...</p>
+    </div>
 
-    <header id="header-container"></header>
+    <a href="#main-v2-content" class="skip-link" style="position: absolute; top: -40px; left: 0; background: #00897b; color: white; padding: 8px; z-index: 100000; transition: top 0.3s;">Pular para o conteúdo</a>
 
-    <main id="main-container">
-        <div style="text-align: center; padding: 2rem;">Carregando...</div>
-    </main>
+    <div id="hero-container" class="hero-container"></div>
 
-    <footer id="footer-container"></footer>
+    <main id="main-v2-content" role="main" aria-label="Conteúdo Principal"></main>
 
-    <script src="assets/js/event-bus.js"></script>
+    <div id="accessibility-v2-container"></div>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+    </div>
 
     <script>
-        /**
-         * Função utilitária para carregar componentes HTML dinamicamente.
-         * @param {string} url - O caminho do arquivo HTML.
-         * @param {string} containerId - O ID do elemento onde o HTML será injetado.
-         */
-        async function loadComponent(url, containerId) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`Erro ao carregar ${url}: ${response.statusText}`);
-                const html = await response.text();
-                document.getElementById(containerId).innerHTML = html;
-            } catch (error) {
-                console.error(error);
-                document.getElementById(containerId).innerHTML = `<p style="color:red; padding:10px;">Erro ao carregar componente.</p>`;
+        (function() {
+            'use strict';
+
+            // Configuração dos Módulos
+            const CONFIG = {
+                // Arquivos HTML parciais para injetar
+                components: [
+                    { 
+                        id: 'accessibility-v2-container', 
+                        path: 'accessibility-v2.html',
+                        optional: false 
+                    }
+                    // NOTA: Se você quiser injetar o 'main-index-v2.html' automaticamente
+                    // dentro do hero-container, descomente a linha abaixo:
+                    // , { id: 'hero-container', path: 'main-index-v2.html', optional: true }
+                ],
+                // Scripts para carregar após o HTML estar pronto
+                scripts: [
+                    'main-index-v2.js',  // Script Principal renomeado
+                    'accessibility-v2.js' // Script Acessibilidade
+                ]
+            };
+
+            // Função para carregar HTML (Fetch e Inject)
+            async function loadComponent(id, path, optional = false) {
+                try {
+                    const response = await fetch(path);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const html = await response.text();
+                    const container = document.getElementById(id);
+                    if (container) {
+                        container.innerHTML = html;
+                        console.log(`[Loader] Componente ${id} carregado de ${path}.`);
+                    }
+                } catch (error) {
+                    if (!optional) console.error(`[Loader] Erro ao carregar ${path}:`, error);
+                    else console.warn(`[Loader] Componente opcional ${path} não carregado.`);
+                }
             }
-        }
 
-        /**
-         * Função para carregar um script JS dinamicamente após o HTML existir.
-         * Isso garante que o JS do componente encontre os elementos no DOM.
-         */
-        function loadScript(url) {
-            return new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = url;
-                script.onload = resolve;
-                script.onerror = reject;
-                document.body.appendChild(script);
-            });
-        }
-
-        // Inicialização: Carrega tudo em ordem
-        async function initApp() {
-            // Passo 1: Carregar todos os fragmentos HTML (Paralelo para performance)
-            await Promise.all([
-                loadComponent('assets/components/accessibility-v2.html', 'accessibility-container'),
-                loadComponent('assets/components/header-v2.html', 'header-container'),
-                loadComponent('assets/pages/main-index-v2.html', 'main-container'),
-                loadComponent('assets/components/footer-v2.html', 'footer-container')
-            ]);
-
-            // Passo 2: Carregar os scripts JS dos componentes
-            // Nota: Carregamos sequencialmente ou conforme dependência.
-            try {
-                // Acessibilidade geralmente precisa rodar cedo para configurar fontes/temas
-                await loadScript('assets/js/accessibility-v2.js');
-                
-                // Header e Footer
-                await loadScript('assets/js/header-v2.js');
-                await loadScript('assets/js/footer-v2.js');
-                
-                // Script da página principal (Dashboard/Index)
-                await loadScript('assets/js/main-index-v2.js');
-                
-                console.log('Aplicação carregada com sucesso.');
-            } catch (error) {
-                console.error('Erro ao carregar scripts:', error);
+            // Função para carregar Script JS dinamicamente
+            function loadScript(src) {
+                return new Promise((resolve) => {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.onload = () => {
+                        console.log(`[Loader] Script ${src} carregado.`);
+                        resolve();
+                    };
+                    script.onerror = () => {
+                        console.error(`[Loader] Falha ao carregar script: ${src}`);
+                        resolve(); // Segue o fluxo para não travar
+                    };
+                    document.body.appendChild(script);
+                });
             }
-        }
 
-        // Inicia a aplicação quando o DOM base estiver pronto
-        document.addEventListener('DOMContentLoaded', initApp);
+            // Inicialização Mestra
+            async function initSystem() {
+                console.time('SystemInit');
+                
+                // 1. Carregar Componentes HTML (Paralelo)
+                await Promise.all(CONFIG.components.map(c => loadComponent(c.id, c.path, c.optional)));
+                
+                // 2. Carregar Scripts JS (Sequencial)
+                for (const scriptSrc of CONFIG.scripts) {
+                    await loadScript(scriptSrc);
+                }
+
+                // 3. Inicializar Módulos e Remover Loader
+                setTimeout(() => {
+                    if (typeof window.MainInit === 'function') window.MainInit();
+                    if (typeof window.AccessibilityInit === 'function') window.AccessibilityInit();
+                    
+                    const loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.style.opacity = '0';
+                        setTimeout(() => loader.style.display = 'none', 500);
+                    }
+                    console.timeEnd('SystemInit');
+                }, 500);
+            }
+
+            // Disparar
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initSystem);
+            } else {
+                initSystem();
+            }
+
+        })();
     </script>
 </body>
 </html>
