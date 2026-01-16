@@ -1,12 +1,10 @@
-/**
- * accessibility-v2.css - Estilos do Painel de Acessibilidade
- * Versão Modular - Funciona em modo autônomo e integrado
- */
+/* accessibility.css - Estilos do Painel de Acessibilidade e Recursos Assistivos */
+/* Problema corrigido: sobreposição de elementos e posicionamento inadequado */
 
 /* ========================================
    VARIÁVEIS E CONFIGURAÇÕES BASE
    ======================================== */
-#accessibility-v2-container {
+:root {
     --accessibility-primary: #0066cc;
     --accessibility-primary-hover: #0052a3;
     --accessibility-secondary: #0099ff;
@@ -26,13 +24,11 @@
     --accessibility-radius: 8px;
     --accessibility-radius-lg: 12px;
     
-    /* Z-Index hierarchy */
+    /* Z-Index hierarchy - valores ajustados para evitar sobreposição */
     --z-accessibility-base: 100;
     --z-accessibility-panel: 200;
     --z-accessibility-modal: 300;
     --z-accessibility-overlay: 400;
-    
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* ========================================
@@ -57,9 +53,10 @@
 }
 
 /* ========================================
-   BOTÕES FLUTUANTES
+   BOTÕES FLUTUANTES COLAPSADOS
+   Aparência: Conectados à barra de rolagem
    ======================================== */
-#accessibility-v2-container .icon-btn.accessibility-btn {
+.icon-btn.accessibility-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,6 +66,7 @@
     background: #0d3b66;
     color: var(--accessibility-white);
     border: none;
+    /* Lado direito reto - conectado à barra de rolagem */
     border-radius: 8px 0 0 8px;
     cursor: pointer;
     box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.2);
@@ -82,56 +80,170 @@
     z-index: var(--z-accessibility-base);
 }
 
-#accessibility-v2-container .icon-btn.accessibility-btn:hover {
+.icon-btn.accessibility-btn:hover {
     background: #0a2d52;
     box-shadow: -4px 2px 12px rgba(0, 0, 0, 0.3);
     transform: translateX(-2px);
 }
 
-#accessibility-v2-container .icon-btn.accessibility-btn:focus {
+.icon-btn.accessibility-btn:focus {
     outline: 2px solid var(--accessibility-secondary);
     outline-offset: -2px;
 }
 
-#accessibility-v2-container .icon-btn.accessibility-btn:active {
+.icon-btn.accessibility-btn:active {
     background: #082440;
     transform: translateX(-4px);
 }
 
-#accessibility-v2-container #accessibility-toggle {
+/* Botão principal de acessibilidade */
+#accessibility-toggle {
     background: #0d3b66;
 }
 
-#accessibility-v2-container #accessibility-toggle:hover {
+#accessibility-toggle:hover {
     background: #0a2d52;
 }
 
-#accessibility-v2-container #accessibility-toggle.active,
-#accessibility-v2-container #accessibility-toggle[aria-expanded="true"] {
+#accessibility-toggle.active,
+#accessibility-toggle[aria-expanded="true"] {
     background: #1a5a8a;
 }
 
-#accessibility-v2-container #libras-toggle-top {
+/* Botão LIBRAS */
+#libras-toggle-top {
     background: #0d3b66;
 }
 
-#accessibility-v2-container #libras-toggle-top:hover {
+#libras-toggle-top:hover {
     background: #0a2d52;
 }
 
-#accessibility-v2-container #libras-toggle-top.active {
+#libras-toggle-top.active {
     background: #1a5a8a;
 }
 
-#accessibility-v2-container .icon-btn.accessibility-btn.active {
+/* Estados ativos */
+.icon-btn.accessibility-btn.active {
     background: #1a5a8a;
     box-shadow: -4px 2px 12px rgba(0, 0, 0, 0.25);
 }
 
 /* ========================================
-   ÍCONES DOS BOTÕES
+   INSTRUÇÕES LIBRAS
    ======================================== */
-#accessibility-v2-container .btn-icon {
+.libras-instructions {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--accessibility-white);
+    border: 2px solid var(--accessibility-success);
+    border-radius: var(--accessibility-radius-lg);
+    padding: 20px;
+    max-width: 350px;
+    box-shadow: var(--accessibility-shadow-lg);
+    z-index: 999999;
+    font-family: Arial, sans-serif;
+}
+
+.libras-instructions:focus {
+    outline: 3px solid var(--accessibility-success);
+    outline-offset: 2px;
+}
+
+.libras-instructions-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.libras-instructions-content h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accessibility-success);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.libras-instructions-content h3::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2328a745' stroke-width='2'%3E%3Cpath d='M8 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z'/%3E%3Cpath d='M12 6v3m0 0l-2 4m2-4l2 4'/%3E%3Cpath d='M6 9v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.libras-instructions-content p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--accessibility-text);
+    line-height: 1.5;
+}
+
+.libras-instructions-content ol {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 13px;
+    color: var(--accessibility-text);
+    line-height: 1.6;
+}
+
+.libras-instructions-content li {
+    margin-bottom: 6px;
+}
+
+.libras-close-btn {
+    background: var(--accessibility-success);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    align-self: flex-start;
+    transition: var(--accessibility-transition);
+}
+
+.libras-close-btn:hover {
+    background: #218838;
+}
+
+.libras-close-btn:focus {
+    outline: 2px solid var(--accessibility-secondary);
+    outline-offset: 2px;
+}
+
+/* Responsividade para instruções LIBRAS */
+@media (max-width: 480px) {
+    .libras-instructions {
+        left: 10px;
+        right: 10px;
+        max-width: none;
+    }
+}
+
+/* Modo escuro para instruções */
+@media (prefers-color-scheme: dark) {
+    .libras-instructions {
+        background: var(--accessibility-dark);
+        border-color: var(--accessibility-success);
+    }
+    
+    .libras-instructions-content h3 {
+        color: #5dd879;
+    }
+    
+    .libras-instructions-content p,
+    .libras-instructions-content ol {
+        color: var(--accessibility-light);
+    }
+}
+
+/* Ícones */
+.btn-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -139,12 +251,12 @@
     height: 100%;
 }
 
-#accessibility-v2-container .btn-icon svg {
+.btn-icon svg {
     width: 22px;
     height: 22px;
 }
 
-#accessibility-v2-container .btn-icon i {
+.btn-icon i {
     font-size: 20px;
     width: 22px;
     height: 22px;
@@ -153,10 +265,15 @@
     justify-content: center;
 }
 
+/* Esconder texto dos botões */
+.btn-text {
+    display: none;
+}
+
 /* ========================================
    PAINEL DE ACESSIBILIDADE
    ======================================== */
-#accessibility-v2-container .accessibility-panel {
+.accessibility-panel {
     position: fixed;
     right: 0;
     top: 0;
@@ -171,25 +288,44 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    /* Garantir que o painel fica acima de tudo */
     contain: layout style;
 }
 
-#accessibility-v2-container .accessibility-panel.accessibility-panel-visible {
+.accessibility-panel.accessibility-panel-visible {
     transform: translateX(0);
+    /* Garante que o painel está visível */
     visibility: visible;
     pointer-events: auto;
 }
 
-#accessibility-v2-container .accessibility-panel.accessibility-panel-hidden {
+.accessibility-panel.accessibility-panel-hidden {
     transform: translateX(100%);
     pointer-events: none;
     visibility: hidden;
 }
 
-/* ========================================
-   CABEÇALHO DO PAINEL
-   ======================================== */
-#accessibility-v2-container .accessibility-header {
+/* Overlay para fechar painel ao clicar fora */
+.accessibility-panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--accessibility-transition);
+    z-index: calc(var(--z-accessibility-panel) - 1);
+}
+
+.accessibility-panel-visible ~ .accessibility-panel-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Cabeçalho do Painel */
+.accessibility-header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -199,7 +335,7 @@
     position: relative;
 }
 
-#accessibility-v2-container .accessibility-title {
+.accessibility-title {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -208,18 +344,18 @@
     font-weight: 600;
 }
 
-#accessibility-v2-container .accessibility-title i {
+.accessibility-title i {
     font-size: 24px;
     color: var(--accessibility-white);
 }
 
-#accessibility-v2-container .accessibility-subtitle {
+.accessibility-subtitle {
     margin: 4px 0 0 0;
     font-size: 14px;
     opacity: 0.9;
 }
 
-#accessibility-v2-container .accessibility-header .close-btn {
+.accessibility-header .close-btn {
     position: absolute;
     top: 16px;
     right: 16px;
@@ -231,11 +367,11 @@
     transition: var(--accessibility-transition);
 }
 
-#accessibility-v2-container .accessibility-header .close-btn:hover {
+.accessibility-header .close-btn:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
-#accessibility-v2-container .accessibility-header .close-btn svg {
+.accessibility-header .close-btn svg {
     width: 20px;
     height: 20px;
     color: var(--accessibility-white);
@@ -244,7 +380,7 @@
 /* ========================================
    CARDS DE ACESSIBILIDADE
    ======================================== */
-#accessibility-v2-container .accessibility-card {
+.accessibility-card {
     display: flex;
     align-items: center;
     padding: 16px 24px;
@@ -253,19 +389,19 @@
     transition: var(--accessibility-transition);
 }
 
-#accessibility-v2-container .accessibility-card:hover {
+.accessibility-card:hover {
     background: var(--accessibility-light);
 }
 
-#accessibility-v2-container .accessibility-card:active {
+.accessibility-card:active {
     background: #e2e6ea;
 }
 
-#accessibility-v2-container .accessibility-card:last-child {
+.accessibility-card:last-child {
     border-bottom: none;
 }
 
-#accessibility-v2-container .card-icon {
+.card-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -277,46 +413,46 @@
     flex-shrink: 0;
 }
 
-#accessibility-v2-container .card-icon svg {
+.card-icon svg {
     width: 20px;
     height: 20px;
     color: var(--accessibility-primary);
 }
 
-#accessibility-v2-container .accessibility-card:hover .card-icon {
+.accessibility-card:hover .card-icon {
     background: var(--accessibility-primary);
 }
 
-#accessibility-v2-container .accessibility-card:hover .card-icon svg {
+.accessibility-card:hover .card-icon svg {
     color: var(--accessibility-white);
 }
 
-#accessibility-v2-container .card-content {
+.card-content {
     flex: 1;
     min-width: 0;
 }
 
-#accessibility-v2-container .card-title {
+.card-title {
     margin: 0;
     font-size: 15px;
     font-weight: 500;
     color: var(--accessibility-text);
 }
 
-#accessibility-v2-container .card-actions {
+.card-actions {
     display: flex;
     align-items: center;
     gap: 8px;
     flex-shrink: 0;
 }
 
-#accessibility-v2-container .font-size-label,
-#accessibility-v2-container .action-label {
+.font-size-label,
+.action-label {
     font-size: 13px;
     color: var(--accessibility-text-muted);
 }
 
-#accessibility-v2-container .font-size-icon {
+.font-size-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -332,7 +468,7 @@
 /* ========================================
    MODAIS
    ======================================== */
-#accessibility-v2-container .modal {
+.modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -349,16 +485,16 @@
     padding: 20px;
 }
 
-#accessibility-v2-container .modal:not(.hidden) {
+.modal:not(.hidden) {
     opacity: 1;
     visibility: visible;
 }
 
-#accessibility-v2-container .modal.hidden {
+.modal.hidden {
     pointer-events: none;
 }
 
-#accessibility-v2-container .modal-content {
+.modal-content {
     background: var(--accessibility-white);
     border-radius: var(--accessibility-radius-lg);
     width: 100%;
@@ -370,14 +506,12 @@
     transition: var(--accessibility-transition);
 }
 
-#accessibility-v2-container .modal:not(.hidden) .modal-content {
+.modal:not(.hidden) .modal-content {
     transform: scale(1);
 }
 
-/* ========================================
-   CABEÇALHO DO MODAL
-   ======================================== */
-#accessibility-v2-container .modal-header {
+/* Cabeçalho do Modal */
+.modal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -385,14 +519,14 @@
     border-bottom: 1px solid var(--accessibility-border);
 }
 
-#accessibility-v2-container .modal-header h2 {
+.modal-header h2 {
     margin: 0;
     font-size: 18px;
     font-weight: 600;
     color: var(--accessibility-text);
 }
 
-#accessibility-v2-container .modal-header .close-btn {
+.modal-header .close-btn {
     background: var(--accessibility-light);
     border: none;
     padding: 10px;
@@ -401,11 +535,11 @@
     transition: var(--accessibility-transition);
 }
 
-#accessibility-v2-container .modal-header .close-btn:hover {
+.modal-header .close-btn:hover {
     background: var(--accessibility-border);
 }
 
-#accessibility-v2-container .modal-header .close-btn svg {
+.modal-header .close-btn svg {
     width: 20px;
     height: 20px;
     color: var(--accessibility-text);
@@ -414,7 +548,7 @@
 /* ========================================
    ABAS DE NAVEGADOR
    ======================================== */
-#accessibility-v2-container .browser-tabs {
+.browser-tabs {
     display: flex;
     gap: 4px;
     padding: 12px 24px;
@@ -422,7 +556,7 @@
     border-bottom: 1px solid var(--accessibility-border);
 }
 
-#accessibility-v2-container .browser-tab {
+.browser-tab {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -436,12 +570,12 @@
     transition: var(--accessibility-transition);
 }
 
-#accessibility-v2-container .browser-tab:hover {
+.browser-tab:hover {
     background: var(--accessibility-white);
     color: var(--accessibility-text);
 }
 
-#accessibility-v2-container .browser-tab.active {
+.browser-tab.active {
     background: var(--accessibility-white);
     color: var(--accessibility-primary);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -450,13 +584,13 @@
 /* ========================================
    LISTA DE ATAŁHOS
    ======================================== */
-#accessibility-v2-container .shortcuts-list {
+.shortcuts-list {
     padding: 16px 24px;
     max-height: 400px;
     overflow-y: auto;
 }
 
-#accessibility-v2-container .shortcut-item {
+.shortcut-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -464,17 +598,21 @@
     border-bottom: 1px solid var(--accessibility-border);
 }
 
-#accessibility-v2-container .shortcut-item:last-child {
+.shortcut-item:last-child {
     border-bottom: none;
 }
 
-#accessibility-v2-container .shortcut-keys {
+.shortcut-description {
+    font-size: 14px;
+    color: var(--accessibility-text);
+}
+
+.shortcut-keys {
     display: flex;
     gap: 4px;
 }
 
-#accessibility-v2-container kbd,
-#accessibility-v2-container .key {
+.key {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -493,11 +631,11 @@
 /* ========================================
    DICIONÁRIO
    ======================================== */
-#accessibility-v2-container .glossary-search {
+.glossary-search {
     padding: 16px 24px;
 }
 
-#accessibility-v2-container .glossary-search input {
+.glossary-search input {
     width: 100%;
     padding: 12px 16px;
     border: 1px solid var(--accessibility-border);
@@ -506,20 +644,20 @@
     transition: var(--accessibility-transition);
 }
 
-#accessibility-v2-container .glossary-search input:focus {
+.glossary-search input:focus {
     outline: none;
     border-color: var(--accessibility-primary);
     box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
 }
 
-#accessibility-v2-container .glossary-filter {
+.glossary-filter {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
     padding: 0 24px 16px;
 }
 
-#accessibility-v2-container .alphabet-letter {
+.alphabet-letter {
     width: 32px;
     height: 32px;
     display: flex;
@@ -535,47 +673,47 @@
     transition: var(--accessibility-transition);
 }
 
-#accessibility-v2-container .alphabet-letter:hover {
+.alphabet-letter:hover {
     background: var(--accessibility-primary);
     border-color: var(--accessibility-primary);
     color: var(--accessibility-white);
 }
 
-#accessibility-v2-container .alphabet-letter.active {
+.alphabet-letter.active {
     background: var(--accessibility-primary);
     border-color: var(--accessibility-primary);
     color: var(--accessibility-white);
 }
 
-#accessibility-v2-container .glossary-list {
+.glossary-list {
     padding: 0 24px 24px;
     max-height: 300px;
     overflow-y: auto;
 }
 
-#accessibility-v2-container .glossary-item {
+.glossary-item {
     padding: 12px 0;
     border-bottom: 1px solid var(--accessibility-border);
 }
 
-#accessibility-v2-container .glossary-item:last-child {
+.glossary-item:last-child {
     border-bottom: none;
 }
 
-#accessibility-v2-container .glossary-term {
+.glossary-term {
     font-size: 15px;
     font-weight: 600;
     color: var(--accessibility-primary);
     margin-bottom: 4px;
 }
 
-#accessibility-v2-container .glossary-definition {
+.glossary-definition {
     font-size: 14px;
     color: var(--accessibility-text);
     line-height: 1.5;
 }
 
-#accessibility-v2-container .glossary-empty {
+.glossary-empty {
     text-align: center;
     padding: 40px 24px;
     color: var(--accessibility-text-muted);
@@ -584,7 +722,7 @@
 /* ========================================
    LEITORES DE TELA (SCREEN READERS)
    ======================================== */
-#accessibility-v2-container .sr-only {
+.sr-only {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -596,7 +734,7 @@
     border: 0;
 }
 
-#accessibility-v2-container #sr-announcer {
+#sr-announcer {
     position: fixed;
     left: 0;
     top: 0;
@@ -611,124 +749,43 @@
 }
 
 /* ========================================
-   INSTRUÇÕES LIBRAS
-   ======================================== */
-#accessibility-v2-container .libras-instructions {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--accessibility-white);
-    border: 2px solid var(--accessibility-success);
-    border-radius: var(--accessibility-radius-lg);
-    padding: 20px;
-    max-width: 350px;
-    box-shadow: var(--accessibility-shadow-lg);
-    z-index: 999999;
-    font-family: Arial, sans-serif;
-}
-
-#accessibility-v2-container .libras-instructions:focus {
-    outline: 3px solid var(--accessibility-success);
-    outline-offset: 2px;
-}
-
-#accessibility-v2-container .libras-instructions-content {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-#accessibility-v2-container .libras-instructions-content h3 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--accessibility-success);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-#accessibility-v2-container .libras-instructions-content p {
-    margin: 0;
-    font-size: 14px;
-    color: var(--accessibility-text);
-    line-height: 1.5;
-}
-
-#accessibility-v2-container .libras-instructions-content ol {
-    margin: 0;
-    padding-left: 20px;
-    font-size: 13px;
-    color: var(--accessibility-text);
-    line-height: 1.6;
-}
-
-#accessibility-v2-container .libras-instructions-content li {
-    margin-bottom: 6px;
-}
-
-#accessibility-v2-container .libras-close-btn {
-    background: var(--accessibility-success);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    align-self: flex-start;
-    transition: var(--accessibility-transition);
-}
-
-#accessibility-v2-container .libras-close-btn:hover {
-    background: #218838;
-}
-
-/* ========================================
    RESPONSIVIDADE
    ======================================== */
 @media (max-width: 480px) {
-    #accessibility-v2-container .accessibility-panel {
+    .accessibility-panel {
         max-width: 100%;
         width: 100%;
     }
     
-    #accessibility-v2-container .modal-content {
+    .modal-content {
         max-width: 100%;
         max-height: 90vh;
     }
     
-    #accessibility-v2-container .browser-tabs {
+    .browser-tabs {
         overflow-x: auto;
     }
     
-    #accessibility-v2-container .shortcut-item {
+    .shortcut-item {
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
     }
-    
-    #accessibility-v2-container .libras-instructions {
-        left: 10px;
-        right: 10px;
-        max-width: none;
-    }
 }
 
 /* ========================================
-   ESTADOS DE ACESSIBILIDADE
+   ESTADOS DE ACESSIBILIDADE (ALTO CONTRASTE)
    ======================================== */
 @media (prefers-contrast: high) {
-    #accessibility-v2-container .icon-btn.accessibility-btn {
+    .icon-btn.accessibility-btn {
         border: 2px solid var(--accessibility-white);
     }
     
-    #accessibility-v2-container .accessibility-card {
+    .accessibility-card {
         border-bottom: 2px solid var(--accessibility-text);
     }
     
-    #accessibility-v2-container kbd,
-    #accessibility-v2-container .key {
+    .key {
         border-width: 2px;
     }
 }
@@ -737,14 +794,14 @@
    REDUZIR MOVIMENTO
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
-    #accessibility-v2-container .icon-btn.accessibility-btn,
-    #accessibility-v2-container .accessibility-panel,
-    #accessibility-v2-container .modal,
-    #accessibility-v2-container .modal-content {
+    .icon-btn.accessibility-btn,
+    .accessibility-panel,
+    .modal,
+    .modal-content {
         transition: none;
     }
     
-    #accessibility-v2-container .icon-btn.accessibility-btn:hover {
+    .icon-btn.accessibility-btn:hover {
         transform: none;
     }
 }
@@ -753,185 +810,48 @@
    MODO ESCURO
    ======================================== */
 @media (prefers-color-scheme: dark) {
-    #accessibility-v2-container .accessibility-panel,
-    #accessibility-v2-container .modal-content {
+    .accessibility-panel,
+    .modal-content {
         background: var(--accessibility-dark);
     }
     
-    #accessibility-v2-container .accessibility-card {
+    .accessibility-card {
         border-color: #495057;
     }
     
-    #accessibility-v2-container .accessibility-card:hover {
+    .accessibility-card:hover {
         background: #495057;
     }
     
-    #accessibility-v2-container .card-title {
+    .card-title {
         color: var(--accessibility-light);
     }
     
-    #accessibility-v2-container .card-icon {
+    .card-icon {
         background: #495057;
     }
     
-    #accessibility-v2-container .browser-tabs {
+    .browser-tabs {
         background: #495057;
     }
     
-    #accessibility-v2-container .browser-tab:not(.active) {
+    .browser-tab:not(.active) {
         color: #adb5bd;
     }
     
-    #accessibility-v2-container .glossary-search input {
+    .glossary-search input {
         background: #495057;
         border-color: #6c757d;
         color: var(--accessibility-light);
     }
     
-    #accessibility-v2-container kbd,
-    #accessibility-v2-container .key {
+    .key {
         background: #495057;
         border-color: #6c757d;
         color: var(--accessibility-light);
     }
     
-    #accessibility-v2-container .accessibility-title i {
+    .accessibility-title i {
         color: var(--accessibility-light);
     }
-}
-
-/* ========================================
-   EFEITOS DE ACESSIBILIDADE NO BODY
-   ======================================== */
-body.inverted-colors,
-body.inverted {
-    filter: invert(1);
-}
-
-body.high-contrast-light,
-body.light-contrast {
-    filter: contrast(1.5);
-}
-
-body.high-contrast-dark,
-body.dark-contrast {
-    filter: contrast(1.5) brightness(0.9);
-}
-
-/* Filtros de daltonismo */
-body.protanopia {
-    filter: url('#protanopia-filter');
-}
-
-body.deuteranopia {
-    filter: url('#deuteranopia-filter');
-}
-
-body.tritanopia {
-    filter: url('#tritanopia-filter');
-}
-
-body.low-saturation,
-body.saturation-low {
-    filter: saturate(0.5);
-}
-
-body.high-saturation,
-body.saturation-high {
-    filter: saturate(1.5);
-}
-
-body.monochrome {
-    filter: grayscale(1);
-}
-
-body.large-cursor,
-body.big-cursor-medium {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M4 4l24 8-8 3-3 8-3-8-4-3z" fill="black" stroke="white" stroke-width="1"/></svg>') 0 0, auto;
-}
-
-body.xl-cursor,
-body.big-cursor-large {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M6 6l36 12-12 4.5-4.5 12-4.5-12-6-4.5z" fill="black" stroke="white" stroke-width="1.5"/></svg>') 0 0, auto;
-}
-
-body.reduced-motion,
-body.stop-anim {
-    animation: none !important;
-    transition: none !important;
-}
-
-body.highlight-links a {
-    outline: 3px solid #ffd700 !important;
-    outline-offset: 2px !important;
-}
-
-body.highlight-headers h1,
-body.highlight-headers h2,
-body.highlight-headers h3 {
-    background-color: #ffd700 !important;
-    color: #000 !important;
-    padding: 2px 8px !important;
-}
-
-body.bold-text {
-    font-weight: bold !important;
-}
-
-body.hide-images img,
-body.hide-images video {
-    visibility: hidden !important;
-}
-
-body.reading-mode,
-body.focused-content {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-body.reading-mode .hero-section-container,
-body.reading-mode .visualizar-section,
-body.reading-mode nav,
-body.reading-mode header,
-body.reading-mode footer {
-    display: none !important;
-}
-
-body.hide-navigational nav,
-body.hide-navigational header,
-body.hide-navigational footer {
-    display: none !important;
-}
-
-/* Guia de leitura */
-.reading-guide,
-#reading-guide {
-    position: fixed;
-    pointer-events: none;
-    z-index: 99999;
-    display: none;
-    width: 200px;
-    height: 50px;
-    background: rgba(0, 0, 255, 0.2);
-    border: 2px solid blue;
-    transform: translate(-50%, -50%);
-}
-
-.reading-guide.guide-azul,
-#reading-guide.guide-azul {
-    background: rgba(0, 0, 255, 0.2);
-    border-color: blue;
-}
-
-.reading-guide.guide-laranja,
-#reading-guide.guide-laranja {
-    background: rgba(255, 165, 0, 0.3);
-    border-color: orange;
-}
-
-.reading-guide.guide-preto,
-#reading-guide.guide-preto {
-    background: rgba(0, 0, 0, 0.3);
-    border-color: black;
 }
