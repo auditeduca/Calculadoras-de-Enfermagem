@@ -1,5 +1,9 @@
-/* accessibility.css - Estilos do Painel de Acessibilidade e Recursos Assistivos */
-/* Problema corrigido: sobreposição de elementos e posicionamento inadequado */
+/**
+ * Accessibility Styles - VERSÃO CORRIGIDA
+ * Painel de acessibilidade com estilos melhorados
+ * Tema claro/escuro centralizado
+ * Recursos assistivos funcionais
+ */
 
 /* ========================================
    VARIÁVEIS E CONFIGURAÇÕES BASE
@@ -24,11 +28,21 @@
     --accessibility-radius: 8px;
     --accessibility-radius-lg: 12px;
     
-    /* Z-Index hierarchy - valores ajustados para evitar sobreposição */
+    /* Z-Index hierarchy */
     --z-accessibility-base: 100;
     --z-accessibility-panel: 200;
     --z-accessibility-modal: 300;
     --z-accessibility-overlay: 400;
+}
+
+/* Tema escuro */
+:root[data-theme="dark"],
+:root.dark-theme {
+    --accessibility-primary: #4d94ff;
+    --accessibility-light: #2d3748;
+    --accessibility-text: #e2e8f0;
+    --accessibility-text-muted: #a0aec0;
+    --accessibility-border: #4a5568;
 }
 
 /* ========================================
@@ -72,6 +86,7 @@
     font-weight: 500;
     text-decoration: none;
     outline: none;
+    white-space: nowrap;
 }
 
 .icon-btn.accessibility-btn:hover {
@@ -98,46 +113,33 @@
     background: linear-gradient(135deg, var(--accessibility-primary-hover), var(--accessibility-primary));
 }
 
-/* Botão de Libras */
+/* Botão Libras */
 #libras-toggle-top {
-    background: var(--accessibility-success);
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
 }
 
 #libras-toggle-top:hover {
-    background: #218838;
+    background: linear-gradient(135deg, #c0392b, #a93226);
 }
 
-/* Ícones */
+/* Ícones dos botões */
 .btn-icon {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 20px;
+    height: 20px;
 }
 
 .btn-icon svg {
-    width: 24px;
-    height: 24px;
-}
-
-.btn-text {
-    white-space: nowrap;
-}
-
-/* Esconder texto em telas pequenas */
-@media (max-width: 768px) {
-    .btn-text {
-        display: none;
-    }
-    
-    .icon-btn.accessibility-btn {
-        padding: 12px;
-    }
+    width: 100%;
+    height: 100%;
 }
 
 /* ========================================
    PAINEL DE ACESSIBILIDADE
    ======================================== */
-.accessibility-panel {
+#accessibility-panel {
     position: fixed;
     right: 0;
     top: 0;
@@ -145,435 +147,299 @@
     max-width: 400px;
     height: 100vh;
     background: var(--accessibility-white);
-    box-shadow: var(--accessibility-shadow-lg);
-    transform: translateX(100%);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--accessibility-text);
     z-index: var(--z-accessibility-panel);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.accessibility-panel.accessibility-panel-visible {
-    transform: translateX(0);
-}
-
-.accessibility-panel.accessibility-panel-hidden {
-    transform: translateX(100%);
-    pointer-events: none;
-}
-
-/* Overlay para fechar painel ao clicar fora */
-.accessibility-panel-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    visibility: hidden;
+    box-shadow: var(--accessibility-shadow-lg);
+    overflow-y: auto;
     transition: var(--accessibility-transition);
-    z-index: calc(var(--z-accessibility-panel) - 1);
-}
-
-.accessibility-panel-visible ~ .accessibility-panel-overlay {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Cabeçalho do Painel */
-.accessibility-header {
     display: flex;
     flex-direction: column;
+}
+
+/* Tema escuro para painel */
+:root[data-theme="dark"] #accessibility-panel,
+:root.dark-theme #accessibility-panel {
+    background: #2d3748;
+    color: #e2e8f0;
+}
+
+#accessibility-panel.accessibility-panel-hidden {
+    transform: translateX(100%);
+    visibility: hidden;
+}
+
+/* ========================================
+   CABEÇALHO DO PAINEL
+   ======================================== */
+.accessibility-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--accessibility-border);
+    display: flex;
+    justify-content: space-between;
     align-items: flex-start;
-    padding: 20px 24px;
-    background: linear-gradient(135deg, var(--accessibility-primary), var(--accessibility-secondary));
-    color: var(--accessibility-white);
-    position: relative;
+    gap: 16px;
 }
 
 .accessibility-title {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     margin: 0;
     font-size: 20px;
     font-weight: 600;
 }
 
 .accessibility-subtitle {
-    margin: 4px 0 0 0;
+    margin: 8px 0 0 0;
     font-size: 14px;
-    opacity: 0.9;
+    color: var(--accessibility-text-muted);
 }
 
-.accessibility-header .close-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: rgba(255, 255, 255, 0.2);
+.icon-accessibility-small {
+    width: 24px;
+    height: 24px;
+}
+
+/* Botão fechar */
+.close-btn {
+    background: none;
     border: none;
-    padding: 8px;
-    border-radius: 50%;
     cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--accessibility-radius);
     transition: var(--accessibility-transition);
+    color: var(--accessibility-text);
 }
 
-.accessibility-header .close-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+.close-btn:hover {
+    background: var(--accessibility-light);
 }
 
-.accessibility-header .close-btn svg {
+.close-btn:focus {
+    outline: 2px solid var(--accessibility-primary);
+    outline-offset: 2px;
+}
+
+.icon-close {
     width: 20px;
     height: 20px;
-    color: var(--accessibility-white);
 }
 
 /* ========================================
-   CARDS DE ACESSIBILIDADE
+   CARTÕES DE ACESSIBILIDADE
    ======================================== */
 .accessibility-card {
     display: flex;
     align-items: center;
+    gap: 16px;
     padding: 16px 24px;
     border-bottom: 1px solid var(--accessibility-border);
     cursor: pointer;
     transition: var(--accessibility-transition);
+    background: var(--accessibility-white);
+}
+
+:root[data-theme="dark"] .accessibility-card,
+:root.dark-theme .accessibility-card {
+    background: #2d3748;
+    border-color: #4a5568;
 }
 
 .accessibility-card:hover {
     background: var(--accessibility-light);
 }
 
-.accessibility-card:active {
-    background: #e2e6ea;
+:root[data-theme="dark"] .accessibility-card:hover,
+:root.dark-theme .accessibility-card:hover {
+    background: #4a5568;
 }
 
-.accessibility-card:last-child {
-    border-bottom: none;
+.accessibility-card:focus-within {
+    outline: 2px solid var(--accessibility-primary);
+    outline-offset: -2px;
 }
 
+/* Ícone do cartão */
 .card-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: var(--accessibility-light);
-    border-radius: var(--accessibility-radius);
-    margin-right: 16px;
     flex-shrink: 0;
-}
-
-.card-icon svg {
-    width: 20px;
-    height: 20px;
-    color: var(--accessibility-primary);
-}
-
-.accessibility-card:hover .card-icon {
-    background: var(--accessibility-primary);
-}
-
-.accessibility-card:hover .card-icon svg {
-    color: var(--accessibility-white);
-}
-
-.card-content {
-    flex: 1;
-    min-width: 0;
-}
-
-.card-title {
-    margin: 0;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--accessibility-text);
-}
-
-.card-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-}
-
-.font-size-label,
-.action-label {
-    font-size: 13px;
-    color: var(--accessibility-text-muted);
-}
-
-.font-size-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    background: var(--accessibility-primary);
-    color: var(--accessibility-white);
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-/* ========================================
-   MODAIS
-   ======================================== */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: var(--z-accessibility-modal);
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--accessibility-transition);
-    padding: 20px;
-}
-
-.modal:not(.hidden) {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal.hidden {
-    pointer-events: none;
-}
-
-.modal-content {
-    background: var(--accessibility-white);
-    border-radius: var(--accessibility-radius-lg);
-    width: 100%;
-    max-width: 560px;
-    max-height: 80vh;
-    overflow: hidden;
-    box-shadow: var(--accessibility-shadow-lg);
-    transform: scale(0.9);
-    transition: var(--accessibility-transition);
-}
-
-.modal:not(.hidden) .modal-content {
-    transform: scale(1);
-}
-
-/* Cabeçalho do Modal */
-.modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--accessibility-border);
-}
-
-.modal-header h2 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--accessibility-text);
-}
-
-.modal-header .close-btn {
-    background: var(--accessibility-light);
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: var(--accessibility-transition);
-}
-
-.modal-header .close-btn:hover {
-    background: var(--accessibility-border);
-}
-
-.modal-header .close-btn svg {
-    width: 20px;
-    height: 20px;
-    color: var(--accessibility-text);
-}
-
-/* ========================================
-   ABAS DE NAVEGADOR
-   ======================================== */
-.browser-tabs {
-    display: flex;
-    gap: 4px;
-    padding: 12px 24px;
-    background: var(--accessibility-light);
-    border-bottom: 1px solid var(--accessibility-border);
-}
-
-.browser-tab {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    background: transparent;
-    border: none;
-    border-radius: var(--accessibility-radius);
-    cursor: pointer;
-    font-size: 13px;
-    color: var(--accessibility-text-muted);
-    transition: var(--accessibility-transition);
-}
-
-.browser-tab:hover {
-    background: var(--accessibility-white);
-    color: var(--accessibility-text);
-}
-
-.browser-tab.active {
-    background: var(--accessibility-white);
-    color: var(--accessibility-primary);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* ========================================
-   LISTA DE ATAŁHOS
-   ======================================== */
-.shortcuts-list {
-    padding: 16px 24px;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.shortcut-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--accessibility-border);
-}
-
-.shortcut-item:last-child {
-    border-bottom: none;
-}
-
-.shortcut-description {
-    font-size: 14px;
-    color: var(--accessibility-text);
-}
-
-.shortcut-keys {
-    display: flex;
-    gap: 4px;
-}
-
-.key {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 32px;
-    height: 28px;
-    padding: 0 8px;
-    background: var(--accessibility-light);
-    border: 1px solid var(--accessibility-border);
-    border-radius: 4px;
-    font-size: 12px;
-    font-family: monospace;
-    font-weight: 500;
-    color: var(--accessibility-text);
-}
-
-/* ========================================
-   DICIONÁRIO
-   ======================================== */
-.glossary-search {
-    padding: 16px 24px;
-}
-
-.glossary-search input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid var(--accessibility-border);
-    border-radius: var(--accessibility-radius);
-    font-size: 14px;
-    transition: var(--accessibility-transition);
-}
-
-.glossary-search input:focus {
-    outline: none;
-    border-color: var(--accessibility-primary);
-    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
-}
-
-.glossary-filter {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 0 24px 16px;
-}
-
-.alphabet-letter {
     width: 32px;
     height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--accessibility-light);
-    border: 1px solid var(--accessibility-border);
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 13px;
+    color: var(--accessibility-primary);
+}
+
+.card-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Conteúdo do cartão */
+.card-content {
+    flex: 1;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 16px;
     font-weight: 500;
     color: var(--accessibility-text);
-    transition: var(--accessibility-transition);
 }
 
-.alphabet-letter:hover {
-    background: var(--accessibility-primary);
-    border-color: var(--accessibility-primary);
-    color: var(--accessibility-white);
-}
-
-.alphabet-letter.active {
-    background: var(--accessibility-primary);
-    border-color: var(--accessibility-primary);
-    color: var(--accessibility-white);
-}
-
-.glossary-list {
-    padding: 0 24px 24px;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.glossary-item {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--accessibility-border);
-}
-
-.glossary-item:last-child {
-    border-bottom: none;
-}
-
-.glossary-term {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--accessibility-primary);
-    margin-bottom: 4px;
-}
-
-.glossary-definition {
+/* Ações do cartão */
+.card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: 14px;
-    color: var(--accessibility-text);
-    line-height: 1.5;
-}
-
-.glossary-empty {
-    text-align: center;
-    padding: 40px 24px;
     color: var(--accessibility-text-muted);
 }
 
+.font-size-label {
+    display: none;
+}
+
+.font-size-icon {
+    font-weight: 600;
+    color: var(--accessibility-primary);
+}
+
 /* ========================================
-   LEITORES DE TELA (SCREEN READERS)
+   CONTRASTE E CORES
+   ======================================== */
+body[data-contrast="high-light"] {
+    --text-primary: #000000;
+    --bg-main: #ffffff;
+}
+
+body[data-contrast="high-dark"] {
+    --text-primary: #ffffff;
+    --bg-main: #000000;
+}
+
+body[data-colorblind="protanopia"] {
+    filter: url(#protanopia-filter);
+}
+
+body[data-colorblind="deuteranopia"] {
+    filter: url(#deuteranopia-filter);
+}
+
+body[data-colorblind="tritanopia"] {
+    filter: url(#tritanopia-filter);
+}
+
+body[data-saturation="low"] {
+    filter: saturate(0.5);
+}
+
+body[data-saturation="high"] {
+    filter: saturate(1.5);
+}
+
+body[data-saturation="mono"] {
+    filter: grayscale(1);
+}
+
+/* ========================================
+   CURSOR
+   ======================================== */
+body[data-cursor="large"] {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M2 4l8 24 5-9 9 0z" fill="black"/></svg>') 4 4, auto;
+}
+
+body[data-cursor="extra-large"] {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M4 8l12 32 8-16 12 0z" fill="black"/></svg>') 6 6, auto;
+}
+
+/* ========================================
+   GUIA DE LEITURA
+   ======================================== */
+body[data-reading-guide="blue"]::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #0066cc;
+    pointer-events: none;
+    z-index: 999;
+}
+
+body[data-reading-guide="orange"]::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #ff9800;
+    pointer-events: none;
+    z-index: 999;
+}
+
+body[data-reading-guide="black"]::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #000000;
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* ========================================
+   RECURSOS ADICIONAIS
+   ======================================== */
+body.highlight-links a {
+    outline: 2px solid var(--accessibility-primary);
+    outline-offset: 2px;
+}
+
+body.highlight-headers h1,
+body.highlight-headers h2,
+body.highlight-headers h3,
+body.highlight-headers h4,
+body.highlight-headers h5,
+body.highlight-headers h6 {
+    outline: 2px solid var(--accessibility-warning);
+    outline-offset: 2px;
+}
+
+body.bold-text {
+    font-weight: 600;
+}
+
+body.stop-animations * {
+    animation: none !important;
+    transition: none !important;
+}
+
+body.hide-images img {
+    visibility: hidden;
+}
+
+body.reading-mode {
+    background: #fef5e7;
+    color: #2c3e50;
+    font-family: Georgia, serif;
+    line-height: 1.8;
+}
+
+:root[data-theme="dark"] body.reading-mode {
+    background: #1a1a1a;
+    color: #e0e0e0;
+}
+
+/* ========================================
+   SCREEN READER ONLY
    ======================================== */
 .sr-only {
     position: absolute;
@@ -584,123 +450,52 @@
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
-    border: 0;
-}
-
-#sr-announcer {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+    border-width: 0;
 }
 
 /* ========================================
    RESPONSIVIDADE
    ======================================== */
-@media (max-width: 480px) {
-    .accessibility-panel {
+@media (max-width: 768px) {
+    #accessibility-panel {
         max-width: 100%;
-        width: 100%;
     }
-    
-    .modal-content {
-        max-width: 100%;
-        max-height: 90vh;
-    }
-    
-    .browser-tabs {
-        overflow-x: auto;
-    }
-    
-    .shortcut-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-}
 
-/* ========================================
-   ESTADOS DE ACESSIBILIDADE (ALTO CONTRASTE)
-   ======================================== */
-@media (prefers-contrast: high) {
-    .icon-btn.accessibility-btn {
-        border: 2px solid var(--accessibility-white);
+    .accessibility-header {
+        padding: 16px;
     }
-    
+
     .accessibility-card {
-        border-bottom: 2px solid var(--accessibility-text);
+        padding: 12px 16px;
     }
-    
-    .key {
-        border-width: 2px;
-    }
-}
 
-/* ========================================
-   REDUZIR MOVIMENTO
-   ======================================== */
-@media (prefers-reduced-motion: reduce) {
-    .icon-btn.accessibility-btn,
-    .accessibility-panel,
-    .modal,
-    .modal-content {
-        transition: none;
+    .btn-text {
+        display: none;
     }
-    
-    .icon-btn.accessibility-btn:hover {
+
+    #accessibility-v2-container {
+        bottom: 16px;
+        top: auto;
+        right: 16px;
         transform: none;
+        flex-direction: row;
     }
 }
 
 /* ========================================
-   MODO ESCURO
+   ANIMAÇÕES
    ======================================== */
-@media (prefers-color-scheme: dark) {
-    .accessibility-panel,
-    .modal-content {
-        background: var(--accessibility-dark);
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
     }
-    
-    .accessibility-card {
-        border-color: #495057;
+    to {
+        transform: translateX(0);
+        opacity: 1;
     }
-    
-    .accessibility-card:hover {
-        background: #495057;
-    }
-    
-    .card-title {
-        color: var(--accessibility-light);
-    }
-    
-    .card-icon {
-        background: #495057;
-    }
-    
-    .browser-tabs {
-        background: #495057;
-    }
-    
-    .browser-tab:not(.active) {
-        color: #adb5bd;
-    }
-    
-    .glossary-search input {
-        background: #495057;
-        border-color: #6c757d;
-        color: var(--accessibility-light);
-    }
-    
-    .key {
-        background: #495057;
-        border-color: #6c757d;
-        color: var(--accessibility-light);
-    }
+}
+
+#accessibility-panel:not(.accessibility-panel-hidden) {
+    animation: slideInRight 0.3s ease-out;
 }
