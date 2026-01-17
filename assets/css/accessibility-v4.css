@@ -1,0 +1,881 @@
+/* ============================================
+   MÓDULO UNIFICADO DE ACESSIBILIDADE - ESTILOS
+   ============================================
+   Princípios:
+   1. Usar variáveis CSS que podem ser sobrescritas
+   2. Escopar estilos para não afetar o resto do site
+   3. Aplicar mudanças via classes no body/documentElement
+   4. Nunca usar !important exceto para propriedades críticas de acessibilidade
+   5. Respeitar estilos existentes dos módulos do site
+   ============================================ */
+
+/* --- Variáveis CSS do Módulo (podem ser sobrescritas globalmente) --- */
+:root {
+    /* Cores do módulo - podem ser sobrescritas por variáveis globais */
+    --a11y-primary: var(--color-primary, #1A3E74);
+    --a11y-primary-dark: var(--color-primary-dark, #0d2137);
+    --a11y-primary-light: var(--color-primary-light, #3d5a99);
+    --a11y-accent: var(--color-accent, #ff9800);
+    --a11y-bg: var(--bg-primary, #ffffff);
+    --a11y-text: var(--text-primary, #333333);
+    --a11y-border: var(--border-color, #e0e0e0);
+    --a11y-shadow: var(--shadow-lg, rgba(0, 0, 0, 0.15));
+    --a11y-radius: 12px;
+    --a11y-transition: 0.3s ease;
+    
+    /* Transições para recursos de acessibilidade */
+    --a11y-transition-duration: 300ms;
+}
+
+/* ============================================
+   ESCOPO ISOLADO - Widgets Laterais
+   ============================================ */
+
+/* Widgets flutuantes - isolados por ID e classe específica */
+#side-widgets {
+    position: fixed;
+    right: 0;
+    top: 200px;
+    z-index: var(--z-accessibility-widget, 100030);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: auto;
+}
+
+/* Wrapper dos botões */
+#side-widgets .a11y-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Botões do widget - sem sobrescrever estilos globais */
+#side-widgets .a11y-btn {
+    width: 52px;
+    height: 52px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    background-color: var(--a11y-primary);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: -3px 0 12px var(--a11y-shadow);
+    transition: all var(--a11y-transition);
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+}
+
+#side-widgets .a11y-btn:hover {
+    width: 62px;
+    background-color: var(--a11y-primary-dark);
+    border-color: rgba(255, 255, 255, 1);
+}
+
+#side-widgets .a11y-btn:focus {
+    outline: 3px solid var(--a11y-accent);
+    outline-offset: 2px;
+}
+
+#side-widgets .a11y-btn i,
+#side-widgets .a11y-btn svg {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+}
+
+/* ============================================
+   ESCOPO ISOLADO - Painel de Acessibilidade
+   ============================================ */
+
+#a11y-panel {
+    position: fixed;
+    top: 150px;
+    right: 65px;
+    width: 360px;
+    max-width: calc(100vw - 100px);
+    max-height: calc(100vh - 200px);
+    background: var(--a11y-bg);
+    border-radius: var(--a11y-radius);
+    box-shadow: -10px 10px 40px var(--a11y-shadow);
+    z-index: var(--z-accessibility-panel, 100020);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: opacity var(--a11y-transition), transform var(--a11y-transition), width 0.3s ease;
+    font-family: var(--font-family-primary, inherit);
+    color: var(--a11y-text);
+}
+
+/* Painel escondido */
+#a11y-panel.a11y-hidden {
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(20px);
+}
+
+/* Painel visível - remove display: none e mostra o painel */
+#a11y-panel:not(.a11y-hidden) {
+    display: flex !important;
+    transition: opacity var(--a11y-transition), transform var(--a11y-transition), width 0.3s ease;
+}
+
+/* Painel minimizado */
+#a11y-panel.a11y-minimized {
+    width: 280px;
+}
+
+/* Header do painel */
+#a11y-panel .a11y-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, var(--a11y-primary), var(--a11y-primary-dark));
+    color: white;
+    min-height: 60px;
+}
+
+#a11y-panel .a11y-header img {
+    max-height: 40px;
+    width: auto;
+}
+
+#a11y-panel .a11y-header .a11y-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Header Left - Logo e Título */
+#a11y-panel .a11y-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+#a11y-panel .a11y-header-left img {
+    max-height: 40px;
+    width: auto;
+    border-radius: 8px;
+}
+
+/* Header Right - Botões de Ação */
+#a11y-panel .a11y-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* =========================================
+   BOTÕES DE FECHAR PADRONIZADOS
+   ========================================= */
+.btn-close-white {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+.btn-close-white:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.btn-close-white:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 2px;
+}
+
+/* Botões de ação no header - Padrão Modal */
+#a11y-panel .a11y-close-btn,
+#a11y-panel .a11y-maximize-btn {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    flex-shrink: 0;
+}
+
+#a11y-panel .a11y-close-btn:hover,
+#a11y-panel .a11y-maximize-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#a11y-panel .a11y-close-btn:focus,
+#a11y-panel .a11y-maximize-btn:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 2px;
+}
+
+#a11y-panel .a11y-close-btn i,
+#a11y-panel .a11y-maximize-btn i {
+    font-size: 1rem;
+}
+
+/* Conteúdo do painel */
+#a11y-panel .a11y-content {
+    padding: 16px 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Seções */
+#a11y-panel .a11y-section {
+    margin-bottom: 24px;
+}
+
+#a11y-panel .a11y-section-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--a11y-primary);
+    margin: 0 0 12px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Grid de cards */
+#a11y-panel .a11y-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+/* Cards de recurso */
+#a11y-panel .a11y-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 8px;
+    background: var(--a11y-bg);
+    border: 1px solid var(--a11y-border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    min-height: 70px;
+}
+
+#a11y-panel .a11y-card:hover {
+    border-color: var(--a11y-primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#a11y-panel .a11y-card:focus {
+    outline: 3px solid var(--a11y-accent);
+    outline-offset: 2px;
+}
+
+#a11y-panel .a11y-card.a11y-active {
+    background: var(--a11y-primary);
+    color: white;
+    border-color: var(--a11y-primary);
+}
+
+#a11y-panel .a11y-card .a11y-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+#a11y-panel .a11y-card .a11y-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Botão restaurar */
+#a11y-panel .a11y-restore-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--a11y-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+#a11y-panel .a11y-restore-btn:hover {
+    background: var(--a11y-primary-dark);
+}
+
+/* ============================================
+   RECURSOS DE ACESSIBILIDADE - Aplicados ao body
+   ============================================ */
+
+/* Escala de fonte - usa CSS custom property */
+body[data-a11y-font-scale] {
+    font-size: calc(16px * var(--a11y-font-scale, 1));
+}
+
+body[data-a11y-font-scale] h1 { font-size: calc(2rem * var(--a11y-font-scale, 1)); }
+body[data-a11y-font-scale] h2 { font-size: calc(1.5rem * var(--a11y-font-scale, 1)); }
+body[data-a11y-font-scale] h3 { font-size: calc(1.25rem * var(--a11y-font-scale, 1)); }
+body[data-a11y-font-scale] h4 { font-size: calc(1rem * var(--a11y-font-scale, 1)); }
+
+/* Altura de linha */
+body[data-a11y-line-height] {
+    line-height: var(--a11y-line-height, 1.5);
+}
+
+/* Espaçamento entre letras */
+body[data-a11y-letter-spacing] {
+    letter-spacing: var(--a11y-letter-spacing, normal);
+}
+
+/* Fonte dyslexic */
+body[data-a11y-font="atkinson"] {
+    font-family: 'Atkinson Hyperlegible', var(--font-family-primary), sans-serif;
+}
+
+body[data-a11y-font="newsreader"] {
+    font-family: 'Newsreader', var(--font-family-primary), serif;
+}
+
+body[data-a11y-font="opendyslexic"] {
+    font-family: 'OpenDyslexic', var(--font-family-primary), sans-serif;
+}
+
+/* Texto em negrito */
+body[data-a11y-bold="true"] {
+    font-weight: 600 !important;
+}
+
+body[data-a11y-bold="true"] * {
+    font-weight: 600 !important;
+}
+
+/* Cursor grande */
+body[data-a11y-big-cursor="true"] {
+    cursor: var(--a11y-cursor, url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="%231A3E74" d="M7 2l12 11.5-5.5 1.2 3.3 6-2.5 1.5-3.3-6L7 19V2z"/></svg>') 0 0, auto !important;
+}
+
+/* Modo leitura -remove distrações */
+body[data-a11y-reading="true"] .main-nav,
+body[data-a11y-reading="true"] .mega-panel,
+body[data-a11y-reading="true"] .top-bar,
+body[data-a11y-reading="true"] .mobile-menu,
+body[data-a11y-reading="true"] .mobile-menu-overlay,
+body[data-a11y-reading="true"] footer,
+body[data-a11y-reading="true"] .cookie-banner,
+body[data-a11y-reading="true"] #side-widgets {
+    display: none !important;
+}
+
+body[data-a11y-reading="true"] #main-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Contraste alto - cores invertidas */
+body[data-a11y-contrast="inverted"] {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+body[data-a11y-contrast="dark"] {
+    background: #000 !important;
+    color: #fff !important;
+}
+
+body[data-a11y-contrast="light"] {
+    background: #fff !important;
+    color: #000 !important;
+}
+
+/* Saturação */
+body[data-a11y-saturation="low"] {
+    filter: saturate(50%);
+}
+
+body[data-a11y-saturation="high"] {
+    filter: saturate(150%);
+}
+
+body[data-a11y-saturation="mono"] {
+    filter: grayscale(100%);
+}
+
+/* Modos daltônicos */
+body[data-a11y-colorblind="deuteranopia"] {
+    filter: url('#deuteranopia-filter');
+}
+
+body[data-a11y-colorblind="protanopia"] {
+    filter: url('#protanopia-filter');
+}
+
+body[data-a11y-colorblind="tritanopia"] {
+    filter: url('#tritanopia-filter');
+}
+
+/* Tema Claro/Escuro */
+body[data-a11y-theme="true"] {
+    --a11y-bg: #1a1a1a;
+    --a11y-text: #f0f0f0;
+    --a11y-border: #404040;
+}
+
+body[data-a11y-theme="true"] #a11y-panel {
+    background: #2a2a2a;
+    color: #f0f0f0;
+}
+
+body[data-a11y-theme="true"] #a11y-panel .a11y-card {
+    background: #2a2a2a;
+    border-color: #404040;
+}
+
+body[data-a11y-theme="true"] #a11y-panel .a11y-section-title {
+    color: #64b5f6;
+}
+
+/* Highlight de links */
+body[data-a11y-links="true"] a {
+    outline: 3px solid #FFEB3B !important;
+    outline-offset: 2px !important;
+}
+
+body[data-a11y-links="true"] a:hover {
+    outline-color: #FFC107 !important;
+}
+
+/* Highlight de headers */
+body[data-a11y-headers="true"] h1,
+body[data-a11y-headers="true"] h2,
+body[data-a11y-headers="true"] h3,
+body[data-a11y-headers="true"] h4,
+body[data-a11y-headers="true"] h5,
+body[data-a11y-headers="true"] h6 {
+    outline: 3px solid #8BC34A !important;
+    outline-offset: 2px !important;
+}
+
+/* Pausar animações */
+body[data-a11y-stop-anim="true"] *,
+body[data-a11y-stop-anim="true"] *::before,
+body[data-a11y-stop-anim="true"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}
+
+/* Esconder imagens */
+body[data-a11y-hide-images="true"] img {
+    visibility: hidden !important;
+}
+
+/* ============================================
+   GUIAS E MÁSCARAS DE LEITURA
+   ============================================ */
+
+#a11y-reading-guide {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: rgba(33, 150, 243, 0.3);
+    pointer-events: none;
+    z-index: 99999;
+    display: none;
+}
+
+#a11y-reading-guide.a11y-active {
+    display: block;
+}
+
+#a11y-mask-top,
+#a11y-mask-bottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.85);
+    pointer-events: none;
+    z-index: 99998;
+    display: none;
+}
+
+#a11y-mask-top.a11y-active,
+#a11y-mask-bottom.a11y-active {
+    display: block;
+}
+
+#a11y-mask-top {
+    top: 0;
+}
+
+#a11y-mask-bottom {
+    bottom: 0;
+}
+
+/* ============================================
+   LUPA DE CONTEÚDO
+   ============================================ */
+
+#a11y-magnifier {
+    position: fixed;
+    padding: 8px 12px;
+    background: var(--a11y-primary);
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    max-width: 300px;
+    word-wrap: break-word;
+    pointer-events: none;
+    z-index: 99999;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+#a11y-magnifier.a11y-active {
+    display: block;
+}
+
+/* ============================================
+   MODAL DE ATALHOS
+   ============================================ */
+
+#a11y-shortcuts-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 100100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#a11y-shortcuts-modal.a11y-hidden {
+    display: none !important;
+}
+
+#a11y-shortcuts-modal.a11y-active {
+    display: flex;
+}
+
+#a11y-shortcuts-modal .a11y-modal-content {
+    background: var(--a11y-bg);
+    border-radius: var(--a11y-radius);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+#a11y-shortcuts-modal .a11y-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+#a11y-shortcuts-modal .a11y-modal-header .a11y-close-btn {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    flex-shrink: 0;
+}
+
+#a11y-shortcuts-modal .a11y-modal-header .a11y-close-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#a11y-shortcuts-modal .a11y-modal-header .a11y-close-btn:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 2px;
+}
+
+#a11y-shortcuts-modal .a11y-modal-header .a11y-close-btn i {
+    font-size: 1rem;
+}
+
+#a11y-shortcuts-modal .a11y-shortcut-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--a11y-border);
+}
+
+#a11y-shortcuts-modal kbd {
+    background: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+/* ============================================
+   MODAL DE GLOSSÁRIO
+   ============================================ */
+
+#a11y-glossary-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 100100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#a11y-glossary-modal.a11y-hidden {
+    display: none !important;
+}
+
+#a11y-glossary-modal.a11y-active {
+    display: flex;
+}
+
+#a11y-glossary-modal .a11y-modal-content {
+    background: var(--a11y-bg);
+    border-radius: var(--a11y-radius);
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+#a11y-glossary-modal .a11y-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+#a11y-glossary-modal .a11y-modal-header .a11y-close-btn {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    flex-shrink: 0;
+}
+
+#a11y-glossary-modal .a11y-modal-header .a11y-close-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#a11y-glossary-modal .a11y-modal-header .a11y-close-btn:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 2px;
+}
+
+#a11y-glossary-modal .a11y-modal-header .a11y-close-btn i {
+    font-size: 1rem;
+}
+
+/* Busca do glossário */
+#a11y-glossary-modal .a11y-glossary-search {
+    margin-bottom: 16px;
+}
+
+#a11y-glossary-modal .a11y-glossary-search-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--a11y-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--a11y-bg);
+    color: var(--a11y-text);
+    transition: border-color 0.2s ease;
+}
+
+#a11y-glossary-modal .a11y-glossary-search-input:focus {
+    outline: none;
+    border-color: var(--a11y-primary);
+}
+
+/* Lista de termos do glossário */
+#a11y-glossary-modal .a11y-glossary-list {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+#a11y-glossary-modal .a11y-glossary-item {
+    padding: 12px;
+    border: 1px solid var(--a11y-border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+}
+
+#a11y-glossary-modal .a11y-glossary-item:hover {
+    border-color: var(--a11y-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#a11y-glossary-modal .a11y-glossary-term {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--a11y-primary);
+    margin-bottom: 4px;
+}
+
+#a11y-glossary-modal .a11y-glossary-category {
+    font-size: 0.75rem;
+    color: var(--a11y-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+#a11y-glossary-modal .a11y-glossary-definition {
+    font-size: 0.875rem;
+    color: var(--a11y-text);
+    line-height: 1.5;
+}
+
+#a11y-glossary-modal .a11y-glossary-empty {
+    text-align: center;
+    padding: 24px;
+    color: var(--a11y-text);
+    opacity: 0.7;
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+
+@media (max-width: 768px) {
+    #a11y-panel {
+        right: 10px;
+        left: 10px;
+        width: auto;
+        max-width: none;
+        top: 80px;
+        max-height: calc(100vh - 120px);
+    }
+    
+    #a11y-panel .a11y-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    #side-widgets {
+        top: 120px;
+    }
+    
+    #side-widgets .a11y-btn {
+        width: 44px;
+        height: 44px;
+    }
+    
+    #side-widgets .a11y-btn:hover {
+        width: 54px;
+    }
+}
+
+@media (max-width: 480px) {
+    #a11y-panel .a11y-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #side-widgets {
+        top: 100px;
+    }
+}
+
+/* ============================================
+   REDUÇÃO DE MOVIMENTO
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --a11y-transition: 0.01ms;
+    }
+    
+    #a11y-panel,
+    #a11y-panel .a11y-card,
+    #a11y-panel .a11y-restore-btn {
+        transition: none;
+    }
+}
+
+/* ============================================
+   ACESSIBILIDADE - FOCO VISÍVEL
+   ============================================ */
+
+.a11y-focus-visible:focus-visible {
+    outline: 3px solid var(--a11y-accent);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   ESCONDER VISUALMENTE MAS MANTER PARA LEITORES DE TELA
+   ============================================ */
+
+.a11y-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

@@ -1,0 +1,239 @@
+{
+    "glossario": [
+        {
+            "termo": "Acessibilidade",
+            "definicao": "Conjunto de recursos e práticas que permitem que pessoas com deficiência ou necessidades especiais possam acessar e utilizar produtos, serviços e ambientes de forma autônoma e independente.",
+            "categoria": "Conceitos Gerais"
+        },
+        {
+            "termo": "Alto Contraste",
+            "definicao": "Recurso de acessibilidade que altera as cores da interface para aumentar a diferenciação visual entre elementos, facilitando a leitura para pessoas com baixa visão ou daltonismo.",
+            "categoria": "Acessibilidade Visual"
+        },
+        {
+            "termo": "ARIA",
+            "definicao": "Accessible Rich Internet Applications. Conjunto de atributos que define como tornar conteúdo web mais acessível para pessoas com deficiência, especialmente em aplicações ricas em JavaScript.",
+            "categoria": "Tecnologias Assistivas"
+        },
+        {
+            "termo": "Back to Top",
+            "definicao": "Recurso de navegação que permite ao usuário retornar rapidamente ao topo da página, especialmente útil em páginas longas.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "Banner de Cookies",
+            "definicao": "Elemento de interface que informa aos usuários sobre o uso de cookies no site e solicita consentimento para sua utilização, em conformidade com a LGPD e GDPR.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "Breadcrumb",
+            "definicao": "Navegação secundária que mostra ao usuário sua localização atual dentro da estrutura do site, permitindo retorno a páginas anteriores.",
+            "categoria": "Navegação"
+        },
+        {
+            "termo": "Breakpoint",
+            "definicao": "Pontos de ruptura definidos no design responsivo onde o layout da página se adapta a diferentes tamanhos de tela.",
+            "categoria": "Design Responsivo"
+        },
+        {
+            "termo": "Card",
+            "definicao": "Componente de interface que agrupa informações relacionadas em um container visual, comumente utilizado para exibir produtos, artigos ou postagens.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "Carrossel",
+            "definicao": "Componente de interface que exibe uma sequência de elementos (imagens, produtos, slides) de forma horizontal, permitindo navegação entre eles.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "Container",
+            "definicao": "Elemento que delimita a largura máxima do conteúdo da página, centralizando-o e garantindo consistência visual.",
+            "categoria": "Layout"
+        },
+        {
+            "termo": "Cookie",
+            "definicao": "Pequeno arquivo de texto armazenado no navegador do usuário que permite ao site reconhecer o dispositivo e personalizar a experiência.",
+            "categoria": "Privacidade"
+        },
+        {
+            "termo": "CSS Variables",
+            "definicao": "Variáveis CSS (Custom Properties) que permitem definir valores reutilizáveis no código, facilitando a manutenção e a implementação de temas.",
+            "categoria": "Desenvolvimento Web"
+        },
+        {
+            "termo": "Daltonismo",
+            "definicao": "Condição genética que afeta a percepção de cores, comumente chamada de cegueira para cores. Existem diferentes tipos: protanopia, deuteranopia e tritanopia.",
+            "categoria": "Acessibilidade Visual"
+        },
+        {
+            "termo": "Design Responsivo",
+            "definicao": "Abordagem de design que faz com que as páginas web se adaptem automaticamente a diferentes tamanhos de tela e dispositivos.",
+            "categoria": "Design"
+        },
+        {
+            "termo": "Dropdown",
+            "definicao": "Componente de interface que exibe uma lista de opções quando ativado, comumente utilizado em menus de navegação e formulários.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "E-commerce",
+            "definicao": "Comercio eletrônico. Modalidade de comércio que utiliza plataformas digitais para realizar transações comerciais.",
+            "categoria": "Negócios"
+        },
+        {
+            "termo": "Footer",
+            "definicao": "Rodapé. Seção inferior de uma página web que geralmente contém informações de contato, links úteis e direitos autorais.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "GDPR",
+            "definicao": "General Data Protection Regulation. Regulamentação europeia sobre proteção de dados e privacidade que estabelece diretrizes para coleta e processamento de informações pessoais.",
+            "categoria": "Privacidade"
+        },
+        {
+            "termo": "Grid",
+            "definicao": "Sistema de layout bidimensional que organiza elementos em linhas e colunas, facilitando a criação de designs consistentes e responsivos.",
+            "categoria": "Layout"
+        },
+        {
+            "termo": "Header",
+            "definicao": "Cabeçalho. Seção superior de uma página web que geralmente contém o logo, menu de navegação e outros elementos de identificação.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "Hero",
+            "definicao": "Seção principal e visualmente proeminente de uma página web, geralmente localizada no topo, que contém a mensagem principal ou chamada para ação.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "Input",
+            "definicao": "Campo de formulário que permite ao usuário inserir dados. Pode ser do tipo texto, número, e-mail, senha, entre outros.",
+            "categoria": "Formulários"
+        },
+        {
+            "termo": "LGPD",
+            "definicao": "Lei Geral de Proteção de Dados. Legislação brasileira que regulamenta o tratamento de dados pessoais, garantindo direitos aos titulares e obrigações aos controladores.",
+            "categoria": "Privacidade"
+        },
+        {
+            "termo": "Link",
+            "definicao": "Elemento clicável que redireciona o usuário para outra página, seção ou recurso. Também conhecido como hiperlink ou hyperlink.",
+            "categoria": "Navegação"
+        },
+        {
+            "termo": "Loading",
+            "definicao": "Indicador visual que informa ao usuário que um processo está em andamento, como carregamento de página ou envio de dados.",
+            "categoria": "Feedback"
+        },
+        {
+            "termo": "Mega Menu",
+            "definicao": "Menu dropdown expandido que exibe múltiplas colunas de opções, permitindo visualizar categorias e subcategorias simultaneamente.",
+            "categoria": "Navegação"
+        },
+        {
+            "termo": "Menu Mobile",
+            "definicao": "Versão adaptada do menu de navegação para dispositivos móveis, geralmente exibido em tempo integral ou através de um ícone de menu (hambúrguer).",
+            "categoria": "Navegação"
+        },
+        {
+            "termo": "Modal",
+            "definicao": "Janela sobreposta que aparece sobre o conteúdo principal da página para exibir informações importantes ou solicitar ações do usuário.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "Modo Escuro",
+            "definicao": "Recurso de acessibilidade e preferência do usuário que inverte as cores da interface, utilizando fundo escuro com texto claro.",
+            "categoria": "Acessibilidade"
+        },
+        {
+            "termo": "Newsletter",
+            "definicao": "Boletim informativo enviado periodicamente por e-mail, geralmente contendo novidades, promoções e conteúdo relevante.",
+            "categoria": "Marketing"
+        },
+        {
+            "termo": "Pagination",
+            "definicao": "Sistema de navegação que divide conteúdo extenso em múltiplas páginas, permitindo ao usuário navegar entre elas.",
+            "categoria": "Navegação"
+        },
+        {
+            "termo": "Pixel Perfect",
+            "definicao": "Técnica de desenvolvimento que busca reproduzir fielmente o design proposto, com precisão pixel a pixel.",
+            "categoria": "Desenvolvimento Web"
+        },
+        {
+            "termo": "Preferências de Movimento",
+            "definicao": "Configuração do sistema operacional que indica se o usuário prefere redução de animações, importante para acessibilidade vestibular.",
+            "categoria": "Acessibilidade"
+        },
+        {
+            "termo": "Rating",
+            "definicao": "Sistema de avaliação que permite aos usuários classificar produtos ou conteúdos, geralmente utilizando estrelas ou números.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "Reader Mode",
+            "definicao": "Recurso que simplifica a exibição de páginas web, removendo distrações e focando apenas no conteúdo textual principal.",
+            "categoria": "Acessibilidade"
+        },
+        {
+            "termo": "Responsividade",
+            "definicao": "Capacidade de um site ou aplicação web de se adaptar a diferentes tamanhos de tela e dispositivos.",
+            "categoria": "Design Responsivo"
+        },
+        {
+            "termo": "Scroll",
+            "definicao": "Ação de rolar o conteúdo da página vertical ou horizontalmente quando este excede as dimensões visíveis da janela.",
+            "categoria": "Navegação"
+        },
+        {
+            "termo": "Search",
+            "definicao": "Funcionalidade de busca que permite aos usuários encontrar conteúdo específico dentro do site ou aplicação.",
+            "categoria": "Funcionalidades"
+        },
+        {
+            "termo": "Slider",
+            "definicao": "Componente interativo que permite selecionar um valor dentro de um intervalo, também utilizado para carrosséis de imagens.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "Sticky Header",
+            "definicao": "Cabeçalho que permanece visível no topo da página durante a rolagem, facilitando a navegação em páginas longas.",
+            "categoria": "Navegação"
+        },
+        {
+            "termo": "Tags",
+            "definicao": "Rótulos ou marcadores que categorizam e organizam conteúdo, facilitando a busca e filtragem de informações.",
+            "categoria": "Organização"
+        },
+        {
+            "termo": "Toast",
+            "definicao": "Mensagem de feedback短暂 que aparece na tela para informar o usuário sobre uma ação realizada, desaparecendo automaticamente.",
+            "categoria": "Feedback"
+        },
+        {
+            "termo": "Tooltip",
+            "definicao": "Caixa de informação que aparece ao passar o mouse sobre um elemento, fornecendo detalhes adicionais ou explicações.",
+            "categoria": "Componentes de Interface"
+        },
+        {
+            "termo": "VLibras",
+            "definicao": "Conjunto de ferramentas computacionais que traduz conteúdo web para Libras (Língua Brasileira de Sinais), promovendo acessibilidade para surdos.",
+            "categoria": "Tecnologias Assistivas"
+        },
+        {
+            "termo": "WCAG",
+            "definicao": "Web Content Accessibility Guidelines. Diretrizes internacionais de acessibilidade para conteúdo web, desenvolvidas pelo W3C.",
+            "categoria": "Acessibilidade"
+        },
+        {
+            "termo": "Wishlist",
+            "definicao": "Lista de desejos. Funcionalidade que permite aos usuários salvar produtos de interesse para compra futura.",
+            "categoria": "E-commerce"
+        },
+        {
+            "termo": "Z-Index",
+            "definicao": "Propriedade CSS que controla a ordem de empilhamento de elementos sobrepostos, determinando qual aparece na frente.",
+            "categoria": "CSS"
+        }
+    ]
+}

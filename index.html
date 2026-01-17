@@ -1,116 +1,330 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadoras de Enfermagem</title>
-    <meta name="description" content="Ferramentas e calculadoras para profissionais de enfermagem.">
+    <title>Calculadoras de Enfermagem - Modular</title>
 
-    <!-- ============================================ -->
-    <!-- BIBLIOTECAS EXTERNAS (CDN)                  -->
-    <!-- ============================================ -->
-    
-    <!-- THREE.js - DEVE vir antes do preload.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Font Awesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
 
-    <!-- ============================================ -->
-    <!-- ESTILOS (CSS)                                -->
-    <!-- ============================================ -->
-    
-    <!-- Estilos Globais -->
+    <!-- Estilos Unificados -->
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/main.css">
-
-    <!-- Estilos de Componentes -->
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css">
     <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
-
-    <!-- Estilos Inline para comportamento do Preload -->
-    <style>
-        .component-placeholder {
-            min-height: 50px;
-        }
-
-        /* Configuração do Preload para cobrir a tela inteira */
-        #component-preload {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 99999;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+    
+    <!-- Monitoramento de CSS -->
+    <script crossorigin="anonymous">
+        document.addEventListener('DOMContentLoaded', function() {
+            const cssUrls = [
+                'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css',
+                'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/main.css',
+                'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css',
+                'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css',
+                'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css',
+                'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css'
+            ];
             
-            /* Transição suave para desaparecer */
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
+            cssUrls.forEach(url => {
+                const link = document.querySelector(`link[href="${url}"]`);
+                if (link) {
+                    link.onerror = function() {
+                        console.error('[CSS Erro] Falha ao carregar: ' + url);
+                    };
+                    link.onload = function() {
+                        console.log('[CSS OK] Carregado: ' + url.split('/').pop());
+                    };
+                }
+            });
+        });
+    </script>
 
-        /* Classe que será adicionada via JS para esconder o preload */
-        #component-preload.fade-out {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { min-height: 100vh; display: flex; flex-direction: column; background-color: #f8f9fa; }
+        body { overflow-x: hidden; overflow-y: auto !important; }
+        #header-container { z-index: 10000; position: relative; }
+        #main-content-container { flex: 1 0 auto; width: 100%; }
+        #main-container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+        #footer-container { margin-top: auto; min-height: 100px; }
+        #accessibility-container { position: fixed; top: 0; left: 0; z-index: 10005; pointer-events: none; }
+        #accessibility-container > * { pointer-events: auto; }
+        
+        /* OCULTAR BOTÃO ORIGINAL VLIBRAS */
+        [vw-access-button], .vw-access-button { display: none !important; }
+        [vw] { z-index: 10007 !important; }
+
+        .loading-text { text-align: center; padding: 100px 20px; color: #666; font-family: sans-serif; }
+        body.loading-active { overflow: hidden !important; }
+        
+        /* ERRO VISÍVEL */
+        .module-error { 
+            background: #fee2e2; 
+            border: 1px solid #ef4444; 
+            color: #dc2626; 
+            padding: 15px; 
+            margin: 10px; 
+            border-radius: 8px; 
+            text-align: center;
         }
+        .module-error small { display: block; margin-top: 5px; color: #991b1b; }
     </style>
 </head>
-<body>
+<body class="loading-active">
 
-    <!-- ============================================ -->
-    <!-- ESTRUTURA MODULAR (Placeholders)             -->
-    <!-- ============================================ -->
-
-    <!-- 1. Acessibilidade -->
-    <div id="component-accessibility" class="component-placeholder"></div>
-
-    <!-- 2. Header -->
-    <header id="component-header" class="component-placeholder"></header>
-
-    <!-- 3. Conteúdo Principal (Main Index) -->
-    <main id="component-main-index" class="component-placeholder"></main>
-
-    <!-- 4. Footer -->
-    <footer id="component-footer" class="component-placeholder"></footer>
-
-    <!-- 5. Preload (Cobre a tela inteira) -->
-    <div id="component-preload" class="component-placeholder"></div>
-
-
-    <!-- ============================================ -->
-    <!-- SCRIPT DE CARREGAMENTO MODULAR               -->
-    <!-- ============================================ -->
-    <script>
-        /**
-         * Carregador Simples de Componentes
-         */
-        const components = [
-            { 
-                id: 'component-accessibility', 
-                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility.html' 
-            },
-            { 
-                id: 'component-header', 
-                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header.html' 
-            },
-            { 
-                id: 'component-main-index', 
-                url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/main-index.html' 
-            },
-            { 
-                id: 'component-footer', 
-
-
-@@ -170,6 +170,7 @@
+    <div id="preload-container"></div>
+    <div id="accessibility-container"></div>
     
-    <!-- Script de carregamento da página principal -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index-loader.js"></script>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+    </div>
 
+    <header id="header-container"></header>
+    <main id="main-content-container">
+        <div id="main-container">
+            <div class="loading-text"><p><i class="fas fa-spinner fa-spin"></i> Carregando módulos...</p></div>
+        </div>
+    </main>
+    <footer id="footer-container"></footer>
 
+    <!-- Scripts de Utilidade (Carregados Primeiro) -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/utils.js" crossorigin="anonymous"></script>
+
+    <script crossorigin="anonymous">
+        /**
+         * URLs ABSOLUTAS DOS COMPONENTES
+         */
+        const COMPONENT_URLS = {
+            preload: "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/preload.html",
+            accessibility: "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility.html",
+            header: "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header.html",
+            footer: "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer.html",
+            main: "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/pages/main-content.html"
+        };
+
+        /**
+         * POLYFILL DE SEGURANÇA (Sandbox Fix)
+         */
+        (function() {
+            const memory = {};
+            try { localStorage.setItem('t', '1'); localStorage.removeItem('t'); } catch (e) {
+                console.warn("[Sandbox] Ativando Polyfill de Memória.");
+                Object.defineProperty(window, 'localStorage', {
+                    value: {
+                        getItem: (k) => memory[k] || null,
+                        setItem: (k, v) => memory[k] = String(v),
+                        removeItem: (k) => delete memory[k],
+                        clear: () => { for (let k in memory) delete memory[k]; },
+                        key: (i) => Object.keys(memory)[i] || null,
+                        get length() { return Object.keys(memory).length; }
+                    }, writable: true
+                });
+            }
+            try { document.cookie; } catch (e) {
+                let c = "";
+                Object.defineProperty(document, 'cookie', { get: () => c, set: (v) => c = v, configurable: true });
+            }
+        })();
+
+        /**
+         * MONITOR DE MÓDULOS
+         * Verifica se todos os módulos foram carregados corretamente
+         */
+        function monitorModules() {
+            const modules = [
+                { id: 'preload-container', name: 'Preload' },
+                { id: 'accessibility-container', name: 'Acessibilidade' },
+                { id: 'header-container', name: 'Header' },
+                { id: 'main-container', name: 'Main Content' },
+                { id: 'footer-container', name: 'Footer' }
+            ];
+            
+            console.log('[Monitor] Verificando módulos...');
+            modules.forEach(mod => {
+                const el = document.getElementById(mod.id);
+                if (el && el.innerHTML.trim().length > 0) {
+                    console.log(`[Monitor] ✓ ${mod.name} carregado`);
+                } else {
+                    console.warn(`[Monitor] ✗ ${mod.name} não carregado`);
+                }
+            });
+        }
+        
+        /**
+         * CARREGADOR DE MÓDULOS COM URL ABSOLUTA E LOGS DETALHADOS
+         */
+        async function loadModule(id, url) {
+            const el = document.getElementById(id);
+            if (!el) {
+                console.warn(`[Aviso] Elemento #${id} não encontrado`);
+                return;
+            }
+            try {
+                console.log(`[Carregando] ${id} <- ${url}`);
+                const response = await fetch(url, { cache: 'no-cache' });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const html = await response.text();
+                if (!html || html.trim().length === 0) throw new Error("Conteúdo vazio");
+                el.innerHTML = html;
+                console.log(`[OK] ${id} carregado com sucesso (${html.length} bytes)`);
+                window.dispatchEvent(new CustomEvent(`Module:${id}:Ready`));
+            } catch (err) {
+                console.error(`[Erro] ${id}:`, err);
+                el.innerHTML = `<div class="module-error">
+                    <strong>Erro ao carregar ${id}</strong>
+                    <small>URL: ${url}</small>
+                    <small>${err.message}</small>
+                </div>`;
+            }
+        }
+
+        /**
+         * PONTES DE ACESSIBILIDADE (Libras e Olho)
+         */
+        function setupBridges() {
+            // Bridge Libras (Mãos)
+            const btnLibras = document.querySelector('.fa-hands')?.closest('button') || document.querySelector('.btn-libras');
+            const vLibras = document.querySelector('[vw-access-button]');
+            if (btnLibras && vLibras) {
+                btnLibras.onclick = (e) => { e.preventDefault(); vLibras.click(); };
+                console.log('[Bridge] Libras conectada');
+            }
+
+            // Bridge Acessibilidade (Olho)
+            const btnEye = document.querySelector('.fa-eye')?.closest('button') || document.querySelector('.btn-assistive');
+            if (btnEye) {
+                btnEye.onclick = (e) => {
+                    e.preventDefault();
+                    const panel = document.getElementById('accessibility-panel');
+                    if (panel) panel.classList.toggle('active');
+                };
+                console.log('[Bridge] Acessibilidade conectada');
+            }
+
+            // Bridge Menu Hamburguer
+            const header = document.getElementById('header-container');
+            header?.addEventListener('click', (e) => {
+                const toggle = e.target.closest('.hamburger, .menu-toggle');
+                if (toggle) header.querySelector('.nav-menu')?.classList.toggle('active');
+            });
+
+            // Retry se não encontrou
+            if ((!btnLibras || !btnEye) && !window._bridgesRetried) {
+                window._bridgesRetried = true;
+                console.log('[Bridge] Retry em 1s...');
+                setTimeout(setupBridges, 1000);
+            }
+        }
+
+        /**
+         * FUNÇÕES DE TESTE E DIAGNÓSTICO - REMOVER EM PRODUÇÃO
+         */
+        function testFooter() {
+            console.log('=== TESTE MANUAL DO FOOTER ===');
+            
+            const banner = document.getElementById('cookie-banner');
+            const fab = document.getElementById('cookie-fab');
+            const overlay = document.getElementById('cookie-overlay');
+            const modal = document.getElementById('cookie-modal-content');
+            
+            console.log('Banner:', banner ? 'ENCONTRADO' : 'NÃO ENCONTRADO');
+            console.log('FAB:', fab ? 'ENCONTRADO' : 'NÃO ENCONTRADO');
+            console.log('Overlay:', overlay ? 'ENCONTRADO' : 'NÃO ENCONTRADO');
+            console.log('Modal:', modal ? 'ENCONTRADO' : 'NÃO ENCONTRADO');
+            
+            if (banner) {
+                banner.classList.remove('hidden');
+                banner.classList.add('visible');
+                banner.style.display = 'flex';
+                console.log('Banner: forçado visível');
+            }
+            
+            if (fab) {
+                fab.style.display = 'flex';
+                fab.classList.add('visible');
+                console.log('FAB: forçado visível');
+            }
+            
+            if (banner) {
+                const bg = window.getComputedStyle(banner).backgroundColor;
+                const color = window.getComputedStyle(banner).color;
+                console.log('Banner background:', bg);
+                console.log('Banner color:', color);
+            }
+        }
+        
+        function testAllModules() {
+            console.log('=== TESTE DE TODOS OS MÓDULOS ===');
+            const modules = ['preload-container', 'accessibility-container', 'header-container', 'main-container', 'footer-container'];
+            modules.forEach(id => {
+                const el = document.getElementById(id);
+                const hasContent = el && el.innerHTML.trim().length > 0;
+                console.log(`${id}: ${hasContent ? 'OK (' + el.innerHTML.length + ' bytes)' : 'VAZIO'}`);
+            });
+        }
+
+        /**
+         * INICIALIZAÇÃO
+         */
+        async function init() {
+            console.log('[Init] Iniciando carregamento dos módulos...');
+
+            // 1. Injetar HTML com URLs absolutas
+            await Promise.all([
+                loadModule('preload-container', COMPONENT_URLS.preload),
+                loadModule('accessibility-container', COMPONENT_URLS.accessibility),
+                loadModule('header-container', COMPONENT_URLS.header),
+                loadModule('main-container', COMPONENT_URLS.main),
+                loadModule('footer-container', COMPONENT_URLS.footer)
+            ]);
+
+            // 2. Configurar bridges após carregar HTML
+            console.log('[Init] Configurando bridges...');
+            setupBridges();
+            
+            // 2.5 Monitorar módulos carregados
+            setTimeout(monitorModules, 1000);
+
+            // 3. Carregar Scripts
+            const scripts = [
+                "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+                "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/MTLLoader.js",
+                "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js",
+                "https://vlibras.gov.br/app/vlibras-plugin.js",
+                "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/preload.js",
+                "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js",
+                "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js",
+                "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js",
+                "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js"
+            ];
+
+            console.log('[Init] Carregando scripts...');
+            for (const src of scripts) {
+                await new Promise(res => {
+                    const s = document.createElement('script');
+                    s.src = src; s.async = false; s.crossOrigin = "anonymous";
+                    s.onload = () => res();
+                    s.onerror = () => {
+                        console.warn(`[Script] Falha ao carregar: ${src}`);
+                        res();
+                    };
+                    document.body.appendChild(s);
+                });
+            }
+
+            // 4. Finalizar
+            setTimeout(() => {
+                console.log('[Init] Concluído');
+                document.body.classList.remove('loading-active');
+                window.dispatchEvent(new CustomEvent('preloadFinalizado'));
+            }, 1000);
+        }
+
+        window.onload = init;
+    </script>
 </body>
 </html>
