@@ -1,222 +1,309 @@
-<div id="side-widgets">
-  <div class="a11y-widget">
-    <button type="button" class="a11y-btn a11y-focus-visible" aria-label="Abrir tradutor de Libras" data-a11y-action="toggle-libras">
-      <i class="fas fa-sign-language" aria-hidden="true"></i>
-    </button>
-    <button type="button" id="a11y-toggle-btn" class="a11y-btn a11y-focus-visible" aria-label="Abrir menu de recursos assistivos" aria-expanded="false" data-a11y-action="toggle-panel">
-      <i class="fas fa-eye" aria-hidden="true"></i>
-    </button>
-  </div>
+<!-- Widgets Laterais -->
+<div id="side-widgets" class="side-widgets-container">
+    <div class="accessibility-widget">
+        <button type="button" aria-label="Abrir tradutor de libras" data-action="toggleLibras">
+            <i class="fas fa-sign-language fa-lg" aria-hidden="true"></i>
+        </button>
+        <button id="accessibility-btn" type="button" aria-label="Abrir menu de recursos assistivos" data-action="togglePanel">
+            <i class="fas fa-eye fa-lg" aria-hidden="true"></i>
+        </button>
+    </div>
 </div>
 
-<aside id="a11y-panel" class="a11y-hidden" role="dialog" aria-modal="true" aria-labelledby="a11y-title" aria-hidden="true">
-  <header class="a11y-header" id="a11y-drag-handle" role="heading" aria-level="1">
-    <div class="a11y-header-left">
-      <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Calculadoras de Enfermagem" loading="lazy">
-      <h2 id="a11y-title">Recursos de Acessibilidade</h2>
-    </div>
-    <div class="a11y-header-right">
-      <button type="button" class="btn-close-white a11y-maximize-btn a11y-focus-visible" aria-label="Expandir ou minimizar painel" data-a11y-action="toggle-maximize">
-        <i class="fas fa-expand" aria-hidden="true"></i>
-        <i class="fas fa-compress-alt" aria-hidden="true" style="display:none"></i>
-      </button>
-      <button type="button" class="btn-close-white a11y-close-btn a11y-focus-visible" aria-label="Fechar menu de acessibilidade" data-a11y-action="close-panel">
-        <i class="fas fa-times" aria-hidden="true"></i>
-      </button>
-    </div>
-  </header>
-  
-  <div class="a11y-content">
-    <!-- Seção: Controle de Fonte -->
-    <section class="a11y-section" aria-labelledby="a11y-font-title">
-      <h3 id="a11y-font-title" class="a11y-section-title">Controle de Fonte</h3>
-      <div class="a11y-grid">
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="fontSizeIncrease" aria-pressed="false" data-a11y-type="cycle" data-a11y-values="1.2,1.5,2.0">
-          <span class="a11y-icon"><i class="fas fa-text-height" aria-hidden="true"></i></span>
-          <span class="a11y-label">Aumentar</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="font-style" aria-pressed="false" data-a11y-type="cycle" data-a11y-values="atkinson,newsreader,opendyslexic">
-          <span class="a11y-icon"><i class="fas fa-font" aria-hidden="true"></i></span>
-          <span class="a11y-label">Fonte</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="bold" aria-pressed="false" data-a11y-type="toggle">
-          <span class="a11y-icon"><i class="fas fa-bold" aria-hidden="true"></i></span>
-          <span class="a11y-label">Negrito</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="line-height" aria-pressed="false" data-a11y-type="cycle" data-a11y-values="1.2,1.5,2.0">
-          <span class="a11y-icon"><i class="fas fa-align-justify" aria-hidden="true"></i></span>
-          <span class="a11y-label">Espaçamento</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="letter-spacing" aria-pressed="false" data-a11y-type="cycle" data-a11y-values="1.2,1.5,2.0">
-          <span class="a11y-icon"><i class="fas fa-text-width" aria-hidden="true"></i></span>
-          <span class="a11y-label">Letras</span>
-        </button>
-      </div>
-    </section>
+<!-- Painel de Acessibilidade -->
+<aside id="accessibility-panel" class="accessibility-panel-hidden" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+    <header class="panel-header shiny-header-border" id="panel-drag-handle" style="cursor:grab">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Logo" class="panel-logo-img">
+        </div>
+        <div style="display:flex;align-items:center;gap:0.25rem">
+            <button type="button" data-action="toggleMaximize" class="icon-btn" title="Expandir/Recolher Menu" aria-label="Expandir ou recolher tamanho do menu">
+                <i class="fas fa-expand" aria-hidden="true"></i>
+            </button>
+            <button id="close-panel-btn" type="button" data-action="togglePanel" class="icon-btn" aria-label="Fechar menu">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
 
-    <!-- Seção: Navegação -->
-    <section class="a11y-section" aria-labelledby="a11y-nav-title">
-      <h3 id="a11y-nav-title" class="a11y-section-title">Navegação</h3>
-      <div class="a11y-grid">
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-action="show-shortcuts" aria-pressed="false">
-          <span class="a11y-icon"><i class="fas fa-keyboard" aria-hidden="true"></i></span>
-          <span class="a11y-label">Atalhos</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-action="show-glossary" aria-pressed="false">
-          <span class="a11y-icon"><i class="fas fa-book-medical" aria-hidden="true"></i></span>
-          <span class="a11y-label">Glossário</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="tts" aria-pressed="false" data-a11y-type="toggle">
-          <span class="a11y-icon"><i class="fas fa-volume-up" aria-hidden="true"></i></span>
-          <span class="a11y-label">Leitor</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="big-cursor" aria-pressed="false" data-a11y-type="cycle" data-a11y-values="1.5,2,2.5">
-          <span class="a11y-icon"><i class="fas fa-mouse-pointer" aria-hidden="true"></i></span>
-          <span class="a11y-label">Cursor</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="reading-mode" aria-pressed="false" data-a11y-type="toggle">
-          <span class="a11y-icon"><i class="fas fa-book-reader" aria-hidden="true"></i></span>
-          <span class="a11y-label">Leitura</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="reading-mask" aria-pressed="false" data-a11y-type="cycle" data-a11y-values="sm,md,lg">
-          <span class="a11y-icon"><i class="fas fa-window-minimize" aria-hidden="true"></i></span>
-          <span class="a11y-label">Máscara</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="reading-guide" aria-pressed="false" data-a11y-type="cycle" data-a11y-values="azul,laranja,preto">
-          <span class="a11y-icon"><i class="fas fa-grip-lines" aria-hidden="true"></i></span>
-          <span class="a11y-label">Guia</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="highlight-links" aria-pressed="false" data-a11y-type="toggle">
-          <span class="a11y-icon"><i class="fas fa-link" aria-hidden="true"></i></span>
-          <span class="a11y-label">Links</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="highlight-headers" aria-pressed="false" data-a11y-type="toggle">
-          <span class="a11y-icon"><i class="fas fa-heading" aria-hidden="true"></i></span>
-          <span class="a11y-label">Títulos</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="magnifier" aria-pressed="false" data-a11y-type="toggle">
-          <span class="a11y-icon"><i class="fas fa-search-plus" aria-hidden="true"></i></span>
-          <span class="a11y-label">Lupa</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="hide-images" aria-pressed="false" data-a11y-type="toggle">
-          <span class="a11y-icon"><i class="fas fa-eye-slash" aria-hidden="true"></i></span>
-          <span class="a11y-label">Imagens</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="stop-anim" aria-pressed="false" data-a11y-type="toggle">
-          <span class="a11y-icon"><i class="fas fa-pause-circle" aria-hidden="true"></i></span>
-          <span class="a11y-label">Animações</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="stop-sounds" aria-pressed="false" data-a11y-type="toggle">
-          <span class="a11y-icon"><i class="fas fa-volume-mute" aria-hidden="true"></i></span>
-          <span class="a11y-label">Sons</span>
-        </button>
-      </div>
-    </section>
+    <div class="panel-content custom-scrollbar">
+        <!-- Glossário -->
+        <section class="mb-6" aria-labelledby="dict-section-title">
+            <h3 id="dict-section-title" class="section-title">Dicionário de Termos de Enfermagem</h3>
+            <div class="grid grid-cols-2 gap-2" role="group">
+                <button type="button" class="accessibility-card" data-feature="glossary" aria-pressed="false" title="Glossário de termos técnicos de enfermagem">
+                    <i class="fas fa-book-medical icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Glossário</span>
+                    <span class="card-hint">Dicionário de termos</span>
+                </button>
+            </div>
+        </section>
 
-    <!-- Seção: Cores -->
-    <section class="a11y-section" aria-labelledby="a11y-color-title">
-      <h3 id="a11y-color-title" class="a11y-section-title">Cores e Contraste</h3>
-      <div class="a11y-grid">
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="theme" aria-pressed="false" data-a11y-type="toggle">
-          <span class="a11y-icon"><i class="fas fa-moon" aria-hidden="true"></i></span>
-          <span class="a11y-label">Tema</span>
+        <!-- Controle de Fonte -->
+        <section class="mb-6" aria-labelledby="font-section-title">
+            <h3 id="font-section-title" class="section-title">Controle de Fonte</h3>
+            <div class="grid grid-cols-2 gap-2" role="group">
+                <button type="button" class="accessibility-card" data-feature="fontSize" data-type="cycle" data-values="1.2,1.5,2.0" aria-pressed="false" title="Aumentar tamanho do texto em 120%, 150% ou 200%">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span class="level-badge" aria-live="polite"></span>
+                    <i class="fas fa-text-height icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Tamanho de Fonte</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="fontStyle" data-type="cycle" data-values="atkinson,newsreader,opendyslexic" aria-pressed="false" title="Alternar entre Atkinson, Newsreader ou OpenDyslexic">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span class="level-badge" aria-live="polite"></span>
+                    <i class="fas fa-italic icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Estilo de Fonte</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="bold-text" data-type="simple" aria-pressed="false" title="Realçar todo o texto com negrito">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                    </div>
+                    <i class="fas fa-bold icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Letras Destacadas</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="lineHeight" data-type="cycle" data-values="1.2,1.5,2.0" aria-pressed="false" title="Espaçar linhas em 120%, 150% ou 200%">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span class="level-badge" aria-live="polite"></span>
+                    <i class="fas fa-align-justify icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Espaço entre Linhas</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="letterSpacing" data-type="cycle" data-values="1.2,1.5,2.0" aria-pressed="false" title="Espaçar letras em 120%, 150% ou 200%">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span class="level-badge" aria-live="polite"></span>
+                    <i class="fas fa-text-width icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Espaço entre Letras</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Navegação -->
+        <section class="mb-6" aria-labelledby="nav-section-title">
+            <h3 id="nav-section-title" class="section-title">Navegação</h3>
+            <div class="grid grid-cols-2 gap-2" role="group">
+                <button type="button" class="accessibility-card" data-feature="keyboard-shortcuts" data-action="showKeyboardShortcuts" aria-pressed="false" title="Ver atalhos de teclado por navegador">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                    </div>
+                    <i class="fas fa-keyboard icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Atalhos</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="tts" data-type="tts-click" aria-pressed="false" title="Clique no texto para ouvir a partir do ponto clicado">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span class="level-badge" aria-live="polite"></span>
+                    <i class="fas fa-assistive-listening-systems icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Leitor de Site</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="bigCursor" data-type="cycle" data-values="medium,large,xlarge" aria-pressed="false" title="Aumentar cursor em 120%, 150% ou 200%">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span class="level-badge" aria-live="polite"></span>
+                    <i class="fas fa-mouse-pointer icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Cursor do Mouse</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="reading-mode" data-type="simple" aria-pressed="false" title="Remove distrações e adapta ao contraste do sistema">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                    </div>
+                    <i class="fas fa-book-reader icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Modo Leitura</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="readingMask" data-type="cycle" data-values="sm,md,lg" aria-pressed="false" title="Foco em trechos - Pequeno, Médio ou Grande">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span class="level-badge" aria-live="polite"></span>
+                    <i class="fas fa-window-minimize icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Máscara de Leitura</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="readingGuide" data-type="cycle" data-values="azul,laranja,preto" aria-pressed="false" title="Régua de leitura - Azul, Laranja ou Preto">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span class="level-badge" aria-live="polite"></span>
+                    <i class="fas fa-grip-lines icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Guia de Leitura</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="highlight-links" data-type="simple" aria-pressed="false" title="Destacar todos os links da página">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                    </div>
+                    <i class="fas fa-link icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Destaque de Links</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="highlight-headers" data-type="simple" aria-pressed="false" title="Destacar todos os cabeçalhos e títulos">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                    </div>
+                    <i class="fas fa-heading icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Destacar Cabeçalhos</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="magnifier" data-type="simple" aria-pressed="false" title="Ampliar texto ao passar o mouse">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                    </div>
+                    <i class="fas fa-search-plus icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Lupa de Conteúdo</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="hide-images" data-type="simple" aria-pressed="false" title="Ocultar todas as imagens do site">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                    </div>
+                    <i class="fas fa-eye-slash icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Esconder Imagens</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="stop-anim" data-type="simple" aria-pressed="false" title="Pausar todas as animações CSS">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                    </div>
+                    <i class="fas fa-pause-circle icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Pausar Animações</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="stop-sounds" data-type="simple" aria-pressed="false" title="Silenciar áudio, vídeo e iframes">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                    </div>
+                    <i class="fas fa-volume-mute icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Parar Sons</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Controle de Cor -->
+        <section class="mb-6" aria-labelledby="color-section-title">
+            <h3 id="color-section-title" class="section-title">Controle de Cor</h3>
+            <div class="grid grid-cols-2 gap-2" role="group">
+                <button type="button" class="accessibility-card" data-feature="contrast" data-type="cycle" data-values="inverted,dark-contrast,light-contrast" aria-pressed="false" title="Invertido, Contraste Escuro ou Claro">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span class="level-badge" aria-live="polite"></span>
+                    <i class="fas fa-adjust icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Contraste de Cores</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="saturation" data-type="cycle" data-values="low,high,monochrome" aria-pressed="false" title="Baixa, Alta Saturação ou Monocromático">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span class="level-badge" aria-live="polite"></span>
+                    <i class="fas fa-tint icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Intensidade de Cores</span>
+                </button>
+
+                <button type="button" class="accessibility-card" data-feature="colorblind" data-type="cycle" data-values="deuteranopia,protanopia,tritanopia" aria-pressed="false" title="Deuteranopia (Verde), Protanopia (Vermelho), Tritanopia (Azul)">
+                    <div class="level-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span class="level-badge" aria-live="polite"></span>
+                    <i class="fas fa-eye icon-slot" aria-hidden="true"></i>
+                    <span class="card-label">Modo Daltônico</span>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Botão Restaurar -->
+    <div class="menu-cta-overlay">
+        <button type="button" data-action="resetAll" class="btn-restore">
+            <i class="fas fa-undo" aria-hidden="true"></i>
+            Restaurar Tudo
         </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="contrast" aria-pressed="false" data-a11y-type="cycle" data-a11y-values="inverted,dark,light">
-          <span class="a11y-icon"><i class="fas fa-adjust" aria-hidden="true"></i></span>
-          <span class="a11y-label">Contraste</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="saturation" aria-pressed="false" data-a11y-type="cycle" data-a11y-values="low,high,mono">
-          <span class="a11y-icon"><i class="fas fa-tint" aria-hidden="true"></i></span>
-          <span class="a11y-label">Saturação</span>
-        </button>
-        
-        <button type="button" class="a11y-card a11y-focus-visible" data-a11y-feature="colorblind" aria-pressed="false" data-a11y-type="cycle" data-a11y-values="deuteranopia,protanopia,tritanopia">
-          <span class="a11y-icon"><i class="fas fa-eye" aria-hidden="true"></i></span>
-          <span class="a11y-label">Daltonismo</span>
-        </button>
-      </div>
-    </section>
-  </div>
-  
-  <footer class="a11y-footer">
-    <button type="button" class="a11y-restore-btn a11y-focus-visible" data-a11y-action="reset-all">
-      <i class="fas fa-undo" aria-hidden="true"></i>
-      Restaurar Padrões
-    </button>
-  </footer>
+    </div>
 </aside>
 
-<!-- Elementos de Leitura -->
-<div id="a11y-reading-guide" role="slider" aria-label="Guia de leitura" aria-hidden="true"></div>
-<div id="a11y-mask-top" aria-hidden="true"></div>
-<div id="a11y-mask-bottom" aria-hidden="true"></div>
-<div id="a11y-magnifier" role="tooltip" aria-hidden="true"></div>
+<!-- Elementos de Suporte -->
+<div id="reading-mask-top" class="reading-mask" aria-hidden="true"></div>
+<div id="reading-mask-bottom" class="reading-mask" aria-hidden="true"></div>
+<div id="reading-guide" class="reading-guide" aria-hidden="true"></div>
+<div id="magnifier-tooltip" class="magnifier-tooltip" aria-hidden="true"></div>
 
-<!-- Modal de Atalhos -->
-<div id="a11y-shortcuts-modal" class="a11y-hidden" role="dialog" aria-modal="true" aria-labelledby="a11y-shortcuts-title" aria-hidden="true">
-  <div class="a11y-modal-content">
-    <div class="a11y-modal-header">
-      <h2 id="a11y-shortcuts-title"><i class="fas fa-keyboard" aria-hidden="true"></i> Atalhos de Teclado</h2>
-      <button type="button" class="btn-close-white a11y-close-btn a11y-focus-visible" aria-label="Fechar" data-a11y-action="close-shortcuts">
-        <i class="fas fa-times" aria-hidden="true"></i>
-      </button>
+<!-- Modal de Atalhos de Teclado -->
+<div id="keyboard-shortcuts-modal" class="shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title" hidden>
+    <div class="shortcuts-content">
+        <header class="shortcuts-header">
+            <h2 id="shortcuts-title">
+                <i class="fas fa-keyboard"></i>
+                Atalhos de Teclado
+            </h2>
+            <button type="button" data-action="closeShortcutsModal" class="shortcuts-close" aria-label="Fechar">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </header>
+        <div class="shortcuts-body">
+            <div class="browser-tabs">
+                <button type="button" class="browser-tab active" data-browser="chrome">Chrome / Edge</button>
+                <button type="button" class="browser-tab" data-browser="firefox">Firefox</button>
+                <button type="button" class="browser-tab" data-browser="safari">Safari</button>
+            </div>
+            <div class="shortcuts-list" id="shortcuts-list"></div>
+            <p class="shortcuts-note">
+                <i class="fas fa-info-circle"></i>
+                No Mac, use <kbd>Option</kbd> ao invés de <kbd>Alt</kbd>
+            </p>
+        </div>
     </div>
-    <div id="a11y-shortcuts-list">
-      <!-- Preenchido via JavaScript -->
-    </div>
-  </div>
-</div>
-
-<!-- Modal de Glossário -->
-<div id="a11y-glossary-modal" class="a11y-hidden" role="dialog" aria-modal="true" aria-labelledby="a11y-glossary-title" aria-hidden="true">
-  <div class="a11y-modal-content a11y-glossary-content">
-    <div class="a11y-modal-header">
-      <h2 id="a11y-glossary-title"><i class="fas fa-book-medical" aria-hidden="true"></i> Glossário de Termos de Enfermagem</h2>
-      <button type="button" class="btn-close-white a11y-close-btn a11y-focus-visible" aria-label="Fechar" data-a11y-action="close-glossary">
-        <i class="fas fa-times" aria-hidden="true"></i>
-      </button>
-    </div>
-    <div class="a11y-glossary-search">
-      <input type="text" id="a11y-glossary-search" class="a11y-glossary-search-input" placeholder="Buscar termo..." aria-label="Buscar no glossário">
-    </div>
-    <div id="a11y-glossary-list">
-      <!-- Preenchido via JavaScript -->
-    </div>
-  </div>
 </div>
 
 <!-- Filtros SVG para Daltonismo -->
-<svg style="position:absolute;width:0;height:0" aria-hidden="true" focusable="false">
-  <defs>
-    <filter id="protanopia-filter">
-      <feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0"/>
-    </filter>
-    <filter id="deuteranopia-filter">
-      <feColorMatrix type="matrix" values="0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0"/>
-    </filter>
-    <filter id="tritanopia-filter">
-      <feColorMatrix type="matrix" values="0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0"/>
-    </filter>
-  </defs>
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+    <defs>
+        <filter id="protanopia-filter">
+            <feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0"/>
+        </filter>
+        <filter id="deuteranopia-filter">
+            <feColorMatrix type="matrix" values="0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0"/>
+        </filter>
+        <filter id="tritanopia-filter">
+            <feColorMatrix type="matrix" values="0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0"/>
+        </filter>
+    </defs>
 </svg>
-
-<!-- Announcer para leitores de tela -->
-<div id="a11y-announcer" class="a11y-sr-only" role="status" aria-live="polite" aria-atomic="true"></div>

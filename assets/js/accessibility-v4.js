@@ -1,961 +1,1346 @@
 /**
- * Módulo de Acessibilidade - JavaScript
+ * Módulo de Controle de Acessibilidade (AccessControl)
+ * Gerencia todas as funcionalidades de acessibilidade do site
+ * Versão completa com suporte a daltonismo, TTS, glossário, atalhos de teclado e mais
  */
-(function() {
+
+window.AccessControl = window.AccessControl || (function() {
     'use strict';
 
     // ============================================
-    // CONFIGURAÇÕES
-    // ============================================
-    const CONFIG = {
-        storagePrefix: 'nursing_calc_a11y_',
-        features: {
-            fontSizeIncrease: { values: [1.2, 1.5, 2.0], default: 1, currentIndex: 0 },
-            fontSizeDecrease: { values: [0.8, 0.5, 1.0], default: 1, currentIndex: 2 },
-            fontStyle: { values: ['default', 'atkinson', 'newsreader', 'opendyslexic'], default: 'default' },
-            bold: { type: 'toggle', default: false },
-            lineHeight: { values: [1, 1.2, 1.5, 2.0], default: 1 },
-            letterSpacing: { values: [1, 1.2, 1.5, 2.0], default: 1 },
-            bigCursor: { values: [1, 1.5, 2, 2.5], default: 1 },
-            readingMode: { type: 'toggle', default: false },
-            readingMask: { values: ['sm', 'md', 'lg'], default: 'md', active: false },
-            readingGuide: { values: ['azul', 'laranja', 'preto'], default: 'azul', active: false },
-            highlightLinks: { type: 'toggle', default: false },
-            highlightHeaders: { type: 'toggle', default: false },
-            magnifier: { type: 'toggle', default: false },
-            hideImages: { type: 'toggle', default: false },
-            stopAnim: { type: 'toggle', default: false },
-            stopSounds: { type: 'toggle', default: false },
-            contrast: { values: ['default', 'inverted', 'dark', 'light'], default: 'default' },
-            saturation: { values: ['default', 'low', 'high', 'mono'], default: 'default' },
-            colorblind: { values: ['default', 'deuteranopia', 'protanopia', 'tritanopia'], default: 'default' },
-            theme: { type: 'toggle', default: false }
-        },
-        fontIncreaseSteps: [1.2, 1.5, 2.0],
-        fontDecreaseSteps: [0.8, 0.5, 1.0]
-    };
-
-    // ============================================
-    // ESTADO
+    // ESTADO DO MÓDULO
     // ============================================
     const state = {
-        panelOpen: false,
-        panelMinimized: false,
-        settings: {},
-        initialized: false
+        fontSize: 0,
+        fontStyle: 0,
+        letterSpacing: 0,
+        lineHeight: 0,
+        readingMask: 0,
+        readingGuide: 0,
+        contrast: 0,
+        colorblind: 0,
+        saturation: 0,
+        bigCursor: 0,
+        ttsSpeed: 0,
+        ttsActive: false,
+        stopSounds: false,
+        magnifierActive: false,
+        theme: 'system',
+        _initialized: false
+    };
+
+    // Elementos cacheados
+    let elements = {};
+
+    // Handlers de eventos
+    let mouseMoveHandler = null;
+    let readingGuideHandler = null;
+    let magnifierHandler = null;
+    let magnifierMoveHandler = null;
+    let ttsClickHandler = null;
+
+    // Dados do glossário
+    let glossaryData = [];
+
+    // ============================================
+    // UTILITÁRIOS
+    // ============================================
+    function debounce(fn, delay = 16) {
+        let timeout;
+        return function(...args) {
+            cancelAnimationFrame(timeout);
+            timeout = requestAnimationFrame(() => fn.apply(this, args));
+        };
+    }
+
+    function sanitizeHTML(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function announceToScreenReader(message) {
+        let announcer = document.getElementById('sr-announcer');
+        if (!announcer) {
+            announcer = document.createElement('div');
+            announcer.id = 'sr-announcer';
+            announcer.setAttribute('role', 'status');
+            announcer.setAttribute('aria-live', 'polite');
+            announcer.setAttribute('aria-atomic', 'true');
+            announcer.className = 'sr-only';
+            document.body.appendChild(announcer);
+        }
+        announcer.textContent = '';
+        setTimeout(() => {
+            announcer.textContent = message;
+        }, 100);
+    }
+
+    // ============================================
+    // NOMES PARA EXIBIÇÃO
+    // ============================================
+    const displayNames = {
+        fontSize: { '1.2': '120%', '1.5': '150%', '2.0': '200%' },
+        fontStyle: { atkinson: 'Atkinson', newsreader: 'Newsreader', opendyslexic: 'OpenDyslexic' },
+        lineHeight: { '1.2': '120%', '1.5': '150%', '2.0': '200%' },
+        letterSpacing: { '1.2': '120%', '1.5': '150%', '2.0': '200%' },
+        contrast: { inverted: 'Invertido', 'dark-contrast': 'Escuro', 'light-contrast': 'Claro' },
+        colorblind: { deuteranopia: 'Verde', protanopia: 'Vermelho', tritanopia: 'Azul' },
+        saturation: { low: 'Baixa', high: 'Alta', monochrome: 'Mono' },
+        readingMask: { sm: 'Pequeno', md: 'Medio', lg: 'Grande' },
+        readingGuide: { azul: 'Azul', laranja: 'Laranja', preto: 'Preto' },
+        bigCursor: { medium: '120%', large: '150%', xlarge: '200%' },
+        tts: { normal: 'Normal', slow: 'Lento', fast: 'Rapido' }
     };
 
     // ============================================
-    // LOG
+    // CLASSES CSS SUPORTADAS
     // ============================================
-    function log(msg) {
-        console.log('[A11y]', msg);
-    }
-
-    function logError(msg) {
-        console.error('[A11y]', msg);
-    }
+    const allClasses = [
+        'inverted', 'dark-contrast', 'light-contrast',
+        'protanopia', 'deuteranopia', 'tritanopia',
+        'saturation-low', 'saturation-high', 'monochrome',
+        'highlight-links', 'highlight-headers', 'bold-text',
+        'stop-anim', 'stop-sounds', 'hide-images',
+        'font-atkinson', 'font-newsreader', 'font-opendyslexic',
+        'reading-mode', 'glossary', 'magnifier-active',
+        'reading-guide-azul', 'reading-guide-laranja', 'reading-guide-preto',
+        'big-cursor-medium', 'big-cursor-large', 'big-cursor-xlarge'
+    ];
 
     // ============================================
-    // PERSISTÊNCIA
+    // ATAJOS DE TECLADO POR NAVEGADOR
     // ============================================
-    function saveSetting(key, value) {
-        try {
-            localStorage.setItem(CONFIG.storagePrefix + key, JSON.stringify(value));
-        } catch (e) {
-            logError('Erro ao salvar: ' + key);
-        }
-    }
+    const shortcutsByBrowser = {
+        chrome: [
+            { keys: ['Alt', 'A'], desc: 'Abrir/Fechar menu acessibilidade' },
+            { keys: ['Alt', '1'], desc: 'Aumentar fonte' },
+            { keys: ['Alt', '2'], desc: 'Diminuir fonte' },
+            { keys: ['Alt', 'C'], desc: 'Alto contraste' },
+            { keys: ['Alt', 'L'], desc: 'Destacar links' },
+            { keys: ['Alt', 'H'], desc: 'Destacar cabecalhos' },
+            { keys: ['Alt', 'M'], desc: 'Mascara de leitura' },
+            { keys: ['Alt', 'G'], desc: 'Guia de leitura' },
+            { keys: ['Alt', 'R'], desc: 'Modo leitura' },
+            { keys: ['Alt', 'T'], desc: 'Leitor TTS' },
+            { keys: ['Alt', 'I'], desc: 'Esconder imagens' },
+            { keys: ['Alt', '0'], desc: 'Restaurar tudo' },
+            { keys: ['Esc'], desc: 'Fechar paineis' }
+        ],
+        firefox: [
+            { keys: ['Alt', 'Shift', 'A'], desc: 'Abrir/Fechar menu acessibilidade' },
+            { keys: ['Alt', 'Shift', '1'], desc: 'Aumentar fonte' },
+            { keys: ['Alt', 'Shift', '2'], desc: 'Diminuir fonte' },
+            { keys: ['Alt', 'Shift', 'C'], desc: 'Alto contraste' },
+            { keys: ['Alt', 'Shift', 'L'], desc: 'Destacar links' },
+            { keys: ['Alt', 'Shift', 'H'], desc: 'Destacar cabecalhos' },
+            { keys: ['Alt', 'Shift', 'M'], desc: 'Mascara de leitura' },
+            { keys: ['Alt', 'Shift', 'G'], desc: 'Guia de leitura' },
+            { keys: ['Alt', 'Shift', 'R'], desc: 'Modo leitura' },
+            { keys: ['Alt', 'Shift', 'T'], desc: 'Leitor TTS' },
+            { keys: ['Alt', 'Shift', 'I'], desc: 'Esconder imagens' },
+            { keys: ['Alt', 'Shift', '0'], desc: 'Restaurar tudo' },
+            { keys: ['Esc'], desc: 'Fechar paineis' }
+        ],
+        safari: [
+            { keys: ['Ctrl', 'Option', 'A'], desc: 'Abrir/Fechar menu acessibilidade' },
+            { keys: ['Ctrl', 'Option', '1'], desc: 'Aumentar fonte' },
+            { keys: ['Ctrl', 'Option', '2'], desc: 'Diminuir fonte' },
+            { keys: ['Ctrl', 'Option', 'C'], desc: 'Alto contraste' },
+            { keys: ['Ctrl', 'Option', 'L'], desc: 'Destacar links' },
+            { keys: ['Ctrl', 'Option', 'H'], desc: 'Destacar cabecalhos' },
+            { keys: ['Ctrl', 'Option', 'M'], desc: 'Mascara de leitura' },
+            { keys: ['Ctrl', 'Option', 'G'], desc: 'Guia de leitura' },
+            { keys: ['Ctrl', 'Option', 'R'], desc: 'Modo leitura' },
+            { keys: ['Ctrl', 'Option', 'T'], desc: 'Leitor TTS' },
+            { keys: ['Ctrl', 'Option', 'I'], desc: 'Esconder imagens' },
+            { keys: ['Ctrl', 'Option', '0'], desc: 'Restaurar tudo' },
+            { keys: ['Esc'], desc: 'Fechar paineis' }
+        ]
+    };
 
-    function loadSetting(key, defaultValue) {
-        try {
-            const saved = localStorage.getItem(CONFIG.storagePrefix + key);
-            if (saved !== null) {
-                return JSON.parse(saved);
+    // ============================================
+    // GERENCIADOR DE TEMA
+    // ============================================
+    const ThemeManager = {
+        detectSystemTheme() {
+            return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        },
+
+        getTheme() {
+            return localStorage.getItem('acc_theme') || 'system';
+        },
+
+        applyTheme(theme) {
+            const isDark = theme === 'dark' || (theme === 'system' && this.detectSystemTheme() === 'dark');
+            document.body.classList.toggle('dark-theme', isDark);
+            localStorage.setItem('acc_theme', theme);
+            state.theme = theme;
+
+            // Sincronizar com HeaderModule se disponível
+            if (window.HeaderModule && typeof window.HeaderModule.toggleTheme === 'function') {
+                window.HeaderModule.toggleTheme();
             }
-        } catch (e) {
-            logError('Erro ao carregar: ' + key);
+        },
+
+        init() {
+            this.applyTheme(this.getTheme());
+            window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                if (this.getTheme() === 'system') {
+                    this.applyTheme('system');
+                }
+            });
+        },
+
+        resetToSystem() {
+            localStorage.removeItem('acc_theme');
+            this.applyTheme('system');
         }
-        return defaultValue;
+    };
+
+    // ============================================
+    // VERIFICAÇÃO DE ELEMENTOS
+    // ============================================
+    function ensureElements() {
+        if (elements.panel && document.body.contains(elements.panel)) {
+            return true;
+        }
+        elements = {
+            body: document.body,
+            panel: document.getElementById('accessibility-panel'),
+            sideWidgets: document.getElementById('side-widgets'),
+            closeBtn: document.getElementById('close-panel-btn'),
+            openBtn: document.getElementById('accessibility-btn'),
+            shortcutsModal: document.getElementById('keyboard-shortcuts-modal'),
+            magnifierTooltip: document.getElementById('magnifier-tooltip'),
+            readingGuide: document.getElementById('reading-guide')
+        };
+        return !!elements.panel;
     }
 
-    function loadAllSettings() {
-        Object.keys(CONFIG.features).forEach(key => {
-            state.settings[key] = loadSetting(key, CONFIG.features[key].default);
+    function isPanelClosed() {
+        return !ensureElements() || elements.panel.classList.contains('accessibility-panel-hidden');
+    }
+
+    // ============================================
+    // PERSISTÊNCIA DE ESTADO (Sob demanda - Regra Opt-In)
+    // ============================================
+    function saveState() {
+        localStorage.setItem('accessControlState', JSON.stringify(state));
+    }
+
+    function loadSavedState() {
+        // NÃO é chamado automaticamente - viola regra opt-in
+        // Mantido para uso explícito quando usuário solicita restaurar
+        try {
+            const saved = JSON.parse(localStorage.getItem('accessControlState') || '{}');
+            Object.assign(state, saved);
+        } catch (e) {
+            localStorage.removeItem('accessControlState');
+        }
+    }
+
+    function restoreFromStorage() {
+        // Função explícita para restaurar estado anterior
+        // Usuário deve acionar esta função manualmente
+        loadSavedState();
+        
+        // Aplicar recursos restaurados
+        if (state.fontSize > 0) {
+            const values = ['1.2', '1.5', '2.0'];
+            applyFeature('fontSize', values[state.fontSize - 1]);
+        }
+        if (state.fontStyle > 0) {
+            const values = ['atkinson', 'newsreader', 'opendyslexic'];
+            applyFeature('fontStyle', values[state.fontStyle - 1]);
+        }
+        if (state.letterSpacing > 0) {
+            const values = ['1.2', '1.5', '2.0'];
+            applyFeature('letterSpacing', values[state.letterSpacing - 1]);
+        }
+        if (state.lineHeight > 0) {
+            const values = ['1.2', '1.5', '2.0'];
+            applyFeature('lineHeight', values[state.lineHeight - 1]);
+        }
+        if (state.contrast > 0) {
+            const values = ['inverted', 'dark-contrast', 'light-contrast'];
+            applyFeature('contrast', values[state.contrast - 1]);
+        }
+        if (state.colorblind > 0) {
+            const values = ['deuteranopia', 'protanopia', 'tritanopia'];
+            applyFeature('colorblind', values[state.colorblind - 1]);
+        }
+        if (state.saturation > 0) {
+            const values = ['low', 'high', 'monochrome'];
+            applyFeature('saturation', values[state.saturation - 1]);
+        }
+        if (state.bigCursor > 0) {
+            const values = ['medium', 'large', 'xlarge'];
+            applyFeature('bigCursor', values[state.bigCursor - 1]);
+        }
+        
+        announceToScreenReader('Configurações de acessibilidade restauradas');
+    }
+
+    // ============================================
+    // ATUALIZAÇÃO DE UI
+    // ============================================
+    function updateDots(element, level = 1) {
+        element?.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i < level);
         });
     }
 
-    function saveAllSettings() {
-        Object.keys(state.settings).forEach(key => {
-            saveSetting(key, state.settings[key]);
-        });
+    function resetDots(element) {
+        element?.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
+    }
+
+    function updateAriaPressed(element, isActive) {
+        element?.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     }
 
     // ============================================
     // CONTROLE DO PAINEL
     // ============================================
-    function togglePanel() {
-        var panel = document.getElementById('a11y-panel');
-        var toggleBtn = document.getElementById('a11y-toggle-btn');
-
-        if (!panel) {
-            logError('Painel não encontrado');
-            return;
-        }
-
-        state.panelOpen = !state.panelOpen;
-
-        log('Toggle panel: ' + (state.panelOpen ? 'abrindo' : 'fechando'));
-
-        if (state.panelOpen) {
-            panel.classList.remove('a11y-hidden');
-            panel.removeAttribute('style');
-            panel.setAttribute('aria-hidden', 'false');
-            if (toggleBtn) {
-                toggleBtn.setAttribute('aria-expanded', 'true');
-            }
-            log('Painel aberto');
-        } else {
-            panel.classList.add('a11y-hidden');
-            panel.setAttribute('aria-hidden', 'true');
-            if (toggleBtn) {
-                toggleBtn.setAttribute('aria-expanded', 'false');
-            }
-            log('Painel fechado');
-        }
+    function openPanel() {
+        if (!ensureElements()) return;
+        elements.panel.classList.remove('accessibility-panel-hidden');
+        elements.sideWidgets?.classList.add('side-widgets-hidden');
+        setTimeout(() => elements.closeBtn?.focus(), 100);
     }
 
     function closePanel() {
-        var panel = document.getElementById('a11y-panel');
-        var toggleBtn = document.getElementById('a11y-toggle-btn');
+        if (!ensureElements() || isPanelClosed()) return;
+        elements.panel.classList.add('accessibility-panel-hidden');
+        elements.sideWidgets?.classList.remove('side-widgets-hidden');
+        elements.openBtn?.focus();
+    }
 
-        if (panel && !panel.classList.contains('a11y-hidden')) {
-            panel.classList.add('a11y-hidden');
-            panel.setAttribute('aria-hidden', 'true');
-            if (toggleBtn) {
-                toggleBtn.setAttribute('aria-expanded', 'false');
-            }
-            state.panelOpen = false;
-            log('Painel fechado');
-        }
+    function togglePanel() {
+        isPanelClosed() ? openPanel() : closePanel();
     }
 
     function toggleMaximize() {
-        var panel = document.getElementById('a11y-panel');
-        if (!panel) return;
+        ensureElements();
+        elements.panel?.classList.toggle('panel-expanded');
+    }
 
-        var btn = panel.querySelector('.a11y-maximize-btn');
-        var expandIcon = btn ? btn.querySelector('.fa-expand') : null;
-        var compressIcon = btn ? btn.querySelector('.fa-compress-alt') : null;
+    // ============================================
+    // ATAJOS DE TECLADO
+    // ============================================
+    function showKeyboardShortcuts() {
+        const modal = document.getElementById('keyboard-shortcuts-modal');
+        if (modal) {
+            modal.hidden = false;
+            renderShortcuts('chrome');
+            setupBrowserTabs();
+            modal.querySelector('button')?.focus();
+        }
+    }
 
-        state.panelMinimized = !state.panelMinimized;
-        panel.classList.toggle('a11y-minimized', state.panelMinimized);
+    function closeShortcutsModal() {
+        const modal = document.getElementById('keyboard-shortcuts-modal');
+        if (modal) modal.hidden = true;
+    }
 
-        // Alternar ícones
-        if (expandIcon && compressIcon) {
-            if (state.panelMinimized) {
-                expandIcon.style.display = 'none';
-                compressIcon.style.display = 'block';
+    function renderShortcuts(browser) {
+        const list = document.getElementById('shortcuts-list');
+        if (!list) return;
+        const shortcuts = shortcutsByBrowser[browser] || shortcutsByBrowser.chrome;
+        list.innerHTML = shortcuts.map(s => `
+            <div class="shortcut-item">
+                ${s.keys.map(k => `<kbd>${k}</kbd>`).join('+')}
+                <span>${s.desc}</span>
+            </div>
+        `).join('');
+    }
+
+    function setupBrowserTabs() {
+        document.querySelectorAll('.browser-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.browser-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                renderShortcuts(tab.dataset.browser);
+            });
+        });
+    }
+
+    // ============================================
+    // CONTROLE DE RECURSOS SIMPLES (Com marcação de interação)
+    // ============================================
+    function toggleSimple(className, element) {
+        if (!ensureElements()) return;
+        
+        // Marcar interação do usuário para regra opt-in
+        if (window.AccessibilityRule) {
+            AccessibilityRule.markUserInteraction();
+        }
+        
+        const isActive = elements.body.classList.toggle(className);
+        element?.classList.toggle('active', isActive);
+        updateAriaPressed(element, isActive);
+        updateDots(element, isActive ? 1 : 0);
+
+        if (className === 'stop-sounds') toggleStopSounds(isActive);
+        if (className === 'magnifier') toggleMagnifier(isActive);
+        if (className === 'stop-anim') {
+            // Apenas adicionar/remover classe CSS, sem estilos inline
+            if (isActive) {
+                document.body.classList.add('stop-anim');
             } else {
-                expandIcon.style.display = 'block';
-                compressIcon.style.display = 'none';
+                document.body.classList.remove('stop-anim');
             }
+            announceToScreenReader(isActive ? 'Animações pausadas' : 'Animações retomadas');
+        }
+
+        saveState();
+    }
+
+    // ============================================
+    // CONTROLE DE ANIMAÇÕES
+    // ============================================
+    function toggleAnimations(active) {
+        if (active) {
+            document.body.classList.add('stop-anim-active');
+            // Pausar todas as animações
+            const animatedElements = document.querySelectorAll('*');
+            animatedElements.forEach(el => {
+                const computedStyle = window.getComputedStyle(el);
+                if (computedStyle.animationName !== 'none') {
+                    el.style.animationPlayState = 'paused';
+                }
+            });
+            // Pausar transições
+            const allElements = document.querySelectorAll('*');
+            allElements.forEach(el => {
+                el.style.transitionPlayState = 'paused';
+            });
+        } else {
+            document.body.classList.remove('stop-anim-active');
+            // Retomar animações
+            const animatedElements = document.querySelectorAll('*');
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = '';
+            });
+            const allElements = document.querySelectorAll('*');
+            allElements.forEach(el => {
+                el.style.transitionPlayState = '';
+            });
         }
     }
 
     // ============================================
-    // RECURSOS DE ACESSIBILIDADE
+    // CICLO DE RECURSOS (Com marcação de interação)
     // ============================================
-    function applySetting(feature, value) {
-        state.settings[feature] = value;
+    function cycleFeature(feature, values, element) {
+        if (!ensureElements()) return;
 
-        switch (feature) {
-            case 'fontSizeIncrease':
-                var increaseValues = CONFIG.fontIncreaseSteps;
-                var increaseIndex = increaseValues.indexOf(state.settings.fontSizeIncrease);
-                var nextIncreaseIndex = (increaseIndex + 1) % increaseValues.length;
-                var newIncreaseValue = increaseValues[nextIncreaseIndex];
-                state.settings.fontSizeIncrease = newIncreaseValue;
-                // Aplicar aumento de fonte
-                document.documentElement.style.setProperty('--a11y-font-scale', newIncreaseValue);
-                document.body.setAttribute('data-a11y-font-scale', newIncreaseValue);
-                // Resetar decrease quando aumentar
-                state.settings.fontSizeDecrease = 1;
-                break;
-            case 'fontSizeDecrease':
-                var decreaseValues = CONFIG.fontDecreaseSteps;
-                var decreaseIndex = decreaseValues.indexOf(state.settings.fontSizeDecrease);
-                var nextDecreaseIndex = (decreaseIndex + 1) % decreaseValues.length;
-                var newDecreaseValue = decreaseValues[nextDecreaseIndex];
-                state.settings.fontSizeDecrease = newDecreaseValue;
-                // Aplicar redução de fonte
-                document.documentElement.style.setProperty('--a11y-font-scale', newDecreaseValue);
-                document.body.setAttribute('data-a11y-font-scale', newDecreaseValue);
-                // Resetar increase quando reduzir
-                state.settings.fontSizeIncrease = 1;
-                break;
-            case 'fontStyle':
-                document.body.setAttribute('data-a11y-font', value);
-                break;
-            case 'bold':
-                document.body.setAttribute('data-a11y-bold', value);
-                break;
-            case 'lineHeight':
-                document.documentElement.style.setProperty('--a11y-line-height', value);
-                document.body.setAttribute('data-a11y-line-height', value);
-                break;
-            case 'letterSpacing':
-                var spacing = (value - 1) * 0.05;
-                document.documentElement.style.setProperty('--a11y-letter-spacing', spacing + 'em');
-                document.body.setAttribute('data-a11y-letter-spacing', spacing + 'em');
-                break;
-            case 'bigCursor':
-                document.documentElement.style.setProperty('--a11y-cursor', "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"" + (48 * value) + "\" height=\"" + (48 * value) + "\" viewBox=\"0 0 24 24\"><path fill=\"%231A3E74\" d=\"M7 2l12 11.5-5.5 1.2 3.3 6-2.5 1.5-3.3-6L7 19V2z\"/></svg>') 0 0, auto");
-                document.body.setAttribute('data-a11y-big-cursor', value > 1 ? 'true' : 'false');
-                break;
-            case 'readingMode':
-                document.body.setAttribute('data-a11y-reading', value);
-                break;
-            case 'readingMask':
-                toggleReadingMask(value);
-                break;
-            case 'readingGuide':
-                toggleReadingGuide(value);
-                break;
-            case 'highlightLinks':
-                document.body.setAttribute('data-a11y-links', value);
-                break;
-            case 'highlightHeaders':
-                document.body.setAttribute('data-a11y-headers', value);
-                break;
-            case 'magnifier':
-                document.body.setAttribute('data-a11y-magnifier', value);
-                break;
-            case 'hideImages':
-                document.body.setAttribute('data-a11y-hide-images', value);
-                break;
-            case 'stopAnim':
-                document.body.setAttribute('data-a11y-stop-anim', value);
-                break;
-            case 'stopSounds':
-                toggleStopSounds(value);
-                break;
-            case 'contrast':
-                document.body.setAttribute('data-a11y-contrast', value);
-                break;
-            case 'saturation':
-                document.body.setAttribute('data-a11y-saturation', value);
-                break;
-            case 'colorblind':
-                document.body.setAttribute('data-a11y-colorblind', value);
-                break;
-            case 'theme':
-                document.body.setAttribute('data-a11y-theme', value);
-                updateThemeIcon(value);
-                break;
+        // Marcar interação do usuário para regra opt-in
+        if (window.AccessibilityRule) {
+            AccessibilityRule.markUserInteraction();
+        }
+        
+        state[feature] = ((state[feature] || 0) + 1) % (values.length + 1);
+        const index = state[feature] - 1;
+        const value = values[index];
+        const badge = element?.querySelector('.level-badge');
+
+        cleanupFeatureClasses(feature);
+
+        if (index === -1) {
+            element?.classList.remove('active');
+            updateAriaPressed(element, false);
+            if (badge) badge.style.display = 'none';
+            resetDots(element);
+            resetFeatureCSS(feature);
+        } else {
+            element?.classList.add('active');
+            updateAriaPressed(element, true);
+            updateDots(element, state[feature]);
+            if (badge) {
+                badge.textContent = displayNames[feature]?.[value] || value;
+                badge.style.display = 'block';
+            }
+            applyFeature(feature, value);
+
+            const featureNames = {
+                fontSize: 'Tamanho de fonte',
+                fontStyle: 'Estilo de fonte',
+                letterSpacing: 'Espaçamento entre letras',
+                lineHeight: 'Altura de linha',
+                contrast: 'Contraste',
+                colorblind: 'Modo daltonico',
+                saturation: 'Saturacao',
+                bigCursor: 'Cursor grande'
+            };
+
+            const name = featureNames[feature] || feature;
+            const displayValue = displayNames[feature]?.[value] || value;
+            announceToScreenReader(`${name}: ${displayValue}`);
         }
 
-        saveSetting(feature, value);
-        updateButtonStates();
+        // Disparar evento para sincronização com botões externos
+        window.dispatchEvent(new CustomEvent('accessibility:featureChanged', {
+            detail: { feature, value, isActive: index !== -1 }
+        }));
+
+        saveState();
     }
 
-    function cycleValue(feature) {
-        var current = state.settings[feature];
-        var featureConfig = CONFIG.features[feature];
-        var values = featureConfig.values;
-        var currentIndex = values.indexOf(current);
-        var nextIndex = (currentIndex + 1) % values.length;
-        var nextValue = values[nextIndex];
-
-        applySetting(feature, nextValue);
+    function cleanupFeatureClasses(feature) {
+        const classMap = {
+            fontStyle: ['font-atkinson', 'font-newsreader', 'font-opendyslexic'],
+            contrast: ['inverted', 'dark-contrast', 'light-contrast'],
+            colorblind: ['protanopia', 'deuteranopia', 'tritanopia'],
+            saturation: ['saturation-low', 'saturation-high', 'monochrome'],
+            readingGuide: ['reading-guide-azul', 'reading-guide-laranja', 'reading-guide-preto'],
+            bigCursor: ['big-cursor-medium', 'big-cursor-large', 'big-cursor-xlarge']
+        };
+        classMap[feature]?.forEach(cls => elements.body.classList.remove(cls));
     }
 
-    function toggleSetting(feature) {
-        applySetting(feature, !state.settings[feature]);
+    function resetFeatureCSS(feature) {
+        const resets = {
+            fontSize: () => {
+                document.documentElement.style.setProperty('--font-scale', '1');
+                document.body.removeAttribute('data-font-scale');
+                document.getElementById('accessibility-panel')?.classList.remove('font-large');
+            },
+            letterSpacing: () => document.documentElement.style.setProperty('--letter-spacing', '0'),
+            lineHeight: () => document.documentElement.style.setProperty('--line-height', '1.6'),
+            readingMask: () => toggleReadingMask(false),
+            readingGuide: () => toggleReadingGuide(false),
+            bigCursor: () => cleanupFeatureClasses('bigCursor')
+        };
+        resets[feature]?.();
+    }
+
+    function applyFeature(feature, value) {
+        const actions = {
+            fontSize: () => {
+                document.documentElement.style.setProperty('--font-scale', value);
+                document.body.setAttribute('data-font-scale', value);
+                const panel = document.getElementById('accessibility-panel');
+                if (panel) panel.classList.toggle('font-large', value === '2.0');
+            },
+            letterSpacing: () => {
+                const spacing = (parseFloat(value) - 1) * 0.1;
+                document.documentElement.style.setProperty('--letter-spacing', spacing + 'em');
+            },
+            lineHeight: () => {
+                const height = 1.6 * parseFloat(value);
+                document.documentElement.style.setProperty('--line-height', height);
+            },
+            fontStyle: () => elements.body.classList.add('font-' + value),
+            contrast: () => elements.body.classList.add(value),
+            colorblind: () => elements.body.classList.add(value),
+            saturation: () => elements.body.classList.add(value === 'monochrome' ? 'monochrome' : `saturation-${value}`),
+            readingMask: () => toggleReadingMask(true, value),
+            readingGuide: () => toggleReadingGuide(true, value),
+            bigCursor: () => elements.body.classList.add('big-cursor-' + value)
+        };
+        actions[feature]?.();
     }
 
     // ============================================
-    // RECURSOS ESPECÍFICOS
+    // MÁSCARA DE LEITURA
     // ============================================
-    var maskMoveHandler = null;
-    var guideMoveHandler = null;
+    function toggleReadingMask(active, size) {
+        const maskTop = document.getElementById('reading-mask-top');
+        const maskBottom = document.getElementById('reading-mask-bottom');
+        if (!maskTop || !maskBottom) return;
 
-    function toggleReadingMask(size) {
-        var maskTop = document.getElementById('a11y-mask-top');
-        var maskBottom = document.getElementById('a11y-mask-bottom');
-        var active = state.settings.readingMask && state.settings.readingMask !== false;
+        maskTop.style.display = active ? 'block' : 'none';
+        maskBottom.style.display = active ? 'block' : 'none';
 
-        if (maskTop && maskBottom) {
-            maskTop.classList.toggle('a11y-active', active);
-            maskBottom.classList.toggle('a11y-active', active);
+        if (mouseMoveHandler) {
+            window.removeEventListener('mousemove', mouseMoveHandler);
+            mouseMoveHandler = null;
+        }
 
-            var heights = { sm: 80, md: 150, lg: 250 };
-            var height = heights[state.settings.readingMask] || 150;
-
-            if (maskMoveHandler) {
-                document.removeEventListener('mousemove', maskMoveHandler);
-                maskMoveHandler = null;
-            }
-
-            if (active) {
-                maskMoveHandler = debounce(function(e) {
-                    maskTop.style.height = (e.clientY - height/2) + 'px';
-                    maskBottom.style.top = (e.clientY + height/2) + 'px';
-                    maskBottom.style.height = (window.innerHeight - e.clientY - height/2) + 'px';
-                });
-                document.addEventListener('mousemove', maskMoveHandler);
-            }
+        if (active) {
+            const height = size === 'sm' ? 60 : size === 'md' ? 120 : 200;
+            mouseMoveHandler = debounce((e) => {
+                maskTop.style.height = Math.max(0, e.clientY - height / 2) + 'px';
+                maskBottom.style.top = (e.clientY + height / 2) + 'px';
+            });
+            window.addEventListener('mousemove', mouseMoveHandler);
+            announceToScreenReader(`Mascara de leitura ativada: ${size === 'sm' ? 'pequena' : size === 'md' ? 'media' : 'grande'}`);
         }
     }
 
-    function toggleReadingGuide(color) {
-        var guide = document.getElementById('a11y-reading-guide');
-        var active = state.settings.readingGuide && state.settings.readingGuide !== false;
+    // ============================================
+    // GUIA DE LEITURA
+    // ============================================
+    function toggleReadingGuide(active, color) {
+        const guide = document.getElementById('reading-guide');
+        if (!guide) return;
 
-        if (guide) {
-            guide.classList.toggle('a11y-active', active);
+        guide.style.display = active ? 'block' : 'none';
+        guide.classList.remove('guide-azul', 'guide-laranja', 'guide-preto');
+        elements.body.classList.remove('reading-guide-azul', 'reading-guide-laranja', 'reading-guide-preto');
 
-            var colors = { azul: 'rgba(33, 150, 243, 0.3)', laranja: 'rgba(255, 152, 0, 0.3)', preto: 'rgba(0, 0, 0, 0.3)' };
-            guide.style.backgroundColor = colors[state.settings.readingGuide] || colors.azul;
+        if (active && color) {
+            guide.classList.add('guide-' + color);
+            elements.body.classList.add('reading-guide-' + color);
+        }
 
-            if (guideMoveHandler) {
-                document.removeEventListener('mousemove', guideMoveHandler);
-                guideMoveHandler = null;
-            }
+        if (readingGuideHandler) {
+            window.removeEventListener('mousemove', readingGuideHandler);
+            readingGuideHandler = null;
+        }
 
-            if (active) {
-                guideMoveHandler = debounce(function(e) {
-                    guide.style.top = (e.clientY - 20) + 'px';
-                });
-                document.addEventListener('mousemove', guideMoveHandler);
-            }
+        if (active) {
+            readingGuideHandler = debounce((e) => {
+                guide.style.top = e.clientY + 'px';
+            });
+            window.addEventListener('mousemove', readingGuideHandler);
+            announceToScreenReader(`Guia de leitura ativado: cor ${color}`);
         }
     }
 
+    // ============================================
+    // LUPA DE CONTEÚDO - CORRIGIDA
+    // ============================================
+    function toggleMagnifier(active) {
+        state.magnifierActive = active;
+        
+        // Garantir que o tooltip existe
+        let tooltip = document.getElementById('magnifier-tooltip');
+        if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.id = 'magnifier-tooltip';
+            tooltip.className = 'magnifier-tooltip';
+            tooltip.setAttribute('role', 'tooltip');
+            tooltip.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(tooltip);
+        }
+
+        // Limpar handlers anteriores
+        if (magnifierHandler) {
+            document.removeEventListener('mouseover', magnifierHandler, true);
+            magnifierHandler = null;
+        }
+        if (magnifierMoveHandler) {
+            document.removeEventListener('mousemove', magnifierMoveHandler, true);
+            magnifierMoveHandler = null;
+        }
+
+        if (active) {
+            magnifierHandler = function(e) {
+                const target = e.target;
+                
+                // Ignorar elementos de UI
+                if (target.closest('#accessibility-panel') || 
+                    target.closest('.side-widgets-container') || 
+                    target.closest('#glossary-modal') || 
+                    target.closest('.shortcuts-modal') || 
+                    target.closest('.cookie-banner')) {
+                    tooltip.style.display = 'none';
+                    tooltip.setAttribute('aria-hidden', 'true');
+                    return;
+                }
+
+                // Buscar texto visível
+                let text = '';
+                
+                if (target.childNodes.length === 1 && target.childNodes[0].nodeType === Node.TEXT_NODE) {
+                    text = target.textContent.trim();
+                } else if (target.textContent) {
+                    // Limpar tags HTML e pegar texto limpo
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = target.innerHTML;
+                    text = tempDiv.textContent.trim();
+                }
+
+                if (text && text.length > 0 && text.length < 500) {
+                    tooltip.textContent = text.length > 200 ? text.substring(0, 200) + '...' : text;
+                    tooltip.style.display = 'block';
+                    tooltip.setAttribute('aria-hidden', 'false');
+                    
+                    // Posicionar tooltip
+                    const rect = target.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    let x = rect.right + 15;
+                    let y = rect.top;
+                    
+                    if (x + tooltipRect.width > window.innerWidth - 20) {
+                        x = rect.left - tooltipRect.width - 15;
+                    }
+                    if (y + tooltipRect.height > window.innerHeight - 20) {
+                        y = window.innerHeight - tooltipRect.height - 20;
+                    }
+                    
+                    tooltip.style.left = Math.max(10, x) + 'px';
+                    tooltip.style.top = Math.max(10, y) + 'px';
+                } else {
+                    tooltip.style.display = 'none';
+                    tooltip.setAttribute('aria-hidden', 'true');
+                }
+            };
+
+            magnifierMoveHandler = function(e) {
+                if (tooltip.style.display === 'block') {
+                    const x = e.clientX + 20;
+                    const y = e.clientY + 20;
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    
+                    if (x + tooltipRect.width > window.innerWidth - 10) {
+                        tooltip.style.left = (e.clientX - tooltipRect.width - 20) + 'px';
+                    } else {
+                        tooltip.style.left = x + 'px';
+                    }
+                    
+                    if (y + tooltipRect.height > window.innerHeight - 10) {
+                        tooltip.style.top = (e.clientY - tooltipRect.height - 20) + 'px';
+                    } else {
+                        tooltip.style.top = y + 'px';
+                    }
+                }
+            };
+
+            announceToScreenReader('Lupa ativada - passe o mouse sobre o texto');
+            document.addEventListener('mouseover', magnifierHandler, true);
+            document.addEventListener('mousemove', magnifierMoveHandler, true);
+        } else {
+            tooltip.style.display = 'none';
+            tooltip.setAttribute('aria-hidden', 'true');
+            announceToScreenReader('Lupa desativada');
+        }
+    }
+
+    // ============================================
+    // LEITOR DE TEXTO (TTS) (Com marcação de interação)
+    // ============================================
+    function toggleTTSClick(element) {
+        if (!ensureElements()) return;
+
+        // Marcar interação do usuário para regra opt-in
+        if (window.AccessibilityRule) {
+            AccessibilityRule.markUserInteraction();
+        }
+
+        state.ttsSpeed = ((state.ttsSpeed || 0) + 1) % 4;
+        const speedMap = { 1: 'normal', 2: 'slow', 3: 'fast' };
+        const rateMap = { 1: 1, 2: 0.7, 3: 1.5 };
+        const badge = element?.querySelector('.level-badge');
+
+        if (state.ttsSpeed === 0) {
+            state.ttsActive = false;
+            element?.classList.remove('active');
+            updateAriaPressed(element, false);
+            if (badge) badge.style.display = 'none';
+            resetDots(element);
+            elements.body.style.cursor = '';
+
+            if (ttsClickHandler) {
+                document.removeEventListener('click', ttsClickHandler, true);
+                ttsClickHandler = null;
+            }
+
+            window.speechSynthesis.cancel();
+        } else {
+            state.ttsActive = true;
+            state.ttsRate = rateMap[state.ttsSpeed];
+            element?.classList.add('active');
+            updateAriaPressed(element, true);
+            updateDots(element, state.ttsSpeed);
+
+            if (badge) {
+                badge.textContent = displayNames.tts[speedMap[state.ttsSpeed]];
+                badge.style.display = 'block';
+            }
+
+            elements.body.style.cursor = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'%231A3E74\' d=\'M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z\'/%3E%3C/svg%3E") 16 16, pointer';
+
+            if (ttsClickHandler) {
+                document.removeEventListener('click', ttsClickHandler, true);
+            }
+
+            ttsClickHandler = (e) => {
+                if (e.target.closest('#accessibility-panel, #accessibility-module, .side-widgets-container, .shortcuts-modal, #glossary-modal')) return;
+
+                const target = e.target;
+                const textElement = target.closest('p, span, h1, h2, h3, h4, h5, h6, li, td, th, a, label, article, section, div');
+
+                if (textElement) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const selection = window.getSelection();
+                    const range = document.caretRangeFromPoint(e.clientX, e.clientY);
+                    let textToRead = '';
+
+                    if (range) {
+                        const fullText = textElement.textContent || '';
+                        const offset = range.startOffset;
+                        const nodeText = range.startContainer.textContent || '';
+                        const clickedIndex = fullText.indexOf(nodeText) + offset;
+                        textToRead = fullText.substring(clickedIndex).trim();
+                    }
+
+                    if (!textToRead || textToRead.length < 3) {
+                        textToRead = textElement.textContent?.trim() || '';
+                    }
+
+                    if (textToRead.length > 0) {
+                        window.speechSynthesis.cancel();
+                        const utterance = new SpeechSynthesisUtterance(textToRead);
+                        utterance.lang = 'pt-BR';
+                        utterance.rate = state.ttsRate || 1;
+                        window.speechSynthesis.speak(utterance);
+                    }
+                }
+            };
+
+            document.addEventListener('click', ttsClickHandler, true);
+        }
+
+        saveState();
+    }
+
+    // ============================================
+    // PARAR SONS
+    // ============================================
     function toggleStopSounds(active) {
-        var mediaElements = document.querySelectorAll('audio, video');
-        for (var i = 0; i < mediaElements.length; i++) {
-            mediaElements[i].muted = active;
-            if (active) mediaElements[i].pause();
-        }
-        var iframes = document.querySelectorAll('iframe');
-        for (var j = 0; j < iframes.length; j++) {
+        state.stopSounds = active;
+        document.querySelectorAll('audio, video').forEach(media => {
+            media.muted = active;
+            if (active) media.pause();
+        });
+
+        document.querySelectorAll('iframe').forEach(iframe => {
             try {
-                if (active && iframes[j].src.indexOf('youtube') !== -1) {
-                    iframes[j].setAttribute('data-original-src', iframes[j].src);
-                    iframes[j].src = iframes[j].src + (iframes[j].src.indexOf('?') !== -1 ? '&' : '?') + 'mute=1';
+                const src = iframe.src;
+                if (active) {
+                    if (src.includes('youtube')) {
+                        if (!src.includes('mute=1')) {
+                            iframe.src = src + (src.includes('?') ? '&' : '?') + 'mute=1';
+                        }
+                    }
+                    iframe.setAttribute('data-original-src', src);
                 }
             } catch (e) {}
+        });
+    }
+
+    // ============================================
+    // WIDGET VLIBRAS
+    // ============================================
+    function toggleLibrasWidget() {
+        document.querySelector('[vw-access-button]')?.click();
+    }
+
+    // ============================================
+    // GLOSSÁRIO
+    // ============================================
+    let currentGlossaryLetter = 'A';
+    let alphabetExpanded = true;
+
+    async function loadGlossary() {
+        try {
+            const response = await fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/data/glossario.json');
+            glossaryData = (await response.json()).termos || [];
+        } catch (e) {
+            console.warn('Glossario nao encontrado');
+            glossaryData = [];
         }
     }
 
-    function debounce(fn) {
-        var delay = 16;
-        var timeout;
-        return function() {
-            var args = arguments;
-            var self = this;
-            cancelAnimationFrame(timeout);
-            timeout = requestAnimationFrame(function() {
-                fn.apply(self, args);
+    function openGlossary(searchTerm = null) {
+        let modal = document.getElementById('glossary-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'glossary-modal';
+            modal.className = 'glossary-modal';
+            modal.setAttribute('role', 'dialog');
+            modal.setAttribute('aria-modal', 'true');
+
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+            modal.innerHTML = `
+                <div class="glossary-content">
+                    <header class="glossary-header">
+                        <h2><i class="fas fa-book-medical"></i> Glossário de Enfermagem</h2>
+                        <button type="button" class="glossary-close" data-action="closeGlossary" aria-label="Fechar">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </header>
+                    <div class="glossary-body">
+                        <nav class="glossary-alphabet" id="glossary-alphabet">
+                            <button type="button" class="alphabet-toggle" id="alphabet-toggle" title="Expandir/Retrair">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="alphabet-letters" id="alphabet-letters">
+                                ${alphabet.map(l => `<button type="button" class="alphabet-letter${l === 'A' ? ' active' : ''}" data-letter="${l}">${l}</button>`).join('')}
+                            </div>
+                        </nav>
+                        <div class="glossary-main">
+                            <div class="glossary-search">
+                                <input type="text" id="glossary-search-input" placeholder="Buscar termo..." autocomplete="off">
+                            </div>
+                            <ul class="glossary-list" id="glossary-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            modal.querySelector('#alphabet-toggle').addEventListener('click', () => {
+                alphabetExpanded = !alphabetExpanded;
+                modal.querySelector('.glossary-alphabet').classList.toggle('collapsed', !alphabetExpanded);
+                // CSS will handle the rotation animation via .collapsed .alphabet-toggle i
             });
-        };
-    }
 
-    // ============================================
-    // UI - ATUALIZAÇÃO DE ESTADOS
-    // ============================================
-    function updateButtonStates() {
-        var buttons = document.querySelectorAll('[data-a11y-feature]');
-        for (var i = 0; i < buttons.length; i++) {
-            var btn = buttons[i];
-            var feature = btn.dataset.a11yFeature;
-            var featureConfig = CONFIG.features[feature];
-            var value = state.settings[feature];
+            modal.querySelectorAll('.alphabet-letter').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    modal.querySelectorAll('.alphabet-letter').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentGlossaryLetter = btn.dataset.letter;
+                    modal.querySelector('#glossary-search-input').value = '';
+                    renderGlossaryList();
+                });
+            });
 
-            if (featureConfig.type === 'toggle') {
-                btn.classList.toggle('a11y-active', value);
-                btn.setAttribute('aria-pressed', value);
-            } else {
-                var values = featureConfig.values;
-                var index = values.indexOf(value);
-                btn.classList.toggle('a11y-active', index > 0);
-                btn.setAttribute('aria-pressed', index > 0);
-            }
-        }
-    }
-
-    // ============================================
-    // PAINEL DE ATALHOS
-    // ============================================
-    function showShortcutsModal() {
-        var modal = document.getElementById('a11y-shortcuts-modal');
-        if (!modal) return;
-
-        renderShortcuts();
-        modal.classList.remove('a11y-hidden');
-        modal.classList.add('a11y-active');
-        modal.removeAttribute('style');
-        modal.setAttribute('aria-hidden', 'false');
-
-        var closeBtn = modal.querySelector('.a11y-close-btn');
-        if (closeBtn) closeBtn.focus();
-    }
-
-    function hideShortcutsModal() {
-        var modal = document.getElementById('a11y-shortcuts-modal');
-        if (!modal) return;
-
-        modal.classList.remove('a11y-active');
-        modal.classList.add('a11y-hidden');
-        modal.setAttribute('aria-hidden', 'true');
-        modal.style.display = 'none';
-    }
-
-    function renderShortcuts() {
-        var list = document.getElementById('a11y-shortcuts-list');
-        if (!list) return;
-
-        var shortcuts = [
-            { keys: 'Alt+1', desc: 'Abrir menu' },
-            { keys: 'Alt+2', desc: 'Aumentar fonte' },
-            { keys: 'Alt+3', desc: 'Diminuir fonte' },
-            { keys: 'Alt+4', desc: 'Contraste' },
-            { keys: 'Alt+5', desc: 'Guia leitura' },
-            { keys: 'Escape', desc: 'Fechar' }
-        ];
-
-        var html = '';
-        for (var i = 0; i < shortcuts.length; i++) {
-            html += '<div class="a11y-shortcut-item"><kbd>' + shortcuts[i].keys + '</kbd><span>' + shortcuts[i].desc + '</span></div>';
-        }
-        list.innerHTML = html;
-    }
-
-    // ============================================
-    // GLOSSÁRIO DE TERMOS DE ENFERMAGEM
-    // ============================================
-    var glossaryData = [];
-    var glossaryLoaded = false;
-
-    function loadGlossaryData() {
-        if (glossaryLoaded) return Promise.resolve(glossaryData);
-
-        return fetch('assets/data/glossario.json')
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar glossário');
+            modal.querySelector('#glossary-search-input').addEventListener('input', (e) => {
+                const val = e.target.value;
+                if (val) {
+                    modal.querySelectorAll('.alphabet-letter').forEach(b => b.classList.remove('active'));
+                    renderGlossaryList(val);
+                } else {
+                    modal.querySelector(`.alphabet-letter[data-letter="${currentGlossaryLetter}"]`)?.classList.add('active');
+                    renderGlossaryList();
                 }
-                return response.json();
-            })
-            .then(function(data) {
-                glossaryData = data.glossario || [];
-                glossaryLoaded = true;
-                return glossaryData;
-            })
-            .catch(function(error) {
-                logError('Erro ao carregar glossário: ' + error.message);
-                return [];
             });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeGlossary();
+            });
+        }
+
+        modal.hidden = false;
+
+        if (searchTerm) {
+            const input = modal.querySelector('#glossary-search-input');
+            input.value = searchTerm;
+            modal.querySelectorAll('.alphabet-letter').forEach(b => b.classList.remove('active'));
+            renderGlossaryList(searchTerm);
+        } else {
+            renderGlossaryList();
+        }
+
+        setTimeout(() => modal.querySelector('#glossary-search-input')?.focus(), 100);
     }
 
-    function renderGlossaryTerms(terms, searchTerm) {
-        var list = document.getElementById('a11y-glossary-list');
+    function renderGlossaryList(filter = '') {
+        const list = document.getElementById('glossary-list');
         if (!list) return;
 
-        if (!terms || terms.length === 0) {
-            list.innerHTML = '<div class="a11y-glossary-empty">Nenhum termo encontrado</div>';
+        let filtered;
+        if (filter) {
+            filtered = glossaryData.filter(item =>
+                item.termo.toLowerCase().includes(filter.toLowerCase()) ||
+                item.definicao.toLowerCase().includes(filter.toLowerCase())
+            );
+        } else {
+            filtered = glossaryData.filter(item => item.termo.charAt(0).toUpperCase() === currentGlossaryLetter);
+        }
+
+        if (filtered.length === 0) {
+            list.innerHTML = `<li class="glossary-empty"><i class="fas fa-info-circle"></i> Nenhum termo com "${filter || currentGlossaryLetter}"</li>`;
             return;
         }
 
-        var html = '';
-        var searchLower = searchTerm ? searchTerm.toLowerCase() : '';
+        list.innerHTML = filtered.map(item => `
+            <li class="glossary-item">
+                <div class="glossary-term">${sanitizeHTML(item.termo)}</div>
+                <div class="glossary-definition">${sanitizeHTML(item.definicao)}</div>
+            </li>
+        `).join('');
+    }
 
-        for (var i = 0; i < terms.length; i++) {
-            var term = terms[i];
-            var termoTermo = term.termo || '';
-            var termoDefinicao = term.definicao || '';
-            var termoCategoria = term.categoria || '';
+    function closeGlossary() {
+        const modal = document.getElementById('glossary-modal');
+        if (modal) modal.hidden = true;
+    }
 
-            // Filtrar por termo de busca
-            if (searchLower) {
-                if (termoTermo.toLowerCase().indexOf(searchLower) === -1 &&
-                    termoDefinicao.toLowerCase().indexOf(searchLower) === -1) {
-                    continue;
+    function setupTermLinks() {
+        document.addEventListener('click', (e) => {
+            // Verificar se clicou em um elemento abbr ou com data-definition
+            const term = e.target.closest('[data-definition], abbr[title]');
+            
+            // Verificar se o elemento está dentro de painéis de acessibilidade
+            if (term && !term.closest('#accessibility-panel, #glossary-modal, .shortcuts-modal, #keyboard-shortcuts-modal')) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Obter o termo para busca
+                let searchTerm = '';
+                
+                if (term.tagName === 'ABBR') {
+                    // Para abbr, usar o texto visível ou o atributo title
+                    searchTerm = term.textContent?.trim() || term.getAttribute('title') || '';
+                } else {
+                    // Para data-definition
+                    searchTerm = term.textContent?.trim() || term.getAttribute('data-definition') || term.getAttribute('title') || '';
+                }
+                
+                if (searchTerm && searchTerm.length > 0) {
+                    openGlossary(searchTerm);
                 }
             }
-
-            html += '<div class="a11y-glossary-item">';
-            html += '<div class="a11y-glossary-category">' + escapeHtml(termoCategoria) + '</div>';
-            html += '<div class="a11y-glossary-term">' + escapeHtml(termoTermo) + '</div>';
-            html += '<div class="a11y-glossary-definition">' + escapeHtml(termoDefinicao) + '</div>';
-            html += '</div>';
-        }
-
-        if (!html) {
-            html = '<div class="a11y-glossary-empty">Nenhum termo encontrado para "' + escapeHtml(searchTerm) + '"</div>';
-        }
-
-        list.innerHTML = html;
-    }
-
-    function escapeHtml(text) {
-        if (!text) return '';
-        var div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
-    function showGlossaryModal() {
-        var modal = document.getElementById('a11y-glossary-modal');
-        if (!modal) return;
-
-        // Carregar dados do glossário se ainda não carregados
-        if (!glossaryLoaded) {
-            loadGlossaryData().then(function(terms) {
-                renderGlossaryTerms(terms, '');
-            });
-        } else {
-            renderGlossaryTerms(glossaryData, '');
-        }
-
-        modal.classList.remove('a11y-hidden');
-        modal.classList.add('a11y-active');
-        modal.removeAttribute('style');
-        modal.setAttribute('aria-hidden', 'false');
-
-        var searchInput = document.getElementById('a11y-glossary-search');
-        if (searchInput) {
-            searchInput.value = '';
-            searchInput.focus();
-        }
-
-        var closeBtn = modal.querySelector('.a11y-close-btn');
-        if (closeBtn) closeBtn.focus();
-    }
-
-    function hideGlossaryModal() {
-        var modal = document.getElementById('a11y-glossary-modal');
-        if (!modal) return;
-
-        modal.classList.remove('a11y-active');
-        modal.classList.add('a11y-hidden');
-        modal.setAttribute('aria-hidden', 'true');
-        modal.style.display = 'none';
-    }
-
-    function setupGlossarySearch() {
-        var searchInput = document.getElementById('a11y-glossary-search');
-        if (!searchInput) return;
-
-        var debounceSearch = debounce(function() {
-            var searchTerm = searchInput.value;
-            renderGlossaryTerms(glossaryData, searchTerm);
-        }, 300);
-
-        searchInput.oninput = debounceSearch;
+        });
+        
+        // Adicionar cursor pointer e underline pontilhado em abbr para indicar que são clicáveis
+        document.querySelectorAll('abbr[title]').forEach(abbr => {
+            abbr.style.cursor = 'pointer';
+            abbr.style.textDecoration = 'none';
+            abbr.style.borderBottom = '2px dotted #1A3E74';
+            abbr.setAttribute('role', 'button');
+            abbr.setAttribute('tabindex', '0');
+            abbr.setAttribute('aria-label', `Ver definição de ${abbr.textContent?.trim()}`);
+        });
+        
+        // Suporte para teclado em abbr
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const abbr = e.target.closest('abbr[title]');
+                if (abbr && !abbr.closest('#accessibility-panel, #glossary-modal, .shortcuts-modal')) {
+                    e.preventDefault();
+                    const searchTerm = abbr.textContent?.trim() || abbr.getAttribute('title') || '';
+                    if (searchTerm) {
+                        openGlossary(searchTerm);
+                    }
+                }
+            }
+        });
     }
 
     // ============================================
-    // RESETAR TUDO
+    // RESTAURAR TUDO
     // ============================================
     function resetAll() {
-        Object.keys(CONFIG.features).forEach(function(key) {
-            state.settings[key] = CONFIG.features[key].default;
-        });
+        ensureElements();
 
-        var attrs = [
-            'data-a11y-font-scale', 'data-a11y-font', 'data-a11y-bold',
-            'data-a11y-line-height', 'data-a11y-letter-spacing',
-            'data-a11y-big-cursor', 'data-a11y-reading', 'data-a11y-links',
-            'data-a11y-headers', 'data-a11y-magnifier', 'data-a11y-hide-images',
-            'data-a11y-stop-anim', 'data-a11y-contrast', 'data-a11y-saturation',
-            'data-a11y-colorblind', 'data-a11y-theme'
-        ];
+        // Salvar posição do scroll antes de limpar
+        const scrollX = window.scrollX;
+        const scrollY = window.scrollY;
 
-        for (var a = 0; a < attrs.length; a++) {
-            document.body.removeAttribute(attrs[a]);
-        }
-
-        var guide = document.getElementById('a11y-reading-guide');
-        var maskTop = document.getElementById('a11y-mask-top');
-        var maskBottom = document.getElementById('a11y-mask-bottom');
-        var magnifier = document.getElementById('a11y-magnifier');
-
-        if (guide) guide.classList.remove('a11y-active');
-        if (maskTop) maskTop.classList.remove('a11y-active');
-        if (maskBottom) maskBottom.classList.remove('a11y-active');
-        if (magnifier) magnifier.classList.remove('a11y-active');
-
-        if (maskMoveHandler) {
-            document.removeEventListener('mousemove', maskMoveHandler);
-            maskMoveHandler = null;
-        }
-        if (guideMoveHandler) {
-            document.removeEventListener('mousemove', guideMoveHandler);
-            guideMoveHandler = null;
-        }
-
-        updateButtonStates();
-        saveAllSettings();
-    }
-
-    // ============================================
-    // FUNÇÕES DE TEMA
-    // ============================================
-    function updateThemeIcon(isDark) {
-        var themeIcons = document.querySelectorAll('#theme-toggle .fa-moon, #mobile-theme-toggle .fa-moon, #theme-toggle .fa-sun, #mobile-theme-toggle .fa-sun');
-        themeIcons.forEach(function(icon) {
-            if (isDark) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
+        Object.keys(state).forEach(key => {
+            if (!key.startsWith('_')) {
+                state[key] = typeof state[key] === 'boolean' ? false : 0;
             }
         });
-    }
 
-    function toggleTheme() {
-        var newValue = !state.settings.theme;
-        state.settings.theme = newValue;
-        document.body.setAttribute('data-a11y-theme', newValue);
-        updateThemeIcon(newValue);
-        saveSetting('theme', newValue);
-        updateButtonStates();
-    }
+        state.ttsRate = 1;
 
-    // ============================================
-    // FUNÇÕES DE FONTE DO HEADER
-    // ============================================
-    function increaseFont() {
-        var increaseValues = CONFIG.fontIncreaseSteps;
-        var currentIndex = increaseValues.indexOf(state.settings.fontSizeIncrease);
-        var nextIndex = (currentIndex + 1) % increaseValues.length;
-        var newValue = increaseValues[nextIndex];
-        
-        state.settings.fontSizeIncrease = newValue;
-        state.settings.fontSizeDecrease = 1;
-        
-        document.documentElement.style.setProperty('--a11y-font-scale', newValue);
-        document.body.setAttribute('data-a11y-font-scale', newValue);
-        
-        saveSetting('fontSizeIncrease', newValue);
-        saveSetting('fontSizeDecrease', 1);
-        updateButtonStates();
-    }
+        // Limpar estilos inline - apenas restaurar variáveis CSS
+        document.documentElement.style.removeProperty('--font-scale');
+        document.documentElement.style.removeProperty('--letter-spacing');
+        document.documentElement.style.removeProperty('--line-height');
+        document.body.removeAttribute('data-font-scale');
+        document.getElementById('accessibility-panel')?.classList.remove('font-large');
 
-    function decreaseFont() {
-        var decreaseValues = CONFIG.fontDecreaseSteps;
-        var currentIndex = decreaseValues.indexOf(state.settings.fontSizeDecrease);
-        var nextIndex = (currentIndex + 1) % decreaseValues.length;
-        var newValue = decreaseValues[nextIndex];
+        // Remover classes de recursos
+        allClasses.forEach(cls => elements.body?.classList.remove(cls));
         
-        state.settings.fontSizeDecrease = newValue;
-        state.settings.fontSizeIncrease = 1;
-        
-        document.documentElement.style.setProperty('--a11y-font-scale', newValue);
-        document.body.setAttribute('data-a11y-font-scale', newValue);
-        
-        saveSetting('fontSizeDecrease', newValue);
-        saveSetting('fontSizeIncrease', 1);
-        updateButtonStates();
-    }
+        // Limpar cursor customizado
+        document.body.style.cursor = '';
 
-    // ============================================
-    // CONFIGURAÇÃO DE EVENTOS
-    // ============================================
-    function setupEventListeners() {
-        var toggleBtn = document.getElementById('a11y-toggle-btn');
-        var panel = document.getElementById('a11y-panel');
-
-        if (toggleBtn) {
-            toggleBtn.onclick = togglePanel;
-            log('Evento click adicionado ao botão toggle');
-        } else {
-            logError('Botão toggle não encontrado');
+        // Remover handlers
+        if (mouseMoveHandler) {
+            window.removeEventListener('mousemove', mouseMoveHandler);
+            mouseMoveHandler = null;
+        }
+        if (readingGuideHandler) {
+            window.removeEventListener('mousemove', readingGuideHandler);
+            readingGuideHandler = null;
+        }
+        if (magnifierHandler) {
+            document.removeEventListener('mouseover', magnifierHandler);
+            magnifierHandler = null;
+        }
+        if (ttsClickHandler) {
+            document.removeEventListener('click', ttsClickHandler);
+            ttsClickHandler = null;
         }
 
-        if (panel) {
-            var closeBtn = panel.querySelector('.a11y-close-btn');
-            var maximizeBtn = panel.querySelector('.a11y-maximize-btn');
+        // Desativar recursos
+        toggleReadingMask(false);
+        toggleReadingGuide(false);
+        toggleMagnifier(false);
+        toggleStopSounds(false);
+        window.speechSynthesis.cancel();
 
-            if (closeBtn) closeBtn.onclick = togglePanel;
-            if (maximizeBtn) maximizeBtn.onclick = toggleMaximize;
-        }
+        ThemeManager.resetToSystem();
 
-        // Botões do header - Controle de fonte
-        var fontIncreaseBtn = document.getElementById('font-increase');
-        var fontDecreaseBtn = document.getElementById('font-reduce');
+        // Atualizar UI dos cards
+        document.querySelectorAll('.accessibility-card').forEach(card => {
+            card.classList.remove('active');
+            updateAriaPressed(card, false);
+            resetDots(card);
+            const badge = card.querySelector('.level-badge');
+            if (badge) badge.style.display = 'none';
+        });
+
+        // Ocultar elementos de suporte
+        ['reading-mask-top', 'reading-mask-bottom', 'reading-guide', 'magnifier-tooltip'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        });
+
+        // Limpar storage
+        localStorage.removeItem('accessControlState');
         
-        if (fontIncreaseBtn) {
-            fontIncreaseBtn.onclick = increaseFont;
-            log('Evento click adicionado ao botão aumentar fonte');
+        // Disparar evento de reset
+        window.dispatchEvent(new CustomEvent('Accessibility:Reset'));
+        
+        announceToScreenReader('Todas as configuracoes de acessibilidade foram restauradas');
+
+        // Feedback visual no botão
+        const btn = document.querySelector('[data-action="resetAll"]');
+        if (btn) {
+            const original = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check" style="color:#10b981"></i> Restaurado!';
+            setTimeout(() => btn.innerHTML = original, 1500);
         }
         
-        if (fontDecreaseBtn) {
-            fontDecreaseBtn.onclick = decreaseFont;
-            log('Evento click adicionado ao botão reduzir fonte');
-        }
-
-        // Botões do header - Tema claro/escuro
-        var themeToggleBtn = document.getElementById('theme-toggle');
-        var mobileThemeToggleBtn = document.getElementById('mobile-theme-toggle');
-        
-        if (themeToggleBtn) {
-            themeToggleBtn.onclick = toggleTheme;
-            log('Evento click adicionado ao botão tema');
-        }
-        
-        if (mobileThemeToggleBtn) {
-            mobileThemeToggleBtn.onclick = toggleTheme;
-            log('Evento click adicionado ao botão tema mobile');
-        }
-
-        // Atalhos de teclado
-        document.onkeydown = function(e) {
-            if (e.key === 'Escape') {
-                var shortcutsModal = document.getElementById('a11y-shortcuts-modal');
-                if (shortcutsModal && shortcutsModal.classList.contains('a11y-active')) {
-                    hideShortcutsModal();
-                    return;
-                }
-                if (state.panelOpen) {
-                    closePanel();
-                    return;
-                }
-            }
-
-            if (e.altKey && e.key === '1') {
-                e.preventDefault();
-                togglePanel();
-            }
-        };
-
-        // Cards de recursos
-        var featureBtns = document.querySelectorAll('[data-a11y-feature]');
-        for (var i = 0; i < featureBtns.length; i++) {
-            featureBtns[i].onclick = function() {
-                var feature = this.dataset.a11yFeature;
-                var featureConfig = CONFIG.features[feature];
-
-                if (featureConfig.type === 'toggle') {
-                    toggleSetting(feature);
-                } else {
-                    cycleValue(feature);
-                }
-            };
-        }
-
-        // Botão de atalhos
-        var showShortcutsBtn = document.querySelector('[data-a11y-action="show-shortcuts"]');
-        if (showShortcutsBtn) showShortcutsBtn.onclick = showShortcutsModal;
-
-        var closeShortcutsBtn = document.querySelector('[data-a11y-action="close-shortcuts"]');
-        if (closeShortcutsBtn) closeShortcutsBtn.onclick = hideShortcutsModal;
-
-        // Botão de glossário
-        var showGlossaryBtn = document.querySelector('[data-a11y-action="show-glossary"]');
-        if (showGlossaryBtn) showGlossaryBtn.onclick = showGlossaryModal;
-
-        var closeGlossaryBtn = document.querySelector('[data-a11y-action="close-glossary"]');
-        if (closeGlossaryBtn) closeGlossaryBtn.onclick = hideGlossaryModal;
-
-        // Configurar busca do glossário
-        setupGlossarySearch();
-
-        // Fechar modal ao clicar fora
-        var shortcutsModal = document.getElementById('a11y-shortcuts-modal');
-        if (shortcutsModal) {
-            shortcutsModal.onclick = function(e) {
-                if (e.target.id === 'a11y-shortcuts-modal') {
-                    hideShortcutsModal();
-                }
-            };
-        }
-
-        // Fechar modal de glossário ao clicar fora
-        var glossaryModal = document.getElementById('a11y-glossary-modal');
-        if (glossaryModal) {
-            glossaryModal.onclick = function(e) {
-                if (e.target.id === 'a11y-glossary-modal') {
-                    hideGlossaryModal();
-                }
-            };
-        }
-
-        // Restaurar tudo
-        var resetBtn = document.querySelector('[data-a11y-action="reset-all"]');
-        if (resetBtn) resetBtn.onclick = resetAll;
-
-        // Fechar painel ao clicar fora
-        document.onclick = function(e) {
-            if (!state.panelOpen) return;
-
-            var panelEl = document.getElementById('a11y-panel');
-            var widgets = document.getElementById('side-widgets');
-            var modal = document.getElementById('a11y-shortcuts-modal');
-
-            var clickedInsidePanel = panelEl && panelEl.contains(e.target);
-            var clickedInsideWidgets = widgets && widgets.contains(e.target);
-            var clickedInsideModal = modal && modal.contains(e.target);
-
-            if (!clickedInsidePanel && !clickedInsideWidgets && !clickedInsideModal) {
-                closePanel();
-            }
-        };
-
-        log('Event listeners configurados');
+        // Restaurar posição do scroll para evitar movimento da página
+        requestAnimationFrame(() => {
+            window.scrollTo(scrollX, scrollY);
+        });
     }
 
     // ============================================
-    // INICIALIZAÇÃO
+    // TRATAMENTO DE EVENTOS
     // ============================================
-    function initialize() {
-        if (state.initialized) {
-            log('Já inicializado');
+    function handleCardClick(card) {
+        const type = card.dataset.type;
+        const feature = card.dataset.feature;
+
+        if (feature === 'glossary') {
+            openGlossary();
             return;
         }
 
-        log('Inicializando...');
-
-        var panel = document.getElementById('a11y-panel');
-        var toggleBtn = document.getElementById('a11y-toggle-btn');
-        var shortcutsModal = document.getElementById('a11y-shortcuts-modal');
-
-        // Debug: log dos elementos encontrados
-        log('Painel encontrado: ' + (panel ? 'sim' : 'não'));
-        log('Botão toggle encontrado: ' + (toggleBtn ? 'sim' : 'não'));
-        log('Modal de atalhos encontrado: ' + (shortcutsModal ? 'sim' : 'não'));
-
-        if (panel) {
-            panel.classList.add('a11y-hidden');
-            panel.setAttribute('aria-hidden', 'true');
-            state.panelOpen = false;
-        } else {
-            logError('Painel não encontrado durante inicialização');
+        if (type === 'simple') {
+            toggleSimple(feature, card);
+        } else if (type === 'cycle') {
+            cycleFeature(feature, card.dataset.values.split(','), card);
+        } else if (type === 'tts-click') {
+            toggleTTSClick(card);
         }
+    }
 
-        if (toggleBtn) {
-            toggleBtn.setAttribute('aria-expanded', 'false');
-        }
+    function handleAction(action) {
+        const actions = {
+            togglePanel, toggleMaximize, toggleLibras: toggleLibrasWidget,
+            resetAll, showKeyboardShortcuts, closeShortcutsModal,
+            openGlossary, closeGlossary
+        };
+        actions[action]?.();
+    }
 
-        if (shortcutsModal) {
-            shortcutsModal.classList.add('a11y-hidden');
-            shortcutsModal.setAttribute('aria-hidden', 'true');
-            shortcutsModal.style.display = 'none';
-        }
+    function setupEvents() {
+        document.addEventListener('click', (e) => {
+            const action = e.target.closest('[data-action]');
+            if (action) {
+                e.preventDefault();
+                return handleAction(action.dataset.action);
+            }
 
-        // Inicializar modal de glossário
-        var glossaryModal = document.getElementById('a11y-glossary-modal');
-        if (glossaryModal) {
-            glossaryModal.classList.add('a11y-hidden');
-            glossaryModal.setAttribute('aria-hidden', 'true');
-            glossaryModal.style.display = 'none';
-        }
+            const card = e.target.closest('.accessibility-card');
+            if (card) {
+                e.preventDefault();
+                return handleCardClick(card);
+            }
 
-        loadAllSettings();
-
-        Object.keys(state.settings).forEach(function(feature) {
-            var value = state.settings[feature];
-            var featureConfig = CONFIG.features[feature];
-
-            if (featureConfig.type === 'toggle') {
-                if (value && value !== featureConfig.default) {
-                    applySetting(feature, value);
-                }
-            } else {
-                if (value !== featureConfig.default) {
-                    applySetting(feature, value);
+            // Fechar painel ao clicar fora, exceto em widgets e modais
+            if (!isPanelClosed()) {
+                const inPanel = elements.panel?.contains(e.target);
+                const inWidgets = elements.sideWidgets?.contains(e.target);
+                const inModal = elements.shortcutsModal?.contains(e.target);
+                const inGlossary = document.getElementById('glossary-modal')?.contains(e.target);
+                const inCookieBanner = e.target.closest('.cookie-banner, .cookie-modal, .cookie-preferences');
+                
+                if (!inPanel && !inWidgets && !inModal && !inGlossary && !inCookieBanner) {
+                    closePanel();
                 }
             }
         });
 
-        setupEventListeners();
-        updateButtonStates();
-
-        state.initialized = true;
-        log('Inicializado com sucesso');
-    }
-
-    // ============================================
-    // INICIALIZAÇÃO AUTOMÁTICA - ROBUSTA
-    // ============================================
-    function start() {
-        log('Iniciando módulo de acessibilidade...');
-
-        // Estratégia 1: Verificar elementos imediatamente (caso já carregados)
-        function tryInit() {
-            if (document.getElementById('a11y-panel') && document.getElementById('a11y-toggle-btn')) {
-                log('Elementos encontrados, inicializando imediatamente');
-                initialize();
-                return true;
-            }
-            return false;
-        }
-
-        if (tryInit()) return;
-
-        // Estratégia 2: Escutar evento do EventBus
-        function onModuleReady() {
-            log('Evento module:accessibility-v2-container:ready recebido');
-            // Pequeno delay para garantir que o DOM foi atualizado
-            setTimeout(function() {
-                if (!state.initialized) {
-                    initialize();
+        // Sincronização com botão de aumentar fonte do header
+        window.addEventListener('accessibility:featureChanged', (e) => {
+            if (e.detail.feature === 'fontSize' && e.detail.value) {
+                const value = e.detail.value;
+                const level = ['1.2', '1.5', '2.0'].indexOf(value) + 1;
+                
+                // Atualizar indicador visual no header se existir
+                const headerIndicator = document.querySelector('.font-size-indicator, .header-font-level');
+                if (headerIndicator) {
+                    const dots = headerIndicator.querySelectorAll('.dot, .level-dot');
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i < level);
+                    });
                 }
-            }, 100);
-        }
-
-        // Registrar listener do EventBus
-        if (window.EventBus) {
-            window.EventBus.on('module:accessibility-v2-container:ready', onModuleReady, { module: 'accessibility' });
-            log('Registrado listener do EventBus');
-        } else {
-            window.addEventListener('eventbus:ready', function() {
-                window.EventBus.on('module:accessibility-v2-container:ready', onModuleReady, { module: 'accessibility' });
-            });
-            log('Aguardando EventBus estar pronto');
-        }
-
-        // Estratégia 3: Fallback com polling
-        var attempts = 0;
-        var maxAttempts = 100; // Aumentado para 10 segundos (100 x 100ms)
-        var pollInterval = setInterval(function() {
-            attempts++;
-            
-            if (state.initialized) {
-                clearInterval(pollInterval);
-                return;
+                
+                // Atualizar badge do card no painel
+                const panelCard = document.querySelector('[data-feature="fontSize"]');
+                if (panelCard && e.detail.isActive !== false) {
+                    const badge = panelCard.querySelector('.level-badge');
+                    if (badge) {
+                        const displayValue = displayNames.fontSize?.[value] || value;
+                        badge.textContent = displayValue;
+                        badge.style.display = 'block';
+                    }
+                    const dots = panelCard.querySelectorAll('.dot');
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i < level);
+                    });
+                }
             }
-            
-            if (tryInit()) {
-                clearInterval(pollInterval);
-                log('Inicializado via polling após ' + attempts + ' tentativas');
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeShortcutsModal();
+                closePanel();
                 return;
             }
 
-            if (attempts >= maxAttempts) {
-                clearInterval(pollInterval);
-                logError('Timeout: elementos não encontrados após ' + attempts + ' tentativas');
-                // Tentar inicializar mesmo assim para debug
-                initialize();
+            if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('.accessibility-card')) {
+                e.preventDefault();
+                handleCardClick(e.target.closest('.accessibility-card'));
+                return;
             }
-        }, 100);
+
+            if (e.altKey) {
+                const shortcuts = {
+                    'a': togglePanel,
+                    '1': () => document.querySelector('[data-feature="fontSize"]')?.click(),
+                    'c': () => document.querySelector('[data-feature="contrast"]')?.click(),
+                    'l': () => document.querySelector('[data-feature="highlight-links"]')?.click(),
+                    'h': () => document.querySelector('[data-feature="highlight-headers"]')?.click(),
+                    'm': () => document.querySelector('[data-feature="readingMask"]')?.click(),
+                    'g': () => document.querySelector('[data-feature="readingGuide"]')?.click(),
+                    'r': () => document.querySelector('[data-feature="reading-mode"]')?.click(),
+                    't': () => document.querySelector('[data-feature="tts"]')?.click(),
+                    'i': () => document.querySelector('[data-feature="hide-images"]')?.click(),
+                    '0': resetAll
+                };
+
+                if (shortcuts[e.key]) {
+                    e.preventDefault();
+                    shortcuts[e.key]();
+                }
+            }
+        });
     }
 
-    // API pública
-    window.A11yModule = {
-        init: initialize,
-        togglePanel: togglePanel,
-        closePanel: closePanel,
-        reset: resetAll,
-        getState: function() { return state; },
-        isReady: function() { return state.initialized; }
+    // ============================================
+    // ARRASTAR PAINEL
+    // ============================================
+    function setupDrag() {
+        const panel = document.getElementById('accessibility-panel');
+        const handle = document.getElementById('panel-drag-handle');
+        if (!panel || !handle) return;
+
+        let isDragging = false;
+        let offsetX = 0, offsetY = 0;
+
+        handle.addEventListener('mousedown', (e) => {
+            if (e.target.closest('button')) return;
+            isDragging = true;
+            offsetX = e.clientX - panel.offsetLeft;
+            offsetY = e.clientY - panel.offsetTop;
+            handle.style.cursor = 'grabbing';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const x = Math.max(0, Math.min(window.innerWidth - panel.offsetWidth, e.clientX - offsetX));
+            const y = Math.max(0, Math.min(window.innerHeight - panel.offsetHeight, e.clientY - offsetY));
+            panel.style.left = x + 'px';
+            panel.style.top = y + 'px';
+            panel.style.right = 'auto';
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            handle.style.cursor = 'grab';
+        });
+    }
+
+    // ============================================
+    // INICIALIZAÇÃO (Comportamento Opt-In)
+    // ============================================
+    function init() {
+        if (state._initialized) return;
+
+        ThemeManager.init();
+
+        if (ensureElements()) {
+            setupEvents();
+            setupDrag();
+            // REMOVIDO: loadSavedState() - não restaura automaticamente
+            // Regra opt-in: recursos só são aplicados após interação explícita
+            loadGlossary();
+            setupTermLinks();
+
+            // Carregar VLibras
+            if (!document.querySelector('script[src*="vlibras"]')) {
+                const vScript = document.createElement('script');
+                vScript.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
+                vScript.async = true;
+                document.head.appendChild(vScript);
+            }
+
+            const vlInterval = setInterval(() => {
+                if (window.VLibras?.Widget) {
+                    clearInterval(vlInterval);
+                    if (!document.querySelector('[vw]')) {
+                        new window.VLibras.Widget('https://vlibras.gov.br/app');
+                    }
+                }
+            }, 300);
+
+            setTimeout(() => clearInterval(vlInterval), 15000);
+        }
+
+        state._initialized = true;
+    }
+
+    // ============================================
+    // API PÚBLICA
+    // ============================================
+    return {
+        init,
+        togglePanel,
+        toggleMaximize,
+        resetAll,
+        restoreFromStorage, // Nova: restaura estado sob demanda
+        ThemeManager,
+        state
     };
 
-    // Iniciar
-    start();
-    log('Módulo carregado');
-
 })();
+
+// ============================================
+// INICIALIZAÇÃO AUTOMÁTICA
+// ============================================
+function tryInit() {
+    const panel = document.getElementById('accessibility-panel');
+    if (panel) {
+        window.AccessControl.init();
+    } else {
+        setTimeout(tryInit, 100);
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryInit);
+} else {
+    tryInit();
+}
