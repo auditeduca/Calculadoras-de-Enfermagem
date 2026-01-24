@@ -1,401 +1,352 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="theme-color" content="#00897b">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Calculadoras de Enfermagem">
-    <meta name="keywords" content="calculadora de enfermagem, calculadoras clínicas, ferramentas de saúde, gotejamento, medication, diluição">
-    <meta name="description" content="Coleção completa de calculadoras de enfermagem e ferramentas clínicas para profissionais de saúde.">
-    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
+    <title>Tecnologia Verde | Calculadoras de Enfermagem</title>
+    
+    <!-- [CONFIGURAÇÃO GLOBAL] -->
+    <script>
+        window.NURSE_CONFIG = {
+            baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/',
+            debug: false
+        };
 
-    <!-- Preconnect e Fonts -->
+        async function loadModule(id, fileName) {
+            const container = document.getElementById(id);
+            if (!container) return;
+            try {
+                const response = await fetch(`${window.NURSE_CONFIG.baseUrl}assets/components/${fileName}.html`);
+                if (!response.ok) throw new Error(`Erro: ${response.status}`);
+                const html = await response.text();
+                container.innerHTML = html;
+                container.classList.remove('opacity-50', 'opacity-30');
+                container.style.opacity = "1";
+            } catch (err) {
+                console.error(`Falha no módulo ${fileName}:`, err);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadModule('accessibility-container', 'accessibility-v4');
+            loadModule('header-container', 'header-v4');
+            loadModule('footer-container', 'footer-v4');
+        });
+    </script>
+
+    <!-- Performance Resource Hints -->
+    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+    <!-- Google AdSense & Analytics -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- SEO & Metadados -->
+    <meta name="description" content="Descubra como as Calculadoras de Enfermagem aplicam a Tecnologia Verde para promover uma assistência à saúde sustentável e digitalmente responsável.">
+    <meta name="keywords" content="tecnologia verde, sustentabilidade enfermagem, TI verde saúde, redução de papel hospital, eco-digital">
+    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/tecnologiaverde.html">
+    <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp">
+
+    <!-- Internacionalização (19 Idiomas) -->
+    <link rel="alternate" hreflang="pt-br" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/tecnologiaverde.html">
+    <link rel="alternate" hreflang="en" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/en/tecnologiaverde.html">
+    <link rel="alternate" hreflang="es" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/es/tecnologiaverde.html">
+    <link rel="alternate" hreflang="fr" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/fr/tecnologiaverde.html">
+    <link rel="alternate" hreflang="de" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/de/tecnologiaverde.html">
+    <link rel="alternate" hreflang="it" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/it/tecnologiaverde.html">
+    <link rel="alternate" hreflang="ja" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ja/tecnologiaverde.html">
+    <link rel="alternate" hreflang="zh" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/zh/tecnologiaverde.html">
+    <link rel="alternate" hreflang="hi" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/hi/tecnologiaverde.html">
+    <link rel="alternate" hreflang="ar" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ar/tecnologiaverde.html">
+    <link rel="alternate" hreflang="ru" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ru/tecnologiaverde.html">
+    <link rel="alternate" hreflang="tr" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/tr/tecnologiaverde.html">
+    <link rel="alternate" hreflang="ko" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ko/tecnologiaverde.html">
+    <link rel="alternate" hreflang="nl" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/nl/tecnologiaverde.html">
+    <link rel="alternate" hreflang="pl" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/pl/tecnologiaverde.html">
+    <link rel="alternate" hreflang="sv" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/sv/tecnologiaverde.html">
+    <link rel="alternate" hreflang="id" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/id/tecnologiaverde.html">
+    <link rel="alternate" hreflang="vi" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/vi/tecnologiaverde.html">
+    <link rel="alternate" hreflang="uk" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/uk/tecnologiaverde.html">
+    <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/tecnologiaverde.html">
+
+    <!-- SEO Estruturado -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalWebPage",
+      "name": "Tecnologia Verde - Calculadoras de Enfermagem",
+      "description": "Compromisso com a sustentabilidade e eco-responsabilidade digital na assistência de enfermagem.",
+      "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/tecnologiaverde.html",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/tecnologiaverde.html"
+      },
+      "author": { "@type": "Organization", "name": "Calculadoras de Enfermagem" }
+    }
+    </script>
+
+    <!-- Estilos Externos V4 -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-    <!-- CSS Modules - Links Locais -->
-    <link rel="stylesheet" href="assets/css/variables-v4.css">
-    <link rel="stylesheet" href="assets/css/header-v4.css">
-    <link rel="stylesheet" href="assets/css/accessibility-v4.css">
-    <link rel="stylesheet" href="assets/css/footer-v4.css">
-    <link rel="stylesheet" href="assets/pages/missao.css">
-
-    <style>
-        /* CSS Crítico */
-        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
-        h1 { font-family: 'Nunito Sans', sans-serif; font-weight: 800; }
-        
-        .skip-link { position: absolute; top: -40px; left: 0; background: #00897b; color: white; padding: 8px; z-index: 100000; transition: top 0.3s; }
-        .skip-link:focus { top: 0; }
-        
-        i.fas, i.fab, i.fa-solid { display: inline-block !important; visibility: visible !important; opacity: 1 !important; }
-        
-        #loader-global { position: fixed; inset: 0; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200000; transition: opacity 0.5s ease; }
-        .loader-image { background-color: #ffffff; margin-bottom: 30px; margin-left: -10px; max-width: 180px; height: auto; }
-        .loader-dots { display: flex; gap: 8px; align-items: center; justify-content: center; }
-        .loader-dot { width: 10px; height: 10px; background: #1A3E74; border-radius: 50%; opacity: 0.3; animation: dotPulse 1.4s ease-in-out infinite; }
-        .loader-dot:nth-child(1) { animation-delay: 0s; }
-        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
-        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes dotPulse { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        main#main-v2-content { min-height: 60vh; display: block; }
-
-        /* --- CORREÇÃO DE POSICIONAMENTO VLIBRAS --- */
-        div[vw],
-        div[vw].enabled {
-            position: fixed !important;
-            right: 0 !important;
-            top: 320px !important;
-            left: auto !important;
-            bottom: auto !important;
-            width: 45px !important;
-            height: 45px !important;
-            z-index: 100000 !important;
-        }
-
-        div[vw] .vw-access-button,
-        div[vw].enabled .vw-access-button {
-            position: relative !important;
-            right: 0 !important;
-            top: 0 !important;
-            left: auto !important;
-            bottom: auto !important;
-            width: 45px !important;
-            height: 45px !important;
-            background-color: #00897b !important;
-            border-radius: 12px 0 0 12px !important;
-            box-shadow: -3px 0 8px rgba(0,0,0,0.2) !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-
-        div[vw] .vw-access-button img {
-            width: 28px !important;
-            height: 28px !important;
-            filter: brightness(0) invert(1) !important;
-        }
-
-        /* Ajuste do wrapper do plugin */
-        div[vw] .vw-plugin-wrapper {
-            position: fixed !important;
-            right: 50px !important;
-            top: 320px !important;
-        }
-
-        /* --- ANIMAÇÃO SVG DO PRELOADER --- */
-        .loader-svg-bg {
-            position: absolute;
-            top: -100px;
-            left: 0;
-            width: 100%;
-            height: calc(100% + 200px);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .loader-svg-bg svg {
-            width: 100%;
-            height: 100%;
-            opacity: 0.6;
-        }
-
-        .svg-curve {
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            will-change: stroke-dashoffset;
-        }
-
-        .svg-curve-1 {
-            stroke: #1A3E74;
-            stroke-width: 2;
-            animation: drawPath 3s ease-in-out forwards;
-        }
-
-        .svg-curve-2 {
-            stroke: #00bcd4;
-            stroke-width: 2;
-            animation: drawPath 3s ease-in-out 0.5s forwards, pulseGlow 4s ease-in-out 3s infinite;
-        }
-
-        @keyframes drawPath {
-            0% {
-                stroke-dashoffset: 1000;
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            100% {
-                stroke-dashoffset: 0;
-                opacity: 0.8;
-            }
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% {
-                opacity: 0.6;
-                filter: drop-shadow(0 0 2px rgba(0, 188, 212, 0.3));
-            }
-            50% {
-                opacity: 0.9;
-                filter: drop-shadow(0 0 8px rgba(0, 188, 212, 0.6));
-            }
-        }
-
-    </style>
-
-    <title>Calculadoras de Enfermagem - Ferramentas Clínicas</title>
-</head>
-<body class="light-mode">
-
-    <div id="loader-global">
-        <!-- SVG Decorativo Animado -->
-        <div class="loader-svg-bg">
-            <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="none">
-                <path class="svg-curve svg-curve-1" d="M-100,250 C300,150 600,400 1500,300" fill="none" stroke="#1A3E74" stroke-width="2" />
-                <path class="svg-curve svg-curve-2" d="M-100,500 C400,400 800,650 1600,450" fill="none" stroke="#00bcd4" stroke-width="2" />
-            </svg>
-        </div>
-        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" 
-             alt="Calculadoras de Enfermagem" 
-             class="loader-image"
-             style="width: 180px; height: auto;">
-        <div class="loader-dots">
-            <div class="loader-dot"></div>
-            <div class="loader-dot"></div>
-            <div class="loader-dot"></div>
-        </div>
-        <p style="margin-top:25px; color:#1A3E74; font-weight:600; font-size:0.95rem; letter-spacing: 0.3px;">Aguarde enquanto o conteúdo é carregado...</p>
-    </div>
-
-    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
-
-    <header id="header-v2-container" role="banner"></header>
-
-    <aside id="accessibility-v2-container" role="complementary"></aside>
-    
-    <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
-    </div>
-
-    <div id="main-module-container"></div>
-
-    <footer id="footer-v2-container" role="contentinfo"></footer>
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        (function() {
-            'use strict';
-
-            window.EventBus = window.EventBus || {
-                events: {}, fired: {},
-                on(e, cb) { 
-                    const event = e.toLowerCase();
-                    if(!this.events[event]) this.events[event] = [];
-                    this.events[event].push(cb);
-                    if(this.fired[event]) cb(this.fired[event]);
-                },
-                emit(e, data) {
-                    const event = e.toLowerCase();
-                    this.fired[event] = data || true;
-                    if(this.events[event]) this.events[event].forEach(cb => cb(data));
-                }
-            };
-
-            const BASE_URL = "";
-
-            const CONFIG = {
-                components: [
-                    { id: 'accessibility-v2-container', path: 'assets/components/accessibility-v4.html' },
-                    { id: 'header-v2-container', path: 'assets/components/header-v4.html' },
-                    { id: 'main-module-container', path: 'assets/pages/missao.html' },
-                    { id: 'footer-v2-container', path: 'assets/components/footer-v4.html' }
-                ],
-                scripts: [
-                    'assets/js/event-bus-v4.js',
-                    'https://vlibras.gov.br/app/vlibras-plugin.js',
-                    'assets/js/accessibility-v4.js',
-                    'assets/js/header-v4.js',
-                    'assets/pages/missao.js',
-                    'assets/js/footer-v4.js'
-                ]
-            };
-
-            async function loadComponent(id, path) {
-                try {
-                    const url = path.startsWith('http') ? path : BASE_URL + path;
-                    const response = await fetch(url + '?t=' + Date.now());
-                    if (!response.ok) throw new Error(response.status);
-                    const html = await response.text();
-                    const container = document.getElementById(id);
-                    if (container) {
-                        container.innerHTML = html;
-                        window.EventBus.emit(`module:${id}:ready`);
-                    }
-                    return true;
-                } catch (e) {
-                    console.error(`[App] Erro crítico ao carregar ${id}:`, e.message);
-                    return false;
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { nunito: ['"Nunito Sans"', 'sans-serif'], inter: ['Inter', 'sans-serif'] },
+                    colors: { 'nurse-primary': '#1A3E74', 'nurse-accent': '#00838f', 'nurse-bgDark': '#0F172A' }
                 }
             }
-
-            async function loadScript(src) {
-                return new Promise((resolve) => {
-                    const script = document.createElement('script');
-                    script.src = (src.startsWith('http') ? src : BASE_URL + src) + '?v=' + Date.now();
-                    script.async = false;
-                    script.onload = () => {
-                        if(src.includes('vlibras') && window.VLibras) {
-                            try { new window.VLibras.Widget('https://vlibras.gov.br/app'); } catch(e){}
-                        }
-                        resolve(true);
-                    };
-                    script.onerror = () => resolve(false);
-                    document.body.appendChild(script);
-                });
-            }
-
-            // ===== CORREÇÃO DE POSICIONAMENTO VLIBRAS =====
-            function fixVLibrasPosition() {
-                const vwContainer = document.querySelector('div[vw]');
-                const vwButton = document.querySelector('div[vw] .vw-access-button');
-                
-                if (vwContainer) {
-                    vwContainer.style.setProperty('position', 'fixed', 'important');
-                    vwContainer.style.setProperty('right', '0', 'important');
-                    vwContainer.style.setProperty('top', '320px', 'important');
-                    vwContainer.style.setProperty('left', 'auto', 'important');
-                    vwContainer.style.setProperty('bottom', 'auto', 'important');
-                    vwContainer.style.setProperty('width', '45px', 'important');
-                    vwContainer.style.setProperty('height', '45px', 'important');
-                    vwContainer.style.setProperty('z-index', '100030', 'important');
-                }
-                
-                if (vwButton) {
-                    vwButton.style.setProperty('position', 'relative', 'important');
-                    vwButton.style.setProperty('right', '0', 'important');
-                    vwButton.style.setProperty('top', '0', 'important');
-                    vwButton.style.setProperty('left', 'auto', 'important');
-                    vwButton.style.setProperty('bottom', 'auto', 'important');
-                    vwButton.style.setProperty('width', '45px', 'important');
-                    vwButton.style.setProperty('height', '45px', 'important');
-                    vwButton.style.setProperty('margin', '0', 'important');
-                    vwButton.style.setProperty('padding', '0', 'important');
-                    vwButton.style.setProperty('background-color', '#00897b', 'important');
-                    vwButton.style.setProperty('border-radius', '12px 0 0 12px', 'important');
-                    vwButton.style.setProperty('box-shadow', '-3px 0 8px rgba(0,0,0,0.2)', 'important');
-                }
-            }
-
-            // Inicia correção contínua do VLibras
-            function startVLibrasFix() {
-                fixVLibrasPosition();
-                setInterval(fixVLibrasPosition, 500);
-                
-                // Observa mudanças no DOM
-                const observer = new MutationObserver(fixVLibrasPosition);
-                const vwContainer = document.querySelector('div[vw]');
-                if (vwContainer) {
-                    observer.observe(vwContainer, { 
-                        attributes: true, 
-                        attributeFilter: ['style', 'class'],
-                        subtree: true 
-                    });
-                }
-            }
-
-            async function start() {
-                await Promise.all(CONFIG.components.map(c => loadComponent(c.id, c.path)));
-                for (const s of CONFIG.scripts) await loadScript(s);
-
-                setTimeout(() => {
-                    if (typeof window.HeaderInit === 'function') window.HeaderInit();
-                    if (typeof window.MainInit === 'function') window.MainInit();
-                    
-                    // Inicia correção do VLibras após carregamento
-                    startVLibrasFix();
-                    
-                    // Inicializa controles de acessibilidade
-                    initA11yControls();
-                    
-                    const loader = document.getElementById('loader-global');
-                    if (loader) {
-                        loader.style.opacity = '0';
-                        setTimeout(() => loader.style.display = 'none', 500);
-                    }
-                }, 500);
-            }
-
-            // Função para inicializar controles de acessibilidade do header
-            function initA11yControls() {
-                // Criar elemento main-content se não existir
-                if (!document.getElementById('main-content')) {
-                    var mainContainer = document.getElementById('main-module-container');
-                    if (mainContainer) {
-                        mainContainer.id = 'main-content';
-                    }
-                }
-                
-                // Criar elemento main-header se não existir
-                if (!document.getElementById('main-header')) {
-                    var headerElement = document.querySelector('.main-header');
-                    if (headerElement) {
-                        headerElement.id = 'main-header';
-                    }
-                }
-                
-                // Configurar botões de skip com suporte a header fixo
-                setupSkipButtons();
-            }
-            
-            // Configurar botões de skip
-            function setupSkipButtons() {
-                var skipButtons = document.querySelectorAll('.skip-btn');
-                skipButtons.forEach(function(btn) {
-                    btn.addEventListener('click', function(e) {
-                        var targetId = this.getAttribute('href');
-                        var targetElement = document.querySelector(targetId);
-                        
-                        if (targetElement) {
-                            e.preventDefault();
-                            
-                            // Calcular offset para header fixo (150px)
-                            var headerHeight = 150;
-                            var targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                            
-                            window.scrollTo({
-                                top: targetPosition,
-                                behavior: 'smooth'
-                            });
-                            
-                            // Focar no elemento alvo para acessibilidade
-                            setTimeout(function() {
-                                targetElement.setAttribute('tabindex', '-1');
-                                targetElement.focus();
-                            }, 500);
-                        }
-                    });
-                });
-            }
-
-            if (document.readyState === 'complete') start();
-            else window.addEventListener('load', start);
-        })();
+        }
     </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter transition-colors duration-300; }
+            h1, h2, h3 { @apply font-nunito tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
+            :focus-visible { @apply outline-none ring-4 ring-cyan-500 ring-offset-2 dark:ring-offset-nurse-bgDark rounded-sm; }
+        }
+        @layer components {
+            .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all; }
+            .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+            .toc-link { @apply flex items-center gap-2 py-2.5 text-sm text-white/90 hover:text-white hover:translate-x-1 border-b border-white/10 last:border-0 transition-all font-semibold; }
+            .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md focus:ring-2 focus:ring-white; }
+            .text-aaa { @apply text-slate-700 dark:text-slate-200 leading-relaxed; }
+            .skeleton { @apply animate-pulse bg-slate-200 dark:bg-slate-700 rounded; }
+            .alert-box { @apply flex gap-4 p-6 rounded-2xl mb-8 border-l-4 border-green-500 bg-green-50 text-green-900 dark:bg-green-900/20 dark:text-green-100 shadow-sm font-inter; }
+            .tag-pill { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen relative overflow-x-hidden">
+
+    <div id="accessibility-container"></div>
+
+    <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="skeleton h-8 w-40"></div>
+            <div class="hidden md:flex gap-6"><div class="skeleton h-4 w-16"></div><div class="skeleton h-4 w-16"></div></div>
+        </div>
+    </div>
+
+    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 py-8 md:py-12 w-full">
+        
+        <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
+            <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+            <i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>
+            <span>Sobre Nós</span>
+            <i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>
+            <span class="text-nurse-primary dark:text-cyan-400 font-bold" aria-current="page">Tecnologia Verde</span>
+        </nav>
+
+        <header class="max-w-4xl mb-12">
+            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Institucional</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Tecnologia Verde na Saúde</h1>
+            <div class="w-24 h-2 bg-gradient-to-r from-green-500 to-nurse-primary rounded-full mb-8"></div>
+            <p class="text-xl text-aaa font-medium mb-8">Compromisso com a sustentabilidade e a redução do impacto ambiental através de soluções digitais inteligentes para a enfermagem.</p>
+        </header>
+
+        <!-- [AJUSTE] Imagem Featured - object-[center_25%] para centralizar o rosto -->
+        <div class="mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 group">
+            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-sustentabilidade-digital.webp" 
+                 alt="Tecnologia Verde e Sustentabilidade Digital na Saúde" 
+                 class="w-full h-[350px] md:h-[500px] object-cover object-[center_25%] transition-transform duration-1000 group-hover:scale-105" 
+                 loading="eager" fetchpriority="high">
+        </div>
+
+        <div class="grid lg:grid-cols-[1fr,340px] gap-10 lg:gap-16 items-start">
+            
+            <article class="card-base p-8 md:p-14">
+                <div class="prose prose-lg prose-slate dark:prose-invert max-w-none">
+                    <p class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-12 leading-snug border-l-8 border-green-500 pl-8 italic">
+                        Nossa visão de Tecnologia Verde integra a eficiência assistencial com a preservação dos recursos naturais do planeta.
+                    </p>
+
+                    <div class="space-y-16">
+                        <section id="pane-eco" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-green-500/10 text-green-600 dark:text-green-400 text-2xl font-black shadow-inner">01</span>
+                                Digitalização e Despapelização
+                            </h2>
+                            <p class="text-aaa text-lg text-justify mb-6">
+                                Ao automatizar cálculos e escalas, eliminamos a necessidade de impressos manuais e formulários físicos. A digitalização da assistência reduz significativamente a pegada de carbono e o consumo de recursos florestais nas unidades de saúde.
+                            </p>
+                            <div class="alert-box">
+                                <i class="fa-solid fa-leaf text-2xl mt-1 shrink-0"></i>
+                                <div>
+                                    <span class="font-bold block uppercase text-xs tracking-widest mb-1 opacity-80">Impacto Ecológico</span>
+                                    Cada 10.000 escalas preenchidas digitalmente poupam aproximadamente uma árvore adulta e economizam milhares de litros de água usados na produção de papel.
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="pane-energy" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-green-500/10 text-green-600 dark:text-green-400 text-2xl font-black shadow-inner">02</span>
+                                Eficiência Energética de Dados
+                            </h2>
+                            <p class="text-aaa text-lg text-justify">
+                                Utilizamos infraestrutura de nuvem com baixas emissões e código otimizado para exigir menos processamento dos dispositivos. Isso resulta em menor consumo de bateria e energia elétrica durante o uso intensivo no plantão.
+                            </p>
+                        </section>
+
+                        <section id="pane-ethics" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-green-500/10 text-green-600 dark:text-green-400 text-2xl font-black shadow-inner">03</span>
+                                Ética e Ciclo de Vida Digital
+                            </h2>
+                            <p class="text-aaa text-lg text-justify">
+                                Promovemos a conscientização sobre o descarte correto de resíduos tecnológicos (e-waste) e a adoção de práticas de TI Verde que visam a longevidade dos equipamentos hospitalares.
+                            </p>
+                        </section>
+
+                        <section id="pane-edu" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-green-500/10 text-green-600 dark:text-green-400 text-2xl font-black shadow-inner">04</span>
+                                Educação Ambiental na Saúde
+                            </h2>
+                            <p class="text-aaa text-lg text-justify">
+                                Educamos os profissionais sobre a importância da sustentabilidade no setor saúde. A ferramenta serve como um exemplo prático de como a tecnologia pode ser uma aliada do meio ambiente sem comprometer a segurança do paciente.
+                            </p>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Bio / Autor -->
+                <footer class="bg-slate-100 dark:bg-slate-900/60 rounded-[2.5rem] p-8 md:p-10 mt-20 flex flex-col md:flex-row gap-8 items-center border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Logotipo" class="w-24 h-24 rounded-full border-4 border-white dark:border-slate-800 shadow-xl object-cover">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400">Calculadoras de Enfermagem</h3>
+                        <p class="text-aaa text-md italic font-medium">"Sustentabilidade digital é o cuidado ético com o futuro da saúde e do planeta."</p>
+                    </div>
+                </footer>
+
+                <!-- Referências -->
+                <section class="mt-12 pt-8 border-t-2 border-slate-200 dark:border-slate-700">
+                    <h3 class="text-xl font-bold mb-8 flex items-center gap-3"><i class="fa-solid fa-seedling text-green-600"></i> Referências Técnicas</h3>
+                    <div class="space-y-5">
+                        <div class="pl-4 border-l-4 border-green-500 py-1">
+                            <p class="text-aaa text-sm">GARTNER. <strong>Gartner Glossary: Green IT</strong>. Pesquisa sobre tecnologias sustentáveis e eficiência energética em datacenters. 2024.</p>
+                        </div>
+                        <div class="pl-4 border-l-4 border-green-500 py-1">
+                            <p class="text-aaa text-sm">WHO. <strong>Environmentally sustainable health care facilities</strong>. World Health Organization guidance on eco-friendly health systems. 2023.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 flex flex-wrap gap-2 items-center">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2 flex items-center"><i class="fa-solid fa-tags mr-2"></i> Tópicos:</span>
+                        <span class="tag-pill">#TecnologiaVerde</span><span class="tag-pill">#Sustentabilidade</span><span class="tag-pill">#SaúdeDigital</span><span class="tag-pill">#GreenIT</span>
+                    </div>
+                </section>
+            </article>
+
+            <aside class="space-y-8 sticky top-32 self-start hidden lg:block">
+                <div class="sidebar-module">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-list-ul"></i> Conteúdo</h3>
+                    <nav class="flex flex-col">
+                        <a href="#pane-eco" class="toc-link">1. Digitalização</a>
+                        <a href="#pane-energy" class="toc-link">2. Eficiência Energética</a>
+                        <a href="#pane-ethics" class="toc-link">3. Ética Digital</a>
+                        <a href="#pane-edu" class="toc-link">4. Educação Ambiental</a>
+                    </nav>
+                </div>
+
+                <div class="card-base p-4 text-center border border-dashed border-slate-300">
+                    <div class="bg-slate-100 dark:bg-slate-800 h-[250px] flex items-center justify-center text-slate-400 text-xs">Anúncio AdSense</div>
+                </div>
+
+                <div class="sidebar-module from-green-700 to-nurse-primary shadow-green-500/20">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-share-alt"></i> Compartilhar</h3>
+                    <div class="flex gap-3.5 flex-wrap">
+                        <a href="#" class="share-btn" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn" onclick="window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="share-btn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/" target="_blank" class="share-btn"><i class="fab fa-instagram"></i></a>
+                        <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Link copiado!');"><i class="fas fa-link"></i></button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Conteúdo Relacionado -->
+    <section class="bg-slate-200/50 dark:bg-slate-900/80 py-24 border-t border-slate-300 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-black mb-16 flex items-center justify-center gap-4">
+                <i class="fa-solid fa-layer-group text-nurse-accent"></i> Conteúdo Relacionado
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
+                <a href="objetivo.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-objetivo.webp" alt="Objetivos" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-nurse-primary text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Institucional</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Objetivos da Plataforma</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Conheça os pilares científicos e a visão estratégica do projeto.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+                <a href="politicadeacessibilidade.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-acessibilidade-digital.webp" alt="Acessibilidade" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-teal-600 text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Acessibilidade Digital</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Inclusão Sem Barreiras</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Garantindo que nossas ferramentas sejam úteis para todos os profissionais.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+                <!-- [AJUSTE] Card Missão - object-top para centralizar o rosto -->
+                <a href="missao.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-missao.webp" alt="Missão" class="w-full h-full object-cover object-top group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-green-700 text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Institucional</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Missão e Valores</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">O compromisso ético e os pilares técnicos que sustentam nosso projeto.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px] mt-12 opacity-50 transition-opacity duration-500">
+        <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col gap-4">
+            <div class="skeleton h-6 w-32"></div>
+            <div class="skeleton h-4 w-64"></div>
+        </div>
+    </div>
+
+    <!-- Scripts Modulares V4 -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
 </body>
 </html>
