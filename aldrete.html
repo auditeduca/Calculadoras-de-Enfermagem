@@ -3,13 +3,21 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Índice de Aldrete e Kroulik | Calculadoras de Enfermagem</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+  <title>Índice de Aldrete e Kroulik - Alta Segura RPA | Calculadoras de Enfermagem</title>
   
+  <meta name="description" content="Calculadora do Índice de Aldrete e Kroulik para avaliação da prontidão de alta na Recuperação Pós-Anestésica (RPA). Inclui auditoria técnica e metas de segurança.">
   <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/aldrete.html"/>
   
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
   
   <script>
     tailwind.config = {
@@ -21,7 +29,29 @@
         }
       }
     }
-    window.NURSE_CONFIG = { baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/' };
+    
+    window.NURSE_CONFIG = { baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/', debug: false };
+
+    // Loader robusto para evitar o colapso e Erro 9
+    async function loadModule(id, url) {
+      const container = document.getElementById(id);
+      if (!container) return;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Status ${res.status}`);
+        container.innerHTML = await res.text();
+        container.style.opacity = "1";
+      } catch(e) { 
+        console.warn(`Módulo ${id} não carregado:`, e);
+        container.style.opacity = "1"; // Garante visibilidade mesmo em erro
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html');
+      loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html');
+      loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html');
+    });
   </script>
 
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
@@ -30,91 +60,152 @@
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
 
   <style type="text/tailwindcss">
+    @layer base {
+      body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300; }
+      h1 { @apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400; }
+      h2, h3 { @apply font-inter tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
+    }
     @layer components {
-      .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden; }
-      .input-field { @apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium; }
-      .btn-primary-action { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 rounded-2xl shadow-xl transition-all active:scale-[0.98] uppercase tracking-wider text-sm flex items-center justify-center gap-2; }
-      .tab-btn { @apply flex-1 px-4 py-3 font-bold text-[11px] border-b-4 border-transparent text-slate-400 hover:text-nurse-primary uppercase tracking-wider text-center; }
-      .tab-btn.active { @apply border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50; }
+      .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden; }
+      .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+      .input-field { @apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium; }
+      .btn-primary-action { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
+      .tab-btn { @apply flex-1 px-4 py-3 font-bold text-[11px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider; }
+      .tab-btn.active { @apply border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50 dark:bg-slate-900/30; }
+      .glass-meta { @apply relative backdrop-blur-md border border-white/20 p-4 rounded-xl shadow-sm transition-all duration-300 flex items-center gap-4; }
+      .toast-msg { @apply pointer-events-auto bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 font-bold text-sm min-w-[320px] border-l-4 border-nurse-secondary; }
     }
   </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
+  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
   <div id="accessibility-container"></div>
-  
-  <header id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] shadow-sm"></header>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 shadow-sm"></div>
 
-  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-28 pb-12 w-full">
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
     
-    <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold">
-        <a href="index.html" class="hover:underline">Início</a>
+    <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
+        <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
         <i class="fa-solid fa-chevron-right text-[10px]"></i>
-        <span class="text-nurse-primary dark:text-cyan-400 font-bold">Índice de Aldrete</span>
+        <span class="text-nurse-primary dark:text-cyan-400 font-bold">Índice de Aldrete e Kroulik</span>
     </nav>
+
+    <header class="max-w-4xl mb-12">
+      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Segurança Cirúrgica</span>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Aldrete e Kroulik</h1>
+      <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+      <p class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">Avaliação fisiológica para alta segura da Recuperação Pós-Anestésica (RPA).</p>
+    </header>
 
     <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
       
       <article class="card-base p-0">
-         <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50">
+         <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30">
             <button onclick="switchTab('calc')" id="btn-tab-calc" class="tab-btn active">Calculadora</button>
-            <button onclick="switchTab('sobre')" id="btn-tab-sobre" class="tab-btn">Sobre</button>
+            <button onclick="switchTab('sobre')" id="btn-tab-sobre" class="tab-btn">Sobre o Índice</button>
          </nav>
 
          <div class="p-6 md:p-10">
-            <section id="pane-calc" class="tab-pane space-y-8">
-                <div class="grid md:grid-cols-2 gap-4">
-                    <input id="p_name" type="text" placeholder="Nome do Paciente" class="input-field"/>
-                    <input id="p_id" type="text" placeholder="Registro" class="input-field"/>
+            <section id="pane-calc" class="tab-pane space-y-10">
+                <div class="space-y-6">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 border-b pb-2">Identificação</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <input id="patient_name" type="text" placeholder="Nome do Paciente" class="input-field"/>
+                        <input id="patient_id" type="text" placeholder="Registro/Prontuário" class="input-field"/>
+                    </div>
+
+                    <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 pt-4 border-b pb-2">Critérios Clínicos</h3>
+                    <div class="space-y-4">
+                        <div class="grid md:grid-cols-1 gap-4">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 font-nunito">Atividade Motora</label>
+                                <select id="m1" class="input-field"><option value="2">Move 4 extremidades voluntariamente ou sob comando (2)</option><option value="1">Move 2 extremidades voluntariamente ou sob comando (1)</option><option value="0">Incapaz de mover extremidades (0)</option></select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 font-nunito">Respiração</label>
+                                <select id="m2" class="input-field"><option value="2">Capaz de respirar profundamente e tossir (2)</option><option value="1">Dispneia ou respiração limitada (1)</option><option value="0">Apneia (0)</option></select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 font-nunito">Circulação (Pressão ArterialBasal)</label>
+                                <select id="m3" class="input-field"><option value="2">PA +/- 20% do nível pré-anestésico (2)</option><option value="1">PA +/- 20-50% do nível pré-anestésico (1)</option><option value="0">PA +/- 50% do nível pré-anestésico (0)</option></select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 font-nunito">Consciência</label>
+                                <select id="m4" class="input-field"><option value="2">Lúcido e orientado (2)</option><option value="1">Desperta se chamado (1)</option><option value="0">Não responde (0)</option></select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 font-nunito">Saturação de O2</label>
+                                <select id="m5" class="input-field"><option value="2">Mantém SatO2 > 92% em ar ambiente (2)</option><option value="1">Necessita suplementação de O2 (1)</option><option value="0">SatO2 < 90% com suplementação (0)</option></select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="space-y-4">
-                    <label class="block text-xs font-black uppercase text-slate-400">Critérios Fisiológicos</label>
-                    <select id="v1" class="input-field"><option value="2">Atividade: Move 4 membros (2)</option><option value="1">Atividade: Move 2 membros (1)</option><option value="0">Atividade: Imóvel (0)</option></select>
-                    <select id="v2" class="input-field"><option value="2">Respiração: Capaz de tossir (2)</option><option value="1">Respiração: Dispneia (1)</option><option value="0">Respiração: Apneia (0)</option></select>
-                    <select id="v3" class="input-field"><option value="2">Circulação: PA +/- 20% basal (2)</option><option value="1">Circulação: PA +/- 50% basal (1)</option><option value="0">Circulação: Instável (0)</option></select>
-                    <select id="v4" class="input-field"><option value="2">Consciência: Lúcido (2)</option><option value="1">Consciência: Desperta (1)</option><option value="0">Consciência: S/ Resposta (0)</option></select>
-                    <select id="v5" class="input-field"><option value="2">SatO2: > 92% ar ambiente (2)</option><option value="1">SatO2: > 90% com O2 (1)</option><option value="0">SatO2: < 90% (0)</option></select>
+                <div class="pt-4">
+                    <button onclick="calcularAldrete()" class="btn-primary-action w-full"><i class="fa-solid fa-calculator"></i> Avaliar Escore de Alta</button>
                 </div>
 
-                <button onclick="calcularAldrete()" class="btn-primary-action w-full">Calcular Escore</button>
-
-                <div id="results-wrapper" class="hidden animate-fade-in pt-8 border-t">
-                    <div class="bg-slate-50 dark:bg-slate-900/50 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-6">
-                        <div id="res-val" class="text-8xl font-black text-nurse-primary dark:text-cyan-400">0</div>
-                        <p id="res-status" class="text-lg font-black mt-2 uppercase tracking-widest">---</p>
+                <div id="results-wrapper" class="hidden animate-fade-in pt-8 border-t border-slate-200 dark:border-slate-700">
+                    <div class="bg-slate-50 dark:bg-slate-800/50 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-10">
+                        <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4">Pontuação Total</p>
+                        <div id="res-total" class="text-7xl md:text-9xl font-black text-nurse-primary dark:text-cyan-400 tracking-tighter font-nunito">0</div>
+                        <p id="res-status" class="text-lg font-black mt-4 uppercase tracking-widest">---</p>
                     </div>
 
-                    <div class="p-4 bg-white dark:bg-slate-800 rounded-xl border-l-4 border-nurse-primary flex justify-between items-center mb-4">
-                        <span class="text-xs font-bold uppercase text-slate-500">Auditoria</span>
-                        <span id="audit-msg" class="font-bold text-nurse-primary dark:text-cyan-400">---</span>
+                    <div class="mb-12">
+                         <h3 class="text-xs font-black uppercase tracking-widest mb-6 flex items-center gap-2"><i class="fa-solid fa-clipboard-check"></i> Auditoria de Alta</h3>
+                         <ul class="space-y-3">
+                            <li class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl text-sm border">
+                                <span class="text-slate-500 font-bold uppercase text-[10px]">Paciente</span>
+                                <span id="audit-nome" class="font-bold text-nurse-primary dark:text-cyan-400">---</span>
+                            </li>
+                            <li class="flex items-center justify-between p-4 bg-nurse-primary/5 dark:bg-nurse-primary/20 rounded-xl text-sm border-nurse-primary/10">
+                                <span class="text-nurse-primary font-bold uppercase text-[10px]">Conduta Sugerida</span>
+                                <span id="audit-conduta" class="font-black text-nurse-primary dark:text-cyan-400">---</span>
+                            </li>
+                         </ul>
                     </div>
 
-                    <div class="flex gap-2">
-                        <div class="flex-1 bg-blue-50 p-3 rounded-lg text-[10px] font-black uppercase text-blue-700 border-l-4 border-blue-500">Meta 1: Identificar Paciente</div>
-                        <div class="flex-1 bg-orange-50 p-3 rounded-lg text-[10px] font-black uppercase text-orange-700 border-l-4 border-orange-500">9 Certos: Registro Correto</div>
-                    </div>
+                    <section class="space-y-4">
+                        <h2 class="text-xl font-black text-center mb-6 flex items-center justify-center gap-3 text-nurse-primary dark:text-cyan-400">
+                            <i class="fa-solid fa-shield-virus"></i> Segurança do Paciente
+                        </h2>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="glass-meta bg-blue-50 text-blue-900 border-l-4 border-blue-500"><span class="text-xs font-black uppercase">Meta 1: Identificação Correta</span></div>
+                            <div class="glass-meta bg-orange-50 text-orange-900 border-l-4 border-orange-500"><span class="text-xs font-black uppercase">9 Certos: Registro de Alta</span></div>
+                        </div>
+                    </section>
                 </div>
             </section>
 
-            <section id="pane-sobre" class="tab-pane hidden prose dark:prose-invert">
-                <h3 class="font-black text-xl">Sobre o Índice</h3>
-                <p>O índice de Aldrete e Kroulik é o padrão para determinar a alta segura da RPA. Um escore ≥ 8 indica estabilidade para transferência.</p>
+            <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+                <h2 class="text-2xl font-black mb-4 font-nunito">Sobre o Índice Aldrete</h2>
+                <p>O Índice de Aldrete e Kroulik é o padrão ouro para avaliação da recuperação fisiológica pós-anestésica. Pontuações entre 8 e 10 indicam que o paciente atingiu estabilidade suficiente para alta da RPA para a unidade de internação.</p>
+                <h3 class="font-bold text-lg mt-6">Parâmetros Avaliados:</h3>
+                <ul>
+                    <li>Atividade Motora (0-2)</li>
+                    <li>Respiração (0-2)</li>
+                    <li>Circulação (0-2)</li>
+                    <li>Consciência (0-2)</li>
+                    <li>Saturação de Oxigénio (0-2)</li>
+                </ul>
             </section>
          </div>
       </article>
 
-      <aside class="space-y-4 sticky top-28">
-         <div class="p-6 rounded-2xl bg-nurse-primary text-white shadow-xl">
-            <h4 class="font-bold mb-2 flex items-center gap-2 text-xl"><i class="fa-solid fa-shield-check"></i> Auditoria</h4>
-            <p class="text-xs opacity-80 leading-relaxed font-medium">Assegure que o paciente atingiu os critérios mínimos antes de libertar a cama de RPA.</p>
+      <aside class="space-y-6 sticky top-28 self-start">
+         <div class="sidebar-module">
+            <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl font-nunito"><i class="fa-solid fa-shield-halved"></i> Auditoria RPA</h3>
+            <p class="text-sm text-white/90 mb-6 font-medium leading-relaxed">Assegure que todos os critérios fisiológicos foram cumpridos antes da transferência do paciente.</p>
+            <button class="w-full bg-white text-nurse-primary font-black py-3 rounded-xl shadow-lg text-sm uppercase tracking-wide">Protocolo Cirúrgico</button>
          </div>
       </aside>
     </div>
   </main>
 
-  <footer id="footer-container" class="bg-nurse-primary dark:bg-slate-900 min-h-[150px] mt-auto"></footer>
-
+  <footer id="footer-container" class="bg-nurse-primary dark:bg-slate-900 min-h-[150px]"></footer>
+  
   <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
   <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
   <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
@@ -124,27 +215,38 @@
     function switchTab(id) {
         document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(`pane-${id}`).classList.remove('hidden');
-        document.getElementById(`btn-tab-${id}`).classList.add('active');
+        document.getElementById(`pane-${id}`)?.classList.remove('hidden');
+        document.getElementById(`btn-tab-${id}`)?.classList.add('active');
     }
 
     function calcularAldrete() {
-        const total = ['v1','v2','v3','v4','v5'].reduce((acc, id) => acc + parseInt(document.getElementById(id).value), 0);
-        document.getElementById('res-val').innerText = total;
-        document.getElementById('results-wrapper').classList.remove('hidden');
+        const m1 = parseInt(document.getElementById('m1').value);
+        const m2 = parseInt(document.getElementById('m2').value);
+        const m3 = parseInt(document.getElementById('m3').value);
+        const m4 = parseInt(document.getElementById('m4').value);
+        const m5 = parseInt(document.getElementById('m5').value);
+        
+        const total = m1 + m2 + m3 + m4 + m5;
+        const patient = document.getElementById('patient_name').value || "Não Identificado";
+
+        document.getElementById('res-total').innerText = total;
+        document.getElementById('audit-nome').innerText = patient;
         
         const status = document.getElementById('res-status');
-        const audit = document.getElementById('audit-msg');
+        const conduta = document.getElementById('audit-conduta');
 
         if(total >= 8) {
             status.innerText = "Apto para Alta";
-            status.className = "text-lg font-black mt-2 uppercase text-green-500";
-            audit.innerText = "Alta Autorizada";
+            status.className = "text-lg font-black mt-4 uppercase text-green-500";
+            conduta.innerText = "Alta Segura Autorizada";
         } else {
-            status.innerText = "Permanecer RPA";
-            status.className = "text-lg font-black mt-2 uppercase text-red-500";
-            audit.innerText = "Reavaliar em 15min";
+            status.innerText = "Manter Observação";
+            status.className = "text-lg font-black mt-4 uppercase text-red-500";
+            conduta.innerText = "Monitorização Contínua RPA";
         }
+
+        document.getElementById('results-wrapper').classList.remove('hidden');
+        document.getElementById('results-wrapper').scrollIntoView({ behavior: 'smooth' });
     }
   </script>
 </body>
