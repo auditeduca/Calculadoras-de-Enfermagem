@@ -3,56 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Adicional Noturno | Enfermagem</title>
-    <meta name="description" content="Calcule o adicional noturno com redução da hora (52m30s) conforme a legislação para enfermagem.">
+    <title>Calculadora de Adicional Noturno | Calculadoras de Enfermagem</title>
+    <meta name="description" content="Cálculo preciso de adicional noturno para enfermagem (2025). Considera redução da hora noturna (52m30s) e adicional de 20% conforme CLT.">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <!-- Tailwind & Config -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="assets/css/global-main.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] },
+                    colors: { 'nurse-primary':'#1A3E74', 'nurse-secondary':'#00bcd4', 'nurse-accent':'#00838f', 'nurse-bgDark':'#0F172A' }
+                }
+            }
+        }
+    </script>
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="assets/css/variables-v4.css">
+    <link rel="stylesheet" href="assets/css/header-v4.css">
+    <link rel="stylesheet" href="assets/css/footer-v4.css">
+    <link rel="stylesheet" href="assets/css/accessibility-v4.css">
+
+    <!-- Estilos Internos (Padrão Ferias.html) -->
+    <style type="text/tailwindcss">
+        @layer base{
+            body{@apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300}
+            h1{@apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400}
+            h2,h3,h4,h5,h6{@apply font-inter tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold}
+        }
+        @layer components{
+            .card-base{@apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all;}
+            .sidebar-module{@apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6;}
+            .input-field{@apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium;}
+            .btn-primary-action { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
+            .tag-pill-footer { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
+            .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 text-white hover:bg-white transition-all shadow-md focus:ring-2 focus:ring-white; }
+        }
+    </style>
 </head>
-<body class="bg-gray-50 font-sans antialiased flex flex-col min-h-screen">
-    <div id="header-container"></div> <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-teal-700 mb-2"><i class="fas fa-moon mr-2"></i> Adicional Noturno</h1>
-            <p class="text-gray-600">Cálculo com fator de redução da hora noturna (52m30s)</p>
-        </div>
-
-        <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-<form id="calc-form" data-calc-type="horaExtra" class="space-y-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Salário Base (R$)</label>
-            <input type="number" id="salario" step="0.01" class="w-full p-3 border rounded-lg" required>
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Jornada Mensal</label>
-            <select id="jornada" class="w-full p-3 border rounded-lg">
-                <option value="220">220 horas</option>
-                <option value="180">180 horas</option>
-                <option value="150">150 horas</option>
-            </select>
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Horas Extras 50% (Dias Úteis)</label>
-            <input type="number" id="he50" class="w-full p-3 border rounded-lg" placeholder="0">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Horas Extras 100% (Dom/Fer)</label>
-            <input type="number" id="he100" class="w-full p-3 border rounded-lg" placeholder="0">
-        </div>
+<body class="flex flex-col min-h-screen">
+    
+    <!-- SVG Decorativo -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+        </svg>
     </div>
-    </form>
-            <div id="result-container" class="hidden mt-8 p-6 bg-teal-50 rounded-xl border border-teal-100">
-                <h3 class="text-xl font-bold text-teal-800 mb-4">Resultado</h3>
-                <div id="result-content" class="space-y-3 text-gray-700"></div>
-            </div>
+
+    <div id="accessibility-container"></div>
+    <div id="header-container" class="sticky top-0 z-50"></div>
+
+    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 py-8 md:py-12 w-full">
+        
+        <!-- Breadcrumb -->
+        <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
+            <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <span class="text-nurse-primary dark:text-cyan-400 font-bold">Adicional Noturno</span>
+        </nav>
+
+        <!-- Header da Página -->
+        <header class="max-w-4xl mb-12">
+            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Carreiras</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Adicional Noturno</h1>
+            <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+            <p class="text-xl text-slate-600 dark:text-slate-300 font-medium">Calcule o valor exato das suas horas noturnas considerando a redução legal (52m30s) e o percentual de 20%.</p>
+        </header>
+
+        <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
+            
+            <!-- Coluna Principal (Calculadora) -->
+            <article class="card-base p-6 md:p-10">
+                <section id="calc-section">
+                    <h2 class="text-2xl md:text-3xl font-extrabold mb-8 font-nunito">Dados do Plantão</h2>
+                    
+                    <form id="calc-form" data-calc-type="adicionalNoturno" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Salário Base (R$)</label>
+                                <input type="number" id="salario" step="0.01" class="input-field" placeholder="0,00" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Jornada Mensal</label>
+                                <select id="jornada" class="input-field">
+                                    <option value="220">220 horas (Padrão)</option>
+                                    <option value="180">180 horas (12x36)</option>
+                                    <option value="150">150 horas</option>
+                                </select>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                    Horas Noturnas (Relógio) <i class="fa-solid fa-circle-info text-nurse-secondary ml-1" title="Informe as horas reais trabalhadas entre 22h e 05h."></i>
+                                </label>
+                                <input type="number" id="horas-noturnas" step="0.1" class="input-field" placeholder="Ex: 7 horas (22h às 05h)" required>
+                                <p class="text-xs text-slate-500 mt-2">O sistema aplicará automaticamente o fator de redução (1h = 52m30s).</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 pt-6">
+                            <button type="submit" class="btn-primary-action w-full">
+                                <i class="fa-solid fa-calculator"></i> Calcular
+                            </button>
+                            <button type="button" id="btn-limpar" class="bg-slate-200 hover:bg-slate-300 text-slate-600 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 uppercase text-sm">
+                                <i class="fa-solid fa-rotate-left"></i> Limpar
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </article>
+
+            <!-- Sidebar -->
+            <aside class="space-y-6 sticky top-28 self-start">
+                <div class="sidebar-module">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-list-ul"></i> Conteúdo</h3>
+                    <nav class="flex flex-col gap-2 font-inter text-sm">
+                        <a href="#calc-section" class="flex items-center gap-2 py-2 hover:translate-x-1 transition-transform">1. Calculadora</a>
+                        <a href="#result-container" class="flex items-center gap-2 py-2 hover:translate-x-1 transition-transform">2. Resultados</a>
+                        <a href="#refs-section" class="flex items-center gap-2 py-2 hover:translate-x-1 transition-transform">3. Base Legal</a>
+                    </nav>
+                </div>
+
+                <div class="sidebar-module from-teal-700 to-nurse-secondary">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-share-alt"></i> Compartilhar</h3>
+                    <div class="flex gap-3 flex-wrap">
+                        <button class="share-btn"><i class="fab fa-whatsapp"></i></button>
+                        <button class="share-btn"><i class="fab fa-telegram"></i></button>
+                        <button class="share-btn"><i class="fas fa-link"></i></button>
+                    </div>
+                </div>
+            </aside>
         </div>
 
-        <div class="mt-8 bg-blue-50 p-6 rounded-xl text-sm text-blue-800">
-            <strong>Base Legal (CLT Art. 73):</strong> O trabalho noturno (22h às 5h) tem acréscimo de 20% e a hora é computada como 52 minutos e 30 segundos.
-        </div>
+        <!-- Resultado -->
+        <section id="result-container" class="hidden mt-12">
+            <div class="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-[2.5rem] p-8 md:p-12 border border-slate-200 dark:border-slate-700 shadow-xl">
+                <h3 class="text-slate-400 font-bold text-center mb-10 uppercase tracking-widest text-xs font-inter">Demonstrativo de Cálculo</h3>
+                <div id="result-content" class="space-y-4 font-inter text-lg">
+                    <!-- JS injeta aqui -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Autor -->
+        <section id="author-section" class="mt-20">
+            <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 flex flex-col md:flex-row gap-10 items-center border border-slate-200 dark:border-slate-700 shadow-sm">
+                <img src="assets/images/author-info.webp" alt="Autor" class="w-28 h-28 rounded-full object-cover shadow-xl border-4 border-white"/>
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400 font-nunito">Equipe Calculadoras de Enfermagem</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-lg italic">"Ferramentas desenvolvidas por especialistas para garantir seus direitos."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Referências -->
+        <section id="refs-section" class="mt-16 border-t border-slate-200 dark:border-slate-800 pt-12">
+            <div class="flex flex-wrap gap-2 items-center mb-8">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2"><i class="fa-solid fa-tags"></i> Tópicos:</span>
+                <span class="tag-pill-footer">#AdicionalNoturno</span><span class="tag-pill-footer">#CLT</span><span class="tag-pill-footer">#Enfermagem</span>
+            </div>
+            <h2 class="text-2xl font-extrabold mb-6 font-nunito text-nurse-primary">Base Legal</h2>
+            <ul class="space-y-4 text-sm text-slate-600 dark:text-slate-400 font-inter">
+                <li class="pl-4 border-l-4 border-nurse-accent">BRASIL. <strong>Consolidação das Leis do Trabalho (CLT)</strong>. Art. 73. "O trabalho noturno terá remuneração superior a do diurno e, para esse efeito, sua remuneração terá um acréscimo de 20%".</li>
+            </ul>
+        </section>
+
     </main>
 
     <div id="footer-container"></div>
     <script src="assets/js/component-loader.js"></script>
-    <script src="assets/js/calculadoras-trabalhistas.js"></script> </body>
+    <script src="assets/js/calculadoras-trabalhistas.js" defer></script>
+</body>
 </html>

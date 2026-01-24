@@ -1,583 +1,109 @@
 <!DOCTYPE html>
 <html lang="pt-br" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-
-  <title>Calculadora de Salário Líquido 2026 | Calculadoras de Enfermagem</title>
-  <meta name="description" content="Descubra seu salário líquido real para 2026. Cálculo completo com descontos de INSS, IRRF, múltiplos vínculos e regra simplificada."/>
-  <meta name="author" content="Calculadoras de Enfermagem"/>
-  <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/calculadora-salario.html"/>
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/webp" href="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp"/>
-
-  <!-- [CONFIGURAÇÃO GLOBAL] -->
-  <script>
-    window.NURSE_CONFIG = { baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/', debug: false };
-    async function loadModule(id, fileName) {
-      const container = document.getElementById(id);
-      if (!container) return;
-      try {
-        const res = await fetch(`${window.NURSE_CONFIG.baseUrl}assets/components/${fileName}.html`);
-        if (!res.ok) throw new Error();
-        container.innerHTML = await res.text();
-        container.classList.remove('opacity-50', 'opacity-30');
-        container.style.opacity = "1";
-      } catch(e) { console.error(e); }
-    }
-    window.addEventListener('DOMContentLoaded', () => {
-      loadModule('accessibility-container', 'accessibility-v4');
-      loadModule('header-container', 'header-v4');
-      loadModule('footer-container', 'footer-v4');
-    });
-  </script>
-
-  <!-- Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] },
-          colors: { 'nurse-primary':'#1A3E74', 'nurse-secondary':'#00bcd4', 'nurse-accent':'#00838f', 'nurse-bgDark':'#0F172A' }
-        }
-      }
-    }
-  </script>
-
-  <!-- Estilos Globais -->
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
-
-  <!-- Bibliotecas PDF & QR -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-  <style type="text/tailwindcss">
-    @layer base{
-      :root{ --header-h: 76px; --assistive-safe-area: 0px }
-      body{@apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300}
-      h1{@apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400}
-      h2,h3,h4,h5,h6{@apply font-inter tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold}
-    }
-    @layer components{
-      .card-base{@apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all;}
-      .sidebar-module{@apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6;}
-      .input-field{@apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium;}
-      .breakdown-row{@apply flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-700 last:border-0 text-xs font-inter;}
-      .detail-title{@apply text-xs font-black text-nurse-secondary uppercase tracking-widest flex items-center gap-2 mb-4 font-inter;}
-      .toggle-checkbox:checked{ right:0; @apply border-nurse-secondary }
-      .toggle-checkbox:checked + .toggle-label{ @apply bg-nurse-secondary }
-      .summary-label{@apply text-slate-500 font-bold text-[10px] uppercase tracking-widest mt-6 mb-2 block border-b border-slate-100 pb-1;}
-      .tag-pill-abs { @apply px-3 py-1.5 bg-nurse-primary text-white rounded font-black text-[9px] uppercase tracking-widest shadow-lg; }
-      .tag-pill-footer { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
-      .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 text-white hover:bg-white transition-all shadow-md focus:ring-2 focus:ring-white; }
-      .label-tooltip { @apply text-nurse-secondary ml-1 cursor-help hover:text-nurse-primary transition-colors; }
-      .btn-primary-action { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
-    }
-    
-    #pdf-render-template {
-      position: absolute;
-      left: -9999px;
-      top: 0;
-      width: 794px;
-      height: 1123px;
-      background: white;
-      padding: 35px;
-      color: #0f172a;
-      display: flex; flex-direction: column; justify-content: space-between;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Hora Extra | Calculadoras de Enfermagem</title>
+    <!-- Fonts, Icons, Tailwind, Config e CSS (Igual ao anterior) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] }, colors: { 'nurse-primary':'#1A3E74', 'nurse-secondary':'#00bcd4', 'nurse-accent':'#00838f', 'nurse-bgDark':'#0F172A' } } } }
+    </script>
+    <link rel="stylesheet" href="assets/css/variables-v4.css">
+    <link rel="stylesheet" href="assets/css/header-v4.css">
+    <link rel="stylesheet" href="assets/css/footer-v4.css">
+    <link rel="stylesheet" href="assets/css/accessibility-v4.css">
+    <style type="text/tailwindcss">
+        @layer base{ body{@apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300} h1{@apply font-nunito font-black text-nurse-primary dark:text-cyan-400} }
+        @layer components{ .card-base{@apply bg-white dark:bg-slate-800 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm;} .sidebar-module{@apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] mb-6;} .input-field{@apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium;} .btn-primary-action { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all w-full flex justify-center gap-2 uppercase tracking-wider; } .tag-pill-footer { @apply px-3 py-1.5 bg-slate-100 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; } .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/40 transition-all; } }
+    </style>
 </head>
 <body class="flex flex-col min-h-screen">
+    <!-- SVG BG -->
+    <div class="fixed inset-0 z-[-1] opacity-10"><svg width="100%" height="100%"><path d="M0,500 Q720,100 1440,500" stroke="#00bcd4" fill="none"/></svg></div>
 
-  <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
-    <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
-        <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-        <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
-    </svg>
-  </div>
+    <div id="accessibility-container"></div>
+    <div id="header-container" class="sticky top-0 z-50"></div>
 
-  <div id="accessibility-container"></div>
-  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50"></div>
+    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 py-12 w-full">
+        <nav class="flex items-center gap-2 text-sm text-slate-600 mb-8 font-semibold">
+            <a href="index.html" class="hover:underline text-nurse-accent">Início</a> <i class="fa-solid fa-chevron-right text-[10px]"></i> <span>Hora Extra</span>
+        </nav>
 
-  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 py-8 md:py-12 w-full">
-    
-    <!-- Breadcrumb -->
-    <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
-        <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
-        <i class="fa-solid fa-chevron-right text-[10px]"></i>
-        <a href="#" class="hover:underline font-medium">Carreiras</a>
-        <i class="fa-solid fa-chevron-right text-[10px]"></i>
-        <a href="#" class="hover:underline font-medium">Calculadoras Trabalhistas</a>
-        <i class="fa-solid fa-chevron-right text-[10px]"></i>
-        <span class="text-nurse-primary dark:text-cyan-400 font-bold" aria-current="page">Calculadora de Salário Líquido</span>
-    </nav>
+        <header class="max-w-4xl mb-12">
+            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block">Carreiras</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Hora Extra</h1>
+            <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+            <p class="text-xl text-slate-600">Cálculo de horas suplementares com reflexo no DSR.</p>
+        </header>
 
-    <header class="max-w-4xl mb-12">
-      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Carreiras</span>
-      <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Calculadora de Salário Líquido</h1>
-      <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
-      <p class="text-xl text-slate-600 dark:text-slate-300 font-medium">Calcule o valor real que você receberá após todos os descontos obrigatórios e opcionais.</p>
-      <p class="text-sm font-bold text-slate-400 mt-4"><i class="fa-regular fa-clock mr-1"></i> Atualizado em 24 de janeiro de 2026</p>
-    </header>
+        <div class="grid lg:grid-cols-[1fr,340px] gap-10">
+            <article class="card-base p-10">
+                <section id="calc-section">
+                    <form id="calc-form" data-calc-type="horaExtra" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Salário Base (R$)</label>
+                                <input type="number" id="salario" step="0.01" class="input-field" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Jornada</label>
+                                <select id="jornada" class="input-field">
+                                    <option value="220">220h</option>
+                                    <option value="180">180h</option>
+                                    <option value="150">150h</option>
+                                </select>
+                            </div>
+                            <div></div> <!-- Spacer -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Qtd. 50% (Seg-Sáb)</label>
+                                <input type="number" id="he50" step="0.1" class="input-field" placeholder="0">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Qtd. 100% (Dom/Fer)</label>
+                                <input type="number" id="he100" step="0.1" class="input-field" placeholder="0">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 pt-4">
+                            <button type="submit" class="btn-primary-action"><i class="fa-solid fa-calculator"></i> Calcular</button>
+                            <button type="button" id="btn-limpar" class="bg-slate-200 text-slate-600 font-bold rounded-2xl flex justify-center items-center uppercase text-sm">Limpar</button>
+                        </div>
+                    </form>
+                </section>
+            </article>
 
-    <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
-      <article class="card-base p-6 md:p-10">
-        <section id="calc-section" class="scroll-mt-36">
-          <h2 class="text-2xl md:text-3xl font-extrabold mb-2 font-nunito">Parâmetros do Cálculo</h2>
-          <p class="text-sm text-slate-500 dark:text-slate-400 mb-8 font-inter">Campos marcados com <span class="text-red-500 font-bold">*</span> são obrigatórios.</p>
-
-          <div class="grid md:grid-cols-2 gap-8">
-            <div class="space-y-6">
-              <div>
-                <label for="salarioBruto" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
-                  Salário Bruto (R$) <span class="text-red-500">*</span> <i class="fa-solid fa-circle-info label-tooltip" title="Valor base registrado em contrato"></i>
-                </label>
-                <input id="salarioBruto" type="number" step="0.01" min="0" oninput="if(this.value<0)this.value=0" placeholder="0,00" class="input-field font-bold text-lg border-red-100"/>
-              </div>
-
-              <div>
-                <label for="proventos" class="block text-sm font-bold text-green-600 dark:text-green-400 mb-2">
-                  Outros Proventos (R$) <i class="fa-solid fa-circle-info label-tooltip" title="Adicionais, horas extras ou bônus tributáveis"></i>
-                </label>
-                <input id="proventos" type="number" step="0.01" min="0" oninput="if(this.value<0)this.value=0" placeholder="0,00" class="input-field bg-green-50/10 border-green-100"/>
-              </div>
-
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <label for="dependentes" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
-                    Dependentes <i class="fa-solid fa-circle-info label-tooltip" title="Número de dependentes para dedução de IRRF"></i>
-                  </label>
-                  <input id="dependentes" type="number" min="0" oninput="if(this.value<0)this.value=0" value="0" class="input-field"/>
+            <aside class="space-y-6">
+                <div class="sidebar-module">
+                    <h3 class="font-bold text-xl mb-4"><i class="fas fa-list"></i> Atalhos</h3>
+                    <nav class="flex flex-col gap-2 text-sm">
+                        <a href="#calc-section">Calculadora</a>
+                        <a href="#refs-section">Base Legal</a>
+                    </nav>
                 </div>
-                <div>
-                  <label for="outros" class="block text-sm font-bold text-red-500 mb-2">
-                    Descontos (R$) <i class="fa-solid fa-circle-info label-tooltip" title="Vale transporte, plano de saúde, farmácia, etc."></i>
-                  </label>
-                  <input id="outros" type="number" step="0.01" min="0" oninput="if(this.value<0)this.value=0" placeholder="0,00" class="input-field border-red-100"/>
-                </div>
-              </div>
+            </aside>
+        </div>
 
-              <div class="space-y-5 pt-2">
-                <div class="flex items-center justify-between">
-                  <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Múltiplos Vínculos <i class="fa-solid fa-circle-info label-tooltip" title="Soma de salários de outros empregos para fins de INSS"></i></span>
-                  <div class="relative inline-block w-10 align-middle select-none">
-                    <input type="checkbox" id="toggle-multi" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 transition-all duration-300" role="switch"/>
-                    <label for="toggle-multi" class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"></label>
-                  </div>
-                </div>
-                <div id="multi-container" class="hidden animate-fade-in pl-4 border-l-2 border-nurse-accent space-y-4">
-                    <input id="brutoExtra" type="number" step="0.01" min="0" oninput="if(this.value<0)this.value=0" placeholder="Soma de outros salários brutos" class="input-field text-sm"/>
-                </div>
-
-                <div class="flex items-center justify-between">
-                  <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Desconto Simplificado <i class="fa-solid fa-circle-info label-tooltip" title="Usa o desconto padrão da Receita se for mais vantajoso que deduções"></i></span>
-                  <div class="relative inline-block w-10 align-middle select-none">
-                    <input type="checkbox" id="toggle-simplificado" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 transition-all duration-300" role="switch"/>
-                    <label for="toggle-simplificado" class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"></label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="grid grid-cols-2 gap-4 pt-2">
-                <button id="btn-calc" class="btn-primary-action">
-                  <i class="fa-solid fa-calculator"></i> Calcular
-                </button>
-                <button id="btn-clear" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase">
-                  <i class="fa-solid fa-rotate-left"></i> Limpar
-                </button>
-              </div>
+        <section id="result-container" class="hidden mt-12">
+            <div class="max-w-4xl mx-auto card-base p-12 shadow-xl bg-white">
+                <h3 class="text-slate-400 font-bold text-center mb-8 uppercase tracking-widest text-xs">Resultado</h3>
+                <div id="result-content" class="space-y-4 font-inter text-lg"></div>
             </div>
-
-            <div class="hidden md:flex flex-col gap-4 text-sm text-slate-500 dark:text-slate-400 font-inter">
-              <div class="p-6 rounded-2xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
-                 <p class="font-bold text-nurse-primary dark:text-cyan-400 mb-4 uppercase text-xs tracking-widest">Base de Referência:</p>
-                 <ul class="space-y-4 list-none">
-                    <li class="flex gap-3"><i class="fa-solid fa-check-circle text-nurse-accent mt-0.5"></i> <span>Teto INSS 2026: R$ 8.475,55.</span></li>
-                    <li class="flex gap-3"><i class="fa-solid fa-check-circle text-nurse-accent mt-0.5"></i> <span>Dedução por dependente: R$ 189,59.</span></li>
-                    <li class="flex gap-3"><i class="fa-solid fa-check-circle text-nurse-accent mt-0.5"></i> <span>Desconto Simplificado IRRF: R$ 564,80.</span></li>
-                 </ul>
-              </div>
-            </div>
-          </div>
         </section>
-      </article>
 
-      <aside class="space-y-6 sticky top-28 self-start">
-        <div class="sidebar-module">
-          <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-list-ul"></i> Conteúdo</h3>
-          <nav class="flex flex-col gap-2 font-inter text-sm">
-            <a href="#calc-section" class="flex items-center gap-2 py-2 hover:translate-x-1 transition-transform">1. Simulador</a>
-            <a href="#results-section" class="flex items-center gap-2 py-2 hover:translate-x-1 transition-transform">2. Salário Líquido</a>
-            <a href="#pane-detalhamento" class="flex items-center gap-2 py-2 hover:translate-x-1 transition-transform">3. Memória de Cálculo</a>
-          </nav>
-        </div>
+        <section id="refs-section" class="mt-16 pt-12 border-t border-slate-200">
+            <h2 class="text-2xl font-extrabold mb-6 text-nurse-primary">Base Legal</h2>
+            <ul class="space-y-2 text-sm text-slate-600">
+                 <li class="pl-4 border-l-4 border-nurse-accent">CLT Art. 59 - A duração normal do trabalho poderá ser acrescida de horas suplementares, em número não excedente de 2.</li>
+                 <li class="pl-4 border-l-4 border-nurse-accent">Súmula 172 TST - Reflexo das horas extras no DSR.</li>
+            </ul>
+        </section>
+    </main>
 
-        <div class="sidebar-module from-teal-700 to-nurse-secondary shadow-nurse-accent/20">
-          <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-share-alt"></i> Compartilhar</h3>
-          <div class="flex gap-3.5 flex-wrap">
-            <a class="share-btn hover:text-blue-600" href="#" id="share-fb"><i class="fab fa-facebook-f"></i></a>
-            <a class="share-btn hover:text-green-500" href="#" id="share-wa"><i class="fab fa-whatsapp"></i></a>
-            <a class="share-btn hover:text-pink-600" href="#" id="share-ig"><i class="fab fa-instagram"></i></a>
-            <a class="share-btn hover:text-blue-800" href="#" id="share-ln"><i class="fab fa-linkedin-in"></i></a>
-            <button class="share-btn" id="btn-share-link"><i class="fas fa-link"></i></button>
-          </div>
-        </div>
-      </aside>
-    </div>
-
-    <!-- RESULTADOS INTERFACE -->
-    <section id="results-section" class="hidden scroll-mt-36 mt-12">
-      <div class="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-[2.5rem] p-8 md:p-12 border border-slate-200 dark:border-slate-700 shadow-xl">
-        <h3 class="text-slate-400 font-bold text-center mb-10 uppercase tracking-[0.2em] text-xs font-inter">Resumo do Salário Líquido</h3>
-
-        <div id="summary-display" class="space-y-6 font-inter">
-          <div>
-            <span class="summary-label">(+) Proventos Totais</span>
-            <div class="flex justify-between items-center text-sm font-bold"><span>Total Bruto</span><span id="res-bruto">0,00</span></div>
-          </div>
-
-          <div>
-            <span class="summary-label">(-) Descontos Obrigatórios</span>
-            <div class="space-y-3">
-              <div class="flex justify-between items-center text-sm text-red-500"><span>INSS</span><span id="res-inss" class="font-bold">(0,00)</span></div>
-              <div class="flex justify-between items-center text-sm text-red-500"><span>IRRF</span><span id="res-irrf" class="font-bold">(0,00)</span></div>
-            </div>
-          </div>
-
-          <div>
-            <span class="summary-label">(-) Descontos Opcionais</span>
-            <div class="flex justify-between items-center text-sm text-red-500"><span>Outros Descontos</span><span id="res-outros" class="font-bold">(0,00)</span></div>
-          </div>
-
-          <div class="pt-10 mt-6 border-t-2 border-slate-100 dark:border-slate-700 text-center">
-            <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-3 font-inter">SALÁRIO LÍQUIDO FINAL (R$)</p>
-            <div id="res-total" class="text-5xl md:text-7xl font-black text-nurse-primary dark:text-cyan-400 tracking-tighter font-nunito">0,00</div>
-          </div>
-        </div>
-
-        <div class="mt-12 flex flex-wrap gap-4 justify-center">
-          <button id="btn-pdf" class="btn-primary-action px-12">
-            <i class="fa-solid fa-file-pdf"></i> Gerar PDF
-          </button>
-          <button id="btn-copy" class="px-10 py-4 rounded-2xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-100 font-bold hover:bg-slate-200 transition-all uppercase tracking-wider text-sm">
-            <i class="fa-solid fa-copy mr-2"></i> Copiar
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- MEMÓRIA TÉCNICA -->
-    <section id="pane-detalhamento" class="hidden scroll-mt-36 mt-16 font-inter">
-      <h2 class="text-2xl font-extrabold mb-8 text-center md:text-left font-nunito text-nurse-primary">Detalhamento dos Impostos sobre salários</h2>
-
-      <div class="grid md:grid-cols-2 gap-8 items-stretch">
-        <div class="card-base p-8 border-slate-200 bg-white flex flex-col h-full relative">
-          <h3 class="detail-title">
-            <span class="w-7 h-7 rounded-xl bg-nurse-primary text-white flex items-center justify-center text-[11px] shadow-sm">A</span>
-            Memória INSS
-          </h3>
-          <p class="text-[10px] text-slate-400 mb-6 uppercase font-black tracking-tighter">Base: R$ <span id="breakdown-inss-base">0,00</span></p>
-          <div id="breakdown-inss-list" class="space-y-2 text-sm flex-grow mb-12"></div>
-          <div class="pt-6 border-t border-slate-100 font-black text-red-500 text-sm">
-            Total Retido: <span id="breakdown-inss-total">0,00</span>
-          </div>
-        </div>
-
-        <div class="card-base p-8 border-slate-200 bg-white flex flex-col h-full relative">
-          <h3 class="detail-title">
-            <span class="w-7 h-7 rounded-xl bg-nurse-primary text-white flex items-center justify-center text-[11px] shadow-sm">B</span>
-            Memória IRRF
-          </h3>
-          <p class="text-[10px] text-slate-400 mb-6 uppercase font-black tracking-tighter">Base: R$ <span id="breakdown-irrf-base">0,00</span></p>
-          <div id="breakdown-irrf-list" class="space-y-2 text-sm flex-grow mb-12"></div>
-          <div class="pt-6 border-t border-slate-100 font-black text-red-500 text-sm">
-            Total Retido: <span id="breakdown-irrf-total">0,00</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- AUTOR -->
-    <section id="author-section" class="mt-20 scroll-mt-36">
-      <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 flex flex-col md:flex-row gap-10 items-center border border-slate-200 dark:border-slate-700 shadow-sm transition-all duration-300">
-        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Autor" class="w-28 h-28 rounded-full object-cover shadow-xl border-4 border-white dark:border-slate-800"/>
-        <div class="text-center md:text-left">
-          <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400 font-nunito">Calculadoras de Enfermagem</h3>
-          <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed max-w-2xl font-inter italic">"A precisão técnica é a expressão máxima do cuidado ético ao paciente."</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAGS -->
-    <section id="refs-section" class="mt-16 border-t border-slate-200 dark:border-slate-800 pt-12">
-      <div class="flex flex-wrap gap-2 items-center mb-12">
-        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2 flex items-center"><i class="fa-solid fa-tags mr-2"></i> Tópicos:</span>
-        <span class="tag-pill-footer">#SalárioLíquido</span><span class="tag-pill-footer">#CLT2026</span><span class="tag-pill-footer">#Enfermagem</span><span class="tag-pill-footer">#DireitoTrabalhista</span>
-      </div>
-
-      <h2 class="text-2xl font-extrabold mb-8 font-nunito text-nurse-primary">Referências Bibliográficas</h2>
-      <ul class="space-y-6 text-sm text-slate-600 dark:text-slate-400 font-inter leading-relaxed">
-        <li class="pl-4 border-l-4 border-nurse-accent">BRASIL. <strong>Portaria Interministerial MPS/MF nº 13, de 2026</strong>. Dispõe sobre o reajuste dos benefícios pagos pelo INSS.</li>
-        <li class="pl-4 border-l-4 border-nurse-accent">BRASIL. <strong>Lei nº 14.663/2023</strong>. Consolida regras de IRPF e salário mínimo.</li>
-      </ul>
-    </section>
-
-    <!-- CONTEÚDO RELACIONADO -->
-    <section id="related-section" class="bg-slate-200/50 dark:bg-nurse-bgDark py-24 border-t border-slate-300 dark:border-slate-800 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 mt-24">
-      <div class="max-w-7xl mx-auto text-center">
-        <h2 class="text-3xl font-black mb-16 flex items-center justify-center gap-4 font-nunito">
-          <i class="fa-solid fa-layer-group text-nurse-accent"></i> Conteúdo Relacionado
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-          <a href="#" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full">
-            <div class="relative h-52 overflow-hidden shrink-0">
-              <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-ferias.webp" alt="Férias" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
-              <span class="tag-pill-abs absolute bottom-4 left-4">TRABALHISTA</span>
-            </div>
-            <div class="p-8 text-left flex flex-col flex-grow">
-              <h3 class="text-xl font-black mb-3 group-hover:text-nurse-secondary transition-colors font-nunito h-14 overflow-hidden line-clamp-2">Calculadora de Férias</h3>
-              <p class="text-slate-500 text-sm mb-6 flex-grow">Simule o valor das suas férias com terço constitucional.</p>
-              <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2 mt-auto">Acessar Ferramenta <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
-            </div>
-          </a>
-          <a href="#" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full">
-            <div class="relative h-52 overflow-hidden shrink-0">
-              <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-rescisao.webp" alt="Rescisão" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
-              <span class="tag-pill-abs absolute bottom-4 left-4">TRABALHISTA</span>
-            </div>
-            <div class="p-8 text-left flex flex-col flex-grow">
-              <h3 class="text-xl font-black mb-3 group-hover:text-nurse-secondary transition-colors font-nunito h-14 overflow-hidden line-clamp-2">Calculadora de Rescisão</h3>
-              <p class="text-slate-500 text-sm mb-6 flex-grow">Simule valores de desligamento CLT conforme lei.</p>
-              <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2 mt-auto">Acessar Ferramenta <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
-            </div>
-          </a>
-          <a href="#" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full">
-            <div class="relative h-52 overflow-hidden shrink-0">
-              <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-13salario.webp" alt="13º Salário" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
-              <span class="tag-pill-abs absolute bottom-4 left-4">TRABALHISTA</span>
-            </div>
-            <div class="p-8 text-left flex flex-col flex-grow">
-              <h3 class="text-xl font-black mb-3 group-hover:text-nurse-secondary transition-colors font-nunito h-14 overflow-hidden line-clamp-2">Guia de Salários 2026</h3>
-              <p class="text-slate-500 text-sm mb-6 flex-grow">Entenda as novas tabelas e pisos da enfermagem.</p>
-              <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2 mt-auto">Acessar Guia <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px] transition-opacity duration-500"></div>
-
-  <!-- TEMPLATE PDF (OCULTO) -->
-  <div id="pdf-render-template">
-    <div style="flex: 1; display: flex; flex-direction: column;">
-      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2.5px solid #1A3E74; padding-bottom: 8px; margin-bottom: 15px;">
-        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" style="height: 40px;" alt="Logo"/>
-        <div style="text-align: right;">
-          <h1 style="font-family: 'Nunito Sans', sans-serif; font-size: 16px; color: #1A3E74; margin: 0; font-weight: 900; text-transform: uppercase;">Demostrativo de Salário Líquido</h1>
-          <p style="font-size: 8px; color: #64748b; margin: 0; font-weight: 600;">EXERCÍCIO 2026 - CALCULADORAS DE ENFERMAGEM</p>
-        </div>
-      </div>
-
-      <div id="pdf-body" style="font-size: 8.5px; font-family: 'Inter', sans-serif; flex: 1;">
-         <!-- Injetado via JS -->
-      </div>
-    </div>
-
-    <div>
-      <div style="margin: 10px 0; padding: 10px; background: #eff6ff; border-radius: 8px; border: 1.5px solid #bfdbfe; text-align: center;">
-        <p style="font-size: 10px; color: #1e3a8a; margin: 0; font-weight: 700;">Simulados para Enfermagem: www.simulados-para-enfermagem.com.br</p>
-      </div>
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; padding-top: 8px; border-top: 1px solid #e2e8f0;">
-        <div style="font-size: 7.5px; color: #94a3b8; line-height: 1.3;">
-          <p id="pdf-footer-text" style="margin: 0; font-weight: 700;"></p>
-          <p style="margin: 0;">Relatório gerado via sistema de simulação trabalhista independente.</p>
-        </div>
-        <div id="pdf-qrcode-container" style="width: 50px; height: 50px;"></div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const CONST_2026 = {
-      TETO_INSS: 8475.55,
-      DEDUC_DEP: 189.59,
-      SIMPLIFICADO: 564.80,
-      RED_LIMITE: 7350.00,
-      RED_A: 978.62,
-      RED_B: 0.133145
-    };
-
-    const formatNum = (val) => val === 0 ? '-' : Number(val).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const formatNeg = (val) => val === 0 ? '-' : `(${formatNum(Math.abs(val))})`;
-
-    function calculateINSS(base) {
-      const fx = [
-        { l: 1621.00, a: 0.075 }, { l: 2902.84, a: 0.09 },
-        { l: 4354.27, a: 0.12 }, { l: 8475.55, a: 0.14 }
-      ];
-      const cap = Math.min(base, CONST_2026.TETO_INSS);
-      let t = 0, p = 0, h = '';
-      fx.forEach(f => {
-        if (cap > p) {
-          const pt = Math.min(cap, f.l) - p;
-          const v = pt * f.a;
-          t += v;
-          h += `<div class="breakdown-row"><span>Aliq ${(f.a*100).toFixed(1)}% (sobre ${formatNum(pt)})</span><span>${formatNum(v)}</span></div>`;
-          p = f.l;
-        }
-      });
-      return { t, h };
-    }
-
-    function calculateIRRF(basePosINSS, rendTotal, useSimp) {
-      const fx = [
-        { l: 2428.80, a: 0.00 }, { l: 2826.65, a: 0.075 },
-        { l: 3751.05, a: 0.15 }, { l: 4664.68, a: 0.225 }, { l: Infinity, a: 0.275 }
-      ];
-      let imp = 0, p = 0, h = '';
-      fx.forEach(f => {
-        if (basePosINSS > p) {
-          const teto = f.l === Infinity ? basePosINSS : f.l;
-          const pt = Math.min(basePosINSS, teto) - p;
-          const v = pt * f.a;
-          imp += v;
-          if(pt > 0) h += `<div class="breakdown-row"><span>Faixa ${(f.a*100).toFixed(1)}% (sobre ${formatNum(pt)})</span><span>${formatNum(v)}</span></div>`;
-          p = teto;
-        }
-      });
-      let red = 0;
-      if (rendTotal <= CONST_2026.RED_LIMITE) red = Math.max(0, CONST_2026.RED_A - (CONST_2026.RED_B * rendTotal));
-      if (red > 0) h += `<div class="breakdown-row text-green-600 font-bold"><span>(-) Redução 2026</span><span>(${formatNum(red)})</span></div>`;
-      return { t: Math.max(0, imp - red), h };
-    }
-
-    function calcular() {
-      if (window.__calc) { alert('Limpe para novo cálculo.'); return; }
-      const b = parseFloat(document.getElementById('salarioBruto').value) || 0;
-      const p = parseFloat(document.getElementById('proventos').value) || 0;
-      const d = Math.max(0, parseInt(document.getElementById('dependentes').value) || 0);
-      const o = parseFloat(document.getElementById('outros').value) || 0;
-      const be = document.getElementById('toggle-multi').checked ? (Math.max(0, parseFloat(document.getElementById('brutoExtra').value) || 0)) : 0;
-      const simp = document.getElementById('toggle-simplificado').checked;
-
-      if (b <= 0) { alert('O Salário Bruto é obrigatório.'); return; }
-
-      const totalTributavel = b + p;
-      const baseINSS = totalTributavel + be;
-      const inssData = calculateINSS(baseINSS);
-      
-      const deducLegal = inssData.t + (d * CONST_2026.DEDUC_DEP);
-      const deducFinal = simp ? Math.max(deducLegal, CONST_2026.SIMPLIFICADO) : deducLegal;
-      const baseIRRF = Math.max(0, totalTributavel - deducFinal);
-      
-      const irrfData = calculateIRRF(baseIRRF, totalTributavel, simp);
-      const liq = totalTributavel - inssData.t - irrfData.t - o;
-
-      document.getElementById('res-bruto').innerText = formatNum(totalTributavel);
-      document.getElementById('res-inss').innerText = formatNeg(inssData.t);
-      document.getElementById('res-irrf').innerText = formatNeg(irrfData.t);
-      document.getElementById('res-outros').innerText = formatNeg(o);
-      document.getElementById('res-total').innerText = formatNum(liq);
-      
-      document.getElementById('breakdown-inss-base').innerText = formatNum(baseINSS);
-      document.getElementById('breakdown-inss-list').innerHTML = inssData.h;
-      document.getElementById('breakdown-inss-total').innerText = `R$ ${formatNum(inssData.t)}`;
-      
-      document.getElementById('breakdown-irrf-base').innerText = formatNum(baseIRRF);
-      document.getElementById('breakdown-irrf-list').innerHTML = irrfData.h;
-      document.getElementById('breakdown-irrf-total').innerText = `R$ ${formatNum(irrfData.t)}`;
-
-      document.getElementById('results-section').classList.remove('hidden');
-      document.getElementById('pane-detalhamento').classList.remove('hidden');
-      window.__calc = { b, p, d, o, inss: inssData.t, irrf: irrfData.t, liq, inssH: inssData.h, irrfH: irrfData.h, totalT: totalTributavel, be, baseIRRF };
-    }
-
-    async function emitirPDF() {
-      if (!window.__calc) return;
-      const c = window.__calc;
-      const template = document.getElementById('pdf-render-template');
-      const body = document.getElementById('pdf-body');
-      const footer = document.getElementById('pdf-footer-text');
-      const qr = document.getElementById('pdf-qrcode-container');
-      qr.innerHTML = '';
-      const now = new Date();
-      footer.innerText = `Gerado em ${now.toLocaleDateString('pt-BR')} - IP: ${window.__userIP || 'Local'}`;
-      body.innerHTML = `
-        <div style="margin-bottom: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-          <div style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;">
-            <p style="font-weight: 800; text-transform: uppercase; margin-bottom: 3px; color: #1A3E74; font-size: 7.5px;">Proventos Informados</p>
-            <table style="width: 100%; font-size: 8px;">
-              <tr><td>Salário Bruto:</td><td style="text-align: right; font-weight: 700;">R$ ${formatNum(c.b)}</td></tr>
-              <tr><td>Adicionais:</td><td style="text-align: right; font-weight: 700;">R$ ${formatNum(c.p)}</td></tr>
-            </table>
-          </div>
-          <div style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;">
-            <p style="font-weight: 800; text-transform: uppercase; margin-bottom: 3px; color: #1A3E74; font-size: 7.5px;">Deduções e Vínculos</p>
-            <table style="width: 100%; font-size: 8px;">
-              <tr><td>Dependentes:</td><td style="text-align: right; font-weight: 700;">${c.d}</td></tr>
-              <tr><td>Extra p/ INSS:</td><td style="text-align: right; font-weight: 700;">R$ ${formatNum(c.be)}</td></tr>
-            </table>
-          </div>
-        </div>
-        <div style="background: #ffffff; padding: 12px; border: 2px solid #1A3E74; border-radius: 10px; margin-bottom: 15px;">
-           <table style="width: 100%; font-size: 9px;">
-             <tr style="border-bottom: 1px solid #cbd5e1; color: #64748b; font-size: 7.5px; text-transform: uppercase;"><th style="text-align: left;">Verba</th><th style="text-align: right;">Valor</th></tr>
-             <tr><td>(+) Bruto Tributável</td><td style="text-align: right;">${formatNum(c.totalT)}</td></tr>
-             <tr style="color: #ef4444;"><td>(-) INSS</td><td style="text-align: right;">${formatNeg(c.inss)}</td></tr>
-             <tr style="color: #ef4444;"><td>(-) IRRF</td><td style="text-align: right;">${formatNeg(c.irrf)}</td></tr>
-             <tr style="color: #ef4444;"><td>(-) Outros Descontos</td><td style="text-align: right;">${formatNeg(c.o)}</td></tr>
-             <tr style="font-weight: 900; font-size: 11px; color: #1A3E74; border-top: 1.5px solid #1A3E74;">
-               <td style="padding-top: 5px;">LÍQUIDO A RECEBER</td><td style="text-align: right; padding-top: 5px;">R$ ${formatNum(c.liq)}</td>
-             </tr>
-           </table>
-        </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-           <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; position: relative; min-height: 120px;">
-              <p style="font-weight: 800; font-size: 7.5px; color: #1A3E74; margin-bottom: 4px; border-bottom: 1px solid #f1f5f9;">Memória INSS</p>
-              <div style="font-size: 7px;">${c.inssH}</div>
-              <div style="position: absolute; bottom: 8px; left: 8px; font-weight: 800; font-size: 8px; color: #ef4444;">Total Retido: R$ ${formatNum(c.inss)}</div>
-           </div>
-           <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; position: relative; min-height: 120px;">
-              <p style="font-weight: 800; font-size: 7.5px; color: #1A3E74; margin-bottom: 4px; border-bottom: 1px solid #f1f5f9;">Memória IRRF</p>
-              <div style="font-size: 7px;">${c.irrfH}</div>
-              <div style="position: absolute; bottom: 8px; left: 8px; font-weight: 800; font-size: 8px; color: #ef4444;">Total Retido: R$ ${formatNum(c.irrf)}</div>
-           </div>
-        </div>
-      `;
-      new QRCode(qr, { text: window.location.href, width: 50, height: 50, colorDark: "#1A3E74" });
-      await new Promise(r => setTimeout(r, 600));
-      const canvas = await html2canvas(template, { scale: 2, useCORS: true });
-      const doc = new window.jspdf.jsPDF('p', 'pt', 'a4');
-      const pdfW = doc.internal.pageSize.getWidth();
-      doc.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, pdfW, (canvas.height * pdfW) / canvas.width);
-      doc.save(`Salario-Liquido-Nurse-2026.pdf`);
-    }
-
-    document.getElementById('toggle-multi').onchange = e => document.getElementById('multi-container').classList.toggle('hidden', !e.target.checked);
-    document.getElementById('btn-calc').onclick = calcular;
-    document.getElementById('btn-pdf').onclick = emitirPDF;
-    document.getElementById('btn-clear').onclick = () => {
-      document.querySelectorAll('input[type="number"]').forEach(i => i.value = '');
-      document.getElementById('results-section').classList.add('hidden');
-      document.getElementById('pane-detalhamento').classList.add('hidden');
-      window.__calc = null;
-    };
-  </script>
+    <div id="footer-container"></div>
+    <script src="assets/js/component-loader.js"></script>
+    <script src="assets/js/calculadoras-trabalhistas.js" defer></script>
 </body>
 </html>

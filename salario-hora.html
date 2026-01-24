@@ -3,266 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Salário Hora Enfermagem | Calculadoras de Enfermagem</title>
-    
-    <!-- Meta Tags para SEO -->
-    <meta name="description" content="Descubra quanto vale a sua hora de trabalho. Calcule o valor da hora normal, adicional de insalubridade e valor por plantão para profissionais de enfermagem.">
-    <meta name="author" content="Calculadoras de Enfermagem">
-    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/calculadora-salario-hora.html">
-
-    <!-- Tailwind CSS & Configuração -->
+    <title>Valor da Hora de Enfermagem | Calculadoras de Enfermagem</title>
+    <!-- Imports Padronizados -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                    },
-                    colors: {
-                        'nurse-primary': '#1A3E74',
-                        'nurse-secondary': '#00bcd4',
-                        'nurse-accent': '#D4AF37',
-                        'nurse-bgDark': '#0F172A',
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- Fontes e Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Estilos Globais -->
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/global-main.css">
+    <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] }, colors: { 'nurse-primary':'#1A3E74', 'nurse-secondary':'#00bcd4', 'nurse-accent':'#00838f', 'nurse-bgDark':'#0F172A' } } } }</script>
+    <link rel="stylesheet" href="assets/css/variables-v4.css">
+    <link rel="stylesheet" href="assets/css/header-v4.css">
+    <link rel="stylesheet" href="assets/css/footer-v4.css">
+    <link rel="stylesheet" href="assets/css/accessibility-v4.css">
+    <style type="text/tailwindcss">
+        @layer base{ body{@apply bg-slate-50 text-slate-900 antialiased font-inter} h1{@apply font-nunito font-black text-nurse-primary} }
+        @layer components{ .card-base{@apply bg-white rounded-[2rem] border border-slate-200 shadow-sm;} .input-field{@apply w-full border-2 border-slate-200 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none font-medium;} .btn-primary-action { @apply bg-nurse-primary text-white font-bold py-4 px-8 rounded-2xl shadow-xl w-full uppercase tracking-wider hover:bg-nurse-secondary transition-colors; } }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+<body class="flex flex-col min-h-screen">
+    <div id="accessibility-container"></div>
+    <div id="header-container" class="sticky top-0 z-50"></div>
 
-    <!-- Console Cleaner -->
-    <script src="assets/js/console-cleaner.js"></script>
-
-    <!-- Injeção do Header -->
-    <div id="header-container"></div>
-
-    <!-- Background Decorativo -->
-    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
-        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
-            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
-        </svg>
-    </div>
-
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-        <!-- Breadcrumb -->
-        <nav class="flex text-sm text-gray-500 dark:text-gray-400 mb-8" aria-label="Breadcrumb">
-            <ol class="flex items-center space-x-2">
-                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
-                <li class="flex items-center gap-2"><span>/</span> <span class="text-nurse-primary dark:text-nurse-secondary font-medium">Financeiro</span></li>
-                <li class="flex items-center gap-2"><span>/</span> <span>Salário Hora</span></li>
-            </ol>
+    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 py-12 w-full">
+        <nav class="flex items-center gap-2 text-sm text-slate-600 mb-8 font-semibold">
+            <a href="index.html" class="text-nurse-accent">Início</a> <i class="fa-solid fa-chevron-right text-[10px]"></i> <span>Valor da Hora</span>
         </nav>
 
-        <header class="mb-12 text-center md:text-left">
-            <span class="inline-block px-3 py-1 text-xs font-bold tracking-wider text-white bg-nurse-secondary rounded-full mb-4 uppercase">Valorização Profissional</span>
-            <h1 class="text-4xl md:text-5xl font-extrabold text-nurse-primary dark:text-white mb-6 leading-tight">Quanto vale a sua hora?</h1>
-            <div class="h-1.5 w-24 bg-nurse-accent mb-6 mx-auto md:mx-0"></div>
-            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
-                Calcule o valor da sua hora trabalhada considerando o salário base, jornada e adicionais técnicos.
-            </p>
+        <header class="max-w-4xl mb-12">
+            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block">Carreiras</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Valor da Hora</h1>
+            <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+            <p class="text-xl text-slate-600">Descubra quanto vale sua hora de trabalho considerando insalubridade.</p>
         </header>
 
-        <div class="grid lg:grid-cols-3 gap-12">
-            <!-- Coluna Principal -->
-            <div class="lg:col-span-2 space-y-8">
-                <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-slate-700">
-                    <div class="bg-nurse-primary p-6 text-white flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-clock text-2xl text-nurse-secondary"></i>
-                            <h2 class="text-xl font-bold">Simular Valor Hora</h2>
+        <div class="grid lg:grid-cols-[1fr,340px] gap-10">
+            <article class="card-base p-10">
+                <form id="calc-form" data-calc-type="salarioHora" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Salário Base</label>
+                            <input type="number" id="salario" step="0.01" class="input-field" required>
                         </div>
-                        <button onclick="resetCalc()" class="text-sm bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-colors">
-                            <i class="fa-solid fa-rotate-left mr-1"></i> Limpar
-                        </button>
-                    </div>
-
-                    <div class="p-8">
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <!-- Inputs -->
-                            <div class="space-y-6">
-                                <div>
-                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Salário Base Mensal (R$)</label>
-                                    <input type="number" id="salarioBase" placeholder="Ex: 3500,00" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary focus:ring-0 outline-none transition-all font-bold text-lg">
-                                </div>
-                                
-                                <div>
-                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Jornada de Trabalho Mensal</label>
-                                    <select id="jornada" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary focus:ring-0 outline-none transition-all text-sm font-medium">
-                                        <option value="220">220h (44h semanais)</option>
-                                        <option value="180" selected>180h (12x36 ou 36h semanais)</option>
-                                        <option value="150">150h (30h semanais)</option>
-                                        <option value="120">120h (24h semanais)</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Adicional de Insalubridade (R$)</label>
-                                    <input type="number" id="insalubridade" placeholder="Ex: 282,40 ou 564,80" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary focus:ring-0 outline-none transition-all">
-                                    <p class="text-[10px] text-gray-400 mt-1 italic">Dica: 20% do salário mínimo (2025) = R$ 302,40</p>
-                                </div>
-
-                                <button onclick="calcularSalarioHora()" class="w-full bg-nurse-secondary hover:bg-nurse-primary text-white font-bold py-4 rounded-xl shadow-lg transition-all transform active:scale-[0.98] flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-calculator"></i> Calcular Agora
-                                </button>
-                            </div>
-
-                            <!-- Resultados -->
-                            <div id="resultBox" class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-700 opacity-40 transition-opacity flex flex-col justify-center">
-                                <h3 class="text-gray-500 dark:text-gray-400 font-bold text-center mb-6 uppercase tracking-widest text-[10px]">Valores Calculados</h3>
-                                
-                                <div class="space-y-6">
-                                    <div class="text-center">
-                                        <p class="text-[10px] text-gray-400 uppercase font-bold mb-1">Sua Hora de Trabalho</p>
-                                        <p id="res-hora" class="text-5xl font-black text-nurse-primary dark:text-nurse-secondary">R$ 0,00</p>
-                                    </div>
-
-                                    <div class="grid grid-cols-2 gap-4 pt-6 border-t border-slate-200 dark:border-slate-700">
-                                        <div class="text-center p-3 bg-white dark:bg-slate-800 rounded-xl">
-                                            <p class="text-[9px] text-gray-400 uppercase font-bold mb-1">Plantão 6h</p>
-                                            <p id="res-6h" class="text-lg font-bold text-nurse-primary dark:text-white">R$ 0,00</p>
-                                        </div>
-                                        <div class="text-center p-3 bg-white dark:bg-slate-800 rounded-xl">
-                                            <p class="text-[9px] text-gray-400 uppercase font-bold mb-1">Plantão 12h</p>
-                                            <p id="res-12h" class="text-lg font-bold text-nurse-primary dark:text-white">R$ 0,00</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="p-4 bg-nurse-primary/5 dark:bg-nurse-secondary/5 rounded-xl border border-nurse-secondary/20">
-                                        <div class="flex justify-between items-center text-xs">
-                                            <span class="text-gray-500">Hora Noturna (+20%)</span>
-                                            <span id="res-horaNoturna" class="font-bold text-nurse-primary dark:text-nurse-secondary">R$ 0,00</span>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Jornada</label>
+                            <select id="jornada" class="input-field">
+                                <option value="220">220h</option>
+                                <option value="180">180h</option>
+                                <option value="150">150h</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Insalubridade</label>
+                            <select id="insalubridade" class="input-field mb-2" onchange="document.getElementById('div-fixo').style.display = this.value === 'fixo' ? 'block' : 'none'">
+                                <option value="0">Não / Incluso</option>
+                                <option value="20">20% (Mínimo)</option>
+                                <option value="40">40% (Máximo)</option>
+                                <option value="fixo">Valor Fixo</option>
+                            </select>
+                            <div id="div-fixo" style="display:none">
+                                <input type="number" id="insalubridade-valor" class="input-field" placeholder="Valor R$">
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Seção de Apoio -->
-                <section class="grid md:grid-cols-2 gap-6">
-                    <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-700">
-                        <h4 class="font-bold text-nurse-primary dark:text-nurse-secondary mb-3 flex items-center gap-2 text-sm uppercase tracking-wider">
-                            <i class="fa-solid fa-circle-info"></i> Por que calcular?
-                        </h4>
-                        <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Muitos hospitais oferecem plantões extras ("Dobras") com valores fixos. Ao saber o seu salário hora real, você consegue identificar se a proposta é vantajosa ou se o valor está abaixo do que você já recebe no seu contrato regular.
-                        </p>
+                    <div class="pt-4 grid grid-cols-2 gap-4">
+                        <button type="submit" class="btn-primary-action">Calcular</button>
+                        <button type="button" id="btn-limpar" class="bg-slate-200 text-slate-600 font-bold rounded-2xl uppercase text-sm">Limpar</button>
                     </div>
-                    <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-700">
-                        <h4 class="font-bold text-nurse-primary dark:text-nurse-secondary mb-3 flex items-center gap-2 text-sm uppercase tracking-wider">
-                            <i class="fa-solid fa-briefcase"></i> O Piso Salarial
-                        </h4>
-                        <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Com a implementação do Piso Nacional da Enfermagem, a base de cálculo mudou para muitos profissionais. Certifique-se de usar o valor do seu salário base atualizado (Vencimento + Complemento do Piso) para obter o valor hora correto.
-                        </p>
-                    </div>
-                </section>
-            </div>
+                </form>
+            </article>
 
-            <!-- Sidebar -->
             <aside class="space-y-6">
-                <!-- Tabela de Referência -->
-                <div class="p-6 bg-white dark:bg-slate-800 rounded-3xl shadow-md border border-gray-100 dark:border-slate-700">
-                    <h3 class="font-bold text-nurse-primary dark:text-nurse-secondary mb-4 text-xs uppercase">Jornadas Comuns</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center py-2 border-b border-gray-50 dark:border-slate-700">
-                            <span class="text-[11px] font-bold text-gray-500">44h / Semanal</span>
-                            <span class="text-[11px] text-gray-400">Divisor 220</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-50 dark:border-slate-700">
-                            <span class="text-[11px] font-bold text-gray-500">36h / Semanal (12x36)</span>
-                            <span class="text-[11px] text-gray-400">Divisor 180</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-50 dark:border-slate-700">
-                            <span class="text-[11px] font-bold text-gray-500">30h / Semanal</span>
-                            <span class="text-[11px] text-gray-400">Divisor 150</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card de Doação Estilizado -->
-                <div class="p-6 bg-gradient-to-br from-nurse-primary to-nurse-secondary rounded-3xl text-white shadow-xl relative overflow-hidden group">
-                    <i class="fa-solid fa-piggy-bank absolute -bottom-6 -right-6 text-9xl opacity-10 group-hover:scale-110 transition-transform duration-500"></i>
-                    <h3 class="font-bold mb-2 relative z-10 text-sm">Portal Livre de Anúncios</h3>
-                    <p class="text-[11px] mb-6 relative z-10 opacity-90 leading-relaxed">
-                        Manter ferramentas técnicas e precisas exige investimento. Ajude-nos a manter este site gratuito para toda a comunidade.
-                    </p>
-                    <a href="doacoes.html" class="inline-block w-full bg-white text-nurse-primary text-center font-bold py-3 rounded-xl text-xs hover:shadow-lg transition-all relative z-10">
-                        Contribuir com o Site
-                    </a>
-                </div>
+                 <!-- Sidebar Modules Here -->
             </aside>
         </div>
+
+        <section id="result-container" class="hidden mt-12">
+            <div class="max-w-4xl mx-auto card-base p-10 bg-white">
+                <h3 class="text-center font-bold text-slate-400 uppercase tracking-widest text-xs mb-8">Análise</h3>
+                <div id="result-content" class="space-y-4"></div>
+            </div>
+        </section>
     </main>
 
-    <!-- Injeção de Footer e Modais -->
     <div id="footer-container"></div>
-    <div id="modals-container"></div>
-
-    <!-- Scripts Externos -->
-    <script src="assets/js/utils.js"></script>
-    <script src="assets/js/template-engine.js"></script>
-    <script src="assets/js/global-main.js"></script>
-
-    <script>
-        function calcularSalarioHora() {
-            const base = parseFloat(document.getElementById('salarioBase').value) || 0;
-            const jornada = parseFloat(document.getElementById('jornada').value) || 180;
-            const insalubridade = parseFloat(document.getElementById('insalubridade').value) || 0;
-
-            if (base <= 0) return;
-
-            // O Salário para fins de divisor inclui gratificações fixas e insalubridade
-            const totalRemuneracao = base + insalubridade;
-            const valorHora = totalRemuneracao / jornada;
-            
-            // Adicional Noturno (20% sobre a hora)
-            const valorHoraNoturna = valorHora * 1.2;
-
-            // Plantões
-            const plantao6h = valorHora * 6;
-            const plantao12h = valorHora * 12;
-
-            // Renderização
-            const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            
-            document.getElementById('res-hora').innerText = fmt(valorHora);
-            document.getElementById('res-6h').innerText = fmt(plantao6h);
-            document.getElementById('res-12h').innerText = fmt(plantao12h);
-            document.getElementById('res-horaNoturna').innerText = fmt(valorHoraNoturna);
-
-            document.getElementById('resultBox').classList.remove('opacity-40');
-        }
-
-        function resetCalc() {
-            document.getElementById('salarioBase').value = '';
-            document.getElementById('insalubridade').value = '';
-            document.getElementById('jornada').value = '180';
-            document.getElementById('resultBox').classList.add('opacity-40');
-            document.getElementById('res-hora').innerText = 'R$ 0,00';
-            document.getElementById('res-6h').innerText = 'R$ 0,00';
-            document.getElementById('res-12h').innerText = 'R$ 0,00';
-            document.getElementById('res-horaNoturna').innerText = 'R$ 0,00';
-        }
-
-        window.addEventListener('templateEngineReady', function() {
-            console.log('Módulo Salário Hora carregado.');
-        });
-    </script>
+    <script src="assets/js/component-loader.js"></script>
+    <script src="assets/js/calculadoras-trabalhistas.js" defer></script>
 </body>
 </html>
