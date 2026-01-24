@@ -1,76 +1,355 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-page-name="termos">
+<html lang="pt-br" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Termos e Condições - Calculadoras de Enfermagem">
-    <meta name="author" content="Calculadoras de Enfermagem">
-    <meta name="theme-color" content="#1A3E74">
-    <meta property="og:title" content="Termos e Condições | Calculadoras de Enfermagem">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.calculadorasdeenfermagem.com.br/termos.html">
-    <meta property="og:site_name" content="Calculadoras de Enfermagem">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Termos e Condições | Calculadoras de Enfermagem">
-    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/termos.html">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/accessibility.css">
-    <link rel="preload" as="script" href="assets/js/config.js">
-    <link rel="preload" as="script" href="assets/js/component-loader.js">
-    <link rel="preload" as="script" href="assets/js/page-initializer.js">
-    <title>Termos e Condições | Calculadoras de Enfermagem</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Termos e Condições de Uso | Calculadoras de Enfermagem</title>
+    
+    <!-- [CONFIGURAÇÃO GLOBAL] -->
+    <script>
+        window.NURSE_CONFIG = {
+            baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/',
+            debug: false
+        };
+
+        /**
+         * Carrega módulos HTML externos de forma assíncrona
+         */
+        async function loadModule(id, fileName) {
+            const container = document.getElementById(id);
+            if (!container) return;
+
+            try {
+                // Normaliza a URL para evitar barras duplas
+                const baseUrl = window.NURSE_CONFIG.baseUrl.endsWith('/') 
+                    ? window.NURSE_CONFIG.baseUrl 
+                    : window.NURSE_CONFIG.baseUrl + '/';
+                
+                const response = await fetch(`${baseUrl}assets/components/${fileName}.html`, {
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
+
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const html = await response.text();
+                container.innerHTML = html;
+            } catch (err) {
+                console.warn(`[Módulo] Falha ao carregar ${fileName}:`, err);
+                // Em caso de erro, removemos o estado de skeleton para não travar a UI
+                container.innerHTML = `<div class="p-4 text-xs text-slate-400 italic">Módulo ${fileName} indisponível no momento.</div>`;
+            } finally {
+                container.classList.remove('opacity-50', 'opacity-30');
+                container.style.opacity = "1";
+            }
+        }
+
+        /**
+         * Inicialização segura dos módulos
+         */
+        function initApp() {
+            loadModule('accessibility-container', 'accessibility-v4');
+            loadModule('header-container', 'header-v4');
+            loadModule('footer-container', 'footer-v4');
+        }
+
+        if (document.readyState === 'loading') {
+            window.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+    </script>
+
+    <!-- Performance Resource Hints -->
+    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+    <!-- Google AdSense & Analytics -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- SEO & Metadados -->
+    <meta name="description" content="Leia os Termos e Condições de Uso das Calculadoras de Enfermagem. Entenda nossas diretrizes, isenção de responsabilidade e regras de utilização da plataforma.">
+    <meta name="keywords" content="termos de uso, condições de uso, isenção de responsabilidade, ética enfermagem, regulamento plataforma, institucional enfermagem">
+    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/termos.html">
+    <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp">
+
+    <!-- SEO Estruturado -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalWebPage",
+      "name": "Termos e Condições de Uso - Calculadoras de Enfermagem",
+      "description": "Regras e diretrizes legais para o uso das ferramentas de suporte à decisão clínica em enfermagem.",
+      "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/termos.html",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/termos.html"
+      },
+      "author": { "@type": "Organization", "name": "Calculadoras de Enfermagem" }
+    }
+    </script>
+
+    <!-- Estilos Externos V4 -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { nunito: ['"Nunito Sans"', 'sans-serif'], inter: ['Inter', 'sans-serif'] },
+                    colors: { 'nurse-primary': '#1A3E74', 'nurse-accent': '#00838f', 'nurse-bgDark': '#0F172A' }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter transition-colors duration-300; }
+            h1, h2, h3 { @apply font-nunito tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
+            :focus-visible { @apply outline-none ring-4 ring-cyan-500 ring-offset-2 dark:ring-offset-nurse-bgDark rounded-sm; }
+        }
+        @layer components {
+            .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all; }
+            .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+            .toc-link { @apply flex items-center gap-2 py-2.5 text-sm text-white/90 hover:text-white hover:translate-x-1 border-b border-white/10 last:border-0 transition-all font-semibold; }
+            .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md focus:ring-2 focus:ring-white; }
+            .text-aaa { @apply text-slate-700 dark:text-slate-200 leading-relaxed; }
+            .skeleton { @apply animate-pulse bg-slate-200 dark:bg-slate-700 rounded; }
+            .alert-box { @apply flex gap-4 p-6 rounded-2xl mb-8 border-l-4 border-amber-500 bg-amber-50 text-amber-900 dark:bg-amber-900/20 dark:text-amber-100 shadow-sm font-inter; }
+            .tag-pill { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
+        }
+    </style>
 </head>
-<body class="relative overflow-x-hidden">
-    <div id="loader-global" class="fixed inset-0 bg-white dark:bg-slate-900 flex items-center justify-center z-50 transition-opacity duration-500">
-        <div class="text-center">
-            <div class="inline-block animate-spin">
-                <svg class="w-12 h-12 text-nurse-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-            </div>
-            <p class="mt-4 text-slate-600 dark:text-slate-400">Carregando página...</p>
+<body class="flex flex-col min-h-screen relative overflow-x-hidden">
+
+    <div id="accessibility-container"></div>
+
+    <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="skeleton h-8 w-40"></div>
+            <div class="hidden md:flex gap-6"><div class="skeleton h-4 w-16"></div><div class="skeleton h-4 w-16"></div></div>
         </div>
     </div>
-    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
-    <a href="#footer-v2-container" class="skip-link">Pular para o rodapé</a>
-    <header id="header-v2-container" role="banner"></header>
-    <aside id="accessibility-v2-container" role="complementary"></aside>
-    <main id="main-content">
-        <div id="main-module-container"></div>
+
+    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 py-8 md:py-12 w-full">
+        
+        <!-- Breadcrumb Ajustado -->
+        <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
+            <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+            <i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>
+            <span>Sobre Nós</span>
+            <i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>
+            <span>Políticas do Site</span>
+            <i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>
+            <span class="text-nurse-primary dark:text-cyan-400 font-bold" aria-current="page">Termos e Condições de Uso</span>
+        </nav>
+
+        <header class="max-w-4xl mb-12">
+            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Institucional</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Termos e Condições de Uso</h1>
+            <div class="w-24 h-2 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+            <p class="text-xl text-aaa font-medium mb-8">Diretrizes para a utilização de nossas ferramentas digitais e o compromisso ético na assistência de enfermagem.</p>
+        </header>
+
+        <div class="grid lg:grid-cols-[1fr,340px] gap-10 lg:gap-16 items-start">
+            
+            <article class="card-base p-8 md:p-14">
+                <div class="prose prose-lg prose-slate dark:prose-invert max-w-none">
+                    
+                    <div class="alert-box mb-12">
+                        <i class="fa-solid fa-triangle-exclamation text-2xl mt-1 shrink-0"></i>
+                        <div>
+                            <span class="font-bold block uppercase text-xs tracking-widest mb-1 opacity-80">Aviso Importante</span>
+                            O uso desta plataforma implica na aceitação total destes termos. Nossas calculadoras são ferramentas de <strong>apoio à decisão</strong> e não substituem o julgamento clínico do profissional.
+                        </div>
+                    </div>
+
+                    <div class="space-y-16">
+                        <!-- Seção 1 -->
+                        <section id="pane-aceitacao" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">01</span>
+                                Aceitação dos Termos
+                            </h2>
+                            <p class="text-aaa text-lg text-justify mb-6">
+                                Ao acessar a plataforma Calculadoras de Enfermagem, você concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis. Se você não concordar com algum destes termos, está proibido de usar ou acessar este site.
+                            </p>
+                        </section>
+
+                        <!-- Seção 2 -->
+                        <section id="pane-responsabilidade" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">02</span>
+                                Isenção de Responsabilidade Médica
+                            </h2>
+                            <p class="text-aaa text-lg text-justify mb-4">
+                                Os materiais e ferramentas neste site são fornecidos apenas para fins informativos e educacionais. As calculadoras automáticas (gotejamento, diluição, escalas) são baseadas em literatura científica, mas:
+                            </p>
+                            <ul class="list-disc pl-6 space-y-3 text-aaa">
+                                <li>Não substituem a conferência manual obrigatória por parte do profissional de saúde.</li>
+                                <li>A responsabilidade final pela administração de medicamentos é exclusiva do profissional executor, conforme o Código de Ética de Enfermagem.</li>
+                                <li>Não garantimos que as ferramentas estejam livres de erros humanos ou técnicos em todas as circunstâncias.</li>
+                            </ul>
+                        </section>
+
+                        <!-- Seção 3 -->
+                        <section id="pane-privacidade" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">03</span>
+                                Uso de Dados e Privacidade
+                            </h2>
+                            <p class="text-aaa text-lg text-justify">
+                                Não coletamos dados sensíveis de pacientes através de nossas calculadoras. Os valores inseridos para cálculos são processados localmente no seu dispositivo. Para mais detalhes, consulte nossa Política de Privacidade.
+                            </p>
+                        </section>
+
+                        <!-- Seção 4 -->
+                        <section id="pane-direitos" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">04</span>
+                                Propriedade Intelectual
+                            </h2>
+                            <p class="text-aaa text-lg text-justify">
+                                É concedida permissão para baixar temporariamente uma cópia dos materiais no site apenas para visualização transitória pessoal e não comercial. Esta é a concessão de uma licença, não uma transferência de título.
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Seção de autor -->
+                    <footer class="bg-slate-100 dark:bg-slate-900/60 rounded-[2.5rem] p-8 md:p-10 mt-20 flex flex-col md:flex-row gap-8 items-center border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Logotipo Institucional" class="w-24 h-24 rounded-full border-4 border-white dark:border-slate-800 shadow-xl object-cover">
+                        <div class="text-center md:text-left">
+                            <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400">Compromisso Ético</h3>
+                            <p class="text-aaa text-md italic font-medium">"A transparência e a responsabilidade técnica fundamentam nossa presença digital."</p>
+                        </div>
+                    </footer>
+
+                    <div class="mt-12 p-6 bg-slate-100 dark:bg-slate-900/40 rounded-2xl text-xs text-slate-500 italic">
+                        Última atualização: 24 de Janeiro de 2026.
+                    </div>
+                </div>
+
+                <!-- Tags -->
+                <section class="mt-12 pt-8 border-t-2 border-slate-200 dark:border-slate-700">
+                    <div class="flex flex-wrap gap-2 items-center">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2 flex items-center"><i class="fa-solid fa-tags mr-2"></i> Tópicos:</span>
+                        <span class="tag-pill">#TermosDeUso</span><span class="tag-pill">#ÉticaProfissional</span><span class="tag-pill">#SuporteClínico</span><span class="tag-pill">#Institucional</span>
+                    </div>
+                </section>
+            </article>
+
+            <!-- Barra Lateral Ajustada -->
+            <aside class="space-y-8 sticky top-32 self-start hidden lg:block">
+                <div class="sidebar-module">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white">
+                        <i class="fas fa-list-ul"></i> Conteúdo
+                    </h3>
+                    <nav class="flex flex-col">
+                        <a href="#pane-aceitacao" class="toc-link">1. Aceitação dos Termos</a>
+                        <a href="#pane-responsabilidade" class="toc-link">2. Isenção de Responsabilidade</a>
+                        <a href="#pane-privacidade" class="toc-link">3. Dados e Privacidade</a>
+                        <a href="#pane-direitos" class="toc-link">4. Propriedade Intelectual</a>
+                    </nav>
+                </div>
+
+                <div class="card-base p-4 text-center border border-dashed border-slate-300">
+                    <div class="bg-slate-100 dark:bg-slate-800 h-[250px] flex items-center justify-center text-slate-400 text-xs">Espaço Publicitário</div>
+                </div>
+
+                <div class="sidebar-module shadow-nurse-accent/20">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-share-alt"></i> Compartilhar</h3>
+                    <div class="flex gap-3.5 flex-wrap">
+                        <a href="#" class="share-btn" title="WhatsApp" onclick="window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="share-btn" title="Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn" title="Instagram" onclick="window.open('https://www.instagram.com/'); return false;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="share-btn" title="LinkedIn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-linkedin-in"></i></a>
+                        <button class="share-btn" title="Copiar Link" onclick="try { navigator.clipboard.writeText(window.location.href); alert('Link copiado!'); } catch(e) { console.error(e); }"><i class="fas fa-link"></i></button>
+                    </div>
+                </div>
+            </aside>
+        </div>
     </main>
-    <footer id="footer-v2-container" role="contentinfo"></footer>
-    <script src="assets/js/config.js"></script>
-    <script src="assets/js/component-loader.js"></script>
-    <script src="assets/js/page-initializer.js"></script>
-    <script>
-        (function() {
-            'use strict';
-            function initPage() {
-                if (typeof SITE_CONFIG === 'undefined') {
-                    console.error('[Page] SITE_CONFIG não está definido');
-                    return;
-                }
-                const pageName = document.documentElement.getAttribute('data-page-name') || 'termos';
-                const pageConfig = SITE_CONFIG.pages[pageName];
-                if (!pageConfig) {
-                    console.error(`[Page] Configuração não encontrada para página: ${pageName}`);
-                    return;
-                }
-                const initializer = new window.PageInitializer(pageConfig);
-                initializer.initialize().catch(error => {
-                    console.error('[Page] Erro ao inicializar página:', error);
-                });
-            }
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initPage);
-            } else {
-                initPage();
-            }
-        })();
-    </script>
+
+    <!-- Conteúdo Relacionado -->
+    <section class="bg-slate-200/50 dark:bg-slate-900/80 py-24 border-t border-slate-300 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-black mb-16 flex items-center justify-center gap-4">
+                <i class="fa-solid fa-layer-group text-nurse-accent"></i> Conteúdo relacionado
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
+                <a href="politicadeprivacidade.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-acessibilidade-digital.webp" alt="Privacidade" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-teal-600 text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Institucional</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Política de Privacidade</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Saiba como tratamos seus dados e garantimos sua segurança digital.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba Mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+                <a href="missao.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-missao.webp" alt="Missão" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-nurse-primary text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Institucional</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Missão, Visão e Valores</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">O compromisso ético por trás de nossa atuação tecnológica.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba Mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+                <a href="tecnologiaverde.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-sustentabilidade-digital.webp" alt="Sustentabilidade" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-green-700 text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Institucional</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Tecnologia Verde</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Como operamos um sistema digital de baixo impacto ambiental.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba Mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px] mt-12 transition-opacity duration-500">
+        <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col gap-4 opacity-30">
+            <div class="skeleton h-6 w-32"></div>
+            <div class="skeleton h-4 w-64"></div>
+        </div>
+    </div>
+
+    <!-- Scripts Modulares com crossorigin -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" crossorigin="anonymous" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" crossorigin="anonymous" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" crossorigin="anonymous" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" crossorigin="anonymous" defer></script>
 </body>
 </html>
