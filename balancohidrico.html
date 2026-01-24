@@ -1,632 +1,649 @@
 <!DOCTYPE html>
 <html lang="pt-br" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Balanço Hídrico - Controle de Líquidos | Calculadoras de Enfermagem</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Realize o cálculo de Balanço Hídrico de 24h com precisão. Ferramenta para enfermagem monitorar ingestão e eliminação, prevenindo desidratação ou retenção hídrica.">
-    <meta name="keywords" content="balanço hídrico, cálculo de balanço hídrico, calculadora enfermagem, controle de líquidos, diurese, ingestão hídrica, perdas e ganhos, segurança do paciente">
-    <meta name="author" content="Calculadoras de Enfermagem">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/balancohidrico.html">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-    <!-- Open Graph / Social -->
-    <meta property="og:locale" content="pt_BR">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Calculadoras de Enfermagem">
-    <meta property="og:title" content="Calculadora de Balanço Hídrico - Controle de Líquidos 24h">
-    <meta property="og:description" content="Calcule o balanço hídrico com precisão clínica. Gere relatórios em PDF com auditoria completa para o prontuário.">
-    <meta property="og:url" content="https://www.calculadorasdeenfermagem.com.br/balancohidrico.html">
-    <meta property="og:image" content="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
+  <title>Calculadora de Balanço Hídrico - Controle de Líquidos | Calculadoras de Enfermagem</title>
+  
+  <!-- SEO & META TAGS -->
+  <meta name="description" content="Realize o cálculo de Balanço Hídrico de 24h com precisão. Ferramenta para enfermagem monitorar ingestão e eliminação, prevenindo desidratação ou retenção hídrica.">
+  <meta name="keywords" content="balanço hídrico, cálculo de balanço hídrico, calculadora enfermagem, controle de líquidos, diurese, ingestão hídrica, perdas e ganhos, segurança do paciente">
+  <meta name="author" content="Calculadoras de Enfermagem">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/balanco-hidrico.html"/>
+  
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Calculadoras de Enfermagem">
+  <meta property="og:title" content="Calculadora de Balanço Hídrico - Controle de Líquidos 24h">
+  <meta property="og:description" content="Calcule o balanço hídrico com precisão clínica. Gere relatórios em PDF com auditoria completa para o prontuário.">
+  <meta property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/balanco-hidrico.html">
+  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-balanco.webp">
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Balanço Hídrico Seguro - Calculadoras de Enfermagem">
-    <meta name="twitter:image" content="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
+  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
 
-    <!-- Alternates Hreflang (Indexação Internacional) -->
-    <link rel="alternate" hreflang="pt-br" href="https://www.calculadorasdeenfermagem.com.br/balancohidrico.html">
-    <link rel="alternate" hreflang="en" href="https://www.calculadorasdeenfermagem.com.br/en/balancohidrico.html">
-    <link rel="alternate" hreflang="es" href="https://www.calculadorasdeenfermagem.com.br/es/balancohidrico.html">
-    <link rel="alternate" hreflang="fr" href="https://www.calculadorasdeenfermagem.com.br/fr/balancohidrico.html">
-    <link rel="alternate" hreflang="de" href="https://www.calculadorasdeenfermagem.com.br/de/balancohidrico.html">
-    <link rel="alternate" hreflang="it" href="https://www.calculadorasdeenfermagem.com.br/it/balancohidrico.html">
-    <link rel="alternate" hreflang="ja" href="https://www.calculadorasdeenfermagem.com.br/ja/balancohidrico.html">
-    <link rel="alternate" hreflang="zh" href="https://www.calculadorasdeenfermagem.com.br/zh/balancohidrico.html">
-    <link rel="alternate" hreflang="hi" href="https://www.calculadorasdeenfermagem.com.br/hi/balancohidrico.html">
-    <link rel="alternate" hreflang="ar" href="https://www.calculadorasdeenfermagem.com.br/ar/balancohidrico.html">
-    <link rel="alternate" hreflang="ru" href="https://www.calculadorasdeenfermagem.com.br/ru/balancohidrico.html">
-    <link rel="alternate" hreflang="tr" href="https://www.calculadorasdeenfermagem.com.br/tr/balancohidrico.html">
-    <link rel="alternate" hreflang="ko" href="https://www.calculadorasdeenfermagem.com.br/ko/balancohidrico.html">
-    <link rel="alternate" hreflang="nl" href="https://www.calculadorasdeenfermagem.com.br/nl/balancohidrico.html">
-    <link rel="alternate" hreflang="pl" href="https://www.calculadorasdeenfermagem.com.br/pl/balancohidrico.html">
-    <link rel="alternate" hreflang="sv" href="https://www.calculadorasdeenfermagem.com.br/sv/balancohidrico.html">
-    <link rel="alternate" hreflang="id" href="https://www.calculadorasdeenfermagem.com.br/id/balancohidrico.html">
-    <link rel="alternate" hreflang="vi" href="https://www.calculadorasdeenfermagem.com.br/vi/balancohidrico.html">
-    <link rel="alternate" hreflang="uk" href="https://www.calculadorasdeenfermagem.com.br/uk/balancohidrico.html">
-    <link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/balancohidrico.html">
+  <!-- Fontes e Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Bibliotecas JS (Com Crossorigin para evitar Script Error) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" crossorigin="anonymous" defer></script>
 
-    <!-- Google Tag Manager / Analytics -->
-    <script src="https://www.googletagmanager.com/gtag/js?id=AW-952633102"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('consent', 'default', {
-            'analytics_storage': 'denied',
-            'ad_storage': 'denied',
-            'wait_for_update': 500
-        });
-        gtag('config', 'AW-952633102');
-        gtag('config', 'G-8FLJ59XXDK');
-    </script>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        nunito: ['Nunito Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        'nurse-primary': '#1A3E74',
-                        'nurse-primary-light': '#2E5A9C',
-                        'nurse-secondary': '#00bcd4',
-                        'nurse-accent': '#D4AF37',
-                        'nurse-bgDark': '#0F172A',
-                    }
-                }
-            }
+  <!-- Configuração do Sistema -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] },
+          colors: { 'nurse-primary':'#1A3E74', 'nurse-secondary':'#00bcd4', 'nurse-accent':'#00838f', 'nurse-bgDark':'#0F172A' }
         }
-    </script>
+      }
+    }
+    
+    window.NURSE_CONFIG = { baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/', debug: false };
 
-    <!-- Fontes e Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    async function loadModule(id, url) {
+      const container = document.getElementById(id);
+      if (!container) return;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Status ${res.status}`);
+        container.innerHTML = await res.text();
+        container.classList.remove('opacity-50', 'opacity-30');
+        container.style.opacity = "1";
+      } catch(e) { 
+        console.warn(`Módulo ${id} não carregado (possível CORS ou Offline):`, e); 
+      }
+    }
 
-    <!-- Dependências PDF e QR Code -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    window.addEventListener('DOMContentLoaded', () => {
+      loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html');
+      loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html');
+      loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html');
+    });
+  </script>
 
-    <style>
-        :root { --color-primary: #1A3E74; --color-primary-light: #2E5A9C; }
-        .tab-btn-active { border-color: #00bcd4 !important; color: #00bcd4 !important; font-weight: bold; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        .sidebar-card { padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        .toc-list li { margin-bottom: 0.75rem; font-size: 0.875rem; transition: transform 0.2s; font-family: 'Inter', sans-serif; }
-        .toc-list li:hover { transform: translateX(5px); }
-        .share-btn { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); color: white; transition: all 0.3s; }
-        .share-btn:hover { background: white; color: var(--color-primary); transform: translateY(-3px); }
-        .btn-action { height: 56px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; transition: all 0.3s; font-family: 'Nunito Sans', sans-serif; }
-    </style>
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300; }
+      h1 { @apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400; }
+      h2, h3 { @apply font-inter tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
+    }
+    @layer components {
+      .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden; }
+      .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+      .input-field { @apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium; }
+      .btn-primary-action { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
+      .btn-secondary-action { @apply bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
+      .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 text-white hover:bg-white transition-all shadow-md focus:ring-2 focus:ring-white; }
+      .tab-btn { @apply flex-1 px-4 py-3 font-bold text-[11px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider; }
+      .tab-btn.active { @apply border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50 dark:bg-slate-900/30; }
+      .label-tooltip { @apply text-nurse-secondary ml-1 cursor-help hover:text-nurse-primary transition-colors text-xs; }
+      .glass-meta { @apply relative backdrop-blur-md border border-white/20 p-4 rounded-xl shadow-sm transition-all duration-300 flex items-center gap-4; }
+      .glass-meta-blue { @apply bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-100 border-l-4 border-blue-500; }
+      .glass-meta-orange { @apply bg-orange-50 dark:bg-orange-900/20 text-orange-900 dark:text-orange-100 border-l-4 border-orange-500; }
+      .toast-msg { @apply pointer-events-auto bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 font-bold text-sm min-w-[320px] border-l-4 border-nurse-secondary; animation: slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      .tag-pill-footer { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
+    }
+    @keyframes slide-in { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    #pdf-render-template { position: absolute; left: -9999px; top: 0; width: 794px; min-height: 1123px; background: white; padding: 40px; color: #0f172a; display: flex; flex-direction: column; }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
+<body class="flex flex-col min-h-screen">
 
-    <div id="header-container"></div>
+  <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+    <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+        <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+        <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+    </svg>
+  </div>
 
-    <!-- Elemento Decorativo Main -->
-    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
-        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
-            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
-        </svg>
+  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
+  <div id="accessibility-container"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50"></div>
+
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
+    
+    <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
+        <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        <a href="ferramentas.html" class="hover:underline text-nurse-accent">Ferramentas</a>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        <span class="hidden md:inline hover:underline text-nurse-accent cursor-pointer">Calculadoras Clínicas</span>
+        <i class="fa-solid fa-chevron-right text-[10px] hidden md:inline"></i>
+        <span class="text-nurse-primary dark:text-cyan-400 font-bold md:hidden">Balanço Hídrico</span>
+        <span class="text-nurse-primary dark:text-cyan-400 font-bold hidden md:inline">Cálculo de Balanço Hídrico</span>
+    </nav>
+
+    <header class="max-w-4xl mb-12">
+      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Calculadoras Clínicas</span>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Cálculo de Balanço Hídrico</h1>
+      <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+      <p class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">Ferramenta para controle rigoroso de entradas e saídas de líquidos, essencial para o equilíbrio volêmico.</p>
+    </header>
+
+    <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
+      
+      <article class="card-base p-0">
+         <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30">
+            <button onclick="switchTab('calc')" id="btn-tab-calc" class="tab-btn active">Calculadora</button>
+            <button onclick="switchTab('sobre')" id="btn-tab-sobre" class="tab-btn">Sobre</button>
+            <button onclick="switchTab('ajuda')" id="btn-tab-ajuda" class="tab-btn">Instruções</button>
+            <button onclick="switchTab('tecnico')" id="btn-tab-tecnico" class="tab-btn">Técnico</button>
+         </nav>
+
+         <div class="p-6 md:p-10">
+            <!-- ABA: CALCULADORA -->
+            <section id="pane-calc" class="tab-pane space-y-10">
+                <div class="space-y-6">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 border-b pb-2">Dados do Paciente</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="patient_name" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Nome do Paciente <i class="fa-solid fa-circle-info label-tooltip" title="Identificação completa para registro seguro"></i>
+                            </label>
+                            <input id="patient_name" type="text" placeholder="Nome completo" class="input-field"/>
+                        </div>
+                        <div>
+                            <label for="patient_birthdate" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Data de Nascimento <i class="fa-solid fa-circle-info label-tooltip" title="Para confirmação inequívoca (Meta 1)"></i>
+                            </label>
+                            <input id="patient_birthdate" type="date" max="9999-12-31" class="input-field text-sm" oninput="validateBirthDate()"/>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- COLUNA GANHOS -->
+                        <div class="space-y-4">
+                            <h3 class="text-xs font-black uppercase tracking-widest text-nurse-secondary mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-circle-plus"></i> Ingestão (Ganhos)
+                            </h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <label for="ganhoOral" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                        Via Oral (VO) <i class="fa-solid fa-circle-info label-tooltip" title="Água, sucos, chás, sopas"></i>
+                                    </label>
+                                    <input id="ganhoOral" type="number" min="0" placeholder="0 ml" class="input-field font-bold text-nurse-primary dark:text-cyan-400" onkeydown="preventNegative(event)"/>
+                                </div>
+                                <div>
+                                    <label for="ganhoSonda" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                        Sondas (Enteral) <i class="fa-solid fa-circle-info label-tooltip" title="Água lavagem e dietas via SNE/GTT"></i>
+                                    </label>
+                                    <input id="ganhoSonda" type="number" min="0" placeholder="0 ml" class="input-field font-bold text-nurse-primary dark:text-cyan-400" onkeydown="preventNegative(event)"/>
+                                </div>
+                                <div>
+                                    <label for="ganhoEv" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                        Parenteral (EV/Soros) <i class="fa-solid fa-circle-info label-tooltip" title="Soros, medicações, NPT, expansores"></i>
+                                    </label>
+                                    <input id="ganhoEv" type="number" min="0" placeholder="0 ml" class="input-field font-bold text-nurse-primary dark:text-cyan-400" onkeydown="preventNegative(event)"/>
+                                </div>
+                                <div>
+                                    <label for="ganhoOutros" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                        Outros <i class="fa-solid fa-circle-info label-tooltip" title="Hemoderivados, plasma, etc."></i>
+                                    </label>
+                                    <input id="ganhoOutros" type="number" min="0" placeholder="0 ml" class="input-field font-bold text-nurse-primary dark:text-cyan-400" onkeydown="preventNegative(event)"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COLUNA PERDAS -->
+                        <div class="space-y-4">
+                            <h3 class="text-xs font-black uppercase tracking-widest text-red-500 mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-circle-minus"></i> Eliminação (Perdas)
+                            </h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <label for="perdaUrina" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                        Diurese (Urina) <i class="fa-solid fa-circle-info label-tooltip" title="Volume urinário total aferido"></i>
+                                    </label>
+                                    <input id="perdaUrina" type="number" min="0" placeholder="0 ml" class="input-field font-bold text-nurse-primary dark:text-cyan-400" onkeydown="preventNegative(event)"/>
+                                </div>
+                                <div>
+                                    <label for="perdaDrenos" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                        Drenos <i class="fa-solid fa-circle-info label-tooltip" title="Tórax, portovac, penrose, JP"></i>
+                                    </label>
+                                    <input id="perdaDrenos" type="number" min="0" placeholder="0 ml" class="input-field font-bold text-nurse-primary dark:text-cyan-400" onkeydown="preventNegative(event)"/>
+                                </div>
+                                <div>
+                                    <label for="perdaVomitos" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                        Vômitos / SNG Aberta <i class="fa-solid fa-circle-info label-tooltip" title="Volume de estase ou êmese"></i>
+                                    </label>
+                                    <input id="perdaVomitos" type="number" min="0" placeholder="0 ml" class="input-field font-bold text-nurse-primary dark:text-cyan-400" onkeydown="preventNegative(event)"/>
+                                </div>
+                                <div>
+                                    <label for="perdaOutros" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                        Outros <i class="fa-solid fa-circle-info label-tooltip" title="Diarréia líquida, sangramentos, etc."></i>
+                                    </label>
+                                    <input id="perdaOutros" type="number" min="0" placeholder="0 ml" class="input-field font-bold text-nurse-primary dark:text-cyan-400" onkeydown="preventNegative(event)"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 pt-4">
+                    <button onclick="calcularBalanco()" class="btn-primary-action"><i class="fa-solid fa-calculator"></i> Calcular</button>
+                    <button onclick="resetForm()" class="btn-secondary-action"><i class="fa-solid fa-rotate-left"></i> Limpar</button>
+                </div>
+
+                <!-- ÁREA DE RESULTADOS -->
+                <div id="results-wrapper" class="hidden animate-fade-in pt-8 border-t border-slate-200 dark:border-slate-700">
+                    <div class="bg-slate-50 dark:bg-slate-800/50 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-10">
+                        <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4">Balanço Hídrico Final (24h)</p>
+                        
+                        <!-- Resultado Principal (Big Number) -->
+                        <div id="res-final" class="text-6xl md:text-8xl font-black text-[#1A3E74] dark:text-cyan-400 tracking-tighter font-nunito leading-none mb-4">+0</div>
+                        <p class="text-lg font-black text-nurse-secondary mb-6 uppercase tracking-widest">Mililitros (ml)</p>
+                        
+                        <!-- Subdetalhes Centralizados -->
+                        <div class="flex justify-center gap-8 text-xs font-bold uppercase tracking-widest border-t border-slate-200 dark:border-slate-700 pt-6 max-w-md mx-auto">
+                            <div class="text-nurse-secondary">
+                                <i class="fa-solid fa-circle-plus mr-1"></i> Ganhos: <span id="res-total-ganhos">0</span>
+                            </div>
+                            <div class="text-red-500">
+                                <i class="fa-solid fa-circle-minus mr-1"></i> Perdas: <span id="res-total-perdas">0</span>
+                            </div>
+                        </div>
+
+                        <div id="res-interpretacao" class="mt-6 text-sm font-bold"></div>
+                    </div>
+
+                    <!-- BOTÕES DE AÇÃO -->
+                    <div class="flex flex-wrap gap-4 justify-center mb-10">
+                        <button onclick="gerarPDF()" class="btn-primary-action px-10"><i class="fa-solid fa-file-pdf"></i> Gerar PDF</button>
+                        <button onclick="copiarResumo()" class="btn-secondary-action px-8"><i class="fa-solid fa-copy"></i> Copiar</button>
+                    </div>
+
+                    <!-- BUSCA DIAGNÓSTICO -->
+                    <div class="card-base p-6 border-l-4 border-nurse-accent bg-slate-50 dark:bg-slate-900/40 mb-10">
+                        <h3 class="text-sm font-black uppercase tracking-widest text-nurse-primary mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-book-medical"></i> Diagnóstico NANDA
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">Pesquise diagnósticos relacionados como "Volume de Líquidos Excessivo" ou "Risco de Desequilíbrio Eletrolítico".</p>
+                        <button onclick="showNanda()" class="w-full sm:w-auto bg-nurse-accent text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:brightness-110 transition shadow-lg flex items-center justify-center gap-2">
+                            Pesquisar Diagnósticos <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+
+                    <!-- AUDITORIA -->
+                    <div class="mb-12">
+                         <h3 class="text-xs font-black uppercase tracking-widest mb-6 flex items-center gap-2"><i class="fa-solid fa-clipboard-check"></i> Auditoria do Cálculo</h3>
+                         <ul class="space-y-3">
+                            <!-- DADOS DO PACIENTE -->
+                            <li class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl text-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-slate-500 font-bold uppercase text-[10px]">Dados do Paciente</span>
+                                <span class="font-bold text-nurse-primary dark:text-cyan-400 text-right"><span id="audit-nome">---</span><br><span id="audit-nasc" class="text-xs text-slate-400 font-normal">---</span></span>
+                            </li>
+                            <!-- PARÂMETROS DO CÁLCULO -->
+                            <li class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl text-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-slate-500 font-bold uppercase text-[10px]">Parâmetros do Cálculo</span>
+                                <div class="text-right">
+                                    <span class="font-bold text-nurse-primary dark:text-cyan-400 block">Entradas: <span id="audit-total-ganhos">---</span></span>
+                                    <span class="text-xs text-slate-400">Saídas: <span id="audit-total-perdas">---</span></span>
+                                </div>
+                            </li>
+                            <!-- FÓRMULA APLICADA -->
+                            <li class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl text-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-slate-500 font-bold uppercase text-[10px]">Fórmula Aplicada</span>
+                                <span id="res-formula-box" class="font-mono text-xs font-bold text-nurse-primary dark:text-cyan-400 text-right">Ganhos - Perdas = Saldo</span>
+                            </li>
+                            <!-- RESULTADO -->
+                            <li class="flex items-center justify-between p-4 bg-nurse-primary/5 dark:bg-nurse-primary/20 rounded-xl text-sm border border-nurse-primary/10">
+                                <span class="text-nurse-primary font-bold uppercase text-[10px]">Resultado</span>
+                                <span id="audit-resultado" class="font-black text-nurse-primary dark:text-cyan-400 text-right">---</span>
+                            </li>
+                         </ul>
+                    </div>
+
+                    <!-- CHECKLISTS -->
+                    <section>
+                        <h2 class="text-xl md:text-2xl font-black text-center mb-8 flex items-center justify-center gap-3 text-nurse-primary dark:text-cyan-400">
+                            <i class="fa-solid fa-shield-virus"></i> Check-list de Segurança do Paciente
+                        </h2>
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-xs font-black uppercase tracking-widest mb-4 border-b border-slate-200 dark:border-slate-700 pb-2">Metas Internacionais de Segurança</h3>
+                                <div id="checklist-metas" class="space-y-2"></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <!-- ABAS INFORMATIVAS -->
+            <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+                <h2 class="text-2xl font-black mb-4">Sobre o Balanço Hídrico</h2>
+                <p class="text-aaa">O Balanço Hídrico (BH) é a contabilização rigorosa de todos os líquidos que entram e saem do organismo em um período de 24 horas. É uma ferramenta fundamental na avaliação da função renal, cardíaca e no ajuste de terapias diuréticas ou de reposição volêmica.</p>
+            </section>
+
+            <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+                <h2 class="text-2xl font-black mb-4">Instruções</h2>
+                <ol class="space-y-2 text-aaa text-sm">
+                    <li>Preencha a identificação do paciente para o registro de auditoria.</li>
+                    <li>Insira todos os volumes de entradas (Soro, Dieta, Água) em mililitros.</li>
+                    <li>Insira todos os volumes de saídas (Urina, Drenos, Vômitos) em mililitros.</li>
+                    <li>O sistema calculará automaticamente o saldo e indicará se é positivo ou negativo.</li>
+                </ol>
+            </section>
+
+            <section id="pane-tecnico" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+                <h2 class="text-2xl font-black mb-4">Informações Técnicas</h2>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl text-sm text-aaa">
+                    <p><strong>Meta de Segurança:</strong> Valores de balanço positivo extremo (>1000ml) ou negativo extremo (<-1000ml) devem ser comunicados imediatamente à equipe médica.</p>
+                    <p class="mt-2"><strong>Referência:</strong> Potter & Perry - Fundamentos de Enfermagem.</p>
+                </div>
+            </section>
+         </div>
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside class="space-y-6 sticky top-28 self-start">
+         <div class="sidebar-module">
+            <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white font-nunito"><i class="fa-solid fa-trophy"></i> Desafio Clínico</h3>
+            <p class="text-sm text-white/90 mb-6 font-medium leading-relaxed font-inter">Teste seus conhecimentos sobre reposição volêmica e distúrbios eletrolíticos.</p>
+            <button onclick="redirectSimulados()" class="w-full bg-white text-nurse-primary font-black py-3 rounded-xl hover:bg-slate-100 transition shadow-lg text-sm uppercase tracking-wide">Acessar Simulados <i class="fa-solid fa-bolt ml-1"></i></button>
+         </div>
+
+         <div class="sidebar-module from-teal-700 to-nurse-secondary shadow-nurse-accent/20">
+            <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white font-nunito"><i class="fas fa-share-nodes"></i> Compartilhar</h3>
+            <div class="flex gap-3 flex-wrap justify-start">
+                <button class="share-btn hover:text-blue-600" onclick="share('facebook')"><i class="fab fa-facebook-f"></i></button>
+                <button class="share-btn hover:text-green-500" onclick="share('whatsapp')"><i class="fab fa-whatsapp"></i></button>
+                <button class="share-btn hover:text-blue-800" onclick="share('linkedin')"><i class="fab fa-linkedin-in"></i></button>
+                <button class="share-btn hover:text-gray-300" onclick="copyLink()"><i class="fas fa-link"></i></button>
+            </div>
+         </div>
+      </aside>
     </div>
 
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-        <!-- Breadcrumb -->
-        <nav class="flex text-sm text-slate-500 mb-8 font-inter">
-            <ol class="flex items-center space-x-2">
-                <li><a href="https://www.calculadorasdeenfermagem.com.br" class="hover:text-nurse-secondary transition-colors">Início</a></li>
-                <li><span>></span> <span>Calculadoras Clínicas</span></li>
-                <li><span>></span> <span class="text-nurse-primary dark:text-nurse-secondary font-bold font-nunito">Balanço Hídrico</span></li>
-            </ol>
-        </nav>
-
-        <!-- Título -->
-        <header class="mb-12 text-center md:text-left">
-            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito">Calculadoras Clínicas</span>
-            <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 leading-tight font-nunito tracking-tight">Cálculo de Balanço Hídrico</h1>
-            <div class="w-24 h-1.5 bg-nurse-secondary rounded-full mb-8 mx-auto md:mx-0"></div>
-            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium font-inter max-w-3xl">
-                Controle rigoroso de entradas e saídas de líquidos para suporte à decisão clínica e equilíbrio volêmico.
-            </p>
-        </header>
-
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
-            <!-- Coluna Principal -->
-            <div class="lg:col-span-3 space-y-10">
-                
-                <!-- Abas -->
-                <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-8 font-nunito font-bold">
-                    <button onclick="showTab('calc')" id="btn-tab-calc" class="px-6 py-3 border-b-2 tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all">
-                        <i class="fa-solid fa-calculator"></i> Calculadora
-                    </button>
-                    <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
-                        <i class="fa-solid fa-circle-info"></i> Sobre
-                    </button>
-                    <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
-                        <i class="fa-solid fa-clipboard-list"></i> Como Usar?
-                    </button>
-                    <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
-                        <i class="fa-solid fa-microscope"></i> Informações Técnicas
-                    </button>
-                </div>
-
-                <!-- Painel da Calculadora -->
-                <section id="pane-calc" class="space-y-8 animate-in fade-in duration-500">
-                    
-                    <!-- Dados do Paciente -->
-                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
-                        <h3 class="text-lg font-black text-nurse-primary dark:text-white mb-6 uppercase tracking-tight font-nunito">
-                            Dados do Paciente
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Nome Completo</label>
-                                <input type="text" id="patient_name" placeholder="Ex: João Silva" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Data de Nascimento</label>
-                                <input type="date" id="patient_birthdate" onchange="updateAge()" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
-                                <p id="patient-age-display" class="text-[10px] text-nurse-secondary font-bold mt-1 uppercase tracking-wider font-nunito"></p>
-                            </div>
-                        </div>
+    <!-- RELACIONADOS & FOOTER -->
+    <section id="related-section" class="bg-slate-200/50 dark:bg-nurse-bgDark py-24 border-t border-slate-300 dark:border-slate-800 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 mt-24">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-black mb-16 flex items-center justify-center gap-4 font-nunito"><i class="fa-solid fa-layer-group text-nurse-accent"></i> Conteúdo Relacionado</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <a href="insulina.html" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full text-left">
+                    <div class="relative h-52 bg-nurse-primary/5 flex items-center justify-center overflow-hidden shrink-0">
+                        <i class="fa-solid fa-syringe text-6xl text-nurse-primary group-hover:scale-110 transition-transform duration-700"></i>
+                        <span class="tag-pill-abs absolute bottom-4 left-4">Calculadora</span>
                     </div>
-
-                    <!-- Parâmetros do Cálculo -->
-                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
-                        <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest border-b border-gray-100 dark:border-slate-800 pb-2 font-nunito">Parâmetros do Cálculo</h3>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <!-- Ganhos -->
-                            <div class="space-y-4 font-inter">
-                                <h4 class="text-xs font-black uppercase text-nurse-primary dark:text-nurse-secondary tracking-widest flex items-center gap-2">
-                                    <i class="fa-solid fa-plus-circle"></i> Ingestão (Ganhos ml)
-                                </h4>
-                                <div class="grid grid-cols-1 gap-4">
-                                    <div class="space-y-1">
-                                        <label class="text-[10px] font-bold uppercase text-gray-400 tracking-tighter">Via Oral</label>
-                                        <input type="number" id="ganho_oral" placeholder="0" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
-                                    </div>
-                                    <div class="space-y-1">
-                                        <label class="text-[10px] font-bold uppercase text-gray-400 tracking-tighter">Sondas (Enteral)</label>
-                                        <input type="number" id="ganho_sonda" placeholder="0" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
-                                    </div>
-                                    <div class="space-y-1">
-                                        <label class="text-[10px] font-bold uppercase text-gray-400 tracking-tighter">Parenteral (EV/Soros)</label>
-                                        <input type="number" id="ganho_ev" placeholder="0" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
-                                    </div>
-                                    <div class="space-y-1">
-                                        <label class="text-[10px] font-bold uppercase text-gray-400 tracking-tighter">Outros Ganhos</label>
-                                        <input type="number" id="ganho_outros" placeholder="0" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Perdas -->
-                            <div class="space-y-4 font-inter">
-                                <h4 class="text-xs font-black uppercase text-red-500 tracking-widest flex items-center gap-2">
-                                    <i class="fa-solid fa-minus-circle"></i> Eliminação (Perdas ml)
-                                </h4>
-                                <div class="grid grid-cols-1 gap-4">
-                                    <div class="space-y-1">
-                                        <label class="text-[10px] font-bold uppercase text-gray-400 tracking-tighter">Diurese (Urina)</label>
-                                        <input type="number" id="perda_urina" placeholder="0" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-red-400">
-                                    </div>
-                                    <div class="space-y-1">
-                                        <label class="text-[10px] font-bold uppercase text-gray-400 tracking-tighter">Drenos / Estomas</label>
-                                        <input type="number" id="perda_drenos" placeholder="0" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-red-400">
-                                    </div>
-                                    <div class="space-y-1">
-                                        <label class="text-[10px] font-bold uppercase text-gray-400 tracking-tighter">Vômitos / SNG Aberta</label>
-                                        <input type="number" id="perda_vomitos" placeholder="0" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-red-400">
-                                    </div>
-                                    <div class="space-y-1">
-                                        <label class="text-[10px] font-bold uppercase text-gray-400 tracking-tighter">Outras Perdas</label>
-                                        <input type="number" id="perda_outros" placeholder="0" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-red-400">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-10 max-w-xl mx-auto font-nunito">
-                            <button onclick="handleCalculate()" class="btn-action bg-nurse-primary text-white hover:bg-nurse-primary/90 shadow-lg shadow-nurse-primary/20">
-                                <i class="fa-solid fa-calculator"></i> Calcular
-                            </button>
-                            <button onclick="handleReset()" class="btn-action bg-gray-100 dark:bg-slate-800 text-gray-500 hover:bg-gray-200">
-                                <i class="fa-solid fa-rotate-left"></i> Limpar Tudo
-                            </button>
-                        </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-secondary transition-colors font-nunito line-clamp-2">Cálculo de Insulina</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">Aspiração segura de doses de insulina.</p>
+                        <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2 mt-auto">Acessar <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
                     </div>
-
-                    <!-- Resultados -->
-                    <div id="results-section" class="hidden space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-                        <div id="result-card-container" class="p-10 rounded-[3rem] shadow-2xl transition-all duration-500 text-white font-nunito">
-                            <div class="flex flex-col md:flex-row items-center gap-10">
-                                <div class="w-40 h-40 rounded-full border-4 border-white/20 flex flex-col items-center justify-center bg-black/10 backdrop-blur-md">
-                                    <span id="res-balanco-final" class="text-4xl font-black text-white">+0</span>
-                                    <span class="text-[10px] uppercase font-bold text-white/80 tracking-widest">ml / 24h</span>
-                                </div>
-                                <div class="text-center md:text-left flex-grow">
-                                    <h3 class="text-2xl font-black italic mb-2 text-white">Balanço Hídrico</h3>
-                                    <div class="grid grid-cols-2 gap-4 mb-4 font-inter">
-                                        <div class="bg-white/10 p-3 rounded-xl">
-                                            <p class="text-[10px] uppercase font-bold text-white/60">Total Ganhos</p>
-                                            <p id="res-total-ganhos" class="text-xl font-bold">0 ml</p>
-                                        </div>
-                                        <div class="bg-white/10 p-3 rounded-xl">
-                                            <p class="text-[10px] uppercase font-bold text-white/60">Total Perdas</p>
-                                            <p id="res-total-perdas" class="text-xl font-bold">0 ml</p>
-                                        </div>
-                                    </div>
-                                    <p id="res-classificacao" class="font-bold text-lg text-white uppercase tracking-tight"></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Ações Secundárias -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-nunito">
-                            <button onclick="handleSearchNanda()" class="btn-action border-2 border-nurse-secondary text-nurse-secondary hover:bg-nurse-secondary hover:text-white">
-                                <i class="fa-solid fa-book-medical"></i> Diagnóstico (NANDA, NIC e NOC)
-                            </button>
-                            <button id="btn-generate-pdf" onclick="generatePDF()" class="btn-action bg-nurse-primary text-white hover:opacity-90">
-                                <i class="fa-solid fa-file-pdf"></i> <span id="pdf-button-text">Gerar PDF</span>
-                            </button>
-                        </div>
-
-                        <!-- Auditoria do Cálculo -->
-                        <div class="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm font-inter">
-                            <h4 class="font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest border-b pb-2 font-nunito flex items-center gap-2">
-                                <i class="fa-solid fa-magnifying-glass-chart text-nurse-secondary"></i> Auditoria do Cálculo
-                            </h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                <div class="space-y-2">
-                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Paciente:</p>
-                                    <p id="audit-nome" class="text-xs font-bold text-gray-600 dark:text-gray-300">-</p>
-                                    <p id="audit-idade" class="text-[10px] text-gray-400 font-bold">-</p>
-                                </div>
-                                <div class="space-y-2">
-                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Detalhamento Entradas:</p>
-                                    <ul id="audit-detalhe-ganhos" class="text-[10px] text-gray-500 space-y-1"></ul>
-                                </div>
-                                <div class="space-y-2">
-                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Detalhamento Saídas:</p>
-                                    <ul id="audit-detalhe-perdas" class="text-[10px] text-gray-500 space-y-1"></ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Checklists -->
-                        <div class="space-y-6">
-                            <div class="bg-white dark:bg-slate-900/50 p-6 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
-                                <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-4 uppercase tracking-widest font-nunito flex items-center gap-2">
-                                    <i class="fa-solid fa-list-check"></i> 9 Certos da Administração
-                                </h3>
-                                <div id="checklist-certos" class="grid grid-cols-1 sm:grid-cols-3 gap-2"></div>
-                            </div>
-                            <div class="bg-white dark:bg-slate-900/50 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
-                                <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary p-6 uppercase tracking-widest font-nunito border-b border-gray-100 dark:border-slate-800 flex items-center gap-2">
-                                    <i class="fa-solid fa-shield-halved"></i> Metas Internacionais de Segurança
-                                </h3>
-                                <div id="checklist-metas" class="p-6 space-y-3 font-inter"></div>
-                            </div>
-                        </div>
+                </a>
+                <a href="heparina.html" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full text-left">
+                    <div class="relative h-52 bg-nurse-primary/5 flex items-center justify-center overflow-hidden shrink-0">
+                        <i class="fa-solid fa-vial text-6xl text-nurse-primary group-hover:scale-110 transition-transform duration-700"></i>
+                        <span class="tag-pill-abs absolute bottom-4 left-4">Calculadora</span>
                     </div>
-                </section>
-
-                <section id="pane-teoria" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter">
-                    <h2 class="font-nunito font-black text-nurse-primary">Sobre o Balanço Hídrico</h2>
-                    <p>O Balanço Hídrico (BH) é a contabilização rigorosa de todos os líquidos que entram e saem do organismo em um período de 24 horas. É uma ferramenta fundamental na avaliação da função renal, cardíaca e no ajuste de terapias diuréticas ou de reposição volêmica.</p>
-                </section>
-
-                <section id="pane-instrucoes" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter">
-                    <h2 class="font-nunito font-black text-nurse-primary">Como Usar?</h2>
-                    <ol class="space-y-4">
-                        <li>Inicie preenchendo o nome e a data de nascimento do paciente para a auditoria.</li>
-                        <li>Registre todos os volumes de ganhos (ingestão oral, enteral, EV) acumulados no período.</li>
-                        <li>Registre todos os volumes de perdas (urina, drenos, vômitos, evacuação) acumulados no período.</li>
-                        <li>Clique em **Calcular** para obter o saldo final e a conduta clínica recomendada.</li>
-                    </ol>
-                </section>
-
-                <section id="pane-tecnica" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter">
-                    <h2 class="font-nunito font-black text-nurse-primary">Informações Técnicas</h2>
-                    <p>Conforme os protocolos institucionais e a Meta 2 de Segurança do Paciente (Comunicação Efetiva), o registro do balanço deve ser contínuo. Valores de balanço positivo extremo (>1000ml) ou negativo extremo (<-1000ml) devem ser comunicados imediatamente à equipe médica para avaliação de intervenção.</p>
-                </section>
-
-                <div class="pt-10 border-t border-gray-100 dark:border-slate-800">
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-gray-200 dark:bg-slate-800 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-wider font-nunito">#BalancoHidrico</span>
-                        <span class="px-3 py-1 bg-gray-200 dark:bg-slate-800 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-wider font-nunito">#MonitoramentoClinico</span>
-                        <span class="px-3 py-1 bg-gray-200 dark:bg-slate-800 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-wider font-nunito">#SegurancaDoPaciente</span>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-secondary transition-colors font-nunito line-clamp-2">Cálculo de Heparina</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">Segurança na administração de anticoagulantes.</p>
+                        <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2 mt-auto">Acessar <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
                     </div>
-                </div>
+                </a>
+                 <a href="gotejamento.html" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full text-left">
+                    <div class="relative h-52 bg-nurse-secondary/5 flex items-center justify-center overflow-hidden shrink-0">
+                        <i class="fa-solid fa-droplet text-6xl text-nurse-secondary group-hover:scale-110 transition-transform duration-700"></i>
+                        <span class="tag-pill-abs absolute bottom-4 left-4">Calculadora</span>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-secondary transition-colors font-nunito line-clamp-2">Gotejamento de Soro</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">Cálculo de gotas e microgotas para infusões.</p>
+                        <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2 mt-auto">Acessar <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
+                    </div>
+                </a>
             </div>
-
-            <!-- Sidebar -->
-            <aside class="space-y-6 font-nunito">
-                <div class="sidebar-card bg-nurse-primary text-white">
-                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold font-nunito"><i class="fas fa-list mr-2"></i> Índice</h3>
-                    <ul class="toc-list font-inter">
-                        <li><a href="#pane-calc" onclick="showTab('calc')">1. Calculadora</a></li>
-                        <li><a href="#pane-teoria" onclick="showTab('teoria')">2. Sobre</a></li>
-                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes')">3. Como Usar</a></li>
-                        <li><a href="#pane-tecnica" onclick="showTab('tecnica')">4. Informações Técnicas</a></li>
-                    </ul>
-                </div>
-
-                <div class="sidebar-card bg-nurse-primary-light text-white">
-                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold font-nunito"><i class="fas fa-share-nodes mr-2"></i> Compartilhar</h3>
-                    <div class="flex flex-wrap gap-3 justify-between">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.calculadorasdeenfermagem.com.br/balancohidrico.html" target="_blank" class="share-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/" target="_blank" class="share-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://api.whatsapp.com/send?text=Calculadora de Balanço Hídrico Segura: https://www.calculadorasdeenfermagem.com.br/balancohidrico.html" target="_blank" class="share-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.calculadorasdeenfermagem.com.br/balancohidrico.html" target="_blank" class="share-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://twitter.com/intent/tweet?text=Confira a Calculadora de Balanço Hídrico Profissional em: https://www.calculadorasdeenfermagem.com.br/balancohidrico.html" target="_blank" class="share-btn" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
-                    </div>
-                </div>
-                <div id="qrcode-source" class="hidden"></div>
-            </aside>
         </div>
+    </section>
 
-        <!-- Ferramentas Relacionadas -->
-        <section class="bg-slate-100 dark:bg-slate-900/40 py-24 border-t border-slate-200 dark:border-slate-800 mt-24 relative z-10 rounded-[3rem]">
-            <div class="max-w-7xl mx-auto px-4 text-center">
-                <h2 class="text-3xl md:text-5xl font-black text-nurse-primary dark:text-white mb-16 flex items-center justify-center gap-6 font-nunito">
-                    <i class="fa-solid fa-toolbox text-nurse-secondary"></i> Ferramentas Relacionadas
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 text-left">
-                    <a href="insulina.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
-                        <div class="relative h-60 overflow-hidden">
-                            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-insulina.webp" alt="Insulina" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                            <span class="absolute top-6 left-6 px-4 py-1.5 bg-nurse-secondary text-white text-[10px] font-bold uppercase rounded-full shadow-lg font-nunito">Medicação</span>
-                        </div>
-                        <div class="p-8">
-                            <h3 class="text-2xl font-bold text-nurse-primary dark:text-white mb-3 group-hover:text-nurse-secondary transition-colors font-nunito">Cálculo de Insulina</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-inter leading-relaxed">Aspiração precisa de insulina U-100 para segurança glicêmica.</p>
-                            <span class="text-nurse-secondary font-bold text-xs uppercase tracking-widest flex items-center gap-2 font-nunito font-bold">Acessar <i class="fa-solid fa-arrow-right"></i></span>
-                        </div>
-                    </a>
+    <section class="max-w-7xl mx-auto px-4 py-12 border-t border-slate-200 dark:border-slate-800">
+        <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 flex flex-col md:flex-row gap-10 items-center border border-slate-200 dark:border-slate-700 shadow-sm mb-12">
+            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Autor" class="w-28 h-28 rounded-full object-cover shadow-xl border-4 border-white dark:border-slate-800"/>
+            <div class="text-center md:text-left">
+                <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400 font-nunito">Calculadoras de Enfermagem</h3>
+                <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed max-w-2xl font-inter italic">"A precisão técnica é a expressão máxima do cuidado ético ao paciente."</p>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-2 items-center">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2 flex items-center"><i class="fa-solid fa-tags mr-2"></i> Tópicos:</span>
+            <span class="tag-pill-footer">#Enfermagem</span><span class="tag-pill-footer">#BalançoHídrico</span><span class="tag-pill-footer">#UTI</span>
+        </div>
+    </section>
+  </main>
+
+  <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px] transition-opacity duration-500"></div>
+  
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" crossorigin="anonymous" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" crossorigin="anonymous" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" crossorigin="anonymous" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" crossorigin="anonymous" defer></script>
+
+  <!-- TEMPLATE PDF OCULTO -->
+  <div id="pdf-render-template">
+    <div style="flex: 1; display: flex; flex-direction: column;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #1A3E74; padding-bottom: 10px; margin-bottom: 20px;">
+        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" style="height: 50px;" alt="Logo"/>
+        <div style="text-align: right;">
+          <h1 style="font-family: 'Nunito Sans', sans-serif; font-size: 18px; color: #1A3E74; margin: 0; font-weight: 900; text-transform: uppercase;">Registro de Balanço Hídrico (24h)</h1>
+          <p style="font-size: 9px; color: #64748b; margin: 0; font-weight: 600;">CALCULADORAS CLÍNICAS - ENFERMAGEM</p>
+        </div>
+      </div>
+      <div id="pdf-body" style="font-size: 10px; font-family: 'Inter', sans-serif; flex: 1;"></div>
+    </div>
+    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: flex-end;">
+      <div style="font-size: 8px; color: #94a3b8;"><p id="pdf-footer-timestamp" style="margin: 0; font-weight: 700;"></p></div>
+      <div id="pdf-qrcode-container" style="width: 60px; height: 60px;"></div>
+    </div>
+  </div>
+
+  <script>
+    const APP_STATE = { data: null };
+    const CONSTS = {
+        METAS: [ { id: 1, text: "Identificar corretamente o paciente", class: "glass-meta-blue" }, { id: 2, text: "Comunicação Efetiva (Passagem de Plantão)", class: "glass-meta-orange" }, { id: 6, text: "Reduzir o risco de quedas (Desequilíbrio)", class: "glass-meta-blue" } ]
+    };
+
+    const safeSet = (id, val, isHTML=false) => { const el=document.getElementById(id); if(el) el[isHTML?'innerHTML':'innerText']=val; };
+    const showNotification = (msg) => {
+        const c=document.getElementById('notification-container'); if(!c)return;
+        const t=document.createElement('div'); t.className='toast-msg'; t.innerHTML=`<i class="fa-solid fa-circle-info text-nurse-secondary text-lg"></i><span>${msg}</span>`;
+        c.appendChild(t); setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(50px)';setTimeout(()=>t.remove(),500)},3500);
+    };
+
+    function calcularBalanco() {
+        const pName = document.getElementById('patient_name')?.value || "Não Identificado";
+        const pDob = document.getElementById('patient_birthdate')?.value || "Não Informada";
+
+        // Ganhos
+        const gOral = parseFloat(document.getElementById('ganhoOral').value) || 0;
+        const gSonda = parseFloat(document.getElementById('ganhoSonda').value) || 0;
+        const gEv = parseFloat(document.getElementById('ganhoEv').value) || 0;
+        const gOutros = parseFloat(document.getElementById('ganhoOutros').value) || 0;
+        const tGanhos = gOral + gSonda + gEv + gOutros;
+
+        // Perdas
+        const pUrina = parseFloat(document.getElementById('perdaUrina').value) || 0;
+        const pDrenos = parseFloat(document.getElementById('perdaDrenos').value) || 0;
+        const pVomitos = parseFloat(document.getElementById('perdaVomitos').value) || 0;
+        const pOutros = parseFloat(document.getElementById('perdaOutros').value) || 0;
+        const tPerdas = pUrina + pDrenos + pVomitos + pOutros;
+
+        const balanco = tGanhos - tPerdas;
+        
+        APP_STATE.data = {
+            name: pName, dob: pDob,
+            gains: { oral: gOral, sonda: gSonda, ev: gEv, outros: gOutros, total: tGanhos },
+            losses: { urina: pUrina, drenos: pDrenos, vomitos: pVomitos, outros: pOutros, total: tPerdas },
+            balance: balanco,
+            timestamp: new Date().toLocaleString()
+        };
+
+        updateUI(APP_STATE.data);
+        
+        const wrap = document.getElementById('results-wrapper');
+        wrap.classList.remove('hidden');
+        wrap.scrollIntoView({ behavior: 'smooth' });
+        showNotification("Balanço Calculado!");
+    }
+
+    function updateUI(d) {
+        safeSet('res-total-ganhos', `${d.gains.total} ml`);
+        safeSet('res-total-perdas', `${d.losses.total} ml`);
+        
+        const signal = d.balance > 0 ? '+' : '';
+        const resEl = document.getElementById('res-final');
+        resEl.innerText = `${signal}${d.balance}`;
+        
+        const interpEl = document.getElementById('res-interpretacao');
+        if (d.balance > 500) {
+            interpEl.innerHTML = `<span class="text-nurse-primary"><i class="fa-solid fa-arrow-trend-up"></i> Balanço Positivo</span> (Risco de Hipervolemia)`;
+            resEl.className = "text-6xl md:text-8xl font-black text-nurse-primary dark:text-cyan-400 tracking-tighter font-nunito leading-none mb-4";
+        } else if (d.balance < -500) {
+            interpEl.innerHTML = `<span class="text-red-500"><i class="fa-solid fa-arrow-trend-down"></i> Balanço Negativo</span> (Risco de Desidratação)`;
+            resEl.className = "text-6xl md:text-8xl font-black text-red-500 tracking-tighter font-nunito leading-none mb-4";
+        } else {
+            interpEl.innerHTML = `<span class="text-green-500"><i class="fa-solid fa-scale-balanced"></i> Equilíbrio Hídrico</span>`;
+            resEl.className = "text-6xl md:text-8xl font-black text-green-500 tracking-tighter font-nunito leading-none mb-4";
+        }
+
+        // AUDITORIA DO CÁLCULO
+        safeSet('audit-nome', d.name); safeSet('audit-nasc', d.dob);
+        safeSet('audit-total-ganhos', `${d.gains.total} ml`);
+        safeSet('audit-total-perdas', `${d.losses.total} ml`);
+        safeSet('audit-resultado', `${signal}${d.balance} ml`);
+
+        // Checklists (9 Certos removido pois é Balanço Hídrico, Metas mantidas)
+        safeSet('checklist-metas', CONSTS.METAS.map(m=>`<label class="glass-meta ${m.class} cursor-pointer hover:scale-[1.02]"><input type="checkbox" class="w-5 h-5 accent-white shrink-0"><span class="text-xs font-black uppercase">${m.id}. ${m.text}</span></label>`).join(''), true);
+    }
+
+    function showNanda() {
+        let q = 'NANDA NIC NOC Balanço Hídrico Enfermagem';
+        if (APP_STATE.data) q = `Diagnóstico Enfermagem Balanço ${APP_STATE.data.balance > 0 ? 'Positivo' : 'Negativo'} Excessivo`;
+        showNotification("Pesquisando diagnósticos...");
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(q)}`, '_blank');
+    }
+
+    async function gerarPDF() {
+        if (!APP_STATE.data) return;
+        showNotification("Gerando PDF...");
+        const d = APP_STATE.data;
+        safeSet('pdf-footer-timestamp', `Data: ${d.timestamp}`);
+        safeSet('pdf-body', `
+            <div style="padding:15px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:15px;font-size:11px;">
+                <p>Paciente: <strong>${d.name}</strong> | Nasc: <strong>${d.dob}</strong></p>
+            </div>
+            <div style="display:flex;gap:15px;margin-bottom:15px;">
+                <div style="flex:1;border:1px solid #00bcd4;border-radius:10px;padding:10px;">
+                   <h3 style="color:#00bcd4;font-weight:900;border-bottom:1px solid #e2e8f0;margin:0 0 10px 0;">GANHOS (+)</h3>
+                   <p>Oral: ${d.gains.oral} ml</p>
+                   <p>Sonda: ${d.gains.sonda} ml</p>
+                   <p>EV: ${d.gains.ev} ml</p>
+                   <p>Outros: ${d.gains.outros} ml</p>
+                   <p style="font-weight:800;margin-top:5px;">TOTAL: ${d.gains.total} ml</p>
+                </div>
+                <div style="flex:1;border:1px solid #ef4444;border-radius:10px;padding:10px;">
+                   <h3 style="color:#ef4444;font-weight:900;border-bottom:1px solid #e2e8f0;margin:0 0 10px 0;">PERDAS (-)</h3>
+                   <p>Urina: ${d.losses.urina} ml</p>
+                   <p>Drenos: ${d.losses.drenos} ml</p>
+                   <p>Vômitos: ${d.losses.vomitos} ml</p>
+                   <p>Outros: ${d.losses.outros} ml</p>
+                   <p style="font-weight:800;margin-top:5px;">TOTAL: ${d.losses.total} ml</p>
                 </div>
             </div>
-        </section>
-    </main>
+            <div style="padding:15px;background:#1A3E74;color:white;border-radius:10px;text-align:center;">
+                <h2 style="margin:0;font-size:16px;">BALANÇO FINAL: ${d.balance > 0 ? '+' : ''}${d.balance} ml</h2>
+            </div>`, true);
 
-    <div id="footer-container"></div>
-    <div id="modals-container"></div>
-
-    <script src="assets/js/utils.js"></script>
-    <script src="assets/js/template-engine.js"></script>
-    <script src="assets/js/global-main.js"></script>
-
-    <script>
-        const ALL_CERTOS = ['Paciente', 'Horário', 'Registro', 'Volume', 'Via', 'Conferência', 'Aspecto', 'Unidade', 'Plantão'];
-        const SAFETY_GOALS = [
-            { id: 1, text: "Identificar corretamente o paciente", colorClass: "bg-red-100 border-red-500 text-red-800", related: true },
-            { id: 2, text: "Melhorar a comunicação efetiva", colorClass: "bg-yellow-100 border-yellow-500 text-yellow-800", related: true },
-            { id: 3, text: "Segurança na administração de medicamentos", colorClass: "bg-blue-100 border-blue-500 text-blue-800", related: true },
-            { id: 5, text: "Prevenção de infecções (Higiene das Mãos)", colorClass: "bg-green-100 border-green-500 text-green-800", related: true }
-        ];
-
-        function showTab(id) {
-            ['calc', 'teoria', 'instrucoes', 'tecnica'].forEach(t => {
-                document.getElementById('pane-' + t)?.classList.add('hidden');
-                document.getElementById('btn-tab-' + t)?.classList.remove('tab-btn-active');
-            });
-            document.getElementById('pane-' + id)?.classList.remove('hidden');
-            document.getElementById('btn-tab-' + id)?.classList.add('tab-btn-active');
+        const qc = document.getElementById('pdf-qrcode-container');
+        if (qc) { 
+           qc.innerHTML = ''; 
+           if(window.QRCode) {
+             try { new QRCode(qc, { text: window.location.href, width: 60, height: 60 }); } catch(e) { console.warn("QR Error", e); }
+           }
         }
+        
+        try {
+            if (!window.jspdf || !window.html2canvas) { showNotification("Erro: Biblioteca PDF não carregada."); return; }
+            const canvas = await html2canvas(document.getElementById('pdf-render-template'), { scale: 2, useCORS: true });
+            const doc = new window.jspdf.jsPDF('p', 'pt', 'a4');
+            doc.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, doc.internal.pageSize.getWidth(), (canvas.height * doc.internal.pageSize.getWidth()) / canvas.width);
+            doc.save(`BalancoHidrico-${d.name.replace(/\s+/g, '-')}.pdf`);
+        } catch (e) { console.warn("PDF Error", e); showNotification("Erro ao gerar PDF."); }
+    }
 
-        const calculateAge = (dob) => {
-            if (!dob) return null;
-            const diff = Date.now() - new Date(dob).getTime();
-            const years = Math.abs(new Date(diff).getUTCFullYear() - 1970);
-            return years > 0 ? `${years} anos` : 'Recém-nascido';
-        };
-
-        const updateAge = () => {
-            const dob = document.getElementById('patient_birthdate').value;
-            document.getElementById('patient-age-display').innerText = dob ? `Idade: ${calculateAge(dob)}` : '';
-        };
-
-        const renderChecklists = () => {
-            document.getElementById('checklist-certos').innerHTML = ALL_CERTOS.map((item, idx) => `
-                <label class="flex items-center gap-3 p-2 bg-gray-50 dark:bg-slate-800 rounded-xl cursor-pointer text-[10px] font-bold hover:bg-nurse-secondary/10 transition-colors font-nunito">
-                    <input type="checkbox" id="check-certo-${idx}" class="w-4 h-4 rounded accent-nurse-secondary"> ${item} Correto
-                </label>
-            `).join('');
-
-            document.getElementById('checklist-metas').innerHTML = SAFETY_GOALS.map((meta, idx) => `
-                <label class="flex items-center p-3 rounded-xl border-l-4 shadow-sm cursor-pointer transition-all hover:brightness-95 ${meta.colorClass}">
-                    <input type="checkbox" id="check-meta-${idx}" class="mr-3 w-4 h-4 accent-nurse-primary">
-                    <span class="text-sm font-bold">Meta ${meta.id}: ${meta.text}</span>
-                </label>
-            `).join('');
-        };
-
-        function handleCalculate() {
-            const pName = document.getElementById('patient_name').value || "Não Informado";
-            const pDob = document.getElementById('patient_birthdate').value;
-
-            // Ganhos
-            const gOral = parseFloat(document.getElementById('ganho_oral').value) || 0;
-            const gSonda = parseFloat(document.getElementById('ganho_sonda').value) || 0;
-            const gEv = parseFloat(document.getElementById('ganho_ev').value) || 0;
-            const gOutros = parseFloat(document.getElementById('ganho_outros').value) || 0;
-            const tGanhos = gOral + gSonda + gEv + gOutros;
-
-            // Perdas
-            const pUrina = parseFloat(document.getElementById('perda_urina').value) || 0;
-            const pDrenos = parseFloat(document.getElementById('perda_drenos').value) || 0;
-            const pVomitos = parseFloat(document.getElementById('perda_vomitos').value) || 0;
-            const pOutros = parseFloat(document.getElementById('perda_outros').value) || 0;
-            const tPerdas = pUrina + pDrenos + pVomitos + pOutros;
-
-            const balanco = tGanhos - tPerdas;
-
-            document.getElementById('res-total-ganhos').innerText = `${tGanhos} ml`;
-            document.getElementById('res-total-perdas').innerText = `${tPerdas} ml`;
-            document.getElementById('res-balanco-final').innerText = `${balanco > 0 ? '+' : ''}${balanco}`;
-
-            const card = document.getElementById('result-card-container');
-            const classText = document.getElementById('res-classificacao');
-
-            if (balanco > 500) {
-                card.className = "p-10 rounded-[3rem] shadow-2xl bg-nurse-primary text-white";
-                classText.innerText = "BALANÇO POSITIVO: Reter líquidos em excesso.";
-            } else if (balanco < -500) {
-                card.className = "p-10 rounded-[3rem] shadow-2xl bg-red-600 text-white";
-                classText.innerText = "BALANÇO NEGATIVO: Déficit hídrico importante.";
-            } else {
-                card.className = "p-10 rounded-[3rem] shadow-2xl bg-nurse-primary-light text-white";
-                classText.innerText = "EQUILÍBRIO HÍDRICO: Estabilidade mantida.";
-            }
-
-            // Auditoria UI
-            document.getElementById('audit-nome').innerText = pName;
-            document.getElementById('audit-idade').innerText = pDob ? `${calculateAge(pDob)}` : "-";
-            document.getElementById('audit-detalhe-ganhos').innerHTML = `
-                <li>Oral: ${gOral}ml</li><li>Sonda: ${gSonda}ml</li><li>EV: ${gEv}ml</li><li>Outros: ${gOutros}ml</li>
-            `;
-            document.getElementById('audit-detalhe-perdas').innerHTML = `
-                <li>Urina: ${pUrina}ml</li><li>Drenos: ${pDrenos}ml</li><li>Vômitos: ${pVomitos}ml</li><li>Outros: ${pOutros}ml</li>
-            `;
-
-            renderChecklists();
-            document.getElementById('results-section').classList.remove('hidden');
-            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+    function copiarResumo() {
+        if (!APP_STATE.data) return;
+        const d = APP_STATE.data;
+        const t = `BALANÇO HÍDRICO\nPaciente: ${d.name}\nGanhos: ${d.gains.total} ml\nPerdas: ${d.losses.total} ml\nSALDO: ${d.balance > 0 ? '+' : ''}${d.balance} ml`;
+        
+        try {
+          const el = document.createElement("textarea");
+          el.value = t;
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+          showNotification("Resumo Copiado!");
+        } catch(e) {
+          showNotification("Erro ao copiar.");
         }
+    }
 
-        function handleReset() {
-            document.querySelectorAll('input').forEach(i => i.value = '');
-            document.getElementById('results-section').classList.add('hidden');
-            updateAge();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+    function switchTab(id) {
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`pane-${id}`)?.classList.remove('hidden');
+        document.getElementById(`btn-tab-${id}`)?.classList.add('active');
+        if (id === 'calc' && APP_STATE.data) document.getElementById('results-wrapper').classList.remove('hidden');
+    }
 
-        function handleSearchNanda() {
-            window.open(`https://www.google.com/search?q=NANDA+NIC+NOC+Balanco+Hidrico+Enfermagem`, '_blank');
-        }
+    function resetForm() {
+        document.querySelectorAll('input').forEach(i => i.value = '');
+        document.getElementById('results-wrapper').classList.add('hidden');
+        APP_STATE.data = null;
+        showNotification("Formulário limpo!");
+    }
 
-        async function generatePDF() {
-            const btn = document.getElementById('btn-generate-pdf');
-            const btnText = document.getElementById('pdf-button-text');
-            btnText.innerText = "Processando...";
-            btn.disabled = true;
-
-            try {
-                let deviceIp = "127.0.0.1";
-                try {
-                    const ipRes = await fetch('https://api.ipify.org?format=json');
-                    const ipData = await ipRes.json();
-                    deviceIp = ipData.ip;
-                } catch (e) {}
-
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                const pName = document.getElementById('patient_name').value || "Não Identificado";
-                
-                // Ganhos
-                const gOral = document.getElementById('ganho_oral').value || 0;
-                const gSonda = document.getElementById('ganho_sonda').value || 0;
-                const gEv = document.getElementById('ganho_ev').value || 0;
-                const gOutros = document.getElementById('ganho_outros').value || 0;
-                const tG = parseFloat(gOral) + parseFloat(gSonda) + parseFloat(gEv) + parseFloat(gOutros);
-
-                // Perdas
-                const pUrina = document.getElementById('perda_urina').value || 0;
-                const pDrenos = document.getElementById('perda_drenos').value || 0;
-                const pVomitos = document.getElementById('perda_vomitos').value || 0;
-                const pOutros = document.getElementById('perda_outros').value || 0;
-                const tP = parseFloat(pUrina) + parseFloat(pDrenos) + parseFloat(pVomitos) + parseFloat(pOutros);
-                
-                const balanco = tG - tP;
-
-                // Estilização PDF
-                doc.setFillColor(26, 62, 116);
-                doc.rect(5, 5, 2, 287, 'F'); 
-
-                doc.setDrawColor(26, 62, 116);
-                doc.setLineWidth(0.8);
-                doc.rect(12, 8, 185, 32);
-                try {
-                    const logoUrl = "https://www.calculadorasdeenfermagem.com.br/iconpages.webp";
-                    doc.addImage(logoUrl, 'WEBP', 16, 12, 22, 22);
-                } catch(e) {}
-
-                doc.setTextColor(26, 62, 116);
-                doc.setFont("helvetica", "bold");
-                doc.setFontSize(14);
-                doc.text("RELATÓRIO DE CÁLCULO DE BALANÇO HÍDRICO", 110, 26, { align: "center" });
-
-                doc.setTextColor(0);
-                doc.setFontSize(10);
-                doc.text(`Paciente: ${pName}`, 22, 55);
-                doc.line(22, 57, 192, 57);
-
-                doc.setFont("helvetica", "bold");
-                doc.text("ENTRADAS (Ganhos)", 22, 70);
-                doc.setFont("helvetica", "normal");
-                doc.text(`Via Oral: ${gOral}ml | Sondas: ${gSonda}ml | EV: ${gEv}ml | Outros: ${gOutros}ml`, 22, 78);
-                doc.text(`TOTAL ENTRADAS: ${tG}ml`, 22, 85);
-
-                doc.setFont("helvetica", "bold");
-                doc.text("SAÍDAS (Perdas)", 22, 100);
-                doc.setFont("helvetica", "normal");
-                doc.text(`Urina: ${pUrina}ml | Drenos: ${pDrenos}ml | Vômitos: ${pVomitos}ml | Outros: ${pOutros}ml`, 22, 108);
-                doc.text(`TOTAL SAÍDAS: ${tP}ml`, 22, 115);
-
-                doc.setFillColor(245, 245, 245);
-                doc.roundedRect(22, 125, 170, 25, 3, 3, 'F');
-                doc.setFont("helvetica", "bold");
-                doc.setFontSize(16);
-                doc.setTextColor(26, 62, 116);
-                doc.text(`BALANÇO FINAL: ${balanco > 0 ? '+' : ''}${balanco} ml / 24h`, 107, 142, { align: "center" });
-
-                doc.setTextColor(0);
-                doc.setFontSize(10);
-                doc.text("VALIDAÇÃO DOS 9 CERTOS", 22, 170);
-                doc.line(22, 172, 192, 172);
-                doc.setFontSize(8);
-                ALL_CERTOS.forEach((item, i) => {
-                    const chk = document.getElementById(`check-certo-${i}`).checked;
-                    doc.text(`${chk ? '[X]' : '[ ]'} ${item} Correto`, 25 + (Math.floor(i/3)*60), 180 + (i%3)*6);
-                });
-
-                const qrUrl = "https://www.calculadorasdeenfermagem.com.br";
-                const qrContainer = document.getElementById('qrcode-source');
-                qrContainer.innerHTML = "";
-                new QRCode(qrContainer, { text: qrUrl, width: 128, height: 128 });
-                
-                setTimeout(() => {
-                    const qrImg = qrContainer.querySelector('img').src;
-                    doc.addImage(qrImg, 'PNG', 165, 240, 25, 25);
-                    doc.line(22, 275, 192, 275);
-                    doc.setFontSize(7);
-                    doc.setTextColor(150);
-                    const now = new Date();
-                    doc.text(`Gerado em: ${now.toLocaleDateString('pt-BR')}, ${now.toLocaleTimeString('pt-BR')} - IP: ${deviceIp}`, 107, 282, { align: "center" });
-                    doc.text("www.calculadorasdeenfermagem.com.br", 107, 287, { align: "center" });
-                    doc.save(`BH_Audit_${pName.replace(/\s+/g, '_')}.pdf`);
-                    btnText.innerText = "Gerar PDF";
-                    btn.disabled = false;
-                }, 500);
-
-            } catch (error) {
-                console.error(error);
-                btnText.innerText = "Gerar PDF";
-                btn.disabled = false;
-            }
-        }
-    </script>
+    function validateBirthDate() {
+        const el = document.getElementById('patient_birthdate');
+        if (el?.value) { const p = el.value.split('-'); if (p[0].length > 4) el.value = `${p[0].substring(0,4)}-${p[1]}-${p[2]}`; }
+    }
+    
+    function preventNegative(e) { if(['-','e','+'].includes(e.key)) e.preventDefault(); }
+    function redirectSimulados() { window.open('https://simulados-para-enfermagem.com.br/', '_blank'); }
+    function copyLink() { 
+        try {
+          const el = document.createElement("textarea");
+          el.value = window.location.href;
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+          showNotification("Link copiado!"); 
+        } catch(e) { showNotification("Erro ao copiar link."); }
+    }
+    function share(p) {
+        const u = encodeURIComponent(window.location.href);
+        const m = { whatsapp: `https://api.whatsapp.com/send?text=${u}`, facebook: `https://www.facebook.com/sharer/sharer.php?u=${u}`, linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${u}` };
+        if(m[p]) window.open(m[p], '_blank');
+    }
+  </script>
 </body>
 </html>
