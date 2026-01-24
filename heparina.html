@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Calculadora de Heparina - Dosagem e Diluição | Calculadoras de Enfermagem</title>
+    
+    <!-- [FAVICON] -->
+    <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp">
 
     <!-- [1. CONFIGURAÇÃO E CARREGAMENTO DE MÓDULOS] -->
     <script>
         window.NURSE_CONFIG = {
             baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/',
-            version: 'v4.8.1',
+            version: 'v4.8.3',
             lastUpdate: '24/01/2026'
         };
 
@@ -35,18 +38,47 @@
             loadModule('header-container', 'header-v4');
             loadModule('footer-container', 'footer-v4');
 
-            // Delegação global para interatividade de módulos externos
+            // DELEGAÇÃO DE EVENTOS PARA COMPONENTES DINÂMICOS (MENU E ACESSIBILIDADE)
             document.addEventListener('click', (e) => {
-                const toggleBtn = e.target.closest('[data-toggle-menu]') || e.target.closest('.menu-toggle');
-                if (toggleBtn) {
-                    const menu = document.querySelector(toggleBtn.dataset.toggleMenu || '.mega-menu-container');
-                    if (menu) menu.classList.toggle('hidden');
+                const toggleMenuBtn = e.target.closest('[data-toggle-menu]') || e.target.closest('.menu-toggle') || e.target.closest('.btn-menu');
+                if (toggleMenuBtn) {
+                    e.preventDefault();
+                    const menuSelector = toggleMenuBtn.dataset.toggleMenu || '.mega-menu-container';
+                    const menu = document.querySelector(menuSelector);
+                    if (menu) {
+                        menu.classList.toggle('hidden');
+                        menu.classList.toggle('active');
+                    }
                 }
+
                 if (e.target.closest('#toggle-contrast') || e.target.closest('.btn-contrast')) {
+                    e.preventDefault();
                     document.documentElement.classList.toggle('dark');
+                    showNotification("Modo de exibição alterado.");
+                }
+
+                const btnFontUp = e.target.closest('#increase-font') || e.target.closest('.btn-font-up');
+                const btnFontDown = e.target.closest('#decrease-font') || e.target.closest('.btn-font-down');
+                const btnFontReset = e.target.closest('#reset-font') || e.target.closest('.btn-font-reset');
+
+                if (btnFontUp) {
+                    e.preventDefault();
+                    adjustFontSize(1);
+                } else if (btnFontDown) {
+                    e.preventDefault();
+                    adjustFontSize(-1);
+                } else if (btnFontReset) {
+                    e.preventDefault();
+                    document.documentElement.style.fontSize = '';
                 }
             });
         });
+
+        function adjustFontSize(delta) {
+            const root = document.documentElement;
+            const currentSize = parseFloat(window.getComputedStyle(root).fontSize);
+            root.style.fontSize = (currentSize + delta) + 'px';
+        }
     </script>
 
     <!-- [2. RECURSOS EXTERNOS] -->
@@ -88,7 +120,7 @@
         @layer components {
             .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2.5rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden text-left; }
             .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6 transition-all; }
-            .input-field { @apply w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-semibold; }
+            .input-field { @apply w-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-semibold text-slate-700 dark:text-white; }
             
             .btn-nurse-standard { @apply h-[60px] min-w-[200px] px-6 rounded-2xl font-bold transition-all active:scale-[0.98] flex items-center justify-center gap-3 text-sm shadow-md; }
             .btn-calc { @apply bg-nurse-primary text-white hover:bg-nurse-secondary w-full md:w-auto; }
@@ -201,11 +233,11 @@
                                 <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 md:p-16 border-2 border-nurse-primary/10 shadow-2xl text-center relative overflow-hidden">
                                     <span class="absolute top-6 left-8 text-[11px] font-black uppercase text-nurse-primary/30 tracking-widest">Resultado</span>
                                     <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-nurse-accent via-nurse-primary to-nurse-accent"></div>
-                                    <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4 text-center">Volume total a aspirar</p>
-                                    <div id="res-total" class="text-7xl md:text-9xl font-black text-[#1A3E74] dark:text-cyan-400 tracking-tighter font-nunito leading-none text-center">0,00</div>
-                                    <p class="text-xl font-black text-nurse-secondary mt-4 uppercase tracking-widest text-center">Mililitros (ml)</p>
+                                    <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4">Volume total a aspirar</p>
+                                    <div id="res-total" class="text-7xl md:text-9xl font-black text-[#1A3E74] dark:text-cyan-400 tracking-tighter font-nunito leading-none">0,00</div>
+                                    <p class="text-xl font-black text-nurse-secondary mt-4 uppercase tracking-widest">Mililitros (ml)</p>
                                     <div id="res-formula-box" class="mt-10 inline-block px-8 py-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl font-mono text-xs border border-slate-100 dark:border-slate-700 text-slate-500 shadow-inner italic"></div>
-                                    <div id="res-conduta" class="mt-6 text-center"></div>
+                                    <div id="res-conduta" class="mt-6"></div>
                                     <div class="mt-12 flex flex-wrap gap-4 justify-center">
                                         <button onclick="gerarPDF()" class="btn-nurse-standard btn-pdf"><i class="fa-solid fa-file-pdf"></i> Gerar PDF</button>
                                         <button onclick="copiarResumo()" class="btn-nurse-standard btn-copy"><i class="fa-solid fa-copy"></i> Copiar</button>
@@ -222,7 +254,7 @@
 
                                 <!-- AUDITORIA -->
                                 <div class="bg-white dark:bg-slate-900/40 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm font-inter text-left">
-                                    <h3 class="text-xs font-black uppercase tracking-widest mb-10 flex items-center gap-3 text-left">
+                                    <h3 class="text-xs font-black uppercase tracking-widest mb-10 flex items-center gap-3">
                                         <i class="fa-solid fa-clipboard-check text-xl"></i> Auditoria do cálculo
                                     </h3>
                                     <ul class="space-y-4 text-left">
@@ -256,44 +288,51 @@
                                         <i class="fa-solid fa-shield-halved text-nurse-secondary text-3xl"></i> Check-list de Segurança do Paciente
                                     </h2>
                                     <div class="grid grid-cols-1 gap-12 text-left">
-                                        <div class="space-y-8 text-left">
+                                        <div class="space-y-8">
                                             <h3 class="text-xs font-black uppercase tracking-widest flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
                                                 <i class="fa-solid fa-list-check text-lg"></i> 9 acertos de medicamentos
                                             </h3>
-                                            <div id="checklist-9certos" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left"></div>
+                                            <div id="checklist-9certos" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
                                         </div>
-                                        <div class="space-y-8 text-left">
+                                        <div class="space-y-8">
                                             <h3 class="text-xs font-black uppercase tracking-widest flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
                                                 <i class="fa-solid fa-globe text-lg"></i> Metas de segurança
                                             </h3>
-                                            <div id="checklist-metas" class="flex flex-col gap-4 text-left"></div>
+                                            <div id="checklist-metas" class="flex flex-col gap-4"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
+                        <!-- PANE: SOBRE -->
                         <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none text-left">
                             <h2 class="text-3xl font-black mb-6">Sobre a ferramenta</h2>
-                            <p class="text-lg">Focada na mitigação de erros em medicamentos de alta vigilância, esta ferramenta utiliza protocolos da OMS e do MS para garantir a segurança assistencial.</p>
+                            <p class="text-lg">Esta calculadora visa mitigar erros em medicamentos de alta vigilância, utilizando protocolos rigorosos de segurança e farmacologia clínica para otimizar a assistência de enfermagem.</p>
                         </section>
 
+                        <!-- PANE: AJUDA -->
                         <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none text-left">
-                            <h2 class="text-3xl font-black mb-6 text-left">Como usar a calculadora?</h2>
-                            <ol class="space-y-4 text-left">
-                                <li><strong>Identificação:</strong> Insira o nome do paciente e data de nascimento (opcional).</li>
-                                <li><strong>Parâmetros:</strong> Informe a concentração (ex: 5000 UI), o volume (ex: 5ml) e a dose prescrita.</li>
-                                <li><strong>Cálculo:</strong> Clique em "Calcular" para obter o volume em ml.</li>
-                                <li><strong>Conferência:</strong> Revise os 9 Acertos e as Metas de Segurança antes do preparo.</li>
-                                <li><strong>Registo:</strong> Gere o PDF para documentação clínica obrigatória.</li>
+                            <h2 class="text-3xl font-black mb-6">Como usar a calculadora?</h2>
+                            <ol class="space-y-4">
+                                <li><strong>Dados:</strong> Insira o nome e nascimento do paciente.</li>
+                                <li><strong>Ampola:</strong> Informe a concentração (UI) e o volume (ml) do frasco disponível.</li>
+                                <li><strong>Prescrição:</strong> Digite a dose exata prescrita.</li>
+                                <li><strong>Resultado:</strong> Verifique o volume a aspirar e complete os check-lists de segurança.</li>
                             </ol>
                         </section>
 
+                        <!-- PANE: TÉCNICO -->
                         <section id="pane-tecnico" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none text-left">
-                            <h2 class="text-3xl font-black mb-6 text-left">Informações Técnicas</h2>
-                            <div class="p-4 bg-slate-100 dark:bg-slate-800 rounded-xl text-sm text-left">
-                                <p><strong>Versão:</strong> 4.8.1 | <strong>Atualização:</strong> 24/01/2026</p>
-                                <p><strong>Referências:</strong> Protocolo Nacional de Segurança do Paciente (MS), OMS 2024, NANDA-I 2021-2023.</p>
+                            <h2 class="text-3xl font-black mb-6">Informações Técnicas</h2>
+                            <div class="p-6 bg-slate-100 dark:bg-slate-800 rounded-2xl text-sm">
+                                <p><strong>Versão:</strong> 4.8.3 | <strong>Última Atualização:</strong> 24/01/2026</p>
+                                <p class="mt-4 font-bold">Referências Bibliográficas:</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>OMS - Metas Internacionais de Segurança do Paciente.</li>
+                                    <li>COFEN - Manual de Boas Práticas em Administração de Medicamentos.</li>
+                                    <li>ISMP Brasil - Guia de Medicamentos de Alta Vigilância.</li>
+                                </ul>
                             </div>
                         </section>
                     </div>
@@ -309,15 +348,14 @@
                 </section>
             </div>
 
+            <!-- BARRA LATERAL -->
             <aside class="space-y-8 sticky top-32 self-start hidden lg:block no-print text-left">
-                <!-- Desafio Clínico CTA -->
                 <div class="sidebar-module from-[#0ea5e9] to-[#0369a1] text-center">
                     <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center justify-center gap-3 text-xl text-white font-nunito"><i class="fa-solid fa-trophy"></i> Desafio Clínico</h3>
-                    <p class="text-sm text-white/95 mb-6 font-medium leading-relaxed">Domine a segurança do paciente! Teste sua agilidade em casos reais com nossos simulados interativos.</p>
+                    <p class="text-sm text-white/95 mb-6 font-medium leading-relaxed">Domine a segurança do paciente! Teste sua agilidade em casos reais com simulados interativos.</p>
                     <button onclick="redirectSimulados()" class="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-white text-nurse-primary font-black hover:bg-nurse-secondary hover:text-white transition w-full shadow-2xl hover:scale-[1.05] duration-300">Acessar Simulados Agora <i class="fa-solid fa-bolt"></i></button>
                 </div>
 
-                <!-- Compartilhar Section -->
                 <div class="sidebar-module from-teal-700 to-nurse-secondary shadow-nurse-accent/20 text-center">
                     <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center justify-center gap-3 text-xl text-white font-nunito"><i class="fas fa-share-alt"></i> Compartilhar</h3>
                     <div class="grid grid-cols-5 gap-2">
@@ -343,23 +381,23 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch text-left">
                 <div class="card-base p-8 flex flex-col group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 text-left">
                     <span class="text-[9px] font-black bg-nurse-primary/10 text-nurse-primary px-3 py-1 rounded-full uppercase mb-4 self-start">Calculadoras Clínicas</span>
-                    <i class="fa-solid fa-syringe text-3xl text-nurse-primary mb-6 text-left"></i>
-                    <h3 class="text-xl font-black mb-3 text-left">Cálculo de Insulina</h3>
-                    <p class="text-slate-500 text-sm mb-8 flex-grow text-left">Conversão correta de UI para seringas de 1ml com segurança absoluta.</p>
+                    <i class="fa-solid fa-syringe text-3xl text-nurse-primary mb-6"></i>
+                    <h3 class="text-xl font-black mb-3">Cálculo de Insulina</h3>
+                    <p class="text-slate-500 text-sm mb-8 flex-grow">Conversão correta de UI para seringas de 1ml.</p>
                     <a href="insulina.html" class="btn-nurse-standard h-[50px] min-w-0 bg-nurse-primary text-white text-xs shadow-none">Acessar ferramenta <i class="fa-solid fa-chevron-right text-[10px]"></i></a>
                 </div>
                 <div class="card-base p-8 flex flex-col group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 text-left">
                     <span class="text-[9px] font-black bg-nurse-primary/10 text-nurse-primary px-3 py-1 rounded-full uppercase mb-4 self-start">Calculadoras Clínicas</span>
-                    <i class="fa-solid fa-droplet text-3xl text-nurse-secondary mb-6 text-left"></i>
-                    <h3 class="text-xl font-black mb-3 text-left">Gotejamento de Soro</h3>
-                    <p class="text-slate-500 text-sm mb-8 flex-grow text-left">Calcule gotas e microgotas para infusões precisas e seguras.</p>
+                    <i class="fa-solid fa-droplet text-3xl text-nurse-secondary mb-6"></i>
+                    <h3 class="text-xl font-black mb-3">Gotejamento de Soro</h3>
+                    <p class="text-slate-500 text-sm mb-8 flex-grow">Cálculo de gotas e microgotas para infusões seguras.</p>
                     <a href="gotejamento.html" class="btn-nurse-standard h-[50px] min-w-0 bg-nurse-primary text-white text-xs shadow-none">Acessar ferramenta <i class="fa-solid fa-chevron-right text-[10px]"></i></a>
                 </div>
                 <div class="card-base p-8 flex flex-col group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 text-left">
                     <span class="text-[9px] font-black bg-nurse-primary/10 text-nurse-primary px-3 py-1 rounded-full uppercase mb-4 self-start">Calculadoras Clínicas</span>
-                    <i class="fa-solid fa-chart-bar text-3xl text-nurse-accent mb-6 text-left"></i>
-                    <h3 class="text-xl font-black mb-3 text-left">Balanço Hídrico</h3>
-                    <p class="text-slate-500 text-sm mb-8 flex-grow text-left">Monitorização rigorosa de entradas e saídas de líquidos assistenciais.</p>
+                    <i class="fa-solid fa-chart-bar text-3xl text-nurse-accent mb-6"></i>
+                    <h3 class="text-xl font-black mb-3">Balanço Hídrico</h3>
+                    <p class="text-slate-500 text-sm mb-8 flex-grow">Monitorização de entradas e saídas de líquidos assistenciais.</p>
                     <a href="balanco-hidrico.html" class="btn-nurse-standard h-[50px] min-w-0 bg-nurse-primary text-white text-xs shadow-none">Acessar ferramenta <i class="fa-solid fa-chevron-right text-[10px]"></i></a>
                 </div>
             </div>
@@ -557,7 +595,7 @@
                 whatsapp: `https://api.whatsapp.com/send?text=${url}`, 
                 facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`, 
                 linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
-                instagram: `https://www.instagram.com/` // Redireciona para o IG pois não há API de share via URL para stories/feed web
+                instagram: `https://www.instagram.com/`
             };
             if (shares[platform]) window.open(shares[platform], '_blank');
         }
