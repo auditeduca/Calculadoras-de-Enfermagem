@@ -23,6 +23,9 @@
                 container.innerHTML = html;
                 container.classList.remove('opacity-50', 'opacity-30');
                 container.style.opacity = "1";
+                
+                // Disparar evento para scripts que dependem do carregamento de módulos
+                window.dispatchEvent(new CustomEvent('moduleLoaded', { detail: { id, fileName } }));
             } catch (err) {
                 console.error(`Falha no módulo ${fileName}:`, err);
             }
@@ -122,7 +125,7 @@
 
     <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 py-8 md:py-12 w-full">
         
-        <!-- Breadcrumb Ajustado -->
+        <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
             <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
             <i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>
@@ -167,7 +170,7 @@
                                                 <span class="tooltip-text">Valor registrado em carteira ou contrato antes dos descontos.</span>
                                             </div>
                                         </label>
-                                        <input type="number" id="bruto" placeholder="Ex: 5000.00" step="0.01" min="0" class="input-field text-lg font-bold">
+                                        <input type="number" id="bruto" placeholder="Ex: 5000.00" step="0.01" min="0" oninput="if(this.value<0)this.value=0" class="input-field text-lg font-bold">
                                     </div>
                                     
                                     <div>
@@ -178,7 +181,7 @@
                                                 <span class="tooltip-text">Horas extras, comissões, insalubridade ou bônus.</span>
                                             </div>
                                         </label>
-                                        <input type="number" id="proventos" placeholder="Ex: Insalubridade, Bônus" step="0.01" min="0" class="input-field bg-green-50/50 dark:bg-green-900/5 border-green-100 dark:border-green-900/30">
+                                        <input type="number" id="proventos" placeholder="Ex: Insalubridade, Bônus" step="0.01" min="0" oninput="if(this.value<0)this.value=0" class="input-field bg-green-50/50 dark:bg-green-900/5 border-green-100 dark:border-green-900/30">
                                     </div>
 
                                     <div>
@@ -189,7 +192,7 @@
                                                 <span class="tooltip-text">Vale transporte, plano de saúde, faltas, etc.</span>
                                             </div>
                                         </label>
-                                        <input type="number" id="outros" placeholder="Ex: VR, VT, Sindicato" step="0.01" min="0" class="input-field">
+                                        <input type="number" id="outros" placeholder="Ex: VR, VT, Sindicato" step="0.01" min="0" oninput="if(this.value<0)this.value=0" class="input-field">
                                     </div>
                                 </div>
 
@@ -202,7 +205,7 @@
                                         </div>
                                     </label>
                                     <p class="text-[10px] text-slate-500 mb-2 uppercase tracking-wider font-bold">Dedução legal: R$ 189,59 por dependente</p>
-                                    <input type="number" id="dependentes" value="0" min="0" class="input-field">
+                                    <input type="number" id="dependentes" value="0" min="0" oninput="if(this.value<0)this.value=0" class="input-field">
                                 </div>
                             </div>
 
@@ -222,17 +225,17 @@
                                     <div id="multi-vinculos-container" class="hidden space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
                                         <div class="grid grid-cols-2 gap-3">
                                             <div>
-                                                <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase">2º Vínculo</label>
-                                                <input type="number" id="bruto2" placeholder="R$ 0,00" class="input-field py-2 text-sm">
+                                                <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase">2º Vínculo (Bruto)</label>
+                                                <input type="number" id="bruto2" placeholder="R$ 0,00" min="0" oninput="if(this.value<0)this.value=0" class="input-field py-2 text-sm">
                                             </div>
                                             <div>
-                                                <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase">3º Vínculo</label>
-                                                <input type="number" id="bruto3" placeholder="R$ 0,00" class="input-field py-2 text-sm">
+                                                <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase">3º Vínculo (Bruto)</label>
+                                                <input type="number" id="bruto3" placeholder="R$ 0,00" min="0" oninput="if(this.value<0)this.value=0" class="input-field py-2 text-sm">
                                             </div>
                                         </div>
                                         <div>
                                             <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase">Outros Descontos Externos</label>
-                                            <input type="number" id="outros_desc_externo" placeholder="Soma descontos" class="input-field py-2 text-sm">
+                                            <input type="number" id="outros_desc_externo" placeholder="Soma descontos" min="0" oninput="if(this.value<0)this.value=0" class="input-field py-2 text-sm">
                                         </div>
                                     </div>
                                 </div>
@@ -267,7 +270,7 @@
                                     </div>
                                     <div id="super-rich-container" class="hidden mt-4 pt-4 border-t border-yellow-100 dark:border-slate-700">
                                         <label class="block text-[10px] font-bold text-yellow-600 mb-1 uppercase">Rendimentos Isentos/Não Tributáveis</label>
-                                        <input type="number" id="rendimentos_isentos" placeholder="Dividendos, Lucros, etc." class="input-field py-2 text-sm border-yellow-200 focus:border-yellow-500">
+                                        <input type="number" id="rendimentos_isentos" placeholder="Dividendos, Lucros, etc." min="0" oninput="if(this.value<0)this.value=0" class="input-field py-2 text-sm border-yellow-200 focus:border-yellow-500">
                                     </div>
                                 </div>
 
@@ -326,7 +329,7 @@
                         </div>
                     </section>
 
-                    <!-- Memória de Cálculo (Ajustada para mesma altura) -->
+                    <!-- Memória de Cálculo -->
                     <section id="pane-detalhamento" class="scroll-mt-36 mb-16 hidden">
                         <h2 class="text-2xl md:text-3xl font-extrabold mb-8 flex items-center gap-5">
                             <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">02</span>
@@ -440,7 +443,7 @@
         </div>
     </main>
 
-    <!-- Conteúdo Relacionado Atualizado -->
+    <!-- Conteúdo Relacionado -->
     <section class="bg-slate-200/50 dark:bg-slate-900/80 py-24 border-t border-slate-300 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <h2 class="text-3xl font-black mb-16 flex items-center justify-center gap-4">
@@ -449,7 +452,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
                 <a href="ferias.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
                     <div class="relative h-52 overflow-hidden">
-                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-ferias.webp" alt="Férias" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" onerror="this.src='https://via.placeholder.com/400x300?text=Calculadora+de+Férias'">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-ferias.webp" alt="Férias" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" onerror="this.onerror=null; this.src='https://placehold.co/400x300/1A3E74/white?text=Calculadora+de+Férias'">
                         <div class="absolute inset-0 bg-black/40"></div>
                         <span class="absolute bottom-4 left-6 bg-nurse-primary text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Trabalhista</span>
                     </div>
@@ -461,7 +464,7 @@
                 </a>
                 <a href="rescisao.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
                     <div class="relative h-52 overflow-hidden">
-                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-rescisao.webp" alt="Rescisão" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" onerror="this.src='https://via.placeholder.com/400x300?text=Calculadora+de+Rescisão'">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-rescisao.webp" alt="Rescisão" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" onerror="this.onerror=null; this.src='https://placehold.co/400x300/1A3E74/white?text=Calculadora+de+Rescisão'">
                         <div class="absolute inset-0 bg-black/40"></div>
                         <span class="absolute bottom-4 left-6 bg-teal-600 text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Trabalhista</span>
                     </div>
@@ -473,7 +476,7 @@
                 </a>
                 <a href="decimoterceiro.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
                     <div class="relative h-52 overflow-hidden">
-                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-13salario.webp" alt="13º Salário" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" onerror="this.src='https://via.placeholder.com/400x300?text=13º+Salário'">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-13salario.webp" alt="13º Salário" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" onerror="this.onerror=null; this.src='https://placehold.co/400x300/1A3E74/white?text=13º+Salário'">
                         <div class="absolute inset-0 bg-black/40"></div>
                         <span class="absolute bottom-4 left-6 bg-green-700 text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Trabalhista</span>
                     </div>
@@ -675,6 +678,19 @@
             document.getElementById('pane-detalhamento').classList.add('hidden');
             toggleInputs(false);
         }
+
+        // Scripts Modulares V4 (Carregamento Seguro)
+        window.addEventListener('moduleLoaded', (e) => {
+            if (e.detail.fileName === 'header-v4') {
+                // Reinicializar scripts do header se necessário
+            }
+        });
     </script>
+    
+    <!-- Scripts Externos -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
 </body>
 </html>
