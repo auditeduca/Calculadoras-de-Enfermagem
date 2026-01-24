@@ -35,6 +35,11 @@
         });
     </script>
 
+    <!-- [AUDITORIA - PRIORIDADE 2] Performance Resource Hints -->
+    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+
     <!-- Google AdSense & Analytics -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -73,7 +78,7 @@
     <link rel="alternate" hreflang="uk" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/uk/objetivo.html">
     <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/objetivo.html">
 
-    <!-- SEO Estruturado -->
+    <!-- [AUDITORIA - PRIORIDADE 1] SEO Estruturado com mainEntityOfPage -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -81,6 +86,10 @@
       "name": "Objetivos da Plataforma - Calculadoras de Enfermagem",
       "description": "Pilares técnicos e científicos para a excelência na assistência de enfermagem através de tecnologia e precisão clínica.",
       "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/objetivo.html",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/objetivo.html"
+      },
       "author": { "@type": "Organization", "name": "Calculadoras de Enfermagem" }
     }
     </script>
@@ -119,7 +128,10 @@
         }
         @layer components {
             .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all; }
-            .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] mb-6; }
+            
+            /* [AUDITORIA - PRIORIDADE 3] Sidebar gradiente suavizado no modo escuro */
+            .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+            
             .toc-link { @apply flex items-center gap-2 py-2.5 text-sm text-white/90 hover:text-white hover:translate-x-1 border-b border-white/10 last:border-0 transition-all font-semibold; }
             .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md focus:ring-2 focus:ring-white; }
             .text-aaa { @apply text-slate-700 dark:text-slate-200 leading-relaxed; }
@@ -142,6 +154,7 @@
 
     <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 py-8 md:py-12 w-full">
         
+        <!-- Breadcrumb solicitado -->
         <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
             <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
             <i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>
@@ -151,7 +164,7 @@
         </nav>
 
         <header class="max-w-4xl mb-12">
-            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md uppercase">Institucional</span>
+            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Institucional</span>
             <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Objetivos da Plataforma</h1>
             <div class="w-24 h-2 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
             <p class="text-xl text-aaa font-medium mb-8">Unindo tecnologia e rigor científico para transformar a assistência de enfermagem através de ferramentas de alta precisão.</p>
@@ -173,6 +186,7 @@
                     </p>
 
                     <div class="space-y-16">
+                        <!-- Pillar 1 -->
                         <section id="pane-calc" class="scroll-mt-36">
                             <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
                                 <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">01</span>
@@ -190,6 +204,7 @@
                             </div>
                         </section>
 
+                        <!-- Pillar 2 -->
                         <section id="pane-teoria" class="scroll-mt-36">
                             <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
                                 <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">02</span>
@@ -200,6 +215,7 @@
                             </p>
                         </section>
 
+                        <!-- Pillar 3 -->
                         <section id="pane-instrucoes" class="scroll-mt-36">
                             <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
                                 <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">03</span>
@@ -210,6 +226,7 @@
                             </p>
                         </section>
 
+                        <!-- Pillar 4 -->
                         <section id="pane-tecnica" class="scroll-mt-36">
                             <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
                                 <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">04</span>
@@ -222,6 +239,7 @@
                     </div>
                 </div>
 
+                <!-- Bio / Autor -->
                 <footer class="bg-slate-100 dark:bg-slate-900/60 rounded-[2.5rem] p-8 md:p-10 mt-20 flex flex-col md:flex-row gap-8 items-center border border-slate-200 dark:border-slate-700 shadow-sm">
                     <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Logotipo" class="w-24 h-24 rounded-full border-4 border-white dark:border-slate-800 shadow-xl object-cover">
                     <div class="text-center md:text-left">
@@ -230,6 +248,7 @@
                     </div>
                 </footer>
 
+                <!-- Referências integridade total -->
                 <section class="mt-12 pt-8 border-t-2 border-slate-200 dark:border-slate-700">
                     <h3 class="text-xl font-bold mb-8 flex items-center gap-3"><i class="fa-solid fa-book-medical text-nurse-accent"></i> Referências Bibliográficas</h3>
                     <div class="space-y-5">
@@ -250,6 +269,7 @@
                 </section>
             </article>
 
+            <!-- Barra Lateral Sincronizada -->
             <aside class="space-y-8 sticky top-32 self-start hidden lg:block">
                 <div class="sidebar-module">
                     <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-list-ul"></i> Conteúdo</h3>
@@ -279,6 +299,7 @@
         </div>
     </main>
 
+    <!-- Conteúdo Relacionado mantido íntegro -->
     <section class="bg-slate-200/50 dark:bg-slate-900/80 py-24 border-t border-slate-300 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <h2 class="text-3xl font-black mb-16 flex items-center justify-center gap-4">
@@ -325,8 +346,8 @@
         </div>
     </section>
 
-    <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px] mt-12 opacity-50 transition-opacity duration-500">
-        <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col gap-4">
+    <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px] mt-12 transition-opacity duration-500">
+        <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col gap-4 opacity-30">
             <div class="skeleton h-6 w-32"></div>
             <div class="skeleton h-4 w-64"></div>
         </div>
