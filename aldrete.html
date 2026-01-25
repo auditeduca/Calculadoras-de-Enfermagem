@@ -7,13 +7,10 @@
 
   <title>Índice de Aldrete e Kroulik - Escalas Clínicas | Calculadoras de Enfermagem</title>
   
-  <meta name="description" content="Avaliação sistemática para alta segura da Recuperação Pós-Anestésica (RPA).">
   <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/aldrete.html"/>
-  
   <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   
@@ -29,17 +26,29 @@
         }
       }
     }
+    
     window.NURSE_CONFIG = { baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/', debug: false };
 
+    // Loader robusto para evitar colapso visual
     async function loadModule(id, url) {
       const container = document.getElementById(id);
       if (!container) return;
       try {
         const res = await fetch(url);
         if (!res.ok) throw new Error(`Status ${res.status}`);
-        container.innerHTML = await res.text();
+        const html = await res.text();
+        container.innerHTML = html;
+        
+        // Remove opacidade de carregamento e força visibilidade
+        container.classList.remove('opacity-50', 'opacity-0');
         container.style.opacity = "1";
-      } catch(e) { console.warn(`Erro no módulo ${id}:`, e); }
+        
+        // Notifica o sistema que o componente está pronto
+        window.dispatchEvent(new CustomEvent('moduleLoaded', { detail: { id } }));
+      } catch(e) { 
+        console.warn(`Erro ao carregar ${id}:`, e);
+        container.style.opacity = "1";
+      }
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -57,19 +66,14 @@
   <style type="text/tailwindcss">
     @layer base {
       body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300; }
-      h1 { @apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400 leading-tight; }
-      h2, h3 { @apply font-inter tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
+      h1 { @apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400; }
     }
     @layer components {
       .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden; }
-      .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
       .input-field { @apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium; }
       .btn-primary-action { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
-      .btn-secondary-action { @apply bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
-      .tab-btn { @apply flex-1 px-2 py-3 font-bold text-[10px] md:text-[11px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider; }
+      .tab-btn { @apply flex-1 px-4 py-3 font-bold text-[10px] md:text-[11px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider; }
       .tab-btn.active { @apply border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50 dark:bg-slate-900/30; }
-      .label-tooltip { @apply text-nurse-secondary ml-1 cursor-help hover:text-nurse-primary transition-colors text-xs; }
-      .glass-meta { @apply relative backdrop-blur-md border border-white/20 p-4 rounded-xl shadow-sm transition-all duration-300 flex items-center gap-4; }
     }
   </style>
 </head>
@@ -78,31 +82,24 @@
   <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
   <div id="accessibility-container"></div>
   
-  <header id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] shadow-sm transition-opacity opacity-0"></header>
+  <header id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] shadow-sm transition-opacity duration-500 opacity-0"></header>
 
   <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
     
-    <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
+    <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold">
         <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
         <i class="fa-solid fa-chevron-right text-[10px]"></i>
         <a href="ferramentas.html" class="hover:underline text-nurse-accent">Ferramentas</a>
         <i class="fa-solid fa-chevron-right text-[10px]"></i>
         <span class="hidden md:inline hover:underline text-nurse-accent">Escalas Clínicas</span>
         <i class="fa-solid fa-chevron-right text-[10px] hidden md:inline"></i>
-        <span class="text-nurse-primary dark:text-cyan-400 font-bold">Índice de Aldrete e Kroulik</span>
+        <span class="text-nurse-primary dark:text-cyan-400 font-bold">Índice de Aldrete</span>
     </nav>
-
-    <header class="max-w-4xl mb-12">
-      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Escalas Clínicas</span>
-      <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6">Índice de Aldrete</h1>
-      <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
-      <p class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">Avaliação sistemática para alta segura da Recuperação Pós-Anestésica (RPA).</p>
-    </header>
 
     <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
       
       <article class="card-base p-0">
-         <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto">
+         <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30">
             <button onclick="switchTab('calc')" id="btn-tab-calc" class="tab-btn active">Escala</button>
             <button onclick="switchTab('sobre')" id="btn-tab-sobre" class="tab-btn">Sobre</button>
             <button onclick="switchTab('ajuda')" id="btn-tab-ajuda" class="tab-btn">Como Usar</button>
@@ -111,37 +108,31 @@
 
          <div class="p-6 md:p-10">
             <section id="pane-calc" class="tab-pane space-y-10">
-                </section>
-
-            <section id="pane-sobre" class="tab-pane hidden prose dark:prose-invert">
-                <h2 class="text-2xl font-black">Sobre o Índice</h2>
-                <p>O Índice de Aldrete e Kroulik é utilizado para determinar a alta segura do paciente da RPA.</p>
-                <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 mt-6">
-                    <p class="text-blue-900 font-bold mb-4 italic">"Quer aprofundar seus conhecimentos em Enfermagem?"</p>
-                    <button onclick="window.open('URL_BIBLIOTECA')" class="bg-nurse-primary text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest">Acessar Biblioteca <i class="fa-solid fa-book ml-2"></i></button>
+                <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 border-b pb-2">Dados do Paciente</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <input id="p_name" type="text" placeholder="Nome Completo" class="input-field"/>
+                    <input id="p_dob" type="date" class="input-field text-sm"/>
                 </div>
+                
+                <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 border-b pb-2 pt-4">Parâmetros de Avaliação</h3>
+                <button onclick="alert('Avaliação realizada')" class="btn-primary-action w-full">Avaliar</button>
             </section>
          </div>
       </article>
 
-      <aside class="space-y-6 sticky top-28 self-start">
-         <div class="sidebar-module from-orange-600 to-orange-800">
-            <h3 class="font-bold text-xl mb-4 font-nunito"><i class="fa-solid fa-bolt"></i> Desafio Clínico</h3>
-            <p class="text-sm text-white/90 mb-6">Treine com simulados baseados em casos reais.</p>
-            <button onclick="window.open('https://simulados-para-enfermagem.com.br/')" class="w-full bg-white text-orange-700 font-black py-3 rounded-xl shadow-lg uppercase text-xs">Ir para Simulados</button>
-         </div>
-         
-         <div class="card-base p-4 bg-slate-100 dark:bg-slate-900 border-dashed border-2 flex items-center justify-center min-h-[250px] text-slate-400 text-[10px] italic">
-            Publicidade (Adsense)
+      <aside class="space-y-6">
+         <div class="card-base p-6 bg-nurse-primary text-white">
+            <h4 class="font-bold mb-2">Simuladores</h4>
+            <p class="text-xs opacity-80 mb-4">Pratique seus conhecimentos.</p>
+            <button class="w-full bg-white text-nurse-primary py-2 rounded-lg font-bold text-xs">Acessar</button>
          </div>
       </aside>
     </div>
   </main>
 
-  <footer id="footer-container" class="bg-nurse-primary dark:bg-slate-900 min-h-[150px]"></footer>
+  <footer id="footer-container" class="min-h-[150px]"></footer>
 
   <script>
-    // Lógica de Tabs e UI Helpers herdados da insulina.html
     function switchTab(id) {
         document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
