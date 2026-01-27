@@ -1,510 +1,599 @@
 <!DOCTYPE html>
 <html lang="pt-br" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escala de Apgar Online – Avaliação do Recém-Nascido | Calculadoras de Enfermagem</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Calcule a Escala de Apgar (1º e 5º minuto) com precisão clínica. Avalie a vitalidade do recém-nascido e gere relatórios em PDF com auditoria completa.">
-    <meta name="keywords" content="escala de apgar, apgar neonatal, avaliação recém-nascido, enfermagem obstétrica, pediatria, vitalidade neonatal">
-    <meta name="author" content="Calculadoras de Enfermagem">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/apgar.html">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        nunito: ['Nunito Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        'nurse-primary': '#1A3E74',
-                        'nurse-primary-light': '#2E5A9C',
-                        'nurse-secondary': '#00bcd4',
-                        'nurse-accent': '#D4AF37',
-                        'nurse-bgDark': '#0F172A',
-                    }
-                }
-            }
+  <title>Índice de Apgar - Escalas Clínicas | Calculadoras de Enfermagem</title>
+  <meta name="description" content="Calculadora profissional do Índice de Apgar para avaliação neonatal. Inclui cálculo de idade exata, auditoria técnica e checklist de segurança do paciente."/>
+  <meta name="author" content="Calculadoras de Enfermagem"/>
+  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/apgar.html"/>
+  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
+
+  <!-- [DEPENDÊNCIAS EXTERNAS - Padrão V4.4] -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+
+  <!-- [CONFIGURAÇÃO DO TEMA] -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] },
+          colors: { 'nurse-primary':'#1A3E74', 'nurse-secondary':'#00bcd4', 'nurse-accent':'#00838f', 'nurse-bgDark':'#0F172A' }
         }
-    </script>
+      }
+    }
+    
+    window.NURSE_CONFIG = { baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/', debug: false };
 
-    <!-- Fontes e Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    async function loadModule(id, url) {
+      const container = document.getElementById(id);
+      if (!container) return;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Erro ao carregar ${url}`);
+        container.innerHTML = await res.text();
+        container.classList.remove('opacity-50', 'opacity-30');
+        container.style.opacity = "1";
+      } catch(e) { console.error(e); }
+    }
 
-    <!-- Dependências PDF e QR Code -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    window.addEventListener('DOMContentLoaded', () => {
+      loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html');
+      loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html');
+      loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html');
+    });
+  </script>
 
-    <style>
-        :root { --color-primary: #1A3E74; --color-primary-light: #2E5A9C; }
-        .tab-btn-active { border-color: #00bcd4 !important; color: #00bcd4 !important; font-weight: bold; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .sidebar-card { padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        .toc-list li { margin-bottom: 0.75rem; font-size: 0.875rem; transition: transform 0.2s; font-family: 'Inter', sans-serif; }
-        .toc-list li:hover { transform: translateX(5px); }
-        .share-btn { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); color: white; transition: all 0.3s; }
-        .share-btn:hover { background: white; color: var(--color-primary); transform: translateY(-3px); }
-        .btn-action { height: 56px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; transition: all 0.3s; font-family: 'Nunito Sans', sans-serif; }
-        .tag { display: inline-block; background: #f3f4f6; color: #4b5563; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 600; margin-right: 0.5rem; margin-bottom: 0.5rem; transition: all 0.2s; cursor: pointer; }
-        .tag:hover { background: var(--color-primary); color: white; }
-    </style>
+  <!-- [ESTILOS GLOBAIS] -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300; }
+      h1 { @apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400 leading-tight; }
+      h2, h3 { @apply font-inter tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
+    }
+    @layer components {
+      .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden; }
+      .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+      
+      .input-field { @apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium; }
+      .btn-primary-action { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider h-14; }
+      .btn-secondary-action { @apply bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider h-14; }
+      .btn-action-equal { @apply flex-1 h-14 rounded-2xl font-bold uppercase text-xs tracking-widest transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg; }
+      
+      .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 text-white hover:bg-white transition-all shadow-md focus:ring-2 focus:ring-white; }
+      .tab-btn { @apply flex-1 px-4 py-3 font-bold text-[11px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider; }
+      .tab-btn.active { @apply border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50 dark:bg-slate-900/30; }
+
+      .label-tooltip { @apply text-nurse-secondary ml-1 cursor-help hover:text-nurse-primary transition-colors text-xs; }
+      .glass-meta { @apply relative backdrop-blur-md border border-white/20 p-4 rounded-xl shadow-sm transition-all duration-300 flex items-center gap-4; }
+      .glass-meta-blue { @apply bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-100 border-l-4 border-blue-500; }
+      .glass-meta-orange { @apply bg-orange-50 dark:bg-orange-900/20 text-orange-900 dark:text-orange-100 border-l-4 border-orange-500; }
+      .toast-msg { @apply pointer-events-auto bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 font-bold text-sm min-w-[320px] border-l-4 border-nurse-secondary; animation: slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      .tag-pill-footer { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
+    }
+    @keyframes slide-in { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    #pdf-render-template { position: absolute; left: -9999px; top: 0; width: 794px; min-height: 1123px; background: white; padding: 40px; color: #0f172a; display: flex; flex-direction: column; }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
+<body class="flex flex-col min-h-screen">
 
-    <div id="header-container"></div>
+  <!-- BACKGROUND DECORATIVO -->
+  <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+    <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+        <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+        <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+    </svg>
+  </div>
 
-    <!-- Elemento Decorativo SVG -->
-    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
-        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
-            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
-        </svg>
+  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
+  <div id="accessibility-container"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50 shadow-sm"></div>
+
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
+    
+    <!-- BREADCRUMB -->
+    <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
+        <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        <a href="ferramentas.html" class="hover:underline text-nurse-accent">Ferramentas</a>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        <span class="hidden md:inline hover:underline text-nurse-accent cursor-pointer text-nurse-accent font-bold">Escalas Clínicas</span>
+        <i class="fa-solid fa-chevron-right text-[10px] hidden md:inline"></i>
+        <span class="text-nurse-primary dark:text-cyan-400 font-bold">Índice de Apgar</span>
+    </nav>
+
+    <!-- HEADER DA PÁGINA -->
+    <header class="max-w-4xl mb-12">
+      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Escalas Clínicas</span>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Índice de Apgar Neonatal</h1>
+      <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+      <p class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">Protocolo para avaliação rápida da vitalidade do recém-nascido e necessidade de reanimação.</p>
+    </header>
+
+    <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
+      
+      <!-- FERRAMENTA -->
+      <article class="card-base p-0">
+         <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30">
+            <button onclick="switchTab('calc')" id="btn-tab-calc" class="tab-btn active">Escala</button>
+            <button onclick="switchTab('sobre')" id="btn-tab-sobre" class="tab-btn">Sobre</button>
+            <button onclick="switchTab('ajuda')" id="btn-tab-ajuda" class="tab-btn">Instruções</button>
+            <button onclick="switchTab('tecnico')" id="btn-tab-tecnico" class="tab-btn">Técnico</button>
+         </nav>
+
+         <div class="p-6 md:p-10">
+            <!-- ABA: ESCALA -->
+            <section id="pane-calc" class="tab-pane space-y-10">
+                <div class="space-y-6">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 border-b pb-2">Dados do Recém-Nascido</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="patient_name" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Identificação do RN <i class="fa-solid fa-circle-info label-tooltip" title="Nome do RN ou identificação da mãe conforme Meta 1"></i>
+                            </label>
+                            <input id="patient_name" type="text" placeholder="Ex: RN de Maria Santos" class="input-field"/>
+                        </div>
+                        <div>
+                            <label for="patient_birthdate" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Data e Hora Nascimento <i class="fa-solid fa-circle-info label-tooltip" title="Essencial para o cálculo exato de vida em minutos/horas"></i>
+                            </label>
+                            <input id="patient_birthdate" type="datetime-local" class="input-field text-sm" onchange="calculateExactAge()"/>
+                            <p id="age-display" class="text-xs text-nurse-secondary font-bold mt-1 ml-1 hidden"></p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 pt-4 border-b pb-2">Parâmetros de Avaliação: <span class="text-red-500">*</span></h3>
+                    <div class="space-y-4">
+                        <!-- 1. Cor -->
+                        <div>
+                            <label for="apgar_cor" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                1. Aparência (Cor) <i class="fa-solid fa-circle-info label-tooltip" title="Avalia a oxigenação periférica do recém-nascido."></i>
+                            </label>
+                            <select id="apgar_cor" class="input-field cursor-pointer font-bold">
+                                <option value="">Selecione...</option>
+                                <option value="2">2 - Completamente rosado</option>
+                                <option value="1">1 - Corpo rosado, extremidades cianóticas</option>
+                                <option value="0">0 - Cianose central ou palidez</option>
+                            </select>
+                        </div>
+                        <!-- 2. FC -->
+                        <div>
+                            <label for="apgar_fc" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                2. Pulso (Frequência Cardíaca) <i class="fa-solid fa-circle-info label-tooltip" title="Parâmetro mais importante. Use estetoscópio ou palpação do cordão."></i>
+                            </label>
+                            <select id="apgar_fc" class="input-field cursor-pointer font-bold">
+                                <option value="">Selecione...</option>
+                                <option value="2">2 - Superior a 100 bpm</option>
+                                <option value="1">1 - Inferior a 100 bpm</option>
+                                <option value="0">0 - Ausente</option>
+                            </select>
+                        </div>
+                        <!-- 3. Irritabilidade -->
+                        <div>
+                            <label for="apgar_irritabilidade" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                3. Caretas (Irritabilidade Reflexa) <i class="fa-solid fa-circle-info label-tooltip" title="Resposta à estimulação (ex: aspiração de vias aéreas)."></i>
+                            </label>
+                            <select id="apgar_irritabilidade" class="input-field cursor-pointer font-bold">
+                                <option value="">Selecione...</option>
+                                <option value="2">2 - Espirros, tosses ou choro vigoroso</option>
+                                <option value="1">1 - Caretas, choro discreto</option>
+                                <option value="0">0 - Sem resposta</option>
+                            </select>
+                        </div>
+                        <!-- 4. Atividade -->
+                        <div>
+                            <label for="apgar_tonus" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                4. Atividade (Tônus Muscular) <i class="fa-solid fa-circle-info label-tooltip" title="Avalia a flexão das extremidades e movimentação."></i>
+                            </label>
+                            <select id="apgar_tonus" class="input-field cursor-pointer font-bold">
+                                <option value="">Selecione...</option>
+                                <option value="2">2 - Movimentação ativa e boa flexão</option>
+                                <option value="1">1 - Alguma flexão de extremidades</option>
+                                <option value="0">0 - Flácido (Hipotônico)</option>
+                            </select>
+                        </div>
+                        <!-- 5. Respiração -->
+                        <div>
+                            <label for="apgar_resp" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                5. Respiração (Esforço) <i class="fa-solid fa-circle-info label-tooltip" title="Avalia a regularidade da respiração e o vigor do choro."></i>
+                            </label>
+                            <select id="apgar_resp" class="input-field cursor-pointer font-bold">
+                                <option value="">Selecione...</option>
+                                <option value="2">2 - Choro forte, respiração regular</option>
+                                <option value="1">1 - Choro fraco, respiração irregular</option>
+                                <option value="0">0 - Ausente</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 pt-4">
+                    <button id="btn-avaliar-main" onclick="calcularApgar()" class="btn-primary-action"><i class="fa-solid fa-clipboard-list"></i> Avaliar</button>
+                    <button onclick="resetForm()" class="btn-secondary-action"><i class="fa-solid fa-rotate-left"></i> Limpar</button>
+                </div>
+
+                <!-- RESULTADOS -->
+                <div id="results-wrapper" class="hidden animate-fade-in pt-8 border-t border-slate-200 dark:border-slate-700">
+                    <div class="bg-slate-50 dark:bg-slate-800/50 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-10">
+                        <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4">Pontuação Apgar</p>
+                        <div id="res-total" class="text-6xl md:text-8xl font-black text-[#1A3E74] dark:text-cyan-400 tracking-tighter font-nunito leading-none">0</div>
+                        <p class="text-lg font-black mt-4 uppercase tracking-widest" id="res-status-text">---</p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4 justify-center mb-10">
+                        <button onclick="gerarPDF()" class="btn-action-equal bg-nurse-primary text-white hover:bg-nurse-secondary"><i class="fa-solid fa-file-pdf"></i> Gerar PDF</button>
+                        <button onclick="copiarResumo()" class="btn-action-equal bg-slate-200 text-slate-700 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-200"><i class="fa-solid fa-copy"></i> Copiar Resumo</button>
+                    </div>
+
+                    <div class="card-base p-6 border-l-4 border-nurse-accent bg-slate-50 dark:bg-slate-900/40 mb-10">
+                        <h3 class="text-sm font-black uppercase tracking-widest text-nurse-primary mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-book-medical"></i> Diagnóstico NANDA-I
+                        </h3>
+                        <button onclick="showNanda()" class="w-full sm:w-auto bg-nurse-accent text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:brightness-110 transition shadow-lg h-12 flex items-center justify-center gap-2">
+                            Pesquisar Diagnósticos <i class="fa-solid fa-magnifying-glass text-white/70"></i>
+                        </button>
+                    </div>
+
+                    <!-- AUDITORIA DO CÁLCULO -->
+                    <div class="mb-12 space-y-6">
+                         <h3 class="text-xs font-black uppercase tracking-widest mb-6 flex items-center gap-2 border-b pb-2"><i class="fa-solid fa-clipboard-check text-nurse-secondary"></i> Auditoria do Cálculo</h3>
+                         
+                         <div class="space-y-4">
+                            <!-- Dados -->
+                            <div class="bg-slate-50 dark:bg-slate-800/40 rounded-2xl p-5 border border-slate-100 dark:border-slate-700">
+                                <p class="text-[10px] font-black uppercase text-slate-400 mb-3 tracking-widest">Dados do Paciente</p>
+                                <div class="flex justify-between text-sm">
+                                    <span class="font-bold text-slate-600 dark:text-slate-300">Paciente:</span>
+                                    <span id="audit-nome" class="font-black text-nurse-primary dark:text-cyan-400">---</span>
+                                </div>
+                                <div class="flex justify-between text-sm mt-2">
+                                    <span class="font-bold text-slate-600 dark:text-slate-300">Idade no Exame:</span>
+                                    <span id="audit-idade" class="font-bold text-slate-500">---</span>
+                                </div>
+                            </div>
+
+                            <!-- Parâmetros -->
+                            <div class="bg-slate-50 dark:bg-slate-800/40 rounded-2xl p-5 border border-slate-100 dark:border-slate-700">
+                                <p class="text-[10px] font-black uppercase text-slate-400 mb-3 tracking-widest">Parâmetros de Avaliação</p>
+                                <div id="audit-params-list" class="space-y-2 text-[11px] font-bold text-slate-600 dark:text-slate-400 italic"></div>
+                            </div>
+
+                            <!-- Fórmula -->
+                            <div class="bg-nurse-primary/5 dark:bg-nurse-primary/20 rounded-2xl p-5 border border-nurse-primary/10">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[10px] font-black uppercase text-nurse-primary">Fórmula Aplicada:</span>
+                                    <span id="res-formula-box" class="font-mono text-xs font-black text-nurse-primary dark:text-cyan-400">---</span>
+                                </div>
+                                <div class="flex justify-between items-center mt-4 pt-4 border-t border-nurse-primary/10">
+                                    <span class="text-[10px] font-black uppercase text-nurse-primary">Resultado Final:</span>
+                                    <span id="audit-score-detail" class="font-black text-lg text-nurse-primary dark:text-cyan-400">---</span>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+
+                    <!-- SEGURANÇA -->
+                    <section>
+                        <h2 class="text-xl md:text-2xl font-black text-center mb-8 flex items-center justify-center gap-3 text-nurse-primary dark:text-cyan-400">
+                            <i class="fa-solid fa-shield-virus"></i> Segurança Neonatal
+                        </h2>
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-xs font-black uppercase tracking-widest mb-4 border-b border-slate-200 dark:border-slate-700 pb-2">9 Certos de Medicação</h3>
+                                <div id="checklist-9certos" class="grid grid-cols-1 md:grid-cols-2 gap-2"></div>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-black uppercase tracking-widest mb-4 border-b border-slate-200 dark:border-slate-700 pb-2">Metas Internacionais</h3>
+                                <div id="checklist-metas" class="space-y-2"></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <!-- ABA SOBRE -->
+            <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+                <h2 class="text-2xl font-black mb-4">Sobre o Índice de Apgar</h2>
+                <p>Criado pela Dra. Virginia Apgar em 1952, este índice é a principal ferramenta para avaliar a vitalidade imediata do recém-nascido e a resposta a manobras de reanimação.</p>
+                <p>O exame deve ser realizado rotineiramente no <strong>1º e 5º minutos de vida</strong>. Pontuações entre 8 e 10 indicam boa vitalidade, enquanto valores abaixo de 7 indicam algum grau de depressão neonatal.</p>
+            </section>
+
+            <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+                <h2 class="text-2xl font-black mb-4">Instruções de Uso</h2>
+                <ol class="space-y-2 text-sm">
+                    <li>Insira o nome e horário exato do nascimento.</li>
+                    <li>Selecione cada um dos 5 parâmetros observados clinicamente.</li>
+                    <li>O sistema classificará a vitalidade (Normal, Moderada ou Grave).</li>
+                    <li>Gere o PDF para registro no prontuário neonatal.</li>
+                </ol>
+            </section>
+
+            <section id="pane-tecnico" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+                <h2 class="text-2xl font-black mb-4 text-nurse-primary uppercase tracking-widest">Referências Bibliográficas</h2>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl text-sm leading-relaxed border border-slate-200 dark:border-slate-700">
+                    <p class="mb-4">APGAR, V. A proposal for a new method of evaluation of the newborn infant. <strong>Anesth. Analg.</strong>, v. 32, p. 260-267, 1953.</p>
+                    <p class="mb-4">SOCIEDADE BRASILEIRA DE PEDIATRIA. <strong>Diretrizes do Programa de Reanimação Neonatal da SBP</strong>. Rio de Janeiro: SBP, 2022.</p>
+                    <p>BRASIL. Ministério da Saúde. <strong>Protocolo de Identificação do Paciente</strong>. Brasília: Ministério da Saúde, 2013.</p>
+                </div>
+            </section>
+         </div>
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside class="space-y-6 sticky top-28 self-start">
+         <div class="sidebar-module">
+            <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white font-nunito"><i class="fa-solid fa-trophy"></i> Desafio Clínico</h3>
+            <p class="text-sm text-white/90 mb-6 font-medium leading-relaxed font-inter italic">Teste sua agilidade em simulações neonatais reais.</p>
+            <button onclick="redirectSimulados()" class="w-full bg-white text-nurse-primary font-black py-3 rounded-xl hover:bg-slate-100 transition shadow-lg text-sm uppercase tracking-wide">Acessar Simuladores <i class="fa-solid fa-bolt ml-1"></i></button>
+         </div>
+
+         <div class="sidebar-module from-teal-700 to-nurse-secondary shadow-nurse-accent/20">
+            <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white font-nunito"><i class="fas fa-share-alt"></i> Compartilhar</h3>
+            <div class="flex gap-3 flex-wrap justify-start">
+                <button class="share-btn hover:text-blue-600" onclick="share('facebook')"><i class="fab fa-facebook-f"></i></button>
+                <button class="share-btn hover:text-green-500" onclick="share('whatsapp')"><i class="fab fa-whatsapp"></i></button>
+                <button class="share-btn hover:text-blue-800" onclick="share('linkedin')"><i class="fab fa-linkedin-in"></i></button>
+                <button class="share-btn hover:text-gray-300" onclick="copyLink()"><i class="fas fa-link"></i></button>
+            </div>
+         </div>
+         
+         <div class="card-base p-6 flex items-center justify-center min-h-[250px] bg-slate-50 dark:bg-slate-800/50 border-dashed border-2">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Publicidade AdSense</span>
+         </div>
+      </aside>
     </div>
 
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-        <!-- Breadcrumb -->
-        <nav class="flex text-sm text-slate-500 mb-8 font-inter">
-            <ol class="flex items-center space-x-2">
-                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
-                <li><span>></span> <span>Neonatologia</span></li>
-                <li><span>></span> <span class="text-nurse-primary dark:text-nurse-secondary font-bold font-nunito">Escala de Apgar</span></li>
-            </ol>
-        </nav>
-
-        <!-- Cabeçalho -->
-        <header class="mb-12 text-center md:text-left">
-            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito tracking-tighter">Pediatria / Obstetrícia</span>
-            <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 leading-tight font-nunito tracking-tight italic tracking-tighter capitalize">Escala de Apgar</h1>
-            <div class="w-24 h-1.5 bg-nurse-secondary rounded-full mb-8 mx-auto md:mx-0"></div>
-            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium font-inter max-w-3xl">
-                Avaliação imediata da vitalidade do recém-nascido nos primeiros minutos de vida. Essencial para decisões clínicas em sala de parto.
-            </p>
-        </header>
-
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
-            <!-- Conteúdo Principal -->
-            <div class="lg:col-span-3 space-y-10">
-                
-                <!-- Sistema de Abas -->
-                <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-8 font-nunito font-bold">
-                    <button onclick="showTab('calc')" id="btn-tab-calc" class="px-6 py-3 border-b-2 tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all">
-                        <i class="fa-solid fa-calculator"></i> Escala
-                    </button>
-                    <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
-                        <i class="fa-solid fa-book-medical"></i> Sobre
-                    </button>
-                    <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
-                        <i class="fa-solid fa-clipboard-list"></i> Como Usar?
-                    </button>
-                    <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
-                        <i class="fa-solid fa-microscope"></i> Informações Técnicas
-                    </button>
-                </div>
-
-                <!-- Painel da Escala -->
-                <section id="pane-calc" class="space-y-8 animate-in fade-in duration-500">
-                    
-                    <!-- Dados do Recém-Nascido -->
-                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
-                        <h3 class="text-lg font-black text-nurse-primary dark:text-white mb-6 uppercase tracking-tight font-nunito">
-                            Dados de Auditoria
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Nome do RN / Mãe</label>
-                                <input type="text" id="patient_name" placeholder="Ex: RN de Maria Silva" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Data e Hora do Parto</label>
-                                <input type="datetime-local" id="parto_time" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Parâmetros Apgar -->
-                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
-                        <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-8 uppercase tracking-widest border-b border-gray-100 dark:border-slate-800 pb-2 font-nunito">
-                            Critérios de Avaliação
-                        </h3>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Frequência Cardíaca</label>
-                                <select id="sel_fc" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
-                                    <option value="0">Ausente (0 pts)</option>
-                                    <option value="1">&lt; 100 batimentos por minuto (1 pt)</option>
-                                    <option value="2">≥ 100 batimentos por minuto (2 pts)</option>
-                                </select>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Esforço Respiratório</label>
-                                <select id="sel_resp" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
-                                    <option value="0">Ausente / Apneia (0 pts)</option>
-                                    <option value="1">Fraco, irregular ou gemência (1 pt)</option>
-                                    <option value="2">Forte, choro vigoroso (2 pts)</option>
-                                </select>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tônus Muscular</label>
-                                <select id="sel_tonus" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
-                                    <option value="0">Flácido (0 pts)</option>
-                                    <option value="1">Alguma flexão de extremidades (1 pt)</option>
-                                    <option value="2">Movimentação ativa (2 pts)</option>
-                                </select>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Irritabilidade Reflexa</label>
-                                <select id="sel_reflexo" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
-                                    <option value="0">Sem resposta (0 pts)</option>
-                                    <option value="1">Careta / Choro fraco (1 pt)</option>
-                                    <option value="2">Espirros, tosse ou choro forte (2 pts)</option>
-                                </select>
-                            </div>
-                            <div class="md:col-span-2 space-y-2">
-                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Cor da Pele</label>
-                                <select id="sel_cor" class="w-full p-4 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary">
-                                    <option value="0">Cianose central ou palidez (0 pts)</option>
-                                    <option value="1">Corpo rosado, extremidades azuladas (1 pt)</option>
-                                    <option value="2">Totalmente rosado (2 pts)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-12 max-w-xl mx-auto font-nunito">
-                            <button onclick="handleCalculate()" class="btn-action bg-nurse-primary text-white hover:bg-nurse-primary/90 shadow-xl shadow-nurse-primary/20">
-                                <i class="fa-solid fa-calculator"></i> Calcular
-                            </button>
-                            <button onclick="handleReset()" class="btn-action bg-gray-100 dark:bg-slate-800 text-gray-500 hover:bg-gray-200">
-                                <i class="fa-solid fa-rotate-left"></i> Limpar
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Resultados -->
-                    <div id="results-section" class="hidden space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-                        <div id="result-card" class="p-10 rounded-[3rem] shadow-2xl transition-all duration-500 text-white font-nunito bg-nurse-primary relative overflow-hidden group">
-                            <div class="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform">
-                                <i class="fa-solid fa-baby text-[120px]"></i>
-                            </div>
-
-                            <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
-                                <div class="relative w-44 h-44 flex items-center justify-center">
-                                    <svg class="w-full h-full transform -rotate-90">
-                                        <circle cx="88" cy="88" r="80" stroke="currentColor" stroke-width="8" fill="transparent" class="text-white/10" />
-                                        <circle id="progress-ring" cx="88" cy="88" r="80" stroke="#00bcd4" stroke-width="12" fill="transparent" stroke-dasharray="502" stroke-dashoffset="502" class="transition-all duration-1000 ease-out" />
-                                    </svg>
-                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                        <span id="res-score-val" class="text-5xl font-black text-white">0</span>
-                                        <span class="text-[10px] uppercase font-bold text-white/80 tracking-widest">Apgar</span>
-                                    </div>
-                                </div>
-                                <div class="text-center md:text-left flex-grow">
-                                    <h3 id="res-status" class="text-2xl font-black italic mb-2 text-white uppercase tracking-tight">Status de Vitalidade</h3>
-                                    <div class="bg-white/10 p-6 rounded-2xl border border-white/20 mb-6">
-                                        <p class="text-sm font-medium mb-1 opacity-70">Conduta Clínica Sugerida</p>
-                                        <p id="res-conduta" class="text-xl font-bold text-nurse-secondary italic">Aguardando Avaliação...</p>
-                                    </div>
-                                    <p class="text-[10px] font-black text-white/60 bg-white/10 inline-block px-4 py-1.5 rounded-full uppercase tracking-widest">
-                                        <i class="fa-solid fa-shield-check mr-2"></i> Auditoria de Vitalidade (Virginia Apgar)
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-nunito">
-                            <button onclick="handleSearchNanda()" class="btn-action border-2 border-nurse-secondary text-nurse-secondary hover:bg-nurse-secondary hover:text-white">
-                                <i class="fa-solid fa-book-medical"></i> Diagnóstico (NANDA, NIC e NOC)
-                            </button>
-                            <button onclick="generatePDF()" class="btn-action bg-nurse-primary text-white hover:opacity-90">
-                                <i class="fa-solid fa-file-pdf"></i> Gerar PDF
-                            </button>
-                        </div>
-
-                        <!-- Auditoria Clínica -->
-                        <div class="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm font-inter">
-                            <h4 class="font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest font-nunito flex items-center gap-2">
-                                <i class="fa-solid fa-magnifying-glass-chart text-nurse-secondary"></i> Auditoria do Cálculo
-                            </h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                <div class="space-y-2">
-                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Identificação:</p>
-                                    <p id="audit-patient" class="text-xs font-bold text-gray-600 dark:text-gray-300 italic">-</p>
-                                    <p id="audit-parto" class="text-[10px] text-gray-400 font-bold italic">-</p>
-                                </div>
-                                <div class="space-y-2 text-center md:text-left">
-                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Pontuação:</p>
-                                    <p id="audit-score" class="text-xs font-bold text-gray-600 dark:text-gray-300">-</p>
-                                </div>
-                                <div class="space-y-2 text-right">
-                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Hora da Avaliação:</p>
-                                    <p id="audit-time" class="text-xs font-bold text-gray-600 dark:text-gray-300">-</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Metas de Segurança -->
-                        <div class="bg-white dark:bg-slate-900/50 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
-                            <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary p-6 uppercase tracking-widest font-nunito border-b border-gray-100 dark:border-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-shield-halved"></i> Segurança no Centro Obstétrico
-                            </h3>
-                            <div id="checklist-metas" class="p-6 space-y-3 font-inter"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Abas Teóricas -->
-                <section id="pane-teoria" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
-                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Sobre a Escala de Apgar</h2>
-                    <p>Criada pela <strong>Dra. Virginia Apgar</strong> em 1952, esta escala revolucionou a neonatologia ao fornecer um método padronizado para avaliar a vitalidade do recém-nascido.</p>
-                    <p>Originalmente desenvolvida para avaliar o impacto da anestesia materna no bebê, hoje é a ferramenta universal para determinar a necessidade de intervenções imediatas de reanimação.</p>
-                </section>
-
-                <section id="pane-instrucoes" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
-                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Como Usar?</h2>
-                    <ol>
-                        <li>A primeira avaliação deve ser feita exatamente aos <strong>1 minuto</strong> de vida.</li>
-                        <li>A segunda avaliação ocorre aos <strong>5 minutos</strong> de vida.</li>
-                        <li>Se o escore for &lt; 7 aos 5 minutos, repita a cada 5 minutos até 20 minutos de vida.</li>
-                        <li>Observe simultaneamente os 5 critérios: Frequência Cardíaca, Respiração, Tônus, Reflexo e Cor.</li>
-                    </ol>
-                </section>
-
-                <section id="pane-tecnica" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
-                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Interpretação Técnica</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose">
-                        <div class="p-6 bg-green-50 rounded-2xl border border-green-100">
-                            <h4 class="font-bold text-green-700 mb-2">8 a 10 Pontos</h4>
-                            <p class="text-sm text-green-600"> RN saudável com boa vitalidade. Cuidados de rotina.</p>
-                        </div>
-                        <div class="p-6 bg-yellow-50 rounded-2xl border border-yellow-100">
-                            <h4 class="font-bold text-yellow-700 mb-2">4 a 7 Pontos</h4>
-                            <p class="text-sm text-yellow-600"> Asfixia leve a moderada. Necessita suporte e monitoração.</p>
-                        </div>
-                        <div class="p-6 bg-red-50 rounded-2xl border border-red-100">
-                            <h4 class="font-bold text-red-700 mb-2">0 a 3 Pontos</h4>
-                            <p class="text-sm text-red-600"> Asfixia grave. Necessidade de reanimação imediata.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Tags -->
-                <div class="pt-10 border-t border-gray-100 dark:border-slate-800">
-                    <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Tags</h4>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tag">#Neonatologia</span>
-                        <span class="tag">#RN</span>
-                        <span class="tag">#Parto</span>
-                        <span class="tag">#Apgar</span>
-                        <span class="tag">#EnfermagemObstetrica</span>
-                    </div>
-                </div>
+    <!-- SEÇÃO AUTOR -->
+    <section class="max-w-7xl mx-auto px-4 py-16 border-t border-slate-200 dark:border-slate-800 mt-24">
+        <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 flex flex-col md:flex-row gap-12 items-center border border-slate-200 dark:border-slate-700 shadow-2xl relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-nurse-secondary/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110"></div>
+            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Autor" class="w-32 h-32 rounded-full object-cover shadow-2xl border-4 border-white dark:border-slate-700 z-10"/>
+            <div class="text-center md:text-left z-10 flex-grow">
+                <h3 class="text-3xl font-black mb-3 text-nurse-primary dark:text-cyan-400 font-nunito tracking-tight">Calculadoras de Enfermagem</h3>
+                <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed max-w-3xl font-inter italic">"A precisão clínica nos primeiros minutos de vida é decisiva para o prognóstico neonatal. Nossas ferramentas automatizam a aplicação das escalas para que você foque no cuidado imediato."</p>
             </div>
-
-            <!-- Sidebar -->
-            <aside class="space-y-6 font-nunito">
-                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white">
-                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold"><i class="fas fa-list mr-2"></i> Índice</h3>
-                    <ul class="toc-list font-inter">
-                        <li><a href="#pane-calc" onclick="showTab('calc')">1. Escala</a></li>
-                        <li><a href="#pane-teoria" onclick="showTab('teoria')">2. Sobre</a></li>
-                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes')">3. Como Usar</a></li>
-                        <li><a href="#pane-tecnica" onclick="showTab('tecnica')">4. Informações Técnicas</a></li>
-                    </ul>
-                </div>
-
-                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white">
-                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold"><i class="fas fa-share-nodes mr-2"></i> Compartilhar</h3>
-                    <div class="flex flex-wrap gap-3 justify-between">
-                        <a href="#" class="share-btn"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="share-btn"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="share-btn"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" class="share-btn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="share-btn"><i class="fa-brands fa-x-twitter"></i></a>
-                    </div>
-                </div>
-                <div id="qrcode-source" class="hidden"></div>
-            </aside>
         </div>
+        <div class="flex flex-wrap gap-2 items-center justify-center md:justify-start mt-10">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-4 flex items-center"><i class="fa-solid fa-tags mr-2"></i> Tópicos:</span>
+            <span class="tag-pill-footer">#EscalasClínicas</span><span class="tag-pill-footer">#Neonatologia</span><span class="tag-pill-footer">#Apgar</span><span class="tag-pill-footer">#SaúdeDaCriança</span>
+        </div>
+    </section>
 
-        <!-- Ferramentas Relacionadas -->
-        <section class="related-section bg-slate-100 dark:bg-slate-900/40 py-20 mt-16 rounded-[3rem]">
-            <div class="max-w-7xl mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-black text-center mb-12 text-nurse-primary dark:text-white font-nunito flex items-center justify-center gap-4">
-                    <i class="fa-solid fa-toolbox text-nurse-secondary"></i> Ferramentas Relacionadas
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <!-- Balanço Hídrico -->
-                    <a href="balancohidrico.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600" alt="Balanço" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                            <span class="absolute top-4 left-4 px-3 py-1 bg-nurse-secondary text-white text-[9px] font-black uppercase rounded-full tracking-widest">Monitoração</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Balanço Hídrico</h3>
-                            <p class="text-xs text-gray-500 font-inter mb-4">Controle rigoroso de perdas e ganhos.</p>
-                            <span class="text-nurse-secondary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
-                        </div>
-                    </a>
-                    <!-- Gotejamento -->
-                    <a href="gotejamento.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1584017947476-83a6e957723b?w=600" alt="Soro" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                            <span class="absolute top-4 left-4 px-3 py-1 bg-nurse-secondary text-white text-[9px] font-black uppercase rounded-full tracking-widest">Infusão</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Gotejamento de Soro</h3>
-                            <p class="text-xs text-gray-500 font-inter mb-4">Cálculo de gotas e microgotas.</p>
-                            <span class="text-nurse-secondary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
-                        </div>
-                    </a>
-                    <!-- Glasgow -->
-                    <a href="glasgow.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600" alt="Glasgow" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                            <span class="absolute top-4 left-4 px-3 py-1 bg-nurse-secondary text-white text-[9px] font-black uppercase rounded-full tracking-widest">Neurologia</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Escala de Glasgow</h3>
-                            <p class="text-xs text-gray-500 font-inter mb-4">Avaliação do nível de consciência.</p>
-                            <span class="text-nurse-secondary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
-                        </div>
-                    </a>
-                </div>
+    <!-- RELACIONADOS -->
+    <section id="related-section" class="bg-slate-100/50 dark:bg-nurse-bgDark py-24 border-t border-slate-300 dark:border-slate-800 -mx-4 px-4 mt-24">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-black mb-16 flex items-center justify-center gap-4 font-nunito"><i class="fa-solid fa-layer-group text-nurse-accent"></i> Ferramentas Relacionadas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <a href="aldrete.html" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full text-left">
+                    <div class="relative h-48 bg-nurse-primary/5 flex items-center justify-center overflow-hidden shrink-0">
+                        <i class="fa-solid fa-clipboard-check text-6xl text-nurse-primary group-hover:scale-110 transition-transform duration-700"></i>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-xl font-black mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Índice de Aldrete</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">Alta segura da Recuperação Pós-Anestésica.</p>
+                        <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
+                    </div>
+                </a>
+                <a href="gestacional.html" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full text-left">
+                    <div class="relative h-48 bg-nurse-secondary/5 flex items-center justify-center overflow-hidden shrink-0">
+                        <i class="fa-solid fa-calendar-day text-6xl text-nurse-secondary group-hover:scale-110 transition-transform duration-700"></i>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-xl font-black mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Idade Gestacional</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">Cálculo por DUM e Ultrassonografia.</p>
+                        <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
+                    </div>
+                </a>
+                <a href="balanco-hidrico.html" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full text-left">
+                    <div class="relative h-48 bg-nurse-accent/5 flex items-center justify-center overflow-hidden shrink-0">
+                        <i class="fa-solid fa-chart-line text-6xl text-nurse-accent group-hover:scale-110 transition-transform duration-700"></i>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-xl font-black mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Balanço Hídrico</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">Controle de perdas e ganhos neonatais.</p>
+                        <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
+                    </div>
+                </a>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+  </main>
 
-    <div id="footer-container"></div>
-    <div id="modals-container"></div>
+  <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px] transition-opacity duration-500"></div>
+  
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
 
-    <script src="assets/js/utils.js"></script>
-    <script src="assets/js/template-engine.js"></script>
-    <script src="assets/js/global-main.js"></script>
+  <!-- TEMPLATE PDF OCULTO -->
+  <div id="pdf-render-template">
+    <div style="flex: 1; display: flex; flex-direction: column;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #1A3E74; padding-bottom: 10px; margin-bottom: 20px;">
+        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" style="height: 50px;" alt="Logo"/>
+        <div style="text-align: right;">
+          <h1 style="font-family: 'Nunito Sans', sans-serif; font-size: 18px; color: #1A3E74; margin: 0; font-weight: 900; text-transform: uppercase;">Registro de Índice de Apgar</h1>
+          <p style="font-size: 9px; color: #64748b; margin: 0; font-weight: 600;">AVALIAÇÃO NEONATAL IMEDIATA</p>
+        </div>
+      </div>
+      <div id="pdf-body" style="font-size: 10px; font-family: 'Inter', sans-serif; flex: 1;"></div>
+    </div>
+    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: flex-end;">
+      <div style="font-size: 8px; color: #94a3b8;"><p id="pdf-footer-timestamp" style="margin: 0; font-weight: 700;"></p></div>
+      <div id="pdf-qrcode-container" style="width: 60px; height: 60px;"></div>
+    </div>
+  </div>
 
-    <script>
-        const SAFETY_GOALS = [
-            { id: 1, text: "Identificação Correta da Mãe e do RN", color: "bg-red-50 border-red-500 text-red-800" },
-            { id: 2, text: "Passagem de Plantão Estruturada (SBAR)", color: "bg-yellow-50 border-yellow-500 text-yellow-800" },
-            { id: 5, text: "Higiene das Mãos Antes de Manipular o RN", color: "bg-blue-50 border-blue-500 text-blue-800" }
-        ];
+  <script>
+    const APP_STATE = { data: null, exactAge: null };
+    const CONSTS = {
+        CERTOS: ["Paciente certo", "Medicamento certo", "Dose certa", "Via certa", "Hora certa", "Registro certo", "Orientação certa", "Resposta certa", "Validade certa"],
+        METAS: [ { id: 1, text: "Identificar corretamente o paciente", class: "glass-meta-blue" }, { id: 2, text: "Melhorar a comunicação efetiva", class: "glass-meta-orange" }, { id: 6, text: "Prevenção de Quedas (Berço)", class: "glass-meta-blue" } ]
+    };
 
-        function showTab(id) {
-            ['calc', 'teoria', 'instrucoes', 'tecnica'].forEach(t => {
-                document.getElementById('pane-' + t).classList.add('hidden');
-                document.getElementById('btn-tab-' + t).classList.remove('tab-btn-active');
-            });
-            document.getElementById('pane-' + id).classList.remove('hidden');
-            document.getElementById('btn-tab-' + id).classList.add('tab-btn-active');
+    const safeSet = (id, val, isHTML=false) => { const el=document.getElementById(id); if(el) el[isHTML?'innerHTML':'innerText']=val; };
+    const showNotification = (msg) => {
+        const c=document.getElementById('notification-container'); if(!c)return;
+        const t=document.createElement('div'); t.className='toast-msg'; t.innerHTML=`<i class="fa-solid fa-circle-info text-nurse-secondary text-lg"></i><span>${msg}</span>`;
+        c.appendChild(t); setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(50px)';setTimeout(()=>t.remove(),500)},3500);
+    };
+
+    function calculateExactAge() {
+        const el = document.getElementById('patient_birthdate');
+        const display = document.getElementById('age-display');
+        if (!el.value) { display.classList.add('hidden'); return; }
+
+        const birth = new Date(el.value);
+        const now = new Date();
+        const diffMs = now - birth;
+
+        if (diffMs < 0) { showNotification("Hora de nascimento não pode ser futura!"); el.value = ""; display.classList.add('hidden'); return; }
+
+        const diffMinutes = Math.floor(diffMs / 60000);
+        const hours = Math.floor(diffMinutes / 60);
+        const mins = diffMinutes % 60;
+        const days = Math.floor(hours / 24);
+
+        let ageStr = days > 0 ? `${days}d ` : "";
+        ageStr += `${hours % 24}h ${mins}min de vida`;
+
+        APP_STATE.exactAge = ageStr;
+        display.innerText = ageStr;
+        display.classList.remove('hidden');
+    }
+
+    function calcularApgar() {
+        const cor = document.getElementById('apgar_cor');
+        const fc = document.getElementById('apgar_fc');
+        const irr = document.getElementById('apgar_irritabilidade');
+        const tonus = document.getElementById('apgar_tonus');
+        const resp = document.getElementById('apgar_resp');
+        
+        const name = document.getElementById('patient_name')?.value || "Não Identificado";
+
+        if (!cor.value || !fc.value || !irr.value || !tonus.value || !resp.value) {
+            return showNotification("Selecione todos os 5 parâmetros!");
         }
 
-        function handleCalculate() {
-            const name = document.getElementById('patient_name').value || "RN Não Identificado";
-            const partoTime = document.getElementById('parto_time').value;
+        const score = parseInt(cor.value) + parseInt(fc.value) + parseInt(irr.value) + parseInt(tonus.value) + parseInt(resp.value);
+        
+        let status = score >= 8 ? "BOM ESTADO GERAL (NORMAL)" : (score >= 5 ? "DEPRESSÃO MODERADA" : "DEPRESSÃO GRAVE (ASFIXIA)");
+        let color = score >= 8 ? "text-green-500" : (score >= 5 ? "text-yellow-500" : "text-red-500");
 
-            const fc = parseInt(document.getElementById('sel_fc').value);
-            const resp = parseInt(document.getElementById('sel_resp').value);
-            const tonus = parseInt(document.getElementById('sel_tonus').value);
-            const ref = parseInt(document.getElementById('sel_reflexo').value);
-            const cor = parseInt(document.getElementById('sel_cor').value);
+        APP_STATE.data = {
+            name,
+            age: APP_STATE.exactAge || "N/A",
+            paramsText: [cor.options[cor.selectedIndex].text, fc.options[fc.selectedIndex].text, irr.options[irr.selectedIndex].text, tonus.options[tonus.selectedIndex].text, resp.options[resp.selectedIndex].text],
+            paramsVal: [cor.value, fc.value, irr.value, tonus.value, resp.value],
+            total: score,
+            status,
+            timestamp: new Date().toLocaleString()
+        };
 
-            const total = fc + resp + tonus + ref + cor;
+        safeSet('res-total', score);
+        const st = document.getElementById('res-status-text');
+        st.innerText = status;
+        st.className = `text-lg font-black mt-4 uppercase tracking-widest ${color}`;
+        
+        safeSet('res-formula-box', `${cor.value} + ${fc.value} + ${irr.value} + ${tonus.value} + ${resp.value} = ${score}`);
+        safeSet('audit-nome', name); 
+        safeSet('audit-idade', APP_STATE.exactAge || "Horário não informado");
+        safeSet('audit-score-detail', `${score} Pontos (${status})`);
+        safeSet('audit-params-list', APP_STATE.data.paramsText.map(t => `<p>• ${t}</p>`).join(''), true);
 
-            let status = "";
-            let conduta = "";
-            
-            if (total >= 8) {
-                status = "Boa Vitalidade";
-                conduta = "Vitalidade preservada. Realizar cuidados imediatos de rotina.";
-            } else if (total >= 4) {
-                status = "Depressão Moderada";
-                conduta = "Necessita monitoração e suporte respiratório imediato.";
-            } else {
-                status = "Depressão Grave";
-                conduta = "Iniciado protocolo de Reanimação Neonatal imediata.";
-            }
+        safeSet('checklist-9certos', CONSTS.CERTOS.map(c=>`
+          <div class="flex items-center gap-2 p-3 bg-white dark:bg-slate-900/50 rounded-lg border border-slate-100 dark:border-slate-700 transition">
+             <input type="checkbox" class="w-4 h-4 accent-nurse-primary">
+             <span class="text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-grow">${c}</span>
+             <label class="text-[9px] font-black uppercase text-slate-400 flex items-center gap-1 cursor-pointer hover:text-nurse-secondary">
+               <input type="checkbox" class="accent-slate-400 w-3 h-3"> N/A
+             </label>
+          </div>`).join(''), true);
 
-            document.getElementById('res-score-val').innerText = total;
-            document.getElementById('res-status').innerText = status;
-            document.getElementById('res-conduta').innerText = conduta;
-            document.getElementById('progress-ring').style.strokeDashoffset = 502 - (total / 10) * 502;
+        safeSet('checklist-metas', CONSTS.METAS.map(m=>`<label class="glass-meta ${m.class} cursor-pointer hover:scale-[1.01] transition"><input type="checkbox" class="w-5 h-5 accent-white shrink-0"><span class="text-xs font-black uppercase">${m.id}. ${m.text}</span></label>`).join(''), true);
+        
+        document.getElementById('results-wrapper').classList.remove('hidden');
+        document.getElementById('results-wrapper').scrollIntoView({ behavior: 'smooth' });
+        showNotification("Cálculo realizado!");
+    }
 
-            document.getElementById('audit-patient').innerText = name;
-            document.getElementById('audit-parto').innerText = partoTime ? new Date(partoTime).toLocaleString('pt-BR') : "Não informada";
-            document.getElementById('audit-score').innerText = total + " / 10 PONTOS";
-            document.getElementById('audit-time').innerText = new Date().toLocaleString('pt-BR');
-
-            document.getElementById('checklist-metas').innerHTML = SAFETY_GOALS.map(m => `
-                <div class="flex items-center p-3 rounded-xl border-l-4 ${m.color}">
-                    <input type="checkbox" checked class="mr-3 w-4 h-4 accent-nurse-primary">
-                    <span class="text-xs font-bold">Meta ${m.id}: ${m.text}</span>
+    async function gerarPDF() {
+        if (!APP_STATE.data) return;
+        const d = APP_STATE.data;
+        safeSet('pdf-footer-timestamp', `Registro: ${d.timestamp}`);
+        safeSet('pdf-body', `
+            <div style="padding:15px;background:#f8fafc;border-radius:10px;margin-bottom:15px;border:1px solid #eee;">
+                <p>RN: <strong>${d.name}</strong> | Idade no Exame: <strong>${d.age}</strong></p>
+            </div>
+            <div style="padding:20px;border:2px solid #1A3E74;border-radius:15px;margin-bottom:15px;">
+                <p style="font-weight:900;text-transform:uppercase;border-bottom:1px solid #eee;margin-bottom:10px;padding-bottom:5px;">Escore de Apgar</p>
+                <ul style="list-style:none;padding:0;font-size:9px;">
+                   ${d.paramsText.map(t => `<li style="margin-bottom:4px;">• ${t}</li>`).join('')}
+                </ul>
+                <div style="margin-top:15px;padding-top:10px;border-top:1px solid #eee;display:flex;justify-content:space-between;">
+                   <span style="font-weight:900;color:#1A3E74;">TOTAL:</span>
+                   <span style="font-weight:900;color:#1A3E74;font-size:16px;">${d.total} / 10</span>
                 </div>
-            `).join('');
+                <p style="text-align:right;font-weight:900;font-size:10px;color:${d.total >= 8 ? '#16a34a' : (d.total >= 5 ? '#eab308' : '#dc2626')}">${d.status}</p>
+            </div>`, true);
 
-            document.getElementById('results-section').classList.remove('hidden');
-            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
-        }
+        const qc = document.getElementById('pdf-qrcode-container');
+        if (qc) { qc.innerHTML = ''; new QRCode(qc, { text: window.location.href, width: 60, height: 60 }); }
+        
+        try {
+            const canvas = await html2canvas(document.getElementById('pdf-render-template'), { scale: 2 });
+            const doc = new window.jspdf.jsPDF('p', 'pt', 'a4');
+            doc.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, doc.internal.pageSize.getWidth(), (canvas.height * doc.internal.pageSize.getWidth()) / canvas.width);
+            doc.save(`Apgar-${d.name.replace(/\s+/g, '-')}.pdf`);
+        } catch (e) { console.error(e); }
+    }
 
-        function handleReset() {
-            document.querySelectorAll('input').forEach(i => i.value = '');
-            document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-            document.getElementById('results-section').classList.add('hidden');
-        }
+    function copiarResumo() {
+        if (!APP_STATE.data) return;
+        const d = APP_STATE.data;
+        const t = `APGAR: ${d.total}/10 (${d.status})\nRN: ${d.name}\nIdade: ${d.age}\nAudit: ${d.paramsVal.join('+')}=${d.total}\n${d.timestamp}`;
+        navigator.clipboard.writeText(t).then(() => showNotification("Resumo Copiado!"));
+    }
 
-        function handleSearchNanda() {
-            const score = document.getElementById('res-score-val').innerText;
-            window.open(`https://www.google.com/search?q=NANDA+NIC+NOC+enfermagem+neonatal+apgar+${score}`, '_blank');
-        }
+    function switchTab(id) {
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`pane-${id}`)?.classList.remove('hidden');
+        document.getElementById(`btn-tab-${id}`)?.classList.add('active');
+    }
 
-        async function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const name = document.getElementById('patient_name').value || "RN Não Identificado";
-            const score = document.getElementById('res-score-val').innerText;
-            const conduta = document.getElementById('res-conduta').innerText;
-
-            doc.setFillColor(26, 62, 116);
-            doc.rect(0, 0, 8, 297, 'F'); 
-
-            doc.setFont("helvetica", "bold");
-            doc.setFontSize(18); doc.setTextColor(26, 62, 116);
-            doc.text("RELATÓRIO DE AVALIAÇÃO NEONATAL: APGAR", 105, 25, { align: "center" });
-
-            doc.setDrawColor(230); doc.line(20, 35, 195, 35);
-
-            doc.setFontSize(10); doc.setTextColor(80); doc.setFont("helvetica", "normal");
-            doc.text(`Identificação: ${name}`, 20, 48);
-            doc.text(`Data/Hora Parto: ${document.getElementById('parto_time').value || "-"}`, 20, 56);
-            doc.text(`Avaliação feita em: ${new Date().toLocaleString('pt-BR')}`, 20, 64);
-
-            doc.setFillColor(248, 250, 252); doc.roundedRect(20, 80, 175, 45, 4, 4, 'F');
-            doc.setFontSize(26); doc.setTextColor(26, 62, 116); doc.setFont("helvetica", "bold");
-            doc.text(`${score} / 10 PONTOS`, 107, 105, { align: "center" });
-            doc.setFontSize(11); doc.text(conduta, 107, 116, { align: "center", maxWidth: 160 });
-
-            const qrContainer = document.getElementById('qrcode-source');
-            qrContainer.innerHTML = "";
-            new QRCode(qrContainer, { text: "https://www.calculadorasdeenfermagem.com.br/apgar.html", width: 100, height: 100 });
-            
-            setTimeout(() => {
-                const qrImg = qrContainer.querySelector('img').src;
-                doc.addImage(qrImg, 'PNG', 165, 250, 30, 30);
-                doc.setFontSize(8); doc.setTextColor(150);
-                doc.text("Validado por Calculadoras de Enfermagem - Auditoria Neonatal", 100, 285, { align: "center" });
-                doc.save(`Apgar_${name.replace(/\s+/g, '_')}.pdf`);
-            }, 500);
-        }
-    </script>
+    function resetForm() {
+        document.querySelectorAll('input, select').forEach(i => i.value = '');
+        document.getElementById('results-wrapper').classList.add('hidden');
+        document.getElementById('age-display').classList.add('hidden');
+        APP_STATE.data = null; APP_STATE.exactAge = null;
+        showNotification("Limpado!");
+    }
+    
+    function showNanda() { window.open(`https://www.google.com/search?q=${encodeURIComponent('NANDA diagnósticos enfermagem recém nascido vitalidade apgar')}`, '_blank'); }
+    function redirectSimulados() { window.open('https://simulados-para-enfermagem.com.br/', '_blank'); }
+    function copyLink() { navigator.clipboard.writeText(window.location.href); showNotification("Link copiado!"); }
+    function share(p) {
+        const u = encodeURIComponent(window.location.href);
+        const m = { whatsapp: `https://api.whatsapp.com/send?text=${u}`, facebook: `https://www.facebook.com/sharer/sharer.php?u=${u}`, linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${u}` };
+        if(m[p]) window.open(m[p], '_blank');
+    }
+  </script>
 </body>
 </html>
