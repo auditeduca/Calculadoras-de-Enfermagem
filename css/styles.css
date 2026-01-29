@@ -1,234 +1,204 @@
-/* Estilos Base */
-body { 
-    background-color: rgb(248 250 252);
-    color: rgb(15 23 42);
-    font-family: 'Inter', sans-serif;
-    position: relative;
-    transition: background-color 0.3s, color 0.3s;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+/* Correções de estilos para os problemas identificados */
+
+/* 1. Correção para campos numéricos - prevenir negativos */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.dark body {
-    background-color: #0F172A;
-    color: rgb(241 245 249);
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
-h1 {
-    font-family: '"Nunito Sans"', sans-serif;
-    font-weight: 900;
-    letter-spacing: -0.025em;
-    color: #1A3E74;
+/* 2. Estilo para campos obrigatórios */
+.input-field:required {
+  background-image: linear-gradient(45deg, transparent 50%, #ef4444 50%);
+  background-position: right 15px top 50%;
+  background-size: 8px 8px;
+  background-repeat: no-repeat;
 }
 
-.dark h1 {
-    color: #67e8f9;
+.dark .input-field:required {
+  background-image: linear-gradient(45deg, transparent 50%, #dc2626 50%);
 }
 
-/* Componentes */
-.card-base {
-    background-color: white;
-    border-radius: 2rem;
-    border: 1px solid rgb(226 232 240);
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    transition: all 0.3s;
-    overflow: hidden;
+/* 3. Estilo para botões desabilitados */
+.btn-primary-action:disabled,
+.btn-secondary-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
 }
 
-.dark .card-base {
-    background-color: rgb(30 41 59 / 0.9);
-    border-color: rgb(51 65 85);
+/* 4. Correção para sidebar sticky */
+@media (min-width: 1024px) {
+  .sticky-sidebar {
+    position: sticky;
+    top: 6rem;
+    align-self: flex-start;
+  }
 }
 
-.input-field {
-    width: 100%;
-    background-color: white;
-    border: 2px solid rgb(226 232 240);
-    border-radius: 0.75rem;
-    padding: 0.75rem 1rem;
-    font-weight: 500;
-    transition: all 0.3s;
-    outline: none;
+/* 5. Estilo para tooltips melhorados */
+.label-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
 }
 
-.dark .input-field {
-    background-color: rgb(30 41 59);
-    border-color: rgb(51 65 85);
-    color: rgb(241 245 249);
+.label-tooltip:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-bottom: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.input-field:focus {
-    border-color: #00bcd4;
+.label-tooltip:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #1e293b;
+  margin-bottom: -5px;
+  z-index: 1000;
 }
 
-.input-field.error {
-    border-color: #ef4444;
-    background-color: rgb(254 242 242);
+/* 6. Animações para notificações */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
-.btn-primary-action {
-    background-color: #1A3E74;
-    color: white;
-    font-weight: 700;
-    padding: 1rem 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-primary-action:hover {
-    background-color: #00bcd4;
-}
-
-.btn-secondary-action {
-    background-color: rgb(226 232 240);
-    color: rgb(71 85 105);
-    font-weight: 700;
-    padding: 1rem;
-    border-radius: 1rem;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: none;
-    cursor: pointer;
-}
-
-.dark .btn-secondary-action {
-    background-color: rgb(51 65 85);
-    color: rgb(226 232 240);
-}
-
-.btn-secondary-action:hover {
-    background-color: rgb(203 213 225);
-}
-
-.dark .btn-secondary-action:hover {
-    background-color: rgb(71 85 105);
-}
-
-.tab-btn {
-    flex: 1;
-    padding: 0.75rem 1rem;
-    font-weight: 700;
-    font-size: 0.6875rem;
-    transition: all 0.3s;
-    border-bottom: 4px solid transparent;
-    color: rgb(148 163 184);
-    white-space: nowrap;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.tab-btn:hover {
-    color: #1A3E74;
-}
-
-.dark .tab-btn:hover {
-    color: #67e8f9;
-}
-
-.tab-btn.active {
-    border-bottom-color: #00bcd4;
-    color: #1A3E74;
-    background-color: rgb(248 250 252 / 0.5);
-}
-
-.dark .tab-btn.active {
-    color: #67e8f9;
-    background-color: rgb(30 41 59 / 0.3);
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 }
 
 .toast-msg {
-    pointer-events: auto;
-    background-color: rgb(15 23 42);
-    color: white;
-    padding: 1rem 1.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-weight: 700;
-    font-size: 0.875rem;
-    min-width: 320px;
-    border-left: 4px solid #00bcd4;
-    animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideInRight 0.3s ease-out;
 }
 
-@keyframes slideIn {
-    from {
-        transform: translateX(120%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+.toast-msg.hiding {
+  animation: slideOutRight 0.3s ease-out;
 }
 
-/* Template PDF Oculto */
-#pdf-render-template {
-    position: absolute;
-    left: -9999px;
-    top: 0;
-    width: 794px;
-    min-height: 1123px;
-    background: white;
-    padding: 40px;
-    color: #0f172a;
-    display: flex;
+/* 7. Estilo para seção de auditoria */
+#audit-list li {
+  transition: all 0.3s ease;
+}
+
+#audit-list li:hover {
+  transform: translateX(5px);
+  border-left-color: #00bcd4;
+}
+
+/* 8. Estilo para checklists */
+#checklist-9certos label,
+#checklist-metas label {
+  transition: all 0.2s ease;
+}
+
+#checklist-9certos label:hover,
+#checklist-metas label:hover {
+  border-color: #00bcd4;
+  box-shadow: 0 2px 8px rgba(0, 188, 212, 0.2);
+}
+
+/* 9. Correção para data de nascimento */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+  cursor: pointer;
+}
+
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+/* 10. Estilo para tags/tópicos */
+.tag-pill-footer {
+  transition: all 0.2s ease;
+}
+
+.tag-pill-footer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 62, 116, 0.2);
+}
+
+/* 11. Responsividade para mobile */
+@media (max-width: 768px) {
+  .mobile-stack {
     flex-direction: column;
+  }
+  
+  .mobile-full-width {
+    width: 100% !important;
+  }
+  
+  .mobile-text-center {
+    text-align: center;
+  }
+  
+  .mobile-p-4 {
+    padding: 1rem;
+  }
+  
+  #global-reference-buttons {
+    bottom: 1rem;
+    right: 1rem;
+    transform: scale(0.9);
+  }
 }
 
-/* Utilitários */
-.hidden {
-    display: none !important;
+/* 12. Estilo para modais */
+#reference-modal {
+  backdrop-filter: blur(4px);
 }
 
-.tab-pane {
-    display: none;
+#reference-modal > div > div {
+  animation: modalAppear 0.3s ease-out;
 }
 
-.tab-pane.active {
-    display: block;
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
-@media (min-width: 1024px) {
-    .sticky-sidebar {
-        position: sticky;
-        top: 7rem;
-        align-self: flex-start;
-    }
-}
-
-/* Animações */
-.animate-spin {
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* 13. Estilo para botão Simulados na sidebar */
+.sidebar-module a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
