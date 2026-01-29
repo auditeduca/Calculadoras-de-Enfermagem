@@ -1,81 +1,191 @@
 {
+  "version": "1.0.0",
+  "last_updated": "2024-01-15",
   "calculators": [
     {
       "id": "insulina",
       "name": "Cálculo de Insulina",
       "description": "Ferramenta técnica para aspiração segura de insulina com protocolos integrados.",
-      "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/insulina.html",
-      "breadcrumbs": {
-        "desktop": ["Início", "Ferramentas", "Calculadoras Clínicas", "Cálculo de Insulina"],
-        "mobile": ["Início", "Ferramentas", "Insulina"]
-      },
-      "tabs": {
-        "about": "O cálculo de insulina fundamenta-se na regra de três simples para converter Unidades Internacionais (UI) em mililitros (ml). A precisão é vital para evitar eventos adversos graves como hipoglicemia severa.",
-        "about_items": [
-          "<strong>1. Identificação e Definição:</strong> Projetada para converter a dose prescrita de UI para mililitros (ml).",
-          "<strong>2. Objetivo e Finalidade:</strong> Eliminar o erro de conversão matemática no preparo da medicação.",
-          "<strong>3. Público-Alvo:</strong> Enfermeiros e técnicos devidamente capacitados.",
-          "<strong>4. Parâmetros e Variáveis:</strong> Processa Concentração do Frasco, Dose Prescrita e Volume da Seringa.",
-          "<strong>5. Lógica de Cálculo:</strong> Aplica a regra de conversão padrão baseada na concentração de 100 UI por 1 ml.",
-          "<strong>6. Protocolo de Segurança:</strong> Dupla Checagem Obrigatória. Não se aplica a canetas pré-preenchidas."
-        ],
-        "instructions": [
-          "1. Identifique o paciente para fins de auditoria clínica.",
-          "2. Insira a concentração do frasco (UI/ml).",
-          "3. Informe a capacidade da seringa utilizada.",
-          "4. Digite a dose prescrita em UI.",
-          "5. Utilize a auditoria gerada para conferência ativa."
-        ],
-        "references": [
-          "Sociedade Brasileira de Diabetes (SBD). Diretrizes 2023.",
-          "Protocolos de Segurança do Paciente - ANVISA/MS."
-        ]
+      "category": "Medicação",
+      "icon": "fa-syringe",
+      "unit": "mL",
+      "formula": {
+        "calculation": "V = (Dose Prescrita × Volume Seringa) ÷ Concentração Frasco",
+        "explanation": "Volume a aspirar em mL = (Dose em UI × Volume da seringa em mL) ÷ Concentração do frasco em UI/mL"
       },
       "fields": {
-        "Parâmetros": [
-          { "id": "insulinaFrasco", "name": "Frasco (UI/ml)", "type": "number", "placeholder": "", "unit": "UI/ml", "tooltip": "Concentração de insulina no frasco (Padrão: 100 UI/ml)", "required": true },
-          { "id": "insulinaSeringa", "name": "Seringa (ml)", "type": "number", "placeholder": "", "unit": "ml", "tooltip": "Capacidade total da seringa (ex: 1ml ou 3ml)", "required": true },
-          { "id": "insulinaPrescricao", "name": "Prescrição (UI)", "type": "number", "placeholder": "", "unit": "UI", "tooltip": "Dose exata solicitada pelo médico", "required": true }
+        "Parâmetros do Paciente": [
+          {
+            "id": "patient_name",
+            "name": "Nome do Paciente",
+            "type": "text",
+            "placeholder": "Nome completo",
+            "required": false,
+            "tooltip": "Identificação do paciente para registro"
+          },
+          {
+            "id": "patient_dob",
+            "name": "Data de Nascimento",
+            "type": "text",
+            "placeholder": "DD/MM/AAAA",
+            "required": false,
+            "tooltip": "Para cálculo de idade e validação"
+          }
+        ],
+        "Parâmetros do Cálculo": [
+          {
+            "id": "dose_prescrita",
+            "name": "Dose Prescrita",
+            "type": "number",
+            "placeholder": "Ex: 20",
+            "required": true,
+            "tooltip": "Dose em Unidades Internacionais (UI) prescrita pelo médico",
+            "unit": "UI",
+            "min": 0,
+            "step": 0.5
+          },
+          {
+            "id": "concentracao_frasco",
+            "name": "Concentração do Frasco",
+            "type": "number",
+            "placeholder": "Ex: 100",
+            "required": true,
+            "tooltip": "Concentração padrão: 100 UI/mL. Verificar rótulo.",
+            "unit": "UI/mL",
+            "min": 0
+          },
+          {
+            "id": "volume_seringa",
+            "name": "Volume da Seringa",
+            "type": "number",
+            "placeholder": "Ex: 1",
+            "required": true,
+            "tooltip": "Volume total da seringa disponível",
+            "unit": "mL",
+            "min": 0,
+            "step": 0.5
+          }
         ]
       },
-      "formula": {
-        "description": "Regra de três simples para volume de aspiração.",
-        "calculation": "(Prescrição × Capacidade Seringa) / Concentração Frasco = ml"
-      }
+      "instructions": [
+        "Identifique corretamente o paciente",
+        "Confirme a dose prescrita com a prescrição médica",
+        "Verifique a concentração do frasco de insulina (geralmente 100 UI/mL)",
+        "Selecione seringa apropriada (insulina 1mL ou 0,5mL)",
+        "Realize dupla checagem com outro profissional",
+        "Aspire o volume calculado com precisão"
+      ],
+      "warnings": [
+        "Insulina é medicamento de alta vigilância",
+        "Doses acima de 100 UI requerem atenção especial",
+        "Nunca usar seringa padrão para insulina",
+        "Verificar validade e aspecto do frasco",
+        "Armazenamento correto: refrigerar entre 2-8°C"
+      ],
+      "references": [
+        "Protocolo de Segurança na Administração de Insulina - ANVISA",
+        "Diretrizes da Sociedade Brasileira de Diabetes (SBD)",
+        "Manual de Cálculo e Administração de Medicamentos - COREN",
+        "Boas Práticas de Enfermagem - Ministério da Saúde"
+      ],
+      "tags": ["insulina", "diabetes", "medicação", "segurança", "dose"]
     },
     {
       "id": "heparina",
       "name": "Cálculo de Heparina",
-      "description": "Cálculo preciso de dosagem de heparina para prevenção de erros em medicações de alta vigilância.",
-      "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/heparina.html",
-      "breadcrumbs": {
-        "desktop": ["Início", "Ferramentas", "Calculadoras Clínicas", "Cálculo de Heparina"],
-        "mobile": ["Início", "Ferramentas", "Heparina"]
-      },
-      "tabs": {
-        "about": "A Heparina é um anticoagulante que exige rigor matemático na diluição e aspiração para prevenir eventos hemorrágicos ou trombóticos.",
-        "instructions": [
-          "1. Insira a concentração disponível no frasco (UI).",
-          "2. Informe o volume total do frasco (ml).",
-          "3. Digite a dose prescrita em UI.",
-          "4. O sistema calculará o volume exato para aspiração segura."
-        ],
-        "references": [
-          "COFEN. Guia de Boas Práticas: Administração de Medicamentos.",
-          "Protocolos Institucionais de Alta Vigilância."
-        ]
-      },
+      "description": "Cálculo preciso para administração de heparina com controle de coagulação.",
+      "category": "Anticoagulante",
+      "icon": "fa-droplet",
+      "unit": "mL",
       "fields": {
-        "Parâmetros": [
-          { "id": "heparinaConcentracao", "name": "Concentração (UI)", "type": "number", "placeholder": "", "unit": "UI", "tooltip": "Dosagem total presente no frasco", "required": true },
-          { "id": "heparinaVolume", "name": "Volume (ml)", "type": "number", "placeholder": "", "unit": "ml", "tooltip": "Volume líquido total do frasco", "required": true },
-          { "id": "heparinaPrescricao", "name": "Prescrição (UI)", "type": "number", "placeholder": "", "unit": "UI", "tooltip": "Dose prescrita a administrar", "required": true }
+        "Parâmetros do Cálculo": [
+          {
+            "id": "dose_prescrita",
+            "name": "Dose Prescrita",
+            "type": "number",
+            "required": true,
+            "unit": "UI"
+          },
+          {
+            "id": "concentracao_frasco",
+            "name": "Concentração do Frasco",
+            "type": "number",
+            "required": true,
+            "unit": "UI/mL"
+          },
+          {
+            "id": "volume_seringa",
+            "name": "Volume da Seringa",
+            "type": "number",
+            "required": true,
+            "unit": "mL"
+          }
         ]
       },
-      "formula": {
-        "description": "Regra de três para volume a aspirar.",
-        "calculation": "(Prescrição × Volume Frasco) / Concentração = ml"
-      }
+      "tags": ["heparina", "anticoagulante", "coagulação", "trombose"]
+    },
+    {
+      "id": "gotejamento",
+      "name": "Cálculo de Gotejamento",
+      "description": "Cálculo de gotas/minuto para infusão de soluções endovenosas.",
+      "category": "Hidratação",
+      "icon": "fa-faucet-drip",
+      "fields": {
+        "Parâmetros do Cálculo": [
+          {
+            "id": "volume_total",
+            "name": "Volume Total",
+            "type": "number",
+            "required": true,
+            "unit": "mL"
+          },
+          {
+            "id": "tempo_minutos",
+            "name": "Tempo de Infusão",
+            "type": "number",
+            "required": true,
+            "unit": "minutos"
+          },
+          {
+            "id": "tipo_gotejamento",
+            "name": "Tipo de Gotejamento",
+            "type": "select",
+            "required": true,
+            "options": [
+              { "value": "macrogotas", "label": "Macrogotas (20 gotas/mL)" },
+              { "value": "microgotas", "label": "Microgotas (60 microgotas/mL)" }
+            ]
+          }
+        ]
+      },
+      "tags": ["soro", "infusão", "hidratação", "velocidade"]
+    },
+    {
+      "id": "imc",
+      "name": "Cálculo de IMC",
+      "description": "Índice de Massa Corporal para avaliação nutricional.",
+      "category": "Avaliação",
+      "icon": "fa-weight-scale",
+      "unit": "kg/m²",
+      "fields": {
+        "Dados Antropométricos": [
+          {
+            "id": "peso",
+            "name": "Peso",
+            "type": "number",
+            "required": true,
+            "unit": "kg"
+          },
+          {
+            "id": "altura",
+            "name": "Altura",
+            "type": "number",
+            "required": true,
+            "unit": "metros"
+          }
+        ]
+      },
+      "tags": ["imc", "nutrição", "avaliação", "peso"]
     }
   ]
 }
