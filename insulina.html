@@ -1,66 +1,232 @@
 <!DOCTYPE html>
 <html lang="pt-br" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-  <title>Cálculo de Insulina Online | Seringas de 100UI e 300UI</title>
-  <meta name="description" content="Ferramenta profissional para cálculo de dosagem de insulina com segurança, auditoria de cálculo e geração de PDF.">
-  <meta name="keywords" content="insulina, enfermagem, cálculo de medicação, segurança do paciente, seringa insulina">
-  
-  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/insulina.html"/>
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <title>Calculadoras de Enfermagem - Sistema Dinâmico Modular</title>
+    
+    <!-- Meta Tags Dinâmicas -->
+    <meta id="meta-description" name="description" content="Calculadoras profissionais de enfermagem com segurança integrada e auditoria clínica.">
+    <meta id="meta-keywords" name="keywords" content="enfermagem, cálculos, segurança do paciente, nanda, nic, noc, calculadoras clínicas">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <meta name="robots" content="index, follow">
+    <link id="canonical-link" rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/"/>
+    
+    <!-- Open Graph -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Calculadoras de Enfermagem">
+    <meta id="og-title" property="og:title" content="Calculadoras de Enfermagem - Sistema Dinâmico">
+    <meta id="og-description" property="og:description" content="Ferramentas profissionais com segurança e auditoria clínica integrada.">
+    <meta id="og-url" property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
+    <meta id="og-image" property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured.webp">
 
-  <script src="js/nursing_calculators.js"></script>
-  <script src="js/calculator-engine.js"></script>
-  <script src="js/main_content_injector.js"></script>
+    <!-- Ícone -->
+    <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
+    
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuração do Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        nunito: ['"Nunito Sans"', 'sans-serif'], 
+                        inter: ['Inter', 'sans-serif'] 
+                    },
+                    colors: { 
+                        'nurse-primary': '#1A3E74', 
+                        'nurse-secondary': '#00bcd4', 
+                        'nurse-accent': '#00838f', 
+                        'nurse-bgDark': '#0F172A' 
+                    }
+                }
+            }
+        };
+        
+        // Configuração global
+        window.NURSE_CONFIG = {
+            baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/',
+            debug: false
+        };
+    </script>
+
+    <!-- Estilos Externos -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
 </head>
 
-<body class="bg-slate-50 font-sans text-slate-900">
-
-  <header class="bg-white border-b sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <i class="fa-solid fa-calculator text-blue-600 text-xl"></i>
-        <span class="font-bold text-lg tracking-tight">Calculadoras de Enfermagem</span>
-      </div>
+<body class="flex flex-col min-h-screen dark:bg-nurse-bgDark dark:text-slate-100">
+    <!-- Background Decorativo -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
     </div>
-  </header>
 
-  <main id="main-content" class="max-w-4xl mx-auto p-4 min-h-[80vh]">
-    <div class="flex justify-center items-center py-20">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-    </div>
-  </main>
+    <!-- Container para Notificações -->
+    <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
+    
+    <!-- Container para Acessibilidade -->
+    <div id="accessibility-container"></div>
+    
+    <!-- Container para Header -->
+    <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] shadow-sm transition-opacity duration-500"></div>
 
-  <footer class="bg-slate-900 text-slate-400 py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="mb-4">© 2026 Calculadoras de Enfermagem - Segurança e Auditoria Clínica</p>
-    </div>
-  </footer>
+    <!-- Conteúdo Principal -->
+    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
+        <!-- O conteúdo será injetado dinamicamente pelo sistema -->
+        <div class="text-center py-20">
+            <i class="fa-solid fa-spinner animate-spin text-5xl text-nurse-primary mb-6"></i>
+            <h2 class="text-2xl font-bold text-nurse-primary dark:text-cyan-400 mb-4">Carregando Sistema de Calculadoras</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+                O sistema modular de calculadoras clínicas está sendo inicializado...
+            </p>
+        </div>
+    </main>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      const injector = new MainContentInjector({
-        containerId: 'main-content',
-        jsonPath: 'nursing_calculators.json'
-      });
+    <!-- Container para Footer -->
+    <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px]"></div>
+    
+    <!-- Template PDF Oculto -->
+    <div id="pdf-render-template"></div>
 
-      // Forçamos a injeção direta pelo ID do JSON para garantir o SEO fixo
-      const success = await injector.injectById('insulina');
-      
-      if (!success) {
-        document.getElementById('main-content').innerHTML = `
-          <div class="text-center py-20">
-            <h2 class="text-2xl font-bold text-red-600">Erro ao carregar módulo</h2>
-            <p>Certifique-se de que 'nursing_calculators.json' está na mesma pasta.</p>
-          </div>
-        `;
-      }
-    });
-  </script>
+    <!-- Bibliotecas Externas (Deferidas) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+
+    <!-- Componentes do Sistema (Deferidos) -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" crossorigin="anonymous" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" crossorigin="anonymous" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" crossorigin="anonymous" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" crossorigin="anonymous" defer></script>
+
+    <!-- Módulos do Sistema (Deferidos) -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/util.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/ui.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/voice.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/pdf.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/notifications.js" defer></script>
+    
+    <!-- Núcleo do Sistema (Deferidos) -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/nursing_calculators.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/nursing_engine.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/main_content_injector.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/core.js" defer></script>
+
+    <!-- Script de Inicialização -->
+    <script>
+        /**
+         * CARREGAMENTO DE MÓDULOS HTML
+         */
+        async function loadHtmlModule(id, url) {
+            const container = document.getElementById(id);
+            if (!container) {
+                console.warn(`Container ${id} não encontrado`);
+                return;
+            }
+            
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const html = await response.text();
+                container.innerHTML = html;
+                container.classList.remove('opacity-50');
+                console.log(`✅ Módulo ${id} carregado`);
+            } catch (error) {
+                console.error(`❌ Erro ao carregar módulo ${id}:`, error);
+                container.innerHTML = `
+                    <div class="p-4 text-center">
+                        <p class="text-sm text-slate-500">Módulo não disponível</p>
+                    </div>
+                `;
+            }
+        }
+        
+        /**
+         * INICIALIZAÇÃO DO SISTEMA
+         */
+        async function initializeSystem() {
+            console.log('🚀 Inicializando Sistema de Calculadoras...');
+            
+            // 1. Carregar componentes HTML
+            await Promise.all([
+                loadHtmlModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html'),
+                loadHtmlModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html'),
+                loadHtmlModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html')
+            ]);
+            
+            // 2. Aguardar carregamento dos scripts JavaScript
+            let attempts = 0;
+            const maxAttempts = 10;
+            
+            const waitForScripts = () => {
+                return new Promise((resolve) => {
+                    const checkInterval = setInterval(() => {
+                        attempts++;
+                        
+                        // Verificar se os módulos principais estão carregados
+                        const modulesLoaded = window.NURSE_SYSTEM && 
+                                               window.MAIN_CONTENT_INJECTOR && 
+                                               window.NURSING_ENGINE;
+                        
+                        if (modulesLoaded || attempts >= maxAttempts) {
+                            clearInterval(checkInterval);
+                            resolve();
+                        }
+                    }, 500);
+                });
+            };
+            
+            await waitForScripts();
+            
+            // 3. Inicializar sistema principal
+            try {
+                if (window.NURSE_SYSTEM && typeof window.NURSE_SYSTEM.init === 'function') {
+                    await window.NURSE_SYSTEM.init();
+                    console.log('✅ Sistema inicializado com sucesso');
+                } else {
+                    throw new Error('Sistema principal não disponível');
+                }
+            } catch (error) {
+                console.error('❌ Erro ao inicializar sistema:', error);
+                
+                // Mostrar mensagem de erro
+                const mainContent = document.getElementById('main-content');
+                if (mainContent) {
+                    mainContent.innerHTML = `
+                        <div class="text-center py-20 px-4">
+                            <i class="fa-solid fa-exclamation-triangle text-5xl text-red-500 mb-6"></i>
+                            <h2 class="text-2xl font-bold text-red-600 mb-4">Erro ao Carregar o Sistema</h2>
+                            <button onclick="location.reload()" class="btn-primary-action inline-flex">
+                                <i class="fa-solid fa-rotate-right mr-2"></i> Recarregar Página
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+        }
+        
+        // Iniciar quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', initializeSystem);
+    </script>
 </body>
 </html>
