@@ -1,50 +1,51 @@
-/**
- * UTIL.js - Ferramentas de Apoio, PDF, Cópia e Validação
- */
 const UTIL = {
-    validateFields(containerId) {
-        const fields = document.querySelectorAll(`#${containerId} input[required]`);
+    validateInputs(containerId) {
+        const fields = document.querySelectorAll(`#${containerId} input[required], #patient_name, #patient_dob`);
         let isValid = true;
+        
         fields.forEach(f => {
-            if (!f.value) {
-                f.classList.add('animate-shake', 'border-red-500', 'bg-red-50');
+            if (!f.value || (f.type === 'number' && parseFloat(f.value) < 0)) {
+                f.classList.add('error', 'animate-shake');
                 isValid = false;
                 setTimeout(() => f.classList.remove('animate-shake'), 400);
             } else {
-                f.classList.remove('border-red-500', 'bg-red-50');
+                f.classList.remove('error');
             }
         });
-        if (!isValid) VOICE.speak("Atenção: Campos obrigatórios em falta.");
+
+        const dobInput = document.getElementById('patient_dob');
+        if (dobInput.value && dobInput.value.length !== 4) {
+            dobInput.classList.add('error');
+            isValid = false;
+        }
+
+        if (!isValid) VOICE.speak("Verifique os campos obrigatórios e valores negativos.");
         return isValid;
     },
 
-    resetSystem() {
-        VOICE.speak("A repor o formulário.");
-        location.reload();
+    getAge(year) {
+        const current = new Date().getFullYear();
+        const age = current - parseInt(year);
+        if (age < 0 || age > 120) {
+            CORE.notify("Idade incoerente detetada!", "error");
+            return null;
+        }
+        return age;
     },
 
-    async generatePDF(elementId, configId) {
-        VOICE.speak("A gerar o relatório de auditoria clínica.");
-        const element = document.getElementById(elementId);
-        const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p', 'pt', 'a4');
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 595, 842);
-        pdf.save(`Relatorio_Audit_${configId}.pdf`);
-        VOICE.speak("PDF gerado com sucesso.");
-    },
-
-    copyResult(result, configName) {
-        const patient = document.getElementById('patient_name').value || 'Não Identificado';
-        const text = `--- REGISTO DE AUDITORIA ---\nCalculadora: ${configName}\nPaciente: ${patient}\nResultado: ${result} ml\nAuditado via: auditeduca.github.io`;
-        navigator.clipboard.writeText(text);
-        CORE.notify("Registo copiado!");
-        VOICE.speak("Copiado com sucesso.");
-    },
-
-    searchNANDA(name, result) {
-        const query = encodeURIComponent(`diagnóstico enfermagem NANDA ${name} ${result} ml`);
-        window.open(`https://www.google.com/search?q=${query}`, '_blank');
-        VOICE.speak("A procurar diagnósticos no NANDA.");
+    checkAnomalous(value, type) {
+        if (type === 'insulina' && value > 100) {
+            CORE.notify("Alerta: Dose de insulina elevada (>100UI)!", "error");
+            VOICE.speak("Atenção: Dose de insulina superior a cem unidades detetada.");
+        }
     }
 };
+
+// Listener para cálculo automático de idade no input
+document.addEventListener('input', (e) => {
+    if (e.target.id === 'patient_dob' && e.target.value.length === 4) {
+        const age = UTIL.getAge(e.target.value);
+        const badge = document.getElementById('age-badge');
+        if (badge && age !== null) badge.innerText = `${age} anos`;
+    }
+});

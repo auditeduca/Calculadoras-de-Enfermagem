@@ -11,6 +11,14 @@
       },
       "tabs": {
         "about": "O cálculo de insulina fundamenta-se na regra de três simples para converter Unidades Internacionais (UI) em mililitros (ml). A precisão é vital para evitar eventos adversos graves como hipoglicemia severa.",
+        "about_items": [
+          "<strong>1. Identificação e Definição:</strong> Projetada para converter a dose prescrita de UI para mililitros (ml).",
+          "<strong>2. Objetivo e Finalidade:</strong> Eliminar o erro de conversão matemática no preparo da medicação.",
+          "<strong>3. Público-Alvo:</strong> Enfermeiros e técnicos devidamente capacitados.",
+          "<strong>4. Parâmetros e Variáveis:</strong> Processa Concentração do Frasco, Dose Prescrita e Volume da Seringa.",
+          "<strong>5. Lógica de Cálculo:</strong> Aplica a regra de conversão padrão baseada na concentração de 100 UI por 1 ml.",
+          "<strong>6. Protocolo de Segurança:</strong> Dupla Checagem Obrigatória. Não se aplica a canetas pré-preenchidas."
+        ],
         "instructions": [
           "1. Identifique o paciente para fins de auditoria clínica.",
           "2. Insira a concentração do frasco (UI/ml).",
@@ -25,9 +33,9 @@
       },
       "fields": {
         "Parâmetros": [
-          { "id": "insulinaFrasco", "name": "Frasco (UI/ml)", "type": "number", "placeholder": "Ex: Concentração", "unit": "UI/ml", "required": true },
-          { "id": "insulinaSeringa", "name": "Seringa (ml)", "type": "number", "placeholder": "Ex: Capacidade", "unit": "ml", "required": true },
-          { "id": "insulinaPrescricao", "name": "Prescrição (UI)", "type": "number", "placeholder": "Ex: Dose", "unit": "UI", "required": true }
+          { "id": "insulinaFrasco", "name": "Frasco (UI/ml)", "type": "number", "placeholder": "", "unit": "UI/ml", "tooltip": "Concentração de insulina no frasco (Padrão: 100 UI/ml)", "required": true },
+          { "id": "insulinaSeringa", "name": "Seringa (ml)", "type": "number", "placeholder": "", "unit": "ml", "tooltip": "Capacidade total da seringa (ex: 1ml ou 3ml)", "required": true },
+          { "id": "insulinaPrescricao", "name": "Prescrição (UI)", "type": "number", "placeholder": "", "unit": "UI", "tooltip": "Dose exata solicitada pelo médico", "required": true }
         ]
       },
       "formula": {
@@ -59,49 +67,14 @@
       },
       "fields": {
         "Parâmetros": [
-          { "id": "heparinaConcentracao", "name": "Concentração (UI)", "type": "number", "placeholder": "Ex: Concentração Frasco", "unit": "UI", "required": true },
-          { "id": "heparinaVolume", "name": "Volume (ml)", "type": "number", "placeholder": "Ex: Volume Frasco", "unit": "ml", "required": true },
-          { "id": "heparinaPrescricao", "name": "Prescrição (UI)", "type": "number", "placeholder": "Ex: Dose", "unit": "UI", "required": true }
+          { "id": "heparinaConcentracao", "name": "Concentração (UI)", "type": "number", "placeholder": "", "unit": "UI", "tooltip": "Dosagem total presente no frasco", "required": true },
+          { "id": "heparinaVolume", "name": "Volume (ml)", "type": "number", "placeholder": "", "unit": "ml", "tooltip": "Volume líquido total do frasco", "required": true },
+          { "id": "heparinaPrescricao", "name": "Prescrição (UI)", "type": "number", "placeholder": "", "unit": "UI", "tooltip": "Dose prescrita a administrar", "required": true }
         ]
       },
       "formula": {
         "description": "Regra de três para volume a aspirar.",
         "calculation": "(Prescrição × Volume Frasco) / Concentração = ml"
-      }
-    },
-    {
-      "id": "gotejamento",
-      "name": "Gotejamento de Soro",
-      "description": "Cálculo de velocidade de infusão para equipos de macrogotas e microgotas.",
-      "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/gotejamento.html",
-      "breadcrumbs": {
-        "desktop": ["Início", "Ferramentas", "Calculadoras Clínicas", "Gotejamento"],
-        "mobile": ["Início", "Ferramentas", "Gotejamento"]
-      },
-      "tabs": {
-        "about": "O controle do gotejamento assegura que o volume prescrito seja infundido no tempo correto, evitando sobrecarga hídrica ou atrasos terapêuticos.",
-        "instructions": [
-          "1. Informe o volume total da solução (ml).",
-          "2. Insira o tempo total da infusão.",
-          "3. Selecione a unidade de tempo (Horas ou Minutos).",
-          "4. Escolha o tipo de equipo (Macrogotas ou Microgotas)."
-        ],
-        "references": [
-          "Potter & Perry. Fundamentos de Enfermagem.",
-          "Cálculos de Enfermagem - Protocolos Técnicos."
-        ]
-      },
-      "fields": {
-        "Parâmetros": [
-          { "id": "volume", "name": "Volume (ml)", "type": "number", "placeholder": "Ex: Volume Total", "unit": "ml", "required": true },
-          { "id": "tempo", "name": "Tempo", "type": "number", "placeholder": "Ex: Tempo Infusão", "required": true },
-          { "id": "unidadeTempo", "name": "Unidade", "type": "select", "options": [{"value": "horas", "label": "Horas"}, {"value": "minutos", "label": "Minutos"}], "required": true },
-          { "id": "equipo", "name": "Equipo", "type": "select", "options": [{"value": "macrogotas", "label": "Macrogotas"}, {"value": "microgotas", "label": "Microgotas"}], "required": true }
-        ]
-      },
-      "formula": {
-        "description": "Velocidade de infusão gravitacional.",
-        "calculation": "Gotas/min = Volume / (Tempo h × 3)"
       }
     }
   ]
