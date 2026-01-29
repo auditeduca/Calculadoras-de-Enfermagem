@@ -1,13 +1,13 @@
 /**
- * UI.js - Renderização Dinâmica de Componentes e Interface
- * Contém os métodos de renderização exigidos pelo CORE.
+ * UI.js - Renderização Dinâmica de Componentes
+ * Responsável por Sidebar, AdSense, Header, Tabs e Checklists.
  */
 const UI = {
     renderHeader(config) {
         const container = document.getElementById('calc-header');
         if (!container) return;
         container.innerHTML = `
-            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Segurança Clínica</span>
+            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Segurança Clínica Profissional</span>
             <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">${config.name}</h1>
             <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
             <p class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">${config.description}</p>
@@ -22,6 +22,26 @@ const UI = {
             return `<span class="${isLast ? 'text-nurse-primary dark:text-cyan-400 font-bold' : ''}">${item}</span>`;
         }).join('<i class="fa-solid fa-chevron-right text-[10px] mx-2 opacity-30"></i>');
         container.innerHTML = `<div class="hidden md:flex items-center text-slate-500 dark:text-slate-400">${html}</div>`;
+    },
+
+    /**
+     * Injeção de AdSense em Slots Modulares
+     */
+    renderAdSense() {
+        const topSlot = document.getElementById('adsense-top');
+        const resultSlot = document.getElementById('adsense-results');
+        
+        const template = (label) => `
+            <div class="w-full bg-slate-100 dark:bg-slate-800/50 rounded-2xl flex items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-700 min-h-[100px] transition-all">
+                <div class="text-center">
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest italic block mb-1">Publicidade Profissional</span>
+                    <span class="text-[8px] text-slate-300 uppercase">${label}</span>
+                </div>
+            </div>
+        `;
+
+        if (topSlot) topSlot.innerHTML = template('Topo da Página');
+        if (resultSlot) resultSlot.innerHTML = template('Resultado da Auditoria');
     },
 
     renderTabs() {
@@ -82,20 +102,37 @@ const UI = {
     renderSidebar(db) {
         const container = document.getElementById('sidebar-container');
         if (!container) return;
+
+        // Calculadoras Relacionadas
         const related = db ? db.calculators.filter(c => c.id !== CORE.state.config.id).slice(0, 3).map(c => 
             `<a href="?id=${c.id}" class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/10 text-white font-bold transition-all text-[11px] uppercase border border-white/10 mb-1"><i class="fa-solid fa-calculator text-cyan-300"></i> ${c.name}</a>`
         ).join('') : '';
 
         container.innerHTML = `
+            <!-- Módulo Simulados -->
             <div class="sidebar-module">
                 <h3 class="font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-trophy"></i> Simulados</h3>
                 <p class="text-xs mb-4 opacity-80">Pratique com casos clínicos reais e evite erros na assistência.</p>
                 <a href="https://simulados-para-enfermagem.com.br" target="_blank" class="block bg-white text-nurse-primary text-center py-3 rounded-xl font-black text-[10px] uppercase hover:scale-105 transition-all">Acessar simulados</a>
             </div>
+
+            <!-- Módulo Relacionadas -->
             <div class="sidebar-module from-teal-600 to-nurse-secondary">
                 <h3 class="font-bold mb-4 flex items-center gap-2 font-nunito"><i class="fa-solid fa-list-ul"></i> Relacionadas</h3>
                 <div class="space-y-1">${related}</div>
-            </div>`;
+            </div>
+
+            <!-- Módulo Compartilhar -->
+            <div class="sidebar-module from-slate-700 to-slate-900">
+                <h3 class="font-bold mb-4 flex items-center gap-2 font-nunito"><i class="fa-solid fa-share-nodes"></i> Compartilhar</h3>
+                <div class="flex gap-3 justify-center">
+                    <button onclick="window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(window.location.href))" class="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white hover:text-nurse-primary transition-all shadow-md" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+                    <button onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href))" class="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white hover:text-nurse-primary transition-all shadow-md" title="Facebook"><i class="fab fa-facebook-f"></i></button>
+                    <button onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(window.location.href))" class="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white hover:text-nurse-primary transition-all shadow-md" title="LinkedIn"><i class="fab fa-linkedin-in"></i></button>
+                    <button onclick="navigator.clipboard.writeText(window.location.href); CORE.notify('Link copiado!')" class="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white hover:text-nurse-primary transition-all shadow-md" title="Copiar Link"><i class="fa-solid fa-link"></i></button>
+                </div>
+            </div>
+        `;
     },
 
     renderAuthor() {
