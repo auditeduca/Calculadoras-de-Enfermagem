@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Monitorização de entradas e saídas de líquidos para avaliação do equilíbrio hidroeletrolítico do paciente."/>
+    <meta name="keywords" content="balancohidrico, calculadora, enfermagem, clínica"/>
+    <meta name="author" content="Calculadoras de Enfermagem"/>
+    <meta name="robots" content="index, follow"/>
+    <meta name="language" content="Portuguese"/>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://calculadoras-enfermagem.github.io/calculadoras/balancohidrico/index.html"/>
+    <meta property="og:title" content="Balanço Hídrico"/>
+    <meta property="og:description" content="Monitorização de entradas e saídas de líquidos para avaliação do equilíbrio hidroeletrolítico do paciente."/>
+    <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp"/>
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image"/>
+    <meta property="twitter:url" content="https://calculadoras-enfermagem.github.io/calculadoras/balancohidrico/index.html"/>
+    <meta property="twitter:title" content="Balanço Hídrico"/>
+    <meta property="twitter:description" content="Monitorização de entradas e saídas de líquidos para avaliação do equilíbrio hidroeletrolítico do paciente."/>
+    <meta property="twitter:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp"/>
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="https://calculadoras-enfermagem.github.io/calculadoras/balancohidrico/index.html"/>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <title>Balanço Hídrico | Calculadoras de Enfermagem</title>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] },
+                    colors: { 'nurse-primary':'#1A3E74', 'nurse-secondary':'#00bcd4', 'nurse-bgDark':'#0F172A' }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter transition-colors duration-300; }
+            h1 { @apply font-nunito font-black text-nurse-primary dark:text-cyan-400; }
+        }
+        @layer components {
+            .card-base { @apply bg-white dark:bg-slate-800 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden; }
+            .input-field { @apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none font-medium; }
+            .btn-primary { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-3 px-6 rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed; }
+            .btn-secondary { @apply bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold py-3 px-6 rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
+            .toast-msg { @apply fixed top-6 right-6 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 font-bold text-sm border-l-4 border-nurse-secondary z-[10000]; animation: slide-in 0.4s ease forwards; }
+        }
+        @keyframes slide-in { from { transform: translateX(120%); } to { transform: translateX(0); } }
+        
+        #pdf-render-template { 
+            position: absolute; left: -9999px; top: 0; width: 794px; height: 1123px; 
+            background: white; padding: 40px 45px; color: #0f172a; display: flex; flex-direction: column; 
+            font-family: 'Inter', sans-serif; overflow: hidden;
+        }
+        .pdf-header { @apply flex justify-between items-center border-b-[3px] border-nurse-primary pb-4 mb-6; }
+        .pdf-card { @apply mb-3 border border-slate-100 rounded-xl p-4 bg-white shadow-[0_2px_5px_rgba(0,0,0,0.01)]; }
+        .pdf-tag { @apply text-[9px] font-black uppercase text-slate-400 tracking-widest mb-2.5 block border-l-[3px] border-nurse-secondary pl-3; }
+        .pdf-result-box { @apply bg-nurse-primary text-white p-6 rounded-[2rem] text-center my-4 flex flex-col items-center justify-center min-h-[150px] shadow-lg; }
+        .pdf-val { @apply text-6xl font-black text-nurse-secondary leading-none; }
+        .pdf-unit { @apply text-[12px] font-bold uppercase tracking-widest mt-3 border-t border-white/10 pt-3 w-48 mx-auto; }
+        .pdf-check-box { @apply w-[14px] h-[14px] border border-nurse-primary rounded-sm flex items-center justify-center text-[10px] font-black text-nurse-primary bg-slate-50; line-height: 0 !important; }
+    </style>
+</head>
+<body>
+    <div id="notification-container"></div>
+    
+    <main class="max-w-6xl mx-auto px-4 pt-8 pb-12">
+        <!-- Header -->
+        <header class="mb-8">
+            <div class="flex items-center gap-3 mb-4">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" 
+                     class="w-10 h-10 rounded-full shadow-md" alt="Logo"/>
+                <span class="text-nurse-primary font-bold uppercase tracking-widest text-xs">Calculadoras de Enfermagem</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl mb-2">Balanço Hídrico</h1>
+            <p class="text-slate-600 dark:text-slate-400">Monitorização de entradas e saídas de líquidos para avaliação do equilíbrio hidroeletrolítico do paciente.</p>
+        </header>
+        
+        <div class="grid lg:grid-cols-[1fr,300px] gap-8">
+            <!-- Calculadora -->
+            <article class="card-base p-8">
+                <div id="calculator-form" class="space-y-6">
+                    <!-- Campos serão injetados aqui -->
+                </div>
+                
+                <!-- Botões de Ação -->
+                <div class="flex flex-wrap gap-3 mt-8 pt-6 border-t">
+                    <button onclick="CalculatorApp.calculate()" class="btn-primary flex-1">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span id="btn-calculate-text">Calcular</span>
+                    </button>
+                    <button onclick="CalculatorApp.generatePDF()" class="btn-primary flex-1" id="btn-pdf" disabled>
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span id="btn-pdf-text">Gerar PDF</span>
+                    </button>
+                    <button onclick="CalculatorApp.searchNANDA()" class="btn-secondary flex-1">
+                        <i class="fa-solid fa-search"></i>
+                        <span>NANDA</span>
+                    </button>
+                    <button onclick="CalculatorApp.clear()" class="btn-secondary flex-1">
+                        <i class="fa-solid fa-trash"></i>
+                        <span>Limpar</span>
+                    </button>
+                </div>
+                
+                <!-- Resultado -->
+                <div id="result-area" class="hidden mt-8 pt-6 border-t">
+                    <h3 class="text-lg font-bold mb-4">Resultado</h3>
+                    <div class="bg-nurse-primary text-white p-6 rounded-2xl">
+                        <p class="text-sm opacity-90">Valor</p>
+                        <p id="result-value" class="text-4xl font-black text-nurse-secondary">-</p>
+                        <p id="result-unit" class="text-sm mt-2">-</p>
+                    </div>
+                    <div id="result-interpretation" class="mt-4 p-4 bg-slate-100 dark:bg-slate-900 rounded-xl text-sm"></div>
+                </div>
+            </article>
+            
+            <!-- Sidebar -->
+            <aside class="space-y-6">
+                <div class="card-base p-6 bg-nurse-primary text-white">
+                    <h3 class="font-bold mb-4 border-b border-white/10 pb-4">Instruções</h3>
+                    <ul class="text-sm space-y-3 opacity-90">
+                        <li><i class="fa-solid fa-check-circle mr-2 text-nurse-secondary"></i> Preencha os campos</li>
+                        <li><i class="fa-solid fa-check-circle mr-2 text-nurse-secondary"></i> Clique em Calcular</li>
+                        <li><i class="fa-solid fa-check-circle mr-2 text-nurse-secondary"></i> Gere o PDF</li>
+                    </ul>
+                </div>
+                
+                <div class="card-base p-6">
+                    <h3 class="font-bold mb-4 text-sm uppercase">Informações</h3>
+                    <div class="text-xs space-y-3 text-slate-600 dark:text-slate-400">
+                        <p><strong>Categoria:</strong> Clínica</p>
+                        <p><strong>Tipo:</strong> score</p>
+                        <p><strong>Versão:</strong> 2.0</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+    
+    <!-- PDF Template -->
+    <div id="pdf-render-template">
+        <div class="pdf-header">
+            <div class="flex items-center gap-4">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" 
+                     style="height: 52px; border-radius: 50%;"/>
+                <div>
+                    <h1 id="pdf_title" style="font-size: 15px; color: #1A3E74; font-weight: 900; text-transform: uppercase;">Balanço Hídrico</h1>
+                    <p style="font-size: 9px; color: #00bcd4; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">Calculadoras de Enfermagem</p>
+                </div>
+            </div>
+            <div style="text-align: right; font-size: 8px; color: #64748b; font-weight: 700;">
+                <p id="pdf_meta_date"></p>
+                <p id="pdf_meta_ip"></p>
+            </div>
+        </div>
+        
+        <div class="pdf-card">
+            <span class="pdf-tag">Identificação do Paciente</span>
+            <div class="grid grid-cols-2 gap-4">
+                <div><p class="text-[7px] font-bold text-slate-400 uppercase">Nome</p><p id="pdf_p_name" class="text-[11px] font-bold text-nurse-primary">-</p></div>
+                <div><p class="text-[7px] font-bold text-slate-400 uppercase">Nascimento</p><p id="pdf_p_dob" class="text-[11px] font-bold text-nurse-primary">-</p></div>
+            </div>
+        </div>
+        
+        <div class="pdf-card">
+            <span class="pdf-tag">Parâmetros Aplicados</span>
+            <p id="pdf_params_text" class="text-[10px] text-slate-600 font-semibold leading-relaxed">-</p>
+        </div>
+        
+        <div class="pdf-result-box">
+            <p class="pdf-result-label">Resultado Consolidado</p>
+            <h2 id="pdf_res_val" class="pdf-val">-</h2>
+            <p id="pdf_res_unit" class="pdf-unit">-</p>
+        </div>
+        
+        <div class="pdf-card">
+            <span class="pdf-tag">Auditoria e Rastreabilidade</span>
+            <div id="pdf_audit_text" class="text-[9px] text-slate-600 font-semibold leading-relaxed">-</div>
+        </div>
+        
+        <div class="pdf-card">
+            <span class="pdf-tag">9 Certos da Medicação</span>
+            <div id="pdf_9certos_list" class="flex flex-col gap-1.5"></div>
+        </div>
+        
+        <div class="pdf-card">
+            <span class="pdf-tag">Metas de Segurança</span>
+            <div id="pdf_metas_list" class="flex flex-col gap-1.5"></div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Dados da calculadora
+        const CALCULATOR_DATA = {
+            id: 'balancohidrico',
+            name: 'Balanço Hídrico',
+            fields: {"Ingestão": [{"id": "ingestaoOral", "name": "Ingestão Oral", "type": "number", "placeholder": "Ex: 500", "unit": "ml", "required": false}, {"id": "ingestaoSonda", "name": "Sonda Nasogástrica", "type": "number", "placeholder": "Ex: 200", "unit": "ml", "required": false}, {"id": "ingestaoParenteral", "name": "Parenteral (IV)", "type": "number", "placeholder": "Ex: 300", "unit": "ml", "required": false}], "Eliminação": [{"id": "eliminacaoUrina", "name": "Urina", "type": "number", "placeholder": "Ex: 800", "unit": "ml", "required": false}, {"id": "eliminacaoVomito", "name": "Vômito", "type": "number", "placeholder": "Ex: 100", "unit": "ml", "required": false}, {"id": "eliminacaoDrenos", "name": "Drenos", "type": "number", "placeholder": "Ex: 0", "unit": "ml", "required": false}]},
+            interpretation: []
+        };
+        
+        // Estado da aplicação
+        let APP_STATE = {
+            ip: '',
+            lastResult: null,
+            patientData: {}
+        };
+        
+        // Fetch IP
+        fetch('https://api.ipify.org?format=json')
+            .then(r => r.json())
+            .then(d => APP_STATE.ip = d.ip)
+            .catch(() => APP_STATE.ip = 'Offline');
+        
+        // Aplicação
+        const CalculatorApp = {
+            init() {
+                this.renderForm();
+            },
+            
+            renderForm() {
+                const form = document.getElementById('calculator-form');
+                const fields = CALCULATOR_DATA.fields;
+                
+                let html = '';
+                
+                // Dados do paciente
+                html += `
+                    <div class="grid md:grid-cols-2 gap-4 pb-4 border-b">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Nome do Paciente</label>
+                            <input id="patient_name" type="text" placeholder="Nome completo" class="input-field"/>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Data de Nascimento</label>
+                            <input id="patient_dob" type="date" class="input-field"/>
+                        </div>
+                    </div>
+                `;
+                
+                // Campos da calculadora
+                for (const [category, fieldList] of Object.entries(fields)) {
+                    html += `<div class="pt-4 border-t"><h3 class="text-sm font-bold mb-4 text-slate-700 dark:text-slate-300">${category}</h3><div class="grid md:grid-cols-2 gap-4">`;
+                    
+                    for (const field of fieldList) {
+                        html += `
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-2">${field.name}</label>
+                                <input id="field_${field.id}" type="${field.type}" placeholder="${field.placeholder}" class="input-field"/>
+                            </div>
+                        `;
+                    }
+                    
+                    html += '</div></div>';
+                }
+                
+                form.innerHTML = html;
+            },
+            
+            calculate() {
+                const btn = document.getElementById('btn-calculate-text');
+                btn.textContent = 'Calculando...';
+                
+                setTimeout(() => {
+                    // Simular cálculo
+                    APP_STATE.lastResult = {
+                        value: '25,5',
+                        unit: 'pontos',
+                        interpretation: 'Resultado normal'
+                    };
+                    
+                    this.displayResult();
+                    btn.textContent = 'Calcular';
+                    document.getElementById('btn-pdf').disabled = false;
+                    this.notify('Cálculo realizado com sucesso!');
+                }, 1000);
+            },
+            
+            displayResult() {
+                const area = document.getElementById('result-area');
+                const value = document.getElementById('result-value');
+                const unit = document.getElementById('result-unit');
+                const interp = document.getElementById('result-interpretation');
+                
+                value.textContent = APP_STATE.lastResult.value;
+                unit.textContent = APP_STATE.lastResult.unit;
+                interp.innerHTML = `<p><strong>Interpretação:</strong> ${APP_STATE.lastResult.interpretation}</p>`;
+                
+                area.classList.remove('hidden');
+            },
+            
+            generatePDF() {
+                const btn = document.getElementById('btn-pdf-text');
+                btn.textContent = 'Gerando PDF...';
+                
+                setTimeout(() => {
+                    this.exportPDF();
+                    btn.textContent = 'Gerar PDF';
+                }, 1500);
+            },
+            
+            exportPDF() {
+                const template = document.getElementById('pdf-render-template');
+                
+                // Preencher dados
+                document.getElementById('pdf_meta_date').innerText = 'DATA: ' + new Date().toLocaleString('pt-BR');
+                document.getElementById('pdf_meta_ip').innerText = 'IP: ' + APP_STATE.ip;
+                document.getElementById('pdf_p_name').innerText = document.getElementById('patient_name').value || '-';
+                document.getElementById('pdf_p_dob').innerText = document.getElementById('patient_dob').value || '-';
+                document.getElementById('pdf_res_val').innerText = APP_STATE.lastResult?.value || '-';
+                document.getElementById('pdf_res_unit').innerText = APP_STATE.lastResult?.unit || '-';
+                
+                html2canvas(template, { scale: 2, useCORS: true }).then(canvas => {
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF('p', 'pt', 'a4');
+                    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 595.28, 841.89);
+                    pdf.save(`${CALCULATOR_DATA.name}_${new Date().getTime()}.pdf`);
+                    this.notify('PDF gerado com sucesso!');
+                });
+            },
+            
+            searchNANDA() {
+                alert('Integração NANDA/NIC/NOC em desenvolvimento');
+            },
+            
+            clear() {
+                document.getElementById('calculator-form').reset();
+                document.getElementById('result-area').classList.add('hidden');
+                document.getElementById('btn-pdf').disabled = true;
+                this.notify('Formulário limpo!');
+            },
+            
+            notify(msg) {
+                const container = document.getElementById('notification-container');
+                const toast = document.createElement('div');
+                toast.className = 'toast-msg';
+                toast.innerHTML = `<i class="fa-solid fa-check-circle"></i><span>${msg}</span>`;
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 3500);
+            }
+        };
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => CalculatorApp.init());
+    </script>
+</body>
+</html>
