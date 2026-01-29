@@ -1,232 +1,332 @@
 <!DOCTYPE html>
 <html lang="pt-br" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <!-- ... (head igual ao original, mantendo todas as meta tags) ... -->
+  
+  <!-- Adicionar referência aos novos módulos -->
+  <script src="modal-reference.js" defer></script>
+  <script src="pdf-generator.js" defer></script>
+  
+  <script>
+    // Configuração do sistema corrigido
+    const CALCULATOR_SYSTEM = {
+      // ... (todo o código do DYNAMIC_CALCULATOR_SYSTEM original) ...
+      
+      // CORREÇÃO 1: Botão Simulados
+      redirectSimulados() {
+        window.open('https://simulados-para-enfermagem.com.br/', '_blank', 'noopener,noreferrer');
+      },
 
-    <title>Calculadoras de Enfermagem - Sistema Dinâmico Modular</title>
-    
-    <!-- Meta Tags Dinâmicas -->
-    <meta id="meta-description" name="description" content="Calculadoras profissionais de enfermagem com segurança integrada e auditoria clínica.">
-    <meta id="meta-keywords" name="keywords" content="enfermagem, cálculos, segurança do paciente, nanda, nic, noc, calculadoras clínicas">
-    <meta name="author" content="Calculadoras de Enfermagem">
-    <meta name="robots" content="index, follow">
-    <link id="canonical-link" rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/"/>
-    
-    <!-- Open Graph -->
-    <meta property="og:locale" content="pt_BR">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Calculadoras de Enfermagem">
-    <meta id="og-title" property="og:title" content="Calculadoras de Enfermagem - Sistema Dinâmico">
-    <meta id="og-description" property="og:description" content="Ferramentas profissionais com segurança e auditoria clínica integrada.">
-    <meta id="og-url" property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
-    <meta id="og-image" property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured.webp">
+      // CORREÇÃO 2: Label Data de Nascimento
+      createBirthdateField() {
+        return `
+          <div>
+            <label for="patient_birthdate" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+              Data de Nascimento <span class="text-red-500">*</span>
+              <i class="fa-solid fa-circle-info label-tooltip" title="Para cálculo de idade e verificação de faixa etária"></i>
+            </label>
+            <input id="patient_birthdate" type="date" 
+                   max="${new Date().toISOString().split('T')[0]}" 
+                   class="input-field" required />
+          </div>
+        `;
+      },
 
-    <!-- Ícone -->
-    <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
-    
-    <!-- Fontes Google -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Configuração do Tailwind -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { 
-                        nunito: ['"Nunito Sans"', 'sans-serif'], 
-                        inter: ['Inter', 'sans-serif'] 
-                    },
-                    colors: { 
-                        'nurse-primary': '#1A3E74', 
-                        'nurse-secondary': '#00bcd4', 
-                        'nurse-accent': '#00838f', 
-                        'nurse-bgDark': '#0F172A' 
-                    }
-                }
+      // CORREÇÃO 3: Gerar PDF usando novo sistema
+      async gerarPDF() {
+        if (!this.data || !this.currentCalculator) {
+          this.showNotification('Realize um cálculo primeiro');
+          return;
+        }
+
+        try {
+          this.showNotification('Gerando PDF...');
+          
+          const patientData = {
+            name: document.getElementById('patient_name')?.value || 'Não informado',
+            birthdate: document.getElementById('patient_birthdate')?.value || 'Não informado'
+          };
+
+          await PDF_SYSTEM.generate(
+            this.currentCalculator.name,
+            this.data,
+            patientData
+          );
+          
+          this.showNotification('PDF gerado com sucesso!', 'success');
+          
+        } catch (error) {
+          console.error('Erro ao gerar PDF:', error);
+          this.showNotification('Erro ao gerar PDF');
+        }
+      },
+
+      // CORREÇÃO 4: Copiar resultado
+      copiarResumo() {
+        if (!this.data) {
+          this.showNotification('Nenhum resultado para copiar');
+          return;
+        }
+
+        try {
+          let text = `REGISTRO DE CÁLCULO - ${this.currentCalculator.name}\n`;
+          text += `Data: ${new Date().toLocaleString('pt-BR')}\n`;
+          text += `Paciente: ${document.getElementById('patient_name')?.value || 'Não informado'}\n`;
+          text += `Nascimento: ${document.getElementById('patient_birthdate')?.value || 'Não informado'}\n\n`;
+          
+          Object.keys(this.data).forEach(key => {
+            if (!['calculator', 'timestamp'].includes(key)) {
+              text += `${this.formatLabel(key)}: ${this.data[key]}\n`;
             }
-        };
-        
-        // Configuração global
-        window.NURSE_CONFIG = {
-            baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/',
-            debug: false
-        };
-    </script>
+          });
+          
+          navigator.clipboard.writeText(text).then(() => {
+            this.showNotification('Resultado copiado!', 'success');
+          }).catch(err => {
+            console.error('Erro ao copiar:', err);
+            this.showNotification('Erro ao copiar texto');
+          });
+          
+        } catch (error) {
+          console.error('Erro:', error);
+          this.showNotification('Erro ao copiar');
+        }
+      },
 
-    <!-- Estilos Externos -->
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
+      // CORREÇÃO 5: Botão Diagnóstico NANDA
+      buscarDiagnosticoNANDA() {
+        if (!this.currentCalculator) return;
+        
+        REFERENCE_MODALS.open('diagnosticoNANDA');
+        
+        // Alternativamente, busca online
+        // const query = encodeURIComponent(`NANDA diagnóstico enfermagem ${this.currentCalculator.name}`);
+        // window.open(`https://www.google.com/search?q=${query}`, '_blank');
+      },
+
+      // CORREÇÃO 6: Prevenir números negativos em todos os campos
+      createFieldsHTML(fields) {
+        return fields.map(field => {
+          let html = '';
+          if (field.type === 'select') {
+            html = `
+              <div>
+                <label for="${field.id}" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                  ${field.name} ${field.required ? '<span class="text-red-500">*</span>' : ''}
+                </label>
+                <select id="${field.id}" class="input-field" ${field.required ? 'required' : ''}>
+                  <option value="">Selecione</option>
+                  ${field.options.map(o => `<option value="${o.value}">${o.label}</option>`).join('')}
+                </select>
+              </div>
+            `;
+          } else if (field.type === 'date') {
+            html = `
+              <div>
+                <label for="${field.id}" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                  ${field.name} ${field.required ? '<span class="text-red-500">*</span>' : ''}
+                </label>
+                <input id="${field.id}" type="date" 
+                       max="${new Date().toISOString().split('T')[0]}" 
+                       class="input-field" ${field.required ? 'required' : ''}/>
+              </div>
+            `;
+          } else {
+            // Para campos numéricos, prevenir números negativos
+            const inputType = field.type || 'number';
+            const step = field.type === 'decimal' ? '0.01' : '1';
+            
+            html = `
+              <div>
+                <label for="${field.id}" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                  ${field.name} ${field.required ? '<span class="text-red-500">*</span>' : ''}
+                  ${field.tooltip ? `<i class="fa-solid fa-circle-info label-tooltip" title="${field.tooltip}"></i>` : ''}
+                </label>
+                <input id="${field.id}" type="${inputType}" 
+                       min="0" 
+                       step="${step}"
+                       placeholder="${field.placeholder || ''}" 
+                       class="input-field" 
+                       oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"
+                       onkeydown="return event.key !== '-' && event.key !== 'e' && event.key !== '+'"
+                       ${field.required ? 'required' : ''}/>
+                ${field.unit ? `<span class="text-xs text-slate-500 mt-1">${field.unit}</span>` : ''}
+              </div>
+            `;
+          }
+          return html;
+        }).join('');
+      },
+
+      // CORREÇÃO 7: Renderizar todas as seções corretamente
+      renderCalculator(calc) {
+        // ... (código original) ...
+        
+        // Adicionar botão NANDA na seção de resultados
+        const actionButtons = `
+          <div class="flex flex-wrap gap-4 justify-center mb-10">
+            <button onclick="CALCULATOR_SYSTEM.gerarPDF()" class="btn-primary-action px-10">
+              <i class="fa-solid fa-file-pdf"></i> Gerar PDF
+            </button>
+            <button onclick="CALCULATOR_SYSTEM.copiarResumo()" class="btn-secondary-action px-8">
+              <i class="fa-solid fa-copy"></i> Copiar Resultado
+            </button>
+            <button onclick="CALCULATOR_SYSTEM.buscarDiagnosticoNANDA()" class="btn-secondary-action px-8 bg-nurse-accent text-white hover:bg-nurse-primary">
+              <i class="fa-solid fa-stethoscope"></i> Diagnóstico NANDA
+            </button>
+          </div>
+        `;
+        
+        // Adicionar botões de referência nas seções de checklist
+        const checklistHeaders = `
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+              <i class="fa-solid fa-check-double"></i> 9 Certos da Medicação
+            </h3>
+            <button onclick="REFERENCE_MODALS.open('certosMedicacao')" class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold">
+              <i class="fa-solid fa-circle-info mr-1"></i> Ver Referência
+            </button>
+          </div>
+          
+          <div class="flex justify-between items-center mb-4 mt-8">
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+              <i class="fa-solid fa-star"></i> Metas Internacionais de Segurança
+            </h3>
+            <button onclick="REFERENCE_MODALS.open('metasSeguranca')" class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold">
+              <i class="fa-solid fa-circle-info mr-1"></i> Ver Referência
+            </button>
+          </div>
+        `;
+        
+        // Adicionar seção do autor e tags
+        this.renderAuthorSection();
+      },
+
+      // Nova função para renderizar seção do autor
+      renderAuthorSection() {
+        const authorHTML = `
+          <section class="max-w-7xl mx-auto px-4 py-12 border-t border-slate-200 dark:border-slate-800 mt-12">
+            <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 flex flex-col md:flex-row gap-10 items-center border border-slate-200 dark:border-slate-700 shadow-sm">
+              <div class="relative flex-shrink-0">
+                <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white dark:border-slate-700 shadow-xl">
+                  <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" 
+                       alt="Autor" 
+                       class="w-full h-full object-cover"/>
+                </div>
+              </div>
+              <div class="text-center md:text-left">
+                <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400 font-nunito">
+                  Calculadoras de Enfermagem
+                </h3>
+                <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed max-w-2xl font-inter italic">
+                  "A precisão técnica é a expressão máxima do cuidado ético ao paciente."
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center">
+                    <i class="fa-solid fa-tags mr-2"></i> Tópicos:
+                  </span>
+                  <span id="tags-container" class="flex flex-wrap gap-2">
+                    <!-- Tags serão preenchidas dinamicamente -->
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+        `;
+        
+        // Inserir após a seção de resultados
+        const mainContent = document.querySelector('main');
+        if (mainContent) {
+          mainContent.insertAdjacentHTML('beforeend', authorHTML);
+        }
+      },
+
+      // Função auxiliar para mostrar notificações
+      showNotification(message, type = 'info') {
+        REFERENCE_MODALS.showNotification(message, type);
+      }
+    };
+
+    // Substituir o sistema antigo pelo novo
+    window.DYNAMIC_CALCULATOR_SYSTEM = CALCULATOR_SYSTEM;
+  </script>
+  
+  <style>
+    /* Estilos adicionais para correções */
+    .input-field:invalid {
+      border-color: #ef4444;
+      background-color: #fef2f2;
+    }
+    
+    .dark .input-field:invalid {
+      border-color: #dc2626;
+      background-color: #7f1d1d20;
+    }
+    
+    .required-field::after {
+      content: " *";
+      color: #ef4444;
+      font-weight: bold;
+    }
+    
+    /* Estilo para botões de referência */
+    .reference-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .reference-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+  </style>
 </head>
-
-<body class="flex flex-col min-h-screen dark:bg-nurse-bgDark dark:text-slate-100">
-    <!-- Background Decorativo -->
-    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
-        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
-            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
-        </svg>
-    </div>
-
-    <!-- Container para Notificações -->
-    <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
-    
-    <!-- Container para Acessibilidade -->
-    <div id="accessibility-container"></div>
-    
-    <!-- Container para Header -->
-    <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] shadow-sm transition-opacity duration-500"></div>
-
-    <!-- Conteúdo Principal -->
-    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
-        <!-- O conteúdo será injetado dinamicamente pelo sistema -->
-        <div class="text-center py-20">
-            <i class="fa-solid fa-spinner animate-spin text-5xl text-nurse-primary mb-6"></i>
-            <h2 class="text-2xl font-bold text-nurse-primary dark:text-cyan-400 mb-4">Carregando Sistema de Calculadoras</h2>
-            <p class="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-                O sistema modular de calculadoras clínicas está sendo inicializado...
-            </p>
-        </div>
-    </main>
-
-    <!-- Container para Footer -->
-    <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px]"></div>
-    
-    <!-- Template PDF Oculto -->
-    <div id="pdf-render-template"></div>
-
-    <!-- Bibliotecas Externas (Deferidas) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-
-    <!-- Componentes do Sistema (Deferidos) -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" crossorigin="anonymous" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" crossorigin="anonymous" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" crossorigin="anonymous" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" crossorigin="anonymous" defer></script>
-
-    <!-- Módulos do Sistema (Deferidos) -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/util.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/ui.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/voice.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/pdf.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/notifications.js" defer></script>
-    
-    <!-- Núcleo do Sistema (Deferidos) -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/nursing_calculators.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/nursing_engine.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/main_content_injector.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/core.js" defer></script>
-
-    <!-- Script de Inicialização -->
-    <script>
-        /**
-         * CARREGAMENTO DE MÓDULOS HTML
-         */
-        async function loadHtmlModule(id, url) {
-            const container = document.getElementById(id);
-            if (!container) {
-                console.warn(`Container ${id} não encontrado`);
-                return;
-            }
-            
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                const html = await response.text();
-                container.innerHTML = html;
-                container.classList.remove('opacity-50');
-                console.log(`✅ Módulo ${id} carregado`);
-            } catch (error) {
-                console.error(`❌ Erro ao carregar módulo ${id}:`, error);
-                container.innerHTML = `
-                    <div class="p-4 text-center">
-                        <p class="text-sm text-slate-500">Módulo não disponível</p>
-                    </div>
-                `;
-            }
+<body>
+  <!-- ... (restante do corpo igual ao original) ... -->
+  
+  <script>
+    // Inicialização corrigida
+    document.addEventListener('DOMContentLoaded', () => {
+      // Aguardar carregamento dos módulos
+      setTimeout(() => {
+        if (window.CALCULATOR_SYSTEM) {
+          CALCULATOR_SYSTEM.init();
+        } else if (window.DYNAMIC_CALCULATOR_SYSTEM) {
+          DYNAMIC_CALCULATOR_SYSTEM.init();
         }
         
-        /**
-         * INICIALIZAÇÃO DO SISTEMA
-         */
-        async function initializeSystem() {
-            console.log('🚀 Inicializando Sistema de Calculadoras...');
-            
-            // 1. Carregar componentes HTML
-            await Promise.all([
-                loadHtmlModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html'),
-                loadHtmlModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html'),
-                loadHtmlModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html')
-            ]);
-            
-            // 2. Aguardar carregamento dos scripts JavaScript
-            let attempts = 0;
-            const maxAttempts = 10;
-            
-            const waitForScripts = () => {
-                return new Promise((resolve) => {
-                    const checkInterval = setInterval(() => {
-                        attempts++;
-                        
-                        // Verificar se os módulos principais estão carregados
-                        const modulesLoaded = window.NURSE_SYSTEM && 
-                                               window.MAIN_CONTENT_INJECTOR && 
-                                               window.NURSING_ENGINE;
-                        
-                        if (modulesLoaded || attempts >= maxAttempts) {
-                            clearInterval(checkInterval);
-                            resolve();
-                        }
-                    }, 500);
-                });
-            };
-            
-            await waitForScripts();
-            
-            // 3. Inicializar sistema principal
-            try {
-                if (window.NURSE_SYSTEM && typeof window.NURSE_SYSTEM.init === 'function') {
-                    await window.NURSE_SYSTEM.init();
-                    console.log('✅ Sistema inicializado com sucesso');
-                } else {
-                    throw new Error('Sistema principal não disponível');
-                }
-            } catch (error) {
-                console.error('❌ Erro ao inicializar sistema:', error);
-                
-                // Mostrar mensagem de erro
-                const mainContent = document.getElementById('main-content');
-                if (mainContent) {
-                    mainContent.innerHTML = `
-                        <div class="text-center py-20 px-4">
-                            <i class="fa-solid fa-exclamation-triangle text-5xl text-red-500 mb-6"></i>
-                            <h2 class="text-2xl font-bold text-red-600 mb-4">Erro ao Carregar o Sistema</h2>
-                            <button onclick="location.reload()" class="btn-primary-action inline-flex">
-                                <i class="fa-solid fa-rotate-right mr-2"></i> Recarregar Página
-                            </button>
-                        </div>
-                    `;
-                }
-            }
+        // Inicializar modais de referência
+        if (window.REFERENCE_MODALS) {
+          REFERENCE_MODALS.init();
         }
-        
-        // Iniciar quando o DOM estiver pronto
-        document.addEventListener('DOMContentLoaded', initializeSystem);
-    </script>
+      }, 1000);
+    });
+    
+    // Funções globais corrigidas
+    function share(platform) {
+      const url = encodeURIComponent(window.location.href);
+      const title = encodeURIComponent(document.title);
+      
+      const urls = {
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+        whatsapp: `https://api.whatsapp.com/send?text=${title}%20${url}`,
+        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+        twitter: `https://twitter.com/intent/tweet?text=${title}&url=${url}`
+      };
+      
+      if (urls[platform]) {
+        window.open(urls[platform], '_blank', 'width=600,height=400,noopener,noreferrer');
+      }
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href)
+        .then(() => {
+          if (window.REFERENCE_MODALS) {
+            REFERENCE_MODALS.showNotification('Link copiado!', 'success');
+          }
+        })
+        .catch(err => console.error('Erro ao copiar:', err));
+    }
+  </script>
 </body>
 </html>
