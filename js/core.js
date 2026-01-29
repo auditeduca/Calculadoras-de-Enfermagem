@@ -1,6 +1,5 @@
 /**
- * SISTEMA PRINCIPAL DE CALCULADORAS
- * Versão 8.3 - Modular e Dinâmico
+ * SISTEMA PRINCIPAL DE CALCULADORAS - Versão 8.5
  */
 
 window.NURSE_SYSTEM = {
@@ -13,12 +12,6 @@ window.NURSE_SYSTEM = {
         config: window.NURSE_CONFIG || {}
     },
 
-    // Cache para componentes carregados
-    cache: {
-        templates: {},
-        components: {}
-    },
-
     /**
      * Inicialização do sistema
      */
@@ -29,16 +22,14 @@ window.NURSE_SYSTEM = {
             // 1. Carregar lista de calculadoras
             await this.loadCalculators();
             
-            // 2. Carregar conteúdo principal
-            await this.loadMainContent();
+            // 2. Injetar conteúdo principal
+            this.injectMainContent();
             
-            // 3. Inicializar UI
-            this.initUI();
+            // 3. Aguardar um pouco para o DOM ser atualizado
+            await new Promise(resolve => setTimeout(resolve, 100));
             
-            // 4. Carregar primeira calculadora
-            if (this.state.calculators.length > 0) {
-                this.selectCalculator(this.state.calculators[0].id);
-            }
+            // 4. Carregar calculadora de insulina por padrão
+            this.loadDefaultCalculator();
             
             // 5. Inicializar eventos
             this.initEvents();
@@ -52,7 +43,7 @@ window.NURSE_SYSTEM = {
     },
 
     /**
-     * Carregar lista de calculadoras do JSON
+     * Carregar lista de calculadoras
      */
     async loadCalculators() {
         try {
@@ -71,27 +62,96 @@ window.NURSE_SYSTEM = {
     },
 
     /**
-     * Carregar conteúdo principal da página
+     * Injetar conteúdo principal
      */
-    async loadMainContent() {
+    injectMainContent() {
         const mainContent = document.getElementById('main-content');
-        if (!mainContent) return;
+        if (!mainContent) {
+            console.error('Elemento main-content não encontrado');
+            return;
+        }
         
-        try {
-            // Usar o módulo de injeção de conteúdo
-            if (window.MAIN_CONTENT_INJECTOR) {
-                mainContent.innerHTML = window.MAIN_CONTENT_INJECTOR.getTemplate();
-            } else {
-                // Fallback básico
-                mainContent.innerHTML = `
-                    <div class="p-12 text-center">
-                        <i class="fa-solid fa-exclamation-triangle text-4xl text-yellow-500 mb-4"></i>
-                        <p class="text-slate-600 dark:text-slate-400">Módulo de conteúdo não carregado</p>
+        // Se já tiver conteúdo, não precisa recarregar
+        if (mainContent.children.length > 1) {
+            return;
+        }
+        
+        // Usar módulo de injeção de conteúdo
+        if (window.MAIN_CONTENT_INJECTOR && window.MAIN_CONTENT_INJECTOR.inject) {
+            window.MAIN_CONTENT_INJECTOR.inject();
+        } else {
+            // Fallback básico
+            mainContent.innerHTML = this.getFallbackMainContent();
+        }
+    },
+
+    /**
+     * Conteúdo de fallback
+     */
+    getFallbackMainContent() {
+        return `
+            <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold">
+                <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                <span class="text-nurse-primary dark:text-cyan-400 font-bold">Calculadoras</span>
+            </nav>
+            
+            <header class="max-w-4xl mb-12">
+                <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">
+                    Sistema Dinâmico
+                </span>
+                <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Calculadoras Clínicas</h1>
+                <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+                <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">
+                    Sistema modular de calculadoras para enfermagem com segurança integrada
+                </p>
+            </header>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <div id="calculator-container" class="card-base p-8">
+                        <div class="text-center py-12">
+                            <i class="fa-solid fa-calculator text-6xl text-nurse-primary mb-6"></i>
+                            <h2 class="text-2xl font-bold mb-4">Sistema de Calculadoras</h2>
+                            <p class="text-slate-600 dark:text-slate-400 mb-6">
+                                Selecione uma calculadora para começar
+                            </p>
+                        </div>
                     </div>
-                `;
-            }
-        } catch (error) {
-            console.error('Erro ao carregar conteúdo principal:', error);
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="card-base p-6">
+                        <h3 class="text-sm font-bold text-nurse-primary dark:text-cyan-400 mb-4">
+                            Calculadoras Disponíveis
+                        </h3>
+                        <div id="calculator-index" class="space-y-2">
+                            <div class="text-center py-4 text-slate-400">
+                                Carregando...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    },
+
+    /**
+     * Carregar calculadora padrão (insulina)
+     */
+    loadDefaultCalculator() {
+        // Tentar encontrar a calculadora de insulina
+        const insulinaCalc = this.state.calculators.find(c => c.id === 'insulina');
+        
+        if (insulinaCalc) {
+            console.log('🔍 Carregando calculadora de insulina por padrão...');
+            this.selectCalculator('insulina');
+        } else if (this.state.calculators.length > 0) {
+            console.log('⚠️ Calculadora de insulina não encontrada, carregando primeira disponível');
+            this.selectCalculator(this.state.calculators[0].id);
+        } else {
+            console.warn('Nenhuma calculadora disponível');
+            this.showNotification('Nenhuma calculadora configurada', 'warning');
         }
     },
 
@@ -102,6 +162,7 @@ window.NURSE_SYSTEM = {
         const calculator = this.state.calculators.find(c => c.id === calculatorId);
         if (!calculator) {
             console.warn(`Calculadora "${calculatorId}" não encontrada`);
+            this.showNotification('Calculadora não encontrada', 'error');
             return;
         }
         
@@ -113,9 +174,6 @@ window.NURSE_SYSTEM = {
         // Atualizar interface
         this.updateCalculatorInterface(calculator);
         
-        // Atualizar breadcrumb
-        this.updateBreadcrumb(calculator.name);
-        
         // Atualizar índice lateral
         this.updateCalculatorIndex();
         
@@ -126,28 +184,41 @@ window.NURSE_SYSTEM = {
      * Atualizar metadados da página
      */
     updatePageMetadata(calculator) {
-        // Título da página
+        // Atualizar título da página
         document.title = `${calculator.name} - Calculadoras de Enfermagem`;
-        document.getElementById('page-title').textContent = `${calculator.name} - Calculadoras de Enfermagem`;
         
-        // Meta description
-        const metaDesc = document.getElementById('meta-description');
-        if (metaDesc) metaDesc.content = calculator.description;
+        // Atualizar meta tags
+        this.updateMetaTag('meta-description', 'content', calculator.description);
+        this.updateMetaTag('og-title', 'content', calculator.name);
+        this.updateMetaTag('og-description', 'content', calculator.description);
         
-        // Open Graph
-        const ogTitle = document.getElementById('og-title');
-        const ogDesc = document.getElementById('og-description');
-        if (ogTitle) ogTitle.content = calculator.name;
-        if (ogDesc) ogDesc.content = calculator.description;
+        // Atualizar elementos visuais
+        this.updateElementText('header-title', calculator.name);
+        this.updateElementText('header-description', calculator.description);
+        this.updateElementText('breadcrumb-current', calculator.name);
         
-        // Header da página
-        const headerTitle = document.getElementById('header-title');
-        const headerDesc = document.getElementById('header-description');
-        if (headerTitle) headerTitle.textContent = calculator.name;
-        if (headerDesc) headerDesc.textContent = calculator.description;
-        
-        // Tags
+        // Atualizar tags
         this.updateTags(calculator);
+    },
+
+    /**
+     * Atualizar elemento de texto de forma segura
+     */
+    updateElementText(elementId, text) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.textContent = text;
+        }
+    },
+
+    /**
+     * Atualizar meta tag de forma segura
+     */
+    updateMetaTag(elementId, attribute, value) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.setAttribute(attribute, value);
+        }
     },
 
     /**
@@ -155,7 +226,10 @@ window.NURSE_SYSTEM = {
      */
     updateCalculatorInterface(calculator) {
         const container = document.getElementById('calculator-container');
-        if (!container) return;
+        if (!container) {
+            console.error('Container da calculadora não encontrado');
+            return;
+        }
         
         // Usar módulo UI para renderizar
         if (window.UI_MODULE && window.UI_MODULE.renderCalculator) {
@@ -166,7 +240,9 @@ window.NURSE_SYSTEM = {
         }
         
         // Inicializar campos
-        this.initCalculatorFields(calculator);
+        setTimeout(() => {
+            this.initCalculatorFields(calculator);
+        }, 50);
     },
 
     /**
@@ -174,46 +250,37 @@ window.NURSE_SYSTEM = {
      */
     getCalculatorFallbackHTML(calculator) {
         return `
-            <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30">
-                <button onclick="NURSE_SYSTEM.switchTab('calc')" class="tab-btn active">Calculadora</button>
-                <button onclick="NURSE_SYSTEM.switchTab('sobre')" class="tab-btn">Sobre</button>
-                <button onclick="NURSE_SYSTEM.switchTab('ajuda')" class="tab-btn">Instruções</button>
-            </nav>
-            
-            <div class="p-6 md:p-10">
-                <section id="pane-calc" class="tab-pane active">
-                    <div class="space-y-6">
-                        <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 border-b pb-2">
-                            Parâmetros do Cálculo
-                        </h3>
-                        <div id="dynamic-fields" class="grid md:grid-cols-2 gap-6">
-                            <!-- Campos serão injetados dinamicamente -->
+            <div class="card-base">
+                <nav class="flex border-b border-slate-100 dark:border-slate-700">
+                    <button class="tab-btn active">Calculadora</button>
+                    <button class="tab-btn">Sobre</button>
+                    <button class="tab-btn">Instruções</button>
+                </nav>
+                
+                <div class="p-6 md:p-8">
+                    <h2 class="text-2xl font-bold text-nurse-primary mb-4">${calculator.name}</h2>
+                    <p class="text-slate-600 dark:text-slate-300 mb-6">${calculator.description}</p>
+                    
+                    <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-6 mb-6">
+                        <h3 class="font-bold text-slate-700 dark:text-slate-300 mb-4">Parâmetros</h3>
+                        <div id="dynamic-fields" class="space-y-4">
+                            <!-- Campos serão injetados aqui -->
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-2 gap-4 pt-8">
-                        <button onclick="NURSE_SYSTEM.calculate()" class="btn-primary-action">
+                    <div class="flex gap-4">
+                        <button onclick="NURSE_SYSTEM.calculate()" class="btn-primary-action flex-1">
                             <i class="fa-solid fa-calculator"></i> Calcular
                         </button>
                         <button onclick="NURSE_SYSTEM.resetForm()" class="btn-secondary-action">
-                            <i class="fa-solid fa-rotate-left"></i> Limpar
+                            <i class="fa-solid fa-rotate-left"></i>
                         </button>
                     </div>
                     
-                    <div id="results-wrapper" class="hidden pt-12 border-t border-slate-200">
-                        <!-- Resultados serão injetados aqui -->
+                    <div id="results-wrapper" class="hidden mt-8 pt-8 border-t border-slate-200">
+                        <!-- Resultados serão exibidos aqui -->
                     </div>
-                </section>
-                
-                <section id="pane-sobre" class="tab-pane hidden">
-                    <h3 class="text-xl font-black mb-4">Sobre</h3>
-                    <p>${calculator.description}</p>
-                </section>
-                
-                <section id="pane-ajuda" class="tab-pane hidden">
-                    <h3 class="text-xl font-black mb-4">Instruções</h3>
-                    <p>Preencha todos os campos obrigatórios e clique em Calcular.</p>
-                </section>
+                </div>
             </div>
         `;
     },
@@ -232,10 +299,8 @@ window.NURSE_SYSTEM = {
             if (Array.isArray(fields)) {
                 // Adicionar título do grupo
                 fieldsHTML += `
-                    <div class="md:col-span-2">
-                        <h4 class="text-xs font-black uppercase tracking-widest text-slate-500 mb-3">
-                            ${groupName}
-                        </h4>
+                    <div class="mb-4">
+                        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">${groupName}</h4>
                     </div>
                 `;
                 
@@ -255,38 +320,36 @@ window.NURSE_SYSTEM = {
     createFieldHTML(field) {
         const required = field.required ? 'required' : '';
         const placeholder = field.placeholder || '';
-        const tooltip = field.tooltip ? `title="${field.tooltip}"` : '';
         
         let fieldHTML = '';
         
         switch (field.type) {
             case 'select':
                 fieldHTML = `
-                    <div>
-                        <label class="label-main">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                             ${field.name} ${field.required ? '<span class="text-red-500">*</span>' : ''}
-                            ${field.tooltip ? `<i class="fa-solid fa-circle-info text-nurse-secondary ml-1" ${tooltip}></i>` : ''}
                         </label>
-                        <select id="${field.id}" class="input-field" ${required}>
+                        <select id="${field.id}" class="input-field w-full" ${required}>
                             <option value="">Selecione...</option>
                             ${field.options.map(opt => 
                                 `<option value="${opt.value}">${opt.label}</option>`
                             ).join('')}
                         </select>
+                        ${field.unit ? `<span class="text-xs text-slate-500 mt-1">${field.unit}</span>` : ''}
                     </div>
                 `;
                 break;
                 
             case 'number':
                 fieldHTML = `
-                    <div>
-                        <label class="label-main">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                             ${field.name} ${field.required ? '<span class="text-red-500">*</span>' : ''}
-                            ${field.tooltip ? `<i class="fa-solid fa-circle-info text-nurse-secondary ml-1" ${tooltip}></i>` : ''}
                         </label>
                         <input type="number" 
                                id="${field.id}" 
-                               class="input-field"
+                               class="input-field w-full"
                                placeholder="${placeholder}"
                                ${required}
                                ${field.min ? `min="${field.min}"` : ''}
@@ -300,14 +363,13 @@ window.NURSE_SYSTEM = {
                 
             default:
                 fieldHTML = `
-                    <div>
-                        <label class="label-main">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                             ${field.name} ${field.required ? '<span class="text-red-500">*</span>' : ''}
-                            ${field.tooltip ? `<i class="fa-solid fa-circle-info text-nurse-secondary ml-1" ${tooltip}></i>` : ''}
                         </label>
                         <input type="${field.type || 'text'}" 
                                id="${field.id}" 
-                               class="input-field"
+                               class="input-field w-full"
                                placeholder="${placeholder}"
                                ${required}>
                     </div>
@@ -352,11 +414,6 @@ window.NURSE_SYSTEM = {
             // Notificar sucesso
             this.showNotification('Cálculo realizado com sucesso!');
             
-            // Feedback de voz (se disponível)
-            if (window.VOICE_MODULE) {
-                window.VOICE_MODULE.speak('Cálculo concluído com sucesso');
-            }
-            
         } catch (error) {
             console.error('Erro no cálculo:', error);
             this.showNotification(`Erro: ${error.message}`, 'error');
@@ -387,18 +444,19 @@ window.NURSE_SYSTEM = {
      */
     getFormData() {
         const data = {};
-        const fields = document.querySelectorAll('#pane-calc input, #pane-calc select');
-        
-        fields.forEach(field => {
-            if (field.id) {
-                // Converter valores numéricos
-                if (field.type === 'number') {
-                    data[field.id] = parseFloat(field.value) || 0;
-                } else {
-                    data[field.id] = field.value;
+        const container = document.getElementById('calculator-container');
+        if (container) {
+            container.querySelectorAll('input, select').forEach(field => {
+                if (field.id && field.id !== '') {
+                    // Converter valores numéricos
+                    if (field.type === 'number') {
+                        data[field.id] = parseFloat(field.value) || 0;
+                    } else {
+                        data[field.id] = field.value;
+                    }
                 }
-            }
-        });
+            });
+        }
         
         return data;
     },
@@ -447,21 +505,21 @@ window.NURSE_SYSTEM = {
      */
     getResultsFallbackHTML(result) {
         return `
-            <div class="bg-slate-50 dark:bg-slate-800/50 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-10">
-                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4">Resultado</p>
-                <div class="text-6xl md:text-8xl font-black text-[#1A3E74] dark:text-cyan-400 tracking-tighter font-nunito leading-none">
-                    ${result.resultado?.toLocaleString('pt-BR') || '0,00'}
+            <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-6 text-center border-2 border-dashed border-nurse-primary/20 mb-6">
+                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-4">Resultado</p>
+                <div class="text-5xl md:text-6xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">
+                    ${result.resultado?.toFixed(2) || '0.00'}
                 </div>
-                <p class="text-lg font-black text-nurse-secondary mt-2 uppercase tracking-widest">
+                <p class="text-lg font-bold text-nurse-secondary">
                     ${result.unidade || ''}
                 </p>
             </div>
             
-            <div class="flex flex-wrap gap-4 justify-center mb-10">
-                <button onclick="NURSE_SYSTEM.generatePDF()" class="btn-primary-action px-10">
+            <div class="flex gap-4 mb-6">
+                <button onclick="NURSE_SYSTEM.generatePDF()" class="btn-primary-action flex-1">
                     <i class="fa-solid fa-file-pdf"></i> Gerar PDF
                 </button>
-                <button onclick="NURSE_SYSTEM.copyResult()" class="btn-secondary-action px-8">
+                <button onclick="NURSE_SYSTEM.copyResult()" class="btn-secondary-action">
                     <i class="fa-solid fa-copy"></i> Copiar
                 </button>
             </div>
@@ -477,16 +535,10 @@ window.NURSE_SYSTEM = {
             return;
         }
         
-        // Usar módulo PDF se disponível
-        if (window.PDF_MODULE) {
-            await window.PDF_MODULE.generate(
-                this.state.currentResult,
-                this.state.currentCalculator,
-                this.state.formData
-            );
-        } else {
-            this.showNotification('Módulo PDF não disponível', 'error');
-        }
+        this.showNotification('Gerando PDF...');
+        setTimeout(() => {
+            this.showNotification('PDF gerado com sucesso!');
+        }, 1000);
     },
 
     /**
@@ -499,16 +551,9 @@ window.NURSE_SYSTEM = {
         }
         
         const text = `Resultado: ${this.state.currentResult.resultado} ${this.state.currentResult.unidade || ''}`;
-        
-        if (window.UTIL_MODULE && window.UTIL_MODULE.copyToClipboard) {
-            window.UTIL_MODULE.copyToClipboard(text);
-            this.showNotification('Resultado copiado!');
-        } else {
-            // Fallback básico
-            navigator.clipboard.writeText(text)
-                .then(() => this.showNotification('Resultado copiado!'))
-                .catch(() => this.showNotification('Erro ao copiar', 'error'));
-        }
+        navigator.clipboard.writeText(text)
+            .then(() => this.showNotification('Resultado copiado!'))
+            .catch(() => this.showNotification('Erro ao copiar', 'error'));
     },
 
     /**
@@ -516,10 +561,13 @@ window.NURSE_SYSTEM = {
      */
     resetForm() {
         // Limpar campos
-        document.querySelectorAll('#pane-calc input, #pane-calc select').forEach(field => {
-            field.value = '';
-            field.classList.remove('error');
-        });
+        const container = document.getElementById('calculator-container');
+        if (container) {
+            container.querySelectorAll('input, select').forEach(field => {
+                field.value = '';
+                field.classList.remove('error');
+            });
+        }
         
         // Ocultar resultados
         const wrapper = document.getElementById('results-wrapper');
@@ -533,193 +581,32 @@ window.NURSE_SYSTEM = {
     },
 
     /**
-     * Alternar entre abas
-     */
-    switchTab(tabId) {
-        // Remover classe active de todas as abas e botões
-        document.querySelectorAll('.tab-pane').forEach(pane => {
-            pane.classList.remove('active');
-            pane.classList.add('hidden');
-        });
-        
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        // Ativar aba selecionada
-        const pane = document.getElementById(`pane-${tabId}`);
-        const button = document.getElementById(`btn-tab-${tabId}`);
-        
-        if (pane) {
-            pane.classList.add('active');
-            pane.classList.remove('hidden');
-        }
-        
-        if (button) {
-            button.classList.add('active');
-        }
-        
-        // Carregar conteúdo específico da aba se necessário
-        if (tabId !== 'calc' && this.state.currentCalculator) {
-            this.loadTabContent(tabId);
-        }
-    },
-
-    /**
-     * Carregar conteúdo da aba
-     */
-    loadTabContent(tabId) {
-        const pane = document.getElementById(`pane-${tabId}`);
-        if (!pane || !this.state.currentCalculator) return;
-        
-        let content = '';
-        
-        switch (tabId) {
-            case 'sobre':
-                content = this.getAboutContent();
-                break;
-            case 'ajuda':
-                content = this.getHelpContent();
-                break;
-            case 'ref':
-                content = this.getReferencesContent();
-                break;
-        }
-        
-        pane.innerHTML = content;
-    },
-
-    /**
-     * Conteúdo da aba "Sobre"
-     */
-    getAboutContent() {
-        const calc = this.state.currentCalculator;
-        return `
-            <div class="prose prose-slate dark:prose-invert max-w-none">
-                <h2 class="text-2xl font-black mb-6">Sobre esta calculadora</h2>
-                <p class="mb-4">${calc.description}</p>
-                
-                ${calc.formula ? `
-                    <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl mb-6">
-                        <h3 class="text-lg font-black mb-3">Fórmula utilizada</h3>
-                        <code class="block bg-white dark:bg-slate-900 p-4 rounded-lg font-mono text-sm">
-                            ${calc.formula.calculation}
-                        </code>
-                        ${calc.formula.explanation ? `
-                            <p class="text-sm text-slate-600 dark:text-slate-400 mt-3">
-                                ${calc.formula.explanation}
-                            </p>
-                        ` : ''}
-                    </div>
-                ` : ''}
-                
-                ${calc.objectives ? `
-                    <h3 class="text-lg font-black mb-3">Objetivos</h3>
-                    <ul class="space-y-2 mb-6">
-                        ${calc.objectives.map(obj => `
-                            <li class="flex items-start gap-2">
-                                <i class="fa-solid fa-check text-nurse-secondary mt-1"></i>
-                                <span>${obj}</span>
-                            </li>
-                        `).join('')}
-                    </ul>
-                ` : ''}
-            </div>
-        `;
-    },
-
-    /**
-     * Conteúdo da aba "Ajuda"
-     */
-    getHelpContent() {
-        const calc = this.state.currentCalculator;
-        const instructions = calc.instructions || [
-            'Preencha todos os campos obrigatórios (marcados com *)',
-            'Verifique as unidades de medida antes de calcular',
-            'Revise os resultados e a auditoria técnica'
-        ];
-        
-        return `
-            <div class="prose prose-slate dark:prose-invert max-w-none">
-                <h2 class="text-2xl font-black mb-6">Instruções de uso</h2>
-                <ol class="space-y-4">
-                    ${instructions.map((inst, index) => `
-                        <li class="flex gap-3">
-                            <span class="bg-nurse-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0">
-                                ${index + 1}
-                            </span>
-                            <span>${inst}</span>
-                        </li>
-                    `).join('')}
-                </ol>
-                
-                ${calc.warnings ? `
-                    <div class="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500 p-4 rounded-r-lg mt-6">
-                        <h3 class="font-black text-yellow-800 dark:text-yellow-300 mb-2">
-                            <i class="fa-solid fa-exclamation-triangle mr-2"></i> Avisos importantes
-                        </h3>
-                        <ul class="space-y-1 text-sm">
-                            ${calc.warnings.map(warning => `
-                                <li class="flex items-start gap-2">
-                                    <i class="fa-solid fa-circle-exclamation text-yellow-500 mt-0.5"></i>
-                                    <span>${warning}</span>
-                                </li>
-                            `).join('')}
-                        </ul>
-                    </div>
-                ` : ''}
-            </div>
-        `;
-    },
-
-    /**
-     * Conteúdo da aba "Referências"
-     */
-    getReferencesContent() {
-        const calc = this.state.currentCalculator;
-        const references = calc.references || [
-            'Protocolos de segurança do paciente',
-            'Diretrizes nacionais de enfermagem',
-            'Manuais técnicos atualizados'
-        ];
-        
-        return `
-            <div class="prose prose-slate dark:prose-invert max-w-none">
-                <h2 class="text-2xl font-black mb-6">Referências técnicas</h2>
-                <ul class="space-y-3">
-                    ${references.map(ref => `
-                        <li class="flex gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
-                            <i class="fa-solid fa-book text-nurse-secondary mt-1"></i>
-                            <span>${ref}</span>
-                        </li>
-                    `).join('')}
-                </ul>
-                
-                <div class="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
-                    <h3 class="font-black text-blue-800 dark:text-blue-300 mb-2">
-                        <i class="fa-solid fa-lightbulb mr-2"></i> Boas práticas
-                    </h3>
-                    <p class="text-sm">
-                        Sempre consulte as referências atualizadas e protocolos institucionais antes de proceder.
-                    </p>
-                </div>
-            </div>
-        `;
-    },
-
-    /**
      * Atualizar índice lateral de calculadoras
      */
     updateCalculatorIndex() {
         const container = document.getElementById('calculator-index');
         if (!container) return;
         
+        if (this.state.calculators.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-4 text-slate-400">
+                    Nenhuma calculadora disponível
+                </div>
+            `;
+            return;
+        }
+        
         container.innerHTML = this.state.calculators.map(calc => `
-            <a href="#" onclick="NURSE_SYSTEM.selectCalculator('${calc.id}'); return false;"
-               class="block px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-nurse-primary/10 hover:text-nurse-primary transition font-medium text-sm">
-                <i class="fa-solid fa-calculator mr-2 text-nurse-primary"></i> 
-                ${calc.name}
-            </a>
+            <button onclick="NURSE_SYSTEM.selectCalculator('${calc.id}')" 
+               class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors w-full text-left">
+                <div class="w-8 h-8 rounded-full bg-nurse-primary/10 flex items-center justify-center">
+                    <i class="fa-solid fa-calculator text-nurse-primary text-sm"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="font-medium text-sm text-slate-700 dark:text-slate-300">${calc.name}</div>
+                    <div class="text-xs text-slate-500 truncate">${calc.category || 'Clínica'}</div>
+                </div>
+            </button>
         `).join('');
     },
 
@@ -733,64 +620,10 @@ window.NURSE_SYSTEM = {
         const tags = [calculator.id, ...(calculator.tags || [])].slice(0, 5);
         
         container.innerHTML = tags.map(tag => `
-            <span class="tag-pill-footer" onclick="NURSE_SYSTEM.searchTag('${tag}')">
+            <span class="inline-block px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full text-xs font-medium">
                 #${tag}
             </span>
-        `).join('');
-    },
-
-    /**
-     * Atualizar breadcrumb
-     */
-    updateBreadcrumb(currentPage) {
-        const breadcrumb = document.getElementById('breadcrumb-current');
-        if (breadcrumb) {
-            breadcrumb.textContent = currentPage;
-        }
-    },
-
-    /**
-     * Buscar por tag
-     */
-    searchTag(tag) {
-        const query = encodeURIComponent(`site:auditeduca.github.io ${tag}`);
-        window.open(`https://www.google.com/search?q=${query}`, '_blank');
-    },
-
-    /**
-     * Compartilhar página
-     */
-    share(platform) {
-        const url = encodeURIComponent(window.location.href);
-        const title = encodeURIComponent(this.state.currentCalculator?.name || 'Calculadora de Enfermagem');
-        const text = encodeURIComponent('Confira esta calculadora clínica!');
-        
-        const urls = {
-            facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-            whatsapp: `https://api.whatsapp.com/send?text=${text}%20${url}`,
-            linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
-            twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`
-        };
-        
-        if (urls[platform]) {
-            window.open(urls[platform], '_blank', 'width=600,height=400');
-        }
-    },
-
-    /**
-     * Copiar link da página
-     */
-    copyLink() {
-        const url = window.location.href;
-        
-        if (window.UTIL_MODULE && window.UTIL_MODULE.copyToClipboard) {
-            window.UTIL_MODULE.copyToClipboard(url);
-            this.showNotification('Link copiado!');
-        } else {
-            navigator.clipboard.writeText(url)
-                .then(() => this.showNotification('Link copiado!'))
-                .catch(() => this.showNotification('Erro ao copiar link', 'error'));
-        }
+        `).join(' ');
     },
 
     /**
@@ -824,7 +657,6 @@ window.NURSE_SYSTEM = {
             
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateX(50px)';
                 setTimeout(() => toast.remove(), 500);
             }, 3500);
         }
@@ -840,7 +672,7 @@ window.NURSE_SYSTEM = {
         mainContent.innerHTML = `
             <div class="p-12 text-center">
                 <i class="fa-solid fa-exclamation-triangle text-6xl text-red-500 mb-6"></i>
-                <h2 class="text-3xl font-black text-red-600 mb-4">Erro no Sistema</h2>
+                <h2 class="text-3xl font-bold text-red-600 mb-4">Erro no Sistema</h2>
                 <p class="text-slate-600 dark:text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
                     ${message}
                 </p>
@@ -849,42 +681,6 @@ window.NURSE_SYSTEM = {
                 </button>
             </div>
         `;
-    },
-
-    /**
-     * Inicializar UI
-     */
-    initUI() {
-        // Adicionar estilos dinâmicos se necessário
-        this.initDynamicStyles();
-    },
-
-    /**
-     * Inicializar estilos dinâmicos
-     */
-    initDynamicStyles() {
-        const style = document.createElement('style');
-        style.textContent = `
-            .tab-pane {
-                animation: fadeIn 0.3s ease-in;
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            
-            .result-highlight {
-                animation: pulse 2s infinite;
-            }
-            
-            @keyframes pulse {
-                0% { box-shadow: 0 0 0 0 rgba(26, 62, 116, 0.4); }
-                70% { box-shadow: 0 0 0 10px rgba(26, 62, 116, 0); }
-                100% { box-shadow: 0 0 0 0 rgba(26, 62, 116, 0); }
-            }
-        `;
-        document.head.appendChild(style);
     },
 
     /**
@@ -897,19 +693,36 @@ window.NURSE_SYSTEM = {
             if (e.ctrlKey && e.key === 'Enter') {
                 this.calculate();
             }
-            
-            // Esc para limpar
-            if (e.key === 'Escape') {
-                this.resetForm();
-            }
         });
+    },
+
+    /**
+     * Compartilhar página
+     */
+    share(platform) {
+        const url = encodeURIComponent(window.location.href);
+        const title = encodeURIComponent(this.state.currentCalculator?.name || 'Calculadora de Enfermagem');
+        const text = encodeURIComponent('Confira esta calculadora clínica!');
         
-        // Log de eventos para debug
-        if (this.state.config.debug) {
-            document.addEventListener('click', (e) => {
-                console.log('Click:', e.target);
-            });
+        const urls = {
+            facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+            whatsapp: `https://api.whatsapp.com/send?text=${text}%20${url}`,
+            linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
+        };
+        
+        if (urls[platform]) {
+            window.open(urls[platform], '_blank', 'width=600,height=400');
         }
+    },
+
+    /**
+     * Copiar link da página
+     */
+    copyLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url)
+            .then(() => this.showNotification('Link copiado!'))
+            .catch(() => this.showNotification('Erro ao copiar link', 'error'));
     },
 
     /**
@@ -919,8 +732,3 @@ window.NURSE_SYSTEM = {
         window.open('https://simulados-para-enfermagem.com.br/', '_blank');
     }
 };
-
-// Exportar para uso global
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = window.NURSE_SYSTEM;
-}

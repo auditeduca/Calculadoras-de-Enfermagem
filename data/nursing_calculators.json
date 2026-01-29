@@ -1,13 +1,12 @@
 {
   "version": "1.0.0",
-  "last_updated": "2024-01-15",
+  "last_updated": "2024-01-29",
   "calculators": [
     {
       "id": "insulina",
       "name": "Cálculo de Insulina",
       "description": "Ferramenta técnica para aspiração segura de insulina com protocolos integrados.",
       "category": "Medicação",
-      "icon": "fa-syringe",
       "unit": "mL",
       "formula": {
         "calculation": "V = (Dose Prescrita × Volume Seringa) ÷ Concentração Frasco",
@@ -20,16 +19,7 @@
             "name": "Nome do Paciente",
             "type": "text",
             "placeholder": "Nome completo",
-            "required": false,
-            "tooltip": "Identificação do paciente para registro"
-          },
-          {
-            "id": "patient_dob",
-            "name": "Data de Nascimento",
-            "type": "text",
-            "placeholder": "DD/MM/AAAA",
-            "required": false,
-            "tooltip": "Para cálculo de idade e validação"
+            "required": false
           }
         ],
         "Parâmetros do Cálculo": [
@@ -39,7 +29,6 @@
             "type": "number",
             "placeholder": "Ex: 20",
             "required": true,
-            "tooltip": "Dose em Unidades Internacionais (UI) prescrita pelo médico",
             "unit": "UI",
             "min": 0,
             "step": 0.5
@@ -50,7 +39,6 @@
             "type": "number",
             "placeholder": "Ex: 100",
             "required": true,
-            "tooltip": "Concentração padrão: 100 UI/mL. Verificar rótulo.",
             "unit": "UI/mL",
             "min": 0
           },
@@ -60,7 +48,6 @@
             "type": "number",
             "placeholder": "Ex: 1",
             "required": true,
-            "tooltip": "Volume total da seringa disponível",
             "unit": "mL",
             "min": 0,
             "step": 0.5
@@ -75,19 +62,6 @@
         "Realize dupla checagem com outro profissional",
         "Aspire o volume calculado com precisão"
       ],
-      "warnings": [
-        "Insulina é medicamento de alta vigilância",
-        "Doses acima de 100 UI requerem atenção especial",
-        "Nunca usar seringa padrão para insulina",
-        "Verificar validade e aspecto do frasco",
-        "Armazenamento correto: refrigerar entre 2-8°C"
-      ],
-      "references": [
-        "Protocolo de Segurança na Administração de Insulina - ANVISA",
-        "Diretrizes da Sociedade Brasileira de Diabetes (SBD)",
-        "Manual de Cálculo e Administração de Medicamentos - COREN",
-        "Boas Práticas de Enfermagem - Ministério da Saúde"
-      ],
       "tags": ["insulina", "diabetes", "medicação", "segurança", "dose"]
     },
     {
@@ -95,7 +69,6 @@
       "name": "Cálculo de Heparina",
       "description": "Cálculo preciso para administração de heparina com controle de coagulação.",
       "category": "Anticoagulante",
-      "icon": "fa-droplet",
       "unit": "mL",
       "fields": {
         "Parâmetros do Cálculo": [
@@ -129,7 +102,6 @@
       "name": "Cálculo de Gotejamento",
       "description": "Cálculo de gotas/minuto para infusão de soluções endovenosas.",
       "category": "Hidratação",
-      "icon": "fa-faucet-drip",
       "fields": {
         "Parâmetros do Cálculo": [
           {
@@ -165,7 +137,6 @@
       "name": "Cálculo de IMC",
       "description": "Índice de Massa Corporal para avaliação nutricional.",
       "category": "Avaliação",
-      "icon": "fa-weight-scale",
       "unit": "kg/m²",
       "fields": {
         "Dados Antropométricos": [

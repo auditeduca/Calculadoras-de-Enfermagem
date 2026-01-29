@@ -318,4 +318,110 @@ window.UTIL_MODULE = {
         temp.textContent = html;
         return temp.innerHTML;
     }
+};/**
+ * MÓDULO DE UTILITÁRIOS
+ */
+
+window.UTIL_MODULE = {
+    
+    /**
+     * Formatar número para o padrão brasileiro
+     */
+    formatNumber(number, decimals = 2) {
+        if (typeof number !== 'number' || isNaN(number)) {
+            return '0,00';
+        }
+        
+        return number.toLocaleString('pt-BR', {
+            minimumFractionDigits: decimals,
+            maximumFractionDigits: decimals
+        });
+    },
+    
+    /**
+     * Formatar data
+     */
+    formatDate(date, format = 'pt-BR') {
+        if (!date) return '';
+        
+        const d = new Date(date);
+        if (isNaN(d.getTime())) return '';
+        
+        if (format === 'pt-BR') {
+            return d.toLocaleDateString('pt-BR');
+        }
+        
+        return d.toISOString().split('T')[0];
+    },
+    
+    /**
+     * Copiar texto para clipboard
+     */
+    copyToClipboard(text) {
+        return new Promise((resolve, reject) => {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text)
+                    .then(() => resolve(true))
+                    .catch(() => this.fallbackCopy(text, resolve, reject));
+            } else {
+                this.fallbackCopy(text, resolve, reject);
+            }
+        });
+    },
+    
+    /**
+     * Fallback para cópia
+     */
+    fallbackCopy(text, resolve, reject) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        textArea.style.top = '0';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            const successful = document.execCommand('copy');
+            document.body.removeChild(textArea);
+            successful ? resolve(true) : reject(false);
+        } catch (err) {
+            document.body.removeChild(textArea);
+            reject(false);
+        }
+    },
+    
+    /**
+     * Gerar ID único
+     */
+    generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    },
+    
+    /**
+     * Armazenar dados no localStorage
+     */
+    storeData(key, data) {
+        try {
+            localStorage.setItem(key, JSON.stringify(data));
+            return true;
+        } catch (error) {
+            console.error('Erro ao armazenar dados:', error);
+            return false;
+        }
+    },
+    
+    /**
+     * Recuperar dados do localStorage
+     */
+    retrieveData(key) {
+        try {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : null;
+        } catch (error) {
+            console.error('Erro ao recuperar dados:', error);
+            return null;
+        }
+    }
 };
