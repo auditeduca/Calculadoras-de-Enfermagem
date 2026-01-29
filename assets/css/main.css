@@ -1,0 +1,36 @@
+/* Variáveis de Identidade Visual */
+:root {
+  --nurse-primary: #1A3E74;
+  --nurse-secondary: #00bcd4;
+  --nurse-accent: #00838f;
+  --nurse-bg-dark: #0F172A;
+}
+
+/* Animação de Erro (Shake) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+  border-color: #ef4444 !important; /* Vermelho vibrante para erro */
+  background-color: #fef2f2 !important;
+}
+
+/* Transições de Fade-In para Resultados */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Customização de Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: var(--nurse-primary); border-radius: 10px; }
