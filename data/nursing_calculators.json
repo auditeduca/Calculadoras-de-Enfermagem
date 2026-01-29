@@ -1,0 +1,508 @@
+{
+  "calculators": [
+    {
+      "id": "heparina",
+      "name": "Cálculo de Heparina",
+      "description": "Ferramenta profissional para cálculo preciso de dosagem e diluição de heparina com protocolos de segurança integrados.",
+      "url": "https://www.calculadorasdeenfermagem.com.br/heparina.html",
+      "fields": {
+        "Parâmetros": [
+          {
+            "id": "heparinaConcentracao",
+            "name": "Concentração (UI/ml)",
+            "type": "number",
+            "placeholder": "Ex: 5000",
+            "unit": "UI/ml",
+            "tooltip": "Concentração do frasco de heparina",
+            "required": true
+          },
+          {
+            "id": "heparinaVolume",
+            "name": "Volume (ml)",
+            "type": "number",
+            "placeholder": "Ex: 5",
+            "unit": "ml",
+            "tooltip": "Volume total do frasco",
+            "required": true
+          },
+          {
+            "id": "heparinaPrescricao",
+            "name": "Prescrição (UI)",
+            "type": "number",
+            "placeholder": "Ex: 2500",
+            "unit": "UI",
+            "tooltip": "Dose prescrita",
+            "required": true
+          }
+        ]
+      },
+      "formula": {
+        "description": "Cálculo de volume a aspirar usando regra de três",
+        "calculation": "Volume = (Prescrição × Volume Frasco) / Concentração"
+      },
+      "instructions": [
+        "Insira a concentração do frasco de heparina (geralmente 5000 UI/ml)",
+        "Informe o volume total do frasco",
+        "Digite a prescrição médica em Unidades Internacionais (UI)",
+        "O sistema calculará o volume exato a ser aspirado"
+      ],
+      "warnings": [
+        "Heparina é medicação de alta vigilância - dupla checagem obrigatória",
+        "Verificar validade e integridade do frasco antes do uso",
+        "Respeitar protocolos institucionais de administração"
+      ]
+    },
+    {
+      "id": "insulina",
+      "name": "Cálculo de Insulina",
+      "description": "Ferramenta para aspiração segura de insulina com auditoria de cálculo, 9 certos, metas de segurança e geração de PDF profissional.",
+      "url": "https://www.calculadorasdeenfermagem.com.br/insulina.html",
+      "fields": {
+        "Parâmetros": [
+          {
+            "id": "insulinaFrasco",
+            "name": "Frasco (UI/ml)",
+            "type": "number",
+            "placeholder": "Ex: 100",
+            "unit": "UI/ml",
+            "tooltip": "Concentração do frasco (padrão 100UI)",
+            "required": true
+          },
+          {
+            "id": "insulinaSeringa",
+            "name": "Seringa (ml)",
+            "type": "number",
+            "placeholder": "Ex: 1",
+            "unit": "ml",
+            "tooltip": "Capacidade total da seringa",
+            "required": true
+          },
+          {
+            "id": "insulinaPrescricao",
+            "name": "Prescrição (UI)",
+            "type": "number",
+            "placeholder": "Ex: 20",
+            "unit": "UI",
+            "tooltip": "Dose prescrita em Unidades",
+            "required": true
+          }
+        ]
+      },
+      "formula": {
+        "description": "Cálculo de volume a aspirar usando regra de três",
+        "calculation": "(Prescrição × Seringa) / Frasco = Volume em ml"
+      },
+      "instructions": [
+        "Insira a concentração do frasco (padrão 100 UI/ml)",
+        "Informe o volume total da seringa disponível (ex: 1ml, 3ml)",
+        "Digite a prescrição médica em UI",
+        "O sistema calculará o volume exato a ser aspirado em ml"
+      ],
+      "warnings": [
+        "INSULINA É UMA MEDICAÇÃO DE ALTA VIGILÂNCIA (MAV) - DUPLA CHECAGEM OBRIGATÓRIA",
+        "Sempre verificar a validade e a integridade do frasco",
+        "Respeitar rigorosamente o protocolo de segurança do paciente",
+        "Conferir os 9 certos da medicação antes da administração"
+      ]
+    },
+    {
+      "id": "balancohidrico",
+      "name": "Balanço Hídrico",
+      "description": "Monitorização de entradas e saídas de líquidos para avaliação do equilíbrio hidroeletrolítico do paciente.",
+      "url": "https://www.calculadorasdeenfermagem.com.br/balancohidrico.html",
+      "fields": {
+        "Ingestão": [
+          {
+            "id": "ingestaoOral",
+            "name": "Ingestão Oral",
+            "type": "number",
+            "placeholder": "Ex: 500",
+            "unit": "ml",
+            "required": false
+          },
+          {
+            "id": "ingestaoSonda",
+            "name": "Sonda Nasogástrica",
+            "type": "number",
+            "placeholder": "Ex: 200",
+            "unit": "ml",
+            "required": false
+          },
+          {
+            "id": "ingestaoParenteral",
+            "name": "Parenteral (IV)",
+            "type": "number",
+            "placeholder": "Ex: 300",
+            "unit": "ml",
+            "required": false
+          }
+        ],
+        "Eliminação": [
+          {
+            "id": "eliminacaoUrina",
+            "name": "Urina",
+            "type": "number",
+            "placeholder": "Ex: 800",
+            "unit": "ml",
+            "required": false
+          },
+          {
+            "id": "eliminacaoVomito",
+            "name": "Vômito",
+            "type": "number",
+            "placeholder": "Ex: 100",
+            "unit": "ml",
+            "required": false
+          },
+          {
+            "id": "eliminacaoDrenos",
+            "name": "Drenos",
+            "type": "number",
+            "placeholder": "Ex: 0",
+            "unit": "ml",
+            "required": false
+          }
+        ]
+      },
+      "formula": {
+        "description": "Balanço = Total de Ingestão - Total de Eliminação",
+        "calculation": "Balanço = (Oral + Sonda + Parenteral) - (Urina + Vômito + Drenos)"
+      },
+      "instructions": [
+        "Registre todos os volumes ingeridos (oral, sonda, parenteral)",
+        "Registre todos os volumes eliminados (urina, vômito, drenos)",
+        "O sistema calculará o balanço total",
+        "Balanço positivo = retenção de líquidos; Balanço negativo = perda de líquidos"
+      ],
+      "warnings": [
+        "Registrar com precisão todos os volumes",
+        "Considerar perdas insensíveis (perspirações, respiração)",
+        "Avaliar clinicamente o estado de hidratação do paciente",
+        "Comunicar desequilíbrios significativos ao médico"
+      ]
+    },
+    {
+      "id": "gotejamento",
+      "name": "Gotejamento de Soro",
+      "description": "Cálculo de gotas e microgotas para infusões intravenosas com precisão.",
+      "url": "https://www.calculadorasdeenfermagem.com.br/gotejamento.html",
+      "fields": {
+        "Parâmetros": [
+          {
+            "id": "volume",
+            "name": "Volume (ml)",
+            "type": "number",
+            "placeholder": "Ex: 500",
+            "unit": "ml",
+            "tooltip": "Volume total a infundir",
+            "required": true
+          },
+          {
+            "id": "tempo",
+            "name": "Tempo",
+            "type": "number",
+            "placeholder": "Ex: 8",
+            "unit": "h ou min",
+            "tooltip": "Tempo de infusão",
+            "required": true
+          },
+          {
+            "id": "unidadeTempo",
+            "name": "Unidade de Tempo",
+            "type": "select",
+            "options": [
+              { "value": "horas", "label": "Horas" },
+              { "value": "minutos", "label": "Minutos" }
+            ],
+            "required": true
+          },
+          {
+            "id": "equipo",
+            "name": "Tipo de Equipo",
+            "type": "select",
+            "options": [
+              { "value": "macrogotas", "label": "Macrogotas (20 gotas/ml)" },
+              { "value": "microgotas", "label": "Microgotas (60 gotas/ml)" }
+            ],
+            "required": true
+          }
+        ]
+      },
+      "formula": {
+        "description": "Cálculo de velocidade de infusão",
+        "calculation": "Gotas/min = Volume / (Tempo em horas × 3) ou (Volume × 20) / Tempo em minutos"
+      },
+      "instructions": [
+        "Informe o volume total de soro a infundir",
+        "Indique o tempo de infusão (em horas ou minutos)",
+        "Selecione o tipo de equipo disponível",
+        "O sistema calculará o gotejamento em gotas/minuto"
+      ],
+      "warnings": [
+        "Verificar a compatibilidade do equipo com a solução",
+        "Monitorar regularmente o gotejamento durante a infusão",
+        "Ajustar conforme necessário para manter a velocidade correta",
+        "Observar sinais de infiltração ou flebite"
+      ]
+    },
+    {
+      "id": "gestacional",
+      "name": "Idade Gestacional e DPP",
+      "description": "Cálculo da idade gestacional e data provável do parto (DPP) baseado na última menstruação.",
+      "url": "https://www.calculadorasdeenfermagem.com.br/gestacional.html",
+      "fields": {
+        "Parâmetros": [
+          {
+            "id": "dum",
+            "name": "Data da Última Menstruação",
+            "type": "date",
+            "tooltip": "Data do primeiro dia da última menstruação",
+            "required": true
+          }
+        ]
+      },
+      "formula": {
+        "description": "Cálculo de idade gestacional e DPP",
+        "calculation": "DPP = DUM + 280 dias (40 semanas)"
+      },
+      "instructions": [
+        "Informe a data do primeiro dia da última menstruação",
+        "O sistema calculará a idade gestacional atual",
+        "Será exibida a data provável do parto (DPP)",
+        "Use a regra de Naegele para validação"
+      ],
+      "warnings": [
+        "Este cálculo é baseado em ciclos regulares de 28 dias",
+        "Para ciclos irregulares, considerar ultrassom obstétrico",
+        "A DPP é uma estimativa e pode variar ±2 semanas",
+        "Confirmar com profissional de saúde"
+      ]
+    },
+    {
+      "id": "imc",
+      "name": "Índice de Massa Corporal (IMC)",
+      "description": "Cálculo do Índice de Massa Corporal e classificação do estado nutricional.",
+      "url": "https://www.calculadorasdeenfermagem.com.br/imc.html",
+      "fields": {
+        "Parâmetros": [
+          {
+            "id": "peso",
+            "name": "Peso",
+            "type": "number",
+            "placeholder": "Ex: 70.5",
+            "unit": "kg",
+            "tooltip": "Peso corporal em quilogramas",
+            "required": true
+          },
+          {
+            "id": "altura",
+            "name": "Altura",
+            "type": "number",
+            "placeholder": "Ex: 1.75",
+            "unit": "m",
+            "tooltip": "Altura em metros",
+            "required": true
+          }
+        ]
+      },
+      "formula": {
+        "description": "Cálculo do Índice de Massa Corporal",
+        "calculation": "IMC = Peso (kg) / Altura² (m²)"
+      },
+      "instructions": [
+        "Informe o peso corporal em quilogramas",
+        "Informe a altura em metros (ex: 1.75)",
+        "O sistema calculará o IMC",
+        "Verifique a classificação do estado nutricional"
+      ],
+      "warnings": [
+        "IMC < 18.5: Abaixo do peso",
+        "IMC 18.5-24.9: Peso normal",
+        "IMC 25-29.9: Sobrepeso",
+        "IMC 30-34.9: Obesidade Grau I",
+        "IMC 35-39.9: Obesidade Grau II",
+        "IMC ≥ 40: Obesidade Grau III"
+      ]
+    },
+    {
+      "id": "medicamentos",
+      "name": "Cálculo de Medicamentos",
+      "description": "Cálculo de dosagem de medicamentos usando regra de três simples.",
+      "url": "https://www.calculadorasdeenfermagem.com.br/medicamentos.html",
+      "fields": {
+        "Parâmetros": [
+          {
+            "id": "prescricao",
+            "name": "Prescrição",
+            "type": "number",
+            "placeholder": "Ex: 120",
+            "unit": "mg",
+            "tooltip": "Dose prescrita",
+            "required": true
+          },
+          {
+            "id": "concentracao",
+            "name": "Concentração",
+            "type": "number",
+            "placeholder": "Ex: 240",
+            "unit": "mg",
+            "tooltip": "Concentração disponível",
+            "required": true
+          },
+          {
+            "id": "volumeTotal",
+            "name": "Volume Total",
+            "type": "number",
+            "placeholder": "Ex: 10",
+            "unit": "ml",
+            "tooltip": "Volume total do frasco",
+            "required": true
+          }
+        ]
+      },
+      "formula": {
+        "description": "Cálculo de volume a aspirar",
+        "calculation": "Volume = (Prescrição / Concentração) × Volume Total"
+      },
+      "instructions": [
+        "Informe a dose prescrita em mg",
+        "Informe a concentração disponível em mg",
+        "Informe o volume total do frasco em ml",
+        "O sistema calculará o volume a aspirar"
+      ],
+      "warnings": [
+        "Sempre verificar a prescrição médica",
+        "Conferir a validade do medicamento",
+        "Respeitar os protocolos de administração",
+        "Dupla checagem em medicações de alta vigilância"
+      ]
+    },
+    {
+      "id": "dimensionamento",
+      "name": "Dimensionamento de Pessoal",
+      "description": "Cálculo do dimensionamento de pessoal de enfermagem conforme Resolução COFEN 543/2017.",
+      "url": "https://www.calculadorasdeenfermagem.com.br/dimensionamento.html",
+      "fields": {
+        "Parâmetros": [
+          {
+            "id": "cargaHoraria",
+            "name": "Carga Horária",
+            "type": "number",
+            "placeholder": "Ex: 40",
+            "unit": "horas/semana",
+            "required": true
+          },
+          {
+            "id": "numCM",
+            "name": "Cuidado Mínimo",
+            "type": "number",
+            "placeholder": "Ex: 5",
+            "unit": "pacientes",
+            "required": false
+          },
+          {
+            "id": "numCI",
+            "name": "Cuidado Intermediário",
+            "type": "number",
+            "placeholder": "Ex: 8",
+            "unit": "pacientes",
+            "required": false
+          },
+          {
+            "id": "numCAD",
+            "name": "Cuidado Alta Dependência",
+            "type": "number",
+            "placeholder": "Ex: 3",
+            "unit": "pacientes",
+            "required": false
+          },
+          {
+            "id": "numCSI",
+            "name": "Cuidado Semi-Intensivo",
+            "type": "number",
+            "placeholder": "Ex: 0",
+            "unit": "pacientes",
+            "required": false
+          }
+        ]
+      },
+      "formula": {
+        "description": "Dimensionamento conforme COFEN 543/2017",
+        "calculation": "Total = (Horas/paciente × Número de pacientes × IST) / Horas disponíveis"
+      },
+      "instructions": [
+        "Informe a carga horária semanal",
+        "Informe o número de pacientes por grau de complexidade",
+        "O sistema calculará o número de profissionais necessários",
+        "Considera IST (Índice de Segurança Técnica) de 15%"
+      ],
+      "warnings": [
+        "Baseado na Resolução COFEN Nº 543/2017",
+        "IST (Índice de Segurança Técnica) = 15%",
+        "Considerar folgas, férias e afastamentos",
+        "Consultar protocolos institucionais"
+      ]
+    },
+    {
+      "id": "gasometria",
+      "name": "Gasometria Arterial",
+      "description": "Interpretação de valores de gasometria arterial para avaliação do equilíbrio ácido-básico.",
+      "url": "https://www.calculadorasdeenfermagem.com.br/gasometria.html",
+      "fields": {
+        "Valores": [
+          {
+            "id": "ph",
+            "name": "pH",
+            "type": "number",
+            "placeholder": "Ex: 7.35",
+            "tooltip": "Potencial hidrogeniônico",
+            "required": false
+          },
+          {
+            "id": "paco2",
+            "name": "PaCO₂",
+            "type": "number",
+            "placeholder": "Ex: 35",
+            "unit": "mmHg",
+            "tooltip": "Pressão parcial de CO₂",
+            "required": false
+          },
+          {
+            "id": "po2",
+            "name": "pO₂",
+            "type": "number",
+            "placeholder": "Ex: 80",
+            "unit": "mmHg",
+            "tooltip": "Pressão parcial de O₂",
+            "required": false
+          },
+          {
+            "id": "hco3",
+            "name": "HCO₃⁻",
+            "type": "number",
+            "placeholder": "Ex: 24",
+            "unit": "mEq/L",
+            "tooltip": "Bicarbonato",
+            "required": false
+          }
+        ]
+      },
+      "formula": {
+        "description": "Interpretação de gasometria arterial",
+        "calculation": "Análise de pH, PaCO₂ e HCO₃⁻ para diagnóstico de distúrbios ácido-básicos"
+      },
+      "instructions": [
+        "Informe os valores obtidos da gasometria",
+        "O sistema interpretará o distúrbio ácido-básico",
+        "Verifique a oxigenação e ventilação",
+        "Consulte profissional para conduta clínica"
+      ],
+      "warnings": [
+        "Valores de referência variam conforme laboratório",
+        "Considerar o contexto clínico do paciente",
+        "Repetir coleta se valores forem inconsistentes",
+        "Amostra deve ser analisada em até 15 minutos"
+      ]
+    }
+  ]
+}
