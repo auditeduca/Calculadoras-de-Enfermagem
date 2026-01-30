@@ -1,240 +1,291 @@
 /**
- * Sistema de Geração de PDF - Calculadoras de Enfermagem
- * Versão 2.0 - Corrigida
+ * MODAL-REFERENCE.JS - Gerenciador de Modais de Referência
+ * Controla modais de NANDA, 9 Certos, Metas de Segurança e Diagnósticos
+ * 
+ * @author Calculadoras de Enfermagem
+ * @version 2.0.0
  */
 
-const PDF_SYSTEM = {
-    // Configurações
-    config: {
-        pageSize: 'a4',
-        orientation: 'portrait',
-        margin: 20,
-        unit: 'pt'
-    },
+class ModalReferenceManager {
+  constructor(options = {}) {
+    this.modalManager = options.modalManager || window.MODAL_MANAGER;
+    this.notificationManager = options.notificationManager || window.NOTIFICATION_MANAGER;
+    this.baseURL = options.baseURL || 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
+    this.initializeModals();
+  }
 
-    // Gerar PDF para calculadora
-    async generate(calculatorName, resultData, patientData = {}) {
-        try {
-            // Verificar bibliotecas
-            if (typeof jsPDF === 'undefined') {
-                console.error('jsPDF não carregado');
-                this.showError('Biblioteca PDF não carregada');
-                return;
-            }
+  /**
+   * Inicializar modais de referência
+   */
+  initializeModals() {
+    this.registerNANDAModal();
+    this.registerMedicationChecklistModal();
+    this.registerSafetyGoalsModal();
+    this.registerInternationalGoalsModal();
+  }
 
-            const doc = new jsPDF(this.config.orientation, this.config.unit, this.config.pageSize);
-            
-            // Cabeçalho
-            this.addHeader(doc, calculatorName);
-            
-            // Dados do paciente
-            if (patientData.name || patientData.birthdate) {
-                this.addPatientInfo(doc, patientData);
-            }
-            
-            // Resultados
-            this.addResults(doc, resultData);
-            
-            // Auditoria e segurança
-            this.addSafetyInfo(doc);
-            
-            // Rodapé
-            this.addFooter(doc);
-            
-            // Salvar arquivo
-            const fileName = `Auditoria_${calculatorName.replace(/\s+/g, '_')}_${new Date().getTime()}.pdf`;
-            doc.save(fileName);
-            
-            return true;
-            
-        } catch (error) {
-            console.error('Erro ao gerar PDF:', error);
-            this.showError('Erro ao gerar PDF: ' + error.message);
-            return false;
-        }
-    },
+  /**
+   * Registrar modal NANDA
+   */
+  registerNANDAModal() {
+    const content = `
+      <div class="space-y-4">
+        <div class="bg-gradient-to-r from-nurse-primary to-nurse-accent text-white p-4 rounded-xl">
+          <h4 class="font-bold text-sm mb-2">NANDA-I Classificação 2021-2023</h4>
+          <p class="text-xs opacity-90">Diagnósticos de Enfermagem: Definições e Classificação</p>
+        </div>
 
-    // Adicionar cabeçalho
-    addHeader(doc, title) {
-        doc.setFillColor(26, 62, 116); // nurse-primary
-        doc.rect(0, 0, doc.internal.pageSize.getWidth(), 40, 'F');
-        
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bold');
-        doc.text(title, 40, 25);
-        
-        doc.setTextColor(255, 255, 255, 0.7);
-        doc.setFontSize(8);
-        doc.text('SISTEMA PROFISSIONAL DE ENFERMAGEM', 40, 35);
-        
-        // Logo
-        doc.addImage(this.getLogo(), 'PNG', doc.internal.pageSize.getWidth() - 60, 10, 40, 40);
-    },
+        <div class="space-y-3">
+          <div class="border-l-4 border-red-500 pl-4 py-2">
+            <h5 class="font-bold text-sm text-red-700 dark:text-red-400">Diagnósticos de Risco</h5>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Risco de glicemia instável</p>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Risco de lesão</p>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Risco de infecção</p>
+          </div>
 
-    // Adicionar informações do paciente
-    addPatientInfo(doc, patientData) {
-        doc.setDrawColor(200, 200, 200);
-        doc.setFillColor(248, 250, 252);
-        doc.rect(40, 60, doc.internal.pageSize.getWidth() - 80, 30, 'F');
-        
-        doc.setTextColor(0, 0, 0);
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'normal');
-        
-        doc.text('PACIENTE:', 50, 75);
-        doc.setFont('helvetica', 'bold');
-        doc.text(patientData.name || 'Não informado', 100, 75);
-        
-        doc.setFont('helvetica', 'normal');
-        doc.text('NASCIMENTO:', 50, 85);
-        doc.setFont('helvetica', 'bold');
-        doc.text(patientData.birthdate || 'Não informado', 120, 85);
-    },
+          <div class="border-l-4 border-orange-500 pl-4 py-2">
+            <h5 class="font-bold text-sm text-orange-700 dark:text-orange-400">Diagnósticos Reais</h5>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Conhecimento deficiente</p>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Ansiedade relacionada ao procedimento</p>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Dor aguda</p>
+          </div>
 
-    // Adicionar resultados
-    addResults(doc, resultData) {
-        let yPos = 110;
-        
-        // Título da seção
-        doc.setFillColor(0, 188, 212); // nurse-secondary
-        doc.rect(40, yPos, doc.internal.pageSize.getWidth() - 80, 15, 'F');
-        
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(11);
-        doc.setFont('helvetica', 'bold');
-        doc.text('RESULTADOS DO CÁLCULO', 50, yPos + 10);
-        yPos += 25;
-        
-        // Dados do cálculo
-        doc.setTextColor(0, 0, 0);
-        doc.setFontSize(9);
-        
-        Object.keys(resultData).forEach(key => {
-            if (key !== 'unidade' && key !== 'calculator') {
-                const label = this.formatLabel(key);
-                const value = resultData[key];
-                const unit = resultData.unidade || '';
-                
-                doc.setFont('helvetica', 'bold');
-                doc.text(`${label}:`, 50, yPos);
-                doc.setFont('helvetica', 'normal');
-                doc.text(`${value} ${unit}`, 150, yPos);
-                yPos += 10;
-            }
-        });
-        
-        yPos += 10;
-        
-        // Resultado principal em destaque
-        if (resultData.volumeAspirar || resultData.resultado) {
-            const mainValue = resultData.volumeAspirar || resultData.resultado;
-            doc.setFillColor(26, 62, 116, 0.1);
-            doc.rect(40, yPos, doc.internal.pageSize.getWidth() - 80, 40, 'F');
-            
-            doc.setFontSize(24);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(26, 62, 116);
-            doc.text('VOLUME FINAL:', 50, yPos + 20);
-            doc.text(`${mainValue} ${resultData.unidade || 'UI'}`, 
-                     doc.internal.pageSize.getWidth() - 100, yPos + 20, { align: 'right' });
-            
-            yPos += 60;
-        }
-    },
+          <div class="border-l-4 border-blue-500 pl-4 py-2">
+            <h5 class="font-bold text-sm text-blue-700 dark:text-blue-400">Diagnósticos de Bem-estar</h5>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Disposição para melhorar o conhecimento</p>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Disposição para melhorar o autocuidado</p>
+          </div>
+        </div>
 
-    // Adicionar informações de segurança
-    addSafetyInfo(doc) {
-        const yPos = 220;
-        
-        doc.setFillColor(249, 250, 251);
-        doc.rect(40, yPos, doc.internal.pageSize.getWidth() - 80, 100, 'F');
-        doc.setDrawColor(226, 232, 240);
-        doc.rect(40, yPos, doc.internal.pageSize.getWidth() - 80, 100);
-        
-        doc.setTextColor(0, 0, 0);
-        doc.setFontSize(9);
-        doc.setFont('helvetica', 'bold');
-        doc.text('CHECKLIST DE SEGURANÇA APLICADO:', 50, yPos + 15);
-        
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(8);
-        
-        const checklistItems = [
-            '✓ Verificação dupla do cálculo',
-            '✓ Confirmação da prescrição médica',
-            '✓ Identificação do paciente',
-            '✓ Verificação do medicamento',
-            '✓ Confirmação da via de administração',
-            '✓ Checagem de alergias',
-            '✓ Registro no prontuário'
-        ];
-        
-        checklistItems.forEach((item, index) => {
-            const x = 50 + (index % 2) * 200;
-            const y = yPos + 35 + Math.floor(index / 2) * 12;
-            doc.text(item, x, y);
-        });
-    },
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-200 dark:border-blue-800">
+          <p class="text-xs text-blue-900 dark:text-blue-200">
+            <strong>Nota:</strong> Para diagnósticos específicos do cálculo, use o botão "Buscar NANDA" para pesquisar online.
+          </p>
+        </div>
 
-    // Adicionar rodapé
-    addFooter(doc) {
-        const pageHeight = doc.internal.pageSize.getHeight();
-        
-        doc.setDrawColor(200, 200, 200);
-        doc.line(40, pageHeight - 40, doc.internal.pageSize.getWidth() - 40, pageHeight - 40);
-        
-        doc.setTextColor(100, 116, 139);
-        doc.setFontSize(7);
-        doc.setFont('helvetica', 'normal');
-        
-        doc.text('Calculadoras de Enfermagem Profissional', 40, pageHeight - 30);
-        doc.text('Documento gerado em: ' + new Date().toLocaleString('pt-BR'), 
-                 doc.internal.pageSize.getWidth() - 40, pageHeight - 30, { align: 'right' });
-        
-        doc.text('Este documento não substitui o registro oficial no prontuário.', 
-                 40, pageHeight - 20);
-        doc.text('Página 1 de 1', 
-                 doc.internal.pageSize.getWidth() - 40, pageHeight - 20, { align: 'right' });
-    },
+        <button onclick="window.MODAL_REFERENCE_MANAGER?.searchNANDAOnline()" class="w-full btn btn-primary">
+          <i class="fa-solid fa-magnifying-glass"></i> Buscar NANDA Online
+        </button>
+      </div>
+    `;
 
-    // Formatar labels
-    formatLabel(key) {
-        const labels = {
-            'prescricao': 'Prescrição Médica',
-            'volumeAspirar': 'Volume a Aspirar',
-            'resultado': 'Resultado',
-            'unidade': 'Unidade',
-            'fatorCalculo': 'Fator de Cálculo',
-            'tipoSeringa': 'Tipo de Seringa'
-        };
-        
-        return labels[key] || key.replace(/([A-Z])/g, ' $1').toUpperCase();
-    },
+    this.modalManager.register('nanda', {
+      title: 'Diagnósticos de Enfermagem - NANDA',
+      icon: 'fa-stethoscope',
+      content
+    });
+  }
 
-    // Obter logo (base64 ou URL)
-    getLogo() {
-        // Retorna um logo em base64 ou URL
-        // Você pode substituir por sua logo real
-        return 'data:image/svg+xml;base64,' + btoa(`
-            <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100" height="100" rx="20" fill="#1A3E74"/>
-                <path d="M30 30 L70 30 L70 70 L30 70 Z" stroke="#00BCD4" stroke-width="4" fill="none"/>
-                <path d="M40 40 L60 60 M60 40 L40 60" stroke="white" stroke-width="3"/>
-                <text x="50" y="85" text-anchor="middle" fill="white" font-size="8" font-family="Arial">ENF</text>
-            </svg>
-        `);
-    },
+  /**
+   * Registrar modal dos 9 Certos
+   */
+  registerMedicationChecklistModal() {
+    const certos = [
+      'Paciente Certo',
+      'Medicação Certa',
+      'Dose Certa',
+      'Via Certa',
+      'Hora Certa',
+      'Registro Certo',
+      'Validade Certa',
+      'Resposta Certa',
+      'Forma Farmacêutica Certa'
+    ];
 
-    // Mostrar erro
-    showError(message) {
-        if (window.NOTIFICATION_MODULE) {
-            window.NOTIFICATION_MODULE.show(message, 'error');
-        } else {
-            alert(message);
-        }
-    }
-};
+    const content = `
+      <div class="space-y-3">
+        <div class="bg-gradient-to-r from-green-600 to-green-700 text-white p-4 rounded-xl">
+          <h4 class="font-bold text-sm mb-1">9 Certos da Medicação</h4>
+          <p class="text-xs opacity-90">Protocolo de segurança para administração de medicamentos</p>
+        </div>
 
-// Adicionar ao objeto global
-window.PDF_SYSTEM = PDF_SYSTEM;
+        <div class="space-y-2">
+          ${certos.map((certo, index) => `
+            <label class="flex items-center gap-3 p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-xl cursor-pointer hover:border-green-500 transition group">
+              <input type="checkbox" class="w-4 h-4 accent-green-600 transition"/>
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 group-hover:text-green-600">
+                ${index + 1}. ${certo}
+              </span>
+            </label>
+          `).join('')}
+        </div>
+
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800">
+          <p class="text-xs text-yellow-900 dark:text-yellow-200">
+            <strong>Importante:</strong> Todos os 9 certos devem ser verificados antes da administração do medicamento.
+          </p>
+        </div>
+      </div>
+    `;
+
+    this.modalManager.register('medication', {
+      title: '9 Certos da Medicação',
+      icon: 'fa-check-double',
+      content
+    });
+  }
+
+  /**
+   * Registrar modal de Metas de Segurança
+   */
+  registerSafetyGoalsModal() {
+    const goals = [
+      {
+        number: 1,
+        title: 'Identificar o paciente corretamente',
+        description: 'Usar dois identificadores (nome e data de nascimento ou prontuário)',
+        class: 'bg-blue-50 dark:bg-blue-900/20 border-blue-500'
+      },
+      {
+        number: 2,
+        title: 'Comunicação Efetiva na passagem de plantão',
+        description: 'Utilizar técnicas estruturadas como SBAR',
+        class: 'bg-blue-50 dark:bg-blue-900/20 border-blue-500'
+      },
+      {
+        number: 3,
+        title: 'Segurança de Medicamentos de Alta Vigilância',
+        description: 'Aplicar protocolos específicos para medicamentos de risco',
+        class: 'bg-orange-50 dark:bg-orange-900/20 border-orange-500'
+      },
+      {
+        number: 6,
+        title: 'Reduzir risco de quedas do paciente',
+        description: 'Implementar medidas preventivas e de proteção',
+        class: 'bg-blue-50 dark:bg-blue-900/20 border-blue-500'
+      }
+    ];
+
+    const content = `
+      <div class="space-y-3">
+        <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-xl">
+          <h4 class="font-bold text-sm mb-1">Metas Internacionais de Segurança</h4>
+          <p class="text-xs opacity-90">Protocolo da Organização Mundial da Saúde (OMS)</p>
+        </div>
+
+        <div class="space-y-2">
+          ${goals.map(goal => `
+            <div class="border-l-4 ${goal.class} p-3 rounded-lg">
+              <h5 class="font-bold text-sm text-slate-900 dark:text-slate-100 mb-1">
+                Meta ${goal.number}: ${goal.title}
+              </h5>
+              <p class="text-xs text-slate-600 dark:text-slate-400">${goal.description}</p>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg border border-green-200 dark:border-green-800">
+          <p class="text-xs text-green-900 dark:text-green-200">
+            <strong>Objetivo:</strong> Melhorar a segurança do paciente através de práticas padronizadas e verificáveis.
+          </p>
+        </div>
+      </div>
+    `;
+
+    this.modalManager.register('safety', {
+      title: 'Metas Internacionais de Segurança',
+      icon: 'fa-star',
+      content
+    });
+  }
+
+  /**
+   * Registrar modal de Metas Internacionais Completas
+   */
+  registerInternationalGoalsModal() {
+    const allGoals = [
+      { number: 1, title: 'Identificar o paciente corretamente' },
+      { number: 2, title: 'Comunicação Efetiva na passagem de plantão' },
+      { number: 3, title: 'Segurança de Medicamentos de Alta Vigilância' },
+      { number: 4, title: 'Assegurar cirurgias no local, procedimento e paciente corretos' },
+      { number: 5, title: 'Reduzir o risco de infecções associadas aos cuidados de saúde' },
+      { number: 6, title: 'Reduzir risco de quedas do paciente' }
+    ];
+
+    const content = `
+      <div class="space-y-3">
+        <div class="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-4 rounded-xl">
+          <h4 class="font-bold text-sm mb-1">6 Metas Internacionais de Segurança</h4>
+          <p class="text-xs opacity-90">Organização Mundial da Saúde - Programa de Segurança do Paciente</p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-2">
+          ${allGoals.map(goal => `
+            <div class="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700">
+              <span class="flex-shrink-0 w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                ${goal.number}
+              </span>
+              <span class="text-xs font-bold text-slate-700 dark:text-slate-300">${goal.title}</span>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-3 rounded-lg border border-purple-200 dark:border-purple-800">
+          <p class="text-xs text-purple-900 dark:text-purple-200">
+            <strong>Implementação:</strong> Estas metas devem ser integradas em todos os protocolos de cuidado ao paciente.
+          </p>
+        </div>
+      </div>
+    `;
+
+    this.modalManager.register('international-goals', {
+      title: '6 Metas Internacionais de Segurança',
+      icon: 'fa-globe',
+      content
+    });
+  }
+
+  /**
+   * Buscar NANDA online
+   */
+  searchNANDAOnline(calculatorName = 'insulina') {
+    const query = encodeURIComponent(`NANDA diagnóstico enfermagem ${calculatorName} NIC NOC`);
+    window.open(`https://www.google.com/search?q=${query}`, '_blank', 'noopener,noreferrer');
+    this.notificationManager.info('Abrindo busca de diagnósticos NANDA...');
+    this.modalManager.close();
+  }
+
+  /**
+   * Mostrar modal NANDA
+   */
+  showNANDAModal() {
+    this.modalManager.show('nanda');
+  }
+
+  /**
+   * Mostrar modal dos 9 Certos
+   */
+  showMedicationChecklistModal() {
+    this.modalManager.show('medication');
+  }
+
+  /**
+   * Mostrar modal de Metas de Segurança
+   */
+  showSafetyGoalsModal() {
+    this.modalManager.show('safety');
+  }
+
+  /**
+   * Mostrar modal de Metas Internacionais
+   */
+  showInternationalGoalsModal() {
+    this.modalManager.show('international-goals');
+  }
+
+  /**
+   * Fechar modal
+   */
+  closeModal() {
+    this.modalManager.close();
+  }
+}
+
+// Instância global
+window.MODAL_REFERENCE_MANAGER = new ModalReferenceManager({
+  modalManager: window.MODAL_MANAGER,
+  notificationManager: window.NOTIFICATION_MANAGER
+});
+
+// Exportar
+window.ModalReferenceManager = ModalReferenceManager;
