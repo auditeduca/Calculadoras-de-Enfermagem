@@ -1,114 +1,70 @@
 /**
- * Diagnóstico de Integridade de Dados
+ * Diagnóstico de Integridade de Dados - Versão Corrigida
+ * Foco: Validar por que o SYSTEM.data está vazio e corrigir caminhos 404.
  */
 async function runAdvancedDiagnostic() {
-    console.group("%c 🏥 DIAGNÓSTICO DE DADOS CLÍNICOS ", "background: #0284c7; color: white; font-size: 14px; padding: 4px; border-radius: 4px;");
+    console.group("%c 🏥 RELATÓRIO DE SAÚDE DOS DADOS ", "background: #1A3E74; color: white; font-size: 14px; padding: 4px; border-radius: 4px;");
 
-    // Mapeamento dos recursos esperados no SYSTEM.data
+    const baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/data/';
+    
+    // Caminhos corrigidos baseados na estrutura do seu repositório
     const resources = {
-        content: { 
-            url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/data/content-calculators.json',
-            expectedType: 'object'
-        },
-        ipsg: { 
-            url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/data/IPSG.json',
-            expectedType: 'object'
-        },
-        rightForm: { 
-            url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/data/Right_Form.json',
-            expectedType: 'object'
-        },
-        shared: { 
-            url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/data/shared-components.json',
-            expectedType: 'object'
-        },
-        calculators: { 
-            url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/data/nursing_calculators.json',
-            expectedType: 'object'
-        },
-        nanda: { 
-            url: 'nanda.json', 
-            expectedType: 'array'
-        },
-        modal: { 
-            url: 'modal-content.json', 
-            expectedType: 'object'
-        }
+        content: { url: baseUrl + 'content-calculators.json' },
+        ipsg: { url: baseUrl + 'IPSG.json' },
+        rightForm: { url: baseUrl + 'Right_Form.json' },
+        shared: { url: baseUrl + 'shared-components.json' },
+        calculators: { url: baseUrl + 'nursing_calculators.json' },
+        nanda: { url: baseUrl + 'nanda.json' },
+        modal: { url: baseUrl + 'modal-content.json' }
     };
 
     let report = [];
     let globalSuccess = true;
 
-    const analyzeContent = (data) => {
-        if (!data) return { valid: false, summary: "Nulo/Undefined" };
-        if (Array.isArray(data)) {
-            return {
-                valid: data.length > 0,
-                type: 'Array',
-                count: data.length,
-                summary: `Lista com ${data.length} itens`
-            };
-        }
-        if (typeof data === 'object') {
-            const keys = Object.keys(data);
-            return {
-                valid: keys.length > 0,
-                type: 'Object',
-                count: keys.length,
-                summary: `Objeto (${keys.length} chaves)`
-            };
-        }
-        return { valid: false, summary: "Formato desconhecido" };
+    const analyze = (data) => {
+        if (!data) return { valid: false, text: "Vazio/Nulo" };
+        const size = Array.isArray(data) ? data.length : Object.keys(data).length;
+        return { valid: size > 0, text: `${Array.isArray(data) ? 'Array' : 'Objeto'} (${size})` };
     };
 
     for (const [key, config] of Object.entries(resources)) {
         let status = {
-            Recurso: key,
-            HTTP: "⏳",
-            "JSON Válido": "❌",
-            "Ingestão (SYSTEM)": "❌",
-            "Resumo Conteúdo": "-",
-            Tempo: "0ms"
+            Arquivo: key,
+            URL_Status: "⏳",
+            Conteudo_Remoto: "❌",
+            No_SYSTEM_Data: "❌",
+            Detalhes: "-"
         };
 
-        const startTime = performance.now();
-
         try {
-            const response = await fetch(config.url);
-            const endTime = performance.now();
-            status.Tempo = (endTime - startTime).toFixed(2) + "ms";
+            const res = await fetch(config.url);
+            if (res.ok) {
+                status.URL_Status = "✅ 200 OK";
+                const json = await res.json();
+                const remoteInfo = analyze(json);
+                status.Conteudo_Remoto = remoteInfo.valid ? "✅ " + remoteInfo.text : "⚠️ Vazio";
 
-            if (response.ok) {
-                status.HTTP = "✅ 200 OK";
-                const jsonData = await response.json();
-                const analysis = analyzeContent(jsonData);
-                
-                if (analysis.valid) {
-                    status["JSON Válido"] = "✅ Sim";
-                    status["Resumo Conteúdo"] = analysis.summary;
-                } else {
-                    status["JSON Válido"] = "⚠️ Vazio";
-                    globalSuccess = false;
-                }
-
-                if (window.SYSTEM && window.SYSTEM.data && window.SYSTEM.data[key]) {
-                    const memoryAnalysis = analyzeContent(window.SYSTEM.data[key]);
-                    if (memoryAnalysis.valid) {
-                        status["Ingestão (SYSTEM)"] = "✅ Carregado";
+                // Verificação de Ingestão (Onde o problema foi detectado no seu console)
+                if (window.SYSTEM && window.SYSTEM.data) {
+                    const localData = window.SYSTEM.data[key];
+                    if (localData) {
+                        const localInfo = analyze(localData);
+                        status.No_SYSTEM_Data = localInfo.valid ? "✅ " + localInfo.text : "⚠️ Vazio";
                     } else {
-                        status["Ingestão (SYSTEM)"] = "⚠️ Vazio na Memória";
+                        status.No_SYSTEM_Data = "❌ Não Injetado";
                         globalSuccess = false;
                     }
                 } else {
-                    status["Ingestão (SYSTEM)"] = "❌ Não encontrado";
+                    status.No_SYSTEM_Data = "❌ SYSTEM não existe";
+                    globalSuccess = false;
                 }
             } else {
-                status.HTTP = `❌ ${response.status}`;
+                status.URL_Status = `❌ ${res.status} (Erro)`;
                 globalSuccess = false;
             }
-        } catch (error) {
-            status.HTTP = "❌ Erro Rede";
-            status["Resumo Conteúdo"] = error.message;
+        } catch (e) {
+            status.URL_Status = "❌ Erro Conexão";
+            status.Detalhes = e.message;
             globalSuccess = false;
         }
         report.push(status);
@@ -116,17 +72,20 @@ async function runAdvancedDiagnostic() {
 
     console.table(report);
 
-    if (globalSuccess) {
-        console.log("%c SUCESSO TOTAL: Dados verificados. ", "background: #22c55e; color: white; font-weight: bold; padding: 4px;");
-        if (window.SYSTEM && window.SYSTEM.notify) window.SYSTEM.notify("Diagnóstico: OK", "success");
-    } else {
-        console.log("%c FALHA NO DIAGNÓSTICO. ", "background: #ef4444; color: white; font-weight: bold; padding: 4px;");
-        if (window.SYSTEM && window.SYSTEM.notify) window.SYSTEM.notify("Erro nos dados JSON", "error");
+    // Diagnóstico Educativo
+    if (!globalSuccess) {
+        console.warn("%c DICA DE CORREÇÃO: ", "font-weight: bold; color: orange;");
+        console.log("1. Se 'Conteudo_Remoto' está ✅ mas 'No_SYSTEM_Data' está ❌:");
+        console.log("   -> O arquivo existe na web, mas o seu código init() não está salvando o resultado no objeto SYSTEM.data.");
+        console.log("2. Se 'URL_Status' está 404:");
+        console.log("   -> O arquivo não existe no caminho especificado (verifique se nanda.json está na pasta /data/).");
     }
+
     console.groupEnd();
 }
 
-// Execução: Aguarda o evento de load e dá um tempo para o SYSTEM.init terminar
+// Inicia o processo
 window.addEventListener('load', () => {
-    setTimeout(runAdvancedDiagnostic, 2000);
+    // Aguarda 3 segundos para dar tempo do SYSTEM.init() preencher os dados
+    setTimeout(runAdvancedDiagnostic, 3000);
 });
