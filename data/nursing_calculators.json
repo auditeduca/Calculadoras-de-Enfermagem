@@ -1,258 +1,363 @@
 {
-  "version": "2.0.0",
-  "lastUpdated": "2025-01-30",
-  "calculators": {
-    "insulina": {
-      "id": "insulina",
-      "title": "Cálculo de Insulina",
-      "description": "Calculadora profissional para aspiração de insulina em seringas de 100UI e 300UI com segurança do paciente e auditoria de cálculo clínica.",
-      "icon": "fa-syringe",
-      "category": "Farmacologia",
-      "tags": ["insulina", "farmacologia", "segurança-do-paciente", "auditoria", "cálculo-clínico"],
-      "keywords": ["insulina", "diabetes", "seringa", "UI", "mL", "concentração"],
-      "inputs": [
+  "config": {
+    "nome": "Calculadora de Insulina",
+    "versao": "1.0.0",
+    "tipo": "medicamentos",
+    "categoria": "Calculadoras Clínicas",
+    "referencias": {
+      "shared_components": "shared-components.json",
+      "modais": "modal-content.json",
+      "layout": "layout-config.json"
+    }
+  },
+  
+  "calculadora": {
+    "id": "insulina",
+    "titulo": "Cálculo de Insulina",
+    "descricao": "Ferramenta profissional para cálculo seguro de insulina em seringas de 100UI, 200UI e 300UI.",
+    "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/insulina.html",
+    "breadcrumbs": {
+      "desktop": ["Início", "Ferramentas", "Calculadoras Clínicas", "Cálculo de Insulina"],
+      "mobile": ["Início", "Ferramentas", "Insulina"]
+    },
+    "badge": "Calculadoras Clínicas",
+    "versao": "1.0.0",
+    "data_atualizacao": "2024-01-31",
+    "tags": ["#insulina", "#diabetes", "#enfermagem", "#cálculodemedicamentos", "#segurançadopaciente"]
+  },
+  
+  "sidebar_esquerdo": [
+    {
+      "id": "conteudo",
+      "titulo": "NAVEGAÇÃO",
+      "icone": "fa-compass",
+      "tipo": "abas",
+      "ordem": 1,
+      "items": [
+        {
+          "id": "tab-calc",
+          "label": "Calculadora",
+          "tab": "calc",
+          "icone": "fa-calculator",
+          "ativo": true
+        },
+        {
+          "id": "tab-sobre",
+          "label": "Contexto Clínico",
+          "tab": "sobre",
+          "icone": "fa-notes-medical"
+        },
+        {
+          "id": "tab-ajuda",
+          "label": "Instruções de Uso",
+          "tab": "ajuda",
+          "icone": "fa-question-circle"
+        },
+        {
+          "id": "tab-ref",
+          "label": "Referências",
+          "tab": "referencia",
+          "icone": "fa-book-open"
+        }
+      ]
+    },
+    {
+      "id": "diagnostico",
+      "titulo": "DIAGNÓSTICO (NANDA)",
+      "icone": "fa-user-nurse",
+      "tipo": "botao_acao",
+      "ordem": 2,
+      "acao": "openModal",
+      "modal_target": "nanda",
+      "referencia_guia": "nanda",
+      "descricao": "Cruzar dados calculados com domínios NANDA-I",
+      "tooltip": "Clique aqui após realizar o cálculo para ver diagnósticos de enfermagem sugeridos (ex: Risco de Sangramento, Padrão Respiratório Ineficaz).",
+      "estado_dependente": "resultado_calculado"
+    },
+    {
+      "id": "9certos",
+      "titulo": "9 CERTOS (MEDICAÇÃO)",
+      "icone": "fa-check-double",
+      "tipo": "botao_modal",
+      "ordem": 3,
+      "acao": "openModal",
+      "modal_target": "9certos",
+      "referencia_guia": "9certos",
+      "descricao": "Protocolo de verificação de segurança na administração."
+    },
+    {
+      "id": "metas",
+      "titulo": "METAS INTERNACIONAIS",
+      "icone": "fa-globe-americas",
+      "tipo": "botao_modal",
+      "ordem": 4,
+      "acao": "openModal",
+      "modal_target": "metas",
+      "referencia_guia": "metas",
+      "descricao": "Metas Internacionais de Segurança do Paciente."
+    }
+  ],
+
+  "campos_calculadora": [
+    {
+      "id": "secao_identificacao",
+      "secao": "Identificação do Paciente (Opcional)",
+      "icone": "fa-user",
+      "campos": [
         {
           "id": "patient_name",
           "label": "Nome do Paciente",
-          "type": "text",
-          "required": false,
-          "placeholder": "Opcional - para auditoria",
-          "help": "Informação adicional para registro"
+          "tipo": "text",
+          "placeholder": "Nome completo (opcional)",
+          "tooltip": "Identificação do paciente para fins de registro. Campo opcional.",
+          "obrigatorio": false,
+          "min_length": 3,
+          "max_length": 100
         },
         {
           "id": "patient_birthdate",
           "label": "Data de Nascimento",
-          "type": "date",
-          "required": false,
-          "help": "Para cálculo de idade e auditoria"
-        },
+          "tipo": "date",
+          "tooltip": "Para cálculo de idade e verificação de faixa etária. Campo opcional.",
+          "obrigatorio": false,
+          "min_date": "1900-01-01",
+          "max_date": "now"
+        }
+      ]
+    },
+    {
+      "id": "secao_dosagem",
+      "secao": "Parâmetros de Dosagem",
+      "icone": "fa-syringe",
+      "campos": [
         {
           "id": "prescricao_medica",
           "label": "Prescrição Médica (UI)",
-          "type": "number",
-          "required": true,
-          "placeholder": "Ex: 10",
-          "min": 0.5,
-          "max": 500,
+          "tipo": "number",
+          "placeholder": "Ex: 15",
+          "min": 0,
+          "max": 1000,
           "step": 0.5,
-          "tooltip": "Unidades Internacionais prescritas pelo médico",
-          "help": "Valor em Unidades Internacionais (UI)"
+          "tooltip": "Quantidade de insulina prescrita pelo médico em UI.",
+          "abr": "UI",
+          "abr_title": "Unidades Internacionais",
+          "obrigatorio": true,
+          "validacao": "positivo"
         },
         {
           "id": "concentracao_insulina",
           "label": "Concentração da Insulina",
-          "type": "select",
-          "required": true,
-          "options": [
-            { "value": "100", "label": "100 UI/mL (Seringa de 100)" },
-            { "value": "300", "label": "300 UI/mL (Seringa de 300)" }
+          "tipo": "select",
+          "tooltip": "Concentração da insulina. Padrão: 100 UI/mL. Para insulinas U300, use 300.",
+          "abr": "mL",
+          "abr_title": "Mililitros",
+          "opcoes": [
+            { "value": "100", "label": "100 UI/mL (Insulina Regular U100)", "default": true },
+            { "value": "300", "label": "300 UI/mL (Insulina Degludec U300)" },
+            { "value": "200", "label": "200 UI/mL (Insulina Glargine U200)" }
           ],
-          "tooltip": "Concentração disponível no frasco",
-          "help": "Selecione conforme o frasco disponível"
+          "obrigatorio": true
         }
-      ],
-      "content": [
-        {
-          "title": "Fórmula de Cálculo",
-          "description": "Volume (mL) = Prescrição (UI) ÷ Concentração (UI/mL)"
-        },
-        {
-          "title": "Segurança do Paciente",
-          "description": "Sempre verificar os 9 certos da medicação antes da administração"
-        },
-        {
-          "title": "Tipos de Insulina",
-          "description": "Rápida, NPH, Lenta, Ultra-rápida e Análogos"
-        },
-        {
-          "title": "Vias de Administração",
-          "description": "Subcutânea (SC) é a via mais comum para insulina"
-        }
-      ],
-      "references": {
-        "nanda": ["Conhecimento deficiente", "Risco de glicemia instável"],
-        "nic": ["Administração de medicamentos", "Educação do paciente"],
-        "noc": ["Conhecimento: medicamentos", "Controle de glicemia"]
-      },
-      "formula": "Volume (mL) = Prescrição (UI) ÷ Concentração (UI/mL)",
-      "unit": "mL"
-    },
-    "heparina": {
-      "id": "heparina",
-      "title": "Cálculo de Heparina",
-      "description": "Calculadora para cálculo de heparina com protocolos de anticoagulação e segurança.",
-      "icon": "fa-flask",
-      "category": "Farmacologia",
-      "tags": ["heparina", "anticoagulação", "farmacologia", "segurança-do-paciente"],
-      "keywords": ["heparina", "anticoagulante", "UI", "mL", "trombose"],
-      "inputs": [
-        {
-          "id": "prescricao_heparina",
-          "label": "Prescrição Médica (UI)",
-          "type": "number",
-          "required": true,
-          "placeholder": "Ex: 5000",
-          "min": 1000,
-          "max": 50000,
-          "step": 100,
-          "tooltip": "Unidades Internacionais prescritas",
-          "help": "Valor em Unidades Internacionais (UI)"
-        },
-        {
-          "id": "concentracao_heparina",
-          "label": "Concentração da Heparina",
-          "type": "select",
-          "required": true,
-          "options": [
-            { "value": "5000", "label": "5.000 UI/mL" },
-            { "value": "10000", "label": "10.000 UI/mL" },
-            { "value": "25000", "label": "25.000 UI/mL" }
-          ],
-          "help": "Concentração do frasco disponível"
-        }
-      ],
-      "content": [
-        {
-          "title": "Indicações",
-          "description": "Prevenção e tratamento de trombose venosa profunda, embolia pulmonar e eventos tromboembólicos"
-        },
-        {
-          "title": "Monitoramento",
-          "description": "Verificar TTPa (Tempo de Tromboplastina Parcial Ativado) regularmente"
-        },
-        {
-          "title": "Antídoto",
-          "description": "Sulfato de protamina é o antídoto para superdosagem de heparina"
-        }
-      ],
-      "references": {
-        "nanda": ["Risco de sangramento", "Conhecimento deficiente"],
-        "nic": ["Administração de anticoagulantes", "Monitoramento de coagulação"],
-        "noc": ["Coagulação sanguínea", "Conhecimento: medicamentos"]
-      },
-      "formula": "Volume (mL) = Prescrição (UI) ÷ Concentração (UI/mL)",
-      "unit": "mL"
-    },
-    "medicamentos": {
-      "id": "medicamentos",
-      "title": "Diluição de Medicamentos",
-      "description": "Calculadora para diluição de medicamentos com diferentes concentrações.",
-      "icon": "fa-droplet",
-      "category": "Farmacologia",
-      "tags": ["medicamentos", "diluição", "farmacologia", "cálculo-clínico"],
-      "keywords": ["diluição", "medicamento", "concentração", "dose"],
-      "inputs": [
-        {
-          "id": "dose_prescrita",
-          "label": "Dose Prescrita",
-          "type": "number",
-          "required": true,
-          "placeholder": "Ex: 500",
-          "min": 0.1,
-          "step": 0.1,
-          "help": "Quantidade prescrita pelo médico"
-        },
-        {
-          "id": "concentracao_disponivel",
-          "label": "Concentração Disponível",
-          "type": "number",
-          "required": true,
-          "placeholder": "Ex: 250",
-          "min": 0.1,
-          "step": 0.1,
-          "help": "Concentração do medicamento disponível"
-        },
-        {
-          "id": "volume_disponivel",
-          "label": "Volume Disponível (mL)",
-          "type": "number",
-          "required": true,
-          "placeholder": "Ex: 1",
-          "min": 0.1,
-          "step": 0.1,
-          "help": "Volume do frasco ou ampola"
-        }
-      ],
-      "content": [
-        {
-          "title": "Fórmula",
-          "description": "Volume a aspirar = (Dose prescrita × Volume disponível) ÷ Concentração disponível"
-        },
-        {
-          "title": "Técnica de Diluição",
-          "description": "Seguir protocolo específico de cada medicamento"
-        }
-      ],
-      "references": {
-        "nanda": ["Conhecimento deficiente"],
-        "nic": ["Administração de medicamentos"],
-        "noc": ["Conhecimento: medicamentos"]
-      },
-      "formula": "Volume = (Dose × Volume disponível) ÷ Concentração",
-      "unit": "mL"
-    },
-    "gotejamento": {
-      "id": "gotejamento",
-      "title": "Cálculo de Gotejamento",
-      "description": "Calculadora para cálculo de velocidade de infusão e gotejamento de soros.",
-      "icon": "fa-water",
-      "category": "Soros e Infusões",
-      "tags": ["gotejamento", "infusão", "soro", "velocidade"],
-      "keywords": ["gotejamento", "soro", "velocidade", "infusão", "gotas"],
-      "inputs": [
-        {
-          "id": "volume_infusao",
-          "label": "Volume de Infusão (mL)",
-          "type": "number",
-          "required": true,
-          "placeholder": "Ex: 500",
-          "min": 10,
-          "max": 5000,
-          "step": 10,
-          "help": "Volume total a ser infundido"
-        },
-        {
-          "id": "tempo_infusao",
-          "label": "Tempo de Infusão (minutos)",
-          "type": "number",
-          "required": true,
-          "placeholder": "Ex: 60",
-          "min": 1,
-          "max": 1440,
-          "step": 1,
-          "help": "Tempo total em minutos"
-        },
-        {
-          "id": "fator_gotejamento",
-          "label": "Fator de Gotejamento",
-          "type": "select",
-          "required": true,
-          "options": [
-            { "value": "10", "label": "10 gotas/mL (Macrogotas)" },
-            { "value": "15", "label": "15 gotas/mL (Macrogotas)" },
-            { "value": "20", "label": "20 gotas/mL (Macrogotas)" },
-            { "value": "60", "label": "60 gotas/mL (Microgotas)" }
-          ],
-          "help": "Depende do tipo de equipo"
-        }
-      ],
-      "content": [
-        {
-          "title": "Fórmula",
-          "description": "Gotejamento = (Volume × Fator) ÷ Tempo"
-        },
-        {
-          "title": "Tipos de Equipo",
-          "description": "Macrogotas (10, 15, 20) e Microgotas (60)"
-        }
-      ],
-      "references": {
-        "nanda": ["Risco de desequilíbrio de líquidos"],
-        "nic": ["Administração de fluidos"],
-        "noc": ["Equilíbrio de líquidos"]
-      },
-      "formula": "Gotejamento (gotas/min) = (Volume × Fator) ÷ Tempo",
-      "unit": "gotas/min"
+      ]
     }
+  ],
+
+  "botoes_calculo": [
+    {
+      "id": "calcular",
+      "label": "Calcular",
+      "icone": "fa-calculator",
+      "acao": "calcularInsulina()",
+      "cor": "bg-blue-600 hover:bg-blue-700",
+      "posicao": "esquerda"
+    },
+    {
+      "id": "limpar",
+      "label": "Limpar",
+      "icone": "fa-eraser",
+      "acao": "limparCalculo()",
+      "cor": "bg-gray-600 hover:bg-gray-700",
+      "posicao": "direita"
+    }
+  ],
+
+  "secoes_calculadora": {
+    "auditoria_calculo": {
+      "id": "auditoria-calculo",
+      "titulo": "Auditoria do Cálculo",
+      "icone": "fa-clipboard-check",
+      "campos": [
+        {
+          "id": "auditoria_prescricao",
+          "label": "Prescrição Médica",
+          "tipo": "texto_auditoria"
+        },
+        {
+          "id": "auditoria_concentracao",
+          "label": "Concentração da Insulina",
+          "tipo": "texto_auditoria"
+        },
+        {
+          "id": "auditoria_formula",
+          "label": "Fórmula Aplicada",
+          "tipo": "texto_auditoria"
+        },
+        {
+          "id": "auditoria_resultado",
+          "label": "Resultado do Cálculo",
+          "tipo": "texto_auditoria"
+        },
+        {
+          "id": "auditoria_data",
+          "label": "Data e Hora do Cálculo",
+          "tipo": "texto_auditoria"
+        }
+      ]
+    },
+    
+    "checklist_seguranca": {
+      "id": "checklist-seguranca",
+      "titulo": "Check-list de Segurança do Paciente",
+      "icone": "fa-shield-alt",
+      "referencias": {
+        "9certos": "@shared:checklists.9certos_checklist",
+        "metas": "@shared:checklists.metas_checklist"
+      },
+      "subsecoes": [
+        {
+          "id": "subsecao_9certos",
+          "titulo": "9 Certos da Medicação",
+          "descricao": "Protocolo de verificação de segurança na administração de medicamentos",
+          "items_preview": [
+            "Paciente Certo",
+            "Medicamento Certo",
+            "Via Certa"
+          ],
+          "botao_ver_mais": {
+            "texto": "Ver todos os 9 certos",
+            "acao": "openModal",
+            "modal_target": "9certos"
+          }
+        },
+        {
+          "id": "subsecao_metas",
+          "titulo": "Metas Internacionais de Segurança",
+          "descricao": "Metas estabelecidas para prevenção de danos na assistência à saúde",
+          "items_preview": [
+            "Identificação Correta",
+            "Comunicação Efetiva",
+            "Medicamentos de Alta Vigilância"
+          ],
+          "botao_ver_mais": {
+            "texto": "Ver todas as metas",
+            "acao": "openModal",
+            "modal_target": "metas"
+          }
+        }
+      ]
+    }
+  },
+
+  "resultado_config": {
+    "botoes_principais": [
+      {
+        "id": "gerar-pdf",
+        "label": "Gerar PDF",
+        "icone": "fa-file-pdf",
+        "acao": "gerarPDF()",
+        "cor": "bg-red-600 hover:bg-red-700"
+      },
+      {
+        "id": "copiar-resultado",
+        "label": "Copiar Resultado",
+        "icone": "fa-copy",
+        "acao": "copiarResultado()",
+        "cor": "bg-blue-600 hover:bg-blue-700"
+      }
+    ],
+    "botao_diagnostico": {
+      "id": "buscar-diagnostico",
+      "label": "Buscar Diagnóstico de Enfermagem",
+      "icone": "fa-stethoscope",
+      "acao": "openModal('nanda')",
+      "cor": "bg-purple-600 hover:bg-purple-700",
+      "inicialmente_oculto": true
+    }
+  },
+
+  "abas": [
+    {
+      "id": "calc",
+      "titulo": "Calculadora",
+      "icone": "fa-calculator",
+      "conteudo": "dynamic",
+      "padrao": true
+    },
+    {
+      "id": "sobre",
+      "titulo": "Contexto Clínico",
+      "icone": "fa-notes-medical",
+      "conteudo": "Ferramenta profissional desenvolvida para cálculo seguro de insulina em seringas de 100UI, 200UI e 300UI. Baseada em protocolos clínicos internacionais de segurança do paciente.",
+      "version": "1.0.0"
+    },
+    {
+      "id": "ajuda",
+      "titulo": "Instruções de Uso",
+      "icone": "fa-question-circle",
+      "conteudo": "<ol class='list-decimal list-inside space-y-2 text-slate-600 dark:text-slate-400'><li>Preencha a prescrição médica em UI</li><li>Selecione a concentração da insulina</li><li>Clique em 'Calcular'</li><li>Verifique o resultado</li><li>Gere o PDF para registro</li></ol>",
+      "video_tutorial": "#"
+    },
+    {
+      "id": "referencia",
+      "titulo": "Referências",
+      "icone": "fa-book-open",
+      "conteudo": "<ul class='list-disc list-inside space-y-2 text-slate-600 dark:text-slate-400'><li>COFEN - Conselho Federal de Enfermagem</li><li>Protocolo de Segurança do Paciente</li><li>Boas Práticas em Enfermagem</li></ul>",
+      "referencias": [
+        "Protocolo de Segurança na Prescrição, Uso e Administração de Medicamentos",
+        "Manual de Cálculo de Medicamentos do COREN-SP"
+      ]
+    }
+  ],
+
+  "secoes_independentes": [
+    {
+      "tipo": "referencia",
+      "referencia": "@shared:secoes_independentes.autor"
+    },
+    {
+      "tipo": "referencia",
+      "referencia": "@shared:secoes_independentes.tags"
+    }
+  ],
+
+  "sidebar_direito": [
+    {
+      "tipo": "referencia",
+      "referencia": "@shared:sidebar_direito.cta-simulados"
+    },
+    {
+      "tipo": "referencia",
+      "referencia": "@shared:sidebar_direito.compartilhamento"
+    },
+    {
+      "tipo": "referencia",
+      "referencia": "@shared:sidebar_direito.ferramentas_relacionadas"
+    }
+  ],
+
+  "configuracoes": {
+    "unidade_padrao": "UI",
+    "concentracao_padrao": "100",
+    "validacao_estrita": true,
+    "historico_local": true,
+    "exportar_pdf": true,
+    "exportar_csv": false,
+    "modo_escuro": false
+  },
+
+  "formula_calculo": {
+    "descricao": "Volume a administrar (mL) = Prescrição (UI) ÷ Concentração (UI/mL)",
+    "exemplo": "Para 15 UI de insulina U100: 15 ÷ 100 = 0.15 mL",
+    "unidades_suportadas": ["UI", "mL"]
   }
 }
