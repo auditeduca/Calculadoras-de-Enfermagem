@@ -4,44 +4,28 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-
-  <!-- SEO & MONETIZAÇÃO -->
   <title id="page-title">Calculadoras de Enfermagem Profissional | Segurança e Precisão</title>
-  <meta name="description" content="Sistema modular de calculadoras profissionais para enfermagem com protocolos de segurança, auditoria clínica e conformidade com metas internacionais.">
-  <meta name="keywords" content="calculadora enfermagem, cálculo medicação, insulina, heparina, gotejamento, segurança paciente">
-  <meta name="author" content="Calculadoras de Enfermagem">
+  <meta name="description" content="Sistema modular de calculadoras profissionais para enfermagem.">
   <meta name="robots" content="index, follow">
   
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Calculadoras de Enfermagem Profissional">
-  <meta property="og:description" content="Sistema modular com protocolos integrados para enfermagem.">
-  
-  <!-- Favicon Relativo -->
   <link rel="icon" href="./assets/images/author-info.webp" type="image/webp"/>
-
-  <!-- Fontes e Ícones -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     
-  <!-- Tailwind CSS v3.4 (Estável) -->
   <script src="https://cdn.tailwindcss.com"></script>
     
-  <!-- Estilos Modulares (Caminhos Relativos) -->
   <link rel="stylesheet" href="./assets/css/variables-v4.css"/>
   <link rel="stylesheet" href="./assets/css/header-v4.css"/>
   <link rel="stylesheet" href="./assets/css/footer-v4.css"/>
   <link rel="stylesheet" href="./assets/css/accessibility-v4.css"/>
   <link rel="stylesheet" href="./assets/css/styles.css"/>
 
-  <!-- Bibliotecas JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
-    // Configuração Tailwind
     tailwind.config = {
       darkMode: 'class',
       theme: {
@@ -61,7 +45,6 @@
       }
     }
 
-    // CONFIGURAÇÃO GLOBAL DO SISTEMA
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const basePath = isLocal ? '.' : '.'; 
 
@@ -70,7 +53,6 @@
         jsonPath: `${basePath}/data/nursing_calculators.json`
     };
 
-    // INICIALIZAÇÃO DO EVENT BUS
     window.EventBus = window.EventBus || { 
         l: {},
         on: function(e,c){ (this.l[e]=this.l[e]||[]).push(c) }, 
@@ -78,12 +60,11 @@
         off: function(e,c){ if(this.l[e]) this.l[e]=this.l[e].filter(h=>h!==c) } 
     };
     
-    // Fallback Modal Manager
     window.MODAL_MANAGER = window.MODAL_MANAGER || { 
         register: function(){ console.log('Modal registered (fallback)'); }, 
         show: function(title, content){ 
             console.warn('Usando fallback do Modal Manager.');
-            alert('Sistema de janelas carregando... ' + title);
+            alert('Aguarde... Sistema carregando: ' + title);
         },
         close: function(){ console.log('Modal closed (fallback)'); } 
     };
@@ -95,7 +76,6 @@
     @layer base {
       body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300; }
       h1 { @apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400; }
-      h2, h3 { @apply font-inter tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
     }
     @layer components {
       .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden; }
@@ -114,7 +94,7 @@
 
   <!-- CONTAINERS -->
   <div id="accessibility-container"></div>
-  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
+  <!-- Notification container gerado via JS para evitar sobreposição -->
   <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50 shadow-sm"></div>
 
   <main id="main-content" class="flex-grow max-w-[1400px] mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
@@ -132,8 +112,8 @@
     <!-- GRID PRINCIPAL -->
     <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
         
-      <!-- SIDEBAR ESQUERDA -->
-      <aside class="hidden md:flex md:col-span-1 lg:col-span-1 flex-col gap-4 sticky top-28">
+      <!-- SIDEBAR ESQUERDA (Visível a partir de Tablet - md) -->
+      <aside class="hidden md:flex md:col-span-2 lg:col-span-1 flex-col gap-4 sticky top-28 z-40">
          <button onclick="window.MODAL_REFERENCE_MANAGER?.showNANDAModal()" class="vertical-tab group" title="Diagnósticos NANDA">
             <i class="fa-solid fa-stethoscope text-xl mb-1 text-nurse-secondary group-hover:text-nurse-primary dark:text-cyan-400 dark:group-hover:text-white transition-colors"></i>
             <span class="text-[9px] font-bold uppercase tracking-wider text-center leading-tight">NANDA</span>
@@ -149,7 +129,7 @@
       </aside>
 
       <!-- CONTEÚDO CENTRAL -->
-      <div class="md:col-span-11 lg:col-span-8 w-full">
+      <div class="md:col-span-10 lg:col-span-8 w-full">
         <!-- FERRAMENTA -->
         <section class="card-base p-6 md:p-8 mb-6">
           <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-200 dark:border-slate-700">
@@ -160,17 +140,15 @@
             </div>
           </div>
 
-          <!-- NAVEGAÇÃO POR ABAS (NOVO) -->
-          <div class="flex border-b border-slate-200 dark:border-slate-700 mb-6">
+          <!-- ABAS -->
+          <div class="flex border-b border-slate-200 dark:border-slate-700 mb-6 overflow-x-auto">
               <button class="tab-btn active" data-tab="calculator">Calculadora</button>
               <button class="tab-btn" data-tab="about">Sobre</button>
               <button class="tab-btn" data-tab="instructions">Instruções</button>
               <button class="tab-btn" data-tab="references">Referências</button>
           </div>
 
-          <!-- CONTEÚDO DAS ABAS -->
           <div id="tab-contents">
-              <!-- Aba Calculadora -->
               <div id="tab-calculator" class="tab-pane animate-fade-in">
                   <div id="calculator-inputs" class="space-y-4 mb-6">
                     <div class="flex items-center justify-center py-12">
@@ -188,24 +166,13 @@
                   </div>
               </div>
 
-              <!-- Aba Sobre -->
-              <div id="tab-about" class="tab-pane hidden animate-fade-in text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  <p>Selecione uma calculadora para ver os detalhes.</p>
-              </div>
-
-              <!-- Aba Instruções -->
-              <div id="tab-instructions" class="tab-pane hidden animate-fade-in text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  <p>Instruções de uso aparecerão aqui.</p>
-              </div>
-
-              <!-- Aba Referências -->
-              <div id="tab-references" class="tab-pane hidden animate-fade-in text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  <p>Referências bibliográficas e protocolos.</p>
-              </div>
+              <div id="tab-about" class="tab-pane hidden animate-fade-in text-sm text-slate-600 dark:text-slate-300 leading-relaxed"><p>Selecione uma calculadora.</p></div>
+              <div id="tab-instructions" class="tab-pane hidden animate-fade-in text-sm text-slate-600 dark:text-slate-300 leading-relaxed"><p>Instruções.</p></div>
+              <div id="tab-references" class="tab-pane hidden animate-fade-in text-sm text-slate-600 dark:text-slate-300 leading-relaxed"><p>Referências.</p></div>
           </div>
         </section>
 
-        <!-- ADSENSE 2: FIXO E VISÍVEL -->
+        <!-- ADSENSE 2 -->
         <div class="ad-placeholder">Publicidade (Meio)</div>
 
         <!-- RESULTADOS -->
@@ -214,45 +181,34 @@
 
       <!-- SIDEBAR DIREITA -->
       <aside class="md:col-span-12 lg:col-span-3 space-y-6">
-        <!-- CTA Simulados -->
         <div class="card-base relative overflow-hidden group border-none ring-4 ring-nurse-primary/5 dark:ring-cyan-500/20">
             <div class="absolute inset-0 bg-gradient-to-br from-nurse-primary to-blue-600 opacity-95 group-hover:scale-105 transition-transform duration-700"></div>
-            <div class="absolute top-0 right-0 p-4 opacity-10">
-                <i class="fa-solid fa-graduation-cap text-9xl text-white transform rotate-12"></i>
-            </div>
+            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fa-solid fa-graduation-cap text-9xl text-white transform rotate-12"></i></div>
             <div class="relative z-10 p-6 flex flex-col items-center text-center">
-                <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center mb-4 backdrop-blur-sm">
-                    <i class="fa-solid fa-book-medical text-2xl text-white"></i>
-                </div>
+                <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center mb-4 backdrop-blur-sm"><i class="fa-solid fa-book-medical text-2xl text-white"></i></div>
                 <h3 class="text-lg font-black text-white mb-2 leading-tight">Simulados</h3>
-                <p class="text-blue-100 text-xs mb-6 font-medium">Potencialize seus estudos.</p>
-                <a href="https://www.simulados-para-enfermagem.com.br/" target="_blank" class="w-full bg-white text-nurse-primary hover:bg-nurse-secondary font-bold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-xs uppercase tracking-wide">
-                    Acessar <i class="fa-solid fa-arrow-right"></i>
-                </a>
+                <a href="https://www.simulados-para-enfermagem.com.br/" target="_blank" class="w-full bg-white text-nurse-primary hover:bg-nurse-secondary font-bold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-xs uppercase tracking-wide mt-4">Acessar</a>
             </div>
         </div>
 
-        <!-- Ferramentas -->
         <div class="card-base p-5">
-            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-list-ul"></i> Ferramentas
-            </h3>
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-list-ul"></i> Ferramentas</h3>
             <nav id="calculator-index" class="space-y-1">
                 <a href="?calculator=insulina" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-nurse-primary hover:text-white group transition-all">
-                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm group-hover:text-nurse-secondary"><i class="fa-solid fa-syringe"></i></div>
-                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-white">Insulina</span>
+                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm"><i class="fa-solid fa-syringe"></i></div>
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Insulina</span>
                 </a>
                 <a href="?calculator=heparina" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-nurse-primary hover:text-white group transition-all">
-                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm group-hover:text-nurse-secondary"><i class="fa-solid fa-droplet"></i></div>
-                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-white">Heparina</span>
+                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm"><i class="fa-solid fa-droplet"></i></div>
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Heparina</span>
                 </a>
                 <a href="?calculator=medicamentos" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-nurse-primary hover:text-white group transition-all">
-                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm group-hover:text-nurse-secondary"><i class="fa-solid fa-pills"></i></div>
-                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-white">Diluição</span>
+                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm"><i class="fa-solid fa-pills"></i></div>
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Diluição</span>
                 </a>
                 <a href="?calculator=gotejamento" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-nurse-primary hover:text-white group transition-all">
-                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm group-hover:text-nurse-secondary"><i class="fa-solid fa-clock"></i></div>
-                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-white">Gotejamento</span>
+                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm"><i class="fa-solid fa-clock"></i></div>
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Gotejamento</span>
                 </a>
             </nav>
         </div>
@@ -271,10 +227,6 @@
           <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400 font-nunito">Calculadoras de Enfermagem Profissional</h3>
           <p class="text-slate-600 dark:text-slate-300 text-lg italic">"Transformando a complexidade técnica em segurança para o paciente."</p>
         </div>
-      </div>
-      <div class="flex flex-wrap gap-2 items-center">
-        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2"><i class="fa-solid fa-tags mr-2"></i> Tópicos:</span>
-        <span id="tags-container" class="flex flex-wrap gap-2"></span>
       </div>
     </section>
   </main>

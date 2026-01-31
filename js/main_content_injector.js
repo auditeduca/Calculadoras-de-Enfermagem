@@ -2,7 +2,7 @@
  * MAIN_CONTENT_INJECTOR.JS - Injetor de Conteúdo Dinâmico
  * Carrega e injeta conteúdo de calculadoras a partir do JSON
  * * @author Calculadoras de Enfermagem
- * @version 2.0.3 (Populates Tabs)
+ * @version 2.0.4 (Safe References Check)
  */
 
 class MainContentInjector {
@@ -67,7 +67,7 @@ class MainContentInjector {
       tagsContainer.innerHTML = calculator.tags.map(tag => `<span class="tag-pill-footer">${tag}</span>`).join('');
     }
     
-    // 3. Injetar Conteúdo das Abas Extras (Sobre/Instruções/Referências)
+    // 3. Injetar Conteúdo das Abas Extras
     this.populateTabs(calculator);
 
     // Sidebar Extra
@@ -81,7 +81,7 @@ class MainContentInjector {
   }
   
   /**
-   * Preenche as abas com base no JSON 'content'
+   * Preenche as abas com base no JSON 'content' (CORRIGIDO)
    */
   populateTabs(calculator) {
       // Aba Sobre
@@ -97,33 +97,31 @@ class MainContentInjector {
       // Aba Instruções
       const instEl = document.getElementById('tab-instructions');
       if(instEl) {
-          // Procura conteúdo marcado como instrução ou usa padrão
           instEl.innerHTML = calculator.content 
             ? this.formatContent(calculator.content, 'instructions')
             : '<p>Preencha os campos solicitados para obter o resultado.</p>';
       }
       
-      // Aba Referências (Pode vir de um campo references no JSON ou content)
+      // Aba Referências (CORREÇÃO DE SEGURANÇA AQUI)
       const refEl = document.getElementById('tab-references');
       if(refEl) {
-           // Exemplo estático ou dinâmico se houver no JSON
-           refEl.innerHTML = calculator.references 
-            ? `<ul class="list-disc pl-5 space-y-2">${calculator.references.map(r => `<li>${r}</li>`).join('')}</ul>`
-            : '<p>Protocolos Institucionais Padrão (2025).</p>';
+           // Verifica se references existe e é um array
+           const refs = Array.isArray(calculator.references) ? calculator.references : [];
+           
+           if (refs.length > 0) {
+               refEl.innerHTML = `<ul class="list-disc pl-5 space-y-2 text-slate-600 dark:text-slate-300">${refs.map(r => `<li>${r}</li>`).join('')}</ul>`;
+           } else {
+               refEl.innerHTML = '<p class="text-slate-500 italic">Protocolos Institucionais Padrão (2025).</p>';
+           }
       }
   }
 
-  /**
-   * Formata array de conteúdo do JSON em HTML
-   */
   formatContent(contentArray, filterType) {
       if(!Array.isArray(contentArray)) return '';
-      
-      // Filtra ou formata tudo se não houver filtro específico
       return contentArray.map(item => `
         <div class="mb-4">
-            <h4 class="font-bold text-md mb-1">${item.title}</h4>
-            <p>${item.description}</p>
+            <h4 class="font-bold text-md mb-1 text-nurse-secondary">${item.title}</h4>
+            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">${item.description}</p>
         </div>
       `).join('');
   }
@@ -136,9 +134,9 @@ class MainContentInjector {
   createInputHTML(input) {
     const requiredStar = input.required ? '<span class="text-red-500 ml-1">*</span>' : '';
     const helpTooltip = input.help ? `
-      <div class="group relative inline-block ml-2">
+      <div class="group relative inline-block ml-2 z-10">
         <i class="fa-regular fa-circle-question text-slate-400 hover:text-nurse-primary cursor-help"></i>
-        <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-slate-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10 text-center shadow-lg pointer-events-none">
+        <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-slate-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all text-center shadow-lg pointer-events-none">
           ${input.help}
           <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
         </div>
@@ -146,11 +144,11 @@ class MainContentInjector {
     ` : '';
 
     let inputField = '';
-    const baseClass = "w-full rounded-xl border-slate-300 dark:border-slate-600 dark:bg-slate-800 dark:text-white focus:border-nurse-primary focus:ring focus:ring-nurse-primary/20 transition-all p-3";
+    const baseClass = "w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-nurse-primary focus:ring-2 focus:ring-nurse-primary/20 transition-all p-3 outline-none";
 
     if (input.type === 'select') {
       const options = input.options.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('');
-      inputField = `<select id="${input.id}" name="${input.id}" class="${baseClass}" ${input.required ? 'required' : ''}>${options}</select>`;
+      inputField = `<select id="${input.id}" name="${input.id}" class="${baseClass} cursor-pointer" ${input.required ? 'required' : ''}>${options}</select>`;
     } else {
       inputField = `
         <input type="${input.type}" id="${input.id}" name="${input.id}" 
@@ -167,7 +165,7 @@ class MainContentInjector {
 
     return `
       <div class="form-group mb-4 animate-fade-in">
-        <label for="${input.id}" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">
+        <label for="${input.id}" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
           ${input.label} ${requiredStar} ${helpTooltip}
         </label>
         ${inputField}
