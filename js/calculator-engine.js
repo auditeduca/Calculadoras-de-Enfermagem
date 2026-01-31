@@ -2,7 +2,7 @@
  * CALCULATOR-ENGINE.JS - Motor de Cálculos
  * Executa operações matemáticas e validações de cálculos clínicos
  * * @author Calculadoras de Enfermagem
- * @version 2.0.1 (Fixed EventBus & Init)
+ * @version 2.0.2 (Fixed EventBus & Init)
  */
 
 class CalculatorEngine {
@@ -32,7 +32,6 @@ class CalculatorEngine {
    */
   registerCalculator(id, calculator) {
     this.calculators[id] = calculator;
-    // Log removido para limpar console, ou descomente para debug
     // console.log(`✅ Calculadora '${id}' registrada`);
   }
 

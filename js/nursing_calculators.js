@@ -2,7 +2,7 @@
  * NURSING_CALCULATORS.JS - Sistema de Calculadoras de Enfermagem
  * Orquestra todas as funcionalidades do sistema modular (Factory Pattern)
  * * @author Calculadoras de Enfermagem
- * @version 2.0.2 (Fixed Orchestration & Instantiation)
+ * @version 2.0.3 (Fixed Typo & Orchestration)
  */
 
 class NursingCalculators {
@@ -11,7 +11,7 @@ class NursingCalculators {
     this.notificationManager = window.NOTIFICATION_MANAGER;
     this.uiManager = window.UI_MANAGER;
     this.modalReferenceManager = window.MODAL_REFERENCE_MANAGER;
-    a
+    
     // 2. Instancia o Core (que gerencia o EventBus)
     // Se CalculatorCore for uma classe, instanciamos. Se já for objeto (singleton), usamos.
     if (window.CalculatorCore && typeof window.CalculatorCore === 'function') {
@@ -21,7 +21,7 @@ class NursingCalculators {
         this.core = { eventBus: window.EventBus };
     }
 
-    // 3. INSTANCIAÇÃO DE DEPENDÊNCIAS (A CORREÇÃO PRINCIPAL)
+    // 3. INSTANCIAÇÃO DE DEPENDÊNCIAS
     // Criamos as instâncias aqui explicitamente para garantir que existam
     
     // Motor de Cálculo
@@ -227,9 +227,31 @@ class NursingCalculators {
     container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  // Métodos de compartilhamento (mantidos do original)
-  share(platform) { /* ... */ }
-  copyLink() { /* ... */ }
+  // Métodos de compartilhamento
+  share(platform) {
+    const text = `Confira esta calculadora de ${this.currentCalculator?.title || 'Enfermagem'}: ${window.location.href}`;
+    const urls = {
+      whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`
+    };
+    
+    if (urls[platform]) {
+      window.open(urls[platform], '_blank', 'width=600,height=400,noopener,noreferrer');
+      if(this.notificationManager) this.notificationManager.info(`Compartilhando no ${platform}...`);
+    }
+  }
+
+  copyLink() {
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => {
+        if(this.notificationManager) this.notificationManager.success('Link copiado!');
+      })
+      .catch(err => {
+        console.error('Erro ao copiar link:', err);
+        if(this.notificationManager) this.notificationManager.error('Erro ao copiar link');
+      });
+  }
 }
 
 // Inicialização Global Segura

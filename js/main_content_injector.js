@@ -2,7 +2,7 @@
  * MAIN_CONTENT_INJECTOR.JS - Injetor de Conteúdo Dinâmico
  * Carrega e injeta conteúdo de calculadoras a partir do JSON
  * * @author Calculadoras de Enfermagem
- * @version 2.0.1 (Fixed JSON Config)
+ * @version 2.0.2 (Fixed JSON Config)
  */
 
 class MainContentInjector {

@@ -2,7 +2,7 @@
  * NURSING_ENGINE.JS - Motor de Enfermagem
  * Implementa lógica específica de cálculos de enfermagem com validações clínicas
  * * @author Calculadoras de Enfermagem
- * @version 2.0.1 (Fixed Init Dependency)
+ * @version 2.0.2 (Fixed Init Dependency)
  */
 
 class NursingEngine {
@@ -83,8 +83,7 @@ class NursingEngine {
   }
 
   registerHeparinCalculator() {
-      // Stub para evitar erro se chamado, mas sem implementação completa aqui para economizar espaço
-      // A lógica real viria aqui
+      // Stub para evitar erro se chamado
   }
   
   registerMedicationCalculator() {
