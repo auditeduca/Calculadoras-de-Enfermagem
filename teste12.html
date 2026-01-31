@@ -12,7 +12,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   
+  <!-- Estilos Originais (URLs Absolutas) -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Bibliotecas Externas -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 
@@ -96,7 +105,10 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
+  <!-- MÓDULOS DE SISTEMA (HEADER, FOOTER, ACESSIBILIDADE) -->
+  <div id="accessibility-container"></div>
   <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark shadow-sm"></div>
 
   <!-- BARRA LATERAL DE FERRAMENTAS -->
   <aside class="sidebar-left-tools" id="sidebar-tools">
@@ -118,7 +130,7 @@
       </button>
   </aside>
 
-  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-8 pb-8 md:py-12 w-full">
     
     <!-- BREADCRUMB -->
     <nav id="breadcrumb" class="mb-8 font-semibold">
@@ -261,6 +273,9 @@
     </div>
   </main>
 
+  <!-- FOOTER CONTAINER -->
+  <div id="footer-container"></div>
+
   <!-- MODAL -->
   <div id="reference-modal" class="fixed inset-0 z-[10000] hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
     <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden animate-fade-in">
@@ -298,6 +313,12 @@
     </div>
   </div>
 
+  <!-- Scripts de Componentes (URLs Absolutas) -->
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js"></script>
+
   <script>
     const SYSTEM = {
         data: {},
@@ -305,6 +326,7 @@
 
         async init() {
             try {
+                await this.loadComponents();
                 await this.loadAllData();
                 this.renderUI();
                 this.setupEventListeners();
@@ -315,6 +337,23 @@
             }
         },
 
+        async loadComponents() {
+            // Carregar Header, Footer e Acessibilidade via fetch
+            const components = [
+                { id: 'header-container', url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html' },
+                { id: 'footer-container', url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html' },
+                { id: 'accessibility-container', url: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html' }
+            ];
+
+            const loadPromises = components.map(async (comp) => {
+                const response = await fetch(comp.url);
+                const html = await response.text();
+                document.getElementById(comp.id).innerHTML = html;
+            });
+
+            await Promise.all(loadPromises);
+        },
+
         async loadAllData() {
             const urls = {
                 content: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/data/content-calculators.json',
@@ -322,7 +361,7 @@
                 rightForm: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/data/Right_Form.json',
                 shared: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/data/shared-components.json',
                 calculators: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/data/nursing_calculators.json',
-                nanda: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/data/nanda.json'
+                nanda: 'nanda.json'
             };
 
             const fetchPromises = Object.entries(urls).map(async ([key, url]) => {
