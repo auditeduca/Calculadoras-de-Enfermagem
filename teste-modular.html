@@ -11,38 +11,37 @@
   <meta name="keywords" content="calculadora enfermagem, cálculo medicação, insulina, heparina, gotejamento, segurança paciente">
   <meta name="author" content="Calculadoras de Enfermagem">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/"/>
   
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Calculadoras de Enfermagem Profissional">
   <meta property="og:description" content="Sistema modular com protocolos integrados para enfermagem.">
-  <meta property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
-  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
-
-  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
+  
+  <!-- Favicon Relativo -->
+  <link rel="icon" href="./assets/images/author-info.webp" type="image/webp"/>
 
   <!-- Fontes e Ícones -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-  
-  <!-- Tailwind CSS -->
+    
+  <!-- Tailwind CSS v3.4 (Estável) -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Estilos Modulares -->
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
-  <link rel="stylesheet" href="./css/styles.css"/>
+    
+  <!-- Estilos Modulares (Caminhos Relativos) -->
+  <link rel="stylesheet" href="./assets/css/variables-v4.css"/>
+  <link rel="stylesheet" href="./assets/css/header-v4.css"/>
+  <link rel="stylesheet" href="./assets/css/footer-v4.css"/>
+  <link rel="stylesheet" href="./assets/css/accessibility-v4.css"/>
+  <link rel="stylesheet" href="./styles.css"/>
 
-  <!-- Bibliotecas JS (Deferidas) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <!-- Bibliotecas JS (Libs puras primeiro) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
+    // Configuração Tailwind
     tailwind.config = {
       darkMode: 'class',
       theme: {
@@ -61,6 +60,37 @@
         }
       }
     }
+
+    // CONFIGURAÇÃO GLOBAL DO SISTEMA
+    // Ajustado para funcionar localmente ou em produção
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const basePath = isLocal ? '.' : '.'; 
+
+    window.APP_CONFIG = {
+        basePath: basePath,
+        jsonPath: `${basePath}/data/nursing_calculators.json`
+    };
+
+    // INICIALIZAÇÃO DO EVENT BUS (Padrão Singleton Robusto)
+    // Isso garante que window.EventBus seja sempre um OBJETO com métodos, nunca uma classe
+    window.EventBus = window.EventBus || { 
+        l: {},
+        on: function(e,c){ (this.l[e]=this.l[e]||[]).push(c) }, 
+        emit: function(e,d){ (this.l[e]||[]).forEach(c=>c(d)) }, 
+        off: function(e,c){ if(this.l[e]) this.l[e]=this.l[e].filter(h=>h!==c) } 
+    };
+    
+    // Fallback completo para MODAL_MANAGER
+    window.MODAL_MANAGER = window.MODAL_MANAGER || { 
+        register: function(){ console.log('Modal registered (fallback)'); }, 
+        show: function(title, content){ 
+            console.warn('Usando fallback do Modal Manager.');
+            alert('Sistema de janelas carregando... ' + title);
+        },
+        close: function(){ console.log('Modal closed (fallback)'); } 
+    };
+    
+    window.CALCULATOR_SYSTEM = window.CALCULATOR_SYSTEM || {};
   </script>
 
   <style type="text/tailwindcss">
@@ -76,14 +106,17 @@
       .tab-btn { @apply flex-1 px-2 py-3 font-bold text-[10px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider; }
       .tab-btn.active { @apply border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50 dark:bg-slate-900/30; }
       .tag-pill-footer { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
-      .share-btn { @apply w-10 h-10 rounded-full flex items-center justify-center bg-white/10 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md; }
+      .share-btn { @apply w-10 h-10 rounded-full flex items-center justify-center bg-slate-100 dark:bg-slate-700 text-nurse-primary dark:text-slate-300 hover:bg-nurse-primary hover:text-white transition-all shadow-sm; }
+      /* Estilo para abas verticais */
+      .vertical-tab { @apply w-full aspect-square rounded-2xl flex flex-col items-center justify-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-nurse-primary hover:border-nurse-secondary hover:shadow-lg transition-all cursor-pointer active:scale-95; }
+      .vertical-tab.active { @apply bg-nurse-primary text-white border-transparent; }
     }
-    
+      
     @keyframes slideIn {
       from { transform: translateX(100%); opacity: 0; }
       to { transform: translateX(0); opacity: 1; }
     }
-    
+      
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -97,8 +130,8 @@
   <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
   <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50 shadow-sm"></div>
 
-  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
-    
+  <main id="main-content" class="flex-grow max-w-[1400px] mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
+      
     <!-- BREADCRUMB RESPONSIVO -->
     <nav id="breadcrumb" class="mb-8 font-semibold">
       <div class="hidden md:flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
@@ -108,12 +141,29 @@
       </div>
     </nav>
 
-    <!-- LAYOUT PRINCIPAL -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-      
-      <!-- CONTEÚDO PRINCIPAL (3 colunas) -->
-      <div class="lg:col-span-3">
+    <!-- LAYOUT PRINCIPAL REORGANIZADO (12 Colunas) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
+      <!-- COLUNA 1: NAVEGAÇÃO VERTICAL (Esquerda) -->
+      <aside class="hidden lg:flex lg:col-span-1 flex-col gap-4 sticky top-28">
+         <button onclick="window.MODAL_REFERENCE_MANAGER?.showNANDAModal()" class="vertical-tab group" title="Diagnósticos NANDA">
+            <i class="fa-solid fa-stethoscope text-xl mb-1 text-nurse-secondary group-hover:text-nurse-primary dark:text-cyan-400 dark:group-hover:text-white transition-colors"></i>
+            <span class="text-[9px] font-bold uppercase tracking-wider text-center leading-tight">NANDA</span>
+         </button>
+         
+         <button onclick="window.MODAL_REFERENCE_MANAGER?.showMedicationChecklistModal()" class="vertical-tab group" title="9 Certos da Medicação">
+            <i class="fa-solid fa-check-double text-xl mb-1 text-green-500 group-hover:text-green-600 transition-colors"></i>
+            <span class="text-[9px] font-bold uppercase tracking-wider text-center leading-tight">9 Certos</span>
+         </button>
+
+         <button onclick="window.MODAL_REFERENCE_MANAGER?.showSafetyGoalsModal()" class="vertical-tab group" title="Metas de Segurança">
+            <i class="fa-solid fa-shield-heart text-xl mb-1 text-blue-500 group-hover:text-blue-600 transition-colors"></i>
+            <span class="text-[9px] font-bold uppercase tracking-wider text-center leading-tight">Metas</span>
+         </button>
+      </aside>
+
+      <!-- COLUNA 2: CONTEÚDO PRINCIPAL (Centro) -->
+      <div class="lg:col-span-8 w-full">
         <!-- SEÇÃO DE ENTRADA -->
         <section class="card-base p-6 md:p-8 mb-6">
           <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-200 dark:border-slate-700">
@@ -126,6 +176,10 @@
 
           <div id="calculator-inputs" class="space-y-4 mb-6">
             <!-- Inputs injetados dinamicamente -->
+            <div class="flex items-center justify-center py-12">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-nurse-primary"></div>
+                <span class="ml-3 text-sm text-slate-500">Carregando interface...</span>
+            </div>
           </div>
 
           <!-- BOTÕES DE AÇÃO -->
@@ -143,58 +197,88 @@
         <section id="calculator-results" class="mb-6">
           <!-- Resultados injetados dinamicamente -->
         </section>
-
-        <!-- SEÇÃO DE COMPARTILHAMENTO -->
-        <section class="card-base p-6 mb-6">
-          <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary dark:text-cyan-400 mb-4 flex items-center gap-2 border-b pb-3">
-            <i class="fa-solid fa-share-nodes"></i> Compartilhar
-          </h3>
-          <div class="flex gap-3 justify-center">
-            <button onclick="window.CALCULATOR_SYSTEM?.share('facebook')" class="share-btn" title="Compartilhar no Facebook">
-              <i class="fab fa-facebook-f"></i>
-            </button>
-            <button onclick="window.CALCULATOR_SYSTEM?.share('whatsapp')" class="share-btn" title="Compartilhar no WhatsApp">
-              <i class="fab fa-whatsapp"></i>
-            </button>
-            <button onclick="window.CALCULATOR_SYSTEM?.share('linkedin')" class="share-btn" title="Compartilhar no LinkedIn">
-              <i class="fab fa-linkedin-in"></i>
-            </button>
-            <button onclick="window.CALCULATOR_SYSTEM?.copyLink()" class="share-btn" title="Copiar Link">
-              <i class="fas fa-link"></i>
-            </button>
-          </div>
-        </section>
-
-        <!-- OUTRAS CALCULADORAS -->
-        <section class="card-base p-6">
-          <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary dark:text-cyan-400 mb-4 flex items-center gap-2 border-b pb-3">
-            <i class="fa-solid fa-list-ul"></i> Outras Calculadoras
-          </h3>
-          <nav id="calculator-index" class="space-y-1 text-sm">
-            <a href="?calculator=insulina" class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
-              <i class="fa-solid fa-calculator text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
-              <span>Cálculo de Insulina</span>
-            </a>
-            <a href="?calculator=heparina" class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
-              <i class="fa-solid fa-calculator text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
-              <span>Cálculo de Heparina</span>
-            </a>
-            <a href="?calculator=medicamentos" class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
-              <i class="fa-solid fa-calculator text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
-              <span>Diluição de Medicamentos</span>
-            </a>
-            <a href="?calculator=gotejamento" class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
-              <i class="fa-solid fa-calculator text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
-              <span>Cálculo de Gotejamento</span>
-            </a>
-          </nav>
-        </section>
       </div>
 
-      <!-- SIDEBAR (1 coluna) -->
-      <aside class="lg:col-span-1">
+      <!-- COLUNA 3: SIDEBAR DIREITA (CTA + Compartilhar + Outras) -->
+      <aside class="lg:col-span-3 space-y-6">
+        
+        <!-- CARD CTA SIMULADOS -->
+        <div class="card-base relative overflow-hidden group border-none ring-4 ring-nurse-primary/5 dark:ring-cyan-500/20">
+            <div class="absolute inset-0 bg-gradient-to-br from-nurse-primary to-blue-600 opacity-95 group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+                <i class="fa-solid fa-graduation-cap text-9xl text-white transform rotate-12"></i>
+            </div>
+            
+            <div class="relative z-10 p-6 flex flex-col items-center text-center">
+                <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center mb-4 backdrop-blur-sm">
+                    <i class="fa-solid fa-book-medical text-2xl text-white"></i>
+                </div>
+                <h3 class="text-lg font-black text-white mb-2 leading-tight">Simulados de Enfermagem</h3>
+                <p class="text-blue-100 text-xs mb-6 font-medium leading-relaxed">
+                    Potencialize seus estudos com questões comentadas e provas de concursos anteriores.
+                </p>
+                <a href="https://www.simulados-para-enfermagem.com.br/" target="_blank" class="w-full bg-white text-nurse-primary hover:bg-nurse-secondary hover:text-white font-bold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-xs uppercase tracking-wide">
+                    Acessar Simulados <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- SEÇÃO DE COMPARTILHAMENTO -->
+        <div class="card-base p-5">
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-share-nodes"></i> Compartilhar
+            </h3>
+            <div class="grid grid-cols-4 gap-2">
+                <button onclick="window.CALCULATOR_SYSTEM?.share('facebook')" class="share-btn" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button onclick="window.CALCULATOR_SYSTEM?.share('whatsapp')" class="share-btn" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </button>
+                <button onclick="window.CALCULATOR_SYSTEM?.share('linkedin')" class="share-btn" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </button>
+                <button onclick="window.CALCULATOR_SYSTEM?.copyLink()" class="share-btn" title="Copiar Link">
+                    <i class="fas fa-link"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- OUTRAS CALCULADORAS -->
+        <div class="card-base p-5">
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-list-ul"></i> Ferramentas
+            </h3>
+            <nav id="calculator-index" class="space-y-1">
+                <a href="?calculator=insulina" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-nurse-primary hover:text-white group transition-all">
+                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm group-hover:text-nurse-secondary">
+                        <i class="fa-solid fa-syringe"></i>
+                    </div>
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-white">Insulina</span>
+                </a>
+                <a href="?calculator=heparina" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-nurse-primary hover:text-white group transition-all">
+                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm group-hover:text-nurse-secondary">
+                        <i class="fa-solid fa-droplet"></i>
+                    </div>
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-white">Heparina</span>
+                </a>
+                <a href="?calculator=medicamentos" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-nurse-primary hover:text-white group transition-all">
+                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm group-hover:text-nurse-secondary">
+                        <i class="fa-solid fa-pills"></i>
+                    </div>
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-white">Diluição</span>
+                </a>
+                <a href="?calculator=gotejamento" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-nurse-primary hover:text-white group transition-all">
+                    <div class="w-6 h-6 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-nurse-primary text-[10px] shadow-sm group-hover:text-nurse-secondary">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-white">Gotejamento</span>
+                </a>
+            </nav>
+        </div>
+
         <div id="sidebar-content" class="space-y-6">
-          <!-- Conteúdo lateral injetado dinamicamente -->
+          <!-- Conteúdo dinâmico extra da sidebar -->
         </div>
       </aside>
     </div>
@@ -204,9 +288,10 @@
       <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 flex flex-col md:flex-row gap-10 items-center border border-slate-200 dark:border-slate-700 shadow-sm mb-12 transition-all hover:shadow-xl">
         <div class="relative flex-shrink-0">
           <div class="w-32 md:w-40 shadow-2xl border-4 border-white dark:border-slate-700 rounded-3xl overflow-hidden bg-slate-100">
-            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" 
+            <img src="./assets/images/author-info.webp" 
                  alt="Autor Calculadoras de Enfermagem" 
-                 class="w-full h-auto block object-cover"/>
+                 class="w-full h-auto block object-cover"
+                 onerror="this.src='https://placehold.co/200'"/>
           </div>
           <div class="absolute -bottom-2 -right-2 bg-nurse-secondary text-white w-8 h-8 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-800 shadow-lg">
             <i class="fa-solid fa-check text-[10px]"></i>
@@ -262,8 +347,8 @@
     <div id="pdf-body" style="font-size: 11px; line-height: 1.6; font-family: 'Inter', sans-serif;"></div>
   </div>
 
-  <!-- BOTÕES FLUTUANTES DE REFERÊNCIA -->
-  <div id="global-reference-buttons" class="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+  <!-- BOTÕES FLUTUANTES DE REFERÊNCIA (MOBILE APENAS) -->
+  <div id="global-reference-buttons" class="fixed bottom-6 right-6 z-40 flex flex-col gap-3 lg:hidden">
     <button onclick="window.MODAL_REFERENCE_MANAGER?.showNANDAModal()" class="w-12 h-12 bg-nurse-accent hover:bg-nurse-primary text-white rounded-full shadow-xl flex items-center justify-center transition-all hover:scale-110" title="Diagnósticos NANDA">
       <i class="fa-solid fa-stethoscope"></i>
     </button>
@@ -275,31 +360,41 @@
     </button>
   </div>
 
-  <!-- SCRIPTS DO SISTEMA (Ordem de Carregamento Importante) -->
-  <!-- Módulos do sistema -->
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js"></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js"></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js"></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js"></script>
+  <!-- SCRIPTS DO SISTEMA (ORDEM DE CARREGAMENTO OTIMIZADA) -->
+  <!-- Note: URLs relativas para evitar problemas de CORS/404 em ambiente local ou GitHub Pages -->
+    
+  <!-- 1. Infraestrutura Base (Critical Path) -->
+  <script src="./assets/js/event-bus-v4.js" defer></script>
+    
+  <!-- 2. Core e Utilitários (Foundation) -->
+  <script src="./js/core.js" defer></script>
+  <script src="./js/modules/util.js" defer></script>
+  <script src="./js/modules/notifications.js" defer></script>
+    
+  <!-- 3. UI Principal e Gerenciadores -->
+  <script src="./js/modules/ui.js" defer></script>
 
-  <!-- Módulos do projeto -->
-  <script src="./js/core.js"></script>
-  <script src="./js/modules/notifications.js"></script>
-  <script src="./js/modules/ui.js"></script>
-  <script src="./js/modules/util.js"></script>
-  <script src="./js/modules/voice.js"></script>
-  <script src="./js/modules/pdf-generator.js"></script>
-  <script src="./js/calculator-engine.js"></script>
-  <script src="./js/modules/modal-reference.js"></script>
-  <script src="./js/nursing_engine.js"></script>
-  <script src="./js/main_content_injector.js"></script>
-  <script src="./js/nursing_calculators.js"></script>
+  <!-- 4. Componentes Visuais (Header/Footer/Access) -->
+  <script src="./assets/js/header-v4.js" defer></script>
+  <script src="./assets/js/footer-v4.js" defer></script>
+  <script src="./assets/js/accessibility-v4.js" defer></script>
+
+  <!-- 5. Módulos de Funcionalidade -->
+  <script src="./js/modules/voice.js" defer></script>
+  <script src="./js/modules/pdf-generator.js" defer></script>
+  <script src="./js/modules/modal-reference.js" defer></script>
+
+  <!-- 6. Motores de Cálculo (Logic) -->
+  <script src="./js/calculator-engine.js" defer></script>
+  <script src="./js/nursing_engine.js" defer></script>
+  <script src="./js/main_content_injector.js" defer></script>
+  <script src="./js/nursing_calculators.js" defer></script>
 
   <script>
-    // Carregar módulos de forma síncrona
+    // Carregar módulos de template HTML de forma assíncrona
     async function loadSystemModules() {
       try {
-        console.log('🚀 Carregando módulos do sistema...');
+        console.log('🚀 Iniciando injeção de templates...');
         
         // Carregar componentes HTML
         const loadModule = async (id, url) => {
@@ -310,24 +405,28 @@
             if (!res.ok) throw new Error(`Status ${res.status}`);
             container.innerHTML = await res.text();
             container.style.opacity = "1";
-            const event = new CustomEvent('moduleLoaded', { detail: { id, url } });
-            container.dispatchEvent(event);
+              
+            // Disparar evento apenas se EventBus estiver disponível e com emit
+            if(window.EventBus && typeof window.EventBus.emit === 'function') {
+                 window.EventBus.emit('moduleLoaded', { id, url });
+            }
           } catch(e) { 
-            console.warn(`Módulo ${id} não carregado:`, e); 
+            console.warn(`Módulo visual ${id} não carregado.`, e); 
           }
         };
 
-        await loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html');
-        await loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html');
-        await loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html');
-        
-        console.log('✅ Módulos carregados com sucesso');
+        // URLs RELATIVAS (Importante para evitar CORS/404)
+        await loadModule('accessibility-container', './assets/components/accessibility-v4.html');
+        await loadModule('header-container', './assets/components/header-v4.html');
+        await loadModule('footer-container', './assets/components/footer-v4.html');
+          
+        console.log('✅ Templates injetados com sucesso.');
       } catch (error) {
-        console.error('❌ Erro ao carregar módulos:', error);
+        console.error('❌ Erro ao injetar templates:', error);
       }
     }
 
-    // Adicionar função global para prevenir números negativos
+    // Prevenir input negativo global
     window.preventNegative = function(event) {
       if (['-', 'e', '+', 'E'].includes(event.key)) {
         event.preventDefault();
@@ -336,14 +435,23 @@
       return true;
     };
 
-    // Inicializar quando o DOM carregar
+    // Inicialização segura
     document.addEventListener('DOMContentLoaded', () => {
-      console.log('📄 DOM carregado, inicializando sistema...');
+      console.log('📄 DOM pronto. Sistema iniciando...');
       loadSystemModules();
+        
+      // Fallback para injeção de conteúdo principal
+      setTimeout(() => {
+          const loadingEl = document.querySelector('.animate-spin');
+          if(loadingEl && window.NursingCalculators && !document.querySelector('.input-group')) {
+              console.log("⚠️ Detectado atraso. Forçando inicialização da calculadora...");
+              // Tentar reinicializar se a classe estiver disponível mas não rodou
+              if(window.CALCULATOR_SYSTEM && typeof window.CALCULATOR_SYSTEM.initialize === 'function') {
+                  window.CALCULATOR_SYSTEM.initialize();
+              }
+          }
+      }, 3000); 
     });
-
-    // Adicionar ao objeto global
-    window.CALCULATOR_SYSTEM = window.CALCULATOR_SYSTEM || {};
   </script>
 </body>
 </html>
