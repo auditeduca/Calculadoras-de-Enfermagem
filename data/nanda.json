@@ -1,0 +1,35 @@
+[
+  {
+    "codigo": "00218",
+    "titulo": "Risco de Glicemia Instável",
+    "definicao": "Vulnerável à variação dos níveis séricos de glicose/açúcar em relação à variação normal, que pode comprometer a saúde.",
+    "dominio": "2. Nutrição",
+    "classe": "4. Metabolismo",
+    "fatores_risco": [
+      "Conhecimento insuficiente sobre o controle do diabetes",
+      "Monitoramento inadequado da glicemia",
+      "Adesão insuficiente ao plano terapêutico",
+      "Gestão de medicação inadequada"
+    ]
+  },
+  {
+    "codigo": "00078",
+    "titulo": "Gestão ineficaz da saúde",
+    "definicao": "Padrão de regulação e integração à vida cotidiana de um regime terapêutico para o tratamento de doenças e suas sequelas que é insatisfatório para alcançar metas específicas de saúde.",
+    "dominio": "1. Promoção da saúde",
+    "classe": "2. Gestão da saúde",
+    "fatores_relacionados": [
+      "Complexidade do regime terapêutico",
+      "Dificuldades econômicas",
+      "Suporte social insuficiente",
+      "Déficit de conhecimento"
+    ]
+  },
+  {
+    "codigo": "00179",
+    "titulo": "Risco de nível de glicemia instável",
+    "definicao": "Vulnerabilidade a variações nos níveis de glicose no sangue, que podem comprometer a saúde.",
+    "dominio": "2. Nutrição",
+    "classe": "4. Metabolismo"
+  }
+]
