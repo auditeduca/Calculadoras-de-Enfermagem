@@ -1,0 +1,117 @@
+{
+  "config": {
+    "nome": "Calculadora de Heparina",
+    "versao": "1.0.0",
+    "tipo": "medicamentos",
+    "categoria": "Calculadoras Clínicas",
+    "referencias": {
+      "shared_components": "shared-components.json",
+      "modais": "modal-content.json",
+      "layout": "layout-config.json"
+    }
+  },
+  
+  "calculadora": {
+    "id": "heparina",
+    "titulo": "Cálculo de Heparina",
+    "descricao": "Ferramenta para cálculo seguro de dose de heparina em UI para mL.",
+    "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/heparina.html",
+    "breadcrumbs": {
+      "desktop": ["Início", "Ferramentas", "Calculadoras Clínicas", "Cálculo de Heparina"],
+      "mobile": ["Início", "Ferramentas", "Heparina"]
+    },
+    "badge": "Calculadoras Clínicas",
+    "versao": "1.0.0",
+    "data_atualizacao": "2024-01-31",
+    "tags": ["#heparina", "#anticoagulante", "#enfermagem", "#cálculodemedicamentos", "#MAV"]
+  },
+  
+  "sidebar_esquerdo": [
+    {
+      "id": "conteudo",
+      "titulo": "NAVEGAÇÃO",
+      "icone": "fa-compass",
+      "tipo": "abas",
+      "ordem": 1,
+      "items": [
+        {
+          "id": "tab-calc",
+          "label": "Calculadora",
+          "tab": "calc",
+          "icone": "fa-calculator",
+          "ativo": true
+        }
+      ]
+    },
+    {
+      "id": "9certos",
+      "titulo": "9 CERTOS (MEDICAÇÃO)",
+      "icone": "fa-check-double",
+      "tipo": "botao_modal",
+      "ordem": 3,
+      "acao": "openModal",
+      "modal_target": "9certos",
+      "referencia_guia": "9certos",
+      "descricao": "Protocolo de verificação de segurança na administração."
+    },
+    {
+      "id": "guia-heparina",
+      "titulo": "GUIA HEPARINA",
+      "icone": "fa-book-medical",
+      "tipo": "botao_modal",
+      "ordem": 4,
+      "acao": "openModal",
+      "modal_target": "heparina",
+      "referencia_guia": "heparina",
+      "descricao": "Guia completo sobre administração de heparina."
+    }
+  ],
+  
+  "campos_calculadora": [
+    {
+      "id": "secao_dosagem",
+      "secao": "Parâmetros da Heparina",
+      "icone": "fa-syringe",
+      "campos": [
+        {
+          "id": "dose_prescrita",
+          "label": "Dose Prescrita (UI)",
+          "tipo": "number",
+          "placeholder": "Ex: 5000",
+          "min": 0,
+          "max": 50000,
+          "step": 100,
+          "tooltip": "Quantidade de heparina prescrita pelo médico em UI.",
+          "abr": "UI",
+          "obrigatorio": true
+        }
+      ]
+    }
+  ],
+  
+  "secoes_independentes": [
+    {
+      "tipo": "referencia",
+      "referencia": "@shared:secoes_independentes.autor"
+    },
+    {
+      "tipo": "referencia", 
+      "referencia": "@shared:secoes_independentes.tags"
+    }
+  ],
+  
+  "sidebar_direito": [
+    {
+      "tipo": "referencia",
+      "referencia": "@shared:sidebar_direito.cta-simulados"
+    },
+    {
+      "tipo": "referencia",
+      "referencia": "@shared:sidebar_direito.compartilhamento"
+    },
+    {
+      "tipo": "referencia",
+      "referencia": "@shared:sidebar_direito.ferramentas_relacionadas"
+    }
+  ]
+}

@@ -1,0 +1,500 @@
+{
+  "guias": {
+    "9certos": {
+      "id": "guia-9acertos-001",
+      "slug": "guia-bolso-9-acertos-medicamentos",
+      "titulo": "Guia de Bolso: 9 Acertos na Administração de Medicamentos",
+      "categoria": "Segurança do Paciente",
+      "tags": ["Segurança do Paciente", "Protocolo", "Enfermagem", "Farmacologia", "Prevenção de Erros"],
+      "descricao_curta": "Diretriz fundamental para a prática segura na administração de fármacos, visando a eliminação de eventos adversos.",
+      "conteudo_tecnico": {
+        "identificacao": {
+          "definicao": "Os 9 Acertos são um conjunto de verificações sistemáticas que o profissional de enfermagem deve realizar antes, durante e após a administração de qualquer medicamento.",
+          "classificacao_risco": "Protocolo de Segurança Internacional",
+          "importancia": "Redução drástica de erros de medicação, que representam uma das maiores causas de danos evitáveis em sistemas de saúde no mundo."
+        },
+        "objetivos": {
+          "principal": "Estabelecer barreiras de segurança entre o medicamento e o paciente.",
+          "finalidade": [
+            "Garantir a integridade física do paciente",
+            "Padronizar a assistência de enfermagem",
+            "Respaldar legalmente o profissional executante",
+            "Promover a cultura de segurança institucional"
+          ]
+        },
+        "os_9_acertos_detalhado": [
+          {
+            "ordem": 1,
+            "item": "Paciente Certo",
+            "verificacao": "Confirmar nome completo e data de nascimento em dois indicadores (pulseira e prontuário). Perguntar ao paciente se ele está lúcido."
+          },
+          {
+            "ordem": 2,
+            "item": "Medicamento Certo",
+            "verificacao": "Conferir o rótulo do medicamento com a prescrição médica por três vezes (ao pegar, ao preparar e ao descartar/guardar)."
+          },
+          {
+            "ordem": 3,
+            "item": "Via Certa",
+            "verificacao": "Verificar se a via prescrita (EV, IM, SC, VO) é compatível com a apresentação do fármaco e segura para o paciente."
+          },
+          {
+            "ordem": 4,
+            "item": "Hora Certa",
+            "verificacao": "Administrar rigorosamente no horário aprazado para manter o nível terapêutico (janela de segurança de geralmente 30 min)."
+          },
+          {
+            "ordem": 5,
+            "item": "Dose Certa",
+            "verificacao": "Conferir a dosagem prescrita e realizar cálculos de conversão se necessário (ex: miligramas para mililitros)."
+          },
+          {
+            "ordem": 6,
+            "item": "Registro Certo",
+            "verificacao": "Checar o horário na prescrição imediatamente após a administração e anotar qualquer intercorrência ou recusa."
+          },
+          {
+            "ordem": 7,
+            "item": "Orientação Certa",
+            "verificacao": "Explicar ao paciente o nome do medicamento, para que serve e possíveis efeitos colaterais comuns."
+          },
+          {
+            "ordem": 8,
+            "item": "Forma Certa",
+            "verificacao": "Verificar se o medicamento está em sua forma farmacêutica correta (solução, suspensão, comprimido revestido, etc)."
+          },
+          {
+            "ordem": 9,
+            "item": "Resposta Certa",
+            "verificacao": "Monitorar o paciente após a administração para avaliar a eficácia do tratamento e detectar reações adversas precocemente."
+          }
+        ],
+        "protocolos_adicionais": {
+          "estrategias_barreira": [
+            "Não administrar medicamentos preparados por outros profissionais.",
+            "Manter silêncio e concentração máxima durante o preparo.",
+            "Não ignorar alertas de alergias registrados no prontuário.",
+            "Realizar dupla checagem em Medicamentos de Alta Vigilância (MAV)."
+          ],
+          "limitacoes": "O protocolo dos 9 acertos não substitui o julgamento clínico do enfermeiro quanto à condição hemodinâmica do paciente antes da aplicação."
+        },
+        "referencias": [
+          "Conselho Federal de Enfermagem (COFEN). Protocolos de Segurança do Paciente.",
+          "Organização Mundial da Saúde (OMS). Desafio Global de Segurança do Paciente: Medicação sem Danos.",
+          "Anvisa. Protocolo de Segurança na Prescrição, Uso e Administração de Medicamentos."
+        ]
+      },
+      "metadata": {
+        "criado_por": "Calculadoras de Enfermagem",
+        "ultima_atualizacao": "2024-05-20",
+        "idioma": "pt-BR"
+      }
+    },
+    
+    "metas": {
+      "id": "guia-metas-001",
+      "slug": "guia-bolso-metas-internacionais-seguranca",
+      "titulo": "Guia de Bolso: Metas Internacionais de Segurança do Paciente",
+      "categoria": "Segurança do Paciente",
+      "tags": ["Segurança do Paciente", "Protocolo", "OMS", "JCI", "Gestão Hospitalar", "Enfermagem"],
+      "descricao_curta": "As 6 metas globais estabelecidas para prevenir danos e garantir a excelência na assistência à saúde.",
+      "conteudo_tecnico": {
+        "identificacao": {
+          "definicao": "As Metas Internacionais de Segurança do Paciente (MISP) são um conjunto de diretrizes padronizadas globalmente para promover melhorias específicas em áreas críticas da assistência.",
+          "classificacao_risco": "Protocolo de Segurança Máxima / Padrão Ouro",
+          "importancia": "As metas visam solucionar os problemas mais recorrentes na assistência à saúde, como identificação incorreta, falhas na comunicação e infecções hospitalares."
+        },
+        "objetivos": {
+          "principal": "Implementar barreiras sistêmicas para eliminar erros evitáveis nos serviços de saúde.",
+          "finalidade": [
+            "Atingir a acreditação hospitalar (JCI/ONA)",
+            "Reduzir a morbimortalidade associada à assistência",
+            "Padronizar processos críticos em todas as unidades de saúde",
+            "Fomentar a transparência e a segurança institucional"
+          ]
+        },
+        "metas_detalhado": [
+          {
+            "ordem": 1,
+            "item": "Identificar o Paciente Corretamente",
+            "objetivo": "Garantir que o cuidado seja prestado à pessoa para a qual se destina.",
+            "verificacao": "Utilizar pelo menos dois identificadores (nome completo e data de nascimento) em todos os processos. Nunca utilizar o número do leito ou quarto como identificador."
+          },
+          {
+            "ordem": 2,
+            "item": "Melhorar a Comunicação Efetiva",
+            "objetivo": "Reduzir erros resultantes de falhas na troca de informações entre profissionais.",
+            "verificacao": "Implementar protocolos para ordens verbais e resultados críticos (Anotar, Ler e Confirmar). Utilizar ferramentas como SBAR na passagem de plantão."
+          },
+          {
+            "ordem": 3,
+            "item": "Melhorar a Segurança dos Medicamentos de Alta Vigilância",
+            "objetivo": "Prevenir erros com fármacos que possuem maior risco de causar danos graves se utilizados incorretamente.",
+            "verificacao": "Identificação diferenciada (etiquetas vermelhas), armazenamento restrito de eletrólitos concentrados e obrigatoriedade de dupla checagem na administração."
+          },
+          {
+            "ordem": 4,
+            "item": "Assegurar Cirurgias com Local, Procedimento e Paciente Corretos",
+            "objetivo": "Eliminar ocorrências de cirurgias em locais ou pacientes errados.",
+            "verificacao": "Realização do 'Time-out' antes da incisão, marcação da lateralidade (sítio cirúrgico) e preenchimento do Checklist de Cirurgia Segura da OMS."
+          },
+          {
+            "ordem": 5,
+            "item": "Reduzir o Risco de Infecções Associadas aos Cuidados de Saúde",
+            "objetivo": "Minimizar a transmissão de microrganismos através da higiene das mãos.",
+            "verificacao": "Adesão rigorosa aos '5 Momentos para a Higiene das Mãos' e disponibilidade de álcool em gel em todos os pontos de assistência."
+          },
+          {
+            "ordem": 6,
+            "item": "Reduzir o Risco de Danos Resultantes de Quedas e Lesões por Pressão",
+            "objetivo": "Identificar pacientes vulneráveis e implementar medidas preventivas personalizadas.",
+            "verificacao": "Aplicação de escalas de risco (Morse para quedas, Braden para lesões por pressão). Uso de grades elevadas, auxílio na deambulação e mudança de decúbito."
+          }
+        ],
+        "protocolos_adicionais": {
+          "estrategias_barreira": [
+            "Envolvimento do paciente e família no processo de identificação.",
+            "Cultura não punitiva: reporte de 'quase-erros' (near miss).",
+            "Auditorias clínicas periódicas para verificar a adesão às metas.",
+            "Sinalização visual (pulseiras coloridas) para riscos específicos (Alergia, Queda)."
+          ],
+          "limitacoes": "O cumprimento das metas depende diretamente da infraestrutura institucional e do treinamento contínuo da equipe multidisciplinar."
+        },
+        "referencias": [
+          "Joint Commission International (JCI). International Patient Safety Goals.",
+          "Organização Mundial da Saúde (OMS). World Alliance for Patient Safety.",
+          "Ministério da Saúde (Brasil). Programa Nacional de Segurança do Paciente (PNSP)."
+        ]
+      },
+      "metadata": {
+        "criado_por": "Calculadoras de Enfermagem",
+        "ultima_atualizacao": "2024-05-20",
+        "idioma": "pt-BR"
+      }
+    },
+    
+    "nanda": {
+      "id": "guia-nanda-001",
+      "slug": "guia-bolso-diagnosticos-nanda",
+      "titulo": "Guia de Bolso: Diagnósticos de Enfermagem NANDA",
+      "categoria": "Diagnóstico de Enfermagem",
+      "tags": ["NANDA", "Diagnóstico", "Enfermagem", "Plano de Cuidados"],
+      "descricao_curta": "Classificação de diagnósticos de enfermagem NANDA para planejamento da assistência.",
+      "conteudo_tecnico": {
+        "identificacao": {
+          "definicao": "A taxonomia NANDA-I (North American Nursing Diagnosis Association International) fornece diagnósticos de enfermagem padronizados para a prática clínica.",
+          "classificacao_risco": "Ferramenta de Classificação em Enfermagem",
+          "importancia": "Base para a Sistematização da Assistência de Enfermagem (SAE), permitindo identificar respostas humanas a problemas de saúde reais ou potenciais."
+        },
+        "objetivos": {
+          "principal": "Fornecer uma base científica para a seleção de intervenções de enfermagem visando resultados esperados.",
+          "finalidade": [
+            "Identificar problemas/necessidades do paciente",
+            "Direcionar as intervenções de enfermagem",
+            "Avaliar os resultados da assistência",
+            "Comunicação efetiva entre a equipe"
+          ]
+        },
+        "dominios_nanda": [
+          {
+            "dominio": "Promoção da Saúde",
+            "classes": ["Consciência em Saúde", "Controle da Saúde"]
+          },
+          {
+            "dominio": "Nutrição",
+            "classes": ["Ingestão", "Digestão", "Absorção", "Metabolismo", "Hidratação"]
+          },
+          {
+            "dominio": "Eliminação e Troca",
+            "classes": ["Função Urinária", "Função Gastrointestinal", "Função da Pele"]
+          }
+        ],
+        "diagnosticos_relacionados_insulina": [
+          {
+            "diagnostico": "Risco de Glicemia Instável",
+            "definicao": "Risco de variação dos níveis séricos de glicose no sangue para níveis acima ou abaixo da faixa normal.",
+            "fatores_risco": [
+              "Administração de insulina",
+              "Falta de adesão ao regime de controle da glicemia",
+              "Conhecimento deficiente sobre o manejo da glicemia"
+            ]
+          },
+          {
+            "diagnostico": "Conhecimento Deficiente",
+            "definicao": "Ausência ou deficiência de informações cognitivas relacionadas a um tópico específico.",
+            "manifestacoes": [
+              "Solicitação de informações",
+              "Comportamento inadequado",
+              "Declarações de equívocos"
+            ]
+          }
+        ],
+        "protocolos_adicionais": {
+          "estrategias": [
+            "Utilizar o raciocínio clínico para identificar o diagnóstico correto.",
+            "Considerar a evidência científica e a condição específica do paciente.",
+            "Documentar o diagnóstico com base na avaliação completa."
+          ],
+          "limitacoes": "O diagnóstico de enfermagem não substitui o diagnóstico médico, mas complementa o plano de cuidados."
+        },
+        "referencias": [
+          "NANDA International. Diagnósticos de Enfermagem da NANDA-I: Definições e Classificação 2021-2023.",
+          "Conselho Federal de Enfermagem (COFEN). Resolução COFEN n° 358/2009 - Sistematização da Assistência de Enfermagem."
+        ]
+      },
+      "metadata": {
+        "criado_por": "Calculadoras de Enfermagem",
+        "ultima_atualizacao": "2024-05-20",
+        "idioma": "pt-BR"
+      }
+    },
+    
+    "heparina": {
+      "id": "guia-heparina-001",
+      "slug": "guia-bolso-aspiracao-heparina",
+      "titulo": "Guia de Bolso: Aspiração de Heparina",
+      "categoria": "Calculadoras Clínicas",
+      "tags": ["Calculadoras Clínicas","Heparina","Anticoagulante", "MAV", "Cálculo de Medicamentos", "Enfermagem"],
+      "descricao_curta": "Ferramenta de suporte à decisão clínica para conversão de dose de Heparina (UI para mL).",
+      "conteudo_tecnico": {
+        "identificacao": {
+          "definicao": "A Calculadora de Aspiração de Heparina converte a dose prescrita em Unidades Internacionais (UI) para o volume exato em mililitros (mL) a ser aspirado do frasco-ampola ou ampola disponível.",
+          "classificacao_risco": "Medicamento de Alta Vigilância (MAV)",
+          "riscos_associados": [
+            "Hemorragias graves (Superdosagem)",
+            "Eventos trombóticos (Subdosagem)",
+            "Erro de interpretação de concentração (Volume vs Unidade)"
+          ]
+        },
+        "objetivos": {
+          "principal": "Automatizar a Regra de Três simples para o preparo da medicação.",
+          "finalidade": [
+            "Redução da carga cognitiva do profissional",
+            "Minimização de erros matemáticos",
+            "Garantia da dose exata conforme prescrição médica"
+          ]
+        },
+        "publico_alvo": ["Enfermeiros", "Técnicos de Enfermagem", "Auxiliares de Enfermagem"],
+        "indicacoes_clinicas": [
+          "Protocolos de anticoagulação plena",
+          "Profilaxia de Tromboembolismo Venoso (TEV)",
+          "Síndromes Coronarianas Agudas (SCA)",
+          "Procedimentos de Hemodiálise"
+        ],
+        "parametros_calculo": [
+          {
+            "variavel": "Concentração do Frasco (UI)",
+            "descricao": "Quantidade total de unidades contida no frasco ou ampola (ex: 5.000 UI)."
+          },
+          {
+            "variavel": "Volume do Frasco (mL)",
+            "descricao": "Volume total de líquido onde as unidades estão diluídas (ex: 5 mL ou 0,25 mL)."
+          },
+          {
+            "variavel": "Dose Prescrita (UI)",
+            "descricao": "A dose exata solicitada pelo médico na prescrição."
+          }
+        ],
+        "logica_matematica": {
+          "formula": "Volume a Aspirar (mL) = (Dose Prescrita * Volume do Frasco) / Concentração do Frasco",
+          "interpretacao": "O resultado indica o volume que deve ser aspirado com seringa de precisão (1 mL ou 3 mL)."
+        },
+        "protocolos_seguranca": {
+          "obrigatoriedades": [
+            "Dupla checagem: conferência do cálculo por dois profissionais antes da aspiração.",
+            "Verificação de rótulo: distinção entre Heparina Sódica (EV/SC) e Heparina Cálcica (SC).",
+            "Hard Stop: A calculadora não substitui a conferência física do rótulo da ampola."
+          ],
+          "limitacoes": "Não realiza cálculos de infusão contínua (ex: UI/kg/hora). Use calculadoras de vazão específicas para bombas de infusão.",
+          "alerta_critico": "ALERTA DE SEGURANÇA: Uma ampola de 0,25 mL com 5.000 UI possui concentração 20x superior a um frasco de 5 mL com as mesmas 5.000 UI. Erros de volume aqui podem ser fatais."
+        },
+        "referencias": [
+          "Conselho Federal de Enfermagem (COFEN). Guia de Boas Práticas no Preparo e Administração de Medicamentos.",
+          "Instituto para Práticas Seguras no Uso de Medicamentos (ISMP Brasil). Boletim de Medicamentos de Alta Vigilância.",
+          "Potter, P. A.; Perry, A. G. Fundamentos de Enfermagem. 9ª Edição. Elsevier, 2017."
+        ]
+      },
+      "metadata": {
+        "criado_por": "Calculadoras de Enfermagem",
+        "ultima_atualizacao": "2024-05-20",
+        "idioma": "pt-BR"
+      }
+    }
+  },
+  
+  "sidebar_direito": {
+    "cta-simulados": {
+      "id": "cta-simulados",
+      "titulo": "Simulados de Enfermagem",
+      "tipo": "cta",
+      "descricao": "Teste seus conhecimentos com simulados interativos de enfermagem.",
+      "botao": "Acessar Simulados",
+      "link": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/simulados",
+      "icone": "fa-book-open",
+      "cor": "gradient-blue",
+      "target": "_blank"
+    },
+    "compartilhamento": {
+      "id": "compartilhamento",
+      "titulo": "Compartilhar",
+      "tipo": "social",
+      "redes": [
+        { 
+          "id": "whatsapp", 
+          "nome": "whatsapp", 
+          "icone": "fa-brands fa-whatsapp", 
+          "cor": "bg-green-500", 
+          "acao": "shareOn('whatsapp')",
+          "url": "https://wa.me/?text=" 
+        },
+        { 
+          "id": "facebook", 
+          "nome": "facebook", 
+          "icone": "fa-brands fa-facebook", 
+          "cor": "bg-blue-600", 
+          "acao": "shareOn('facebook')",
+          "url": "https://www.facebook.com/sharer/sharer.php?u=" 
+        },
+        { 
+          "id": "linkedin", 
+          "nome": "linkedin", 
+          "icone": "fa-brands fa-linkedin", 
+          "cor": "bg-blue-500", 
+          "acao": "shareOn('linkedin')",
+          "url": "https://www.linkedin.com/shareArticle?mini=true&url=" 
+        },
+        { 
+          "id": "copiar-link", 
+          "nome": "copiar-link", 
+          "icone": "fa-solid fa-link", 
+          "cor": "bg-gray-600", 
+          "acao": "copyLink()"
+        }
+      ]
+    },
+    "ferramentas_relacionadas": {
+      "id": "ferramentas-relacionadas",
+      "titulo": "Ferramentas Relacionadas",
+      "tipo": "links",
+      "items": [
+        { "id": "link1", "label": "Cálculo de Heparina", "icone": "fa-calculator", "link": "#", "badge": "Nova" },
+        { "id": "link2", "label": "Cálculo de Medicamentos", "icone": "fa-calculator", "link": "#", "badge": "Popular" },
+        { "id": "link3", "label": "Balanço Hídrico", "icone": "fa-calculator", "link": "#" },
+        { "id": "link4", "label": "Gotejamento", "icone": "fa-calculator", "link": "#" }
+      ]
+    }
+  },
+  
+  "secoes_independentes": {
+    "autor": {
+      "id": "author-section",
+      "titulo": "Autor",
+      "tipo": "autor",
+      "imagem": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp",
+      "nome": "Calculadoras de Enfermagem",
+      "descricao": "Ferramenta profissional para segurança do paciente",
+      "link": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/"
+    },
+    "tags": {
+      "id": "topics-section",
+      "titulo": "Tópicos Relacionados",
+      "tipo": "tags",
+      "tags": [
+        { "id": "tag1", "nome": "insulina", "cor": "blue" },
+        { "id": "tag2", "nome": "medicação", "cor": "green" },
+        { "id": "tag3", "nome": "segurança", "cor": "red" },
+        { "id": "tag4", "nome": "endocrinologia", "cor": "purple" },
+        { "id": "tag5", "nome": "diabetes", "cor": "orange" },
+        { "id": "tag6", "nome": "enfermagem", "cor": "teal" },
+        { "id": "tag7", "nome": "cálculo", "cor": "indigo" },
+        { "id": "tag8", "nome": "protocolo", "cor": "pink" }
+      ]
+    }
+  },
+  
+  "checklists": {
+    "9certos_checklist": {
+      "items": [
+        {
+          "id": "c1",
+          "label": "1. Paciente Certo",
+          "info": "Confirmar nome completo e data de nascimento em dois indicadores (pulseira e prontuário)."
+        },
+        {
+          "id": "c2",
+          "label": "2. Medicamento Certo",
+          "info": "Conferir o rótulo com a prescrição 3 vezes: ao pegar, ao preparar e ao descartar."
+        },
+        {
+          "id": "c3",
+          "label": "3. Via Certa",
+          "info": "Verificar se a via (EV, IM, SC, VO) é compatível com a apresentação e segura."
+        },
+        {
+          "id": "c4",
+          "label": "4. Hora Certa",
+          "info": "Administrar no horário aprazado (janela de segurança de 30 min) para manter nível terapêutico."
+        },
+        {
+          "id": "c5",
+          "label": "5. Dose Certa",
+          "info": "Conferir a dosagem prescrita e realizar cálculos de conversão (mg -> mL) se necessário."
+        },
+        {
+          "id": "c6",
+          "label": "6. Registro Certo",
+          "info": "Checar na prescrição imediatamente após administrar e anotar intercorrências."
+        },
+        {
+          "id": "c7",
+          "label": "7. Orientação Certa",
+          "info": "Explicar ao paciente o nome do fármaco, finalidade e possíveis efeitos colaterais."
+        },
+        {
+          "id": "c8",
+          "label": "8. Forma Certa",
+          "info": "Verificar a forma farmacêutica correta (solução, suspensão, comprimido, etc)."
+        },
+        {
+          "id": "c9",
+          "label": "9. Resposta Certa",
+          "info": "Monitorar eficácia terapêutica e reações adversas após a administração."
+        }
+      ]
+    },
+    "metas_checklist": {
+      "items": [
+        {
+          "id": "m1",
+          "label": "Meta 1: Identificação Correta",
+          "info": "Utilizar dois identificadores. Nunca usar número do leito/quarto."
+        },
+        {
+          "id": "m2",
+          "label": "Meta 2: Comunicação Efetiva",
+          "info": "Protocolo para ordens verbais e resultados críticos (Anotar, Ler, Confirmar)."
+        },
+        {
+          "id": "m3",
+          "label": "Meta 3: Med. Alta Vigilância",
+          "info": "Identificação diferenciada, armazenamento restrito e dupla checagem."
+        },
+        {
+          "id": "m4",
+          "label": "Meta 4: Cirurgia Segura",
+          "info": "Time-out, marcação de lateralidade e checklist da OMS."
+        },
+        {
+          "id": "m5",
+          "label": "Meta 5: Risco de Infecção",
+          "info": "Higiene das mãos (5 momentos) e precauções padrão."
+        },
+        {
+          "id": "m6",
+          "label": "Meta 6: Risco de Queda/LPP",
+          "info": "Aplicação de escalas (Morse/Braden) e medidas preventivas."
+        }
+      ]
+    }
+  }
+}

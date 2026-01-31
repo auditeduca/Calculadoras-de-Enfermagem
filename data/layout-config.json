@@ -1,0 +1,50 @@
+{
+  "layout": {
+    "nome": "Calculadoras de Enfermagem",
+    "tema": {
+      "cores": {
+        "primaria": "#3b82f6",
+        "secundaria": "#10b981",
+        "perigo": "#ef4444",
+        "sucesso": "#10b981",
+        "aviso": "#f59e0b"
+      },
+      "modo_escuro": true,
+      "fontes": {
+        "principal": "'Inter', sans-serif",
+        "secundaria": "'Roboto', sans-serif"
+      }
+    },
+    "breakpoints": {
+      "mobile": "640px",
+      "tablet": "768px",
+      "desktop": "1024px",
+      "wide": "1280px"
+    },
+    "z_index": {
+      "sidebar": 40,
+      "modal": 50,
+      "dropdown": 30,
+      "tooltip": 60
+    }
+  },
+  
+  "funcionalidades": {
+    "compartilhamento": {
+      "redes_sociais": ["whatsapp", "facebook", "linkedin", "copiar-link"],
+      "mensagem_padrao": "Confira esta calculadora de insulina para enfermagem!",
+      "hashtags": ["#enfermagem", "#insulina", "#segurançadopaciente"]
+    },
+    "exportacao": {
+      "formato_pdf": true,
+      "formato_csv": false,
+      "formato_imagem": false,
+      "incluir_auditoria": true
+    },
+    "local_storage": {
+      "salvar_historico": true,
+      "max_itens_historico": 10,
+      "salvar_configuracoes": true
+    }
+  }
+}

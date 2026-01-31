@@ -1,0 +1,134 @@
+{
+  "modais": {
+    "9certos": {
+      "id": "modal-9certos",
+      "titulo": "9 CERTOS (MEDICAÇÃO)",
+      "guia_id": "guia-9acertos-001",
+      "largura": "850px",
+      "checklist_items": [
+        {
+          "id": "c1",
+          "label": "1. Paciente Certo",
+          "info": "Confirmar nome completo e data de nascimento em dois indicadores (pulseira e prontuário)."
+        },
+        {
+          "id": "c2",
+          "label": "2. Medicamento Certo",
+          "info": "Conferir o rótulo com a prescrição 3 vezes: ao pegar, ao preparar e ao descartar."
+        },
+        {
+          "id": "c3",
+          "label": "3. Via Certa",
+          "info": "Verificar se a via (EV, IM, SC, VO) é compatível com a apresentação e segura."
+        },
+        {
+          "id": "c4",
+          "label": "4. Hora Certa",
+          "info": "Administrar no horário aprazado (janela de segurança de 30 min) para manter nível terapêutico."
+        },
+        {
+          "id": "c5",
+          "label": "5. Dose Certa",
+          "info": "Conferir a dosagem prescrita e realizar cálculos de conversão (mg -> mL) se necessário."
+        },
+        {
+          "id": "c6",
+          "label": "6. Registro Certo",
+          "info": "Checar na prescrição imediatamente após administrar e anotar intercorrências."
+        },
+        {
+          "id": "c7",
+          "label": "7. Orientação Certa",
+          "info": "Explicar ao paciente o nome do fármaco, finalidade e possíveis efeitos colaterais."
+        },
+        {
+          "id": "c8",
+          "label": "8. Forma Certa",
+          "info": "Verificar a forma farmacêutica correta (solução, suspensão, comprimido, etc)."
+        },
+        {
+          "id": "c9",
+          "label": "9. Resposta Certa",
+          "info": "Monitorar eficácia terapêutica e reações adversas após a administração."
+        }
+      ]
+    },
+    
+    "metas": {
+      "id": "modal-metas",
+      "titulo": "Metas Internacionais de Segurança do Paciente",
+      "guia_id": "guia-metas-001",
+      "largura": "850px",
+      "checklist_items": [
+        {
+          "id": "m1",
+          "label": "Meta 1: Identificação Correta",
+          "info": "Utilizar dois identificadores. Nunca usar número do leito/quarto."
+        },
+        {
+          "id": "m2",
+          "label": "Meta 2: Comunicação Efetiva",
+          "info": "Protocolo para ordens verbais e resultados críticos (Anotar, Ler, Confirmar)."
+        },
+        {
+          "id": "m3",
+          "label": "Meta 3: Med. Alta Vigilância",
+          "info": "Identificação diferenciada, armazenamento restrito e dupla checagem."
+        },
+        {
+          "id": "m4",
+          "label": "Meta 4: Cirurgia Segura",
+          "info": "Time-out, marcação de lateralidade e checklist da OMS."
+        },
+        {
+          "id": "m5",
+          "label": "Meta 5: Risco de Infecção",
+          "info": "Higiene das mãos (5 momentos) e precauções padrão."
+        },
+        {
+          "id": "m6",
+          "label": "Meta 6: Risco de Queda/LPP",
+          "info": "Aplicação de escalas (Morse/Braden) e medidas preventivas."
+        }
+      ]
+    },
+    
+    "nanda": {
+      "id": "modal-nanda",
+      "titulo": "Diagnósticos de Enfermagem (NANDA)",
+      "guia_id": "guia-nanda-001",
+      "largura": "900px",
+      "conteudo_tipo": "diagnosticos_insulina",
+      "diagnosticos_relevantes": [
+        {
+          "diagnostico": "Risco de Glicemia Instável",
+          "definicao": "Risco de variação dos níveis séricos de glicose no sangue para níveis acima ou abaixo da faixa normal.",
+          "fatores_relacionados": [
+            "Administração de insulina",
+            "Falta de adesão ao regime de controle da glicemia",
+            "Conhecimento deficiente sobre o manejo da glicemia"
+          ],
+          "intervencoes_nic": [
+            "Monitoramento da glicemia",
+            "Educação sobre insulina",
+            "Monitoramento de sinais e sintomas de hipoglicemia/hiperglicemia"
+          ]
+        },
+        {
+          "diagnostico": "Conhecimento Deficiente",
+          "definicao": "Ausência ou deficiência de informações cognitivas relacionadas a um tópico específico.",
+          "fatores_relacionados": [
+            "Falta de exposição à informação",
+            "Interpretação incorreta das informações",
+            "Falta de interesse em aprender"
+          ],
+          "intervencoes_nic": [
+            "Ensino: processo de doença",
+            "Ensino: medicação prescrita",
+            "Ensino: auto-cuidado"
+          ]
+        }
+      ]
+    }
+  }
+}
