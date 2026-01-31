@@ -1,0 +1,81 @@
+{
+  "id": "guia-metas-001",
+  "slug": "guia-bolso-metas-internacionais-seguranca",
+  "titulo": "Guia de Bolso: Metas Internacionais de Segurança do Paciente",
+  "categoria": "Segurança do Paciente",
+  "tags": ["Segurança do Paciente", "Protocolo", "OMS", "JCI", "Gestão Hospitalar", "Enfermagem"],
+  "descricao_curta": "As 6 metas globais estabelecidas para prevenir danos e garantir a excelência na assistência à saúde.",
+  "conteudo_tecnico": {
+    "identificacao": {
+      "definicao": "As Metas Internacionais de Segurança do Paciente (MISP) são um conjunto de diretrizes padronizadas globalmente para promover melhorias específicas em áreas críticas da assistência.",
+      "classificacao_risco": "Protocolo de Segurança Máxima / Padrão Ouro",
+      "importancia": "As metas visam solucionar os problemas mais recorrentes na assistência à saúde, como identificação incorreta, falhas na comunicação e infecções hospitalares."
+    },
+    "objetivos": {
+      "principal": "Implementar barreiras sistêmicas para eliminar erros evitáveis nos serviços de saúde.",
+      "finalidade": [
+        "Atingir a acreditação hospitalar (JCI/ONA)",
+        "Reduzir a morbimortalidade associada à assistência",
+        "Padronizar processos críticos em todas as unidades de saúde",
+        "Fomentar a transparência e a segurança institucional"
+      ]
+    },
+    "metas_detalhado": [
+      {
+        "ordem": 1,
+        "item": "Identificar o Paciente Corretamente",
+        "objetivo": "Garantir que o cuidado seja prestado à pessoa para a qual se destina.",
+        "verificacao": "Utilizar pelo menos dois identificadores (nome completo e data de nascimento) em todos os processos. Nunca utilizar o número do leito ou quarto como identificador."
+      },
+      {
+        "ordem": 2,
+        "item": "Melhorar a Comunicação Efetiva",
+        "objetivo": "Reduzir erros resultantes de falhas na troca de informações entre profissionais.",
+        "verificacao": "Implementar protocolos para ordens verbais e resultados críticos (Anotar, Ler e Confirmar). Utilizar ferramentas como SBAR na passagem de plantão."
+      },
+      {
+        "ordem": 3,
+        "item": "Melhorar a Segurança dos Medicamentos de Alta Vigilância",
+        "objetivo": "Prevenir erros com fármacos que possuem maior risco de causar danos graves se utilizados incorretamente.",
+        "verificacao": "Identificação diferenciada (etiquetas vermelhas), armazenamento restrito de eletrólitos concentrados e obrigatoriedade de dupla checagem na administração."
+      },
+      {
+        "ordem": 4,
+        "item": "Assegurar Cirurgias com Local, Procedimento e Paciente Corretos",
+        "objetivo": "Eliminar ocorrências de cirurgias em locais ou pacientes errados.",
+        "verificacao": "Realização do 'Time-out' antes da incisão, marcação da lateralidade (sítio cirúrgico) e preenchimento do Checklist de Cirurgia Segura da OMS."
+      },
+      {
+        "ordem": 5,
+        "item": "Reduzir o Risco de Infecções Associadas aos Cuidados de Saúde",
+        "objetivo": "Minimizar a transmissão de microrganismos através da higiene das mãos.",
+        "verificacao": "Adesão rigorosa aos '5 Momentos para a Higiene das Mãos' e disponibilidade de álcool em gel em todos os pontos de assistência."
+      },
+      {
+        "ordem": 6,
+        "item": "Reduzir o Risco de Danos Resultantes de Quedas e Lesões por Pressão",
+        "objetivo": "Identificar pacientes vulneráveis e implementar medidas preventivas personalizadas.",
+        "verificacao": "Aplicação de escalas de risco (Morse para quedas, Braden para lesões por pressão). Uso de grades elevadas, auxílio na deambulação e mudança de decúbito."
+      }
+    ],
+    "protocolos_adicionais": {
+      "estrategias_barreira": [
+        "Envolvimento do paciente e família no processo de identificação.",
+        "Cultura não punitiva: reporte de 'quase-erros' (near miss).",
+        "Auditorias clínicas periódicas para verificar a adesão às metas.",
+        "Sinalização visual (pulseiras coloridas) para riscos específicos (Alergia, Queda)."
+      ],
+      "limitacoes": "O cumprimento das metas depende diretamente da infraestrutura institucional e do treinamento contínuo da equipe multidisciplinar."
+    },
+    "referencias": [
+      "Joint Commission International (JCI). International Patient Safety Goals.",
+      "Organização Mundial da Saúde (OMS). World Alliance for Patient Safety.",
+      "Ministério da Saúde (Brasil). Programa Nacional de Segurança do Paciente (PNSP)."
+    ]
+  },
+  "metadata": {
+    "criado_por": "Calculadoras de Enfermagem",
+    "ultima_atualizacao": "2024-05-20",
+    "idioma": "pt-BR"
+  }
+}

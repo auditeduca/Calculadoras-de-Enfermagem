@@ -1,0 +1,71 @@
+{
+  "id": "guia-heparina-001",
+  "slug": "guia-bolso-aspiracao-heparina",
+  "titulo": "Guia de Bolso: Aspiração de Heparina",
+  "categoria": "Calculadoras Clínicas",
+  "tags": ["Calculadoras Clínicas","Heparina","Anticoagulante", "MAV", "Cálculo de Medicamentos", "Enfermagem"],
+  "descricao_curta": "Ferramenta de suporte à decisão clínica para conversão de dose de Heparina (UI para mL).",
+  "conteudo_tecnico": {
+    "identificacao": {
+      "definicao": "A Calculadora de Aspiração de Heparina converte a dose prescrita em Unidades Internacionais (UI) para o volume exato em mililitros (mL) a ser aspirado do frasco-ampola ou ampola disponível.",
+      "classificacao_risco": "Medicamento de Alta Vigilância (MAV)",
+      "riscos_associados": [
+        "Hemorragias graves (Superdosagem)",
+        "Eventos trombóticos (Subdosagem)",
+        "Erro de interpretação de concentração (Volume vs Unidade)"
+      ]
+    },
+    "objetivos": {
+      "principal": "Automatizar a Regra de Três simples para o preparo da medicação.",
+      "finalidade": [
+        "Redução da carga cognitiva do profissional",
+        "Minimização de erros matemáticos",
+        "Garantia da dose exata conforme prescrição médica"
+      ]
+    },
+    "publico_alvo": ["Enfermeiros", "Técnicos de Enfermagem", "Auxiliares de Enfermagem"],
+    "indicacoes_clinicas": [
+      "Protocolos de anticoagulação plena",
+      "Profilaxia de Tromboembolismo Venoso (TEV)",
+      "Síndromes Coronarianas Agudas (SCA)",
+      "Procedimentos de Hemodiálise"
+    ],
+    "parametros_calculo": [
+      {
+        "variavel": "Concentração do Frasco (UI)",
+        "descricao": "Quantidade total de unidades contida no frasco ou ampola (ex: 5.000 UI)."
+      },
+      {
+        "variavel": "Volume do Frasco (mL)",
+        "descricao": "Volume total de líquido onde as unidades estão diluídas (ex: 5 mL ou 0,25 mL)."
+      },
+      {
+        "variavel": "Dose Prescrita (UI)",
+        "descricao": "A dose exata solicitada pelo médico na prescrição."
+      }
+    ],
+    "logica_matematica": {
+      "formula": "Volume a Aspirar (mL) = (Dose Prescrita * Volume do Frasco) / Concentração do Frasco",
+      "interpretacao": "O resultado indica o volume que deve ser aspirado com seringa de precisão (1 mL ou 3 mL)."
+    },
+    "protocolos_seguranca": {
+      "obrigatoriedades": [
+        "Dupla checagem: conferência do cálculo por dois profissionais antes da aspiração.",
+        "Verificação de rótulo: distinção entre Heparina Sódica (EV/SC) e Heparina Cálcica (SC).",
+        "Hard Stop: A calculadora não substitui a conferência física do rótulo da ampola."
+      ],
+      "limitacoes": "Não realiza cálculos de infusão contínua (ex: UI/kg/hora). Use calculadoras de vazão específicas para bombas de infusão.",
+      "alerta_critico": "ALERTA DE SEGURANÇA: Uma ampola de 0,25 mL com 5.000 UI possui concentração 20x superior a um frasco de 5 mL com as mesmas 5.000 UI. Erros de volume aqui podem ser fatais."
+    },
+    "referencias": [
+      "Conselho Federal de Enfermagem (COFEN). Guia de Boas Práticas no Preparo e Administração de Medicamentos.",
+      "Instituto para Práticas Seguras no Uso de Medicamentos (ISMP Brasil). Boletim de Medicamentos de Alta Vigilância.",
+      "Potter, P. A.; Perry, A. G. Fundamentos de Enfermagem. 9ª Edição. Elsevier, 2017."
+    ]
+  },
+  "metadata": {
+    "criado_por": "Calculadoras de Enfermagem",
+    "ultima_atualizacao": "2024-05-20",
+    "idioma": "pt-BR"
+  }
+}

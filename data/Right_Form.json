@@ -1,0 +1,90 @@
+{
+  "id": "guia-9acertos-001",
+  "slug": "guia-bolso-9-acertos-medicamentos",
+  "titulo": "Guia de Bolso: 9 Acertos na Administração de Medicamentos",
+  "categoria": "Segurança do Paciente",
+  "tags": ["Segurança do Paciente", "Protocolo", "Enfermagem", "Farmacologia", "Prevenção de Erros"],
+  "descricao_curta": "Diretriz fundamental para a prática segura na administração de fármacos, visando a eliminação de eventos adversos.",
+  "conteudo_tecnico": {
+    "identificacao": {
+      "definicao": "Os 9 Acertos são um conjunto de verificações sistemáticas que o profissional de enfermagem deve realizar antes, durante e após a administração de qualquer medicamento.",
+      "classificacao_risco": "Protocolo de Segurança Internacional",
+      "importancia": "Redução drástica de erros de medicação, que representam uma das maiores causas de danos evitáveis em sistemas de saúde no mundo."
+    },
+    "objetivos": {
+      "principal": "Estabelecer barreiras de segurança entre o medicamento e o paciente.",
+      "finalidade": [
+        "Garantir a integridade física do paciente",
+        "Padronizar a assistência de enfermagem",
+        "Respaldar legalmente o profissional executante",
+        "Promover a cultura de segurança institucional"
+      ]
+    },
+    "os_9_acertos_detalhado": [
+      {
+        "ordem": 1,
+        "item": "Paciente Certo",
+        "verificacao": "Confirmar nome completo e data de nascimento em dois indicadores (pulseira e prontuário). Perguntar ao paciente se ele está lúcido."
+      },
+      {
+        "ordem": 2,
+        "item": "Medicamento Certo",
+        "verificacao": "Conferir o rótulo do medicamento com a prescrição médica por três vezes (ao pegar, ao preparar e ao descartar/guardar)."
+      },
+      {
+        "ordem": 3,
+        "item": "Via Certa",
+        "verificacao": "Verificar se a via prescrita (EV, IM, SC, VO) é compatível com a apresentação do fármaco e segura para o paciente."
+      },
+      {
+        "ordem": 4,
+        "item": "Hora Certa",
+        "verificacao": "Administrar rigorosamente no horário aprazado para manter o nível terapêutico (janela de segurança de geralmente 30 min)."
+      },
+      {
+        "ordem": 5,
+        "item": "Dose Certa",
+        "verificacao": "Conferir a dosagem prescrita e realizar cálculos de conversão se necessário (ex: miligramas para mililitros)."
+      },
+      {
+        "ordem": 6,
+        "item": "Registro Certo",
+        "verificacao": "Checar o horário na prescrição imediatamente após a administração e anotar qualquer intercorrência ou recusa."
+      },
+      {
+        "ordem": 7,
+        "item": "Orientação Certa",
+        "verificacao": "Explicar ao paciente o nome do medicamento, para que serve e possíveis efeitos colaterais comuns."
+      },
+      {
+        "ordem": 8,
+        "item": "Forma Certa",
+        "verificacao": "Verificar se o medicamento está em sua forma farmacêutica correta (solução, suspensão, comprimido revestido, etc)."
+      },
+      {
+        "ordem": 9,
+        "item": "Resposta Certa",
+        "verificacao": "Monitorar o paciente após a administração para avaliar a eficácia do tratamento e detectar reações adversas precocemente."
+      }
+    ],
+    "protocolos_adicionais": {
+      "estrategias_barreira": [
+        "Não administrar medicamentos preparados por outros profissionais.",
+        "Manter silêncio e concentração máxima durante o preparo.",
+        "Não ignorar alertas de alergias registrados no prontuário.",
+        "Realizar dupla checagem em Medicamentos de Alta Vigilância (MAV)."
+      ],
+      "limitacoes": "O protocolo dos 9 acertos não substitui o julgamento clínico do enfermeiro quanto à condição hemodinâmica do paciente antes da aplicação."
+    },
+    "referencias": [
+      "Conselho Federal de Enfermagem (COFEN). Protocolos de Segurança do Paciente.",
+      "Organização Mundial da Saúde (OMS). Desafio Global de Segurança do Paciente: Medicação sem Danos.",
+      "Anvisa. Protocolo de Segurança na Prescrição, Uso e Administração de Medicamentos."
+    ]
+  },
+  "metadata": {
+    "criado_por": "Calculadoras de Enfermagem",
+    "ultima_atualizacao": "2024-05-20",
+    "idioma": "pt-BR"
+  }
+}
