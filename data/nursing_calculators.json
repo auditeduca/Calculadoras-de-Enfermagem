@@ -1,162 +1,258 @@
 {
-  "version": "1.0.0",
-  "last_updated": "2024-01-29",
-  "calculators": [
-    {
+  "version": "2.0.0",
+  "lastUpdated": "2025-01-30",
+  "calculators": {
+    "insulina": {
       "id": "insulina",
-      "name": "Cálculo de Insulina",
-      "description": "Ferramenta técnica para aspiração segura de insulina com protocolos integrados.",
-      "category": "Medicação",
-      "unit": "mL",
-      "formula": {
-        "calculation": "V = (Dose Prescrita × Volume Seringa) ÷ Concentração Frasco",
-        "explanation": "Volume a aspirar em mL = (Dose em UI × Volume da seringa em mL) ÷ Concentração do frasco em UI/mL"
-      },
-      "fields": {
-        "Parâmetros do Paciente": [
-          {
-            "id": "patient_name",
-            "name": "Nome do Paciente",
-            "type": "text",
-            "placeholder": "Nome completo",
-            "required": false
-          }
-        ],
-        "Parâmetros do Cálculo": [
-          {
-            "id": "dose_prescrita",
-            "name": "Dose Prescrita",
-            "type": "number",
-            "placeholder": "Ex: 20",
-            "required": true,
-            "unit": "UI",
-            "min": 0,
-            "step": 0.5
-          },
-          {
-            "id": "concentracao_frasco",
-            "name": "Concentração do Frasco",
-            "type": "number",
-            "placeholder": "Ex: 100",
-            "required": true,
-            "unit": "UI/mL",
-            "min": 0
-          },
-          {
-            "id": "volume_seringa",
-            "name": "Volume da Seringa",
-            "type": "number",
-            "placeholder": "Ex: 1",
-            "required": true,
-            "unit": "mL",
-            "min": 0,
-            "step": 0.5
-          }
-        ]
-      },
-      "instructions": [
-        "Identifique corretamente o paciente",
-        "Confirme a dose prescrita com a prescrição médica",
-        "Verifique a concentração do frasco de insulina (geralmente 100 UI/mL)",
-        "Selecione seringa apropriada (insulina 1mL ou 0,5mL)",
-        "Realize dupla checagem com outro profissional",
-        "Aspire o volume calculado com precisão"
+      "title": "Cálculo de Insulina",
+      "description": "Calculadora profissional para aspiração de insulina em seringas de 100UI e 300UI com segurança do paciente e auditoria de cálculo clínica.",
+      "icon": "fa-syringe",
+      "category": "Farmacologia",
+      "tags": ["insulina", "farmacologia", "segurança-do-paciente", "auditoria", "cálculo-clínico"],
+      "keywords": ["insulina", "diabetes", "seringa", "UI", "mL", "concentração"],
+      "inputs": [
+        {
+          "id": "patient_name",
+          "label": "Nome do Paciente",
+          "type": "text",
+          "required": false,
+          "placeholder": "Opcional - para auditoria",
+          "help": "Informação adicional para registro"
+        },
+        {
+          "id": "patient_birthdate",
+          "label": "Data de Nascimento",
+          "type": "date",
+          "required": false,
+          "help": "Para cálculo de idade e auditoria"
+        },
+        {
+          "id": "prescricao_medica",
+          "label": "Prescrição Médica (UI)",
+          "type": "number",
+          "required": true,
+          "placeholder": "Ex: 10",
+          "min": 0.5,
+          "max": 500,
+          "step": 0.5,
+          "tooltip": "Unidades Internacionais prescritas pelo médico",
+          "help": "Valor em Unidades Internacionais (UI)"
+        },
+        {
+          "id": "concentracao_insulina",
+          "label": "Concentração da Insulina",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "value": "100", "label": "100 UI/mL (Seringa de 100)" },
+            { "value": "300", "label": "300 UI/mL (Seringa de 300)" }
+          ],
+          "tooltip": "Concentração disponível no frasco",
+          "help": "Selecione conforme o frasco disponível"
+        }
       ],
-      "tags": ["insulina", "diabetes", "medicação", "segurança", "dose"]
+      "content": [
+        {
+          "title": "Fórmula de Cálculo",
+          "description": "Volume (mL) = Prescrição (UI) ÷ Concentração (UI/mL)"
+        },
+        {
+          "title": "Segurança do Paciente",
+          "description": "Sempre verificar os 9 certos da medicação antes da administração"
+        },
+        {
+          "title": "Tipos de Insulina",
+          "description": "Rápida, NPH, Lenta, Ultra-rápida e Análogos"
+        },
+        {
+          "title": "Vias de Administração",
+          "description": "Subcutânea (SC) é a via mais comum para insulina"
+        }
+      ],
+      "references": {
+        "nanda": ["Conhecimento deficiente", "Risco de glicemia instável"],
+        "nic": ["Administração de medicamentos", "Educação do paciente"],
+        "noc": ["Conhecimento: medicamentos", "Controle de glicemia"]
+      },
+      "formula": "Volume (mL) = Prescrição (UI) ÷ Concentração (UI/mL)",
+      "unit": "mL"
     },
-    {
+    "heparina": {
       "id": "heparina",
-      "name": "Cálculo de Heparina",
-      "description": "Cálculo preciso para administração de heparina com controle de coagulação.",
-      "category": "Anticoagulante",
-      "unit": "mL",
-      "fields": {
-        "Parâmetros do Cálculo": [
-          {
-            "id": "dose_prescrita",
-            "name": "Dose Prescrita",
-            "type": "number",
-            "required": true,
-            "unit": "UI"
-          },
-          {
-            "id": "concentracao_frasco",
-            "name": "Concentração do Frasco",
-            "type": "number",
-            "required": true,
-            "unit": "UI/mL"
-          },
-          {
-            "id": "volume_seringa",
-            "name": "Volume da Seringa",
-            "type": "number",
-            "required": true,
-            "unit": "mL"
-          }
-        ]
+      "title": "Cálculo de Heparina",
+      "description": "Calculadora para cálculo de heparina com protocolos de anticoagulação e segurança.",
+      "icon": "fa-flask",
+      "category": "Farmacologia",
+      "tags": ["heparina", "anticoagulação", "farmacologia", "segurança-do-paciente"],
+      "keywords": ["heparina", "anticoagulante", "UI", "mL", "trombose"],
+      "inputs": [
+        {
+          "id": "prescricao_heparina",
+          "label": "Prescrição Médica (UI)",
+          "type": "number",
+          "required": true,
+          "placeholder": "Ex: 5000",
+          "min": 1000,
+          "max": 50000,
+          "step": 100,
+          "tooltip": "Unidades Internacionais prescritas",
+          "help": "Valor em Unidades Internacionais (UI)"
+        },
+        {
+          "id": "concentracao_heparina",
+          "label": "Concentração da Heparina",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "value": "5000", "label": "5.000 UI/mL" },
+            { "value": "10000", "label": "10.000 UI/mL" },
+            { "value": "25000", "label": "25.000 UI/mL" }
+          ],
+          "help": "Concentração do frasco disponível"
+        }
+      ],
+      "content": [
+        {
+          "title": "Indicações",
+          "description": "Prevenção e tratamento de trombose venosa profunda, embolia pulmonar e eventos tromboembólicos"
+        },
+        {
+          "title": "Monitoramento",
+          "description": "Verificar TTPa (Tempo de Tromboplastina Parcial Ativado) regularmente"
+        },
+        {
+          "title": "Antídoto",
+          "description": "Sulfato de protamina é o antídoto para superdosagem de heparina"
+        }
+      ],
+      "references": {
+        "nanda": ["Risco de sangramento", "Conhecimento deficiente"],
+        "nic": ["Administração de anticoagulantes", "Monitoramento de coagulação"],
+        "noc": ["Coagulação sanguínea", "Conhecimento: medicamentos"]
       },
-      "tags": ["heparina", "anticoagulante", "coagulação", "trombose"]
+      "formula": "Volume (mL) = Prescrição (UI) ÷ Concentração (UI/mL)",
+      "unit": "mL"
     },
-    {
+    "medicamentos": {
+      "id": "medicamentos",
+      "title": "Diluição de Medicamentos",
+      "description": "Calculadora para diluição de medicamentos com diferentes concentrações.",
+      "icon": "fa-droplet",
+      "category": "Farmacologia",
+      "tags": ["medicamentos", "diluição", "farmacologia", "cálculo-clínico"],
+      "keywords": ["diluição", "medicamento", "concentração", "dose"],
+      "inputs": [
+        {
+          "id": "dose_prescrita",
+          "label": "Dose Prescrita",
+          "type": "number",
+          "required": true,
+          "placeholder": "Ex: 500",
+          "min": 0.1,
+          "step": 0.1,
+          "help": "Quantidade prescrita pelo médico"
+        },
+        {
+          "id": "concentracao_disponivel",
+          "label": "Concentração Disponível",
+          "type": "number",
+          "required": true,
+          "placeholder": "Ex: 250",
+          "min": 0.1,
+          "step": 0.1,
+          "help": "Concentração do medicamento disponível"
+        },
+        {
+          "id": "volume_disponivel",
+          "label": "Volume Disponível (mL)",
+          "type": "number",
+          "required": true,
+          "placeholder": "Ex: 1",
+          "min": 0.1,
+          "step": 0.1,
+          "help": "Volume do frasco ou ampola"
+        }
+      ],
+      "content": [
+        {
+          "title": "Fórmula",
+          "description": "Volume a aspirar = (Dose prescrita × Volume disponível) ÷ Concentração disponível"
+        },
+        {
+          "title": "Técnica de Diluição",
+          "description": "Seguir protocolo específico de cada medicamento"
+        }
+      ],
+      "references": {
+        "nanda": ["Conhecimento deficiente"],
+        "nic": ["Administração de medicamentos"],
+        "noc": ["Conhecimento: medicamentos"]
+      },
+      "formula": "Volume = (Dose × Volume disponível) ÷ Concentração",
+      "unit": "mL"
+    },
+    "gotejamento": {
       "id": "gotejamento",
-      "name": "Cálculo de Gotejamento",
-      "description": "Cálculo de gotas/minuto para infusão de soluções endovenosas.",
-      "category": "Hidratação",
-      "fields": {
-        "Parâmetros do Cálculo": [
-          {
-            "id": "volume_total",
-            "name": "Volume Total",
-            "type": "number",
-            "required": true,
-            "unit": "mL"
-          },
-          {
-            "id": "tempo_minutos",
-            "name": "Tempo de Infusão",
-            "type": "number",
-            "required": true,
-            "unit": "minutos"
-          },
-          {
-            "id": "tipo_gotejamento",
-            "name": "Tipo de Gotejamento",
-            "type": "select",
-            "required": true,
-            "options": [
-              { "value": "macrogotas", "label": "Macrogotas (20 gotas/mL)" },
-              { "value": "microgotas", "label": "Microgotas (60 microgotas/mL)" }
-            ]
-          }
-        ]
+      "title": "Cálculo de Gotejamento",
+      "description": "Calculadora para cálculo de velocidade de infusão e gotejamento de soros.",
+      "icon": "fa-water",
+      "category": "Soros e Infusões",
+      "tags": ["gotejamento", "infusão", "soro", "velocidade"],
+      "keywords": ["gotejamento", "soro", "velocidade", "infusão", "gotas"],
+      "inputs": [
+        {
+          "id": "volume_infusao",
+          "label": "Volume de Infusão (mL)",
+          "type": "number",
+          "required": true,
+          "placeholder": "Ex: 500",
+          "min": 10,
+          "max": 5000,
+          "step": 10,
+          "help": "Volume total a ser infundido"
+        },
+        {
+          "id": "tempo_infusao",
+          "label": "Tempo de Infusão (minutos)",
+          "type": "number",
+          "required": true,
+          "placeholder": "Ex: 60",
+          "min": 1,
+          "max": 1440,
+          "step": 1,
+          "help": "Tempo total em minutos"
+        },
+        {
+          "id": "fator_gotejamento",
+          "label": "Fator de Gotejamento",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "value": "10", "label": "10 gotas/mL (Macrogotas)" },
+            { "value": "15", "label": "15 gotas/mL (Macrogotas)" },
+            { "value": "20", "label": "20 gotas/mL (Macrogotas)" },
+            { "value": "60", "label": "60 gotas/mL (Microgotas)" }
+          ],
+          "help": "Depende do tipo de equipo"
+        }
+      ],
+      "content": [
+        {
+          "title": "Fórmula",
+          "description": "Gotejamento = (Volume × Fator) ÷ Tempo"
+        },
+        {
+          "title": "Tipos de Equipo",
+          "description": "Macrogotas (10, 15, 20) e Microgotas (60)"
+        }
+      ],
+      "references": {
+        "nanda": ["Risco de desequilíbrio de líquidos"],
+        "nic": ["Administração de fluidos"],
+        "noc": ["Equilíbrio de líquidos"]
       },
-      "tags": ["soro", "infusão", "hidratação", "velocidade"]
-    },
-    {
-      "id": "imc",
-      "name": "Cálculo de IMC",
-      "description": "Índice de Massa Corporal para avaliação nutricional.",
-      "category": "Avaliação",
-      "unit": "kg/m²",
-      "fields": {
-        "Dados Antropométricos": [
-          {
-            "id": "peso",
-            "name": "Peso",
-            "type": "number",
-            "required": true,
-            "unit": "kg"
-          },
-          {
-            "id": "altura",
-            "name": "Altura",
-            "type": "number",
-            "required": true,
-            "unit": "metros"
-          }
-        ]
-      },
-      "tags": ["imc", "nutrição", "avaliação", "peso"]
+      "formula": "Gotejamento (gotas/min) = (Volume × Fator) ÷ Tempo",
+      "unit": "gotas/min"
     }
-  ]
+  }
 }
