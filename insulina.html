@@ -1,232 +1,1380 @@
 <!DOCTYPE html>
 <html lang="pt-br" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-    <title>Calculadoras de Enfermagem - Sistema Dinâmico Modular</title>
-    
-    <!-- Meta Tags Dinâmicas -->
-    <meta id="meta-description" name="description" content="Calculadoras profissionais de enfermagem com segurança integrada e auditoria clínica.">
-    <meta id="meta-keywords" name="keywords" content="enfermagem, cálculos, segurança do paciente, nanda, nic, noc, calculadoras clínicas">
-    <meta name="author" content="Calculadoras de Enfermagem">
-    <meta name="robots" content="index, follow">
-    <link id="canonical-link" rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/"/>
-    
-    <!-- Open Graph -->
-    <meta property="og:locale" content="pt_BR">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Calculadoras de Enfermagem">
-    <meta id="og-title" property="og:title" content="Calculadoras de Enfermagem - Sistema Dinâmico">
-    <meta id="og-description" property="og:description" content="Ferramentas profissionais com segurança e auditoria clínica integrada.">
-    <meta id="og-url" property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
-    <meta id="og-image" property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured.webp">
+  <!-- SEO & MONETIZAÇÃO -->
+  <title id="page-title">Cálculo de Insulina | Calculadoras de Enfermagem Profissional</title>
+  <meta name="description" content="Calculadora profissional para aspiração de insulina em seringas de 100UI e 300UI. Segurança do paciente com 9 certos e auditoria de cálculo clínica.">
+  <meta name="keywords" content="insulina, enfermagem, cálculo de medicação, segurança do paciente, seringa insulina, auditoria clínica">
+  <meta name="author" content="Calculadoras de Enfermagem">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/insulina.html"/>
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cálculo de Insulina - Segurança e Precisão">
+  <meta property="og:description" content="Ferramenta profissional com protocolos integrados para enfermagem.">
+  <meta property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/insulina.html">
+  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
 
-    <!-- Ícone -->
-    <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
-    
-    <!-- Fontes Google -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Configuração do Tailwind -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { 
-                        nunito: ['"Nunito Sans"', 'sans-serif'], 
-                        inter: ['Inter', 'sans-serif'] 
-                    },
-                    colors: { 
-                        'nurse-primary': '#1A3E74', 
-                        'nurse-secondary': '#00bcd4', 
-                        'nurse-accent': '#00838f', 
-                        'nurse-bgDark': '#0F172A' 
-                    }
-                }
-            }
-        };
-        
-        // Configuração global
-        window.NURSE_CONFIG = {
-            baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/',
-            debug: false
-        };
-    </script>
+  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
 
-    <!-- Estilos Externos -->
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
-</head>
+  <!-- Fontes e Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Estilos Modulares (CSS Externo) -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
 
-<body class="flex flex-col min-h-screen dark:bg-nurse-bgDark dark:text-slate-100">
-    <!-- Background Decorativo -->
-    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
-        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
-            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
-            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
-        </svg>
-    </div>
+  <!-- Bibliotecas JS (Deferidas) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 
-    <!-- Container para Notificações -->
-    <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
-    
-    <!-- Container para Acessibilidade -->
-    <div id="accessibility-container"></div>
-    
-    <!-- Container para Header -->
-    <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] shadow-sm transition-opacity duration-500"></div>
-
-    <!-- Conteúdo Principal -->
-    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
-        <!-- O conteúdo será injetado dinamicamente pelo sistema -->
-        <div class="text-center py-20">
-            <i class="fa-solid fa-spinner animate-spin text-5xl text-nurse-primary mb-6"></i>
-            <h2 class="text-2xl font-bold text-nurse-primary dark:text-cyan-400 mb-4">Carregando Sistema de Calculadoras</h2>
-            <p class="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-                O sistema modular de calculadoras clínicas está sendo inicializado...
-            </p>
-        </div>
-    </main>
-
-    <!-- Container para Footer -->
-    <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px]"></div>
-    
-    <!-- Template PDF Oculto -->
-    <div id="pdf-render-template"></div>
-
-    <!-- Bibliotecas Externas (Deferidas) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-
-    <!-- Componentes do Sistema (Deferidos) -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" crossorigin="anonymous" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" crossorigin="anonymous" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" crossorigin="anonymous" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" crossorigin="anonymous" defer></script>
-
-    <!-- Módulos do Sistema (Deferidos) -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/util.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/ui.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/voice.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/pdf.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/modules/notifications.js" defer></script>
-    
-    <!-- Núcleo do Sistema (Deferidos) -->
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/nursing_calculators.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/nursing_engine.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/main_content_injector.js" defer></script>
-    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/core.js" defer></script>
-
-    <!-- Script de Inicialização -->
-    <script>
-        /**
-         * CARREGAMENTO DE MÓDULOS HTML
-         */
-        async function loadHtmlModule(id, url) {
-            const container = document.getElementById(id);
-            if (!container) {
-                console.warn(`Container ${id} não encontrado`);
-                return;
-            }
-            
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                const html = await response.text();
-                container.innerHTML = html;
-                container.classList.remove('opacity-50');
-                console.log(`✅ Módulo ${id} carregado`);
-            } catch (error) {
-                console.error(`❌ Erro ao carregar módulo ${id}:`, error);
-                container.innerHTML = `
-                    <div class="p-4 text-center">
-                        <p class="text-sm text-slate-500">Módulo não disponível</p>
-                    </div>
-                `;
-            }
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] },
+          colors: { 
+            'nurse-primary':'#1A3E74', 
+            'nurse-secondary':'#00bcd4', 
+            'nurse-accent':'#00838f', 
+            'nurse-bgDark':'#0F172A' 
+          },
+          animation: {
+            'slide-in': 'slideIn 0.3s ease-out',
+            'fade-in': 'fadeIn 0.3s ease-out',
+          }
         }
-        
-        /**
-         * INICIALIZAÇÃO DO SISTEMA
-         */
-        async function initializeSystem() {
-            console.log('🚀 Inicializando Sistema de Calculadoras...');
-            
-            // 1. Carregar componentes HTML
-            await Promise.all([
-                loadHtmlModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html'),
-                loadHtmlModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html'),
-                loadHtmlModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html')
-            ]);
-            
-            // 2. Aguardar carregamento dos scripts JavaScript
-            let attempts = 0;
-            const maxAttempts = 10;
-            
-            const waitForScripts = () => {
-                return new Promise((resolve) => {
-                    const checkInterval = setInterval(() => {
-                        attempts++;
-                        
-                        // Verificar se os módulos principais estão carregados
-                        const modulesLoaded = window.NURSE_SYSTEM && 
-                                               window.MAIN_CONTENT_INJECTOR && 
-                                               window.NURSING_ENGINE;
-                        
-                        if (modulesLoaded || attempts >= maxAttempts) {
-                            clearInterval(checkInterval);
-                            resolve();
-                        }
-                    }, 500);
-                });
-            };
-            
-            await waitForScripts();
-            
-            // 3. Inicializar sistema principal
-            try {
-                if (window.NURSE_SYSTEM && typeof window.NURSE_SYSTEM.init === 'function') {
-                    await window.NURSE_SYSTEM.init();
-                    console.log('✅ Sistema inicializado com sucesso');
-                } else {
-                    throw new Error('Sistema principal não disponível');
-                }
-            } catch (error) {
-                console.error('❌ Erro ao inicializar sistema:', error);
-                
-                // Mostrar mensagem de erro
-                const mainContent = document.getElementById('main-content');
-                if (mainContent) {
-                    mainContent.innerHTML = `
-                        <div class="text-center py-20 px-4">
-                            <i class="fa-solid fa-exclamation-triangle text-5xl text-red-500 mb-6"></i>
-                            <h2 class="text-2xl font-bold text-red-600 mb-4">Erro ao Carregar o Sistema</h2>
-                            <button onclick="location.reload()" class="btn-primary-action inline-flex">
-                                <i class="fa-solid fa-rotate-right mr-2"></i> Recarregar Página
+      }
+    }
+
+    async function loadModule(id, url) {
+      const container = document.getElementById(id);
+      if (!container) return;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Status ${res.status}`);
+        container.innerHTML = await res.text();
+        container.style.opacity = "1";
+        // Disparar evento para scripts que dependem do conteúdo
+        const event = new CustomEvent('moduleLoaded', { detail: { id, url } });
+        container.dispatchEvent(event);
+      } catch(e) { 
+        console.warn(`Módulo ${id} não carregado:`, e); 
+      }
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300; }
+      h1 { @apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400; }
+      h2, h3 { @apply font-inter tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
+    }
+    @layer components {
+      .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden; }
+      .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+      .input-field { @apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium; }
+      .btn-primary-action { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed; }
+      .btn-secondary-action { @apply bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
+      .tab-btn { @apply flex-1 px-2 py-3 font-bold text-[10px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider; }
+      .tab-btn.active { @apply border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50 dark:bg-slate-900/30; }
+      .glass-meta { @apply relative backdrop-blur-md border border-white/20 p-4 rounded-xl shadow-sm transition-all duration-300 flex items-center gap-4; }
+      .glass-meta-blue { @apply bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-100 border-l-4 border-blue-500; }
+      .glass-meta-orange { @apply bg-orange-50 dark:bg-orange-900/20 text-orange-900 dark:text-orange-100 border-l-4 border-orange-500; }
+      .toast-msg { @apply pointer-events-auto bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 font-bold text-sm min-w-[320px] border-l-4 border-nurse-secondary animate-slide-in; }
+      .tag-pill-footer { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
+      .share-btn { @apply w-10 h-10 rounded-full flex items-center justify-center bg-white/10 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md; }
+      .label-tooltip { @apply text-nurse-secondary ml-1 cursor-help hover:text-nurse-primary transition-colors text-xs; }
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Correção para campos numéricos */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    
+    /* Tooltip melhorado */
+    .tooltip-container {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .tooltip-container:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(-50%, -10px);
+    }
+    
+    .tooltip-text {
+      visibility: hidden;
+      width: 220px;
+      background-color: #1e293b;
+      color: white;
+      text-align: left;
+      border-radius: 8px;
+      padding: 10px;
+      position: absolute;
+      z-index: 1000;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: all 0.3s;
+      font-size: 12px;
+      font-weight: normal;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      line-height: 1.4;
+    }
+    
+    /* Modal fixo */
+    #reference-modal {
+      backdrop-filter: blur(5px);
+    }
+    
+    /* Fix para o menu hamburguer */
+    .hamburger-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      cursor: pointer;
+    }
+    
+    .hamburger-menu span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: currentColor;
+      transition: all 0.3s;
+    }
+    
+    /* Mega menu */
+    .mega-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #e2e8f0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+    
+    .dark .mega-menu {
+      background: #1e293b;
+      border-color: #334155;
+    }
+    
+    .has-mega-menu:hover .mega-menu {
+      display: block;
+    }
+    
+    /* Acessibilidade */
+    .accessibility-tools {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .accessibility-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f1f5f9;
+      color: #475569;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .dark .accessibility-btn {
+      background: #334155;
+      color: #cbd5e1;
+    }
+    
+    .accessibility-btn:hover {
+      background: #00bcd4;
+      color: white;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- CONTAINERS PARA MÓDULOS MODULARES -->
+  <div id="accessibility-container"></div>
+  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50 shadow-sm"></div>
+
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
+    
+    <!-- BREADCRUMB RESPONSIVO -->
+    <nav id="breadcrumb" class="mb-8 font-semibold">
+        <!-- Desktop -->
+        <div class="hidden md:flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300">
+            <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <span>Ferramentas</span>
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <span>Calculadoras Clínicas</span>
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <span class="text-nurse-primary dark:text-cyan-400 font-bold">Calculadora de Aspiração de Insulina</span>
+        </div>
+        <!-- Mobile -->
+        <div class="flex md:hidden items-center gap-2 text-sm text-slate-600 dark:text-cyan-300">
+            <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <span>Ferramentas :</span>
+            <span class="text-nurse-primary dark:text-cyan-400 font-bold">Calculadora de Insulina</span>
+        </div>
+    </nav>
+
+    <!-- INTRODUÇÃO -->
+    <header class="max-w-4xl mb-12">
+      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Segurança Clínica</span>
+      <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Cálculo de Insulina</h1>
+      <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+      <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">Ferramenta profissional para aspiração precisa em seringas de 100UI ou 300UI.</p>
+    </header>
+
+    <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
+      
+      <!-- CALCULADORA (CONTAINER PRINCIPAL) -->
+      <article id="calculator-container" class="card-base p-0">
+        <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto">
+          <button onclick="CALCULATOR_SYSTEM.switchTab('calc')" class="tab-btn active" id="btn-tab-calc">Calculadora</button>
+          <button onclick="CALCULATOR_SYSTEM.switchTab('sobre')" class="tab-btn" id="btn-tab-sobre">Sobre</button>
+          <button onclick="CALCULATOR_SYSTEM.switchTab('ajuda')" class="tab-btn" id="btn-tab-ajuda">Instruções</button>
+          <button onclick="CALCULATOR_SYSTEM.switchTab('referencia')" class="tab-btn" id="btn-tab-referencia">Referência</button>
+        </nav>
+
+        <div class="p-6 md:p-10">
+          <section id="pane-calc" class="tab-pane space-y-10">
+            <div class="space-y-6">
+              <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 border-b pb-2">Identificação do Paciente (Opcional)</h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 font-inter">
+                    Nome do Paciente
+                    <span class="tooltip-container ml-1">
+                      <i class="fa-solid fa-circle-info label-tooltip"></i>
+                      <span class="tooltip-text">Identificação do paciente para fins de registro. Campo opcional.</span>
+                    </span>
+                  </label>
+                  <input id="patient_name" type="text" placeholder="Nome completo (opcional)" class="input-field"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 font-inter">
+                    Data de Nascimento
+                    <span class="tooltip-container ml-1">
+                      <i class="fa-solid fa-circle-info label-tooltip"></i>
+                      <span class="tooltip-text">Para cálculo de idade e verificação de faixa etária. Campo opcional.</span>
+                    </span>
+                  </label>
+                  <input id="patient_birthdate" type="date" 
+                         class="input-field"
+                         onchange="CALCULATOR_SYSTEM.validateDate(this)"/>
+                  <span class="text-xs text-slate-500 mt-1 block">Campo opcional para cálculo da idade</span>
+                </div>
+              </div>
+
+              <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 pt-4 border-b pb-2">Parâmetros de Dosagem</h3>
+              <div id="dynamic-fields" class="grid md:grid-cols-2 gap-6">
+                <!-- Campos serão injetados pelo JS -->
+                <div>
+                  <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 font-inter required-field">
+                    Prescrição Médica (UI)
+                    <span class="tooltip-container ml-1">
+                      <i class="fa-solid fa-circle-info label-tooltip"></i>
+                      <span class="tooltip-text">Quantidade de insulina prescrita pelo médico em unidades internacionais (UI).</span>
+                    </span>
+                  </label>
+                  <input id="prescricao_medica" 
+                         type="number" 
+                         placeholder="Ex: 15"
+                         min="0"
+                         step="0.5"
+                         class="input-field" 
+                         required
+                         oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+                         onkeydown="return event.key !== '-' && event.key !== 'e' && event.key !== '+'"/>
+                  <span class="text-xs text-slate-500 mt-1 block">Quantidade de insulina prescrita</span>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 font-inter">
+                    Concentração da Insulina (UI/mL)
+                    <span class="tooltip-container ml-1">
+                      <i class="fa-solid fa-circle-info label-tooltip"></i>
+                      <span class="tooltip-text">Concentração da insulina. Padrão: 100 UI/mL. Para insulinas U300, use 300.</span>
+                    </span>
+                  </label>
+                  <select id="concentracao_insulina" class="input-field">
+                    <option value="100">100 UI/mL (Insulina Regular U100)</option>
+                    <option value="300">300 UI/mL (Insulina Degludec U300)</option>
+                    <option value="200">200 UI/mL (Insulina Glargine U200)</option>
+                  </select>
+                  <span class="text-xs text-slate-500 mt-1 block">Concentração da insulina</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 pt-4">
+              <button id="btn-calculate" onclick="CALCULATOR_SYSTEM.calculate()" class="btn-primary-action flex-1">
+                <i class="fa-solid fa-calculator"></i> <span>Calcular</span>
+              </button>
+              <button onclick="CALCULATOR_SYSTEM.reset()" class="btn-secondary-action">
+                <i class="fa-solid fa-rotate-left"></i> Limpar
+              </button>
+            </div>
+
+            <div id="results-wrapper" class="hidden pt-8 border-t border-slate-200 dark:border-slate-700">
+              <div class="bg-slate-50 dark:bg-slate-900/40 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-6 relative">
+                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4">Dose a Aspirar</p>
+                <div id="res-total" class="text-6xl md:text-8xl font-black text-[#1A3E74] dark:text-cyan-400 tracking-tighter font-nunito leading-none">0,00</div>
+                <p id="res-unit" class="text-lg font-black text-nurse-secondary mt-2 uppercase tracking-widest">unidades</p>
+              </div>
+
+              <!-- BOTÕES DE AÇÃO E NANDA -->
+              <div class="flex flex-col gap-4 mb-10">
+                <div class="grid grid-cols-2 gap-4">
+                    <button id="btn-pdf" onclick="CALCULATOR_SYSTEM.generatePDF()" class="btn-primary-action">
+                        <i class="fa-solid fa-file-pdf"></i> <span>Gerar PDF</span>
+                    </button>
+                    <button onclick="CALCULATOR_SYSTEM.copyResult()" class="btn-secondary-action">
+                        <i class="fa-solid fa-copy"></i> Copiar Resultado
+                    </button>
+                </div>
+                <!-- BOTÃO NANDA -->
+                <button onclick="CALCULATOR_SYSTEM.showNANDAModal()" class="btn-secondary-action bg-nurse-accent text-white hover:bg-nurse-primary py-5 text-xs">
+                    <i class="fa-solid fa-stethoscope"></i> Buscar Diagnóstico de Enfermagem (NANDA)
+                </button>
+              </div>
+
+              <!-- SEÇÃO: AUDITORIA DO CÁLCULO -->
+              <div class="mb-12">
+                <div class="flex justify-between items-center mb-6">
+                  <h3 class="text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                    <i class="fa-solid fa-clipboard-check"></i> Auditoria do Cálculo
+                  </h3>
+                  <button onclick="CALCULATOR_SYSTEM.showAuditHelp()" class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold">
+                    <i class="fa-solid fa-circle-info mr-1"></i> Sobre Auditoria
+                  </button>
+                </div>
+                <ul id="audit-list" class="space-y-3"></ul>
+              </div>
+
+              <!-- SEÇÃO: CHECK-LIST DE SEGURANÇA DO PACIENTE -->
+              <div class="space-y-8 mb-12">
+                <h2 class="text-xl font-black text-nurse-primary dark:text-cyan-400 flex items-center gap-2 border-l-4 border-nurse-secondary pl-4">
+                    <i class="fa-solid fa-user-shield"></i> Check-list de Segurança do Paciente
+                </h2>
+                <div class="bg-white dark:bg-slate-900/30 p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-inner">
+                    <div class="mb-8">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                                <i class="fa-solid fa-check-double"></i> 9 Certos da Medicação
+                            </h3>
+                            <button onclick="CALCULATOR_SYSTEM.showMedicationChecklist()" class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold">
+                                <i class="fa-solid fa-circle-info mr-1"></i> Ver Referência
                             </button>
                         </div>
-                    `;
-                }
-            }
+                        <div id="checklist-9certos" class="grid grid-cols-1 md:grid-cols-2 gap-2"></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                                <i class="fa-solid fa-star"></i> Metas Internacionais de Segurança
+                            </h3>
+                            <button onclick="CALCULATOR_SYSTEM.showSafetyGoals()" class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold">
+                                <i class="fa-solid fa-circle-info mr-1"></i> Ver Referência
+                            </button>
+                        </div>
+                        <div id="checklist-metas" class="space-y-2"></div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <h2 class="text-2xl font-black mb-4 font-nunito">Sobre o Cálculo de Insulina</h2>
+            <div id="sobre-content">
+              <p class="mb-4">Esta calculadora permite o cálculo preciso da quantidade de insulina a ser aspirada em seringas de insulina, considerando diferentes concentrações (U100, U200, U300).</p>
+              <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 font-mono text-xs overflow-x-auto">
+                <span class="text-nurse-secondary font-bold block mb-2 uppercase tracking-widest">Equação Auditada</span>
+                <code>Volume (mL) = Prescrição (UI) / Concentração (UI/mL)</code>
+              </div>
+            </div>
+          </section>
+
+          <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <h2 class="text-2xl font-black mb-4 font-nunito">Instruções de Uso</h2>
+            <ul id="ajuda-content" class="space-y-3 text-sm">
+              <li class="flex gap-3 text-sm font-medium">
+                <i class="fa-solid fa-check-circle text-nurse-secondary mt-1"></i>
+                <span>Informe a prescrição médica em unidades internacionais (UI)</span>
+              </li>
+              <li class="flex gap-3 text-sm font-medium">
+                <i class="fa-solid fa-check-circle text-nurse-secondary mt-1"></i>
+                <span>Selecione a concentração da insulina (U100, U200 ou U300)</span>
+              </li>
+              <li class="flex gap-3 text-sm font-medium">
+                <i class="fa-solid fa-check-circle text-nurse-secondary mt-1"></i>
+                <span>Clique em "Calcular" para obter o volume a aspirar</span>
+              </li>
+              <li class="flex gap-3 text-sm font-medium">
+                <i class="fa-solid fa-check-circle text-nurse-secondary mt-1"></i>
+                <span>Utilize os checklists de segurança para auditoria</span>
+              </li>
+              <li class="flex gap-3 text-sm font-medium">
+                <i class="fa-solid fa-check-circle text-nurse-secondary mt-1"></i>
+                <span>Gere PDF ou copie o resultado para registro</span>
+              </li>
+            </ul>
+          </section>
+
+          <section id="pane-referencia" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <h2 class="text-2xl font-black mb-4 font-nunito">Referências Bibliográficas</h2>
+            <div id="referencia-content" class="space-y-4 text-sm font-medium text-slate-600 dark:text-slate-400">
+              <div class="p-5 bg-slate-50 dark:bg-slate-900/40 rounded-2xl space-y-3 border border-slate-100 dark:border-slate-700">
+                <p>• <strong>Sociedade Brasileira de Diabetes (SBD).</strong> Diretrizes da SBD 2023. São Paulo: Clannad, 2023.</p>
+                <p>• <strong>Conselho Federal de Enfermagem (COFEN).</strong> Guia de Boas Práticas: Administração de Medicamentos. Brasília, 2020.</p>
+                <p>• <strong>Potter, P. A.; Perry, A. G.</strong> Fundamentos de Enfermagem. 10ª Ed. Rio de Janeiro: Elsevier, 2021.</p>
+                <p>• <strong>NANDA-I.</strong> Diagnósticos de Enfermagem: Definições e Classificação 2021-2023. Porto Alegre: Artmed, 2021.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </article>
+
+      <!-- BARRA LATERAL (SIDEBAR) -->
+      <aside class="space-y-6 sticky top-28 self-start">
+         <div class="sidebar-module">
+            <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white font-nunito">
+              <i class="fa-solid fa-trophy"></i> Desafio Clínico
+            </h3>
+            <p class="text-sm text-white/90 mb-6 font-medium leading-relaxed font-inter">
+              Teste sua agilidade e precisão em simulados reais de enfermagem.
+            </p>
+            <a href="https://simulados-para-enfermagem.com.br/" target="_blank" rel="noopener noreferrer"
+               class="w-full bg-white text-nurse-primary font-black py-4 rounded-xl hover:bg-slate-100 transition shadow-lg text-sm uppercase tracking-wide flex items-center justify-center gap-2 group">
+                Acessar Simulados <i class="fa-solid fa-bolt text-nurse-secondary group-hover:scale-125 transition-transform"></i>
+            </a>
+         </div>
+
+         <div class="sidebar-module from-cyan-600 to-nurse-secondary">
+            <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white font-nunito">
+              <i class="fa-solid fa-share-nodes"></i> Compartilhar
+            </h3>
+            <div class="flex gap-3 justify-center">
+                <button onclick="CALCULATOR_SYSTEM.share('facebook')" class="share-btn" title="Compartilhar no Facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </button>
+                <button onclick="CALCULATOR_SYSTEM.share('whatsapp')" class="share-btn" title="Compartilhar no WhatsApp">
+                  <i class="fab fa-whatsapp"></i>
+                </button>
+                <button onclick="CALCULATOR_SYSTEM.share('linkedin')" class="share-btn" title="Compartilhar no LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </button>
+                <button onclick="CALCULATOR_SYSTEM.copyLink()" class="share-btn" title="Copiar Link">
+                  <i class="fas fa-link"></i>
+                </button>
+            </div>
+         </div>
+
+         <div class="card-base p-6">
+            <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary dark:text-cyan-400 mb-4 flex items-center gap-2 border-b pb-3">
+              <i class="fa-solid fa-list-ul"></i> Outras Calculadoras
+            </h3>
+            <nav id="calculator-index" class="space-y-1 text-sm">
+              <a href="heparina.html" class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
+                <i class="fa-solid fa-calculator text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
+                <span>Cálculo de Heparina</span>
+              </a>
+              <a href="medicamentos.html" class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
+                <i class="fa-solid fa-calculator text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
+                <span>Diluição de Medicamentos</span>
+              </a>
+              <a href="gotejamento.html" class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
+                <i class="fa-solid fa-calculator text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
+                <span>Cálculo de Gotejamento</span>
+              </a>
+            </nav>
+         </div>
+      </aside>
+    </div>
+
+    <!-- SEÇÃO DO AUTOR -->
+    <section id="author-section" class="max-w-7xl mx-auto px-4 py-12 border-t border-slate-200 dark:border-slate-800 mt-20">
+        <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 flex flex-col md:flex-row gap-10 items-center border border-slate-200 dark:border-slate-700 shadow-sm mb-12 transition-all hover:shadow-xl">
+            <div class="relative flex-shrink-0">
+                <div class="w-32 md:w-40 shadow-2xl border-4 border-white dark:border-slate-700 rounded-3xl overflow-hidden bg-slate-100">
+                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" 
+                         alt="Autor Calculadoras de Enfermagem" 
+                         class="w-full h-auto block object-cover"/>
+                </div>
+                <div class="absolute -bottom-2 -right-2 bg-nurse-secondary text-white w-8 h-8 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-800 shadow-lg">
+                    <i class="fa-solid fa-check text-[10px]"></i>
+                </div>
+            </div>
+            <div class="text-center md:text-left">
+                <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400 font-nunito">Calculadoras de Enfermagem Profissional</h3>
+                <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed max-w-2xl font-inter italic">
+                    "Transformando a complexidade técnica em segurança para o paciente através da precisão dos dados e protocolos clínicos rigorosos."
+                </p>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 items-center">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2 flex items-center">
+              <i class="fa-solid fa-tags mr-2"></i> Tópicos:
+            </span>
+            <span id="tags-container" class="flex flex-wrap gap-2">
+              <span class="tag-pill-footer">#insulina</span>
+              <span class="tag-pill-footer">#farmacologia</span>
+              <span class="tag-pill-footer">#segurança-do-paciente</span>
+              <span class="tag-pill-footer">#auditoria</span>
+              <span class="tag-pill-footer">#enfermagem</span>
+              <span class="tag-pill-footer">#cálculo-clínico</span>
+            </span>
+        </div>
+    </section>
+  </main>
+
+  <div id="footer-container" class="relative z-10 transition-opacity duration-500 opacity-50"></div>
+
+  <!-- MODAL DE REFERÊNCIAS -->
+  <div id="reference-modal" class="fixed inset-0 z-[10001] hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="CALCULATOR_SYSTEM.closeModal()"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[90vh] overflow-hidden">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl mx-4 overflow-hidden flex flex-col max-h-[90vh]">
+        <div class="bg-nurse-primary dark:bg-slate-900 text-white p-6 flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <i id="modal-icon" class="fa-solid text-2xl"></i>
+            <h3 id="modal-title" class="text-xl font-bold font-nunito"></h3>
+          </div>
+          <button onclick="CALCULATOR_SYSTEM.closeModal()" class="text-white hover:text-nurse-secondary text-xl">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+        <div id="modal-content" class="p-6 overflow-y-auto flex-grow text-sm"></div>
+        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 border-t border-slate-200 dark:border-slate-700">
+          <button onclick="CALCULATOR_SYSTEM.closeModal()" class="w-full bg-nurse-accent hover:bg-nurse-primary text-white font-bold py-3 rounded-xl transition">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF TEMPLATE (OCULTO) -->
+  <div id="pdf-render-template" style="position: absolute; left: -9999px; top: 0; width: 794px; background: white; padding: 40px; color: #0f172a;">
+    <div style="border-bottom: 3px solid #1A3E74; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+      <div style="width: 50px; height: 50px; background: #1A3E74; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+          <i class="fa-solid fa-calculator"></i>
+      </div>
+      <div style="text-align: right;">
+        <h1 style="font-size: 18px; color: #1A3E74; margin: 0; font-weight: 900; text-transform: uppercase;">Relatório de Auditoria</h1>
+        <p style="font-size: 9px; color: #64748b; margin: 0;">SISTEMA PROFISSIONAL DE ENFERMAGEM</p>
+      </div>
+    </div>
+    <div id="pdf-body" style="font-size: 11px; line-height: 1.6; font-family: 'Inter', sans-serif;"></div>
+  </div>
+
+  <!-- BOTÕES FLUTUANTES DE REFERÊNCIA -->
+  <div id="global-reference-buttons" class="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+    <button onclick="CALCULATOR_SYSTEM.showNANDAModal()" class="w-12 h-12 bg-nurse-accent hover:bg-nurse-primary text-white rounded-full shadow-xl flex items-center justify-center transition-all hover:scale-110" title="Diagnósticos NANDA">
+      <i class="fa-solid fa-stethoscope"></i>
+    </button>
+    <button onclick="CALCULATOR_SYSTEM.showMedicationChecklist()" class="w-12 h-12 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-xl flex items-center justify-center transition-all hover:scale-110" title="9 Certos da Medicação">
+      <i class="fa-solid fa-check-double"></i>
+    </button>
+    <button onclick="CALCULATOR_SYSTEM.showSafetyGoals()" class="w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-xl flex items-center justify-center transition-all hover:scale-110" title="Metas de Segurança">
+      <i class="fa-solid fa-star"></i>
+    </button>
+  </div>
+
+  <!-- SCRIPTS DO SISTEMA -->
+  <!-- Módulos do sistema -->
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js"></script>
+
+  <script>
+    // Carregar módulos de forma síncrona
+    async function loadSystemModules() {
+      try {
+        console.log('🚀 Carregando módulos do sistema...');
+        
+        // Carregar componentes HTML
+        await loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html');
+        await loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html');
+        await loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html');
+        
+        // Inicializar scripts JS
+        if (typeof window.initializeAccessibility === 'function') {
+          window.initializeAccessibility();
         }
         
-        // Iniciar quando o DOM estiver pronto
-        document.addEventListener('DOMContentLoaded', initializeSystem);
-    </script>
+        if (typeof window.initializeHeader === 'function') {
+          window.initializeHeader();
+        }
+        
+        console.log('✅ Módulos carregados com sucesso');
+      } catch (error) {
+        console.error('❌ Erro ao carregar módulos:', error);
+      }
+    }
+
+    const CALCULATOR_SYSTEM = {
+      id: 'insulina',
+      config: null,
+      lastResult: null,
+      modals: {
+        nanda: {
+          title: "Diagnósticos de Enfermagem - NANDA",
+          icon: "fa-stethoscope",
+          content: `
+            <div class="space-y-4">
+              <div class="bg-gradient-to-r from-nurse-primary to-nurse-accent text-white p-4 rounded-xl">
+                <h4 class="font-bold text-sm mb-2">NANDA-I Classificação 2021-2023</h4>
+                <p class="text-xs opacity-90">Diagnósticos de Enfermagem: Definições e Classificação</p>
+              </div>
+              
+              <div class="space-y-3">
+                <div class="border-l-4 border-red-500 pl-4 py-2">
+                  <strong class="text-sm text-red-600 dark:text-red-400">Risco de Glicemia Instável (00218)</strong>
+                  <p class="text-xs text-slate-600 dark:text-slate-400">Vulnerável à variação dos níveis séricos de glicose entre valores altos e baixos, que podem comprometer a saúde.</p>
+                </div>
+                
+                <div class="border-l-4 border-blue-500 pl-4 py-2">
+                  <strong class="text-sm text-blue-600 dark:text-blue-400">Controle Ineficaz do Regime Terapêutico (00078)</strong>
+                  <p class="text-xs text-slate-600 dark:text-slate-400">Padrão de regulação e integração no dia-a-dia de um programa para tratamento de doença e sequela que é insatisfatório para atingir objetivos específicos de saúde.</p>
+                </div>
+                
+                <div class="border-l-4 border-green-500 pl-4 py-2">
+                  <strong class="text-sm text-green-600 dark:text-green-400">Conhecimento Deficiente (00126)</strong>
+                  <p class="text-xs text-slate-600 dark:text-slate-400">Insuficiência ou ausência de informações cognitivas relacionadas a um tópico específico.</p>
+                </div>
+              </div>
+              
+              <div class="flex gap-2 mt-4">
+                <button onclick="CALCULATOR_SYSTEM.searchNANDAOnline()" class="flex-1 bg-nurse-primary text-white text-xs font-bold py-2 px-3 rounded-lg text-center hover:bg-nurse-secondary transition">
+                  <i class="fa-solid fa-magnifying-glass mr-1"></i> Buscar Online
+                </button>
+              </div>
+            </div>
+          `
+        },
+        medication: {
+          title: "9 Certos da Medicação",
+          icon: "fa-check-double",
+          content: `
+            <div class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="flex items-start gap-2 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                  <i class="fa-solid fa-user-check text-green-500 mt-1"></i>
+                  <div>
+                    <strong class="text-sm">Paciente Certo</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Verificar nome, prontuário e identificação.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <i class="fa-solid fa-pills text-blue-500 mt-1"></i>
+                  <div>
+                    <strong class="text-sm">Medicação Certa</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Conferir nome, concentração e apresentação.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                  <i class="fa-solid fa-syringe text-purple-500 mt-1"></i>
+                  <div>
+                    <strong class="text-sm">Dose Certa</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Verificar dose prescrita e administrada.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                  <i class="fa-solid fa-route text-yellow-500 mt-1"></i>
+                  <div>
+                    <strong class="text-sm">Via Certa</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Confirmar via de administração correta.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                  <i class="fa-solid fa-clock text-red-500 mt-1"></i>
+                  <div>
+                    <strong class="text-sm">Hora Certa</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Administrar no horário prescrito.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 p-3 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">
+                  <i class="fa-solid fa-file-alt text-indigo-500 mt-1"></i>
+                  <div>
+                    <strong class="text-sm">Registro Certo</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Documentar corretamente no prontuário.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 p-3 bg-teal-50 dark:bg-teal-900/20 rounded-lg">
+                  <i class="fa-solid fa-comment-medical text-teal-500 mt-1"></i>
+                  <div>
+                    <strong class="text-sm">Orientação Certa</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Fornecer orientações adequadas.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 p-3 bg-pink-50 dark:bg-pink-900/20 rounded-lg">
+                  <i class="fa-solid fa-heartbeat text-pink-500 mt-1"></i>
+                  <div>
+                    <strong class="text-sm">Resposta Certa</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Monitorar resposta terapêutica.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <i class="fa-solid fa-calendar-check text-gray-500 mt-1"></i>
+                  <div>
+                    <strong class="text-sm">Validade Certa</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Verificar prazo de validade do medicamento.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `
+        },
+        safety: {
+          title: "Metas Internacionais de Segurança",
+          icon: "fa-star",
+          content: `
+            <div class="space-y-4">
+              <div class="space-y-3">
+                <div class="flex items-start gap-3 p-4 bg-gradient-to-r from-blue-50 to-white dark:from-blue-900/10 dark:to-slate-900 rounded-xl border-l-4 border-blue-500">
+                  <span class="bg-blue-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">1</span>
+                  <div>
+                    <strong class="text-sm">Identificação correta do paciente</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Utilizar pelo menos dois identificadores antes de administrar qualquer cuidado.</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start gap-3 p-4 bg-gradient-to-r from-green-50 to-white dark:from-green-900/10 dark:to-slate-900 rounded-xl border-l-4 border-green-500">
+                  <span class="bg-green-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">2</span>
+                  <div>
+                    <strong class="text-sm">Melhorar a comunicação efetiva</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Assegurar a comunicação clara e precisa durante as transferências de cuidado.</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start gap-3 p-4 bg-gradient-to-r from-orange-50 to-white dark:from-orange-900/10 dark:to-slate-900 rounded-xl border-l-4 border-orange-500">
+                  <span class="bg-orange-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">3</span>
+                  <div>
+                    <strong class="text-sm">Segurança de medicamentos de alta vigilância</strong>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Concentrações especiais, verificação dupla para medicamentos de alto risco.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `
+        }
+      },
+
+      async init() {
+        try {
+          // Carregar módulos do sistema
+          await loadSystemModules();
+          
+          console.log('🎯 Inicializando calculadora de insulina...');
+          
+          // Configuração local da calculadora
+          this.config = {
+            id: 'insulina',
+            name: 'Cálculo de Insulina',
+            description: 'Calculadora para aspiração precisa de insulina em seringas de diferentes concentrações.',
+            instructions: [
+              'Informe a prescrição médica em unidades internacionais (UI)',
+              'Selecione a concentração da insulina (U100, U200 ou U300)',
+              'Clique em "Calcular" para obter o volume a aspirar',
+              'Utilize os checklists de segurança para auditoria',
+              'Gere PDF ou copie o resultado para registro'
+            ],
+            formula: {
+              calculation: 'Volume (mL) = Prescrição (UI) / Concentração (UI/mL)'
+            }
+          };
+
+          // Configurar campos iniciais
+          this.setupInitialFields();
+          
+          // Configurar data de nascimento padrão (opcional)
+          this.setupDefaultBirthdate();
+          
+          this.notify('Calculadora de insulina carregada com sucesso!', 'success');
+          
+        } catch (e) {
+          console.error("Erro ao inicializar sistema:", e);
+          this.notify('Erro ao carregar a calculadora', 'error');
+        }
+      },
+
+      setupInitialFields() {
+        // Remover indicador de obrigatório dos campos de paciente
+        const patientLabels = document.querySelectorAll('label[for="patient_name"], label[for="patient_birthdate"]');
+        patientLabels.forEach(label => {
+          label.classList.remove('required-field');
+        });
+        
+        // Adicionar texto de opcional nos placeholders
+        const patientNameInput = document.getElementById('patient_name');
+        if (patientNameInput) {
+          patientNameInput.placeholder = "Nome completo (opcional)";
+        }
+        
+        // Configurar valor padrão para concentração
+        const concentracaoInput = document.getElementById('concentracao_insulina');
+        if (concentracaoInput) {
+          concentracaoInput.value = "100";
+        }
+      },
+
+      setupDefaultBirthdate() {
+        const birthdateInput = document.getElementById('patient_birthdate');
+        if (birthdateInput) {
+          // Definir data padrão como 30 anos atrás (exemplo)
+          const thirtyYearsAgo = new Date();
+          thirtyYearsAgo.setFullYear(thirtyYearsAgo.getFullYear() - 30);
+          birthdateInput.value = thirtyYearsAgo.toISOString().split('T')[0];
+        }
+      },
+
+      getFieldValue(fieldId) {
+        const element = document.getElementById(fieldId);
+        if (!element) return null;
+        
+        const value = element.value.trim();
+        if (value === '') return null;
+        
+        // Converter para número se for campo numérico
+        if (element.type === 'number' || element.tagName === 'SELECT') {
+          const num = parseFloat(value.replace(',', '.'));
+          return isNaN(num) ? null : num;
+        }
+        
+        return value;
+      },
+
+      validateDate(input) {
+        const selectedDate = new Date(input.value);
+        const today = new Date();
+        
+        if (selectedDate > today) {
+          this.notify('Data de nascimento não pode ser no futuro', 'error');
+          input.value = today.toISOString().split('T')[0];
+        }
+        
+        return true;
+      },
+
+      calculate() {
+        const btn = document.getElementById('btn-calculate');
+        const originalText = btn.innerHTML;
+        
+        // Validar apenas campo obrigatório
+        const prescricao = this.getFieldValue('prescricao_medica');
+        if (!prescricao || prescricao <= 0) {
+          this.notify('Informe a prescrição médica em UI', 'error');
+          document.getElementById('prescricao_medica').focus();
+          return;
+        }
+
+        // Animação de feedback
+        btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Calculando...</span>`;
+        btn.disabled = true;
+
+        setTimeout(() => {
+          try {
+            // Obter valores dos campos
+            const concentracao = this.getFieldValue('concentracao_insulina') || 100;
+            
+            // Cálculo da insulina: Volume (mL) = Prescrição (UI) / Concentração (UI/mL)
+            const volume = prescricao / concentracao;
+            
+            // Converter para mL e unidades
+            const volumeEmMl = volume;
+            const unidades = prescricao;
+            
+            // Formatar resultados
+            this.lastResult = {
+              prescricao: prescricao,
+              concentracao: concentracao,
+              volumeAspirar: volumeEmMl.toFixed(2),
+              unidades: unidades,
+              unidade: "mL",
+              concentracaoTipo: concentracao === 100 ? "U100" : concentracao === 200 ? "U200" : "U300"
+            };
+
+            const formattedTotal = this.lastResult.volumeAspirar;
+            
+            // Atualizar interface
+            document.getElementById('res-total').innerText = formattedTotal;
+            document.getElementById('res-unit').innerText = this.lastResult.unidade;
+            
+            // Mostrar seção de resultados
+            const resultsWrapper = document.getElementById('results-wrapper');
+            resultsWrapper.classList.remove('hidden');
+            resultsWrapper.classList.add('animate-fade-in');
+            
+            // Renderizar auditoria e checklists
+            this.renderAudit(this.lastResult);
+            this.renderChecklists();
+            
+            this.notify('Cálculo realizado com sucesso!', 'success');
+            
+            // Scroll suave para resultados
+            setTimeout(() => {
+              resultsWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+            
+          } catch (error) {
+            console.error('Erro no cálculo:', error);
+            this.notify(`Erro: ${error.message}`, 'error');
+          } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }
+        }, 800);
+      },
+
+      renderAudit(result) {
+        const list = document.getElementById('audit-list');
+        list.innerHTML = '';
+        
+        const auditSteps = [
+          { label: "Prescrição Médica", value: `${result.prescricao} UI`, icon: "fa-file-medical" },
+          { label: "Concentração da Insulina", value: `${result.concentracaoTipo} (${result.concentracao} UI/mL)`, icon: "fa-vial" },
+          { label: "Tipo de Seringa", value: "Seringa de Insulina 1mL", icon: "fa-syringe" },
+          { label: "Fator de Cálculo", value: "1 UI = " + (1/result.concentracao).toFixed(4) + " mL", icon: "fa-calculator" },
+          { label: "Volume Final Auditado", value: `${result.volumeAspirar} ${result.unidade}`, icon: "fa-check-double" }
+        ];
+        
+        auditSteps.forEach(step => {
+          const li = document.createElement('li');
+          li.className = 'flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl text-sm border border-slate-100 dark:border-slate-700 animate-fade-in';
+          li.innerHTML = `
+            <div class="flex items-center gap-3">
+              <i class="fa-solid ${step.icon} text-nurse-secondary"></i>
+              <span class="text-slate-500 font-bold uppercase text-[10px] tracking-wider">${step.label}</span>
+            </div>
+            <span class="font-bold text-nurse-primary dark:text-cyan-400">${step.value}</span>
+          `;
+          list.appendChild(li);
+        });
+      },
+
+      renderChecklists() {
+        const certos = ["Paciente Certo", "Medicação Certa", "Dose Certa", "Via Certa", "Hora Certa", "Registro Certo", "Validade Certa", "Resposta Certa", "Forma Farmacêutica Certa"];
+        
+        document.getElementById('checklist-9certos').innerHTML = certos.map(c => `
+          <label class="flex items-center gap-3 p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-xl cursor-pointer text-[10px] font-black uppercase tracking-widest text-slate-500 hover:border-nurse-secondary transition group animate-fade-in">
+            <input type="checkbox" class="w-4 h-4 accent-nurse-primary transition"/> 
+            <span class="group-hover:text-nurse-primary transition-colors">${c}</span>
+          </label>
+        `).join('');
+
+        const metas = [
+          { id: 1, text: "Identificar o paciente corretamente", class: "glass-meta-blue" },
+          { id: 2, text: "Comunicação Efetiva na passagem de plantão", class: "glass-meta-blue" },
+          { id: 3, text: "Segurança de Medicamentos de Alta Vigilância", class: "glass-meta-orange" },
+          { id: 6, text: "Reduzir risco de quedas do paciente", class: "glass-meta-blue" }
+        ];
+        
+        document.getElementById('checklist-metas').innerHTML = metas.map(m => `
+          <label class="glass-meta ${m.class} py-3 cursor-pointer group animate-fade-in">
+            <input type="checkbox" class="w-4 h-4 accent-white mr-2 transition"/>
+            <span class="text-[10px] uppercase font-black tracking-wider group-hover:underline">${m.id}. ${m.text}</span>
+          </label>
+        `).join('');
+      },
+
+      // MODAIS
+      showModal(type) {
+        const modal = document.getElementById('reference-modal');
+        const modalData = this.modals[type];
+        
+        if (!modal || !modalData) return;
+        
+        document.getElementById('modal-icon').className = `fa-solid ${modalData.icon} text-2xl`;
+        document.getElementById('modal-title').textContent = modalData.title;
+        document.getElementById('modal-content').innerHTML = modalData.content;
+        
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      },
+
+      closeModal() {
+        const modal = document.getElementById('reference-modal');
+        if (modal) {
+          modal.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
+      },
+
+      showNANDAModal() {
+        this.showModal('nanda');
+      },
+
+      showMedicationChecklist() {
+        this.showModal('medication');
+      },
+
+      showSafetyGoals() {
+        this.showModal('safety');
+      },
+
+      showAuditHelp() {
+        this.notify('A auditoria verifica cada etapa do cálculo para garantir a precisão e segurança.', 'info');
+      },
+
+      searchNANDAOnline() {
+        const query = encodeURIComponent("NANDA diagnóstico enfermagem diabetes insulina hiperglicemia");
+        window.open(`https://www.google.com/search?q=${query}`, '_blank', 'noopener,noreferrer');
+        this.closeModal();
+      },
+
+      // GERAR PDF
+      async generatePDF() {
+        if (!this.lastResult) {
+          this.notify('Realize um cálculo primeiro', 'error');
+          return;
+        }
+
+        const btn = document.getElementById('btn-pdf');
+        const originalText = btn.innerHTML;
+        
+        btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Gerando PDF...</span>`;
+        btn.disabled = true;
+
+        try {
+          // Verificar se as bibliotecas estão carregadas
+          if (typeof html2canvas === 'undefined' || typeof jspdf === 'undefined') {
+            throw new Error('Bibliotecas PDF não carregadas');
+          }
+
+          // Preparar conteúdo do PDF
+          const patientName = document.getElementById('patient_name').value || "Não informado";
+          const patientBirthdate = document.getElementById('patient_birthdate').value || "Não informado";
+          const today = new Date().toLocaleString('pt-BR');
+          
+          const pdfBody = document.getElementById('pdf-body');
+          pdfBody.innerHTML = `
+            <div style="margin-bottom: 20px;">
+              <div style="background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <p style="margin: 0 0 5px 0; font-size: 12px;"><strong>PACIENTE:</strong> ${patientName.toUpperCase()}</p>
+                <p style="margin: 0; font-size: 12px;"><strong>DATA DE NASCIMENTO:</strong> ${patientBirthdate}</p>
+              </div>
+              
+              <h2 style="font-size: 14px; color: #1A3E74; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; margin-bottom: 10px;">
+                DADOS DO CÁLCULO AUDITADO
+              </h2>
+              
+              <table style="width: 100%; font-size: 11px; margin-bottom: 20px;">
+                <tr>
+                  <td style="padding: 4px 0;">Calculadora:</td>
+                  <td style="text-align: right; font-weight: bold;">Aspiração de Insulina</td>
+                </tr>
+                <tr>
+                  <td style="padding: 4px 0;">Prescrição Médica:</td>
+                  <td style="text-align: right; font-weight: bold;">${this.lastResult.prescricao} UI</td>
+                </tr>
+                <tr>
+                  <td style="padding: 4px 0;">Concentração:</td>
+                  <td style="text-align: right; font-weight: bold;">${this.lastResult.concentracaoTipo} (${this.lastResult.concentracao} UI/mL)</td>
+                </tr>
+              </table>
+              
+              <div style="background: #1A3E74; color: white; padding: 25px; border-radius: 12px; margin: 20px 0; text-align: center;">
+                <p style="margin:0; font-size: 11px; text-transform: uppercase; opacity: 0.8;">VOLUME FINAL A ASPIRAR</p>
+                <p style="margin:10px 0 0 0; font-size: 36px; font-weight: 900;">
+                  ${document.getElementById('res-total').innerText} ${document.getElementById('res-unit').innerText}
+                </p>
+              </div>
+              
+              <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px; border: 1px solid #e2e8f0;">
+                <p style="margin: 0; font-size: 10px; color: #64748b;">
+                  <strong>Checklist aplicado:</strong> 9 Certos da Medicação e Metas Internacionais de Segurança
+                </p>
+                <p style="margin: 5px 0 0 0; font-size: 9px; color: #94a3b8;">
+                  Documento gerado por Calculadoras de Enfermagem Profissional
+                </p>
+              </div>
+            </div>
+            
+            <p style="font-size: 9px; color: #64748b; margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 10px;">
+              Relatório gerado em: ${today}
+            </p>
+          `;
+
+          // Capturar o template como imagem
+          const canvas = await html2canvas(document.getElementById('pdf-render-template'), {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            logging: false
+          });
+
+          // Gerar PDF
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('p', 'pt', 'a4');
+          const imgData = canvas.toDataURL('image/png');
+          
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+          
+          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+          pdf.save(`Auditoria_Insulina_${new Date().getTime()}.pdf`);
+          
+          this.notify('PDF gerado com sucesso!', 'success');
+          
+        } catch (error) {
+          console.error('Erro ao gerar PDF:', error);
+          this.notify('Erro ao gerar PDF. Tente novamente.', 'error');
+        } finally {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }
+      },
+
+      // COPIAR RESULTADO
+      async copyResult() {
+        if (!this.lastResult) {
+          this.notify('Nenhum resultado para copiar', 'error');
+          return;
+        }
+
+        try {
+          const patientName = document.getElementById('patient_name').value || "Não informado";
+          const patientBirthdate = document.getElementById('patient_birthdate').value || "Não informado";
+          const today = new Date().toLocaleString('pt-BR');
+          
+          let text = `REGISTRO DE AUDITORIA - INSULINA\n`;
+          text += `Data: ${today}\n`;
+          text += `Paciente: ${patientName}\n`;
+          text += `Nascimento: ${patientBirthdate}\n`;
+          text += `\n`;
+          text += `PRESCRIÇÃO: ${this.lastResult.prescricao} UI\n`;
+          text += `CONCENTRAÇÃO: ${this.lastResult.concentracaoTipo} (${this.lastResult.concentracao} UI/mL)\n`;
+          text += `VOLUME A ASPIRAR: ${document.getElementById('res-total').innerText} ${document.getElementById('res-unit').innerText}\n`;
+          text += `\n`;
+          text += `Auditoria realizada por Calculadoras de Enfermagem Profissional\n`;
+          
+          await navigator.clipboard.writeText(text);
+          this.notify('Resultado copiado para a área de transferência!', 'success');
+          
+        } catch (error) {
+          console.error('Erro ao copiar:', error);
+          this.notify('Erro ao copiar resultado', 'error');
+        }
+      },
+
+      // COMPARTILHAMENTO
+      share(platform) {
+        const url = encodeURIComponent(window.location.href);
+        const title = encodeURIComponent(document.title);
+        const text = encodeURIComponent("Confira esta calculadora profissional de enfermagem!");
+        
+        const urls = {
+          facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+          whatsapp: `https://api.whatsapp.com/send?text=${text}%20${url}`,
+          linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+          twitter: `https://twitter.com/intent/tweet?text=${title}&url=${url}`
+        };
+        
+        if (urls[platform]) {
+          window.open(urls[platform], '_blank', 'width=600,height=400,noopener,noreferrer');
+        }
+      },
+
+      copyLink() {
+        navigator.clipboard.writeText(window.location.href)
+          .then(() => this.notify('Link copiado!', 'success'))
+          .catch(err => {
+            console.error('Erro ao copiar link:', err);
+            this.notify('Erro ao copiar link', 'error');
+          });
+      },
+
+      // OUTRAS FUNÇÕES
+      switchTab(tab) {
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        
+        document.getElementById(`pane-${tab}`)?.classList.remove('hidden');
+        document.getElementById(`btn-tab-${tab}`)?.classList.add('active');
+      },
+
+      reset() {
+        // Limpar campos de entrada (exceto campos opcionais de paciente)
+        document.getElementById('prescricao_medica').value = '';
+        
+        // Resetar concentração para padrão
+        document.getElementById('concentracao_insulina').value = '100';
+        
+        // Ocultar resultados
+        document.getElementById('results-wrapper').classList.add('hidden');
+        
+        // Limpar resultado
+        this.lastResult = null;
+        
+        // Resetar checklists
+        document.querySelectorAll('#checklist-9certos input, #checklist-metas input').forEach(checkbox => {
+          checkbox.checked = false;
+        });
+        
+        this.notify('Campos de cálculo resetados', 'info');
+      },
+
+      notify(message, type = 'info') {
+        const container = document.getElementById('notification-container');
+        if (!container) return;
+        
+        const toast = document.createElement('div');
+        toast.className = `toast-msg ${type === 'success' ? 'border-green-500' : type === 'error' ? 'border-red-500' : 'border-nurse-secondary'}`;
+        toast.innerHTML = `
+          <i class="fa-solid ${type === 'success' ? 'fa-check-circle text-green-500' : type === 'error' ? 'fa-exclamation-circle text-red-500' : 'fa-circle-info text-nurse-secondary'}"></i>
+          <span>${message}</span>
+        `;
+        
+        container.appendChild(toast);
+        
+        // Remover após 4 segundos
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(50px)';
+          setTimeout(() => {
+            if (toast.parentNode) {
+              toast.parentNode.removeChild(toast);
+            }
+          }, 500);
+        }, 4000);
+      }
+    };
+
+    // Inicializar quando o DOM carregar
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('📄 DOM carregado, inicializando sistema...');
+      
+      // Inicializar calculadora
+      setTimeout(() => {
+        CALCULATOR_SYSTEM.init();
+      }, 500);
+    });
+
+    // Adicionar função global para prevenir números negativos
+    window.preventNegative = function(event) {
+      if (['-', 'e', '+', 'E'].includes(event.key)) {
+        event.preventDefault();
+        return false;
+      }
+      return true;
+    };
+
+    // Inicializar funções de acessibilidade do header
+    document.addEventListener('moduleLoaded', (e) => {
+      if (e.detail.id === 'header-container') {
+        console.log('Header carregado, inicializando funcionalidades...');
+        
+        // Inicializar menu hambúrguer
+        initHamburgerMenu();
+        
+        // Inicializar mega menu
+        initMegaMenu();
+      }
+    });
+
+    // Função para inicializar menu hambúrguer
+    function initHamburgerMenu() {
+      const hamburgerBtn = document.getElementById('hamburger-menu');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      if (hamburgerBtn && mobileMenu) {
+        hamburgerBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+          mobileMenu.classList.toggle('flex');
+          
+          // Animar ícone do hambúrguer
+          const spans = hamburgerBtn.querySelectorAll('span');
+          if (mobileMenu.classList.contains('hidden')) {
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+          } else {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+          }
+        });
+      }
+    }
+
+    // Função para inicializar mega menu
+    function initMegaMenu() {
+      const megaMenuTriggers = document.querySelectorAll('.has-mega-menu');
+      
+      megaMenuTriggers.forEach(trigger => {
+        const megaMenu = trigger.querySelector('.mega-menu');
+        
+        if (megaMenu) {
+          trigger.addEventListener('mouseenter', () => {
+            megaMenu.style.display = 'block';
+          });
+          
+          trigger.addEventListener('mouseleave', () => {
+            megaMenu.style.display = 'none';
+          });
+          
+          // Para mobile
+          trigger.addEventListener('click', (e) => {
+            if (window.innerWidth < 1024) {
+              e.preventDefault();
+              megaMenu.style.display = megaMenu.style.display === 'block' ? 'none' : 'block';
+            }
+          });
+        }
+      });
+    }
+
+    // Adicionar ao objeto global
+    window.CALCULATOR_SYSTEM = CALCULATOR_SYSTEM;
+  </script>
 </body>
 </html>
