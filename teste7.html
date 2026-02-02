@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#00897b">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <meta name="keywords" content="calculadora de enfermagem, calculadoras clínicas, ferramentas de saúde, gotejamento, medication, diluição">
+    <meta name="description" content="Coleção completa de calculadoras de enfermagem e ferramentas clínicas para profissionais de saúde.">
+    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
+
+    <!-- Preconnect e Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- CSS Modules - Links Absolutos -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v2.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v2.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v2.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v2.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/main-content.css">
+
+    <style>
+        /* CSS Crítico */
+        body { font-family: 'Nunito Sans', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        
+        .skip-link { position: absolute; top: -40px; left: 0; background: #00897b; color: white; padding: 8px; z-index: 100000; transition: top 0.3s; }
+        .skip-link:focus { top: 0; }
+        
+        i.fas, i.fab, i.fa-solid { display: inline-block !important; visibility: visible !important; opacity: 1 !important; }
+        
+        #loader-global { position: fixed; inset: 0; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200000; transition: opacity 0.5s; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #00897b; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        main#main-v2-content { min-height: 60vh; display: block; }
+
+        /* --- AJUSTE DE EMPILHAMENTO (CORRIGIDO) --- */
+        
+        /* Container de Acessibilidade */
+        #accessibility-v2-container {
+            position: fixed !important;
+            right: 0 !important;
+            top: 0 !important;
+            width: 0 !important;
+            z-index: 100001 !important;
+        }
+
+        /* 1. Botão de Acessibilidade (SUPERIOR) */
+        #accessibility-toggle,
+        #accessibility-v2-container button#accessibility-toggle {
+            position: fixed !important;
+            right: 0 !important;
+            left: auto !important;
+            top: 200px !important;
+            z-index: 100002 !important;
+            width: 45px !important;
+            height: 45px !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            background-color: #00897b !important;
+            color: white !important;
+            border: none !important;
+            cursor: pointer !important;
+            
+            /* Estilo Aba Lateral */
+            border-top-left-radius: 10px !important;
+            border-bottom-left-radius: 10px !important;
+            border-top-right-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            box-shadow: -3px 0 8px rgba(0,0,0,0.2) !important;
+            transition: all 0.3s ease;
+        }
+
+        #accessibility-toggle:hover {
+            width: 50px !important;
+            background-color: #00695c !important;
+        }
+
+        /* 2. Botão VLibras (INFERIOR) - Com espaçamento maior */
+        div[vw],
+        div[vw].enabled {
+            position: fixed !important;
+            right: 0 !important;
+            top: 260px !important; /* 60px abaixo do botão de acessibilidade */
+            left: auto !important;
+            bottom: auto !important;
+            width: 45px !important;
+            height: 45px !important;
+            z-index: 100000 !important; /* Abaixo do botão de acessibilidade */
+            display: block !important;
+        }
+
+        /* Mira o botão de acesso oficial do VLibras */
+        div[vw] .vw-access-button,
+        div[vw].enabled .vw-access-button {
+            position: absolute !important;
+            right: 0 !important;
+            left: auto !important;
+            top: 0 !important;
+            bottom: auto !important;
+            width: 45px !important;
+            height: 45px !important;
+            min-width: 45px !important;
+            min-height: 45px !important;
+            max-width: 45px !important;
+            max-height: 45px !important;
+            background-color: #00897b !important;
+            
+            /* Estilo Aba Lateral */
+            border-radius: 10px 0 0 10px !important;
+            box-shadow: -3px 0 8px rgba(0,0,0,0.2) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        div[vw] .vw-access-button img {
+            width: 28px !important;
+            height: 28px !important;
+        }
+
+        /* Painel abrindo ao lado das abas */
+        #accessibility-panel {
+            position: fixed !important;
+            top: 150px !important;
+            right: 55px !important; 
+            z-index: 100005 !important;
+            box-shadow: -10px 10px 20px rgba(0,0,0,0.25) !important;
+            border-radius: 12px !important;
+            overflow: hidden !important;
+        }
+
+        /* Esconde elementos extras do VLibras que podem causar sobreposição */
+        div[vw] .vw-plugin-wrapper {
+            position: fixed !important;
+            right: 50px !important;
+            top: 260px !important;
+        }
+
+    </style>
+
+    <title>Calculadoras de Enfermagem - Ferramentas Clínicas</title>
+</head>
+<body class="light-mode">
+
+    <div id="loader-global">
+        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/favicon-calculadoras-de-enfermagem.webp" 
+             alt="Calculadoras de Enfermagem" 
+             style="background-color: #ffffff; padding: 10px; border-radius: 8px; margin-bottom: 20px; max-width: 200px;">
+        <div class="spinner"></div>
+        <p style="margin-top:15px; color:#00897b; font-weight:600;">Aguarde enquanto o conteúdo é carregado...</p>
+    </div>
+
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <header id="header-v2-container" role="banner"></header>
+
+    <aside id="accessibility-v2-container" role="complementary"></aside>
+    
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+    </div>
+
+    <div id="main-module-container"></div>
+
+    <footer id="footer-v2-container" role="contentinfo"></footer>
+
+    <script>
+        (function() {
+            'use strict';
+
+            window.EventBus = window.EventBus || {
+                events: {}, fired: {},
+                on(e, cb) { 
+                    const event = e.toLowerCase();
+                    if(!this.events[event]) this.events[event] = [];
+                    this.events[event].push(cb);
+                    if(this.fired[event]) cb(this.fired[event]);
+                },
+                emit(e, data) {
+                    const event = e.toLowerCase();
+                    this.fired[event] = data || true;
+                    if(this.events[event]) this.events[event].forEach(cb => cb(data));
+                }
+            };
+
+            const BASE_URL = "https://auditeduca.github.io/Calculadoras-de-Enfermagem/";
+
+            const CONFIG = {
+                components: [
+                    { id: 'accessibility-v2-container', path: 'assets/components/accessibility-v2.html' },
+                    { id: 'header-v2-container', path: 'assets/components/header-v2.html' },
+                    { id: 'main-module-container', path: 'assets/pages/main-content.html' },
+                    { id: 'footer-v2-container', path: 'assets/components/footer-v2.html' }
+                ],
+                scripts: [
+                    'assets/js/event-bus.js',
+                    'https://vlibras.gov.br/app/vlibras-plugin.js',
+                    'assets/js/accessibility-v2.js',
+                    'assets/js/header-v2.js',
+                    'assets/js/main-content.js',
+                    'assets/js/footer-v2.js'
+                ]
+            };
+
+            async function loadComponent(id, path) {
+                try {
+                    const url = path.startsWith('http') ? path : BASE_URL + path;
+                    const response = await fetch(url + '?t=' + Date.now());
+                    if (!response.ok) throw new Error(response.status);
+                    const html = await response.text();
+                    const container = document.getElementById(id);
+                    if (container) {
+                        container.innerHTML = html;
+                        window.EventBus.emit(`module:${id}:ready`);
+                    }
+                    return true;
+                } catch (e) {
+                    console.error(`[App] Erro crítico ao carregar ${id}:`, e.message);
+                    return false;
+                }
+            }
+
+            async function loadScript(src) {
+                return new Promise((resolve) => {
+                    const script = document.createElement('script');
+                    script.src = (src.startsWith('http') ? src : BASE_URL + src) + '?v=' + Date.now();
+                    script.async = false;
+                    script.onload = () => {
+                        if(src.includes('vlibras') && window.VLibras) {
+                            try { new window.VLibras.Widget('https://vlibras.gov.br/app'); } catch(e){}
+                        }
+                        resolve(true);
+                    };
+                    script.onerror = () => resolve(false);
+                    document.body.appendChild(script);
+                });
+            }
+
+            function initAccessibilityWidget() {
+                const checkExist = setInterval(function() {
+                   const accessibilityToggle = document.getElementById('accessibility-toggle');
+                   if (accessibilityToggle) {
+                      clearInterval(checkExist);
+                      setupAccessibility(accessibilityToggle);
+                   }
+                }, 100);
+                setTimeout(() => clearInterval(checkExist), 5000);
+            }
+
+            function setupAccessibility(accessibilityToggle) {
+                const accessibilityClose = document.getElementById('accessibility-close');
+                const accessibilityPanel = document.getElementById('accessibility-panel');
+                const librasToggle = document.getElementById('libras-toggle-top');
+                let isPanelOpen = false;
+
+                if(accessibilityPanel) accessibilityPanel.classList.add('accessibility-panel-hidden');
+
+                accessibilityToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (isPanelOpen) {
+                        accessibilityPanel.classList.add('accessibility-panel-hidden');
+                        accessibilityToggle.classList.remove('active');
+                        isPanelOpen = false;
+                    } else {
+                        accessibilityPanel.classList.remove('accessibility-panel-hidden');
+                        accessibilityToggle.classList.add('active');
+                        isPanelOpen = true;
+                    }
+                });
+
+                if (accessibilityClose) {
+                    accessibilityClose.addEventListener('click', function() {
+                        accessibilityPanel.classList.add('accessibility-panel-hidden');
+                        accessibilityToggle.classList.remove('active');
+                        isPanelOpen = false;
+                    });
+                }
+
+                if (librasToggle) {
+                    librasToggle.addEventListener('click', function() {
+                        if (window.VLibras) new window.VLibras.Widget('https://vlibras.gov.br/app');
+                    });
+                }
+            }
+
+            // ===== FORÇA POSIÇÃO DO VLIBRAS =====
+            function fixVLibrasPosition() {
+                const vwContainer = document.querySelector('div[vw]');
+                const vwButton = document.querySelector('div[vw] .vw-access-button');
+                
+                if (vwContainer) {
+                    vwContainer.style.setProperty('position', 'fixed', 'important');
+                    vwContainer.style.setProperty('right', '0', 'important');
+                    vwContainer.style.setProperty('top', '260px', 'important');
+                    vwContainer.style.setProperty('left', 'auto', 'important');
+                    vwContainer.style.setProperty('bottom', 'auto', 'important');
+                    vwContainer.style.setProperty('width', '45px', 'important');
+                    vwContainer.style.setProperty('height', '45px', 'important');
+                    vwContainer.style.setProperty('z-index', '100000', 'important');
+                }
+                
+                if (vwButton) {
+                    vwButton.style.setProperty('position', 'relative', 'important');
+                    vwButton.style.setProperty('right', '0', 'important');
+                    vwButton.style.setProperty('top', '0', 'important');
+                    vwButton.style.setProperty('left', 'auto', 'important');
+                    vwButton.style.setProperty('bottom', 'auto', 'important');
+                    vwButton.style.setProperty('width', '45px', 'important');
+                    vwButton.style.setProperty('height', '45px', 'important');
+                    vwButton.style.setProperty('margin', '0', 'important');
+                    vwButton.style.setProperty('padding', '0', 'important');
+                    vwButton.style.setProperty('background-color', '#00897b', 'important');
+                    vwButton.style.setProperty('border-radius', '10px 0 0 10px', 'important');
+                    vwButton.style.setProperty('box-shadow', '-3px 0 8px rgba(0,0,0,0.2)', 'important');
+                }
+            }
+
+            // Inicia correção contínua do VLibras
+            function startVLibrasFix() {
+                fixVLibrasPosition();
+                setInterval(fixVLibrasPosition, 500);
+                
+                // Observa mudanças no DOM
+                const observer = new MutationObserver(fixVLibrasPosition);
+                const vwContainer = document.querySelector('div[vw]');
+                if (vwContainer) {
+                    observer.observe(vwContainer, { 
+                        attributes: true, 
+                        attributeFilter: ['style', 'class'],
+                        subtree: true 
+                    });
+                }
+            }
+
+            async function start() {
+                await Promise.all(CONFIG.components.map(c => loadComponent(c.id, c.path)));
+                for (const s of CONFIG.scripts) await loadScript(s);
+
+                setTimeout(() => {
+                    if (typeof window.HeaderInit === 'function') window.HeaderInit();
+                    if (typeof window.MainInit === 'function') window.MainInit();
+                    initAccessibilityWidget();
+                    
+                    // Inicia correção do VLibras após carregamento
+                    startVLibrasFix();
+                    
+                    const loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.style.opacity = '0';
+                        setTimeout(() => loader.style.display = 'none', 500);
+                    }
+                }, 500);
+            }
+
+            if (document.readyState === 'complete') start();
+            else window.addEventListener('load', start);
+        })();
+    </script>
+</body>
+</html>

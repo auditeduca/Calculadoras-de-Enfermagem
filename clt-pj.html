@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparativo CLT vs PJ | Calculadoras de Enfermagem</title>
+    <!-- Imports Padronizados -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] }, colors: { 'nurse-primary':'#1A3E74', 'nurse-secondary':'#00bcd4', 'nurse-accent':'#00838f', 'nurse-bgDark':'#0F172A' } } } }</script>
+    <link rel="stylesheet" href="assets/css/variables-v4.css">
+    <link rel="stylesheet" href="assets/css/header-v4.css">
+    <link rel="stylesheet" href="assets/css/footer-v4.css">
+    <link rel="stylesheet" href="assets/css/accessibility-v4.css">
+    <style type="text/tailwindcss">
+        @layer base{ body{@apply bg-slate-50 text-slate-900 antialiased font-inter} h1{@apply font-nunito font-black text-nurse-primary} }
+        @layer components{ .card-base{@apply bg-white rounded-[2rem] border border-slate-200 shadow-sm;} .input-field{@apply w-full border-2 border-slate-200 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none font-medium;} .btn-primary-action { @apply bg-nurse-primary text-white font-bold py-4 px-8 rounded-2xl shadow-xl w-full uppercase tracking-wider hover:bg-nurse-secondary transition-colors; } }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <div id="accessibility-container"></div>
+    <div id="header-container" class="sticky top-0 z-50"></div>
+
+    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 py-12 w-full">
+        <nav class="flex items-center gap-2 text-sm text-slate-600 mb-8 font-semibold">
+            <a href="index.html" class="text-nurse-accent">Início</a> <i class="fa-solid fa-chevron-right text-[10px]"></i> <span>CLT vs PJ</span>
+        </nav>
+
+        <header class="max-w-4xl mb-12">
+            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block">Carreira</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">CLT vs PJ</h1>
+            <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+            <p class="text-xl text-slate-600">Compare propostas financeiras e decida o melhor regime de contratação.</p>
+        </header>
+
+        <div class="grid lg:grid-cols-[1fr,340px] gap-10">
+            <article class="card-base p-10">
+                <form id="calc-form" data-calc-type="cltPj" class="space-y-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-blue-50/50 p-6 rounded-2xl border border-blue-100">
+                            <h3 class="text-blue-800 font-bold mb-4 border-b border-blue-200 pb-2">Proposta CLT</h3>
+                            <div class="space-y-4">
+                                <div><label class="text-sm font-bold text-slate-700">Salário Carteira</label><input type="number" id="salario-clt" class="input-field" required></div>
+                                <div><label class="text-sm font-bold text-slate-700">Benefícios (VR/VA)</label><input type="number" id="beneficios-clt" class="input-field"></div>
+                            </div>
+                        </div>
+                        <div class="bg-orange-50/50 p-6 rounded-2xl border border-orange-100">
+                            <h3 class="text-orange-800 font-bold mb-4 border-b border-orange-200 pb-2">Proposta PJ</h3>
+                            <div class="space-y-4">
+                                <div><label class="text-sm font-bold text-slate-700">Faturamento Bruto</label><input type="number" id="faturamento-pj" class="input-field" required></div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div><label class="text-xs font-bold">Imposto (%)</label><input type="number" id="imposto-pj" class="input-field" value="15.5"></div>
+                                    <div><label class="text-xs font-bold">Custos (R$)</label><input type="number" id="custos-pj" class="input-field" value="300"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-4 grid grid-cols-2 gap-4">
+                        <button type="submit" class="btn-primary-action">Comparar</button>
+                        <button type="button" id="btn-limpar" class="bg-slate-200 text-slate-600 font-bold rounded-2xl uppercase text-sm">Limpar</button>
+                    </div>
+                </form>
+            </article>
+
+            <aside class="space-y-6">
+                <!-- Sidebar content -->
+            </aside>
+        </div>
+
+        <section id="result-container" class="hidden mt-12">
+            <div class="max-w-4xl mx-auto card-base p-10 bg-white">
+                <h3 class="text-center font-bold text-slate-400 uppercase tracking-widest text-xs mb-8">Veredito Financeiro</h3>
+                <div id="result-content" class="space-y-4"></div>
+            </div>
+        </section>
+
+        <section id="refs-section" class="mt-16 pt-12 border-t border-slate-200">
+            <h2 class="text-2xl font-bold text-nurse-primary mb-4">Base Legal</h2>
+            <ul class="text-sm text-slate-600 space-y-2">
+                <li class="pl-4 border-l-4 border-nurse-accent">Lei Complementar 123/2006 (Simples Nacional).</li>
+                <li class="pl-4 border-l-4 border-nurse-accent">CLT (Benefícios Obrigatórios).</li>
+            </ul>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+    <script src="assets/js/component-loader.js"></script>
+    <script src="assets/js/calculadoras-trabalhistas.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Gasometria Arterial Online – Interprete Resultados | Calculadoras de Enfermagem</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Realize o Cálculo de Gasometria Arterial (pH, PaCO₂, HCO₃⁻, BE, SatO₂) em segundos com precisão clínica. Ferramenta gratuita para diagnóstico de distúrbios acidobásicos.">
+    <meta name="keywords" content="cálculo gasometria, calculadora gasometria, interpretação gasometria, acidose metabólica, alcalose respiratória, distúrbios acidobásicos, enfermagem">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/gasometria.html">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Calculadoras de Enfermagem">
+    <meta property="og:title" content="Cálculo de Gasometria Arterial Online – Interprete Resultados">
+    <meta property="og:description" content="Ferramenta prática para interpretar distúrbios acidobásicos e de oxigenação. Gere relatórios em PDF com auditoria completa.">
+    <meta property="og:url" content="https://www.calculadorasdeenfermagem.com.br/gasometria.html">
+    <meta property="og:image" content="https://www.calculadorasdeenfermagem.com.br/iconpages.webp">
+
+    <!-- Alternates Hreflang -->
+    <link rel="alternate" hreflang="pt-br" href="https://www.calculadorasdeenfermagem.com.br/gasometria.html">
+    <link rel="alternate" hreflang="en" href="https://www.calculadorasdeenfermagem.com.br/en/gasometria.html">
+    <link rel="alternate" hreflang="es" href="https://www.calculadorasdeenfermagem.com.br/es/gasometria.html">
+    <link rel="alternate" hreflang="fr" href="https://www.calculadorasdeenfermagem.com.br/fr/gasometria.html">
+    <link rel="alternate" hreflang="de" href="https://www.calculadorasdeenfermagem.com.br/de/gasometria.html">
+    <link rel="alternate" hreflang="it" href="https://www.calculadorasdeenfermagem.com.br/it/gasometria.html">
+    <link rel="alternate" hreflang="ja" href="https://www.calculadorasdeenfermagem.com.br/ja/gasometria.html">
+    <link rel="alternate" hreflang="zh" href="https://www.calculadorasdeenfermagem.com.br/zh/gasometria.html">
+    <link rel="alternate" hreflang="hi" href="https://www.calculadorasdeenfermagem.com.br/hi/gasometria.html">
+    <link rel="alternate" hreflang="ar" href="https://www.calculadorasdeenfermagem.com.br/ar/gasometria.html">
+    <link rel="alternate" hreflang="ru" href="https://www.calculadorasdeenfermagem.com.br/ru/gasometria.html">
+    <link rel="alternate" hreflang="tr" href="https://www.calculadorasdeenfermagem.com.br/tr/gasometria.html">
+    <link rel="alternate" hreflang="ko" href="https://www.calculadorasdeenfermagem.com.br/ko/gasometria.html">
+    <link rel="alternate" hreflang="nl" href="https://www.calculadorasdeenfermagem.com.br/nl/gasometria.html">
+    <link rel="alternate" hreflang="pl" href="https://www.calculadorasdeenfermagem.com.br/pl/gasometria.html">
+    <link rel="alternate" hreflang="sv" href="https://www.calculadorasdeenfermagem.com.br/sv/gasometria.html">
+    <link rel="alternate" hreflang="id" href="https://www.calculadorasdeenfermagem.com.br/id/gasometria.html">
+    <link rel="alternate" hreflang="vi" href="https://www.calculadorasdeenfermagem.com.br/vi/gasometria.html">
+    <link rel="alternate" hreflang="uk" href="https://www.calculadorasdeenfermagem.com.br/uk/gasometria.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/gasometria.html">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        nunito: ['Nunito Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-primary-light': '#2E5A9C',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Dependências PDF e QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root { --color-primary: #1A3E74; --color-primary-light: #2E5A9C; }
+        .tab-btn-active { border-color: #00bcd4 !important; color: #00bcd4 !important; font-weight: bold; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .sidebar-card { padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .toc-list li { margin-bottom: 0.75rem; font-size: 0.875rem; transition: transform 0.2s; font-family: 'Inter', sans-serif; }
+        .toc-list li:hover { transform: translateX(5px); }
+        .share-btn { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); color: white; transition: all 0.3s; }
+        .share-btn:hover { background: white; color: var(--color-primary); transform: translateY(-3px); }
+        .btn-action { height: 56px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; transition: all 0.3s; font-family: 'Nunito Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
+
+    <div id="header-container"></div>
+
+    <!-- Elemento Decorativo -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-slate-500 mb-8 font-inter">
+            <ol class="flex items-center space-x-2">
+                <li><a href="https://www.calculadorasdeenfermagem.com.br" class="hover:text-nurse-secondary transition-colors">Início</a></li>
+                <li><span>></span> <span>Calculadoras Clínicas</span></li>
+                <li><span>></span> <span class="text-nurse-primary dark:text-nurse-secondary font-bold font-nunito">Gasometria</span></li>
+            </ol>
+        </nav>
+
+        <!-- Título -->
+        <header class="mb-12 text-center md:text-left">
+            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito">Calculadoras Clínicas</span>
+            <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 leading-tight font-nunito tracking-tight">Cálculo de Gasometria</h1>
+            <div class="w-24 h-1.5 bg-nurse-secondary rounded-full mb-8 mx-auto md:mx-0"></div>
+            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium font-inter max-w-3xl">
+                Ferramenta avançada para análise de distúrbios acidobásicos, compensações e status de oxigenação.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+            <!-- Coluna Principal -->
+            <div class="lg:col-span-3 space-y-10">
+                
+                <!-- Abas -->
+                <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-8 font-nunito font-bold">
+                    <button onclick="showTab('calc')" id="btn-tab-calc" class="px-6 py-3 border-b-2 tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-calculator"></i> Calculadora
+                    </button>
+                    <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-circle-info"></i> Sobre
+                    </button>
+                    <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-clipboard-list"></i> Como Usar?
+                    </button>
+                    <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-microscope"></i> Informações Técnicas
+                    </button>
+                </div>
+
+                <!-- Painel da Calculadora -->
+                <section id="pane-calc" class="space-y-8 animate-in fade-in duration-500">
+                    
+                    <!-- Dados do Paciente -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-lg font-black text-nurse-primary dark:text-white mb-6 uppercase tracking-tight font-nunito">
+                            Dados do Paciente
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Nome do Paciente</label>
+                                <input type="text" id="patient_name" placeholder="Ex: Maria Oliveira" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Data de Nascimento</label>
+                                <input type="text" id="patient_dob" placeholder="dd/mm/aaaa" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parâmetros do Cálculo -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest border-b border-gray-100 dark:border-slate-800 pb-2 font-nunito">Parâmetros do Cálculo</h3>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 font-inter">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase text-gray-400">pH Arterial</label>
+                                <input type="number" id="inp_ph" step="0.01" placeholder="7.40" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none">
+                                <p class="text-[10px] text-gray-400">Ref: 7.35 - 7.45</p>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase text-gray-400">PaCO₂ (mmHg)</label>
+                                <input type="number" id="inp_paco2" step="0.1" placeholder="40" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none">
+                                <p class="text-[10px] text-gray-400">Ref: 35 - 45</p>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase text-gray-400">HCO₃⁻ (mEq/L)</label>
+                                <input type="number" id="inp_hco3" step="0.1" placeholder="24" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none">
+                                <p class="text-[10px] text-gray-400">Ref: 22 - 26</p>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase text-gray-400">BE (Base Excess)</label>
+                                <input type="number" id="inp_be" step="0.1" placeholder="0" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none">
+                                <p class="text-[10px] text-gray-400">Ref: -2 a +2</p>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase text-gray-400">SatO₂ (%)</label>
+                                <input type="number" id="inp_sato2" step="0.1" placeholder="98" class="w-full p-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-nurse-secondary outline-none">
+                                <p class="text-[10px] text-gray-400">Ref: > 94%</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-12 max-w-xl mx-auto font-nunito">
+                            <button onclick="handleCalculate()" class="btn-action bg-nurse-primary text-white hover:bg-nurse-primary/90 shadow-lg shadow-nurse-primary/20">
+                                <i class="fa-solid fa-calculator"></i> Calcular
+                            </button>
+                            <button onclick="handleReset()" class="btn-action bg-gray-100 dark:bg-slate-800 text-gray-500 hover:bg-gray-200">
+                                <i class="fa-solid fa-rotate-left"></i> Limpar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Resultados -->
+                    <div id="results-section" class="hidden space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                        <div id="result-card-container" class="p-10 rounded-[3rem] shadow-2xl transition-all duration-500 text-white font-nunito bg-nurse-primary">
+                            <div class="flex flex-col md:flex-row items-center gap-10">
+                                <div class="w-40 h-40 rounded-full border-4 border-white/20 flex flex-col items-center justify-center bg-black/10 backdrop-blur-md">
+                                    <span id="res-ph-label" class="text-3xl font-black text-white">7.40</span>
+                                    <span class="text-[10px] uppercase font-bold text-white/80 tracking-widest">pH Final</span>
+                                </div>
+                                <div class="text-center md:text-left flex-grow">
+                                    <h3 class="text-2xl font-black italic mb-4 text-white uppercase tracking-tight">Diagnóstico Interpretado</h3>
+                                    <div class="bg-white/10 p-6 rounded-2xl mb-4">
+                                        <p id="res-diagnosis" class="text-3xl font-bold leading-tight">Acidose Metabólica Parcialmente Compensada</p>
+                                    </div>
+                                    <p id="res-oxy" class="text-xs font-bold text-nurse-secondary bg-white/10 inline-block px-4 py-1.5 rounded-full uppercase tracking-tight"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ações Secundárias -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-nunito">
+                            <button onclick="handleSearchNanda()" class="btn-action border-2 border-nurse-secondary text-nurse-secondary hover:bg-nurse-secondary hover:text-white">
+                                <i class="fa-solid fa-book-medical"></i> Diagnóstico (NANDA, NIC e NOC)
+                            </button>
+                            <button id="btn-generate-pdf" onclick="generatePDF()" class="btn-action bg-nurse-primary text-white hover:opacity-90">
+                                <i class="fa-solid fa-file-pdf"></i> <span id="pdf-button-text">Gerar PDF</span>
+                            </button>
+                        </div>
+
+                        <!-- Auditoria do Cálculo -->
+                        <div class="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm font-inter">
+                            <h4 class="font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest border-b pb-2 font-nunito flex items-center gap-2">
+                                <i class="fa-solid fa-magnifying-glass-chart text-nurse-secondary"></i> Auditoria do Cálculo
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div class="space-y-2">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Paciente:</p>
+                                    <p id="audit-patient" class="text-xs font-bold text-gray-600 dark:text-gray-300">-</p>
+                                    <p id="audit-dob" class="text-[10px] text-gray-400 font-bold uppercase tracking-tight italic">-</p>
+                                </div>
+                                <div class="space-y-2">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Valores Lidos:</p>
+                                    <p id="audit-values" class="text-xs font-bold text-gray-600 dark:text-gray-300">-</p>
+                                </div>
+                                <div class="space-y-2">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Timestamp Auditoria:</p>
+                                    <p id="audit-time" class="text-xs font-bold text-gray-600 dark:text-gray-300">-</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 9 Certos -->
+                        <div class="bg-white dark:bg-slate-900/50 p-6 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                            <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-4 uppercase tracking-widest font-nunito flex items-center gap-2">
+                                <i class="fa-solid fa-list-check"></i> 9 Certos da Administração (Segurança)
+                            </h3>
+                            <div id="checklist-9certos" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
+                        </div>
+
+                        <!-- Metas de Segurança -->
+                        <div class="bg-white dark:bg-slate-900/50 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary p-6 uppercase tracking-widest font-nunito border-b border-gray-100 dark:border-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved"></i> Metas Internacionais de Segurança
+                            </h3>
+                            <div id="checklist-metas" class="p-6 space-y-3 font-inter"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Conteúdos Teóricos -->
+                <section id="pane-teoria" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter">
+                    <h2 class="font-black text-nurse-primary font-nunito">Sobre a Gasometria Arterial</h2>
+                    <p>A gasometria arterial é um exame de sangue colhido de uma artéria, fundamental para avaliar o equilíbrio ácido-básico (pH), a oxigenação (PaO₂ e SatO₂) e a ventilação (PaCO₂).</p>
+                    <p>O equilíbrio é mantido por sistemas tampões e pela regulação dos pulmões e rins.</p>
+                </section>
+
+                <section id="pane-instrucoes" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter">
+                    <h2 class="font-black text-nurse-primary font-nunito">Como Usar?</h2>
+                    <ol>
+                        <li>Insira o pH arterial obtido no laudo.</li>
+                        <li>Preencha a pressão parcial de CO₂ (PaCO₂).</li>
+                        <li>Insira o valor do Bicarbonato (HCO₃⁻).</li>
+                        <li>Para análise completa, adicione BE e SatO₂.</li>
+                        <li>Clique em **Calcular** para obter o diagnóstico clínico.</li>
+                    </ol>
+                </section>
+
+                <section id="pane-tecnica" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter">
+                    <h2 class="font-black text-nurse-primary font-nunito">Informações Técnicas</h2>
+                    <p><strong>pH < 7,35:</strong> Acidemia | <strong>pH > 7,45:</strong> Alcalemia.</p>
+                    <p>O algoritmo utiliza o método de Henderson-Hasselbalch simplificado para determinar o distúrbio primário e avalia o grau de compensação (Compensado, Parcialmente Compensado ou Descompensado).</p>
+                </section>
+
+                <div class="pt-10 border-t border-gray-100 dark:border-slate-800">
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-gray-200 dark:bg-slate-800 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-wider font-nunito">#Gasometria</span>
+                        <span class="px-3 py-1 bg-gray-200 dark:bg-slate-800 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-wider font-nunito">#DisturbioAcidobasico</span>
+                        <span class="px-3 py-1 bg-gray-200 dark:bg-slate-800 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-wider font-nunito">#TerapiaIntensiva</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="space-y-6 font-nunito">
+                <div class="sidebar-card bg-nurse-primary text-white">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold font-nunito"><i class="fas fa-list mr-2"></i> Índice</h3>
+                    <ul class="toc-list font-inter">
+                        <li><a href="#pane-calc" onclick="showTab('calc')">1. Calculadora</a></li>
+                        <li><a href="#pane-teoria" onclick="showTab('teoria')">2. Sobre</a></li>
+                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes')">3. Como Usar</a></li>
+                        <li><a href="#pane-tecnica" onclick="showTab('tecnica')">4. Informações Técnicas</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card bg-nurse-primary-light text-white">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold font-nunito"><i class="fas fa-share-nodes mr-2"></i> Compartilhar</h3>
+                    <div class="flex flex-wrap gap-3 justify-between">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.calculadorasdeenfermagem.com.br/gasometria.html" target="_blank" class="share-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/" target="_blank" class="share-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://api.whatsapp.com/send?text=Calculadora de Gasometria Arterial Profissional: https://www.calculadorasdeenfermagem.com.br/gasometria.html" target="_blank" class="share-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.calculadorasdeenfermagem.com.br/gasometria.html" target="_blank" class="share-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://twitter.com/intent/tweet?text=Interprete a Gasometria em segundos: https://www.calculadorasdeenfermagem.com.br/gasometria.html" target="_blank" class="share-btn" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+                <div id="qrcode-source" class="hidden"></div>
+            </aside>
+        </div>
+
+        <!-- Ferramentas Relacionadas -->
+        <section class="bg-slate-100 dark:bg-slate-900/40 py-24 border-t border-slate-200 dark:border-slate-800 mt-24 relative z-10 rounded-[3rem]">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-5xl font-black text-nurse-primary dark:text-white mb-16 flex items-center justify-center gap-6 font-nunito">
+                    <i class="fa-solid fa-toolbox text-nurse-secondary"></i> Ferramentas Relacionadas
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 text-left">
+                    <a href="balancohidrico.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
+                        <div class="relative h-60 overflow-hidden">
+                            <img src="img/hidricoicone.webp" alt="Balanço Hídrico" class="w-full h-full object-contain p-8 group-hover:scale-110 transition-transform duration-700 bg-slate-50">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                            <span class="absolute top-6 left-6 px-4 py-1.5 bg-nurse-secondary text-white text-[10px] font-bold uppercase rounded-full shadow-lg font-nunito">Monitoramento</span>
+                        </div>
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold text-nurse-primary dark:text-white mb-3 group-hover:text-nurse-secondary transition-colors font-nunito">Balanço Hídrico</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-inter leading-relaxed">Controle rigoroso de entradas e saídas de líquidos.</p>
+                            <span class="text-nurse-secondary font-bold text-xs uppercase tracking-widest flex items-center gap-2 font-nunito font-bold">Acessar <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
+    <script>
+        const CERTOS = ["Paciente", "Droga", "Via", "Hora", "Dose", "Registro", "Orientação", "Forma", "Resposta"];
+        const SAFETY_GOALS = [
+            { id: 1, text: "Identificação Correta do Paciente", colorClass: "bg-red-100 border-red-500 text-red-800" },
+            { id: 2, text: "Comunicação Efetiva", colorClass: "bg-yellow-100 border-yellow-500 text-yellow-800" },
+            { id: 6, text: "Redução do Risco de Quedas e Lesão", colorClass: "bg-blue-100 border-blue-500 text-blue-800" }
+        ];
+
+        function showTab(id) {
+            ['calc', 'teoria', 'instrucoes', 'tecnica'].forEach(t => {
+                document.getElementById('pane-' + t)?.classList.add('hidden');
+                document.getElementById('btn-tab-' + t)?.classList.remove('tab-btn-active');
+            });
+            document.getElementById('pane-' + id)?.classList.remove('hidden');
+            document.getElementById('btn-tab-' + id)?.classList.add('tab-btn-active');
+        }
+
+        const renderChecklists = () => {
+            document.getElementById('checklist-9certos').innerHTML = CERTOS.map((c) => `
+                <label class="flex items-center p-2 bg-gray-50 dark:bg-slate-800 rounded-lg cursor-pointer text-[10px] font-bold uppercase font-nunito">
+                    <input type="checkbox" checked class="mr-2 w-4 h-4 accent-nurse-secondary"> ${c}
+                </label>
+            `).join('');
+
+            document.getElementById('checklist-metas').innerHTML = SAFETY_GOALS.map((meta) => `
+                <label class="flex items-center p-3 rounded-xl border-l-4 shadow-sm cursor-pointer transition-all hover:brightness-95 ${meta.colorClass}">
+                    <input type="checkbox" checked class="mr-3 w-4 h-4 accent-nurse-primary">
+                    <span class="text-sm font-bold">Meta ${meta.id}: ${meta.text}</span>
+                </label>
+            `).join('');
+        };
+
+        function handleCalculate() {
+            const name = document.getElementById('patient_name').value || "Não Informada";
+            const dob = document.getElementById('patient_dob').value || "Não informada";
+            
+            const ph = parseFloat(document.getElementById('inp_ph').value);
+            const paco2 = parseFloat(document.getElementById('inp_paco2').value);
+            const hco3 = parseFloat(document.getElementById('inp_hco3').value);
+            const sato2 = parseFloat(document.getElementById('inp_sato2').value) || 98;
+
+            if (isNaN(ph) || isNaN(paco2) || isNaN(hco3)) return alert("Por favor, preencha pH, PaCO2 e HCO3.");
+
+            let diag = "";
+            let cardColor = "bg-nurse-primary";
+
+            if (ph < 7.35) { 
+                cardColor = "bg-red-600";
+                if (paco2 > 45 && hco3 >= 22 && hco3 <= 26) diag = "Acidose Respiratória Descompensada";
+                else if (hco3 < 22 && paco2 >= 35 && paco2 <= 45) diag = "Acidose Metabólica Descompensada";
+                else if (paco2 > 45 && hco3 > 26) diag = "Acidose Respiratória Parcialmente Compensada";
+                else if (hco3 < 22 && paco2 < 35) diag = "Acidose Metabólica Parcialmente Compensada";
+                else if (paco2 > 45 && hco3 < 22) diag = "Acidose Mista";
+                else diag = "Acidose em Interpretação";
+            } else if (ph > 7.45) { 
+                cardColor = "bg-nurse-primary-light";
+                if (paco2 < 35 && hco3 >= 22 && hco3 <= 26) diag = "Alcalose Respiratória Descompensada";
+                else if (hco3 > 26 && paco2 >= 35 && paco2 <= 45) diag = "Alcalose Metabólica Descompensada";
+                else if (paco2 < 35 && hco3 < 22) diag = "Alcalose Respiratória Parcialmente Compensada";
+                else if (hco3 > 26 && paco2 > 45) diag = "Alcalose Metabólica Parcialmente Compensada";
+                else if (paco2 < 35 && hco3 > 26) diag = "Alcalose Mista";
+                else diag = "Alcalose em Interpretação";
+            } else { 
+                if (paco2 > 45 && hco3 > 26) diag = "Acidose Respiratória Totalmente Compensada";
+                else if (paco2 < 35 && hco3 < 22) diag = "Alcalose Respiratória Totalmente Compensada";
+                else if (hco3 < 22) diag = "Acidose Metabólica Totalmente Compensada";
+                else if (hco3 > 26) diag = "Alcalose Metabólica Totalmente Compensada";
+                else diag = "Equilíbrio Ácido-Básico Normal";
+            }
+
+            let oxyStr = sato2 < 90 ? "Hipoxemia Grave" : (sato2 < 94 ? "Hipoxemia Leve" : "Oxigenação Adequada");
+
+            document.getElementById('res-ph-label').innerText = ph.toFixed(2);
+            document.getElementById('res-diagnosis').innerText = diag;
+            document.getElementById('res-oxy').innerText = `Status: ${oxyStr}`;
+            document.getElementById('result-card-container').className = `p-10 rounded-[3rem] shadow-2xl transition-all duration-500 text-white font-nunito ${cardColor}`;
+
+            document.getElementById('audit-patient').innerText = name;
+            document.getElementById('audit-dob').innerText = dob;
+            document.getElementById('audit-values').innerText = `pH:${ph} | pCO2:${paco2} | HCO3:${hco3} | SatO2:${sato2}%`;
+            document.getElementById('audit-time').innerText = new Date().toLocaleString('pt-BR');
+
+            renderChecklists();
+            document.getElementById('results-section').classList.remove('hidden');
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleReset() {
+            document.querySelectorAll('input').forEach(i => i.value = '');
+            document.getElementById('results-section').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function handleSearchNanda() {
+            const diag = document.getElementById('res-diagnosis').innerText;
+            window.open(`https://www.google.com/search?q=NANDA+NIC+NOC+Enfermagem+${encodeURIComponent(diag)}`, '_blank');
+        }
+
+        async function generatePDF() {
+            const btn = document.getElementById('btn-generate-pdf');
+            const btnText = document.getElementById('pdf-button-text');
+            btnText.innerText = "Auditando...";
+            btn.disabled = true;
+
+            try {
+                let deviceIp = "Detectando...";
+                try {
+                    const ipRes = await fetch('https://api.ipify.org?format=json');
+                    const ipData = await ipRes.json();
+                    deviceIp = ipData.ip;
+                } catch (e) { deviceIp = "IP não detectado"; }
+
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                const name = document.getElementById('patient_name').value || "Não Informada";
+                const dob = document.getElementById('patient_dob').value || "Não informada";
+                const diag = document.getElementById('res-diagnosis').innerText;
+                const values = document.getElementById('audit-values').innerText;
+
+                // --- ESTILO PREMIUM ---
+                // Sidebar Azul
+                doc.setFillColor(26, 62, 116);
+                doc.rect(5, 5, 2, 287, 'F'); 
+
+                // Header Box
+                doc.setDrawColor(26, 62, 116);
+                doc.setLineWidth(0.8);
+                doc.rect(12, 8, 185, 32);
+                
+                // Logo Placeholder
+                try {
+                    const logoUrl = "https://www.calculadorasdeenfermagem.com.br/iconpages.webp";
+                    doc.addImage(logoUrl, 'WEBP', 16, 12, 22, 22);
+                } catch(e) {}
+
+                doc.setTextColor(26, 62, 116);
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(14);
+                doc.text("RELATÓRIO DE CÁLCULO DE GASOMETRIA ARTERIAL", 110, 26, { align: "center" });
+
+                // Seção: Dados do Paciente
+                doc.setTextColor(0);
+                doc.setFontSize(10);
+                doc.text("DADOS DO PACIENTE E RESPONSÁVEL", 22, 55);
+                doc.line(22, 57, 192, 57);
+                doc.setFont("helvetica", "normal");
+                doc.text(`Paciente: ${name}`, 22, 65);
+                doc.text(`Data de Nascimento: ${dob}`, 22, 72);
+                doc.text(`Valores Analisados: ${values}`, 22, 79);
+
+                // Seção: Resultado
+                doc.setFont("helvetica", "bold");
+                doc.text("INTERPRETAÇÃO DIAGNÓSTICA", 22, 95);
+                doc.line(22, 97, 192, 97);
+                
+                // Box de Resultado
+                doc.setFillColor(245, 245, 245);
+                doc.roundedRect(22, 105, 170, 40, 3, 3, 'F');
+                doc.setFontSize(18);
+                doc.setTextColor(26, 62, 116);
+                doc.text(diag, 107, 128, { align: "center" });
+
+                // Disclaimer
+                doc.setTextColor(100);
+                doc.setFontSize(8);
+                doc.text("Atenção: Este relatório é um suporte para interpretação técnica. A decisão clínica final deve considerar", 22, 160);
+                doc.text("todo o quadro do paciente e exames complementares.", 22, 165);
+
+                // Rodapé Técnico
+                const qrUrl = "https://www.calculadorasdeenfermagem.com.br/gasometria.html";
+                const qrContainer = document.getElementById('qrcode-source');
+                qrContainer.innerHTML = "";
+                new QRCode(qrContainer, { text: qrUrl, width: 128, height: 128 });
+                
+                setTimeout(() => {
+                    const qrImg = qrContainer.querySelector('img').src;
+                    doc.addImage(qrImg, 'PNG', 165, 240, 25, 25);
+                    doc.line(22, 275, 192, 275);
+                    doc.setFontSize(7);
+                    doc.setTextColor(150);
+                    const now = new Date();
+                    doc.text(`Gerado em: ${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR')} - IP: ${deviceIp}`, 107, 282, { align: "center" });
+                    doc.text("www.calculadorasdeenfermagem.com.br", 107, 287, { align: "center" });
+                    
+                    doc.save(`Gasometria_${name.replace(/\s+/g, '_')}.pdf`);
+                    btnText.innerText = "Gerar PDF";
+                    btn.disabled = false;
+                }, 500);
+
+            } catch (error) {
+                console.error(error);
+                btnText.innerText = "Gerar PDF";
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

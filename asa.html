@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classificação ASA Online – Avaliação de Risco Perioperatório | Calculadoras de Enfermagem</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Determine a Classificação ASA (American Society of Anesthesiologists) para avaliação de risco cirúrgico. Ferramenta profissional com auditoria e relatório PDF.">
+    <meta name="keywords" content="classificação asa, risco cirúrgico, anestesia, enfermagem perioperatória, centro cirúrgico, segurança do paciente, asa 1 asa 2 asa 3">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/asa.html">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        nunito: ['Nunito Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'nurse-primary': '#1A3E74',
+                        'nurse-primary-light': '#2E5A9C',
+                        'nurse-secondary': '#00bcd4',
+                        'nurse-accent': '#D4AF37',
+                        'nurse-bgDark': '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Dependências PDF e QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root { --color-primary: #1A3E74; --color-primary-light: #2E5A9C; }
+        .tab-btn-active { border-color: #00bcd4 !important; color: #00bcd4 !important; font-weight: bold; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .sidebar-card { padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .toc-list li { margin-bottom: 0.75rem; font-size: 0.875rem; transition: transform 0.2s; font-family: 'Inter', sans-serif; }
+        .toc-list li:hover { transform: translateX(5px); }
+        .share-btn { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); color: white; transition: all 0.3s; }
+        .share-btn:hover { background: white; color: var(--color-primary); transform: translateY(-3px); }
+        .btn-action { height: 56px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; transition: all 0.3s; font-family: 'Nunito Sans', sans-serif; }
+        .tag { display: inline-block; background: #f3f4f6; color: #4b5563; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 600; margin-right: 0.5rem; margin-bottom: 0.5rem; transition: all 0.2s; cursor: pointer; }
+        .tag:hover { background: var(--color-primary); color: white; }
+        .option-card { cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .option-card:hover { transform: translateY(-2px); border-color: #00bcd4; }
+        .option-card.active { border-color: #1A3E74; background-color: #f8fafc; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-nurse-bgDark dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
+
+    <div id="header-container"></div>
+
+    <!-- Elemento Decorativo SVG -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+        <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+            <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+        </svg>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Breadcrumb -->
+        <nav class="flex text-sm text-slate-500 mb-8 font-inter">
+            <ol class="flex items-center space-x-2">
+                <li><a href="index.html" class="hover:text-nurse-secondary transition-colors">Início</a></li>
+                <li><span>></span> <span>Centro Cirúrgico</span></li>
+                <li><span>></span> <span class="text-nurse-primary dark:text-nurse-secondary font-bold font-nunito">Classificação ASA</span></li>
+            </ol>
+        </nav>
+
+        <!-- Cabeçalho -->
+        <header class="mb-12 text-center md:text-left">
+            <span class="inline-block px-4 py-1.5 text-[10px] font-bold tracking-widest text-white bg-nurse-primary rounded-full mb-4 uppercase font-nunito tracking-tighter italic">Anestesiologia / Perioperatório</span>
+            <h1 class="text-4xl md:text-6xl font-black text-nurse-primary dark:text-white mb-6 leading-tight font-nunito tracking-tight italic tracking-tighter capitalize">Classificação ASA</h1>
+            <div class="w-24 h-1.5 bg-nurse-secondary rounded-full mb-8 mx-auto md:mx-0"></div>
+            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium font-inter max-w-3xl">
+                Avaliação do estado físico pré-operatório. Sistema universal para estratificação de risco anestésico e segurança cirúrgica.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+            <!-- Conteúdo Principal -->
+            <div class="lg:col-span-3 space-y-10">
+                
+                <!-- Sistema de Abas -->
+                <div class="flex border-b border-gray-200 dark:border-slate-800 overflow-x-auto no-scrollbar mb-8 font-nunito font-bold">
+                    <button onclick="showTab('calc')" id="btn-tab-calc" class="px-6 py-3 border-b-2 tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-calculator"></i> Escala
+                    </button>
+                    <button onclick="showTab('teoria')" id="btn-tab-teoria" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-book-medical"></i> Sobre
+                    </button>
+                    <button onclick="showTab('instrucoes')" id="btn-tab-instrucoes" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-clipboard-list"></i> Como Usar?
+                    </button>
+                    <button onclick="showTab('tecnica')" id="btn-tab-tecnica" class="px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-nurse-secondary flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i class="fa-solid fa-microscope"></i> Informações Técnicas
+                    </button>
+                </div>
+
+                <!-- Painel da Escala -->
+                <section id="pane-calc" class="space-y-8 animate-in fade-in duration-500">
+                    
+                    <!-- Dados do Paciente -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-lg font-black text-nurse-primary dark:text-white mb-6 uppercase tracking-tight font-nunito">
+                            Dados do Paciente
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Nome Completo</label>
+                                <input type="text" id="patient_name" placeholder="Ex: Maria das Dores" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest font-nunito">Data de Nascimento</label>
+                                <input type="text" id="patient_dob" placeholder="dd/mm/aaaa" class="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-nurse-secondary font-inter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parâmetros ASA -->
+                    <div class="bg-white dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary mb-8 uppercase tracking-widest border-b border-gray-100 dark:border-slate-800 pb-2 font-nunito">
+                            Categorias ASA
+                        </h3>
+                        
+                        <div id="asa-options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 font-inter">
+                            <div onclick="selectAsa(1)" class="option-card p-6 bg-gray-50 dark:bg-slate-800 rounded-2xl border-2" data-val="1">
+                                <p class="text-lg font-black text-nurse-primary dark:text-nurse-secondary mb-1">ASA I</p>
+                                <p class="text-xs text-gray-500 leading-tight">Paciente saudável, não tabagista, sem consumo ou consumo mínimo de álcool.</p>
+                            </div>
+                            <div onclick="selectAsa(2)" class="option-card p-6 bg-gray-50 dark:bg-slate-800 rounded-2xl border-2" data-val="2">
+                                <p class="text-lg font-black text-nurse-primary dark:text-nurse-secondary mb-1">ASA II</p>
+                                <p class="text-xs text-gray-500 leading-tight">Doença sistêmica leve (Ex: HAS controlada, DM controlado, Obesidade IMC < 40).</p>
+                            </div>
+                            <div onclick="selectAsa(3)" class="option-card p-6 bg-gray-50 dark:bg-slate-800 rounded-2xl border-2" data-val="3">
+                                <p class="text-lg font-black text-nurse-primary dark:text-nurse-secondary mb-1">ASA III</p>
+                                <p class="text-xs text-gray-500 leading-tight">Doença sistêmica grave, não incapacitante (Ex: IAM prévio, DPOC, ICC).</p>
+                            </div>
+                            <div onclick="selectAsa(4)" class="option-card p-6 bg-gray-50 dark:bg-slate-800 rounded-2xl border-2" data-val="4">
+                                <p class="text-lg font-black text-nurse-primary dark:text-nurse-secondary mb-1">ASA IV</p>
+                                <p class="text-xs text-gray-500 leading-tight">Doença sistêmica grave que representa ameaça constante à vida (Ex: Choque, Insuficiência Renal Aguda).</p>
+                            </div>
+                            <div onclick="selectAsa(5)" class="option-card p-6 bg-gray-50 dark:bg-slate-800 rounded-2xl border-2" data-val="5">
+                                <p class="text-lg font-black text-nurse-primary dark:text-nurse-secondary mb-1">ASA V</p>
+                                <p class="text-xs text-gray-500 leading-tight">Paciente moribundo, não espera sobreviver sem a cirurgia (Ex: Aneurisma roto).</p>
+                            </div>
+                            <div onclick="selectAsa(6)" class="option-card p-6 bg-gray-50 dark:bg-slate-800 rounded-2xl border-2" data-val="6">
+                                <p class="text-lg font-black text-nurse-primary dark:text-nurse-secondary mb-1">ASA VI</p>
+                                <p class="text-xs text-gray-500 leading-tight">Morte cerebral declarada. Paciente mantido para doação de órgãos.</p>
+                            </div>
+                        </div>
+
+                        <!-- Modificador Emergência -->
+                        <div class="mt-8 flex items-center justify-center">
+                            <label class="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-100 dark:border-red-900/30 cursor-pointer">
+                                <input type="checkbox" id="check-emergencia" class="w-6 h-6 accent-red-600 rounded-lg">
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-black text-red-700 uppercase tracking-tight">Cirurgia de Emergência (Modificador 'E')</span>
+                                    <span class="text-[10px] text-red-600/70 font-medium">Situações onde o atraso aumenta significativamente o risco.</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-12 max-w-xl mx-auto font-nunito">
+                            <button onclick="handleCalculate()" class="btn-action bg-nurse-primary text-white hover:bg-nurse-primary/90 shadow-xl shadow-nurse-primary/20">
+                                <i class="fa-solid fa-calculator"></i> Calcular
+                            </button>
+                            <button onclick="handleReset()" class="btn-action bg-gray-100 dark:bg-slate-800 text-gray-500 hover:bg-gray-200">
+                                <i class="fa-solid fa-rotate-left"></i> Limpar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Resultados -->
+                    <div id="results-section" class="hidden space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                        <div id="result-card" class="p-10 rounded-[3rem] shadow-2xl transition-all duration-500 text-white font-nunito bg-nurse-primary relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-user-doctor text-[120px]"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+                                <div class="relative w-44 h-44 flex items-center justify-center bg-white/10 rounded-full border-4 border-white/20 backdrop-blur-sm">
+                                    <span id="res-score-val" class="text-6xl font-black text-white italic">I</span>
+                                </div>
+                                <div class="text-center md:text-left flex-grow">
+                                    <h3 id="res-status" class="text-2xl font-black italic mb-2 text-white uppercase tracking-tight">Classificação de Risco</h3>
+                                    <div class="bg-white/10 p-6 rounded-2xl border border-white/20 mb-6">
+                                        <p class="text-sm font-medium mb-1 opacity-70">Descrição do Estado Físico</p>
+                                        <p id="res-desc" class="text-lg font-bold text-nurse-secondary">Paciente Saudável</p>
+                                    </div>
+                                    <p class="text-[10px] font-black text-white/60 bg-white/10 inline-block px-4 py-1.5 rounded-full uppercase tracking-widest">
+                                        <i class="fa-solid fa-shield-check mr-2"></i> Auditoria de Risco (ASA Standard)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-nunito">
+                            <button onclick="handleSearchNanda()" class="btn-action border-2 border-nurse-secondary text-nurse-secondary hover:bg-nurse-secondary hover:text-white">
+                                <i class="fa-solid fa-book-medical"></i> Diagnóstico (NANDA, NIC e NOC)
+                            </button>
+                            <button onclick="generatePDF()" class="btn-action bg-nurse-primary text-white hover:opacity-90">
+                                <i class="fa-solid fa-file-pdf"></i> Gerar PDF
+                            </button>
+                        </div>
+
+                        <!-- Auditoria Clínica -->
+                        <div class="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm font-inter">
+                            <h4 class="font-black text-nurse-primary dark:text-nurse-secondary mb-6 uppercase tracking-widest font-nunito flex items-center gap-2">
+                                <i class="fa-solid fa-magnifying-glass-chart text-nurse-secondary"></i> Auditoria do Cálculo
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div class="space-y-2">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Paciente:</p>
+                                    <p id="audit-patient" class="text-xs font-bold text-gray-600 dark:text-gray-300 italic">-</p>
+                                    <p id="audit-dob" class="text-[10px] text-gray-400 font-bold italic">-</p>
+                                </div>
+                                <div class="space-y-2 text-center md:text-left">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">ASA Selecionada:</p>
+                                    <p id="audit-score" class="text-xs font-bold text-gray-600 dark:text-gray-300">-</p>
+                                </div>
+                                <div class="space-y-2 text-right">
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest font-nunito">Data/Hora Avaliação:</p>
+                                    <p id="audit-time" class="text-xs font-bold text-gray-600 dark:text-gray-300">-</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Metas de Segurança -->
+                        <div class="bg-white dark:bg-slate-900/50 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <h3 class="text-sm font-black text-nurse-primary dark:text-nurse-secondary p-6 uppercase tracking-widest font-nunito border-b border-gray-100 dark:border-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved"></i> Metas Internacionais de Segurança
+                            </h3>
+                            <div id="checklist-metas" class="p-6 space-y-3 font-inter"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Abas Teóricas -->
+                <section id="pane-teoria" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Sobre a Classificação ASA</h2>
+                    <p>A classificação de estado físico da <strong>American Society of Anesthesiologists (ASA)</strong> é utilizada por anestesiologistas em todo o mundo para categorizar o estado físico de um paciente antes de uma cirurgia.</p>
+                    <p>Embora não seja uma medida direta do risco cirúrgico absoluto, ela é o preditor mais robusto de morbimortalidade perioperatória disponível na literatura clínica.</p>
+                </section>
+
+                <section id="pane-instrucoes" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Como Usar?</h2>
+                    <ul class="list-disc pl-5">
+                        <li>Analise o prontuário e as comorbidades do paciente.</li>
+                        <li>Identifique em qual categoria o paciente se enquadra melhor com base na gravidade da doença sistêmica.</li>
+                        <li>Utilize o sufixo <strong>'E'</strong> para qualquer procedimento de emergência.</li>
+                        <li>Note que pacientes pediátricos ou obstétricas possuem critérios de ajuste específicos dentro das categorias.</li>
+                    </ul>
+                </section>
+
+                <section id="pane-tecnica" class="hidden prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 font-inter space-y-6">
+                    <h2 class="font-black text-nurse-primary font-nunito tracking-tighter">Informações Técnicas</h2>
+                    <p>A classificação foi introduzida em 1941 e revisada em 1963 e 2014. Atualmente, a ASA incluiu exemplos específicos (como gravidez, obesidade e consumo de álcool) para reduzir a variabilidade inter-avaliadores.</p>
+                </section>
+
+                <!-- Tags -->
+                <div class="pt-10 border-t border-gray-100 dark:border-slate-800">
+                    <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Tags</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">#CentroCirurgico</span>
+                        <span class="tag">#Anestesia</span>
+                        <span class="tag">#Perioperatorio</span>
+                        <span class="tag">#ASA</span>
+                        <span class="tag">#SegurancaDoPaciente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="space-y-6 font-nunito">
+                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold"><i class="fas fa-list mr-2"></i> Índice</h3>
+                    <ul class="toc-list font-inter">
+                        <li><a href="#pane-calc" onclick="showTab('calc')">1. Escala</a></li>
+                        <li><a href="#pane-teoria" onclick="showTab('teoria')">2. Sobre</a></li>
+                        <li><a href="#pane-instrucoes" onclick="showTab('instrucoes')">3. Como Usar</a></li>
+                        <li><a href="#pane-tecnica" onclick="showTab('tecnica')">4. Informações Técnicas</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card bg-gradient-to-br from-nurse-primary to-nurse-primary-light text-white">
+                    <h3 class="border-b border-white/20 pb-3 mb-4 uppercase tracking-widest text-xs font-bold"><i class="fas fa-share-nodes mr-2"></i> Compartilhar</h3>
+                    <div class="flex flex-wrap gap-3 justify-between">
+                        <a href="#" class="share-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="share-btn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="share-btn"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+                <div id="qrcode-source" class="hidden"></div>
+            </aside>
+        </div>
+
+        <!-- Ferramentas Relacionadas -->
+        <section class="related-section bg-slate-100 dark:bg-slate-900/40 py-20 mt-16 rounded-[3rem]">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-black text-center mb-12 text-nurse-primary dark:text-white font-nunito flex items-center justify-center gap-4">
+                    <i class="fa-solid fa-toolbox text-nurse-secondary"></i> Ferramentas Relacionadas
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <a href="aldrete.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=600" alt="Aldrete" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <span class="absolute top-4 left-4 px-3 py-1 bg-nurse-secondary text-white text-[9px] font-black uppercase rounded-full tracking-widest font-nunito">SRPA</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Escala de Aldrete</h3>
+                            <p class="text-xs text-gray-500 font-inter mb-4">Avaliação para alta da recuperação anestésica.</p>
+                            <span class="text-nurse-secondary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    <a href="heparina.html" class="group block bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600" alt="Heparina" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <span class="absolute top-4 left-4 px-3 py-1 bg-nurse-secondary text-white text-[9px] font-black uppercase rounded-full tracking-widest font-nunito">Medicação</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-nurse-primary dark:text-white mb-2 group-hover:text-nurse-secondary transition-colors font-nunito">Cálculo de Heparina</h3>
+                            <p class="text-xs text-gray-500 font-inter mb-4">Dosagem segura de anticoagulantes.</p>
+                            <span class="text-nurse-secondary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">Acessar <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+    <div id="modals-container"></div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/template-engine.js"></script>
+    <script src="assets/js/global-main.js"></script>
+
+    <script>
+        let selectedAsaVal = null;
+        const SAFETY_GOALS = [
+            { id: 1, text: "Identificação Correta do Paciente", color: "bg-red-50 border-red-500 text-red-800" },
+            { id: 4, text: "Cirurgia Segura (Local e Procedimento)", color: "bg-purple-50 border-purple-500 text-purple-800" },
+            { id: 2, text: "Comunicação Efetiva entre Equipes", color: "bg-yellow-50 border-yellow-500 text-yellow-800" }
+        ];
+
+        const DESCS = {
+            1: "Paciente Saudável",
+            2: "Doença Sistêmica Leve",
+            3: "Doença Sistêmica Grave",
+            4: "Doença Sistêmica Ameaçadora",
+            5: "Paciente Moribundo",
+            6: "Doador de Órgãos"
+        };
+
+        const ROMANS = { 1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI" };
+
+        function showTab(id) {
+            ['calc', 'teoria', 'instrucoes', 'tecnica'].forEach(t => {
+                document.getElementById('pane-' + t).classList.add('hidden');
+                document.getElementById('btn-tab-' + t).classList.remove('tab-btn-active');
+            });
+            document.getElementById('pane-' + id).classList.remove('hidden');
+            document.getElementById('btn-tab-' + id).classList.add('tab-btn-active');
+        }
+
+        function selectAsa(v) {
+            selectedAsaVal = v;
+            document.querySelectorAll('.option-card').forEach(c => c.classList.remove('active', 'border-nurse-primary'));
+            document.querySelector(`.option-card[data-val="${v}"]`).classList.add('active', 'border-nurse-primary');
+        }
+
+        function handleCalculate() {
+            if (!selectedAsaVal) {
+                alert("Por favor, selecione uma categoria ASA.");
+                return;
+            }
+
+            const name = document.getElementById('patient_name').value || "Não Informado";
+            const dob = document.getElementById('patient_dob').value || "Não informado";
+            const emerg = document.getElementById('check-emergencia').checked;
+
+            const scoreStr = ROMANS[selectedAsaVal] + (emerg ? " E" : "");
+            
+            document.getElementById('res-score-val').innerText = scoreStr;
+            document.getElementById('res-desc').innerText = DESCS[selectedAsaVal] + (emerg ? " (Emergência)" : "");
+            
+            // Auditoria
+            document.getElementById('audit-patient').innerText = name;
+            document.getElementById('audit-dob').innerText = dob;
+            document.getElementById('audit-score').innerText = "ASA " + scoreStr;
+            document.getElementById('audit-time').innerText = new Date().toLocaleString('pt-BR');
+
+            // Metas
+            document.getElementById('checklist-metas').innerHTML = SAFETY_GOALS.map(m => `
+                <div class="flex items-center p-3 rounded-xl border-l-4 ${m.color}">
+                    <input type="checkbox" checked class="mr-3 w-4 h-4 accent-nurse-primary">
+                    <span class="text-xs font-bold">Meta ${m.id}: ${m.text}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('results-section').classList.remove('hidden');
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleReset() {
+            selectedAsaVal = null;
+            document.querySelectorAll('.option-card').forEach(c => c.classList.remove('active', 'border-nurse-primary'));
+            document.querySelectorAll('input').forEach(i => i.value = '');
+            document.getElementById('check-emergencia').checked = false;
+            document.getElementById('results-section').classList.add('hidden');
+        }
+
+        function handleSearchNanda() {
+            const score = document.getElementById('res-score-val').innerText;
+            window.open(`https://www.google.com/search?q=NANDA+NIC+NOC+perioperatorio+risco+ASA+${score}`, '_blank');
+        }
+
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const name = document.getElementById('patient_name').value || "Não Informado";
+            const score = document.getElementById('res-score-val').innerText;
+            const desc = document.getElementById('res-desc').innerText;
+
+            doc.setFillColor(26, 62, 116);
+            doc.rect(0, 0, 8, 297, 'F'); 
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(18); doc.setTextColor(26, 62, 116);
+            doc.text("RELATÓRIO DE RISCO PERIOPERATÓRIO: ASA", 105, 25, { align: "center" });
+
+            doc.setDrawColor(230); doc.line(20, 35, 195, 35);
+
+            doc.setFontSize(10); doc.setTextColor(80); doc.setFont("helvetica", "normal");
+            doc.text(`Paciente: ${name}`, 20, 48);
+            doc.text(`Data de Nascimento: ${document.getElementById('patient_dob').value || "-"}`, 20, 56);
+            doc.text(`Avaliação feita em: ${new Date().toLocaleString('pt-BR')}`, 20, 64);
+
+            doc.setFillColor(248, 250, 252); doc.roundedRect(20, 80, 175, 45, 4, 4, 'F');
+            doc.setFontSize(30); doc.setTextColor(26, 62, 116); doc.setFont("helvetica", "bold");
+            doc.text(`ASA ${score}`, 107, 105, { align: "center" });
+            doc.setFontSize(12); doc.text(desc, 107, 115, { align: "center" });
+
+            const qrUrl = "https://www.calculadorasdeenfermagem.com.br/asa.html";
+            const qrContainer = document.getElementById('qrcode-source');
+            qrContainer.innerHTML = "";
+            new QRCode(qrContainer, { text: qrUrl, width: 100, height: 100 });
+            
+            setTimeout(() => {
+                const qrImg = qrContainer.querySelector('img').src;
+                doc.addImage(qrImg, 'PNG', 165, 250, 30, 30);
+                doc.setFontSize(8); doc.setTextColor(150);
+                doc.text("Validado por Calculadoras de Enfermagem - Auditoria Perioperatória", 100, 285, { align: "center" });
+                doc.save(`ASA_${name.replace(/\s+/g, '_')}.pdf`);
+            }, 500);
+        }
+    </script>
+</body>
+</html>

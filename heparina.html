@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+  <title>Calculadora de Heparina - Dosagem e Diluição | Calculadoras de Enfermagem</title>
+  <meta name="description" content="Calculadora de Heparina para enfermagem. Realize cálculos de diluição, gotejamento e conversão de UI para ml com segurança e precisão."/>
+  <meta name="author" content="Calculadoras de Enfermagem"/>
+  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/heparina.html"/>
+  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
+
+  <!-- [DEPENDÊNCIAS EXTERNAS] -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+
+  <!-- [CONFIGURAÇÃO DO TEMA] -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] },
+          colors: { 'nurse-primary':'#1A3E74', 'nurse-secondary':'#00bcd4', 'nurse-accent':'#00838f', 'nurse-bgDark':'#0F172A' }
+        }
+      }
+    }
+    
+    // Configuração Global
+    window.NURSE_CONFIG = { baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/', debug: false };
+
+    // Loader de Módulos
+    async function loadModule(id, url) {
+      const container = document.getElementById(id);
+      if (!container) return;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Erro ao carregar ${url}`);
+        container.innerHTML = await res.text();
+        container.classList.remove('opacity-50', 'opacity-30');
+        container.style.opacity = "1";
+      } catch(e) { console.error(e); }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html');
+      loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html');
+      loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html');
+    });
+  </script>
+
+  <!-- [ESTILOS GLOBAIS] -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300; }
+      h1 { @apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400; }
+      h2, h3 { @apply font-inter tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
+    }
+    @layer components {
+      .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden; }
+      .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+      
+      /* Inputs & Buttons */
+      .input-field { @apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium; }
+      .btn-primary-action { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
+      .btn-secondary-action { @apply bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
+      .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 text-white hover:bg-white transition-all shadow-md focus:ring-2 focus:ring-white; }
+      .tab-btn { @apply flex-1 px-4 py-3 font-bold text-[11px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider; }
+      .tab-btn.active { @apply border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50 dark:bg-slate-900/30; }
+
+      /* UI Elements */
+      .label-tooltip { @apply text-nurse-secondary ml-1 cursor-help hover:text-nurse-primary transition-colors text-xs; }
+      .glass-meta { @apply relative backdrop-blur-md border border-white/20 p-4 rounded-xl shadow-sm transition-all duration-300 flex items-center gap-4; }
+      .glass-meta-blue { @apply bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-100 border-l-4 border-blue-500; }
+      .glass-meta-orange { @apply bg-orange-50 dark:bg-orange-900/20 text-orange-900 dark:text-orange-100 border-l-4 border-orange-500; }
+      .toast-msg { @apply pointer-events-auto bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 font-bold text-sm min-w-[320px] border-l-4 border-nurse-secondary; animation: slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      .tag-pill-footer { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
+    }
+    @keyframes slide-in { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    #pdf-render-template { position: absolute; left: -9999px; top: 0; width: 794px; min-height: 1123px; background: white; padding: 40px; color: #0f172a; display: flex; flex-direction: column; }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- BACKGROUND DECORATIVO -->
+  <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20 dark:opacity-10">
+    <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="none">
+        <path d="M-100,200 C300,150 600,350 1500,250" fill="none" stroke="#00bcd4" stroke-width="2" />
+        <path d="M-100,600 C400,550 800,700 1600,500" fill="none" stroke="#1A3E74" stroke-width="2" />
+    </svg>
+  </div>
+
+  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
+  <div id="accessibility-container"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50"></div>
+
+  <!-- CONTEÚDO PRINCIPAL (Padding top ajustado para mobile) -->
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
+    
+    <!-- BREADCRUMB -->
+    <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
+        <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        <a href="ferramentas.html" class="hover:underline text-nurse-accent">Ferramentas</a>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        <span class="hidden md:inline hover:underline text-nurse-accent cursor-pointer">Calculadoras Clínicas</span>
+        <i class="fa-solid fa-chevron-right text-[10px] hidden md:inline"></i>
+        <span class="text-nurse-primary dark:text-cyan-400 font-bold md:hidden">Calculadora de Heparina</span>
+        <span class="text-nurse-primary dark:text-cyan-400 font-bold hidden md:inline">Calculadora de Aspiração de Heparina</span>
+    </nav>
+
+    <!-- HEADER DA PÁGINA -->
+    <header class="max-w-4xl mb-12">
+      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Calculadoras Clínicas</span>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Cálculo de Heparina</h1>
+      <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+      <p class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">Segurança e precisão na administração de anticoagulantes para a prática de enfermagem.</p>
+    </header>
+
+    <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
+      
+      <!-- FERRAMENTA -->
+      <article class="card-base p-0">
+         <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30">
+            <button onclick="switchTab('calc')" id="btn-tab-calc" class="tab-btn active">Calculadora</button>
+            <button onclick="switchTab('sobre')" id="btn-tab-sobre" class="tab-btn">Sobre</button>
+            <button onclick="switchTab('ajuda')" id="btn-tab-ajuda" class="tab-btn">Instruções</button>
+            <button onclick="switchTab('tecnico')" id="btn-tab-tecnico" class="tab-btn">Técnico</button>
+         </nav>
+
+         <div class="p-6 md:p-10">
+            <!-- ABA: CALCULADORA -->
+            <section id="pane-calc" class="tab-pane space-y-10">
+                <div class="space-y-6">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 border-b pb-2">Dados do Paciente</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="patient_name" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Nome do Paciente <i class="fa-solid fa-circle-info label-tooltip" title="Identificação completa para registro"></i>
+                            </label>
+                            <input id="patient_name" type="text" placeholder="Nome completo" class="input-field"/>
+                        </div>
+                        <div>
+                            <label for="patient_birthdate" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Data de Nascimento <i class="fa-solid fa-circle-info label-tooltip" title="Para confirmação da identificação (Meta 1)"></i>
+                            </label>
+                            <input id="patient_birthdate" type="date" max="9999-12-31" class="input-field text-sm" oninput="validateBirthDate()"/>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 pt-4 border-b pb-2">Parâmetros do Cálculo <span class="text-red-500">*</span></h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="heparinaConcentracao" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Concentração (UI) <i class="fa-solid fa-circle-info label-tooltip" title="Total de unidades no frasco"></i>
+                            </label>
+                            <input id="heparinaConcentracao" type="number" min="0" placeholder="Ex: 5000" class="input-field font-bold text-nurse-primary dark:text-cyan-400" onkeydown="preventNegative(event)"/>
+                        </div>
+                        <div>
+                            <label for="heparinaVolume" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Volume Frasco (ml) <i class="fa-solid fa-circle-info label-tooltip" title="Volume líquido total"></i>
+                            </label>
+                            <input id="heparinaVolume" type="number" step="0.1" min="0" placeholder="Ex: 5" class="input-field font-bold" onkeydown="preventNegative(event)"/>
+                        </div>
+                        <div>
+                            <label for="heparinaPrescricao" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Prescrição (UI) <i class="fa-solid fa-circle-info label-tooltip" title="Dose prescrita"></i>
+                            </label>
+                            <input id="heparinaPrescricao" type="number" min="0" placeholder="Ex: 2500" class="input-field font-bold" onkeydown="preventNegative(event)"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 pt-4">
+                    <button onclick="calcularHeparina()" class="btn-primary-action"><i class="fa-solid fa-calculator"></i> Calcular</button>
+                    <button onclick="resetForm()" class="btn-secondary-action"><i class="fa-solid fa-rotate-left"></i> Limpar</button>
+                </div>
+
+                <!-- ÁREA DE RESULTADOS -->
+                <div id="results-wrapper" class="hidden animate-fade-in pt-8 border-t border-slate-200 dark:border-slate-700">
+                    <div class="bg-slate-50 dark:bg-slate-800/50 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-10">
+                        <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4">Volume total a aspirar</p>
+                        <div id="res-total" class="text-6xl md:text-8xl font-black text-[#1A3E74] dark:text-cyan-400 tracking-tighter font-nunito leading-none">0,00</div>
+                        <p class="text-lg font-black text-nurse-secondary mt-2 uppercase tracking-widest">Mililitros (ml)</p>
+                        <div id="res-conduta" class="mt-4"></div>
+                    </div>
+
+                    <!-- BOTÕES DE AÇÃO -->
+                    <div class="flex flex-wrap gap-4 justify-center mb-10">
+                        <button onclick="gerarPDF()" class="btn-primary-action px-10"><i class="fa-solid fa-file-pdf"></i> Gerar PDF</button>
+                        <button onclick="copiarResumo()" class="btn-secondary-action px-8"><i class="fa-solid fa-copy"></i> Copiar</button>
+                    </div>
+
+                    <!-- BUSCA DIAGNÓSTICO -->
+                    <div class="card-base p-6 border-l-4 border-nurse-accent bg-slate-50 dark:bg-slate-900/40 mb-10">
+                        <h3 class="text-sm font-black uppercase tracking-widest text-nurse-primary mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-book-medical"></i> Diagnóstico NANDA
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">Acesse a taxonomia NANDA/NIC/NOC para diagnósticos relacionados.</p>
+                        <button onclick="showNanda()" class="w-full sm:w-auto bg-nurse-accent text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:brightness-110 transition shadow-lg flex items-center justify-center gap-2">
+                            Pesquisar Diagnósticos <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+
+                    <!-- AUDITORIA -->
+                    <div class="mb-12">
+                         <h3 class="text-xs font-black uppercase tracking-widest mb-6 flex items-center gap-2"><i class="fa-solid fa-clipboard-check"></i> Auditoria do Cálculo</h3>
+                         <ul class="space-y-3">
+                            <li class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl text-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-slate-500 font-bold uppercase text-[10px]">Dados do Paciente</span>
+                                <span class="font-bold text-nurse-primary dark:text-cyan-400 text-right"><span id="audit-nome">---</span><br><span id="audit-nasc" class="text-xs text-slate-400 font-normal">---</span></span>
+                            </li>
+                            <li class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl text-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-slate-500 font-bold uppercase text-[10px]">Parâmetros do Cálculo</span>
+                                <div class="text-right">
+                                    <span class="font-bold text-nurse-primary dark:text-cyan-400 block">Presc: <span id="audit-presc">---</span></span>
+                                    <span class="text-xs text-slate-400">Frasco: <span id="audit-frasco">---</span></span>
+                                </div>
+                            </li>
+                            <li class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl text-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-slate-500 font-bold uppercase text-[10px]">Fórmula Aplicada</span>
+                                <span id="res-formula-box" class="font-mono text-xs font-bold text-nurse-primary dark:text-cyan-400 text-right">---</span>
+                            </li>
+                            <li class="flex items-center justify-between p-4 bg-nurse-primary/5 dark:bg-nurse-primary/20 rounded-xl text-sm border border-nurse-primary/10">
+                                <span class="text-nurse-primary font-bold uppercase text-[10px]">Resultado</span>
+                                <span id="audit-math-detail" class="font-black text-nurse-primary dark:text-cyan-400 text-right">---</span>
+                            </li>
+                         </ul>
+                    </div>
+
+                    <!-- CHECKLISTS -->
+                    <section>
+                        <h2 class="text-xl md:text-2xl font-black text-center mb-8 flex items-center justify-center gap-3 text-nurse-primary dark:text-cyan-400">
+                            <i class="fa-solid fa-shield-virus"></i> Check-list de Segurança do Paciente
+                        </h2>
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-xs font-black uppercase tracking-widest mb-4 border-b border-slate-200 dark:border-slate-700 pb-2">9 Certos da Medicação</h3>
+                                <div id="checklist-9certos" class="space-y-2"></div>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-black uppercase tracking-widest mb-4 border-b border-slate-200 dark:border-slate-700 pb-2">Metas Internacionais de Segurança</h3>
+                                <div id="checklist-metas" class="space-y-2"></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <!-- ABAS INFORMATIVAS -->
+            <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+                <h2 class="text-2xl font-black mb-4">Sobre a ferramenta</h2>
+                <p class="text-aaa">Ferramenta para mitigação de erros em medicamentos de alta vigilância, seguindo protocolos farmacológicos padrão.</p>
+            </section>
+
+            <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+                <h2 class="text-2xl font-black mb-4">Instruções</h2>
+                <ol class="space-y-2 text-aaa text-sm">
+                    <li>Insira os dados do paciente e parâmetros do frasco/prescrição.</li>
+                    <li>O sistema calculará o volume e exibirá alertas de segurança.</li>
+                </ol>
+            </section>
+
+            <section id="pane-tecnico" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+                <h2 class="text-2xl font-black mb-4">Ficha Técnica</h2>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl text-sm text-aaa">
+                    <p><strong>Versão:</strong> 4.8.3 | <strong>Fontes:</strong> MS/Anvisa, ISMP Brasil.</p>
+                </div>
+            </section>
+         </div>
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside class="space-y-6 sticky top-28 self-start">
+         <div class="sidebar-module">
+            <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white font-nunito"><i class="fa-solid fa-trophy"></i> Desafio Clínico</h3>
+            <p class="text-sm text-white/90 mb-6 font-medium leading-relaxed font-inter">Teste sua agilidade em casos reais com simulados interativos.</p>
+            <button onclick="redirectSimulados()" class="w-full bg-white text-nurse-primary font-black py-3 rounded-xl hover:bg-slate-100 transition shadow-lg text-sm uppercase tracking-wide">Acessar Simulados <i class="fa-solid fa-bolt ml-1"></i></button>
+         </div>
+
+         <div class="sidebar-module from-teal-700 to-nurse-secondary shadow-nurse-accent/20">
+            <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white font-nunito"><i class="fas fa-share-alt"></i> Compartilhar</h3>
+            <div class="flex gap-3 flex-wrap justify-start">
+                <button class="share-btn hover:text-blue-600" onclick="share('facebook')"><i class="fab fa-facebook-f"></i></button>
+                <button class="share-btn hover:text-green-500" onclick="share('whatsapp')"><i class="fab fa-whatsapp"></i></button>
+                <button class="share-btn hover:text-blue-800" onclick="share('linkedin')"><i class="fab fa-linkedin-in"></i></button>
+                <button class="share-btn hover:text-gray-300" onclick="copyLink()"><i class="fas fa-link"></i></button>
+            </div>
+         </div>
+      </aside>
+    </div>
+
+    <!-- RELACIONADOS & FOOTER -->
+    <section id="related-section" class="bg-slate-200/50 dark:bg-nurse-bgDark py-24 border-t border-slate-300 dark:border-slate-800 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 mt-24">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-black mb-16 flex items-center justify-center gap-4 font-nunito"><i class="fa-solid fa-layer-group text-nurse-accent"></i> Conteúdo Relacionado</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Cards de Conteúdo (Insulina, Gotejamento, Balanço) -->
+                <a href="insulina.html" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full text-left">
+                    <div class="relative h-52 bg-nurse-primary/5 flex items-center justify-center overflow-hidden shrink-0">
+                        <i class="fa-solid fa-syringe text-6xl text-nurse-primary group-hover:scale-110 transition-transform duration-700"></i>
+                        <span class="tag-pill-abs absolute bottom-4 left-4">Calculadora</span>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-secondary transition-colors font-nunito line-clamp-2">Cálculo de Insulina</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">Conversão correta de UI para seringas de 1ml.</p>
+                        <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2 mt-auto">Acessar <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
+                    </div>
+                </a>
+                 <a href="gotejamento.html" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full text-left">
+                    <div class="relative h-52 bg-nurse-secondary/5 flex items-center justify-center overflow-hidden shrink-0">
+                        <i class="fa-solid fa-droplet text-6xl text-nurse-secondary group-hover:scale-110 transition-transform duration-700"></i>
+                        <span class="tag-pill-abs absolute bottom-4 left-4">Calculadora</span>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-secondary transition-colors font-nunito line-clamp-2">Gotejamento de Soro</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">Cálculo de gotas e microgotas para infusões.</p>
+                        <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2 mt-auto">Acessar <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
+                    </div>
+                </a>
+                 <a href="balanco-hidrico.html" class="group card-base overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full text-left">
+                    <div class="relative h-52 bg-nurse-accent/5 flex items-center justify-center overflow-hidden shrink-0">
+                        <i class="fa-solid fa-chart-bar text-6xl text-nurse-accent group-hover:scale-110 transition-transform duration-700"></i>
+                        <span class="tag-pill-abs absolute bottom-4 left-4">Calculadora</span>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-secondary transition-colors font-nunito line-clamp-2">Balanço Hídrico</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">Monitorização de entradas e saídas de líquidos.</p>
+                        <span class="text-nurse-secondary text-sm font-bold flex items-center gap-2 mt-auto">Acessar <i class="fa-solid fa-arrow-right-long ml-2"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 py-12 border-t border-slate-200 dark:border-slate-800">
+        <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 flex flex-col md:flex-row gap-10 items-center border border-slate-200 dark:border-slate-700 shadow-sm mb-12">
+            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Autor" class="w-28 h-28 rounded-full object-cover shadow-xl border-4 border-white dark:border-slate-800"/>
+            <div class="text-center md:text-left">
+                <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400 font-nunito">Calculadoras de Enfermagem</h3>
+                <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed max-w-2xl font-inter italic">"A precisão técnica é a expressão máxima do cuidado ético ao paciente."</p>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-2 items-center">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2 flex items-center"><i class="fa-solid fa-tags mr-2"></i> Tópicos:</span>
+            <span class="tag-pill-footer">#Enfermagem</span><span class="tag-pill-footer">#Heparina</span><span class="tag-pill-footer">#SegurançaDoPaciente</span>
+        </div>
+    </section>
+  </main>
+
+  <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px] transition-opacity duration-500"></div>
+  
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
+
+  <!-- TEMPLATE PDF OCULTO -->
+  <div id="pdf-render-template">
+    <div style="flex: 1; display: flex; flex-direction: column;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #1A3E74; padding-bottom: 10px; margin-bottom: 20px;">
+        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" style="height: 50px;" alt="Logo"/>
+        <div style="text-align: right;">
+          <h1 style="font-family: 'Nunito Sans', sans-serif; font-size: 18px; color: #1A3E74; margin: 0; font-weight: 900; text-transform: uppercase;">Registro de Aspiração de Heparina</h1>
+          <p style="font-size: 9px; color: #64748b; margin: 0; font-weight: 600;">CALCULADORAS CLÍNICAS - ENFERMAGEM</p>
+        </div>
+      </div>
+      <div id="pdf-body" style="font-size: 10px; font-family: 'Inter', sans-serif; flex: 1;"></div>
+    </div>
+    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: flex-end;">
+      <div style="font-size: 8px; color: #94a3b8;"><p id="pdf-footer-timestamp" style="margin: 0; font-weight: 700;"></p></div>
+      <div id="pdf-qrcode-container" style="width: 60px; height: 60px;"></div>
+    </div>
+  </div>
+
+  <!-- [LÓGICA DA APLICAÇÃO] -->
+  <script>
+    // --- STATE & CONSTANTS ---
+    const APP_STATE = { data: null };
+    const CONSTS = {
+        CERTOS: ["Paciente certo", "Medicamento certo", "Dose certa", "Via certa", "Hora certa", "Registro certo", "Orientação certa", "Resposta certa", "Validade certa"],
+        METAS: [ { id: 1, text: "Identificar corretamente o paciente", class: "glass-meta-blue" }, { id: 3, text: "Segurança de medicamentos de alta vigilância", class: "glass-meta-orange" } ]
+    };
+
+    // --- UI HELPERS ---
+    const safeSet = (id, val, isHTML=false) => { const el=document.getElementById(id); if(el) el[isHTML?'innerHTML':'innerText']=val; };
+    const showNotification = (msg) => {
+        const c=document.getElementById('notification-container'); if(!c)return;
+        const t=document.createElement('div'); t.className='toast-msg'; t.innerHTML=`<i class="fa-solid fa-circle-info text-nurse-secondary text-lg"></i><span>${msg}</span>`;
+        c.appendChild(t); setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(50px)';setTimeout(()=>t.remove(),500)},3500);
+    };
+
+    // --- CORE LOGIC ---
+    function calcularHeparina() {
+        const d = {
+            name: document.getElementById('patient_name')?.value || "Não Identificado",
+            dob: document.getElementById('patient_birthdate')?.value || "Não Informada",
+            conc: parseFloat(document.getElementById('heparinaConcentracao')?.value),
+            vol: parseFloat(document.getElementById('heparinaVolume')?.value),
+            presc: parseFloat(document.getElementById('heparinaPrescricao')?.value)
+        };
+
+        if (isNaN(d.conc) || isNaN(d.vol) || isNaN(d.presc)) return showNotification("Preencha todos os parâmetros!");
+
+        const res = (d.presc * d.vol) / d.conc;
+        const fmt = res.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        
+        APP_STATE.data = { ...d, result: fmt, timestamp: new Date().toLocaleString() };
+        updateUI(APP_STATE.data, res);
+        
+        const wrap = document.getElementById('results-wrapper');
+        wrap.classList.remove('hidden');
+        wrap.scrollIntoView({ behavior: 'smooth' });
+        showNotification("Cálculo realizado!");
+    }
+
+    function updateUI(d, rawRes) {
+        safeSet('res-total', d.result);
+        safeSet('res-formula-box', `(${d.presc} * ${d.vol}) / ${d.conc}`, true);
+        safeSet('res-conduta', rawResultCheck(rawRes), true);
+        
+        safeSet('audit-nome', d.name); safeSet('audit-nasc', d.dob);
+        safeSet('audit-presc', `${d.presc} UI`); safeSet('audit-frasco', `${d.conc} UI / ${d.vol} ml`);
+        safeSet('audit-math-detail', `${d.result} ml`);
+
+        safeSet('checklist-9certos', CONSTS.CERTOS.map(c=>`<label class="flex items-center gap-4 p-3 bg-white dark:bg-slate-900/50 rounded-lg border border-slate-100 dark:border-slate-700 cursor-pointer hover:border-nurse-secondary transition"><input type="checkbox" class="w-4 h-4 accent-nurse-primary"><span class="text-xs font-bold text-slate-600 dark:text-slate-300">${c}</span></label>`).join(''), true);
+        safeSet('checklist-metas', CONSTS.METAS.map(m=>`<label class="glass-meta ${m.class} cursor-pointer hover:scale-[1.02]"><input type="checkbox" class="w-5 h-5 accent-white shrink-0"><span class="text-xs font-black uppercase">${m.id}. ${m.text}</span></label>`).join(''), true);
+    }
+
+    const rawResultCheck = (v) => v > 10 ? `<p class="text-red-500 font-black uppercase text-xs animate-pulse font-inter"><i class="fa-solid fa-triangle-exclamation"></i> Volume crítico!</p>` : '';
+
+    // --- FEATURES ---
+    function showNanda() {
+        let q = 'NANDA NIC NOC Heparina diagnósticos enfermagem';
+        if (APP_STATE.data) q = `Diagnósticos de Enfermagem Heparina volume ${APP_STATE.data.result}ml cuidados`;
+        showNotification("Pesquisando diagnósticos...");
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(q)}`, '_blank');
+    }
+
+    async function gerarPDF() {
+        if (!APP_STATE.data) return;
+        showNotification("Gerando PDF...");
+        const d = APP_STATE.data;
+        safeSet('pdf-footer-timestamp', `Data: ${d.timestamp}`);
+        safeSet('pdf-body', `
+            <div style="padding:20px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;margin-bottom:20px;font-size:11px;">
+                <p>Paciente: <strong>${d.name}</strong> | Nasc: <strong>${d.dob}</strong></p>
+            </div>
+            <div style="padding:25px;border:2px solid #1A3E74;border-radius:20px;">
+                <p style="text-align:center;font-weight:900;text-transform:uppercase;border-bottom:1px solid #e2e8f0;padding-bottom:10px;margin-bottom:15px;">Conferência Técnica</p>
+                <table style="width:100%;font-size:11px;">
+                    <tr><td>Prescrição:</td><td style="text-align:right;font-weight:800;">${d.presc} UI</td></tr>
+                    <tr><td>Frasco:</td><td style="text-align:right;font-weight:800;">${d.conc} UI / ${d.vol} ml</td></tr>
+                    <tr style="font-size:16px;font-weight:900;color:#1A3E74;border-top:2px solid #1A3E74;"><td style="padding-top:15px;">VOLUME:</td><td style="text-align:right;padding-top:15px;">${d.result} ml</td></tr>
+                </table>
+            </div>`, true);
+
+        const qc = document.getElementById('pdf-qrcode-container');
+        if (qc) { qc.innerHTML = ''; new QRCode(qc, { text: window.location.href, width: 60, height: 60 }); }
+        
+        try {
+            const canvas = await html2canvas(document.getElementById('pdf-render-template'), { scale: 2, useCORS: true });
+            const doc = new window.jspdf.jsPDF('p', 'pt', 'a4');
+            doc.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, doc.internal.pageSize.getWidth(), (canvas.height * doc.internal.pageSize.getWidth()) / canvas.width);
+            doc.save(`Heparina-${d.name.replace(/\s+/g, '-')}.pdf`);
+        } catch (e) { console.error(e); }
+    }
+
+    function copiarResumo() {
+        if (!APP_STATE.data) return;
+        const d = APP_STATE.data;
+        const t = `HEPARINA\nPaciente: ${d.name}\nRes: ${d.result} ml\n${d.timestamp}`;
+        navigator.clipboard.writeText(t).then(() => showNotification("Copiado!"));
+    }
+
+    // --- EVENTS & UTILS ---
+    function switchTab(id) {
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`pane-${id}`)?.classList.remove('hidden');
+        document.getElementById(`btn-tab-${id}`)?.classList.add('active');
+        if (id === 'calc' && APP_STATE.data) document.getElementById('results-wrapper').classList.remove('hidden');
+    }
+
+    function resetForm() {
+        document.querySelectorAll('input').forEach(i => i.value = '');
+        document.getElementById('results-wrapper').classList.add('hidden');
+        APP_STATE.data = null;
+        showNotification("Limpo!");
+    }
+
+    function validateBirthDate() {
+        const el = document.getElementById('patient_birthdate');
+        if (el?.value) { const p = el.value.split('-'); if (p[0].length > 4) el.value = `${p[0].substring(0,4)}-${p[1]}-${p[2]}`; }
+    }
+    
+    function preventNegative(e) { if(['-','e','+'].includes(e.key)) e.preventDefault(); }
+    function redirectSimulados() { window.open('https://simulados-para-enfermagem.com.br/', '_blank'); }
+    function copyLink() { navigator.clipboard.writeText(window.location.href); showNotification("Link copiado!"); }
+    function share(p) {
+        const u = encodeURIComponent(window.location.href);
+        const m = { whatsapp: `https://api.whatsapp.com/send?text=${u}`, facebook: `https://www.facebook.com/sharer/sharer.php?u=${u}`, linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${u}` };
+        if(m[p]) window.open(m[p], '_blank');
+    }
+  </script>
+</body>
+</html>

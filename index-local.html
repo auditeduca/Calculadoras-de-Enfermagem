@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculadoras de Enfermagem - Ferramentas e Conteúdo Técnico para Profissionais de Saúde">
+    <meta name="theme-color" content="#1A3E74">
+    <title>Calculadoras de Enfermagem | Sistema Modular</title>
+
+    <!-- Preconnect & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS - ORDEM IMPORTANTE: Global primeiro, depois componentes específicos -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/global-main-index.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/preload.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/modals.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer.css">
+
+    <style>
+        /* Reset adicional */
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; }
+        
+        /* Estados de carregamento */
+        .component-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f9fa;
+            color: #1A3E74;
+            font-size: 14px;
+        }
+        .component-loading::after {
+            content: '';
+            width: 24px;
+            height: 24px;
+            margin-left: 10px;
+            border: 2px solid #e2e8f0;
+            border-top-color: #1A3E74;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* Container principal */
+        #main-container {
+            min-height: calc(100vh - 300px);
+            padding: 0;
+            max-width: 100%;
+            margin: 0;
+        }
+        
+        /* Debug console */
+        #debug-console {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.85);
+            color: #0f0;
+            padding: 12px;
+            font-size: 11px;
+            font-family: monospace;
+            max-height: 180px;
+            overflow-y: auto;
+            z-index: 99999;
+            border-radius: 6px;
+            max-width: 380px;
+            line-height: 1.5;
+        }
+        
+        /* ============================================
+           CORREÇÃO: Links de Skip - Ocultos por padrão
+           ============================================ */
+        
+        /* Esconder TODOS os skip links por padrão */
+        .skip-link,
+        a[href^="#skip"],
+        a[class*="skip"] {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+            background: none !important;
+            color: transparent !important;
+            z-index: -9999 !important;
+        }
+        
+        /* Apenas mostrar quando focado */
+        .skip-link:focus,
+        a[href^="#skip"]:focus,
+        a[class*="skip"]:focus {
+            position: fixed !important;
+            width: auto !important;
+            height: auto !important;
+            padding: 12px 24px !important;
+            margin: 0 !important;
+            overflow: visible !important;
+            clip: auto !important;
+            white-space: normal !important;
+            top: 20px !important;
+            left: 20px !important;
+            background: var(--primary-color, #1A3E74) !important;
+            color: #fff !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            z-index: 999999 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+            outline: 3px solid var(--accent-color, #3b82f6) !important;
+            outline-offset: 2px !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1. Preload / Loading Screen -->
+    <div id="preload-container">
+        <div class="component-loading" style="height: 100vh; width: 100%; position: fixed; inset: 0; z-index: 999999;">
+            Carregando...
+        </div>
+    </div>
+
+    <!-- 2. Widgets Laterais e Painel de Acessibilidade -->
+    <div id="accessibility-container">
+        <div class="component-loading" style="height: 48px; border-bottom: 1px solid #e2e8f0;">
+            Carregando painel de acessibilidade...
+        </div>
+    </div>
+
+    <!-- 3. Header / Navegação (contém barra de acessibilidade e botões skip) -->
+    <div id="header-container">
+        <div class="component-loading" style="height: 130px;">
+            Carregando cabeçalho...
+        </div>
+    </div>
+
+    <!-- 4. Conteúdo Principal -->
+    <main id="main-container">
+        <div class="component-loading" style="height: 400px; background: #f8f9fa;">
+            Carregando conteúdo principal...
+        </div>
+    </main>
+
+    <!-- 5. Footer -->
+    <div id="footer-container">
+        <div class="component-loading" style="height: 100px; border-top: 1px solid #e2e8f0;">
+            Carregando rodapé...
+        </div>
+    </div>
+
+    <!-- 6. Modais -->
+    <div id="modals-container">
+        <div class="component-loading" style="height: 100px;">
+            Carregando sistema de modais...
+        </div>
+    </div>
+
+    <!-- Debug Console -->
+    <div id="debug-console"></div>
+
+    <!-- ======================================== -->
+    <!-- LÓGICA DE CARREGAMENTO MODULAR -->
+    <!-- ======================================== -->
+    <script>
+        // Logger de debug
+        const debugLog = [];
+        function log(msg, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = `[${timestamp.split(' ')[0]}] [${type.toUpperCase()}] ${msg}`;
+            debugLog.push(entry);
+            const debugEl = document.getElementById('debug-console');
+            if (debugEl) debugEl.innerHTML = debugLog.slice(-15).join('<br>');
+        }
+
+        // Componente Loader
+        const ComponentLoader = {
+            async fetchAndInject(url, containerId, fallbackHTML = '') {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const html = await response.text();
+                    document.getElementById(containerId).innerHTML = html;
+                    return true;
+                } catch (error) {
+                    if (fallbackHTML) document.getElementById(containerId).innerHTML = fallbackHTML;
+                    return false;
+                }
+            },
+
+            async init() {
+                // Carrega componentes HTML em paralelo
+                const components = [
+                    { 
+                        url: 'user_input_files/preload.html', 
+                        id: 'preload-container', 
+                        fallback: '' 
+                    },
+                    { 
+                        url: 'user_input_files/accessibility.html', 
+                        id: 'accessibility-container', 
+                        fallback: '' 
+                    },
+                    { 
+                        url: 'user_input_files/header.html', 
+                        id: 'header-container', 
+                        fallback: '<header style="background: #1A3E74; padding: 20px; color: white; text-align: center;">Header em desenvolvimento</header>' 
+                    },
+                    { 
+                        url: 'user_input_files/main-index.html', 
+                        id: 'main-container', 
+                        fallback: '<main style="padding: 40px 20px; max-width: 1400px; margin: 0 auto;"><h1>Conteúdo Principal</h1><p>O conteúdo está sendo carregado...</p></main>' 
+                    },
+                    { 
+                        url: 'user_input_files/footer.html', 
+                        id: 'footer-container', 
+                        fallback: '' 
+                    },
+                    { 
+                        url: 'user_input_files/modals.html', 
+                        id: 'modals-container', 
+                        fallback: '' 
+                    }
+                ];
+
+                // Carrega todos os componentes simultaneamente
+                const results = await Promise.all(
+                    components.map(c => this.fetchAndInject(c.url, c.id, c.fallback))
+                );
+                
+                const allSuccess = results.every(r => r === true);
+                
+                if (!allSuccess) {
+                    console.warn('Alguns componentes falharam ao carregar');
+                }
+
+                // Dispara evento indicando que todos os componentes foram carregados
+                window.dispatchEvent(new CustomEvent('ComponentsLoaded'));
+            }
+        };
+
+        // Inicialização após ComponentsLoaded
+        window.addEventListener('ComponentsLoaded', () => {
+            // Inicializar Preload (Loading Screen)
+            if (typeof LoadingScreen !== 'undefined') {
+                if (typeof LoadingScreen.init === 'function') {
+                    LoadingScreen.init();
+                }
+            }
+
+            // Inicializar Accessibility (deve ser antes do header para criar o objeto AccessControl)
+            if (typeof AccessControl !== 'undefined') {
+                if (typeof AccessControl.init === 'function') {
+                    AccessControl.init();
+                }
+            }
+
+            // Inicializar HeaderEngine (depois que HTML está no DOM)
+            if (typeof HeaderEngine !== 'undefined') {
+                if (typeof HeaderEngine === 'function') {
+                    window.headerEngine = new HeaderEngine();
+                    if (typeof window.headerEngine.init === 'function') {
+                        window.headerEngine.init();
+                    }
+                }
+            }
+
+            // Inicializar ModalSystem
+            if (typeof ModalSystem !== 'undefined') {
+                if (typeof ModalSystem.init === 'function') {
+                    ModalSystem.init();
+                }
+            }
+
+            // Inicializar Footer (gerencia cookies, back-to-top, etc)
+            if (typeof initFooter === 'function') {
+                initFooter();
+            } else if (typeof FooterSystem !== 'undefined') {
+                FooterSystem.init();
+            }
+
+            // Inicializar Main Index Loader (carrega e renderiza ferramentas)
+            if (typeof MainIndexLoader !== 'undefined') {
+                if (typeof MainIndexLoader.load === 'function') {
+                    // O MainIndexLoader já carregou o HTML, agora inicializa a renderização
+                    setTimeout(() => {
+                        if (typeof window.renderAllTools === 'function') {
+                            window.renderAllTools();
+                        }
+                    }, 100);
+                }
+            }
+
+            // Inicializar Global Main (scroll suave, etc)
+            if (typeof initSmoothScroll === 'function') {
+                initSmoothScroll();
+            }
+            
+            // Dispara evento final de página pronta
+            setTimeout(() => {
+                window.dispatchEvent(new CustomEvent('Page:Ready'));
+            }, 100);
+        });
+
+        // Iniciar carregamento quando o DOM estiver pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => ComponentLoader.init());
+        } else {
+            ComponentLoader.init();
+        }
+    </script>
+
+    <!-- ======================================== -->
+    <!-- JAVASCRIPT DOS COMPONENTES (ORDEM IMPORTANTE) -->
+    <!-- ======================================== -->
+    
+    <!-- 1. Preload JS -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/preload.js"></script>
+    
+    <!-- 2. Accessibility JS (deve vir antes de dependent modules) -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility.js"></script>
+    
+    <!-- 3. Header JS -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header.js"></script>
+    
+    <!-- 4. Modals JS -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/modals.js"></script>
+    
+    <!-- 5. Footer JS -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer.js"></script>
+    
+    <!-- 6. Global Main JS -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main.js"></script>
+    
+    <!-- 7. Global Main Index JS -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/global-main-index.js"></script>
+    
+    <!-- 8. Main Index Loader -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/main-index-loader.js"></script>
+
+</body>
+</html>

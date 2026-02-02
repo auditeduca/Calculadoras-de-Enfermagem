@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#00897b">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Calculadoras de Enfermagem">
+    <meta name="keywords" content="calculadora de enfermagem, calculadoras clínicas, ferramentas de saúde, gotejamento, medication, diluição">
+    <meta name="description" content="Coleção completa de calculadoras de enfermagem e ferramentas clínicas para profissionais de saúde.">
+    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
+
+    <!-- Preconnect e Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- CSS Modules - Links Locais -->
+    <link rel="stylesheet" href="assets/css/variables-v4.css">
+    <link rel="stylesheet" href="assets/css/header-v4.css">
+    <link rel="stylesheet" href="assets/css/accessibility-v4.css">
+    <link rel="stylesheet" href="assets/css/footer-v4.css">
+    <link rel="stylesheet" href="assets/css/main-content-v4.css">
+
+    <style>
+        /* CSS Crítico */
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        h1 { font-family: 'Nunito Sans', sans-serif; font-weight: 800; }
+        
+        .skip-link { position: absolute; top: -40px; left: 0; background: #00897b; color: white; padding: 8px; z-index: 100000; transition: top 0.3s; }
+        .skip-link:focus { top: 0; }
+        
+        i.fas, i.fab, i.fa-solid { display: inline-block !important; visibility: visible !important; opacity: 1 !important; }
+        
+        #loader-global { position: fixed; inset: 0; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200000; transition: opacity 0.5s ease; }
+        .loader-image { background-color: #ffffff; margin-bottom: 30px; margin-left: -10px; max-width: 180px; height: auto; }
+        .loader-dots { display: flex; gap: 8px; align-items: center; justify-content: center; }
+        .loader-dot { width: 10px; height: 10px; background: #1A3E74; border-radius: 50%; opacity: 0.3; animation: dotPulse 1.4s ease-in-out infinite; }
+        .loader-dot:nth-child(1) { animation-delay: 0s; }
+        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes dotPulse { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        main#main-v2-content { min-height: 60vh; display: block; }
+
+        /* --- CORREÇÃO DE POSICIONAMENTO VLIBRAS --- */
+        div[vw],
+        div[vw].enabled {
+            position: fixed !important;
+            right: 0 !important;
+            top: 320px !important;
+            left: auto !important;
+            bottom: auto !important;
+            width: 45px !important;
+            height: 45px !important;
+            z-index: 100000 !important;
+        }
+
+        div[vw] .vw-access-button,
+        div[vw].enabled .vw-access-button {
+            position: relative !important;
+            right: 0 !important;
+            top: 0 !important;
+            left: auto !important;
+            bottom: auto !important;
+            width: 45px !important;
+            height: 45px !important;
+            background-color: #00897b !important;
+            border-radius: 12px 0 0 12px !important;
+            box-shadow: -3px 0 8px rgba(0,0,0,0.2) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        div[vw] .vw-access-button img {
+            width: 28px !important;
+            height: 28px !important;
+            filter: brightness(0) invert(1) !important;
+        }
+
+        /* Ajuste do wrapper do plugin */
+        div[vw] .vw-plugin-wrapper {
+            position: fixed !important;
+            right: 50px !important;
+            top: 320px !important;
+        }
+
+        /* --- ANIMAÇÃO SVG DO PRELOADER --- */
+        .loader-svg-bg {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: calc(100% + 200px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .loader-svg-bg svg {
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+        }
+
+        .svg-curve {
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            will-change: stroke-dashoffset;
+        }
+
+        .svg-curve-1 {
+            stroke: #1A3E74;
+            stroke-width: 2;
+            animation: drawPath 3s ease-in-out forwards;
+        }
+
+        .svg-curve-2 {
+            stroke: #00bcd4;
+            stroke-width: 2;
+            animation: drawPath 3s ease-in-out 0.5s forwards, pulseGlow 4s ease-in-out 3s infinite;
+        }
+
+        @keyframes drawPath {
+            0% {
+                stroke-dashoffset: 1000;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                opacity: 0.6;
+                filter: drop-shadow(0 0 2px rgba(0, 188, 212, 0.3));
+            }
+            50% {
+                opacity: 0.9;
+                filter: drop-shadow(0 0 8px rgba(0, 188, 212, 0.6));
+            }
+        }
+
+    </style>
+
+    <title>Calculadoras de Enfermagem - Ferramentas Clínicas</title>
+</head>
+<body class="light-mode">
+
+    <div id="loader-global">
+        <!-- SVG Decorativo Animado -->
+        <div class="loader-svg-bg">
+            <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="none">
+                <path class="svg-curve svg-curve-1" d="M-100,250 C300,150 600,400 1500,300" fill="none" stroke="#1A3E74" stroke-width="2" />
+                <path class="svg-curve svg-curve-2" d="M-100,500 C400,400 800,650 1600,450" fill="none" stroke="#00bcd4" stroke-width="2" />
+            </svg>
+        </div>
+        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" 
+             alt="Calculadoras de Enfermagem" 
+             class="loader-image"
+             style="width: 180px; height: auto;">
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+        <p style="margin-top:25px; color:#1A3E74; font-weight:600; font-size:0.95rem; letter-spacing: 0.3px;">Aguarde enquanto o conteúdo é carregado...</p>
+    </div>
+
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <header id="header-v2-container" role="banner"></header>
+
+    <aside id="accessibility-v2-container" role="complementary"></aside>
+    
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+    </div>
+
+    <div id="main-module-container"></div>
+
+    <footer id="footer-v2-container" role="contentinfo"></footer>
+
+    <script>
+        (function() {
+            'use strict';
+
+            window.EventBus = window.EventBus || {
+                events: {}, fired: {},
+                on(e, cb) { 
+                    const event = e.toLowerCase();
+                    if(!this.events[event]) this.events[event] = [];
+                    this.events[event].push(cb);
+                    if(this.fired[event]) cb(this.fired[event]);
+                },
+                emit(e, data) {
+                    const event = e.toLowerCase();
+                    this.fired[event] = data || true;
+                    if(this.events[event]) this.events[event].forEach(cb => cb(data));
+                }
+            };
+
+            const BASE_URL = "";
+
+            const CONFIG = {
+                components: [
+                    { id: 'accessibility-v2-container', path: 'assets/components/accessibility-v4.html' },
+                    { id: 'header-v2-container', path: 'assets/components/header-v4.html' },
+                    { id: 'main-module-container', path: 'assets/pages/main-content-v4.html' },
+                    { id: 'footer-v2-container', path: 'assets/components/footer-v4.html' }
+                ],
+                scripts: [
+                    'assets/js/event-bus-v4.js',
+                    'https://vlibras.gov.br/app/vlibras-plugin.js',
+                    'assets/js/accessibility-v4.js',
+                    'assets/js/header-v4.js',
+                    'assets/js/main-content-v4.js',
+                    'assets/js/footer-v4.js'
+                ]
+            };
+
+            async function loadComponent(id, path) {
+                try {
+                    const url = path.startsWith('http') ? path : BASE_URL + path;
+                    const response = await fetch(url + '?t=' + Date.now());
+                    if (!response.ok) throw new Error(response.status);
+                    const html = await response.text();
+                    const container = document.getElementById(id);
+                    if (container) {
+                        container.innerHTML = html;
+                        window.EventBus.emit(`module:${id}:ready`);
+                    }
+                    return true;
+                } catch (e) {
+                    console.error(`[App] Erro crítico ao carregar ${id}:`, e.message);
+                    return false;
+                }
+            }
+
+            async function loadScript(src) {
+                return new Promise((resolve) => {
+                    const script = document.createElement('script');
+                    script.src = (src.startsWith('http') ? src : BASE_URL + src) + '?v=' + Date.now();
+                    script.async = false;
+                    script.onload = () => {
+                        if(src.includes('vlibras') && window.VLibras) {
+                            try { new window.VLibras.Widget('https://vlibras.gov.br/app'); } catch(e){}
+                        }
+                        resolve(true);
+                    };
+                    script.onerror = () => resolve(false);
+                    document.body.appendChild(script);
+                });
+            }
+
+            // ===== CORREÇÃO DE POSICIONAMENTO VLIBRAS =====
+            function fixVLibrasPosition() {
+                const vwContainer = document.querySelector('div[vw]');
+                const vwButton = document.querySelector('div[vw] .vw-access-button');
+                
+                if (vwContainer) {
+                    vwContainer.style.setProperty('position', 'fixed', 'important');
+                    vwContainer.style.setProperty('right', '0', 'important');
+                    vwContainer.style.setProperty('top', '320px', 'important');
+                    vwContainer.style.setProperty('left', 'auto', 'important');
+                    vwContainer.style.setProperty('bottom', 'auto', 'important');
+                    vwContainer.style.setProperty('width', '45px', 'important');
+                    vwContainer.style.setProperty('height', '45px', 'important');
+                    vwContainer.style.setProperty('z-index', '100030', 'important');
+                }
+                
+                if (vwButton) {
+                    vwButton.style.setProperty('position', 'relative', 'important');
+                    vwButton.style.setProperty('right', '0', 'important');
+                    vwButton.style.setProperty('top', '0', 'important');
+                    vwButton.style.setProperty('left', 'auto', 'important');
+                    vwButton.style.setProperty('bottom', 'auto', 'important');
+                    vwButton.style.setProperty('width', '45px', 'important');
+                    vwButton.style.setProperty('height', '45px', 'important');
+                    vwButton.style.setProperty('margin', '0', 'important');
+                    vwButton.style.setProperty('padding', '0', 'important');
+                    vwButton.style.setProperty('background-color', '#00897b', 'important');
+                    vwButton.style.setProperty('border-radius', '12px 0 0 12px', 'important');
+                    vwButton.style.setProperty('box-shadow', '-3px 0 8px rgba(0,0,0,0.2)', 'important');
+                }
+            }
+
+            // Inicia correção contínua do VLibras
+            function startVLibrasFix() {
+                fixVLibrasPosition();
+                setInterval(fixVLibrasPosition, 500);
+                
+                // Observa mudanças no DOM
+                const observer = new MutationObserver(fixVLibrasPosition);
+                const vwContainer = document.querySelector('div[vw]');
+                if (vwContainer) {
+                    observer.observe(vwContainer, { 
+                        attributes: true, 
+                        attributeFilter: ['style', 'class'],
+                        subtree: true 
+                    });
+                }
+            }
+
+            async function start() {
+                await Promise.all(CONFIG.components.map(c => loadComponent(c.id, c.path)));
+                for (const s of CONFIG.scripts) await loadScript(s);
+
+                setTimeout(() => {
+                    if (typeof window.HeaderInit === 'function') window.HeaderInit();
+                    if (typeof window.MainInit === 'function') window.MainInit();
+                    
+                    // Inicia correção do VLibras após carregamento
+                    startVLibrasFix();
+                    
+                    // Inicializa controles de acessibilidade
+                    initA11yControls();
+                    
+                    const loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.style.opacity = '0';
+                        setTimeout(() => loader.style.display = 'none', 500);
+                    }
+                }, 500);
+            }
+
+            // Função para inicializar controles de acessibilidade do header
+            function initA11yControls() {
+                // Criar elemento main-content se não existir
+                if (!document.getElementById('main-content')) {
+                    var mainContainer = document.getElementById('main-module-container');
+                    if (mainContainer) {
+                        mainContainer.id = 'main-content';
+                    }
+                }
+                
+                // Criar elemento main-header se não existir
+                if (!document.getElementById('main-header')) {
+                    var headerElement = document.querySelector('.main-header');
+                    if (headerElement) {
+                        headerElement.id = 'main-header';
+                    }
+                }
+                
+                // Configurar botões de skip com suporte a header fixo
+                setupSkipButtons();
+            }
+            
+            // Configurar botões de skip
+            function setupSkipButtons() {
+                var skipButtons = document.querySelectorAll('.skip-btn');
+                skipButtons.forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        var targetId = this.getAttribute('href');
+                        var targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            e.preventDefault();
+                            
+                            // Calcular offset para header fixo (150px)
+                            var headerHeight = 150;
+                            var targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Focar no elemento alvo para acessibilidade
+                            setTimeout(function() {
+                                targetElement.setAttribute('tabindex', '-1');
+                                targetElement.focus();
+                            }, 500);
+                        }
+                    });
+                });
+            }
+
+            if (document.readyState === 'complete') start();
+            else window.addEventListener('load', start);
+        })();
+    </script>
+</body>
+</html>
