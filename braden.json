@@ -1,0 +1,124 @@
+{
+  "id": "braden_scale",
+  "title": "Escala de Braden (Avaliação de Risco de LPP)",
+  "description": "Protocolo clínico para prever o risco de desenvolvimento de Lesão por Pressão (LPP). Essencial para a segurança do paciente e auditoria de cuidados de enfermagem.",
+  "metadata": {
+    "category": "Segurança do Paciente",
+    "version": "1.0.1",
+    "audit_prefix": "AUDIT-BRADEN-PREV"
+  },
+  "sections": [
+    {
+      "name": "Fatores de Risco Intrínsecos e Extrínsecos",
+      "items": [
+        {
+          "id": "percepcao_sensorial",
+          "label": "Percepção Sensorial",
+          "icon": "fa-user-injured",
+          "options": [
+            { "text": "Totalmente Limitado", "value": 1 },
+            { "text": "Muito Limitado", "value": 2 },
+            { "text": "Levemente Limitado", "value": 3 },
+            { "text": "Nenhuma Limitação", "value": 4 }
+          ]
+        },
+        {
+          "id": "umidade",
+          "label": "Umidade da Pele",
+          "icon": "fa-droplet",
+          "options": [
+            { "text": "Constantemente Úmida", "value": 1 },
+            { "text": "Frequentemente Úmida", "value": 2 },
+            { "text": "Ocasionalmente Úmida", "value": 3 },
+            { "text": "Raramente Úmida", "value": 4 }
+          ]
+        },
+        {
+          "id": "atividade",
+          "label": "Atividade Física",
+          "icon": "fa-walking",
+          "options": [
+            { "text": "Acamado", "value": 1 },
+            { "text": "Cadeira de Rodas", "value": 2 },
+            { "text": "Caminha Ocasionalmente", "value": 3 },
+            { "text": "Caminha Frequentemente", "value": 4 }
+          ]
+        },
+        {
+          "id": "mobilidade",
+          "label": "Mobilidade no Leito",
+          "icon": "fa-expand",
+          "options": [
+            { "text": "Totalmente Imóvel", "value": 1 },
+            { "text": "Muito Limitada", "value": 2 },
+            { "text": "Levemente Limitada", "value": 3 },
+            { "text": "Nenhuma Limitação", "value": 4 }
+          ]
+        },
+        {
+          "id": "nutricao",
+          "label": "Padrão Alimentar / Nutrição",
+          "icon": "fa-utensils",
+          "options": [
+            { "text": "Muito Pobre", "value": 1 },
+            { "text": "Provavelmente Inadequada", "value": 2 },
+            { "text": "Adequada", "value": 3 },
+            { "text": "Excelente", "value": 4 }
+          ]
+        },
+        {
+          "id": "friccao_cisalhamento",
+          "label": "Fricção e Cisalhamento",
+          "icon": "fa-arrows-alt-h",
+          "options": [
+            { "text": "Problema Grave", "value": 1 },
+            { "text": "Problema Potencial", "value": 2 },
+            { "text": "Nenhum Problema Aparente", "value": 3 }
+          ]
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "min": 6,
+      "max": 9,
+      "label": "Muito Alto Risco",
+      "color": "rose",
+      "note": "Intervenção IMEDIATA: Implementar colchão de pressão alternada, mudança de decúbito rigorosa de 2/2h e hidratação profunda. Risco crítico de glossura tecidual."
+    },
+    {
+      "min": 10,
+      "max": 12,
+      "label": "Alto Risco",
+      "color": "orange",
+      "note": "Risco Elevado: Intensificar vigilância, aplicar barreiras protetoras em proeminências ósseas e monitorar aporte proteico-calórico."
+    },
+    {
+      "min": 13,
+      "max": 14,
+      "label": "Risco Moderado",
+      "color": "amber",
+      "note": "Atenção: Manter protocolos preventivos, usar coxins para posicionamento e garantir que a pele esteja sempre limpa e seca."
+    },
+    {
+      "min": 15,
+      "max": 18,
+      "label": "Risco Baixo",
+      "color": "indigo",
+      "note": "Vigilância Padrão: Monitorar evolução clínica e manter cuidados básicos de higiene e mobilização ativa se possível."
+    },
+    {
+      "min": 19,
+      "max": 23,
+      "label": "Sem Risco",
+      "color": "emerald",
+      "note": "Paciente estável. Reavaliar conforme protocolo institucional (geralmente a cada 48h ou 72h) ou se houver alteração no quadro clínico."
+    }
+  ],
+  "references": [
+    "Braden BJ, Bergstrom N. A conceptual schema for the study of the etiology of pressure sores. Rehabil Nurs. 1987.",
+    "Diretrizes da NPUAP/EPUAP para Prevenção e Tratamento de Lesões por Pressão.",
+    "Protocolo de Prevenção de Úlcera por Pressão - Ministério da Saúde (Anvisa)."
+  ]
+}
