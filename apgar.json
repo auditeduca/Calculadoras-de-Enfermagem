@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "category": "Escalas Clínicas",
+    "sub_category": "Neonatologia / Obstetrícia",
+    "name": "Escala de Apgar",
+    "version": "2.0",
+    "author": "Dra. Virginia Apgar (1952)",
+    "last_updated": "2026-02-05"
+  },
+  "audit_config": {
+    "formula_label": "Índice de Vitalidade de Apgar",
+    "abstract_formula": "Σ (FC + Respiração + Tônus + Reflexo + Cor)",
+    "formula_template": "Score = {fc} + {resp} + {tonus} + {reflex} + {cor}",
+    "audit_display_format": "Critérios: [FC: {fc}, Resp: {resp}, Tônus: {tonus}, Reflexo: {reflex}, Cor: {cor}] | Total: {total}/10"
+  },
+  "result_interpretation": {
+    "ranges": [
+      {
+        "min": 8,
+        "max": 10,
+        "status": "Boa Vitalidade",
+        "color": "emerald",
+        "recommendation": "Recém-nascido estável. Seguir com cuidados de rotina e contato pele a pele."
+      },
+      {
+        "min": 4,
+        "max": 7,
+        "status": "Asfixia Leve/Moderada",
+        "color": "amber",
+        "recommendation": "Depressão moderada. Iniciar manobras de estimulação e O2 se necessário. Reavaliar rigorosamente."
+      },
+      {
+        "min": 0,
+        "max": 3,
+        "status": "Asfixia Grave",
+        "color": "red",
+        "recommendation": "Depressão grave. Iniciar protocolo de Reanimação Neonatal imediatamente (Passos Iniciais/VPP)."
+      }
+    ]
+  },
+  "criteria": [
+    {
+      "id": "fc",
+      "title": "Frequência Cardíaca",
+      "icon": "fa-heartbeat",
+      "options": [
+        { "val": 2, "text": "≥ 100 bpm", "sub": "Ritmo estável" },
+        { "val": 1, "text": "< 100 bpm", "sub": "Bradicardia neonatal" },
+        { "val": 0, "text": "Ausente", "sub": "Sem batimentos detectáveis" }
+      ]
+    },
+    {
+      "id": "resp",
+      "title": "Esforço Respiratório",
+      "icon": "fa-baby",
+      "options": [
+        { "val": 2, "text": "Choro Vigoroso", "sub": "Respiração regular" },
+        { "val": 1, "text": "Lenta / Irregular", "sub": "Choro fraco ou gemência" },
+        { "val": 0, "text": "Ausente", "sub": "Apneia" }
+      ]
+    },
+    {
+      "id": "tonus",
+      "title": "Tônus Muscular",
+      "icon": "fa-child",
+      "options": [
+        { "val": 2, "text": "Movimentos Ativos", "sub": "Boa flexão de membros" },
+        { "val": 1, "text": "Flexão Discreta", "sub": "Apenas extremidades flexionadas" },
+        { "val": 0, "text": "Flácido", "sub": "Atonia muscular" }
+      ]
+    },
+    {
+      "id": "reflex",
+      "title": "Irritabilidade Reflexa",
+      "icon": "fa-face-grimace",
+      "options": [
+        { "val": 2, "text": "Espirro / Tosse", "sub": "Resposta ativa ao estímulo" },
+        { "val": 1, "text": "Caretas", "sub": "Resposta facial mínima" },
+        { "val": 0, "text": "Ausente", "sub": "Sem resposta a estímulos" }
+      ]
+    },
+    {
+      "id": "cor",
+      "title": "Cor da Pele",
+      "icon": "fa-palette",
+      "options": [
+        { "val": 2, "text": "Totalmente Rosado", "sub": "Normal" },
+        { "val": 1, "text": "Cianose de Extremid.", "sub": "Corpo rosado, mãos/pés azuis" },
+        { "val": 0, "text": "Pálido / Cianótico", "sub": "Cianose central ou palidez" }
+      ]
+    }
+  ],
+  "references": [
+    { "source": "OMS", "doc": "Guidelines on Basic Newborn Resuscitation", "note": "Padrão ouro internacional." },
+    { "source": "SBP", "doc": "Programa de Reanimação Neonatal (PRN-SBP)", "note": "Diretriz brasileira atualizada." },
+    { "source": "Ministério da Saúde", "doc": "Manual de Atenção à Saúde do Recém-Nascido", "note": "Protocolo de assistência ao parto." }
+  ]
+}
