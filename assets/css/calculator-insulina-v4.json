@@ -1,0 +1,131 @@
+{
+  "id": "insulina",
+  "name": "Cálculo de Insulina",
+  "description": "Ferramenta profissional para aspiração precisa em seringas de 100UI ou 300UI.",
+  "category": "Segurança Clínica",
+  "version": "4.0",
+  "fields": [
+    {
+      "id": "patient_name",
+      "type": "text",
+      "label": "Nome do Paciente",
+      "placeholder": "Nome completo (opcional)",
+      "required": false,
+      "tooltip": "Identificação do paciente para fins de registro. Campo opcional."
+    },
+    {
+      "id": "patient_birthdate",
+      "type": "date",
+      "label": "Data de Nascimento",
+      "required": false,
+      "tooltip": "Para cálculo de idade e verificação de faixa etária. Campo opcional."
+    },
+    {
+      "id": "prescricao_medica",
+      "type": "number",
+      "label": "Prescrição Médica (UI)",
+      "placeholder": "Ex: 15",
+      "required": true,
+      "min": 0,
+      "step": 0.5,
+      "tooltip": "Quantidade de insulina prescrita pelo médico em unidades internacionais (UI)."
+    },
+    {
+      "id": "concentracao_insulina",
+      "type": "select",
+      "label": "Concentração da Insulina (UI/mL)",
+      "options": [
+        {
+          "value": "100",
+          "label": "100 UI/mL (Insulina Regular U100)"
+        },
+        {
+          "value": "300",
+          "label": "300 UI/mL (Insulina Degludec U300)"
+        },
+        {
+          "value": "200",
+          "label": "200 UI/mL (Insulina Glargine U200)"
+        }
+      ],
+      "default": "100",
+      "tooltip": "Concentração da insulina. Padrão: 100 UI/mL. Para insulinas U300, use 300."
+    }
+  ],
+  "tabs": [
+    {
+      "id": "calc",
+      "label": "Calculadora",
+      "icon": "fa-calculator"
+    },
+    {
+      "id": "sobre",
+      "label": "Sobre",
+      "icon": "fa-info-circle"
+    },
+    {
+      "id": "ajuda",
+      "label": "Instruções",
+      "icon": "fa-question-circle"
+    },
+    {
+      "id": "referencia",
+      "label": "Referência",
+      "icon": "fa-book"
+    }
+  ],
+  "formula": {
+    "calculation": "Volume (mL) = Prescrição (UI) / Concentração (UI/mL)",
+    "description": "Equação auditada para cálculo preciso de insulina"
+  },
+  "instructions": [
+    "Informe a prescrição médica em unidades internacionais (UI)",
+    "Selecione a concentração da insulina (U100, U200 ou U300)",
+    "Clique em \"Calcular\" para obter o volume a aspirar",
+    "Utilize os checklists de segurança para auditoria",
+    "Gere PDF ou copie o resultado para registro"
+  ],
+  "references": [
+    "Sociedade Brasileira de Diabetes (SBD). Diretrizes da SBD 2023. São Paulo: Clannad, 2023.",
+    "Conselho Federal de Enfermagem (COFEN). Guia de Boas Práticas: Administração de Medicamentos. Brasília, 2020.",
+    "Potter, P. A.; Perry, A. G. Fundamentos de Enfermagem. 10ª Ed. Rio de Janeiro: Elsevier, 2021.",
+    "NANDA-I. Diagnósticos de Enfermagem: Definições e Classificação 2021-2023. Porto Alegre: Artmed, 2021."
+  ],
+  "sidebar_tools": [
+    {
+      "id": "btn-conteudo",
+      "icon": "fa-book-open",
+      "label": "Conteúdo",
+      "action": "switchTab('sobre')",
+      "description": "Abre a aba com informações sobre esta calculadora de insulina"
+    },
+    {
+      "id": "btn-ajuda",
+      "icon": "fa-question-circle",
+      "label": "Ajuda",
+      "action": "showTutorial()",
+      "description": "Abre o tutorial interativo para aprender a usar a calculadora"
+    },
+    {
+      "id": "btn-nanda",
+      "icon": "fa-stethoscope",
+      "label": "Nanda",
+      "action": "showNANDAModal()",
+      "description": "Abre a lista de diagnósticos de enfermagem NANDA relacionados à insulina"
+    },
+    {
+      "id": "btn-9acertos",
+      "icon": "fa-check-double",
+      "label": "9 Acertos",
+      "action": "showMedicationChecklist()",
+      "description": "Abre a lista de verificação dos 9 certos da medicação para segurança do paciente"
+    },
+    {
+      "id": "btn-metas",
+      "icon": "fa-bullseye",
+      "label": "Metas",
+      "action": "showSafetyGoals()",
+      "description": "Abre as metas internacionais de segurança do paciente"
+    }
+  ]
+}

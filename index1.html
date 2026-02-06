@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+  <!-- SEO & MONETIZAÇÃO -->
+  <title id="page-title">Calculadoras de Enfermagem Profissional</title>
+  <meta name="description" content="Plataforma profissional de calculadoras clínicas para enfermagem com foco em segurança do paciente e auditoria de cálculos.">
+  <meta name="keywords" content="enfermagem, cálculo de medicação, segurança do paciente, auditoria clínica, insulina, heparina, gotejamento">
+  <meta name="author" content="Calculadoras de Enfermagem">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/"/>
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Calculadoras de Enfermagem - Precisão e Segurança">
+  <meta property="og:description" content="Plataforma profissional com protocolos integrados para enfermagem.">
+  <meta property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
+  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Calculadoras de Enfermagem">
+  <meta property="og:updated_time" content="2026-02-05T00:00:00-03:00">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Calculadoras de Enfermagem - Precisão e Segurança">
+  <meta name="twitter:description" content="Plataforma profissional com protocolos integrados para enfermagem.">
+  <meta name="twitter:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
+  <meta name="twitter:creator" content="@CalculadorasEnf">
+
+  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
+
+  <!-- Fontes e Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Estilos Modulares (CSS Externo) -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/components-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/animations-v4.css"/>
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Calculadoras de Enfermagem",
+      "description": "Plataforma profissional de calculadoras clínicas para enfermagem",
+      "applicationCategory": "MedicalApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "screenshot": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp",
+      "author": {
+          "@type": "Organization",
+          "name": "Calculadoras de Enfermagem"
+      }
+  }
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] },
+          colors: { 
+            'nurse-primary':'#1A3E74', 
+            'nurse-secondary':'#00bcd4', 
+            'nurse-accent':'#00838f', 
+            'nurse-bgDark':'#0F172A' 
+          },
+          animation: {
+            'slide-in': 'slideIn 0.3s ease-out',
+            'fade-in': 'fadeIn 0.3s ease-out',
+            'pulse-slow': 'pulse 3s infinite',
+            'bounce-slow': 'bounce 2s infinite',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- Indicador de offline -->
+  <div id="offline-indicator" 
+       class="fixed bottom-4 right-4 bg-yellow-500 text-white px-4 py-3 rounded-xl shadow-xl z-[9999] hidden animate-fade-in"
+       role="alert"
+       aria-live="polite">
+    <div class="flex items-center gap-3">
+      <i class="fa-solid fa-wifi-slash text-lg"></i>
+      <div>
+        <p class="font-bold text-sm">Você está offline</p>
+        <p class="text-xs opacity-90">Algumas funcionalidades podem estar limitadas</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTAINERS PARA MÓDULOS MODULARES -->
+  <div id="accessibility-container"></div>
+  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50 shadow-sm"></div>
+
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
+    
+    <!-- BREADCRUMB RESPONSIVO -->
+    <nav id="breadcrumb" class="mb-8 font-semibold">
+        <!-- O breadcrumb será injetado dinamicamente -->
+    </nav>
+
+    <!-- ÁREA PARA CONTEÚDO DINÂMICO -->
+    <div id="dynamic-content"></div>
+
+    <!-- SEÇÃO DO AUTOR (Comum a todas as páginas) -->
+    <section id="author-section" class="max-w-7xl mx-auto px-4 py-12 border-t border-slate-200 dark:border-slate-800 mt-20">
+        <!-- O conteúdo será injetado dinamicamente -->
+    </section>
+  </main>
+
+  <div id="footer-container" class="relative z-10 transition-opacity duration-500 opacity-50"></div>
+
+  <!-- MODAL GENÉRICO -->
+  <div id="generic-modal" 
+       class="fixed inset-0 z-[10001] hidden"
+       aria-hidden="true"
+       aria-labelledby="modal-title"
+       aria-describedby="modal-content"
+       role="dialog">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="SystemUtils.closeModal()" role="presentation"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[90vh] overflow-hidden">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl mx-4 overflow-hidden flex flex-col max-h-[90vh]" role="document">
+        <div class="bg-nurse-primary dark:bg-slate-900 text-white p-6 flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <i id="modal-icon" class="fa-solid text-2xl"></i>
+            <h3 id="modal-title" class="text-xl font-bold font-nunito"></h3>
+          </div>
+          <button onclick="SystemUtils.closeModal()" class="text-white hover:text-nurse-secondary text-xl" aria-label="Fechar modal">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+        <div id="modal-content" class="p-6 overflow-y-auto flex-grow text-sm"></div>
+        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 border-t border-slate-200 dark:border-slate-700">
+          <button onclick="SystemUtils.closeModal()" class="w-full bg-nurse-accent hover:bg-nurse-primary text-white font-bold py-3 rounded-xl transition" aria-label="Fechar">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF TEMPLATE (OCULTO) -->
+  <div id="pdf-render-template" style="position: absolute; left: -9999px; top: 0; width: 794px; background: white; padding: 40px; color: #0f172a; font-family: 'Inter', sans-serif;">
+    <div id="pdf-body"></div>
+  </div>
+
+  <!-- SCRIPTS DO SISTEMA -->
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/system-utils-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/calculator-system-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/page-loader-v4.js"></script>
+  
+  <script>
+    // Inicializar quando o DOM carregar
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('🚀 Inicializando sistema modular...');
+      
+      try {
+        // Carregar módulos básicos
+        await SystemUtils.loadModule('accessibility-container', 'assets/components/accessibility-v4.html');
+        await SystemUtils.loadModule('header-container', 'assets/components/header-v4.html');
+        await SystemUtils.loadModule('footer-container', 'assets/components/footer-v4.html');
+        
+        // Inicializar componentes carregados
+        if (typeof initializeAccessibility === 'function') initializeAccessibility();
+        if (typeof initializeHeader === 'function') initializeHeader();
+        
+        // Detectar página atual e carregar conteúdo apropriado
+        await PageLoader.loadCurrentPage();
+        
+        console.log('✅ Sistema inicializado com sucesso');
+        
+      } catch (error) {
+        console.error('❌ Erro ao inicializar sistema:', error);
+        SystemUtils.showNotification('Erro ao carregar a página', 'error');
+      }
+    });
+
+    // Detectar status da conexão
+    window.addEventListener('load', () => {
+      const offlineIndicator = document.getElementById('offline-indicator');
+      
+      const updateOnlineStatus = () => {
+        if (navigator.onLine) {
+          offlineIndicator.classList.add('hidden');
+        } else {
+          offlineIndicator.classList.remove('hidden');
+        }
+      };
+      
+      window.addEventListener('online', updateOnlineStatus);
+      window.addEventListener('offline', updateOnlineStatus);
+      updateOnlineStatus();
+    });
+  </script>
+</body>
+</html>

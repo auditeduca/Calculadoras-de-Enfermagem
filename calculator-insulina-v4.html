@@ -1,0 +1,63 @@
+<div class="card-base p-0">
+  <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto" id="calculator-tabs">
+    <!-- Tabs serão injetadas dinamicamente -->
+  </nav>
+
+  <div class="p-6 md:p-10">
+    <!-- Tab: Calculadora -->
+    <section id="pane-calc" class="tab-pane space-y-10">
+      <div class="space-y-6">
+        <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 border-b pb-2">
+          Identificação do Paciente (Opcional)
+        </h3>
+        <div class="grid md:grid-cols-2 gap-6" id="patient-fields">
+          <!-- Campos de paciente serão injetados -->
+        </div>
+
+        <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 pt-4 border-b pb-2">
+          Parâmetros de Dosagem
+        </h3>
+        <div id="calculation-fields" class="grid md:grid-cols-2 gap-6">
+          <!-- Campos de cálculo serão injetados -->
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 pt-4">
+        <button id="btn-calculate" onclick="CALCULATOR_SYSTEM.calculate()" class="btn-primary-action flex-1">
+          <i class="fa-solid fa-calculator"></i> <span>Calcular</span>
+        </button>
+        <button onclick="CALCULATOR_SYSTEM.reset()" class="btn-secondary-action">
+          <i class="fa-solid fa-rotate-left"></i> Limpar
+        </button>
+      </div>
+
+      <div id="results-wrapper" class="hidden pt-8 border-t border-slate-200 dark:border-slate-700">
+        <!-- Resultados serão injetados dinamicamente -->
+      </div>
+    </section>
+
+    <!-- Tab: Sobre -->
+    <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+      <h2 class="text-2xl font-black mb-4 font-nunito">Sobre o Cálculo de Insulina</h2>
+      <div id="sobre-content">
+        <!-- Conteúdo será injetado dinamicamente -->
+      </div>
+    </section>
+
+    <!-- Tab: Instruções -->
+    <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+      <h2 class="text-2xl font-black mb-4 font-nunito">Instruções de Uso</h2>
+      <ul id="ajuda-content" class="space-y-3 text-sm">
+        <!-- Instruções serão injetadas dinamicamente -->
+      </ul>
+    </section>
+
+    <!-- Tab: Referência -->
+    <section id="pane-referencia" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+      <h2 class="text-2xl font-black mb-4 font-nunito">Referências Bibliográficas</h2>
+      <div id="referencia-content" class="space-y-4 text-sm font-medium text-slate-600 dark:text-slate-400">
+        <!-- Referências serão injetadas dinamicamente -->
+      </div>
+    </section>
+  </div>
+</div>
