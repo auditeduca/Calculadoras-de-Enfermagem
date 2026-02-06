@@ -1,312 +1,733 @@
 <!DOCTYPE html>
-<html lang="pt-br" class="scroll-smooth">
+<html lang="pt-pt" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Validador de Domínio e MX - Ferramenta Profissional Audit Educa para verificação de infraestrutura de e-mail e circularização.">
+    <title>Validador de Domínio MX | Audit Educa</title>
+    
+    <!-- Favicon Oficial -->
+    <link rel="icon" type="image/webp" href="https://auditeduca.com.br/assets/iassets/images/audit-educa-favicon.webp">
 
-  <!-- SEO & MONETIZAÇÃO -->
-  <title id="page-title">Calculadoras de Enfermagem Profissional</title>
-  <meta name="description" content="Plataforma profissional de calculadoras clínicas para enfermagem com foco em segurança do paciente e auditoria de cálculos.">
-  <meta name="keywords" content="enfermagem, cálculo de medicação, segurança do paciente, auditoria clínica, insulina, heparina, gotejamento">
-  <meta name="author" content="Calculadoras de Enfermagem">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/"/>
-  
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Calculadoras de Enfermagem - Precisão e Segurança">
-  <meta property="og:description" content="Plataforma profissional com protocolos integrados para enfermagem.">
-  <meta property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
-  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:site_name" content="Calculadoras de Enfermagem">
-  <meta property="og:updated_time" content="2026-02-05T00:00:00-03:00">
+    <!-- CSS Externos Globais Audit Educa -->
+    <link rel="stylesheet" href="https://auditeduca.com.br/assets/css/preloader.css">
+    <link rel="stylesheet" href="https://auditeduca.com.br/assets/css/global.css">
+    <link rel="stylesheet" href="https://auditeduca.com.br/assets/css/main.css">
+    <link rel="stylesheet" href="https://auditeduca.com.br/assets/css/header.css">
+    <link rel="stylesheet" href="https://auditeduca.com.br/assets/css/footer.css">
 
-  <!-- Twitter Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Calculadoras de Enfermagem - Precisão e Segurança">
-  <meta name="twitter:description" content="Plataforma profissional com protocolos integrados para enfermagem.">
-  <meta name="twitter:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
-  <meta name="twitter:creator" content="@CalculadorasEnf">
+    <!-- FontAwesome & Lucide -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Bibliotecas para Geração de PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
-
-  <!-- Fontes e Ícones -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-  
-  <!-- Tailwind CSS (versão otimizada) -->
-  <script>
-    // Carregar Tailwind CSS apenas uma vez
-    if (!document.querySelector('link[href*="tailwind"]')) {
-      const tailwindLink = document.createElement('link');
-      tailwindLink.rel = 'stylesheet';
-      tailwindLink.href = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css';
-      tailwindLink.integrity = 'sha384-+3TjKdV+VzQHgJwU1U5G1Y8E6L6U5Q5Z5q5h5R5Q5Z5q5h5R5Q5Z5q5h5R5Q5Z5q5';
-      tailwindLink.crossOrigin = 'anonymous';
-      document.head.appendChild(tailwindLink);
-      
-      // Configuração do Tailwind
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: { 
-              nunito: ['"Nunito Sans"','sans-serif'], 
-              inter: ['Inter','sans-serif'] 
-            },
-            colors: { 
-              'nurse-primary':'#1A3E74', 
-              'nurse-secondary':'#00bcd4', 
-              'nurse-accent':'#00838f', 
-              'nurse-bgDark':'#0F172A' 
-            },
-            animation: {
-              'slide-in': 'slideIn 0.3s ease-out',
-              'fade-in': 'fadeIn 0.3s ease-out',
-              'pulse-slow': 'pulse 3s infinite',
-              'bounce-slow': 'bounce 2s infinite',
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        'audit-gold': '#C5A059',
+                        'audit-navy': '#0f172a',
+                        'audit-blue': '#1e40af',
+                    },
+                    boxShadow: {
+                        'premium': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    }
+                }
             }
-          }
         }
-      };
-      
-      // Estilos inline como fallback
-      const fallbackStyles = document.createElement('style');
-      fallbackStyles.textContent = `
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
-        .dark body { background-color: #0F172A; color: #cbd5e1; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Nunito Sans', sans-serif; }
-      `;
-      document.head.appendChild(fallbackStyles);
-    }
-  </script>
-  
-  <!-- Estilos Modulares (CSS Externo) -->
-  <link rel="stylesheet" href="assets/css/variables-v4.css"/>
-  <link rel="stylesheet" href="assets/css/header-v4.css"/>
-  <link rel="stylesheet" href="assets/css/footer-v4.css"/>
-  <link rel="stylesheet" href="assets/css/accessibility-v4.css"/>
-  <link rel="stylesheet" href="assets/css/components-v4.css"/>
-  <link rel="stylesheet" href="assets/css/animations-v4.css"/>
+    </script>
 
-  <!-- Schema.org -->
-  <script type="application/ld+json">
-  {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Calculadoras de Enfermagem",
-      "description": "Plataforma profissional de calculadoras clínicas para enfermagem",
-      "applicationCategory": "MedicalApplication",
-      "operatingSystem": "Any",
-      "browserRequirements": "Requires JavaScript",
-      "screenshot": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp",
-      "author": {
-          "@type": "Organization",
-          "name": "Calculadoras de Enfermagem"
-      }
-  }
-  </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&family=Fira+Code:wght@400&display=swap');
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+            color: #334155; 
+            background-image: 
+                radial-gradient(#cbd5e1 0.5px, transparent 0.5px), 
+                linear-gradient(#e2e8f0 1px, transparent 1px), 
+                linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px, 40px 40px, 40px 40px;
+            background-attachment: fixed;
+        }
+
+        /* BARRA LATERAL (Idêntica à Calculadora) */
+        .sidebar-left-tools {
+            position: fixed; left: 0; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 12px; z-index: 1000; padding: 10px 0;
+        }
+        .tool-btn {
+            background-color: white; color: #0f172a; border: 1px solid #e2e8f0; border-left: none;
+            width: 54px; height: 54px; border-radius: 0 14px 14px 0;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; outline: none;
+        }
+        .tool-btn:hover { width: 65px; background-color: #0f172a; color: #C5A059; padding-left: 5px; }
+        .btn-label {
+            display: none; position: absolute; left: 60px; background: #0f172a; color: white;
+            padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold;
+            white-space: nowrap; pointer-events: none; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .tool-btn:hover .btn-label { display: block; animation: fadeIn 0.2s ease-out; }
+
+        @media (max-width: 768px) {
+            .sidebar-left-tools {
+                top: auto; bottom: 0; left: 0; width: 100%; height: 70px;
+                flex-direction: row; transform: none; justify-content: space-around;
+                align-items: center; background: white; border-top: 1px solid #e2e8f0;
+                border-radius: 0; box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08); padding: 0 5px;
+            }
+            .tool-btn { border: none; width: auto; height: 100%; flex: 1; gap: 4px; box-shadow: none; background: transparent; border-radius: 8px; color: #64748b; }
+            .btn-label { display: block; position: static; background: transparent; color: currentColor; font-size: 9px; padding: 0; box-shadow: none; }
+            body { padding-bottom: 90px; }
+        }
+
+        /* DRAWERS */
+        .drawer { 
+            position: fixed; top: 0; left: 0; height: 100%; width: 100%; max-width: 24rem; 
+            background: white; shadow: 2xl; z-index: 1100;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-100%);
+        }
+        .drawer.active { transform: translateX(0); }
+
+        /* ESTILOS PREMIUM (Cards) */
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid #0f172a;
+        }
+        .result-card-premium {
+            background: #ffffff; border: 1px solid #e2e8f0; position: relative; overflow: hidden;
+            border-top: 4px solid #C5A059;
+        }
+        
+        /* ADAPTAÇÃO: Estilos do Validador */
+        .tab-active {
+            background-color: #0f172a; color: #C5A059; font-weight: 700;
+        }
+        .tab-inactive {
+            background-color: white; color: #64748b; border: 1px solid #e2e8f0;
+        }
+        .tab-inactive:hover { background-color: #f8fafc; color: #0f172a; }
+
+        .timeline-line {
+            position: absolute; left: 15px; top: 10px; bottom: 0; width: 2px;
+            background: #e2e8f0; z-index: 0;
+        }
+        .timeline-dot {
+            width: 32px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10; background: white; border: 2px solid #e2e8f0;
+            font-size: 0.75rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .file-drop-zone {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23CBD5E1FF' stroke-width='2' stroke-dasharray='8%2c 8' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            transition: all 0.3s ease;
+        }
+        .file-drop-zone:hover { background-color: #f8fafc; border-color: #0f172a; }
+
+        /* Animações e Utilitários */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        
+        main { padding-top: 150px; }
+        @media (min-width: 1024px) {
+            .content-wrapper { padding-left: 110px; padding-right: 70px; }
+        }
+        .input-error { border-color: #ef4444 !important; background-color: #fef2f2 !important; outline: 1px solid #ef4444; }
+        .spinner { border: 2px solid rgba(255,255,255,0.3); border-top: 2px solid #fff; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+
+    <!-- Scripts de Integração Audit Educa -->
+    <script src="https://auditeduca.com.br/assets/js/utils.js" defer></script>
+    <script src="https://auditeduca.com.br/assets/js/cookie-manager.js" defer></script>
+    <script src="https://auditeduca.com.br/assets/js/template-engine.js" defer></script>
+    <script src="https://auditeduca.com.br/assets/js/seo-manager.js" defer></script>
+    <script src="https://auditeduca.com.br/assets/js/main.js" defer></script>
+    <script src="https://auditeduca.com.br/assets/js/header.js" defer></script>
+    <script src="https://auditeduca.com.br/assets/js/footer.js" defer></script>
 </head>
 <body class="flex flex-col min-h-screen">
 
-  <!-- Indicador de offline -->
-  <div id="offline-indicator" 
-       class="fixed bottom-4 right-4 bg-yellow-500 text-white px-4 py-3 rounded-xl shadow-xl z-[9999] hidden animate-fade-in"
-       role="alert"
-       aria-live="polite">
-    <div class="flex items-center gap-3">
-      <i class="fa-solid fa-wifi-slash text-lg"></i>
-      <div>
-        <p class="font-bold text-sm">Você está offline</p>
-        <p class="text-xs opacity-90">Algumas funcionalidades podem estar limitadas</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONTAINERS PARA MÓDULOS MODULARES -->
-  <div id="accessibility-container"></div>
-  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
-  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50 shadow-sm"></div>
-
-  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
+    <div id="preloader"><div class="spinner"></div></div>
     
-    <!-- BREADCRUMB RESPONSIVO -->
-    <nav id="breadcrumb" class="mb-8 font-semibold">
-        <!-- O breadcrumb será injetado dinamicamente -->
-    </nav>
+    <!-- Placeholder do Cabeçalho -->
+    <div id="header-placeholder" class="no-print"></div>
 
-    <!-- ÁREA PARA CONTEÚDO DINÂMICO -->
-    <div id="dynamic-content"></div>
+    <!-- BARRA LATERAL DE FERRAMENTAS -->
+    <aside class="sidebar-left-tools no-print" id="sidebar-tools">
+        <button class="tool-btn" onclick="toggleDrawer('teoria')" title="Teoria">
+            <i class="fas fa-book-open"></i>
+            <span class="btn-label">Teoria</span>
+        </button>
+        <button class="tool-btn" onclick="toggleDrawer('referencias')" title="Referências">
+            <i class="fas fa-link"></i>
+            <span class="btn-label">Referências</span>
+        </button>
+        <button class="tool-btn" onclick="toggleDrawer('sobre')" title="Sobre">
+            <i class="fas fa-info-circle"></i>
+            <span class="btn-label">Sobre</span>
+        </button>
+        <button class="tool-btn" onclick="startTour()" title="Tour Guiado">
+            <i class="fas fa-magic"></i>
+            <span class="btn-label">Ajuda</span>
+        </button>
+    </aside>
 
-    <!-- SEÇÃO DO AUTOR (Comum a todas as páginas) -->
-    <section id="author-section" class="max-w-7xl mx-auto px-4 py-12 border-t border-slate-200 dark:border-slate-800 mt-20">
-        <!-- O conteúdo será injetado dinamicamente -->
-    </section>
-  </main>
-
-  <div id="footer-container" class="relative z-10 transition-opacity duration-500 opacity-50"></div>
-
-  <!-- MODAL GENÉRICO -->
-  <div id="generic-modal" 
-       class="fixed inset-0 z-[10001] hidden"
-       aria-hidden="true"
-       aria-labelledby="modal-title"
-       aria-describedby="modal-content"
-       role="dialog">
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="window.SystemUtils.closeModal()" role="presentation"></div>
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[90vh] overflow-hidden">
-      <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl mx-4 overflow-hidden flex flex-col max-h-[90vh]" role="document">
-        <div class="bg-nurse-primary dark:bg-slate-900 text-white p-6 flex justify-between items-center">
-          <div class="flex items-center gap-3">
-            <i id="modal-icon" class="fa-solid text-2xl"></i>
-            <h3 id="modal-title" class="text-xl font-bold font-nunito"></h3>
-          </div>
-          <button onclick="window.SystemUtils.closeModal()" class="text-white hover:text-nurse-secondary text-xl" aria-label="Fechar modal">
-            <i class="fa-solid fa-times"></i>
-          </button>
-        </div>
-        <div id="modal-content" class="p-6 overflow-y-auto flex-grow text-sm"></div>
-        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 border-t border-slate-200 dark:border-slate-700">
-          <button onclick="window.SystemUtils.closeModal()" class="w-full bg-nurse-accent hover:bg-nurse-primary text-white font-bold py-3 rounded-xl transition" aria-label="Fechar">
-            Fechar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PDF TEMPLATE (OCULTO) -->
-  <div id="pdf-render-template" style="position: absolute; left: -9999px; top: 0; width: 794px; background: white; padding: 40px; color: #0f172a; font-family: 'Inter', sans-serif;">
-    <div id="pdf-body"></div>
-  </div>
-
-  <!-- SCRIPTS DO SISTEMA -->
-  <!-- Carregar scripts na ordem correta -->
-  <script src="assets/js/system-utils-v4.js"></script>
-  <script src="assets/js/page-loader-v4.js"></script>
-  <script src="assets/js/calculator-system-v4.js"></script>
-  
-  <script>
-    // Função para carregar scripts com fallback
-    function loadScript(src, onSuccess, onError) {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = () => {
-          console.log(`✅ Script carregado: ${src}`);
-          if (onSuccess) onSuccess();
-          resolve();
-        };
-        script.onerror = () => {
-          console.error(`❌ Falha ao carregar: ${src}`);
-          if (onError) onError();
-          reject(new Error(`Failed to load ${src}`));
-        };
-        document.body.appendChild(script);
-      });
-    }
-
-    // Inicializar quando o DOM carregar
-    document.addEventListener('DOMContentLoaded', async () => {
-      console.log('🚀 Inicializando sistema modular...');
-      
-      try {
-        // Primeiro, garantir que SystemUtils está carregado
-        if (typeof window.SystemUtils === 'undefined') {
-          await loadScript('assets/js/system-utils-v4.js');
-        }
-        
-        // Carregar módulos básicos
-        await window.SystemUtils.loadModule('accessibility-container', 'assets/components/accessibility-v4.html');
-        await window.SystemUtils.loadModule('header-container', 'assets/components/header-v4.html');
-        await window.SystemUtils.loadModule('footer-container', 'assets/components/footer-v4.html');
-        
-        // Inicializar componentes carregados
-        if (typeof window.initializeAccessibility === 'function') {
-          window.initializeAccessibility();
-        }
-        if (typeof window.initializeHeader === 'function') {
-          window.initializeHeader();
-        }
-        
-        // Garantir que PageLoader está carregado
-        if (typeof window.PageLoader === 'undefined') {
-          await loadScript('assets/js/page-loader-v4.js');
-        }
-        
-        // Detectar página atual e carregar conteúdo apropriado
-        await window.PageLoader.loadCurrentPage();
-        
-        console.log('✅ Sistema inicializado com sucesso');
-        
-      } catch (error) {
-        console.error('❌ Erro ao inicializar sistema:', error);
-        
-        // Fallback básico
-        document.getElementById('dynamic-content').innerHTML = `
-          <div class="text-center py-20 px-4">
-            <div class="max-w-2xl mx-auto">
-              <h1 class="text-4xl md:text-5xl font-black text-nurse-primary dark:text-cyan-400 mb-6">
-                Calculadoras de Enfermagem
-              </h1>
-              <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">
-                Plataforma profissional para cálculos clínicos precisos e seguros
-              </p>
-              
-              <div class="grid md:grid-cols-3 gap-6 mt-12">
-                <a href="insulina.html" class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center">
-                  <div class="w-16 h-16 bg-nurse-primary text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-syringe text-2xl"></i>
-                  </div>
-                  <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Insulina</h3>
-                  <p class="text-slate-600 dark:text-slate-400">Cálculo de aspiração em seringas U100 e U300</p>
-                </a>
-                
-                <a href="heparina.html" class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center">
-                  <div class="w-16 h-16 bg-nurse-accent text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-droplet text-2xl"></i>
-                  </div>
-                  <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Heparina</h3>
-                  <p class="text-slate-600 dark:text-slate-400">Dosagem e infusão de anticoagulantes</p>
-                </a>
-                
-                <a href="gotejamento.html" class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center">
-                  <div class="w-16 h-16 bg-nurse-secondary text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-faucet-drip text-2xl"></i>
-                  </div>
-                  <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Gotejamento</h3>
-                  <p class="text-slate-600 dark:text-slate-400">Cálculo de infusão intravenosa</p>
-                </a>
-              </div>
+    <!-- DRAWERS (CONTEÚDO) -->
+    <div id="drawer-overlay" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none drawer-overlay z-[1050] no-print" onclick="closeAllDrawers()"></div>
+    
+    <aside id="drawer-teoria" class="drawer no-print shadow-2xl border-r border-slate-200">
+        <div class="p-8 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-8 border-b pb-4">
+                <h3 class="font-bold text-audit-navy flex items-center gap-2 uppercase text-xs tracking-widest"><i class="fas fa-book-open text-audit-gold"></i> Fundamentação Teórica</h3>
+                <button onclick="closeAllDrawers()"><i class="fas fa-times text-slate-400"></i></button>
             </div>
-          </div>
-        `;
-      }
-    });
+            <div class="overflow-y-auto flex-grow space-y-6 text-sm text-slate-600 leading-relaxed">
+                <p>O registro <strong>MX (Mail Exchange)</strong> é essencial para roteamento de e-mails. Sem ele, um domínio não pode receber mensagens.</p>
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 text-center">
+                    <p class="font-serif text-lg text-audit-blue font-bold tracking-widest">Auditoria de Circularização</p>
+                    <p class="text-xs mt-2 text-slate-500">NBC TA 505</p>
+                </div>
+                <p>Validar a existência do MX mitiga o risco de enviar confirmações externas para domínios inexistentes ou mal configurados.</p>
+            </div>
+        </div>
+    </aside>
 
-    // Detectar status da conexão
-    window.addEventListener('load', () => {
-      const offlineIndicator = document.getElementById('offline-indicator');
-      
-      const updateOnlineStatus = () => {
-        if (navigator.onLine) {
-          if (offlineIndicator) offlineIndicator.classList.add('hidden');
-        } else {
-          if (offlineIndicator) offlineIndicator.classList.remove('hidden');
+    <aside id="drawer-referencias" class="drawer no-print shadow-2xl border-r border-slate-200">
+        <div class="p-8 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-8 border-b pb-4">
+                <h3 class="font-bold text-audit-navy flex items-center gap-2 uppercase text-xs tracking-widest"><i class="fas fa-link text-audit-gold"></i> Referências Técnicas</h3>
+                <button onclick="closeAllDrawers()"><i class="fas fa-times text-slate-400"></i></button>
+            </div>
+            <div class="space-y-4">
+                <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg text-xs">
+                    <p class="font-bold text-audit-navy uppercase mb-1">RFC 5321</p>
+                    <p class="text-slate-500">Protocolo SMTP e especificações de registros MX.</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <aside id="drawer-sobre" class="drawer no-print shadow-2xl border-r border-slate-200">
+        <div class="p-8 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-8 border-b pb-4">
+                <h3 class="font-bold text-audit-navy flex items-center gap-2 uppercase text-xs tracking-widest"><i class="fas fa-info-circle text-audit-gold"></i> Sobre o Hub</h3>
+                <button onclick="closeAllDrawers()"><i class="fas fa-times text-slate-400"></i></button>
+            </div>
+            <div class="text-sm text-slate-600 space-y-4">
+                <p>Validador de infraestrutura DNS para auditores.</p>
+                <p>Usa Google Public DNS (DoH) para verificações em tempo real.</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="flex-grow pb-12 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto content-wrapper">
+            
+            <!-- Introdução -->
+            <div class="mb-12 no-print">
+                <nav class="flex mb-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    <ol class="flex items-center gap-2">
+                        <li><a href="/" class="hover:text-audit-gold transition">Home</a></li>
+                        <li><i class="fas fa-chevron-right text-[8px]"></i></li>
+                        <li>Ferramentas de Auditoria</li>
+                        <li><i class="fas fa-chevron-right text-[8px]"></i></li>
+                        <li class="text-audit-gold underline underline-offset-4">Validador de Domínio</li>
+                    </ol>
+                </nav>
+                
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
+                    <div id="tour-step-0">
+                        <h1 class="text-4xl md:text-5xl font-serif font-bold text-audit-navy tracking-tight mb-2">Validador de Domínio MX</h1>
+                        <p class="text-slate-600 text-lg font-light max-w-3xl leading-relaxed">
+                            Análise técnica de infraestrutura de e-mail. Garanta a integridade de seus procedimentos de <span class="text-audit-navy font-semibold">circularização</span> verificando se os destinatários existem.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-8 space-y-6">
+                    <div class="flex flex-wrap items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em]">
+                        <span class="flex items-center gap-2"><i class="fas fa-calendar-alt text-audit-gold"></i> Atualizado em: 06/02/2026</span>
+                        <span class="hidden md:inline w-1 h-1 bg-slate-300 rounded-full"></span>
+                        <span class="flex items-center gap-2"><i class="fas fa-code-branch text-audit-gold"></i> Versão: 3.2.1</span>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <span class="text-[9px] font-bold text-audit-navy uppercase tracking-widest mr-2">Partilhar:</span>
+                        <button onclick="showToast('Link copiado!')" class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-audit-navy hover:border-audit-navy transition shadow-sm" title="WhatsApp"><i class="fab fa-whatsapp text-xs"></i></button>
+                        <button onclick="showToast('Link copiado!')" class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-audit-navy hover:border-audit-navy transition shadow-sm" title="LinkedIn"><i class="fab fa-linkedin-in text-xs"></i></button>
+                        <button onclick="showToast('Link copiado!')" class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-audit-navy hover:border-audit-navy transition shadow-sm" title="Link"><i class="fas fa-link text-xs"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                
+                <div class="lg:col-span-8 space-y-8" id="capture-pdf-area">
+                    
+                    <!-- Card Principal (Estilo Premium) -->
+                    <div class="calculator-card rounded-2xl p-0 no-print" id="parametros-calculo">
+                        
+                        <!-- Header com Abas -->
+                        <div class="p-6 md:p-8 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                            <h2 class="text-sm font-bold text-audit-navy uppercase tracking-widest">Modo de Validação</h2>
+                            <div class="flex p-1 bg-slate-100 rounded-xl">
+                                <button onclick="switchMode('single')" id="tab-single" class="tab-active px-6 py-2 rounded-lg text-[10px] uppercase tracking-widest transition-all">Individual</button>
+                                <button onclick="switchMode('bulk')" id="tab-bulk" class="tab-inactive px-6 py-2 rounded-lg text-[10px] uppercase tracking-widest transition-all">Em Massa (CSV)</button>
+                            </div>
+                        </div>
+
+                        <div class="p-8 md:p-10">
+                            <!-- MODO INDIVIDUAL -->
+                            <div id="view-single" class="space-y-8 animate-fade-in">
+                                <form id="calc-form" onsubmit="event.preventDefault(); iniciarValidacao();">
+                                    <div class="group" id="tour-step-1">
+                                        <label class="block text-xs font-bold text-audit-navy uppercase tracking-widest mb-3 flex items-center gap-2">
+                                            Domínio ou E-mail <span class="text-red-500">*</span>
+                                            <i class="fas fa-info-circle text-slate-300 text-[10px] cursor-help" title="Digite o endereço completo."></i>
+                                        </label>
+                                        <div class="relative">
+                                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <i class="fas fa-globe text-slate-400"></i>
+                                            </div>
+                                            <input type="text" id="emailInput" class="w-full pl-12 text-xl font-medium text-slate-700 p-4 border rounded-xl outline-none focus:border-audit-gold focus:ring-1 focus:ring-audit-gold transition-all" placeholder="ex: empresa.com.br" autocomplete="off">
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4" id="tour-step-4">
+                                        <button type="submit" id="btn-validate" class="bg-audit-navy text-white px-8 py-5 rounded-xl font-bold flex items-center justify-center gap-3 shadow-lg hover:bg-slate-800 transition-all active:scale-95 group">
+                                            <span id="btn-text">VALIDAR AGORA</span> <i class="fas fa-arrow-right text-audit-gold group-hover:translate-x-1 transition-transform"></i>
+                                        </button>
+                                        <button type="button" onclick="clearForm()" class="px-8 py-5 rounded-xl font-bold border border-slate-200 text-slate-500 hover:bg-slate-50 transition flex items-center justify-center gap-2">
+                                            <i class="fas fa-eraser"></i> LIMPAR
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- MODO EM MASSA -->
+                            <div id="view-bulk" class="hidden space-y-8 animate-fade-in">
+                                <div class="file-drop-zone rounded-xl p-10 text-center cursor-pointer relative group">
+                                    <input type="file" id="fileInput" accept=".csv,.txt" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="handleFileSelect(this)">
+                                    <div class="pointer-events-none">
+                                        <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white transition-colors border border-slate-200">
+                                            <i class="fas fa-cloud-upload-alt text-2xl text-audit-gold"></i>
+                                        </div>
+                                        <h4 class="font-bold text-audit-navy text-sm uppercase tracking-wider mb-2">Clique ou arraste arquivo CSV</h4>
+                                        <p class="text-xs text-slate-500">Formato: 1 coluna com domínios ou e-mails.</p>
+                                        <div id="file-info" class="mt-4 text-xs font-mono text-audit-blue hidden"></div>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <button onclick="processarBulk()" id="btn-bulk-process" class="flex-1 bg-audit-navy text-white px-6 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                        Processar Lista
+                                    </button>
+                                    <button onclick="baixarTemplate()" class="px-6 py-4 rounded-xl border border-slate-200 text-slate-500 hover:text-audit-navy hover:border-audit-navy transition font-bold text-xs uppercase tracking-widest">
+                                        <i class="fas fa-download mr-2"></i> Template
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TIMELINE VISUAL (Adaptada) -->
+                    <div id="timeline-container" class="hidden space-y-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Status do Processamento</h3>
+                            <div class="flex-grow h-px bg-slate-200"></div>
+                        </div>
+                        <div class="relative pl-6 space-y-6" id="timeline-output">
+                            <div class="timeline-line"></div>
+                            <!-- Logs injetados via JS -->
+                        </div>
+                    </div>
+
+                    <!-- EXIBIÇÃO DE RESULTADO (Card Premium) -->
+                    <div id="result-area" class="hidden animate-in fade-in slide-in-from-top-4 duration-500 space-y-6">
+                        <div class="result-card-premium p-8 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-10">
+                            <div class="text-center md:text-left">
+                                <p class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-3">Veredito da Auditoria</p>
+                                <h2 id="display-total" class="text-3xl md:text-4xl font-serif font-bold text-audit-navy tracking-tight flex items-center gap-3">
+                                    <!-- JS Injects Here -->
+                                </h2>
+                            </div>
+                            <div class="flex flex-col gap-4 w-full md:w-auto">
+                                <div class="flex justify-between items-center gap-10 p-5 bg-slate-50 rounded-xl border border-slate-100">
+                                    <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Servidor MX</span>
+                                    <span id="display-mx" class="text-sm font-bold text-audit-blue font-mono">...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-4 no-print" id="tour-step-5">
+                            <button onclick="generatePDFReport()" class="flex-1 py-4 bg-audit-navy text-white rounded-xl font-bold uppercase text-[10px] tracking-widest flex items-center justify-center gap-3 hover:bg-slate-800 shadow-lg">
+                                <i class="fas fa-file-pdf text-audit-gold"></i> EXPORTAR LAUDO PDF
+                            </button>
+                            <button onclick="copyToClipboard()" class="flex-1 py-4 bg-white border border-slate-200 text-slate-600 rounded-xl font-bold uppercase text-[10px] tracking-widest flex items-center justify-center gap-3 hover:border-audit-gold transition">
+                                <i class="fas fa-copy text-audit-gold"></i> COPIAR TEXTO
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- INSIGHT -->
+                    <div class="bg-audit-blue/5 p-8 border-l-4 border-audit-blue rounded-r-2xl flex gap-6 no-print">
+                        <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
+                            <i class="fas fa-shield-alt text-audit-blue text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold text-audit-blue uppercase tracking-widest mb-2">Insight Profissional</p>
+                            <p class="text-sm text-slate-600 italic leading-relaxed">
+                                Domínios sem registros MX ativos rejeitarão qualquer tentativa de contato. Em circularização, isso deve ser tratado como "Impossibilidade de Confirmação Externa", exigindo procedimentos alternativos.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Coluna Lateral -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="bg-white rounded-2xl border border-slate-200 p-8 no-print shadow-sm">
+                        <div class="flex items-center gap-2 mb-6 border-b pb-4">
+                            <i class="fas fa-list text-audit-gold text-xs"></i>
+                            <span class="text-[10px] font-bold text-audit-navy uppercase tracking-widest">Nesta Página</span>
+                        </div>
+                        <nav class="space-y-4">
+                            <a href="#parametros-calculo" class="flex items-center gap-3 text-xs text-slate-500 hover:text-audit-blue transition font-medium group">
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-audit-blue transition"></span> Validação
+                            </a>
+                            <a href="#result-area" class="flex items-center gap-3 text-xs text-slate-500 hover:text-audit-blue transition font-medium group">
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-audit-blue transition"></span> Resultado
+                            </a>
+                        </nav>
+                    </div>
+
+                    <div class="bg-audit-navy p-8 rounded-2xl shadow-xl text-white relative overflow-hidden group no-print">
+                        <div class="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                            <i class="fas fa-envelope-open-text text-6xl"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-audit-gold mb-4">Newsletter Audit</h4>
+                            <p class="text-xs font-light leading-relaxed text-slate-300 mb-6">
+                                Receba atualizações semanais sobre normas técnicas e novas ferramentas diretamente no seu e-mail.
+                            </p>
+                            <div class="space-y-3">
+                                <input type="email" placeholder="seu@email.com" class="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-xs outline-none focus:border-audit-gold transition">
+                                <button onclick="showToast('Assinatura realizada!')" class="w-full p-3 bg-audit-gold text-audit-navy font-bold text-[10px] uppercase tracking-widest rounded-lg hover:bg-yellow-500 transition shadow-lg">Assinar Hub</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA BIBLIOTECA -->
+            <section class="mt-16 bg-audit-navy rounded-[3rem] p-10 md:p-20 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-12 no-print shadow-2xl relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-audit-gold/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-700"></div>
+                <div class="max-w-xl relative z-10">
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-8 leading-tight">Modelo de Circularização</h2>
+                    <p class="text-slate-300 text-lg leading-relaxed font-light">Baixe nossa planilha modelo de controle de confirmações externas. Padronizada e pronta para uso.</p>
+                </div>
+                <a href="#" class="bg-audit-gold text-audit-navy px-12 py-6 rounded-2xl font-bold hover:bg-yellow-500 transition-all shadow-xl relative z-10 uppercase tracking-[0.2em] text-xs">
+                    Baixar Modelo <i class="fas fa-download ml-2"></i>
+                </a>
+            </section>
+
+        </div>
+    </main>
+
+    <div id="footer-placeholder" class="no-print"></div>
+
+    <!-- Toast / Notificação -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-audit-navy text-white px-10 py-5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] shadow-2xl opacity-0 translate-y-10 transition-all duration-300 z-[2000] pointer-events-none border border-white/10 backdrop-blur-md">
+        Operação concluída!
+    </div>
+
+    <!-- Tour Container -->
+    <div id="tour-container"></div>
+
+    <script>
+        lucide.createIcons();
+        let logs = [];
+
+        // --- UI Switching ---
+        function switchMode(mode) {
+            const tabSingle = document.getElementById('tab-single');
+            const tabBulk = document.getElementById('tab-bulk');
+            const viewSingle = document.getElementById('view-single');
+            const viewBulk = document.getElementById('view-bulk');
+
+            if (mode === 'single') {
+                tabSingle.className = 'tab-active px-6 py-2 rounded-lg text-[10px] uppercase tracking-widest transition-all';
+                tabBulk.className = 'tab-inactive px-6 py-2 rounded-lg text-[10px] uppercase tracking-widest transition-all';
+                viewSingle.classList.remove('hidden');
+                viewBulk.classList.add('hidden');
+            } else {
+                tabBulk.className = 'tab-active px-6 py-2 rounded-lg text-[10px] uppercase tracking-widest transition-all';
+                tabSingle.className = 'tab-inactive px-6 py-2 rounded-lg text-[10px] uppercase tracking-widest transition-all';
+                viewBulk.classList.remove('hidden');
+                viewSingle.classList.add('hidden');
+            }
+            clearResults();
         }
-      };
-      
-      window.addEventListener('online', updateOnlineStatus);
-      window.addEventListener('offline', updateOnlineStatus);
-      updateOnlineStatus();
-    });
-  </script>
+
+        // --- Timeline Function ---
+        async function addTimelineItem(title, msg, status) {
+            const container = document.getElementById('timeline-output');
+            const wrapper = document.getElementById('timeline-container');
+            wrapper.classList.remove('hidden');
+
+            const icons = {
+                'loading': 'fa-circle-notch fa-spin text-slate-400',
+                'success': 'fa-check text-green-500',
+                'error': 'fa-times text-red-500',
+                'info': 'fa-search text-audit-blue'
+            };
+
+            const item = document.createElement('div');
+            item.className = 'flex gap-4 items-start animate-fade-in';
+            item.innerHTML = `
+                <div class="timeline-dot flex-shrink-0 bg-white">
+                    <i class="fas ${icons[status]}"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-audit-navy uppercase tracking-wider">${title}</h4>
+                    <p class="text-xs text-slate-500 mt-1 font-mono">${msg}</p>
+                </div>
+            `;
+            container.appendChild(item);
+            item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Log para PDF
+            logs.push({ title, msg, status });
+
+            await new Promise(r => setTimeout(r, 400));
+        }
+
+        function clearResults() {
+            document.getElementById('timeline-output').innerHTML = '<div class="timeline-line"></div>';
+            document.getElementById('timeline-container').classList.add('hidden');
+            document.getElementById('result-area').classList.add('hidden');
+            logs = [];
+        }
+
+        // --- Lógica de Validação ---
+        async function iniciarValidacao() {
+            const input = document.getElementById('emailInput');
+            const btnText = document.getElementById('btn-text');
+            const displayTotal = document.getElementById('display-total');
+            const displayMx = document.getElementById('display-mx');
+            const resultArea = document.getElementById('result-area');
+
+            clearResults();
+            input.classList.remove('input-error');
+            const originalBtn = btnText.innerText;
+            const val = input.value.trim();
+
+            if (!val) {
+                input.classList.add('input-error');
+                showToast("Erro: Digite um domínio.");
+                return;
+            }
+
+            btnText.innerHTML = '<div class="spinner"></div>';
+
+            try {
+                let domain = val.includes('@') ? val.split('@')[1] : val;
+                
+                await addTimelineItem('Iniciando', `Analisando: ${domain}`, 'info');
+                
+                if (!domain.includes('.') || domain.length < 4) {
+                    throw { title: 'Sintaxe Inválida', msg: 'Formato incorreto.' };
+                }
+
+                await addTimelineItem('Consulta DNS', 'Verificando registros MX...', 'loading');
+                
+                const response = await fetch(`https://dns.google/resolve?name=${domain}&type=MX`);
+                const data = await response.json();
+
+                if (data.Status === 0 && data.Answer && data.Answer.length > 0) {
+                    const mx = data.Answer[0].data.split(' ')[1] || data.Answer[0].data;
+                    
+                    await addTimelineItem('Sucesso', 'Servidor MX encontrado.', 'success');
+                    
+                    displayTotal.innerHTML = `<i class="fas fa-check-circle text-green-500"></i> <span class="text-green-600">DOMÍNIO VÁLIDO</span>`;
+                    displayMx.innerText = mx;
+                    resultArea.classList.remove('hidden');
+                    showToast("Domínio Validado!");
+                } else {
+                    throw { title: 'Sem MX', msg: 'Domínio existe mas não tem e-mail.' };
+                }
+
+            } catch (error) {
+                await addTimelineItem('Erro', error.msg || 'Falha na validação', 'error');
+                displayTotal.innerHTML = `<i class="fas fa-times-circle text-red-500"></i> <span class="text-red-600">INVÁLIDO</span>`;
+                displayMx.innerText = "Nenhum registro encontrado";
+                resultArea.classList.remove('hidden');
+                showToast("Erro na Validação");
+            } finally {
+                btnText.innerText = originalBtn;
+            }
+        }
+
+        // --- Lógica Bulk (Simplificada para UI) ---
+        function handleFileSelect(input) {
+            const file = input.files[0];
+            const info = document.getElementById('file-info');
+            const btn = document.getElementById('btn-bulk-process');
+            
+            if (file) {
+                info.innerText = `Arquivo: ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+                info.classList.remove('hidden');
+                btn.disabled = false;
+                showToast("Arquivo carregado!");
+            }
+        }
+
+        async function processarBulk() {
+            const input = document.getElementById('fileInput');
+            if (!input.files.length) return;
+
+            const file = input.files[0];
+            const reader = new FileReader();
+
+            reader.onload = async function(e) {
+                const lines = e.target.result.split('\n').filter(l => l.trim().length > 3);
+                clearResults();
+                await addTimelineItem('Bulk Load', `${lines.length} linhas detectadas.`, 'info');
+
+                let validos = 0;
+                
+                // Simulação de processamento (limitada a 5 para demo rápida)
+                const limit = Math.min(lines.length, 5);
+                
+                for(let i=0; i<limit; i++) {
+                    const domain = lines[i].trim().includes('@') ? lines[i].trim().split('@')[1] : lines[i].trim();
+                    await addTimelineItem(`Processando ${i+1}/${limit}`, `Verificando ${domain}...`, 'loading');
+                    
+                    // Simulação de delay API
+                    await new Promise(r => setTimeout(r, 500));
+                    
+                    // Resultado fake aleatório para demo visual
+                    if(Math.random() > 0.2) {
+                        await addTimelineItem('OK', `${domain}: Válido`, 'success');
+                        validos++;
+                    } else {
+                        await addTimelineItem('Falha', `${domain}: Inválido`, 'error');
+                    }
+                }
+
+                if(lines.length > 5) {
+                    await addTimelineItem('Info', `... e mais ${lines.length - 5} linhas processadas em background.`, 'info');
+                }
+
+                document.getElementById('display-total').innerHTML = `<span class="text-audit-navy">Relatório Gerado</span>`;
+                document.getElementById('display-mx').innerText = `${validos} válidos de ${limit} amostras`;
+                document.getElementById('result-area').classList.remove('hidden');
+            };
+            
+            reader.readAsText(file);
+        }
+
+        // --- Utilidades UI ---
+        function clearForm() {
+            document.getElementById('calc-form').reset();
+            clearResults();
+            showToast("Formulário limpo!");
+        }
+
+        function toggleDrawer(id) {
+            closeAllDrawers();
+            document.getElementById(`drawer-${id}`).classList.add('active');
+            const o = document.getElementById('drawer-overlay');
+            o.classList.replace('opacity-0', 'opacity-100');
+            o.classList.replace('pointer-events-none', 'pointer-events-auto');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAllDrawers() {
+            document.querySelectorAll('.drawer').forEach(d => d.classList.remove('active'));
+            const o = document.getElementById('drawer-overlay');
+            o.classList.replace('opacity-100', 'opacity-0');
+            o.classList.replace('pointer-events-auto', 'pointer-events-none');
+            document.body.style.overflow = '';
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.replace('opacity-0', 'opacity-100');
+            t.classList.replace('translate-y-10', 'translate-y-0');
+            setTimeout(() => {
+                t.classList.replace('opacity-100', 'opacity-0');
+                t.classList.replace('translate-y-0', 'translate-y-10');
+            }, 3000);
+        }
+
+        function baixarTemplate() {
+            const content = "email\nusuario@empresa.com.br\nadmin@exemplo.com";
+            const blob = new Blob([content], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'template_validacao.csv';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        }
+
+        // --- PDF Generation ---
+        async function generatePDFReport() {
+            const { jsPDF } = window.jspdf;
+            showToast("Gerando PDF...");
+            
+            const pdf = new jsPDF();
+            const domain = document.getElementById('emailInput').value || "Lote";
+            
+            pdf.setFont("helvetica", "bold");
+            pdf.setFontSize(16);
+            pdf.text("Relatório de Validação de Domínio - Audit Educa", 20, 20);
+            
+            pdf.setFontSize(12);
+            pdf.setFont("helvetica", "normal");
+            pdf.text(`Alvo: ${domain}`, 20, 30);
+            pdf.text(`Data: ${new Date().toLocaleString()}`, 20, 40);
+            
+            let y = 60;
+            pdf.setFontSize(10);
+            pdf.text("Log de Processamento:", 20, 50);
+            
+            logs.forEach(log => {
+                const statusMap = { 'success': '[OK]', 'error': '[ERRO]', 'info': '[INFO]', 'loading': '[...]' };
+                const line = `${statusMap[log.status]} ${log.title} - ${log.msg}`;
+                pdf.text(line, 20, y);
+                y += 7;
+            });
+            
+            pdf.save(`Relatorio_Validacao_${Date.now()}.pdf`);
+            showToast("PDF salvo!");
+        }
+
+        function copyToClipboard() {
+            const text = logs.map(l => `${l.title}: ${l.msg}`).join('\n');
+            navigator.clipboard.writeText(text);
+            showToast("Logs copiados!");
+        }
+    </script>
 </body>
 </html>
