@@ -244,139 +244,69 @@
       return isFlex;
     }
 
-    // Função para carregar scripts com fallback
-    function loadScript(src, onSuccess, onError) {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = () => {
-          console.log(`✅ Script carregado: ${src}`);
-          if (onSuccess) onSuccess();
-          resolve();
-        };
-        script.onerror = () => {
-          console.error(`❌ Falha ao carregar: ${src}`);
-          if (onError) onError();
-          reject(new Error(`Failed to load ${src}`));
-        };
-        document.body.appendChild(script);
-      });
+    /// Inicializar quando o DOM carregar
+document.addEventListener('DOMContentLoaded', async () => {
+  console.log('🚀 Inicializando sistema modular...');
+  
+  try {
+    // 1. Verificar se o Tailwind foi carregado
+    if (!checkTailwindLoaded()) {
+      console.warn('⚠️ Tailwind não carregado completamente, usando fallback CSS');
+      document.body.classList.add('tailwind-fallback');
     }
-
-    // Inicializar quando o DOM carregar
-    document.addEventListener('DOMContentLoaded', async () => {
-      console.log('🚀 Inicializando sistema modular...');
-      
-      try {
-        // Verificar se o Tailwind foi carregado
-        if (!checkTailwindLoaded()) {
-          console.warn('⚠️ Tailwind não carregado completamente, usando fallback CSS');
-          // Adicionar classes fallback
-          document.body.classList.add('tailwind-fallback');
-        }
-        
-        // Primeiro, garantir que SystemUtils está carregado
-        if (typeof window.SystemUtils === 'undefined') {
-          await loadScript('assets/js/system-utils-v4.js');
-        }
-        
-        // Carregar módulos básicos
-        await window.SystemUtils.loadModule('accessibility-container', 'assets/components/accessibility-v4.html');
-        await window.SystemUtils.loadModule('header-container', 'assets/components/header-v4.html');
-        await window.SystemUtils.loadModule('footer-container', 'assets/components/footer-v4.html');
-        
-        // Inicializar componentes carregados
-        if (typeof window.initializeAccessibility === 'function') {
-          window.initializeAccessibility();
-        }
-        if (typeof window.initializeHeader === 'function') {
-          window.initializeHeader();
-        }
-        // 1. Carrega a página atual via PageLoader
+    
+    // 2. Garantir que SystemUtils está carregado
+    if (typeof window.SystemUtils === 'undefined') {
+      await loadScript('assets/js/system-utils-v4.js');
+    }
+    
+    // 3. Carregar módulos básicos de interface
+    await Promise.all([
+      window.SystemUtils.loadModule('accessibility-container', 'assets/components/accessibility-v4.html'),
+      window.SystemUtils.loadModule('header-container', 'assets/components/header-v4.html'),
+      window.SystemUtils.loadModule('footer-container', 'assets/components/footer-v4.html')
+    ]);
+    
+    // 4. Inicializar componentes carregados
+    if (typeof window.initializeAccessibility === 'function') window.initializeAccessibility();
+    if (typeof window.initializeHeader === 'function') window.initializeHeader();
+    
+    // 5. Garantir que PageLoader está carregado
+    if (typeof window.PageLoader === 'undefined') {
+      await loadScript('assets/js/page-loader-v4.js');
+    }
+    
+    // 6. Carregar o conteúdo da página atual
     await window.PageLoader.loadCurrentPage();
 
-    // 2. Detecta qual calculadora injetar (ex: via URL ou variável de página)
-    const currentPath = window.location.pathname;
-    if (currentPath.includes('insulina')) {
-        await window.MainContentInjector.inject('insulina');
-    } else if (currentPath.includes('heparina')) {
-        await window.MainContentInjector.inject('heparina');
+    // 7. Injeção de lógica específica da calculadora (via MainContentInjector)
+    if (typeof window.MainContentInjector !== 'undefined') {
+        const currentPath = window.location.pathname;
+        if (currentPath.includes('insulina')) {
+            await window.MainContentInjector.inject('insulina');
+        } else if (currentPath.includes('heparina')) {
+            await window.MainContentInjector.inject('heparina');
+        }
     }
+    
+    console.log('✅ Sistema inicializado com sucesso');
+    
+  } catch (error) {
+    console.error('❌ Erro ao inicializar sistema:', error);
+    
+    // Fallback de emergência para o conteúdo dinâmico
+    const dynamicContent = document.getElementById('dynamic-content');
+    if (dynamicContent) {
+      dynamicContent.innerHTML = `
+        <div class="text-center py-20 px-4">
+          <h1 class="text-3xl font-black text-nurse-primary mb-4">Erro de Carregamento</h1>
+          <p class="text-slate-600 mb-8">Não foi possível carregar a calculadora. Por favor, tente atualizar a página.</p>
+          <button onclick="window.location.reload()" class="bg-nurse-primary text-white px-6 py-2 rounded-xl">Atualizar</button>
+        </div>
+      `;
+    }
+  }
 });
-        // Garantir que PageLoader está carregado
-        if (typeof window.PageLoader === 'undefined') {
-          await loadScript('assets/js/page-loader-v4.js');
-        }
-        
-        // Detectar página atual e carregar conteúdo apropriado
-        await window.PageLoader.loadCurrentPage();
-        
-        console.log('✅ Sistema inicializado com sucesso');
-        
-      } catch (error) {
-        console.error('❌ Erro ao inicializar sistema:', error);
-        
-        // Fallback básico
-        const dynamicContent = document.getElementById('dynamic-content');
-        if (dynamicContent) {
-          dynamicContent.innerHTML = `
-            <div class="text-center py-20 px-4">
-              <div class="max-w-2xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-black text-nurse-primary dark:text-cyan-400 mb-6">
-                  Calculadoras de Enfermagem
-                </h1>
-                <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">
-                  Plataforma profissional para cálculos clínicos precisos e seguros
-                </p>
-                
-                <div class="flex flex-col md:flex-row gap-6 justify-center mt-12">
-                  <a href="insulina.html" class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center min-w-[200px]">
-                    <div class="w-16 h-16 bg-nurse-primary text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <i class="fa-solid fa-syringe text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Insulina</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm">Cálculo de aspiração em seringas</p>
-                  </a>
-                  
-                  <a href="heparina.html" class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center min-w-[200px]">
-                    <div class="w-16 h-16 bg-nurse-accent text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <i class="fa-solid fa-droplet text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Heparina</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm">Dosagem de anticoagulantes</p>
-                  </a>
-                  
-                  <a href="gotejamento.html" class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center min-w-[200px]">
-                    <div class="w-16 h-16 bg-nurse-secondary text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <i class="fa-solid fa-faucet-drip text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Gotejamento</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm">Infusão intravenosa</p>
-                  </a>
-                </div>
-              </div>
-            </div>
-          `;
-        }
-      }
-    });
-
-    // Detectar status da conexão
-    window.addEventListener('load', () => {
-      const offlineIndicator = document.getElementById('offline-indicator');
-      
-      const updateOnlineStatus = () => {
-        if (navigator.onLine) {
-          if (offlineIndicator) offlineIndicator.classList.add('hidden');
-        } else {
-          if (offlineIndicator) offlineIndicator.classList.remove('hidden');
-        }
-      };
-      
-      window.addEventListener('online', updateOnlineStatus);
-      window.addEventListener('offline', updateOnlineStatus);
-      updateOnlineStatus();
-    });
   </script>
 </body>
 </html>
