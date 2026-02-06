@@ -292,7 +292,17 @@
         if (typeof window.initializeHeader === 'function') {
           window.initializeHeader();
         }
-        
+        // 1. Carrega a página atual via PageLoader
+    await window.PageLoader.loadCurrentPage();
+
+    // 2. Detecta qual calculadora injetar (ex: via URL ou variável de página)
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('insulina')) {
+        await window.MainContentInjector.inject('insulina');
+    } else if (currentPath.includes('heparina')) {
+        await window.MainContentInjector.inject('heparina');
+    }
+});
         // Garantir que PageLoader está carregado
         if (typeof window.PageLoader === 'undefined') {
           await loadScript('assets/js/page-loader-v4.js');
