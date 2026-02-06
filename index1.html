@@ -41,9 +41,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   
   <!-- Tailwind CSS - Versão mais recente e estável -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Configuração do Tailwind
+ <script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+  // Verificação de segurança: Só configura se o script carregou com sucesso
+  if (typeof tailwind !== 'undefined') {
     tailwind.config = {
       darkMode: 'class',
       theme: {
@@ -67,7 +69,10 @@
         }
       }
     }
-  </script>
+  } else {
+    console.error("❌ Falha crítica: O script do Tailwind não foi carregado via CDN.");
+  }
+</script>
   
   <!-- Estilos Modulares (CSS Externo) -->
   <link rel="stylesheet" href="assets/css/variables-v4.css"/>
