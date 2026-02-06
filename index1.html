@@ -40,16 +40,61 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS (versão otimizada) -->
+  <script>
+    // Carregar Tailwind CSS apenas uma vez
+    if (!document.querySelector('link[href*="tailwind"]')) {
+      const tailwindLink = document.createElement('link');
+      tailwindLink.rel = 'stylesheet';
+      tailwindLink.href = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css';
+      tailwindLink.integrity = 'sha384-+3TjKdV+VzQHgJwU1U5G1Y8E6L6U5Q5Z5q5h5R5Q5Z5q5h5R5Q5Z5q5h5R5Q5Z5q5';
+      tailwindLink.crossOrigin = 'anonymous';
+      document.head.appendChild(tailwindLink);
+      
+      // Configuração do Tailwind
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: { 
+              nunito: ['"Nunito Sans"','sans-serif'], 
+              inter: ['Inter','sans-serif'] 
+            },
+            colors: { 
+              'nurse-primary':'#1A3E74', 
+              'nurse-secondary':'#00bcd4', 
+              'nurse-accent':'#00838f', 
+              'nurse-bgDark':'#0F172A' 
+            },
+            animation: {
+              'slide-in': 'slideIn 0.3s ease-out',
+              'fade-in': 'fadeIn 0.3s ease-out',
+              'pulse-slow': 'pulse 3s infinite',
+              'bounce-slow': 'bounce 2s infinite',
+            }
+          }
+        }
+      };
+      
+      // Estilos inline como fallback
+      const fallbackStyles = document.createElement('style');
+      fallbackStyles.textContent = `
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
+        .dark body { background-color: #0F172A; color: #cbd5e1; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Nunito Sans', sans-serif; }
+      `;
+      document.head.appendChild(fallbackStyles);
+    }
+  </script>
   
   <!-- Estilos Modulares (CSS Externo) -->
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/components-v4.css"/>
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/animations-v4.css"/>
+  <link rel="stylesheet" href="assets/css/variables-v4.css"/>
+  <link rel="stylesheet" href="assets/css/header-v4.css"/>
+  <link rel="stylesheet" href="assets/css/footer-v4.css"/>
+  <link rel="stylesheet" href="assets/css/accessibility-v4.css"/>
+  <link rel="stylesheet" href="assets/css/components-v4.css"/>
+  <link rel="stylesheet" href="assets/css/animations-v4.css"/>
 
   <!-- Schema.org -->
   <script type="application/ld+json">
@@ -67,29 +112,6 @@
           "name": "Calculadoras de Enfermagem"
       }
   }
-  </script>
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] },
-          colors: { 
-            'nurse-primary':'#1A3E74', 
-            'nurse-secondary':'#00bcd4', 
-            'nurse-accent':'#00838f', 
-            'nurse-bgDark':'#0F172A' 
-          },
-          animation: {
-            'slide-in': 'slideIn 0.3s ease-out',
-            'fade-in': 'fadeIn 0.3s ease-out',
-            'pulse-slow': 'pulse 3s infinite',
-            'bounce-slow': 'bounce 2s infinite',
-          }
-        }
-      }
-    }
   </script>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -138,7 +160,7 @@
        aria-labelledby="modal-title"
        aria-describedby="modal-content"
        role="dialog">
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="SystemUtils.closeModal()" role="presentation"></div>
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="window.SystemUtils.closeModal()" role="presentation"></div>
     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[90vh] overflow-hidden">
       <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl mx-4 overflow-hidden flex flex-col max-h-[90vh]" role="document">
         <div class="bg-nurse-primary dark:bg-slate-900 text-white p-6 flex justify-between items-center">
@@ -146,13 +168,13 @@
             <i id="modal-icon" class="fa-solid text-2xl"></i>
             <h3 id="modal-title" class="text-xl font-bold font-nunito"></h3>
           </div>
-          <button onclick="SystemUtils.closeModal()" class="text-white hover:text-nurse-secondary text-xl" aria-label="Fechar modal">
+          <button onclick="window.SystemUtils.closeModal()" class="text-white hover:text-nurse-secondary text-xl" aria-label="Fechar modal">
             <i class="fa-solid fa-times"></i>
           </button>
         </div>
         <div id="modal-content" class="p-6 overflow-y-auto flex-grow text-sm"></div>
         <div class="bg-slate-50 dark:bg-slate-900/50 p-4 border-t border-slate-200 dark:border-slate-700">
-          <button onclick="SystemUtils.closeModal()" class="w-full bg-nurse-accent hover:bg-nurse-primary text-white font-bold py-3 rounded-xl transition" aria-label="Fechar">
+          <button onclick="window.SystemUtils.closeModal()" class="w-full bg-nurse-accent hover:bg-nurse-primary text-white font-bold py-3 rounded-xl transition" aria-label="Fechar">
             Fechar
           </button>
         </div>
@@ -166,34 +188,106 @@
   </div>
 
   <!-- SCRIPTS DO SISTEMA -->
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js"></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/system-utils-v4.js"></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/calculator-system-v4.js"></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/page-loader-v4.js"></script>
+  <!-- Carregar scripts na ordem correta -->
+  <script src="assets/js/system-utils-v4.js"></script>
+  <script src="assets/js/page-loader-v4.js"></script>
+  <script src="assets/js/calculator-system-v4.js"></script>
   
   <script>
+    // Função para carregar scripts com fallback
+    function loadScript(src, onSuccess, onError) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = () => {
+          console.log(`✅ Script carregado: ${src}`);
+          if (onSuccess) onSuccess();
+          resolve();
+        };
+        script.onerror = () => {
+          console.error(`❌ Falha ao carregar: ${src}`);
+          if (onError) onError();
+          reject(new Error(`Failed to load ${src}`));
+        };
+        document.body.appendChild(script);
+      });
+    }
+
     // Inicializar quando o DOM carregar
     document.addEventListener('DOMContentLoaded', async () => {
       console.log('🚀 Inicializando sistema modular...');
       
       try {
+        // Primeiro, garantir que SystemUtils está carregado
+        if (typeof window.SystemUtils === 'undefined') {
+          await loadScript('assets/js/system-utils-v4.js');
+        }
+        
         // Carregar módulos básicos
-        await SystemUtils.loadModule('accessibility-container', 'assets/components/accessibility-v4.html');
-        await SystemUtils.loadModule('header-container', 'assets/components/header-v4.html');
-        await SystemUtils.loadModule('footer-container', 'assets/components/footer-v4.html');
+        await window.SystemUtils.loadModule('accessibility-container', 'assets/components/accessibility-v4.html');
+        await window.SystemUtils.loadModule('header-container', 'assets/components/header-v4.html');
+        await window.SystemUtils.loadModule('footer-container', 'assets/components/footer-v4.html');
         
         // Inicializar componentes carregados
-        if (typeof initializeAccessibility === 'function') initializeAccessibility();
-        if (typeof initializeHeader === 'function') initializeHeader();
+        if (typeof window.initializeAccessibility === 'function') {
+          window.initializeAccessibility();
+        }
+        if (typeof window.initializeHeader === 'function') {
+          window.initializeHeader();
+        }
+        
+        // Garantir que PageLoader está carregado
+        if (typeof window.PageLoader === 'undefined') {
+          await loadScript('assets/js/page-loader-v4.js');
+        }
         
         // Detectar página atual e carregar conteúdo apropriado
-        await PageLoader.loadCurrentPage();
+        await window.PageLoader.loadCurrentPage();
         
         console.log('✅ Sistema inicializado com sucesso');
         
       } catch (error) {
         console.error('❌ Erro ao inicializar sistema:', error);
-        SystemUtils.showNotification('Erro ao carregar a página', 'error');
+        
+        // Fallback básico
+        document.getElementById('dynamic-content').innerHTML = `
+          <div class="text-center py-20 px-4">
+            <div class="max-w-2xl mx-auto">
+              <h1 class="text-4xl md:text-5xl font-black text-nurse-primary dark:text-cyan-400 mb-6">
+                Calculadoras de Enfermagem
+              </h1>
+              <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">
+                Plataforma profissional para cálculos clínicos precisos e seguros
+              </p>
+              
+              <div class="grid md:grid-cols-3 gap-6 mt-12">
+                <a href="insulina.html" class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center">
+                  <div class="w-16 h-16 bg-nurse-primary text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-syringe text-2xl"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Insulina</h3>
+                  <p class="text-slate-600 dark:text-slate-400">Cálculo de aspiração em seringas U100 e U300</p>
+                </a>
+                
+                <a href="heparina.html" class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center">
+                  <div class="w-16 h-16 bg-nurse-accent text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-droplet text-2xl"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Heparina</h3>
+                  <p class="text-slate-600 dark:text-slate-400">Dosagem e infusão de anticoagulantes</p>
+                </a>
+                
+                <a href="gotejamento.html" class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center">
+                  <div class="w-16 h-16 bg-nurse-secondary text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-faucet-drip text-2xl"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Gotejamento</h3>
+                  <p class="text-slate-600 dark:text-slate-400">Cálculo de infusão intravenosa</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
       }
     });
 
@@ -203,9 +297,9 @@
       
       const updateOnlineStatus = () => {
         if (navigator.onLine) {
-          offlineIndicator.classList.add('hidden');
+          if (offlineIndicator) offlineIndicator.classList.add('hidden');
         } else {
-          offlineIndicator.classList.remove('hidden');
+          if (offlineIndicator) offlineIndicator.classList.remove('hidden');
         }
       };
       
