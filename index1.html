@@ -40,51 +40,32 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   
-  <!-- Tailwind CSS (versão otimizada) -->
+  <!-- Tailwind CSS - Versão mais recente e estável -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Carregar Tailwind CSS apenas uma vez
-    if (!document.querySelector('link[href*="tailwind"]')) {
-      const tailwindLink = document.createElement('link');
-      tailwindLink.rel = 'stylesheet';
-      tailwindLink.href = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css';
-      tailwindLink.integrity = 'sha384-+3TjKdV+VzQHgJwU1U5G1Y8E6L6U5Q5Z5q5h5R5Q5Z5q5h5R5Q5Z5q5h5R5Q5Z5q5';
-      tailwindLink.crossOrigin = 'anonymous';
-      document.head.appendChild(tailwindLink);
-      
-      // Configuração do Tailwind
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: { 
-              nunito: ['"Nunito Sans"','sans-serif'], 
-              inter: ['Inter','sans-serif'] 
-            },
-            colors: { 
-              'nurse-primary':'#1A3E74', 
-              'nurse-secondary':'#00bcd4', 
-              'nurse-accent':'#00838f', 
-              'nurse-bgDark':'#0F172A' 
-            },
-            animation: {
-              'slide-in': 'slideIn 0.3s ease-out',
-              'fade-in': 'fadeIn 0.3s ease-out',
-              'pulse-slow': 'pulse 3s infinite',
-              'bounce-slow': 'bounce 2s infinite',
-            }
+    // Configuração do Tailwind
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { 
+            nunito: ['"Nunito Sans"', 'sans-serif'], 
+            inter: ['Inter', 'sans-serif'] 
+          },
+          colors: { 
+            'nurse-primary': '#1A3E74', 
+            'nurse-secondary': '#00bcd4', 
+            'nurse-accent': '#00838f', 
+            'nurse-bgDark': '#0F172A' 
+          },
+          animation: {
+            'slide-in': 'slideIn 0.3s ease-out',
+            'fade-in': 'fadeIn 0.3s ease-out',
+            'pulse-slow': 'pulse 3s infinite',
+            'bounce-slow': 'bounce 2s infinite',
           }
         }
-      };
-      
-      // Estilos inline como fallback
-      const fallbackStyles = document.createElement('style');
-      fallbackStyles.textContent = `
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
-        .dark body { background-color: #0F172A; color: #cbd5e1; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Nunito Sans', sans-serif; }
-      `;
-      document.head.appendChild(fallbackStyles);
+      }
     }
   </script>
   
@@ -95,6 +76,55 @@
   <link rel="stylesheet" href="assets/css/accessibility-v4.css"/>
   <link rel="stylesheet" href="assets/css/components-v4.css"/>
   <link rel="stylesheet" href="assets/css/animations-v4.css"/>
+
+  <!-- Estilos Base para Fallback -->
+  <style>
+    /* Estilos base para caso o Tailwind falhe */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    
+    .dark body {
+      background-color: #0F172A;
+      color: #cbd5e1;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Nunito Sans', sans-serif;
+      font-weight: 800;
+    }
+    
+    /* Classes utilitárias básicas */
+    .hidden {
+      display: none !important;
+    }
+    
+    .flex {
+      display: flex;
+    }
+    
+    .grid {
+      display: grid;
+    }
+    
+    /* Animações básicas */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .animate-fade-in {
+      animation: fadeIn 0.3s ease-out;
+    }
+  </style>
 
   <!-- Schema.org -->
   <script type="application/ld+json">
@@ -194,6 +224,21 @@
   <script src="assets/js/calculator-system-v4.js"></script>
   
   <script>
+    // Verificar se o Tailwind foi carregado
+    function checkTailwindLoaded() {
+      const tailwindClasses = ['flex', 'grid', 'hidden', 'block'];
+      const testDiv = document.createElement('div');
+      testDiv.className = tailwindClasses.join(' ');
+      document.body.appendChild(testDiv);
+      
+      // Verificar se as classes foram aplicadas
+      const computedStyle = window.getComputedStyle(testDiv);
+      const isFlex = computedStyle.display === 'flex' || computedStyle.display === 'grid';
+      
+      testDiv.remove();
+      return isFlex;
+    }
+
     // Função para carregar scripts com fallback
     function loadScript(src, onSuccess, onError) {
       return new Promise((resolve, reject) => {
@@ -218,6 +263,13 @@
       console.log('🚀 Inicializando sistema modular...');
       
       try {
+        // Verificar se o Tailwind foi carregado
+        if (!checkTailwindLoaded()) {
+          console.warn('⚠️ Tailwind não carregado completamente, usando fallback CSS');
+          // Adicionar classes fallback
+          document.body.classList.add('tailwind-fallback');
+        }
+        
         // Primeiro, garantir que SystemUtils está carregado
         if (typeof window.SystemUtils === 'undefined') {
           await loadScript('assets/js/system-utils-v4.js');
@@ -250,44 +302,47 @@
         console.error('❌ Erro ao inicializar sistema:', error);
         
         // Fallback básico
-        document.getElementById('dynamic-content').innerHTML = `
-          <div class="text-center py-20 px-4">
-            <div class="max-w-2xl mx-auto">
-              <h1 class="text-4xl md:text-5xl font-black text-nurse-primary dark:text-cyan-400 mb-6">
-                Calculadoras de Enfermagem
-              </h1>
-              <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">
-                Plataforma profissional para cálculos clínicos precisos e seguros
-              </p>
-              
-              <div class="grid md:grid-cols-3 gap-6 mt-12">
-                <a href="insulina.html" class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center">
-                  <div class="w-16 h-16 bg-nurse-primary text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-syringe text-2xl"></i>
-                  </div>
-                  <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Insulina</h3>
-                  <p class="text-slate-600 dark:text-slate-400">Cálculo de aspiração em seringas U100 e U300</p>
-                </a>
+        const dynamicContent = document.getElementById('dynamic-content');
+        if (dynamicContent) {
+          dynamicContent.innerHTML = `
+            <div class="text-center py-20 px-4">
+              <div class="max-w-2xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-black text-nurse-primary dark:text-cyan-400 mb-6">
+                  Calculadoras de Enfermagem
+                </h1>
+                <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">
+                  Plataforma profissional para cálculos clínicos precisos e seguros
+                </p>
                 
-                <a href="heparina.html" class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center">
-                  <div class="w-16 h-16 bg-nurse-accent text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-droplet text-2xl"></i>
-                  </div>
-                  <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Heparina</h3>
-                  <p class="text-slate-600 dark:text-slate-400">Dosagem e infusão de anticoagulantes</p>
-                </a>
-                
-                <a href="gotejamento.html" class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center">
-                  <div class="w-16 h-16 bg-nurse-secondary text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-faucet-drip text-2xl"></i>
-                  </div>
-                  <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Gotejamento</h3>
-                  <p class="text-slate-600 dark:text-slate-400">Cálculo de infusão intravenosa</p>
-                </a>
+                <div class="flex flex-col md:flex-row gap-6 justify-center mt-12">
+                  <a href="insulina.html" class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center min-w-[200px]">
+                    <div class="w-16 h-16 bg-nurse-primary text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <i class="fa-solid fa-syringe text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Insulina</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">Cálculo de aspiração em seringas</p>
+                  </a>
+                  
+                  <a href="heparina.html" class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center min-w-[200px]">
+                    <div class="w-16 h-16 bg-nurse-accent text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <i class="fa-solid fa-droplet text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Heparina</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">Dosagem de anticoagulantes</p>
+                  </a>
+                  
+                  <a href="gotejamento.html" class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow text-center min-w-[200px]">
+                    <div class="w-16 h-16 bg-nurse-secondary text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <i class="fa-solid fa-faucet-drip text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-nurse-primary dark:text-cyan-400 mb-2">Gotejamento</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">Infusão intravenosa</p>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        `;
+          `;
+        }
       }
     });
 
