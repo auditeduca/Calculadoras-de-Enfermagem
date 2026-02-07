@@ -953,3 +953,156 @@
 
     @media (min-width: 1024px){.lg\:grid-cols-\[1fr\2c 340px\]{grid-template-columns:1fr 340px}.lg\:text-6xl{font-size:3.75rem;line-height:1}}
   </style></head>
+  <body class="bg-slate-50 dark:bg-nurse-bgDark">
+
+  <div id="header-container" class="opacity-0 transition-opacity duration-500"></div>
+
+  <main class="relative z-10 container mx-auto px-4 pt-28 pb-12">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-[1fr,340px] gap-10">
+      
+      <div class="space-y-10">
+        <header class="text-center md:text-left">
+          <span class="inline-block px-4 py-1.5 bg-cyan-100 dark:bg-cyan-900/30 text-nurse-accent dark:text-cyan-400 rounded-full text-xs font-black uppercase tracking-widest mb-4">
+            Auditoria de Cálculo Clínica
+          </span>
+          <h1 id="calc-titulo" class="text-4xl md:text-6xl mb-4">Cálculo de <span class="text-nurse-secondary">...</span></h1>
+          <p id="calc-desc" class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed italic"></p>
+        </header>
+
+        <div class="card-base p-6 md:p-10 shadow-2xl border-t-8 border-t-nurse-primary relative">
+          <div class="grid md:grid-cols-2 gap-10">
+            
+            <div class="space-y-6">
+              <h3 class="flex items-center gap-3 text-xl font-black">
+                <i class="fa-solid fa-vial-circle-check text-nurse-secondary"></i>
+                Dados da Dose
+              </h3>
+              
+              <div class="group">
+                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                  Concentração do Frasco (UI/ml)
+                </label>
+                <input type="number" id="frasco-ui" class="input-field" placeholder="Ex: 100">
+              </div>
+
+              <div class="group">
+                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                  Dose Prescrita (UI)
+                </label>
+                <input type="number" id="prescricao-ui" class="input-field" placeholder="Quantidade em UI">
+              </div>
+
+              <button onclick="processarCalculoAuditoria()" class="btn-primary-action w-full mt-4 group">
+                <i class="fa-solid fa-shield-check group-hover:scale-110 transition-transform mr-2"></i>
+                Auditar e Calcular
+              </button>
+            </div>
+
+            <div id="result-display" class="bg-slate-50 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border-2 border-dashed border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center min-h-[300px] transition-all">
+              
+              <div id="result-placeholder" class="text-center">
+                <i class="fa-solid fa-calculator text-5xl text-slate-300 mb-4 opacity-30 animate-pulse"></i>
+                <p class="text-slate-400 text-sm font-medium italic">Aguardando parâmetros...</p>
+              </div>
+              
+              <div id="result-content" class="hidden w-full text-center animate-fade-in">
+                <span class="text-[10px] font-black text-nurse-secondary uppercase tracking-[0.2em]">Volume a Aspirar</span>
+                <div class="flex items-baseline justify-center gap-2 my-2">
+                  <span id="val-ml" class="text-7xl font-black text-nurse-primary dark:text-white">0.00</span>
+                  <span class="text-2xl font-bold text-slate-400">ml</span>
+                </div>
+                
+                <div class="mt-8 p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                  <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Memória de Cálculo (Auditoria)</p>
+                  <code id="formula-text" class="text-sm font-mono text-nurse-accent dark:text-cyan-400"></code>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="space-y-6">
+        <div class="sidebar-module">
+          <h3 class="text-white mb-4 flex items-center gap-2 text-lg font-black">
+            <i class="fa-solid fa-circle-exclamation text-yellow-400"></i>
+            Barreira de Erro
+          </h3>
+          <p id="calc-alerta" class="text-xs leading-relaxed opacity-90 font-medium"></p>
+        </div>
+
+        <div class="card-base p-6 bg-slate-100 dark:bg-slate-900/30 border-none">
+          <h4 class="font-black text-[11px] uppercase tracking-widest text-slate-500 mb-4">Referências Técnicas</h4>
+          <ul class="space-y-3 text-xs font-bold text-slate-600 dark:text-slate-400">
+             <li class="flex items-start gap-2"><i class="fa-solid fa-check text-nurse-secondary mt-0.5"></i> Protocolo de Segurança na Prescrição e Administração</li>
+             <li class="flex items-start gap-2"><i class="fa-solid fa-check text-nurse-secondary mt-0.5"></i> COFEN - Guia de Boas Práticas</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script>
+    let dadosConfig = {};
+
+    async function initCalculadora() {
+      // URL ABSOLUTA PARA O JSON
+      const jsonUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/insulina.json';
+      
+      try {
+        const response = await fetch(jsonUrl);
+        if (!response.ok) throw new Error('Erro ao buscar JSON');
+        
+        dadosConfig = await response.json();
+        
+        // Populando a interface dinamicamente
+        document.getElementById('calc-titulo').innerHTML = `Cálculo de <span class="text-nurse-secondary font-black">${dadosConfig.titulo}</span>`;
+        document.getElementById('calc-desc').innerText = dadosConfig.descricao;
+        document.getElementById('frasco-ui').value = dadosConfig.padrao_frasco;
+        document.getElementById('calc-alerta').innerText = dadosConfig.alerta;
+
+        // Carregar módulos (URL absoluta conforme seu padrão)
+        loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/modules/header.html');
+        loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/modules/footer.html');
+
+      } catch (err) {
+        console.error("Falha na injeção de dados:", err);
+      }
+    }
+
+    function processarCalculoAuditoria() {
+      const frasco = parseFloat(document.getElementById('frasco-ui').value);
+      const prescricao = parseFloat(document.getElementById('prescricao-ui').value);
+
+      if (!prescricao || prescricao <= 0) {
+        if(typeof showToast === 'function') showToast("Informe a dose prescrita!", "warning");
+        return;
+      }
+
+      // Regra de Auditoria Clínica: (1ml * Dose) / Frasco
+      const resultadoMl = (1 * prescricao) / frasco;
+
+      // Atualização do Resultado
+      const valDisplay = document.getElementById('val-ml');
+      valDisplay.innerText = resultadoMl.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 3 });
+      
+      // Memória de Cálculo para conferência (Essencial para Auditoria)
+      document.getElementById('formula-text').innerText = `${frasco} ${dadosConfig.unidade_entrada} --- 1ml | ${prescricao} ${dadosConfig.unidade_entrada} --- X ml`;
+
+      // Transição Visual
+      document.getElementById('result-placeholder').classList.add('hidden');
+      document.getElementById('result-content').classList.remove('hidden');
+      
+      const card = document.getElementById('result-display');
+      card.classList.add('animate-pulse');
+      card.style.borderColor = "#00bcd4";
+      setTimeout(() => card.classList.remove('animate-pulse'), 800);
+    }
+
+    // Inicializa ao carregar o DOM
+    document.addEventListener('DOMContentLoaded', initCalculadora);
+  </script>
+</body>

@@ -1,0 +1,29 @@
+{
+  "calculator": {
+    "id": "heparina",
+    "name": "Cálculo de Heparina",
+    "description": "Cálculo de infusão contínua de heparina com ajuste por peso",
+    "icon": "fa-droplet"
+  },
+  "fields": {
+    "calculation": [
+      {
+        "id": "peso_paciente",
+        "type": "number",
+        "label": "Peso do Paciente (kg)",
+        "required": true
+      },
+      {
+        "id": "dose_prescrita",
+        "type": "number",
+        "label": "Dose Prescrita (UI/kg/h)",
+        "required": true
+      }
+    ]
+  },
+  "formula": {
+    "expression": "peso_paciente * dose_prescrita",
+    "unit": "UI/h",
+    "precision": 0
+  }
+}
