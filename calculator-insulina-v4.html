@@ -1,63 +1,394 @@
-<div class="card-base p-0">
-  <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto" id="calculator-tabs">
-    <!-- Tabs serão injetadas dinamicamente -->
-  </nav>
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-  <div class="p-6 md:p-10">
-    <!-- Tab: Calculadora -->
-    <section id="pane-calc" class="tab-pane space-y-10">
-      <div class="space-y-6">
-        <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 border-b pb-2">
-          Identificação do Paciente (Opcional)
-        </h3>
-        <div class="grid md:grid-cols-2 gap-6" id="patient-fields">
-          <!-- Campos de paciente serão injetados -->
+  <!-- SEO -->
+  <title id="page-title">Cálculo de Insulina | Calculadoras de Enfermagem Profissional</title>
+  <meta name="description" content="Calculadora profissional para aspiração de insulina em seringas de 100UI e 300UI. Segurança do paciente com 9 certos e auditoria de cálculo clínica.">
+  
+  <!-- Fontes e Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Estilos Modulares (CSS Externo - URLs Absolutas) -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
+
+  <!-- Bibliotecas JS (Deferidas) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+
+  <!-- Scripts do Sistema (URLs Absolutas) -->
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { nunito: ['"Nunito Sans"','sans-serif'], inter: ['Inter','sans-serif'] },
+          colors: { 'nurse-primary':'#1A3E74', 'nurse-secondary':'#00bcd4', 'nurse-accent':'#00838f', 'nurse-bgDark':'#0F172A' },
+          animation: { 'slide-in': 'slideIn 0.3s ease-out', 'fade-in': 'fadeIn 0.3s ease-out', 'pulse-slow': 'pulse 3s infinite' }
+        }
+      }
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300; }
+      h1 { @apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400; }
+    }
+    @layer components {
+      .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden; }
+      .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+      .input-field { @apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium; }
+      .btn-primary-action { @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed; }
+      .btn-secondary-action { @apply bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider; }
+      .tab-btn { @apply flex-1 px-2 py-3 font-bold text-[10px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider; }
+      .tab-btn.active { @apply border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50 dark:bg-slate-900/30; }
+      .toast-msg { @apply pointer-events-auto bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 font-bold text-sm min-w-[320px] border-l-4 border-nurse-secondary animate-slide-in; }
+      .share-btn { @apply w-10 h-10 rounded-full flex items-center justify-center bg-white/10 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md; }
+    }
+    
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes highlight-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(0, 188, 212, 0.4); } 50% { box-shadow: 0 0 0 10px rgba(0, 188, 212, 0); } }
+    
+    input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    
+    .tooltip-container { position: relative; display: inline-block; }
+    .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; transform: translate(-50%, -10px); }
+    .tooltip-text { visibility: hidden; width: 220px; background-color: #1e293b; color: white; text-align: left; border-radius: 8px; padding: 10px; position: absolute; z-index: 1000; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: all 0.3s; font-size: 12px; font-weight: normal; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); }
+    
+    #reference-modal { backdrop-filter: blur(5px); }
+
+    /* MENU FLUTUANTE LATERAL */
+    .sidebar-left-tools { position: fixed; left: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 40; padding: 10px 0; }
+    .tool-btn { background-color: white; color: #1A3E74; border: 1px solid #e2e8f0; border-left: none; width: 54px; height: 54px; border-radius: 0 14px 14px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; outline: none; }
+    .dark .tool-btn { background-color: #1e293b; color: #cbd5e1; border-color: #334155; box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2); }
+    .tool-btn i { font-size: 18px; transition: transform 0.2s; }
+    .btn-label { display: none; position: absolute; left: 60px; background: #1A3E74; color: white; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; white-space: nowrap; pointer-events: none; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); z-index: 1001; }
+    .dark .btn-label { background: #0f172a; border: 1px solid #334155; }
+    .btn-label::before { content: ''; position: absolute; left: -4px; top: 50%; transform: translateY(-50%); border-width: 4px; border-style: solid; border-color: transparent #1A3E74 transparent transparent; }
+    .dark .btn-label::before { border-color: transparent #0f172a transparent transparent; }
+    .tool-btn:hover { width: 65px; background-color: #1A3E74; color: #ffffff; padding-left: 5px; }
+    .dark .tool-btn:hover { background-color: #00bcd4; color: #0f172a; }
+    .tool-btn:hover i { transform: scale(1.1); }
+    .tool-btn:hover .btn-label { display: block; animation: fadeIn 0.2s ease-out; }
+
+    @media (max-width: 768px) {
+      .sidebar-left-tools { top: auto; bottom: 20px; left: 20px; right: 20px; width: auto; height: 70px; flex-direction: row; transform: none; justify-content: space-around; align-items: center; background: white; border: 1px solid #e2e8f0; border-radius: 20px; box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08); padding: 0 5px; }
+      .dark .sidebar-left-tools { background: #1e293b; border-color: #334155; box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2); }
+      .tool-btn { border: none; width: auto; height: 100%; flex: 1; gap: 4px; box-shadow: none; background: transparent; border-radius: 8px; }
+      .btn-label { display: block; position: static; background: transparent; color: currentColor; font-size: 9px; padding: 0; box-shadow: none; }
+      .btn-label::before { display: none; }
+      .tool-btn:hover, .tool-btn:active { width: auto; background-color: rgba(26, 62, 116, 0.05); color: #1A3E74; padding-left: 0; }
+      body { padding-bottom: 120px; }
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- MENU FLUTUANTE ESQUERDO -->
+  <aside class="sidebar-left-tools" id="sidebar-tools">
+    <button class="tool-btn" onclick="CALCULATOR_SYSTEM.switchTab('sobre')" title="Sobre">
+      <i class="fas fa-book-open"></i><span class="btn-label">Conteúdo</span>
+    </button>
+    <button class="tool-btn" onclick="CALCULATOR_SYSTEM.showTutorial()" title="Ajuda">
+      <i class="fas fa-question-circle"></i><span class="btn-label">Ajuda</span>
+    </button>
+    <button class="tool-btn" onclick="CALCULATOR_SYSTEM.showNANDAModal()" title="NANDA">
+      <i class="fas fa-stethoscope"></i><span class="btn-label">Nanda</span>
+    </button>
+    <button class="tool-btn" onclick="CALCULATOR_SYSTEM.showMedicationChecklist()" title="9 Certos">
+      <i class="fas fa-check-double"></i><span class="btn-label">9 Acertos</span>
+    </button>
+    <button class="tool-btn" onclick="CALCULATOR_SYSTEM.showSafetyGoals()" title="Metas">
+      <i class="fas fa-bullseye"></i><span class="btn-label">Metas</span>
+    </button>
+  </aside>
+
+  <!-- CONTAINERS -->
+  <div id="accessibility-container"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] opacity-0 transition-opacity duration-500 shadow-sm"></div>
+
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full" style="margin-left: 80px;">
+    
+    <!-- BREADCRUMB -->
+    <nav class="mb-8 font-semibold text-sm text-slate-600 dark:text-cyan-300 flex items-center gap-2">
+        <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        <span class="text-nurse-primary dark:text-cyan-400 font-bold">Calculadora de Insulina</span>
+    </nav>
+
+    <!-- HEADER PÁGINA -->
+    <header class="max-w-4xl mb-12">
+      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Segurança Clínica</span>
+      <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Cálculo de Insulina</h1>
+      <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+      <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">Ferramenta profissional para aspiração precisa em seringas de 100UI ou 300UI.</p>
+    </header>
+
+    <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
+      
+      <!-- CALCULADORA -->
+      <article id="calculator-container" class="card-base p-0">
+        <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto">
+          <button onclick="CALCULATOR_SYSTEM.switchTab('calc')" class="tab-btn active" id="btn-tab-calc">Calculadora</button>
+          <button onclick="CALCULATOR_SYSTEM.switchTab('sobre')" class="tab-btn" id="btn-tab-sobre">Sobre</button>
+          <button onclick="CALCULATOR_SYSTEM.switchTab('ajuda')" class="tab-btn" id="btn-tab-ajuda">Instruções</button>
+          <button onclick="CALCULATOR_SYSTEM.switchTab('referencia')" class="tab-btn" id="btn-tab-referencia">Referência</button>
+        </nav>
+
+        <div class="p-6 md:p-10">
+          <!-- ABA CALCULADORA -->
+          <section id="pane-calc" class="tab-pane space-y-10">
+            <div class="space-y-6">
+              <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 border-b pb-2">Identificação (Opcional)</h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div><label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Nome do Paciente</label><input type="text" class="input-field" placeholder="Opcional"></div>
+                <div><label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Data Nascimento</label><input type="date" class="input-field"></div>
+              </div>
+              <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 pt-4 border-b pb-2">Parâmetros</h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Prescrição Médica (UI)</label>
+                  <input id="prescricao_medica" type="number" placeholder="Ex: 15" class="input-field" required>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Concentração (UI/mL)</label>
+                  <select id="concentracao_insulina" class="input-field">
+                    <option value="100">100 UI/mL (U100)</option>
+                    <option value="300">300 UI/mL (U300)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 pt-4">
+              <button onclick="CALCULATOR_SYSTEM.calculate()" class="btn-primary-action flex-1"><i class="fa-solid fa-calculator"></i> Calcular</button>
+              <button onclick="CALCULATOR_SYSTEM.reset()" class="btn-secondary-action">Limpar</button>
+            </div>
+            <div id="results-wrapper" class="hidden pt-8 border-t border-slate-200 dark:border-slate-700">
+              <div class="bg-slate-50 dark:bg-slate-900/40 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-6">
+                <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-4">Volume a Aspirar</p>
+                <div id="res-total" class="text-6xl font-black text-[#1A3E74] dark:text-cyan-400 font-nunito">0,00</div>
+                <p id="res-unit" class="text-lg font-black text-nurse-secondary mt-2 uppercase">mL</p>
+              </div>
+              <div class="flex flex-col gap-4 mb-10">
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="CALCULATOR_SYSTEM.generatePDF()" class="btn-primary-action"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                    <button onclick="CALCULATOR_SYSTEM.copyResult()" class="btn-secondary-action"><i class="fa-solid fa-copy"></i> Copiar</button>
+                </div>
+              </div>
+              <div class="mb-12">
+                <h3 class="text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-4"><i class="fa-solid fa-clipboard-check"></i> Auditoria</h3>
+                <ul id="audit-list" class="space-y-3"></ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- ABA SOBRE -->
+          <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <h2 class="text-2xl font-black mb-4 font-nunito">Sobre o Cálculo</h2>
+            <p>Calculadora para aspiração em seringas de mL quando a prescrição é em UI.</p>
+            <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl font-mono text-xs"><code>Volume (mL) = Prescrição (UI) / Concentração (UI/mL)</code></div>
+          </section>
+
+          <!-- ABA AJUDA -->
+          <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <h2 class="text-2xl font-black mb-4 font-nunito">Como Usar</h2>
+            <ul class="list-disc pl-5"><li>Insira a prescrição.</li><li>Selecione a concentração.</li><li>Clique em calcular.</li></ul>
+          </section>
+
+          <!-- ABA REFERÊNCIA -->
+          <section id="pane-referencia" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <h2 class="text-2xl font-black mb-4 font-nunito">Bibliografia</h2>
+            <p>• Diretrizes SBD 2023</p>
+            <p>• Protocolos COFEN</p>
+          </section>
         </div>
+      </article>
 
-        <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 pt-4 border-b pb-2">
-          Parâmetros de Dosagem
-        </h3>
-        <div id="calculation-fields" class="grid md:grid-cols-2 gap-6">
-          <!-- Campos de cálculo serão injetados -->
+      <!-- SIDEBARS (Módulos Locais) -->
+      <aside class="space-y-6 sticky top-28 self-start">
+         <!-- Os arquivos locais serão injetados aqui -->
+         <div id="sidebar-desafio-clinico"></div>
+         <div id="sidebar-compartilhar"></div>
+         <div id="sidebar-outras-calculadoras"></div>
+         <div id="sidebar-guia-rapido"></div>
+         <div id="sidebar-9-acertos"></div>
+         <div id="sidebar-barreira-erro"></div>
+         <div id="sidebar-referencias-tecnicas"></div>
+      </aside>
+    </div>
+
+    <!-- AUTOR -->
+    <section class="max-w-7xl mx-auto px-4 py-12 border-t border-slate-200 dark:border-slate-800 mt-20">
+        <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 flex flex-col md:flex-row gap-10 items-center border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div class="w-32 md:w-40 shadow-2xl border-4 border-white dark:border-slate-700 rounded-3xl overflow-hidden bg-slate-100">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Autor" class="w-full h-auto block object-cover"/>
+            </div>
+            <div class="text-center md:text-left">
+                <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400 font-nunito">Calculadoras de Enfermagem Profissional</h3>
+                <p class="text-slate-600 dark:text-slate-300 text-lg italic">"Transformando a complexidade técnica em segurança para o paciente."</p>
+            </div>
         </div>
-      </div>
-
-      <div class="grid grid-cols-2 gap-4 pt-4">
-        <button id="btn-calculate" onclick="CALCULATOR_SYSTEM.calculate()" class="btn-primary-action flex-1">
-          <i class="fa-solid fa-calculator"></i> <span>Calcular</span>
-        </button>
-        <button onclick="CALCULATOR_SYSTEM.reset()" class="btn-secondary-action">
-          <i class="fa-solid fa-rotate-left"></i> Limpar
-        </button>
-      </div>
-
-      <div id="results-wrapper" class="hidden pt-8 border-t border-slate-200 dark:border-slate-700">
-        <!-- Resultados serão injetados dinamicamente -->
-      </div>
     </section>
+  </main>
 
-    <!-- Tab: Sobre -->
-    <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
-      <h2 class="text-2xl font-black mb-4 font-nunito">Sobre o Cálculo de Insulina</h2>
-      <div id="sobre-content">
-        <!-- Conteúdo será injetado dinamicamente -->
+  <div id="footer-container" class="opacity-0 transition-opacity duration-500"></div>
+
+  <!-- MODAL -->
+  <div id="reference-modal" class="fixed inset-0 z-[10001] hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="CALCULATOR_SYSTEM.closeModal()"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white dark:bg-slate-800 rounded-2xl shadow-2xl overflow-hidden">
+      <div class="bg-nurse-primary text-white p-6 flex justify-between items-center">
+        <div class="flex items-center gap-3"><i id="modal-icon" class="fa-solid text-2xl"></i><h3 id="modal-title" class="text-xl font-bold"></h3></div>
+        <button onclick="CALCULATOR_SYSTEM.closeModal()" class="text-white hover:text-nurse-secondary"><i class="fa-solid fa-times text-xl"></i></button>
       </div>
-    </section>
-
-    <!-- Tab: Instruções -->
-    <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
-      <h2 class="text-2xl font-black mb-4 font-nunito">Instruções de Uso</h2>
-      <ul id="ajuda-content" class="space-y-3 text-sm">
-        <!-- Instruções serão injetadas dinamicamente -->
-      </ul>
-    </section>
-
-    <!-- Tab: Referência -->
-    <section id="pane-referencia" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
-      <h2 class="text-2xl font-black mb-4 font-nunito">Referências Bibliográficas</h2>
-      <div id="referencia-content" class="space-y-4 text-sm font-medium text-slate-600 dark:text-slate-400">
-        <!-- Referências serão injetadas dinamicamente -->
-      </div>
-    </section>
+      <div id="modal-content" class="p-6 text-sm max-h-[70vh] overflow-y-auto"></div>
+    </div>
   </div>
-</div>
+
+  <script>
+    // Carregador de Módulos (com execução de scripts)
+    async function loadModule(id, url) {
+      const container = document.getElementById(id);
+      if (!container) return;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Status ${res.status}`);
+        container.innerHTML = await res.text();
+        
+        // Re-executa scripts para garantir que sidebars funcionem
+        container.querySelectorAll("script").forEach(oldScript => {
+            const newScript = document.createElement("script");
+            Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+            newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+            oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
+      } catch(e) { console.warn(`Módulo ${id} não carregado.`, e); }
+    }
+
+    // Função de Toast (Notificação)
+    function showToast(msg, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `toast-msg border-l-4 ${type === 'warning' ? 'border-yellow-500 text-yellow-100' : 'border-nurse-secondary'}`;
+        toast.innerHTML = `<i class="fa-solid ${type === 'warning' ? 'fa-triangle-exclamation' : 'fa-check-circle'} text-xl"></i><span>${msg}</span>`;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(20px)';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // Sistema Principal
+    const CALCULATOR_SYSTEM = {
+      // Navegação
+      switchTab: function(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+        document.getElementById('btn-tab-' + tabId).classList.add('active');
+        document.getElementById('pane-' + tabId).classList.remove('hidden');
+      },
+
+      // Cálculo
+      calculate: function() {
+        const prescricao = parseFloat(document.getElementById('prescricao_medica').value);
+        const concentracao = parseFloat(document.getElementById('concentracao_insulina').value);
+
+        if (!prescricao || prescricao <= 0) { showToast("Informe uma prescrição válida!", "warning"); return; }
+
+        const volumeMl = (1 * prescricao) / concentracao;
+        
+        document.getElementById('res-total').innerText = volumeMl.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 3 });
+        document.getElementById('res-unit').innerText = "mL (" + volumeMl.toFixed(3) + " mL)";
+        document.getElementById('results-wrapper').classList.remove('hidden');
+        
+        // Atualiza auditoria
+        document.getElementById('audit-list').innerHTML = `
+            <li class="bg-green-50 p-3 rounded text-sm"><i class="fa-solid fa-check text-green-600 mr-2"></i><strong>Fórmula:</strong> Volume = Prescrição / Concentração</li>
+            <li class="bg-slate-50 p-3 rounded text-sm"><i class="fa-solid fa-calculator text-slate-500 mr-2"></i><strong>Cálculo:</strong> ${prescricao} ÷ ${concentracao} = ${volumeMl.toFixed(4)}...</li>
+        `;
+        showToast("Cálculo realizado com sucesso!", "success");
+      },
+
+      reset: function() {
+        document.getElementById('prescricao_medica').value = '';
+        document.getElementById('results-wrapper').classList.add('hidden');
+      },
+
+      // Funcionalidades Auxiliares (Compatibilidade com Sidebars)
+      notify: function(msg, type) { showToast(msg, type); }, // Conecta o sidebar-9-acertos
+      
+      openModal: function(title, icon, content) {
+         document.getElementById('modal-title').innerText = title;
+         document.getElementById('modal-icon').className = `fa-solid ${icon} text-2xl`;
+         document.getElementById('modal-content').innerHTML = content;
+         document.getElementById('reference-modal').classList.remove('hidden');
+      },
+      closeModal: function() { document.getElementById('reference-modal').classList.add('hidden'); },
+      
+      showTutorial: function() { this.openModal("Tutorial", "fa-question-circle", "<p>Tutorial interativo...</p>"); },
+      showNANDAModal: function() { this.openModal("NANDA-I", "fa-stethoscope", "<p>Diagnósticos...</p>"); },
+      showMedicationChecklist: function() { this.openModal("9 Certos", "fa-check-double", "<ul><li>Paciente Certo</li><li>Medicamento Certo</li>...</ul>"); },
+      showSafetyGoals: function() { this.openModal("Metas", "fa-bullseye", "<p>Metas de Segurança...</p>"); },
+      
+      share: function(platform) { showToast("Compartilhando no " + platform); },
+      copyLink: function() { navigator.clipboard.writeText(window.location.href); showToast("Link copiado!"); },
+      copyResult: function() { navigator.clipboard.writeText(document.getElementById('res-total').innerText); showToast("Resultado copiado!"); },
+      generatePDF: function() { showToast("Gerando PDF..."); }
+    };
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Carregar JSON Config
+        try {
+            const res = await fetch('insulina.json');
+            if (res.ok) {
+                const config = await res.json();
+                document.getElementById('header-title').innerHTML = `Cálculo de <span class="text-nurse-secondary">${config.titulo}</span>`;
+                // Sidebar Alerta (dinâmico)
+                setTimeout(() => {
+                    const alerta = document.getElementById('calc-alerta');
+                    if(alerta) alerta.innerText = config.alerta;
+                }, 1000);
+            }
+        } catch(e) {}
+
+        // 1. Carregar Globais (Nuvem)
+        await loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html');
+        await loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html');
+        await loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html');
+
+        // 2. Carregar Sidebars (Local)
+        await loadModule('sidebar-9-acertos', 'sidebar-9-acertos.html');
+        await loadModule('sidebar-barreira-erro', 'sidebar-barreira-erro.html');
+        await loadModule('sidebar-compartilhar', 'sidebar-compartilhar.html');
+        await loadModule('sidebar-desafio-clinico', 'sidebar-desafio-clinico.html');
+        await loadModule('sidebar-guia-rapido', 'sidebar-guia-rapido.html');
+        await loadModule('sidebar-outras-calculadoras', 'sidebar-outras-calculadoras.html');
+        await loadModule('sidebar-referencias-tecnicas', 'sidebar-referencias-tecnicas.html');
+
+        // Fade In
+        document.getElementById('header-container').style.opacity = '1';
+        document.getElementById('footer-container').style.opacity = '1';
+    });
+  </script>
+</body>
+</html>

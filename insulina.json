@@ -1,0 +1,7 @@
+{
+  "titulo": "Insulina",
+  "descricao": "Ferramenta profissional para cálculo de aspiração de insulina em seringas, com foco na segurança do paciente e dupla checagem.",
+  "padrao_frasco": 100,
+  "unidade_entrada": "UI",
+  "alerta": "⚠️ Atenção Crítica: Verifique sempre se a seringa utilizada é graduada em UI (unidades) ou mL (mililitros) antes de administrar."
+}
