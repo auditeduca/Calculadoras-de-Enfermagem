@@ -1,0 +1,63 @@
+{
+  "seo": {
+    "title": "Calculadora de IMC Profissional - Enfermagem",
+    "description": "Ferramenta para cálculo do Índice de Massa Corporal com classificação da OMS."
+  },
+  "breadcrumb": [
+    { "label": "Home", "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/" },
+    { "label": "Calculadoras", "url": "#" },
+    { "label": "IMC", "url": "" }
+  ],
+  "header": {
+    "categoria": "Avaliação Nutricional",
+    "titulo": "Cálculo de IMC",
+    "descricao": "O Índice de Massa Corporal (IMC) é o padrão internacional para avaliar o grau de sobrepeso e obesidade."
+  },
+  "abas": [
+    { "id": "calc", "label": "Calculadora", "icon": "fa-calculator" },
+    { "id": "sobre", "label": "Sobre o IMC", "icon": "fa-info-circle" },
+    { "id": "ajuda", "label": "Como usar", "icon": "fa-question-circle" }
+  ],
+  "formulario": {
+    "secoes": [
+      {
+        "titulo": "Dados do Paciente",
+        "campos": [
+          {
+            "id": "peso_kg",
+            "label": "Peso atual (kg)",
+            "type": "number",
+            "placeholder": "Ex: 70.5",
+            "required": true
+          },
+          {
+            "id": "altura_m",
+            "label": "Altura (metros)",
+            "type": "number",
+            "placeholder": "Ex: 1.75",
+            "required": true
+          }
+        ]
+      }
+    ],
+    "botao_texto": "Calcular IMC",
+    "limpar_texto": "Limpar Dados"
+  },
+  "calculo": {
+    "alertas": [
+      {
+        "condicao": "resultado > 30",
+        "mensagem": "Atenção: Resultado indica Obesidade. Recomenda-se avaliação clínica detalhada.",
+        "tipo": "warning"
+      }
+    ]
+  },
+  "sidebars": [
+    "sidebar-compartilhar",
+    "sidebar-simulado-enfermagem",
+    "sidebar-outras-calculadoras"
+  ],
+  "acessibilidade": {
+    "vlibras": true
+  }
+}

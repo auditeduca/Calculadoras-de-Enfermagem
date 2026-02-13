@@ -6,6 +6,11 @@
     "versao": "4.0",
     "ultima_atualizacao": "2025-02-13"
   },
+  "acessibilidade": {
+    "vlibras": true,
+    "alto_contraste": false,
+    "leitor_tela": true
+  },
   "seo": {
     "title": "Cálculo de Insulina | Calculadoras de Enfermagem Profissional",
     "description": "Calculadora profissional para aspiração de insulina em seringas de 100UI e 300UI. Segurança do paciente com 9 certos e auditoria de cálculo clínica."

@@ -67,7 +67,7 @@
   </script>
 
   <!-- Estilos Customizados -->
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/styles.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/style.css"/>
 </head>
 <body class="flex flex-col min-h-screen custom-init">
 
@@ -158,51 +158,53 @@
   <div id="libras-container"></div>
 
   <!-- INICIALIZAÇÃO -->
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      console.log('🚀 Iniciando calculadora IMC...');
-      
-      // 1. Substituir engine padrão pelo customizado
-      const originalInit = CALCULATOR_SYSTEM.init;
-      CALCULATOR_SYSTEM.init = async function(configUrl) {
-        this.engine = new IMCCalculatorEngine(configUrl);
-        await this.engine.init();
-      };
-      
-      // 2. Inicializar com config específico
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    console.log('🚀 Iniciando calculadora IMC...');
+    
+    // 1. Recupera a baseUrl perdida
+    const baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
+    
+    // 2. Redefine o init para usar o motor de IMC
+    CALCULATOR_SYSTEM.init = async function(configUrl) {
+      this.engine = new IMCCalculatorEngine(configUrl);
+      await this.engine.init();
+    };
+    
+    try {
+      // 3. Inicializa com o JSON específico (mesma pasta do index)
       await CALCULATOR_SYSTEM.init('exemplo-imc-config.json');
       
-      // 3. Carrega componentes globais
-      await loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html');
-      await loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html');
-      await loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html');
+      // 4. Carrega componentes globais via baseUrl (Evita 404)
+      await loadModule('header-container', `${baseUrl}assets/components/header-v4.html`);
+      await loadModule('footer-container', `${baseUrl}assets/components/footer-v4.html`);
+      await loadModule('accessibility-container', `${baseUrl}assets/components/accessibility-v4.html`);
       
-      // 4. Carrega componentes locais modulares
+      // 5. Carrega componentes de estrutura
       await loadModule('author-container', `${baseUrl}components/author-section.html`);
-      await loadModule('modal-container', `${baseUrl}components/modal-generic.html`);  
-    
-      // 5. Carrega VLibras se habilitado
-      if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
-        await loadModule('libras-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/widget-libras.html');
-        console.log('✓ Widget VLibras habilitado');
+      await loadModule('modal-container', `${baseUrl}components/modal-generic.html`);
+      
+      // 6. Carrega Sidebars com IDs corrigidos
+      if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
+        for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
+          const containerId = sidebar.startsWith('sidebar-') ? sidebar : `sidebar-${sidebar}`;
+          await loadModule(containerId, `${baseUrl}sidebars/${sidebar}.html`);
+        }
       }
       
-      // 6. Carrega sidebars baseado na configuração
-     if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
-     for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
-     const id = sidebar.includes('sidebar-') ? sidebar : `sidebar-${sidebar}`;
-     await loadModule(id, `${baseUrl}sidebars/${sidebar}.html`);
-    }
-  }
-      
-      // 7. Fade in dos componentes
+      // 7. Ativa visibilidade
       setTimeout(() => {
-        document.getElementById('header-container').style.opacity = '1';
-        document.getElementById('footer-container').style.opacity = '1';
-      }, 100);
-      
+        const header = document.getElementById('header-container');
+        const footer = document.getElementById('footer-container');
+        if(header) header.style.opacity = '1';
+        if(footer) footer.style.opacity = '1';
+      }, 150);
+
       console.log('✓ Calculadora IMC carregada com sucesso!');
-    });
-  </script>
+    } catch (err) {
+      console.error('❌ Erro Crítico:', err);
+    }
+  });
+</script>
 </body>
 </html>
