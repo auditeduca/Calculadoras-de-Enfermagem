@@ -6,7 +6,7 @@
   "breadcrumb": [
     { "label": "Home", "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/" },
     { "label": "Calculadoras", "url": "#" },
-    { "label": "IMC", "url": "" }
+    { "label": "IMC", "url"calculadoras/imc/exemplo-imc-config.json" }
   ],
   "header": {
     "categoria": "Avaliação Nutricional",
