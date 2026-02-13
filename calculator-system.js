@@ -1,13 +1,14 @@
 /**
  * CALCULATOR SYSTEM - Sistema Principal
- * Gerencia navegação, modais e funções auxiliares
+ * Gerencia navegação, modais, notificações e funções auxiliares.
+ * Versão: 4.1 (Modular & Anti-Conflito)
  */
 
 const CALCULATOR_SYSTEM = {
   engine: null,
 
   /**
-   * Inicializa o sistema
+   * Inicializa o sistema com um motor baseado em JSON
    */
   async init(configUrl) {
     this.engine = new CalculatorEngine(configUrl);
@@ -15,7 +16,7 @@ const CALCULATOR_SYSTEM = {
   },
 
   /**
-   * Navegação entre abas
+   * Navegação entre abas (Calculadora, Sobre, Ajuda, etc.)
    */
   switchTab(tabId) {
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -29,7 +30,7 @@ const CALCULATOR_SYSTEM = {
   },
 
   /**
-   * Executa cálculo
+   * Dispara o cálculo no motor atual
    */
   calculate() {
     if (this.engine) {
@@ -38,7 +39,7 @@ const CALCULATOR_SYSTEM = {
   },
 
   /**
-   * Reseta formulário
+   * Reseta o formulário no motor atual
    */
   reset() {
     if (this.engine) {
@@ -47,7 +48,7 @@ const CALCULATOR_SYSTEM = {
   },
 
   /**
-   * Exibe modal genérico baseado em configuração
+   * Exibe modal genérico baseado na configuração JSON
    */
   showModal(modalId) {
     const modalConfig = this.engine?.getModalConfig(modalId);
@@ -60,24 +61,26 @@ const CALCULATOR_SYSTEM = {
   },
 
   /**
-   * Abre modal com conteúdo customizado
+   * Abre a estrutura física do modal com conteúdo dinâmico
    */
   openModal(titulo, icone, conteudo) {
     const modal = document.getElementById('reference-modal');
     if (!modal) return;
     
-    document.getElementById('modal-title').textContent = titulo;
-    document.getElementById('modal-icon').className = `fa-solid ${icone} text-2xl`;
-    document.getElementById('modal-content').innerHTML = conteudo;
+    const titleEl = document.getElementById('modal-title');
+    const iconEl = document.getElementById('modal-icon');
+    const contentEl = document.getElementById('modal-content');
+
+    if (titleEl) titleEl.textContent = titulo;
+    if (iconEl) iconEl.className = `fa-solid ${icone} text-2xl`;
+    if (contentEl) contentEl.innerHTML = conteudo;
     
     modal.classList.remove('hidden');
-    
-    // Previne scroll do body
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'; // Previne scroll
   },
 
   /**
-   * Fecha modal
+   * Fecha o modal ativo
    */
   closeModal() {
     const modal = document.getElementById('reference-modal');
@@ -88,26 +91,15 @@ const CALCULATOR_SYSTEM = {
   },
 
   /**
-   * Atalhos para modais específicos (retrocompatibilidade)
+   * Atalhos de retrocompatibilidade para Sidebars
    */
-  showTutorial() {
-    this.showModal('tutorial');
-  },
-
-  showNANDAModal() {
-    this.showModal('nanda');
-  },
-
-  showMedicationChecklist() {
-    this.showModal('nove_certos');
-  },
-
-  showSafetyGoals() {
-    this.showModal('metas_seguranca');
-  },
+  showTutorial() { this.showModal('tutorial'); },
+  showNANDAModal() { this.showModal('nanda'); },
+  showMedicationChecklist() { this.showModal('nove_certos'); },
+  showSafetyGoals() { this.showModal('metas_seguranca'); },
 
   /**
-   * Compartilhamento
+   * Sistema de Compartilhamento Social
    */
   share(platform) {
     const url = encodeURIComponent(window.location.href);
@@ -123,56 +115,48 @@ const CALCULATOR_SYSTEM = {
     
     if (urls[platform]) {
       window.open(urls[platform], '_blank', 'width=600,height=400');
-      showToast(`Compartilhando no ${platform.charAt(0).toUpperCase() + platform.slice(1)}!`);
+      this.notify(`Compartilhando no ${platform.charAt(0).toUpperCase() + platform.slice(1)}!`);
     }
   },
 
-  /**
-   * Copia link da página
-   */
   copyLink() {
     navigator.clipboard.writeText(window.location.href)
-      .then(() => showToast('Link copiado para área de transferência!'))
-      .catch(() => showToast('Erro ao copiar link', 'warning'));
+      .then(() => this.notify('Link copiado para área de transferência!'))
+      .catch(() => this.notify('Erro ao copiar link', 'warning'));
   },
 
-  /**
-   * Copia resultado do cálculo
-   */
   copyResult() {
     const resultText = document.getElementById('res-total')?.innerText;
     const resultUnit = document.getElementById('res-unit')?.innerText;
     
     if (!resultText) {
-      showToast('Realize um cálculo primeiro!', 'warning');
+      this.notify('Realize um cálculo primeiro!', 'warning');
       return;
     }
     
     const fullText = `${resultText} ${resultUnit}`;
     navigator.clipboard.writeText(fullText)
-      .then(() => showToast('Resultado copiado!'))
-      .catch(() => showToast('Erro ao copiar resultado', 'warning'));
+      .then(() => this.notify('Resultado copiado!'))
+      .catch(() => this.notify('Erro ao copiar resultado', 'warning'));
   },
 
   /**
-   * Gera PDF do resultado
+   * Geração de PDF (Requer jsPDF)
    */
   async generatePDF() {
-    if (!this.engine || !this.engine.getResultData()) {
-      showToast('Realize um cálculo primeiro!', 'warning');
+    if (!this.engine || !this.engine.resultData) {
+      this.notify('Realize um cálculo primeiro!', 'warning');
       return;
     }
     
-    showToast('Gerando PDF...', 'info');
+    this.notify('Gerando PDF...', 'info');
     
     try {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      
-      const data = this.engine.getResultData();
+      const data = this.engine.resultData;
       const config = this.engine.config;
       
-      // Header
       doc.setFontSize(18);
       doc.setTextColor(26, 62, 116);
       doc.text(config.header.titulo, 20, 20);
@@ -180,97 +164,45 @@ const CALCULATOR_SYSTEM = {
       doc.setFontSize(10);
       doc.setTextColor(100, 100, 100);
       doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 20, 30);
-      
-      // Linha divisória
-      doc.setDrawColor(26, 62, 116);
       doc.line(20, 35, 190, 35);
       
-      // Dados do Cálculo
       doc.setFontSize(14);
       doc.setTextColor(0, 0, 0);
-      doc.text('Dados do Cálculo', 20, 45);
-      
-      doc.setFontSize(11);
-      doc.text(`Prescrição Médica: ${data.prescricao} UI`, 20, 55);
-      doc.text(`Concentração: ${data.concentracao} UI/mL`, 20, 62);
-      
-      // Resultado
-      doc.setFontSize(14);
-      doc.setTextColor(26, 62, 116);
-      doc.text('Resultado', 20, 75);
+      doc.text('Resultado do Cálculo', 20, 45);
       
       doc.setFontSize(16);
       doc.setTextColor(0, 188, 212);
-      doc.text(`Volume a Aspirar: ${data.volumeMl.toFixed(3)} mL`, 20, 85);
+      // Lógica genérica de exibição no PDF baseada no resultado
+      const valorFormatado = typeof data === 'object' ? JSON.stringify(data) : data;
+      doc.text(`Valor: ${valorFormatado}`, 20, 60);
       
-      // Fórmula
-      doc.setFontSize(12);
-      doc.setTextColor(0, 0, 0);
-      doc.text('Fórmula Utilizada:', 20, 100);
-      doc.setFontSize(10);
-      doc.text(config.calculo.formula, 20, 107);
-      
-      // Cálculo detalhado
-      doc.text('Cálculo:', 20, 117);
-      doc.text(`${data.prescricao} ÷ ${data.concentracao} = ${data.volumeMl.toFixed(4)} mL`, 20, 124);
-      
-      // Aviso de segurança
-      doc.setFontSize(9);
-      doc.setTextColor(150, 0, 0);
-      doc.text('ATENÇÃO: Sempre verifique os 9 certos da medicação antes de administrar.', 20, 140);
-      doc.text('Este documento é apenas uma ferramenta auxiliar e não substitui o julgamento clínico.', 20, 147);
-      
-      // Rodapé
       doc.setFontSize(8);
-      doc.setTextColor(100, 100, 100);
-      doc.text('Calculadoras de Enfermagem Profissional', 20, 280);
       doc.text('https://auditeduca.github.io/Calculadoras-de-Enfermagem/', 20, 285);
       
-      // Salva o PDF
-      doc.save(`calculo-insulina-${new Date().getTime()}.pdf`);
-      showToast('PDF gerado com sucesso!');
-      
+      doc.save(`resultado-${new Date().getTime()}.pdf`);
+      this.notify('PDF gerado com sucesso!');
     } catch (error) {
-      console.error('Erro ao gerar PDF:', error);
-      showToast('Erro ao gerar PDF. Verifique se a biblioteca está carregada.', 'warning');
+      console.error('Erro PDF:', error);
+      this.notify('Erro ao gerar PDF. Verifique as bibliotecas.', 'warning');
     }
   },
 
-  /**
-   * Função de notificação (compatibilidade com sidebars)
-   */
   notify(msg, type = 'info') {
     showToast(msg, type);
   }
 };
 
 /**
- * TOAST SYSTEM - Sistema de Notificações
+ * TOAST SYSTEM - Notificações Visuais
  */
 function showToast(msg, type = 'info') {
+  const icons = { success: 'fa-check-circle', warning: 'fa-triangle-exclamation', error: 'fa-circle-xmark', info: 'fa-info-circle' };
+  const colors = { success: 'border-green-500', warning: 'border-yellow-500', error: 'border-red-500', info: 'border-nurse-secondary' };
+  
   const toast = document.createElement('div');
-  
-  const icons = {
-    success: 'fa-check-circle',
-    warning: 'fa-triangle-exclamation',
-    error: 'fa-circle-xmark',
-    info: 'fa-info-circle'
-  };
-  
-  const colors = {
-    success: 'border-green-500',
-    warning: 'border-yellow-500',
-    error: 'border-red-500',
-    info: 'border-nurse-secondary'
-  };
-  
   toast.className = `toast-msg ${colors[type] || colors.info}`;
-  toast.innerHTML = `
-    <i class="fa-solid ${icons[type] || icons.info} text-xl"></i>
-    <span>${msg}</span>
-  `;
+  toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-xl"></i><span>${msg}</span>`;
   
-  // Container de toasts (cria se não existir)
   let container = document.getElementById('toast-container');
   if (!container) {
     container = document.createElement('div');
@@ -280,8 +212,6 @@ function showToast(msg, type = 'info') {
   }
   
   container.appendChild(toast);
-  
-  // Remove após 3 segundos
   setTimeout(() => {
     toast.style.opacity = '0';
     toast.style.transform = 'translateX(100%)';
@@ -290,86 +220,78 @@ function showToast(msg, type = 'info') {
 }
 
 /**
- * MODULE LOADER - Carregador de Módulos
+ * MODULE LOADER - Carregador assíncrono de HTML
  */
 async function loadModule(id, url) {
   const container = document.getElementById(id);
-  if (!container) {
-    console.warn(`Container ${id} não encontrado`);
-    return;
-  }
+  if (!container) return;
   
   try {
     const response = await fetch(url);
-    if (!response.ok) throw new Error(`Status ${response.status}`);
-    
+    if (!response.ok) throw new Error(`Erro ${response.status}`);
     const html = await response.text();
     container.innerHTML = html;
     
-    // Re-executa scripts inline
+    // Executa scripts internos do módulo carregado
     container.querySelectorAll('script').forEach(oldScript => {
       const newScript = document.createElement('script');
-      Array.from(oldScript.attributes).forEach(attr => 
-        newScript.setAttribute(attr.name, attr.value)
-      );
+      Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
       newScript.appendChild(document.createTextNode(oldScript.innerHTML));
       oldScript.parentNode.replaceChild(newScript, oldScript);
     });
-    
   } catch (error) {
-    console.warn(`Módulo ${id} não carregado:`, error);
+    console.warn(`Módulo [${id}] não carregado:`, error);
   }
 }
 
 /**
- * KEYBOARD SHORTCUTS
+ * ATALHOS DE TECLADO
  */
 document.addEventListener('keydown', (e) => {
-  // ESC fecha modal
-  if (e.key === 'Escape') {
-    CALCULATOR_SYSTEM.closeModal();
-  }
-  
-  // Ctrl+Enter calcula
-  if (e.ctrlKey && e.key === 'Enter') {
-    CALCULATOR_SYSTEM.calculate();
-  }
+  if (e.key === 'Escape') CALCULATOR_SYSTEM.closeModal();
+  if (e.ctrlKey && e.key === 'Enter') CALCULATOR_SYSTEM.calculate();
 });
 
 /**
- /**
- * INICIALIZAÇÃO DO SISTEMA
- * Versão com trava de segurança para calculadoras customizadas
+ * INICIALIZAÇÃO AUTOMÁTICA (ORQUESTRAÇÃO)
  */
 document.addEventListener('DOMContentLoaded', async () => {
-  // TRAVA: Se o body tiver a classe 'custom-init', este script para aqui.
+  // TRAVA DE SEGURANÇA: Se a página tiver 'custom-init', este script para aqui.
   if (document.body.classList.contains('custom-init')) {
-    console.log('⚠️ Sistema: Inicialização automática suspensa para evitar conflitos.');
+    console.log('⚠️ Sistema: Inicialização automática suspensa (Página Customizada).');
     return;
   }
 
   console.log('🚀 Iniciando sistema automático...');
+  const baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
   
   try {
-    const baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
-    
-    // Inicializa motor padrão
+    // 1. Motor padrão (Insulina)
     await CALCULATOR_SYSTEM.init('insulina-config.json');
     
-    // Carrega componentes globais com caminhos absolutos
+    // 2. Componentes Globais
     await loadModule('header-container', `${baseUrl}assets/components/header-v4.html`);
     await loadModule('footer-container', `${baseUrl}assets/components/footer-v4.html`);
     await loadModule('accessibility-container', `${baseUrl}assets/components/accessibility-v4.html`);
     
-    // Carrega componentes locais (usando a pasta components)
+    // 3. Componentes Estruturais
     await loadModule('author-container', `components/author-section.html`);
     await loadModule('modal-container', `components/modal-generic.html`);
     
+    // 4. VLibras
+    if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
+      await loadModule('libras-container', `components/widget-libras.html`);
+    }
+
+    // 5. Sidebars
     if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
       for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
-        await loadModule(`sidebar-${sidebar.replace('sidebar-', '')}`, `sidebars/${sidebar}.html`);
+        const id = sidebar.startsWith('sidebar-') ? sidebar : `sidebar-${sidebar.replace('sidebar-', '')}`;
+        await loadModule(id, `sidebars/${sidebar}.html`);
       }
     }
+    
+    console.log('✓ Sistema carregado.');
   } catch (error) {
     console.error('Erro na carga automática:', error);
   }
