@@ -67,7 +67,7 @@
   </script>
 
   <!-- Estilos Customizados -->
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/styles.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/style.css"/>
 </head>
 <body class="flex flex-col min-h-screen custom-init">
 
@@ -173,7 +173,7 @@
     
     try {
       // 3. Inicializa com o JSON específico (mesma pasta do index)
-      await CALCULATOR_SYSTEM.init('exemplo-imc-config.json');
+      await CALCULATOR_SYSTEM.init('https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-config.json');
       
       // 4. Carrega componentes globais via baseUrl (Evita 404)
       await loadModule('header-container', `${baseUrl}assets/components/header-v4.html`);

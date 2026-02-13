@@ -6,7 +6,7 @@
   "breadcrumb": [
     { "label": "Home", "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/" },
     { "label": "Calculadoras", "url": "#" },
-    { "label": "IMC", "url"calculadoras/imc/exemplo-imc-config.json" }
+    { "label": "IMC", "url": "" }
   ],
   "header": {
     "categoria": "Avaliação Nutricional",
@@ -51,6 +51,12 @@
         "tipo": "warning"
       }
     ]
+  },
+  "conteudo_sobre": {
+    "texto": "<h3>O que é o IMC?</h3><p>O Índice de Massa Corporal é um cálculo simples para avaliar se uma pessoa está no peso ideal.</p>"
+  },
+  "conteudo_ajuda": {
+    "texto": "<h3>Como usar</h3><p>Preencha o peso e a altura e clique em calcular.</p>"
   },
   "sidebars": [
     "sidebar-compartilhar",
