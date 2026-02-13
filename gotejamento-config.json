@@ -1,0 +1,259 @@
+{
+  "metadata": {
+    "id": "calc-gotejamento",
+    "titulo": "Gotejamento",
+    "categoria": "Infusão Venosa",
+    "versao": "4.0",
+    "ultima_atualizacao": "2025-02-13"
+  },
+  "seo": {
+    "title": "Cálculo de Gotejamento | Calculadoras de Enfermagem",
+    "description": "Calculadora profissional para cálculo de gotejamento e microgotas. Determine a velocidade de infusão com precisão e segurança."
+  },
+  "header": {
+    "badge": "Infusão Venosa",
+    "titulo": "Cálculo de Gotejamento",
+    "descricao": "Ferramenta profissional para cálculo preciso de gotas/min e microgotas/min em infusões venosas."
+  },
+  "breadcrumb": {
+    "items": [
+      { "label": "Início", "url": "index.html" },
+      { "label": "Calculadora de Gotejamento", "url": null }
+    ]
+  },
+  "formulario": {
+    "secoes": [
+      {
+        "id": "parametros",
+        "titulo": "Parâmetros da Infusão",
+        "campos": [
+          {
+            "id": "volume_total",
+            "label": "Volume Total (mL)",
+            "type": "number",
+            "placeholder": "Ex: 1000",
+            "required": true,
+            "validacao": {
+              "min": 1,
+              "max": 5000,
+              "mensagem": "Volume deve estar entre 1 e 5000 mL"
+            },
+            "col": "md:col-span-1"
+          },
+          {
+            "id": "tempo_horas",
+            "label": "Tempo de Infusão (horas)",
+            "type": "number",
+            "placeholder": "Ex: 8",
+            "required": true,
+            "validacao": {
+              "min": 0.1,
+              "max": 48,
+              "mensagem": "Tempo deve estar entre 0,1 e 48 horas"
+            },
+            "col": "md:col-span-1"
+          },
+          {
+            "id": "tipo_equipo",
+            "label": "Tipo de Equipo",
+            "type": "select",
+            "required": true,
+            "opcoes": [
+              { "value": "20", "label": "Macrogotas (20 gotas/mL)" },
+              { "value": "60", "label": "Microgotas (60 microgotas/mL)" }
+            ],
+            "col": "md:col-span-2"
+          }
+        ]
+      }
+    ]
+  },
+  "calculo": {
+    "formula": "Gotas/min = (Volume × Fator) / (Tempo × 60)",
+    "unidade_resultado": "gotas/min",
+    "casas_decimais": 0,
+    "formulas_secundarias": [
+      {
+        "id": "ml_hora",
+        "label": "mL/hora",
+        "formula": "Volume / Tempo"
+      }
+    ],
+    "validacoes": [
+      {
+        "tipo": "range",
+        "campo": "volume_total",
+        "min": 1,
+        "max": 5000,
+        "mensagem": "Volume inválido"
+      },
+      {
+        "tipo": "range",
+        "campo": "tempo_horas",
+        "min": 0.1,
+        "max": 48,
+        "mensagem": "Tempo inválido"
+      }
+    ],
+    "alertas": [
+      {
+        "condicao": "resultado > 60",
+        "tipo": "warning",
+        "mensagem": "⚠️ Velocidade de infusão muito rápida! Verifique a prescrição e considere bomba de infusão."
+      },
+      {
+        "condicao": "resultado < 10",
+        "tipo": "info",
+        "mensagem": "ℹ️ Velocidade de infusão muito lenta. Verifique se está adequada ao tratamento."
+      },
+      {
+        "condicao": "tempo_horas > 24",
+        "tipo": "info",
+        "mensagem": "⏰ Infusão prolongada (>24h). Monitore sinais flogísticos e considere troca de acesso."
+      }
+    ]
+  },
+  "abas": [
+    {
+      "id": "calc",
+      "label": "Calculadora",
+      "icone": "fa-calculator",
+      "ativa": true
+    },
+    {
+      "id": "sobre",
+      "label": "Sobre",
+      "icone": "fa-book-open"
+    },
+    {
+      "id": "ajuda",
+      "label": "Instruções",
+      "icone": "fa-question-circle"
+    },
+    {
+      "id": "referencia",
+      "label": "Referência",
+      "icone": "fa-bookmark"
+    }
+  ],
+  "conteudo": {
+    "sobre": {
+      "titulo": "Sobre o Cálculo de Gotejamento",
+      "texto": "<p>O cálculo de gotejamento é essencial para a administração segura de soluções intravenosas. Permite determinar a velocidade exata de infusão em gotas ou microgotas por minuto.</p><p>A precisão neste cálculo é fundamental para garantir a eficácia terapêutica e prevenir complicações como sobrecarga volêmica ou subinfusão.</p>",
+      "formula_visual": "Gotas/min = (Volume × Fator do Equipo) / (Tempo × 60)",
+      "exemplo": {
+        "volume": 1000,
+        "tempo": 8,
+        "fator": 20,
+        "resultado": 42,
+        "explicacao": "Para infundir 1000 mL em 8 horas usando equipo de macrogotas, regule para 42 gotas/min"
+      }
+    },
+    "ajuda": {
+      "titulo": "Como Usar a Calculadora",
+      "passos": [
+        {
+          "numero": 1,
+          "titulo": "Identifique o Volume Total",
+          "descricao": "Verifique na prescrição o volume total a ser infundido em mL"
+        },
+        {
+          "numero": 2,
+          "titulo": "Determine o Tempo de Infusão",
+          "descricao": "Confirme o tempo prescrito para a infusão completa em horas"
+        },
+        {
+          "numero": 3,
+          "titulo": "Selecione o Tipo de Equipo",
+          "descricao": "Macrogotas (20 gotas/mL) para adultos ou Microgotas (60 gotas/mL) para pediatria/infusões precisas"
+        },
+        {
+          "numero": 4,
+          "titulo": "Calcule e Regule",
+          "descricao": "Clique em calcular e ajuste o gotejador conforme o resultado"
+        },
+        {
+          "numero": 5,
+          "titulo": "Monitore a Infusão",
+          "descricao": "Verifique periodicamente a velocidade e sinais vitais do paciente"
+        }
+      ]
+    },
+    "referencia": {
+      "titulo": "Referências Técnicas",
+      "itens": [
+        {
+          "tipo": "protocolo",
+          "titulo": "Protocolo de Terapia Intravenosa",
+          "autores": "Infusion Nurses Society (INS)",
+          "ano": 2021,
+          "link": null
+        },
+        {
+          "tipo": "artigo",
+          "titulo": "Cálculo de Gotejamento: Fundamentos e Aplicação Prática",
+          "autores": "COREN-SP",
+          "ano": 2022,
+          "link": null
+        },
+        {
+          "tipo": "resolucao",
+          "titulo": "Resolução COFEN nº 564/2017 - Código de Ética",
+          "autores": "COFEN",
+          "ano": 2017,
+          "link": null
+        }
+      ]
+    }
+  },
+  "modais": {
+    "tutorial": {
+      "titulo": "Tutorial Passo a Passo",
+      "icone": "fa-question-circle",
+      "conteudo": "<div class='space-y-6'><div class='bg-blue-50 p-6 rounded-lg'><h4 class='font-bold text-lg mb-3'>Preparação</h4><ol class='list-decimal pl-5 space-y-2'><li>Higienize as mãos</li><li>Confira a prescrição médica</li><li>Separe o material necessário</li><li>Identifique o paciente</li></ol></div><div class='bg-green-50 p-6 rounded-lg'><h4 class='font-bold text-lg mb-3'>Cálculo</h4><ol class='list-decimal pl-5 space-y-2'><li>Insira o volume total prescrito</li><li>Informe o tempo de infusão</li><li>Selecione o tipo de equipo</li><li>Clique em calcular</li></ol></div><div class='bg-yellow-50 p-6 rounded-lg'><h4 class='font-bold text-lg mb-3'>Administração</h4><ol class='list-decimal pl-5 space-y-2'><li>Regule o gotejador conforme resultado</li><li>Conte as gotas por 1 minuto</li><li>Ajuste se necessário</li><li>Monitore continuamente</li></ol></div></div>"
+    },
+    "nanda": {
+      "titulo": "Diagnósticos NANDA-I Relacionados",
+      "icone": "fa-stethoscope",
+      "conteudo": "<div class='space-y-3'><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Risco de volume de líquidos deficiente</h5><p class='text-sm mt-2'>Relacionado à administração inadequada de fluidos intravenosos</p></div><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Risco de volume de líquidos excessivo</h5><p class='text-sm mt-2'>Relacionado à infusão rápida de soluções</p></div><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Risco de perfusão tissular periférica ineficaz</h5><p class='text-sm mt-2'>Relacionado à terapia intravenosa inadequada</p></div><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Risco de infecção</h5><p class='text-sm mt-2'>Relacionado à presença de dispositivo invasivo</p></div></div>"
+    },
+    "nove_certos": {
+      "titulo": "9 Certos da Terapia Intravenosa",
+      "icone": "fa-check-double",
+      "conteudo": "<ul class='space-y-3'><li class='flex items-start gap-3'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>1. Paciente Certo</strong><p class='text-sm text-gray-600'>Confirme identidade com pulseira e pergunte nome completo</p></div></li><li class='flex items-start gap-3'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>2. Solução Certa</strong><p class='text-sm text-gray-600'>Confira tipo, concentração e validade da solução</p></div></li><li class='flex items-start gap-3'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>3. Volume Certo</strong><p class='text-sm text-gray-600'>Verifique o volume total prescrito</p></div></li><li class='flex items-start gap-3'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>4. Via Certa</strong><p class='text-sm text-gray-600'>Confirme via de administração (periférica/central)</p></div></li><li class='flex items-start gap-3'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>5. Velocidade Certa</strong><p class='text-sm text-gray-600'>Calcule e regule corretamente o gotejamento</p></div></li><li class='flex items-start gap-3'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>6. Horário Certo</strong><p class='text-sm text-gray-600'>Respeite o horário de início da infusão</p></div></li><li class='flex items-start gap-3'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>7. Registro Certo</strong><p class='text-sm text-gray-600'>Documente volume, horário, local do acesso</p></div></li><li class='flex items-start gap-3'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>8. Orientação Certa</strong><p class='text-sm text-gray-600'>Explique o procedimento ao paciente</p></div></li><li class='flex items-start gap-3'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>9. Monitoramento Certo</strong><p class='text-sm text-gray-600'>Avalie sinais vitais e reações adversas</p></div></li></ul>"
+    },
+    "metas_seguranca": {
+      "titulo": "Metas de Segurança em Terapia Intravenosa",
+      "icone": "fa-bullseye",
+      "conteudo": "<div class='space-y-4'><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 1: Identificação do Paciente</h5><p class='text-sm mt-2'>Verificar identificação antes de iniciar qualquer infusão</p></div><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 3: Segurança na Medicação</h5><p class='text-sm mt-2'>Garantir preparo e administração seguros de soluções IV</p></div><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 5: Redução de Infecções</h5><p class='text-sm mt-2'>Técnica asséptica rigorosa na manipulação de cateteres</p></div><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 6: Prevenção de Quedas</h5><p class='text-sm mt-2'>Atenção à deambulação de pacientes com infusão contínua</p></div></div>"
+    }
+  },
+  "sidebars": [
+    "sidebar-simulado-enfermagem",
+    "sidebar-compartilhar",
+    "sidebar-outras-calculadoras"
+  ],
+  "menu_lateral": [
+    {
+      "id": "guia-rapido",
+      "icone": "fa-question-circle",
+      "label": "Ajuda",
+      "acao": "switchTab",
+      "parametro": "ajuda"
+    },
+    {
+      "id": "nove-certos",
+      "icone": "fa-check-double",
+      "label": "9 Acertos",
+      "acao": "showModal",
+      "parametro": "nove_certos"
+    },
+    {
+      "id": "referencias",
+      "icone": "fa-bookmark",
+      "label": "Referências",
+      "acao": "switchTab",
+      "parametro": "referencia"
+    }
+  ]
+}

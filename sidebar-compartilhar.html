@@ -1,54 +1,35 @@
-<!-- ═══════════════════════════════════════════════════════════════
-     MÓDULO SIDEBAR: COMPARTILHAR
-     Arquivo: sidebar-compartilhar.html
-     
-     Uso: await loadModule('sidebar-share', 'modulos/sidebar-compartilhar.html');
-     
-     Este módulo contém apenas HTML puro.
-     Depende das classes Tailwind e variáveis CSS do HTML principal.
-     ═══════════════════════════════════════════════════════════════ -->
+<!-- SIDEBAR: COMPARTILHAR -->
+<div class="sidebar-module">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+      <i class="fa-solid fa-share-nodes text-2xl"></i>
+    </div>
+    <div>
+      <h3 class="text-lg font-black">Compartilhar</h3>
+      <p class="text-xs opacity-80">Divulgue esta ferramenta</p>
+    </div>
+  </div>
 
-<div class="sidebar-module from-cyan-600 to-nurse-secondary">
-  <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white font-nunito">
-    <i class="fa-solid fa-share-nodes"></i> Compartilhar
-  </h3>
-  <div class="flex gap-3 justify-center">
-    <button onclick="CALCULATOR_SYSTEM.share('facebook')" 
-            class="share-btn" 
-            title="Compartilhar no Facebook"
-            aria-label="Compartilhar no Facebook">
-      <i class="fab fa-facebook-f"></i>
-    </button>
-    <button onclick="CALCULATOR_SYSTEM.share('whatsapp')" 
-            class="share-btn" 
-            title="Compartilhar no WhatsApp"
-            aria-label="Compartilhar no WhatsApp">
+  <div class="grid grid-cols-5 gap-2 mb-4">
+    <button onclick="CALCULATOR_SYSTEM.share('whatsapp')" class="share-btn" title="WhatsApp">
       <i class="fab fa-whatsapp"></i>
     </button>
-    <button onclick="CALCULATOR_SYSTEM.share('linkedin')" 
-            class="share-btn" 
-            title="Compartilhar no LinkedIn"
-            aria-label="Compartilhar no LinkedIn">
-      <i class="fab fa-linkedin-in"></i>
+    <button onclick="CALCULATOR_SYSTEM.share('telegram')" class="share-btn" title="Telegram">
+      <i class="fab fa-telegram"></i>
     </button>
-    <button onclick="CALCULATOR_SYSTEM.share('twitter')" 
-            class="share-btn" 
-            title="Compartilhar no Twitter/X"
-            aria-label="Compartilhar no Twitter">
+    <button onclick="CALCULATOR_SYSTEM.share('facebook')" class="share-btn" title="Facebook">
+      <i class="fab fa-facebook"></i>
+    </button>
+    <button onclick="CALCULATOR_SYSTEM.share('twitter')" class="share-btn" title="Twitter">
       <i class="fab fa-twitter"></i>
     </button>
-    <button onclick="CALCULATOR_SYSTEM.copyLink()" 
-            class="share-btn" 
-            title="Copiar Link"
-            aria-label="Copiar link da página">
-      <i class="fas fa-link"></i>
+    <button onclick="CALCULATOR_SYSTEM.share('linkedin')" class="share-btn" title="LinkedIn">
+      <i class="fab fa-linkedin"></i>
     </button>
   </div>
-  
-  <div class="mt-4 pt-4 border-t border-white/20">
-    <p class="text-xs text-white/70 text-center font-medium">
-      <i class="fa-solid fa-users text-white/50 mr-1"></i>
-      Ajude outros profissionais compartilhando
-    </p>
-  </div>
+
+  <button onclick="CALCULATOR_SYSTEM.copyLink()" class="w-full bg-white/20 hover:bg-white/30 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 text-xs">
+    <i class="fa-solid fa-link"></i>
+    COPIAR LINK
+  </button>
 </div>

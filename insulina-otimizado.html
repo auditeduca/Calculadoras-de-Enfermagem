@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+  <!-- SEO (será atualizado via JS) -->
+  <title id="page-title">Calculadora de Enfermagem</title>
+  <meta name="description" content="Calculadora profissional de enfermagem">
+  
+  <!-- Fontes e Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Estilos Modulares (URLs Absolutas) -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
+
+  <!-- Bibliotecas JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+
+  <!-- Scripts Globais do Sistema -->
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
+
+  <!-- Scripts Locais da Calculadora -->
+  <script src="calculator-engine.js" defer></script>
+  <script src="calculator-system.js" defer></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { 
+            nunito: ['"Nunito Sans"','sans-serif'], 
+            inter: ['Inter','sans-serif'] 
+          },
+          colors: { 
+            'nurse-primary':'#1A3E74', 
+            'nurse-secondary':'#00bcd4', 
+            'nurse-accent':'#00838f', 
+            'nurse-bgDark':'#0F172A' 
+          },
+          animation: { 
+            'slide-in': 'slideIn 0.3s ease-out', 
+            'fade-in': 'fadeIn 0.3s ease-out', 
+            'pulse-slow': 'pulse 3s infinite' 
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- CONTAINERS GLOBAIS -->
+  <div id="accessibility-container"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] opacity-0 transition-opacity duration-500 shadow-sm"></div>
+
+  <!-- MENU FLUTUANTE LATERAL -->
+  <aside class="sidebar-left-tools" id="sidebar-tools">
+    <!-- Será preenchido via JS -->
+  </aside>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full" style="margin-left: 80px;">
+    
+    <!-- BREADCRUMB -->
+    <nav class="mb-8 font-semibold text-sm text-slate-600 dark:text-cyan-300 flex items-center gap-2">
+      <!-- Será preenchido via JS -->
+    </nav>
+
+    <!-- HEADER DA PÁGINA -->
+    <header class="max-w-4xl mb-12">
+      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">
+        <!-- Será preenchido via JS -->
+      </span>
+      <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">
+        <!-- Será preenchido via JS -->
+      </h1>
+      <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+      <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">
+        <!-- Será preenchido via JS -->
+      </p>
+    </header>
+
+    <!-- GRID PRINCIPAL -->
+    <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
+      
+      <!-- CALCULADORA -->
+      <article id="calculator-container" class="card-base p-0">
+        <!-- ABAS DE NAVEGAÇÃO -->
+        <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto">
+          <!-- Será preenchido via JS -->
+        </nav>
+
+        <!-- CONTEÚDO DAS ABAS -->
+        <div class="p-6 md:p-10">
+          <!-- ABA CALCULADORA -->
+          <section id="pane-calc" class="tab-pane">
+            <!-- Será preenchido via JS -->
+          </section>
+
+          <!-- ABA SOBRE -->
+          <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <!-- Será preenchido via JS -->
+          </section>
+
+          <!-- ABA AJUDA -->
+          <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <!-- Será preenchido via JS -->
+          </section>
+
+          <!-- ABA REFERÊNCIA -->
+          <section id="pane-referencia" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <!-- Será preenchido via JS -->
+          </section>
+        </div>
+      </article>
+
+      <!-- SIDEBARS -->
+      <aside class="space-y-6 sticky top-28 self-start">
+        <div id="sidebar-simulado-enfermagem"></div>
+        <div id="sidebar-compartilhar"></div>
+        <div id="sidebar-outras-calculadoras"></div>
+      </aside>
+    </div>
+
+    <!-- AUTOR -->
+    <div id="author-container"></div>
+  </main>
+
+  <!-- FOOTER -->
+  <div id="footer-container" class="opacity-0 transition-opacity duration-500"></div>
+
+  <!-- MODAL GENÉRICO -->
+  <div id="modal-container"></div>
+
+</body>
+</html>

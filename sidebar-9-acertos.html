@@ -1,216 +1,47 @@
-<!-- ═══════════════════════════════════════════════════════════════
-     MÓDULO SIDEBAR: 9 CERTOS DA MEDICAÇÃO
-     Arquivo: sidebar-9-acertos.html
-     
-     Uso: await loadModule('sidebar-9certos', 'modulos/sidebar-9-acertos.html');
-     
-     Este módulo inclui JavaScript inline para funcionamento do checklist
-     ═══════════════════════════════════════════════════════════════ -->
+<!-- SIDEBAR: 9 ACERTOS DA MEDICAÇÃO -->
+<div class="sidebar-module">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+      <i class="fa-solid fa-check-double text-2xl"></i>
+    </div>
+    <div>
+      <h3 class="text-lg font-black">9 Certos</h3>
+      <p class="text-xs opacity-80">Segurança na Medicação</p>
+    </div>
+  </div>
 
-<div class="card-base p-6 bg-gradient-to-br from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 border-none">
-  <div class="flex items-center justify-between mb-4 pb-3 border-b border-red-200 dark:border-red-800">
-    <h3 class="text-xs font-black uppercase tracking-widest text-red-700 dark:text-red-400 flex items-center gap-2">
-      <i class="fa-solid fa-check-double"></i> 9 Certos
-    </h3>
-    <button onclick="CALCULATOR_SYSTEM.showMedicationChecklist()" 
-            class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold transition"
-            title="Ver referência completa">
-      <i class="fa-solid fa-circle-info"></i>
-    </button>
-  </div>
-  
-  <p class="text-[11px] text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-    Checklist de segurança para administração de medicamentos. Marque cada item antes de administrar a insulina.
-  </p>
-  
-  <div class="space-y-2" id="sidebar-9certos-checklist">
-    <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition cursor-pointer group">
-      <input type="checkbox" 
-             class="mt-1 w-4 h-4 rounded border-2 border-red-300 text-nurse-primary focus:ring-nurse-secondary"
-             onchange="updateChecklistProgress()">
-      <div class="flex-1">
-        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 block group-hover:text-nurse-primary dark:group-hover:text-cyan-400 transition">
-          1. Paciente Certo
-        </span>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400">
-          Confirmar identidade com 2 identificadores
-        </span>
-      </div>
-    </label>
-    
-    <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition cursor-pointer group">
-      <input type="checkbox" 
-             class="mt-1 w-4 h-4 rounded border-2 border-red-300 text-nurse-primary focus:ring-nurse-secondary"
-             onchange="updateChecklistProgress()">
-      <div class="flex-1">
-        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 block group-hover:text-nurse-primary dark:group-hover:text-cyan-400 transition">
-          2. Medicamento Certo
-        </span>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400">
-          Conferir nome, tipo e concentração
-        </span>
-      </div>
-    </label>
-    
-    <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition cursor-pointer group">
-      <input type="checkbox" 
-             class="mt-1 w-4 h-4 rounded border-2 border-red-300 text-nurse-primary focus:ring-nurse-secondary"
-             onchange="updateChecklistProgress()">
-      <div class="flex-1">
-        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 block group-hover:text-nurse-primary dark:group-hover:text-cyan-400 transition">
-          3. Dose Certa
-        </span>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400">
-          Calcular e validar a dosagem
-        </span>
-      </div>
-    </label>
-    
-    <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition cursor-pointer group">
-      <input type="checkbox" 
-             class="mt-1 w-4 h-4 rounded border-2 border-red-300 text-nurse-primary focus:ring-nurse-secondary"
-             onchange="updateChecklistProgress()">
-      <div class="flex-1">
-        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 block group-hover:text-nurse-primary dark:group-hover:text-cyan-400 transition">
-          4. Via Certa
-        </span>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400">
-          SC, EV conforme prescrição
-        </span>
-      </div>
-    </label>
-    
-    <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition cursor-pointer group">
-      <input type="checkbox" 
-             class="mt-1 w-4 h-4 rounded border-2 border-red-300 text-nurse-primary focus:ring-nurse-secondary"
-             onchange="updateChecklistProgress()">
-      <div class="flex-1">
-        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 block group-hover:text-nurse-primary dark:group-hover:text-cyan-400 transition">
-          5. Horário Certo
-        </span>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400">
-          Administrar no tempo prescrito
-        </span>
-      </div>
-    </label>
-    
-    <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition cursor-pointer group">
-      <input type="checkbox" 
-             class="mt-1 w-4 h-4 rounded border-2 border-red-300 text-nurse-primary focus:ring-nurse-secondary"
-             onchange="updateChecklistProgress()">
-      <div class="flex-1">
-        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 block group-hover:text-nurse-primary dark:group-hover:text-cyan-400 transition">
-          6. Registro Certo
-        </span>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400">
-          Documentar imediatamente
-        </span>
-      </div>
-    </label>
-    
-    <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition cursor-pointer group">
-      <input type="checkbox" 
-             class="mt-1 w-4 h-4 rounded border-2 border-red-300 text-nurse-primary focus:ring-nurse-secondary"
-             onchange="updateChecklistProgress()">
-      <div class="flex-1">
-        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 block group-hover:text-nurse-primary dark:group-hover:text-cyan-400 transition">
-          7. Ação Certa
-        </span>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400">
-          Explicar ao paciente
-        </span>
-      </div>
-    </label>
-    
-    <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition cursor-pointer group">
-      <input type="checkbox" 
-             class="mt-1 w-4 h-4 rounded border-2 border-red-300 text-nurse-primary focus:ring-nurse-secondary"
-             onchange="updateChecklistProgress()">
-      <div class="flex-1">
-        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 block group-hover:text-nurse-primary dark:group-hover:text-cyan-400 transition">
-          8. Forma Certa
-        </span>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400">
-          Apresentação farmacêutica adequada
-        </span>
-      </div>
-    </label>
-    
-    <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition cursor-pointer group">
-      <input type="checkbox" 
-             class="mt-1 w-4 h-4 rounded border-2 border-red-300 text-nurse-primary focus:ring-nurse-secondary"
-             onchange="updateChecklistProgress()">
-      <div class="flex-1">
-        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 block group-hover:text-nurse-primary dark:group-hover:text-cyan-400 transition">
-          9. Resposta Certa
-        </span>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400">
-          Monitorar efeitos esperados
-        </span>
-      </div>
-    </label>
-  </div>
-  
-  <div class="mt-4 pt-4 border-t border-red-200 dark:border-red-800">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Progresso</span>
-      <span class="text-xs font-black text-nurse-primary dark:text-cyan-400" id="progress-9certos">0/9</span>
+  <div class="space-y-2 mb-6">
+    <div class="flex items-center gap-2 text-sm">
+      <i class="fa-solid fa-check text-green-300"></i>
+      <span>Paciente Certo</span>
     </div>
-    <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
-      <div class="h-full bg-gradient-to-r from-green-500 to-emerald-600 transition-all duration-300 ease-out" 
-           id="progress-bar-9certos" 
-           style="width: 0%"></div>
+    <div class="flex items-center gap-2 text-sm">
+      <i class="fa-solid fa-check text-green-300"></i>
+      <span>Medicamento Certo</span>
+    </div>
+    <div class="flex items-center gap-2 text-sm">
+      <i class="fa-solid fa-check text-green-300"></i>
+      <span>Dose Certa</span>
+    </div>
+    <div class="flex items-center gap-2 text-sm">
+      <i class="fa-solid fa-check text-green-300"></i>
+      <span>Via Certa</span>
+    </div>
+    <div class="flex items-center gap-2 text-sm">
+      <i class="fa-solid fa-check text-green-300"></i>
+      <span>Horário Certo</span>
     </div>
   </div>
-  
-  <button onclick="resetChecklist()" 
-          class="mt-3 w-full bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 font-bold py-2 rounded-lg transition text-xs flex items-center justify-center gap-2">
-    <i class="fa-solid fa-rotate-left"></i>
-    <span>Limpar Checklist</span>
+
+  <button onclick="CALCULATOR_SYSTEM.showMedicationChecklist()" class="w-full bg-white/20 hover:bg-white/30 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 text-xs">
+    <i class="fa-solid fa-list-check"></i>
+    VER LISTA COMPLETA
   </button>
 </div>
 
 <script>
-// Função para atualizar progresso do checklist
-function updateChecklistProgress() {
-  const container = document.getElementById('sidebar-9certos-checklist');
-  if (!container) return;
-  
-  const checkboxes = container.querySelectorAll('input[type="checkbox"]');
-  const total = checkboxes.length;
-  const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
-  const percentage = (checked / total) * 100;
-  
-  // Atualizar contador
-  const progressText = document.getElementById('progress-9certos');
-  if (progressText) {
-    progressText.textContent = `${checked}/${total}`;
-  }
-  
-  // Atualizar barra
-  const progressBar = document.getElementById('progress-bar-9certos');
-  if (progressBar) {
-    progressBar.style.width = `${percentage}%`;
-  }
-  
-  // Feedback visual quando completar
-  if (checked === total && typeof CALCULATOR_SYSTEM !== 'undefined' && CALCULATOR_SYSTEM.notify) {
-    CALCULATOR_SYSTEM.notify('✅ Checklist completo! Todos os 9 certos foram verificados.', 'success');
-  }
-}
-
-// Função para resetar checklist
-function resetChecklist() {
-  const container = document.getElementById('sidebar-9certos-checklist');
-  if (!container) return;
-  
-  const checkboxes = container.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(cb => cb.checked = false);
-  
-  updateChecklistProgress();
-  
-  if (typeof CALCULATOR_SYSTEM !== 'undefined' && CALCULATOR_SYSTEM.notify) {
-    CALCULATOR_SYSTEM.notify('Checklist limpo', 'info');
-  }
-}
+// Script inline para funcionalidades específicas deste sidebar, se necessário
+(function() {
+  console.log('✓ Sidebar 9 Acertos carregado');
+})();
 </script>
