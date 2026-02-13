@@ -354,6 +354,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadModule('author-container', 'author-section.html');
   await loadModule('modal-container', 'modal-generic.html');
   
+  // Carrega VLibras se habilitado na configuração
+  if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
+    await loadModule('libras-container', 'widget-libras.html');
+    console.log('✓ Widget VLibras habilitado');
+  }
+  
   // 3. Carrega sidebars baseado na configuração
   if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
     for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {

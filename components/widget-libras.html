@@ -1,0 +1,58 @@
+<!-- WIDGET DE LIBRAS (VLibras) -->
+<div vw class="enabled">
+  <div vw-access-button class="active"></div>
+  <div vw-plugin-wrapper>
+    <div class="vw-plugin-top-wrapper"></div>
+  </div>
+</div>
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+  new window.VLibras.Widget('https://vlibras.gov.br/app');
+  console.log('✓ Widget VLibras carregado');
+</script>
+
+<style>
+  /* Customização do widget VLibras para integração com o tema */
+  [vw-access-button] {
+    position: fixed !important;
+    bottom: 120px !important;
+    right: 20px !important;
+    z-index: 99999 !important;
+  }
+  
+  /* Mobile - Ajusta posição para não conflitar com menu inferior */
+  @media (max-width: 768px) {
+    [vw-access-button] {
+      bottom: 100px !important;
+      right: 10px !important;
+    }
+  }
+  
+  /* Dark mode - ajusta cores do widget */
+  .dark [vw-access-button] {
+    filter: brightness(0.9);
+  }
+  
+  /* Animação suave ao aparecer */
+  [vw-access-button] {
+    opacity: 0;
+    animation: fadeInVLibras 0.5s ease-in-out 1s forwards;
+  }
+  
+  @keyframes fadeInVLibras {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Garante que o widget fique acima de tudo */
+  [vw-plugin-wrapper] {
+    z-index: 99998 !important;
+  }
+</style>
