@@ -337,60 +337,40 @@ document.addEventListener('keydown', (e) => {
 });
 
 /**
- * INICIALIZAÇÃO
+ /**
+ * INICIALIZAÇÃO DO SISTEMA
+ * Versão com trava de segurança para calculadoras customizadas
  */
 document.addEventListener('DOMContentLoaded', async () => {
-  // VERIFICAÇÃO DE SEGURANÇA:
-  // Se o <body> tiver a classe 'custom-init', este script para aqui e 
-  // deixa o index.html da calculadora assumir o controle total.
+  // TRAVA: Se o body tiver a classe 'custom-init', este script para aqui.
   if (document.body.classList.contains('custom-init')) {
-    console.log('⚠️ Sistema: Inicialização automática suspensa (Página Customizada Detectada).');
+    console.log('⚠️ Sistema: Inicialização automática suspensa para evitar conflitos.');
     return;
   }
 
   console.log('🚀 Iniciando sistema automático...');
   
   try {
-    // 1. Inicializa o motor da calculadora padrão
-    await CALCULATOR_SYSTEM.init('insulina-config.json');
-    
-    // 2. Carrega componentes globais
     const baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
     
+    // Inicializa motor padrão
+    await CALCULATOR_SYSTEM.init('insulina-config.json');
+    
+    // Carrega componentes globais com caminhos absolutos
     await loadModule('header-container', `${baseUrl}assets/components/header-v4.html`);
     await loadModule('footer-container', `${baseUrl}assets/components/footer-v4.html`);
     await loadModule('accessibility-container', `${baseUrl}assets/components/accessibility-v4.html`);
     
-    // Carrega componentes locais modulares (Usando subpastas corretas)
-    await loadModule('author-container', 'components/author-section.html');
-    await loadModule('modal-container', 'components/modal-generic.html');
+    // Carrega componentes locais (usando a pasta components)
+    await loadModule('author-container', `components/author-section.html`);
+    await loadModule('modal-container', `components/modal-generic.html`);
     
-    // Carrega VLibras se habilitado na configuração
-    if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
-      await loadModule('libras-container', 'components/widget-libras.html');
-      console.log('✓ Widget VLibras habilitado');
-    }
-    
-    // 3. Carrega sidebars baseado na configuração
     if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
       for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
-          // Garante a busca dentro da pasta /sidebars/
-          const containerId = sidebar.startsWith('sidebar-') ? sidebar : `sidebar-${sidebar.replace('sidebar-', '')}`;
-          await loadModule(containerId, `sidebars/${sidebar}.html`);
+        await loadModule(`sidebar-${sidebar.replace('sidebar-', '')}`, `sidebars/${sidebar}.html`);
       }
     }
-    
-    // 4. Fade in dos componentes
-    setTimeout(() => {
-      const header = document.getElementById('header-container');
-      const footer = document.getElementById('footer-container');
-      if (header) header.style.opacity = '1';
-      if (footer) footer.style.opacity = '1';
-    }, 150);
-    
-    console.log('✓ Sistema carregado com sucesso!');
-
   } catch (error) {
-    console.error('❌ Erro no carregamento automático do sistema:', error);
+    console.error('Erro na carga automática:', error);
   }
 });
