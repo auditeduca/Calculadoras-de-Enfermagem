@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/style.css"/>
 
   <!-- Bibliotecas JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
@@ -35,8 +36,8 @@
   <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
 
   <!-- Scripts Locais da Calculadora -->
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/core/calculator-engine.js" defer></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/core/calculator-system.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-engine.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-system.js" defer></script>
   
   <!-- Tailwind Config -->
   <script>
@@ -65,7 +66,7 @@
   </script>
 
   <!-- Estilos Customizados -->
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/core/styles.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/styles.css"/>
 </head>
 <body class="flex flex-col min-h-screen">
 
@@ -176,19 +177,19 @@
       await loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html');
       
       // 4. Carrega componentes locais modulares
-      await loadModule('author-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/components/author-section.html');
-      await loadModule('modal-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/modal-generic.html');
+      await loadModule('author-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/author-section.html');
+      await loadModule('modal-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/modal-generic.html');
       
       // 5. Carrega VLibras se habilitado
       if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
-        await loadModule('libras-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/widget-libras.html');
+        await loadModule('libras-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/widget-libras.html');
         console.log('✓ Widget VLibras habilitado');
       }
       
       // 6. Carrega sidebars baseado na configuração
       if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
         for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
-          await loadModule(sidebar, `https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/sidebars/${sidebar}.html`);
+          await loadModule(sidebar, `https://auditeduca.github.io/Calculadoras-de-Enfermagem/sidebars/${sidebar}.html`);
         }
       }
       

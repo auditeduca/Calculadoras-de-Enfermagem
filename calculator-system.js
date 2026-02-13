@@ -351,21 +351,22 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html');
   
   // Carrega componentes locais modulares
-  await loadModule('author-container', 'author-section.html');
-  await loadModule('modal-container', 'modal-generic.html');
+  await loadModule('author-container', 'components/author-section.html');
+  await loadModule('modal-container', 'components/modal-generic.html');
   
   // Carrega VLibras se habilitado na configuração
   if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
-    await loadModule('libras-container', 'widget-libras.html');
+    await loadModule('libras-container', 'components/widget-libras.html');
     console.log('✓ Widget VLibras habilitado');
   }
   
   // 3. Carrega sidebars baseado na configuração
   if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
     for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
-      await loadModule(`sidebar-${sidebar.replace('sidebar-', '')}`, `${sidebar}.html`);
+        // AJUSTE AQUI: Adicionamos 'sidebars/' antes do nome do arquivo
+        await loadModule(`sidebar-${sidebar.replace('sidebar-', '')}`, `sidebars/${sidebar}.html`);
     }
-  }
+}
   
   // 4. Fade in dos componentes
   setTimeout(() => {
