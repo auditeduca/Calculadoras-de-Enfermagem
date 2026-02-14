@@ -1,103 +1,303 @@
 /**
- * ═══════════════════════════════════════════════════════════════
- * CORE STYLES v4.2 DEFINITIVO
- * CSS completo extraído da página de referência
- * Todos os estilos necessários para renderização PERFEITA
- * ═══════════════════════════════════════════════════════════════
+ * CORE STYLES v4.2 - SEM @apply
+ * Versão compatível com CSS puro
  */
 
-/* ═══════════════════════════════════════════════════════════════
-   BASE STYLES
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== BASE STYLES ===== */
 body {
-  @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dark body {
+  background-color: #0F172A;
+  color: #f1f5f9;
 }
 
 h1 {
-  @apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  color: #1A3E74;
+}
+
+.dark h1 {
+  color: #22d3ee;
 }
 
 h2, h3 {
-  @apply font-inter tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #1A3E74;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   COMPONENT CLASSES
-   ═══════════════════════════════════════════════════════════════ */
+.dark h2, .dark h3 {
+  color: #22d3ee;
+}
 
+/* ===== COMPONENT CLASSES ===== */
 .card-base {
-  @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden;
+  background-color: #ffffff;
+  border-radius: 2rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.dark .card-base {
+  background-color: rgba(30, 41, 59, 0.9);
+  border-color: #334155;
 }
 
 .sidebar-module {
-  @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  color: #ffffff;
+  background: linear-gradient(135deg, #1A3E74, #2E5A9C);
+  margin-bottom: 1.5rem;
+}
+
+.dark .sidebar-module {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
 }
 
 .input-field {
-  @apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium;
+  width: 100%;
+  background-color: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.dark .input-field {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+.input-field:focus {
+  border-color: #00bcd4;
 }
 
 .btn-primary-action {
-  @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed;
+  background-color: #1A3E74;
+  color: #ffffff;
+  font-weight: 700;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-primary-action:hover {
+  background-color: #00bcd4;
+}
+
+.btn-primary-action:active {
+  transform: scale(0.98);
+}
+
+.btn-primary-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .btn-secondary-action {
-  @apply bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider;
+  background-color: #e2e8f0;
+  color: #475569;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 1rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-secondary-action:hover {
+  background-color: #cbd5e1;
+}
+
+.dark .btn-secondary-action {
+  background-color: #334155;
+  color: #e2e8f0;
+}
+
+.dark .btn-secondary-action:hover {
+  background-color: #475569;
 }
 
 .tab-btn {
-  @apply flex-1 px-2 py-3 font-bold text-[10px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider;
+  flex: 1;
+  padding: 0.75rem 0.5rem;
+  font-weight: 700;
+  font-size: 0.625rem;
+  transition: all 0.2s;
+  border-bottom: 4px solid transparent;
+  color: #94a3b8;
+  white-space: nowrap;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tab-btn:hover {
+  color: #1A3E74;
 }
 
 .tab-btn.active {
-  @apply border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50 dark:bg-slate-900/30;
+  border-bottom-color: #00bcd4;
+  color: #1A3E74;
+  background-color: rgba(248, 250, 252, 0.5);
+}
+
+.dark .tab-btn.active {
+  color: #22d3ee;
+  background-color: rgba(30, 41, 59, 0.3);
 }
 
 .tab-pane {
-  @apply space-y-6;
+  display: block;
+}
+
+.tab-pane.hidden {
+  display: none;
 }
 
 .glass-meta {
-  @apply relative backdrop-blur-md border border-white/20 p-4 rounded-xl shadow-sm transition-all duration-300 flex items-center gap-4;
+  position: relative;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .glass-meta-blue {
-  @apply bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-100 border-l-4 border-blue-500;
+  background-color: #eff6ff;
+  color: #1e3a8a;
+  border-left: 4px solid #3b82f6;
+}
+
+.dark .glass-meta-blue {
+  background-color: rgba(30, 58, 138, 0.2);
+  color: #bfdbfe;
 }
 
 .glass-meta-orange {
-  @apply bg-orange-50 dark:bg-orange-900/20 text-orange-900 dark:text-orange-100 border-l-4 border-orange-500;
+  background-color: #fff7ed;
+  color: #9a3412;
+  border-left: 4px solid #f97316;
+}
+
+.dark .glass-meta-orange {
+  background-color: rgba(124, 45, 18, 0.2);
+  color: #fed7aa;
 }
 
 .toast-msg {
-  @apply pointer-events-auto bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 font-bold text-sm min-w-[320px] border-l-4 border-nurse-secondary animate-slide-in;
+  pointer-events: auto;
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  min-width: 320px;
+  border-left: 4px solid #00bcd4;
+  animation: slideIn 0.3s ease-out;
 }
 
 .toast-msg.warning {
-  @apply border-yellow-500;
+  border-left-color: #eab308;
 }
 
 .toast-msg.warning i {
-  @apply text-yellow-500;
+  color: #eab308;
 }
 
 .tag-pill-footer {
-  @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer;
+  padding: 0.375rem 0.75rem;
+  background-color: #f1f5f9;
+  color: #1e293b;
+  border-radius: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.dark .tag-pill-footer {
+  background-color: #0f172a;
+  color: #cbd5e1;
+}
+
+.tag-pill-footer:hover {
+  background-color: #00838f;
+  color: #ffffff;
 }
 
 .share-btn {
-  @apply w-10 h-10 rounded-full flex items-center justify-center bg-white/10 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.share-btn:hover {
+  background-color: #ffffff;
+  color: #1A3E74;
 }
 
 .label-tooltip {
-  @apply text-nurse-secondary ml-1 cursor-help hover:text-nurse-primary transition-colors text-xs;
+  color: #00bcd4;
+  margin-left: 0.25rem;
+  cursor: help;
+  font-size: 0.75rem;
+  transition: color 0.2s;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   SIDEBAR TOOLS (Menu Lateral Esquerdo)
-   ═══════════════════════════════════════════════════════════════ */
+.label-tooltip:hover {
+  color: #1A3E74;
+}
 
+/* ===== SIDEBAR TOOLS (Menu Lateral Esquerdo) ===== */
 .sidebar-left-tools {
   position: fixed;
   left: 20px;
@@ -198,10 +398,7 @@ h2, h3 {
   animation: fadeIn 0.2s ease-out;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   ANIMATIONS
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== ANIMATIONS ===== */
 @keyframes slideIn {
   from {
     transform: translateX(100%);
@@ -256,10 +453,7 @@ h2, h3 {
   animation: slideUp 0.3s ease-out;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   FORM ELEMENTS
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== FORM ELEMENTS ===== */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -296,10 +490,7 @@ input[type="number"] {
   background-color: #fefce8 !important;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   TOOLTIPS
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== TOOLTIPS ===== */
 .tooltip-container {
   position: relative;
   display: inline-block;
@@ -332,18 +523,12 @@ input[type="number"] {
   line-height: 1.4;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   MODAL
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== MODAL ===== */
 #reference-modal {
   backdrop-filter: blur(5px);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   TUTORIAL
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== TUTORIAL ===== */
 .tutorial-step {
   opacity: 0;
   transform: translateY(20px);
@@ -361,26 +546,7 @@ input[type="number"] {
   position: relative;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   ACCESSIBILITY (apenas utilitário básico)
-   ═══════════════════════════════════════════════════════════════ */
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   RESULTS WRAPPER (ADICIONADO)
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== RESULTS WRAPPER ===== */
 #results-wrapper {
   animation: fadeIn 0.5s ease-out;
 }
@@ -398,10 +564,7 @@ input[type="number"] {
   border-color: rgba(0, 188, 212, 0.2);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   AUDIT LIST (ADICIONADO)
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== AUDIT LIST ===== */
 #audit-list li {
   display: flex;
   align-items: center;
@@ -459,10 +622,7 @@ input[type="number"] {
   border-color: #334155;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   FORM SECTIONS (ADICIONADO)
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== FORM SECTIONS ===== */
 .form-section-title {
   font-size: 0.75rem;
   font-weight: 900;
@@ -491,10 +651,7 @@ input[type="number"] {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   MODAL CONTENT (ADICIONADO)
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== MODAL CONTENT ===== */
 #modal-content {
   max-height: 70vh;
   overflow-y: auto;
@@ -528,10 +685,7 @@ input[type="number"] {
   background: #94a3b8;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   BADGES E PILLS (ADICIONADO)
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== BADGES E PILLS ===== */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -573,10 +727,7 @@ input[type="number"] {
   color: #6ee7b7;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   LOADING STATES (ADICIONADO)
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== LOADING STATES ===== */
 .skeleton {
   background: linear-gradient(
     90deg,
@@ -607,10 +758,7 @@ input[type="number"] {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PROSE (ADICIONADO)
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== PROSE ===== */
 .prose {
   max-width: none;
   color: #334155;
@@ -677,12 +825,8 @@ input[type="number"] {
   background: #1e293b;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   RESPONSIVE - MOBILE
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== RESPONSIVE - MOBILE ===== */
 @media (max-width: 768px) {
-  /* Sidebar Tools vira barra inferior */
   .sidebar-left-tools {
     top: auto;
     bottom: 20px;
@@ -751,21 +895,16 @@ input[type="number"] {
     color: #00bcd4;
   }
   
-  /* Padding no body para não sobrepor */
   body {
     padding-bottom: 120px;
   }
   
-  /* Main sem margin lateral */
   #main-content {
     margin-left: 0 !important;
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PRINT STYLES
-   ═══════════════════════════════════════════════════════════════ */
-
+/* ===== PRINT STYLES ===== */
 @media print {
   .no-print,
   .sidebar-left-tools,
