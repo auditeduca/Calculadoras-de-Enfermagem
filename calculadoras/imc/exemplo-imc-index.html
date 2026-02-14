@@ -37,8 +37,8 @@
 
   <!-- Scripts Locais da Calculadora -->
   <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-engine.js" defer></script>
- <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-system.js" defer></script>
- <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-custom-calculator.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-system.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-custom-calculator.js" defer></script>
   
   <!-- Tailwind Config -->
   <script>
@@ -101,6 +101,7 @@
         <!-- Será preenchido via JS -->
       </p>
     </header>
+    
     <!-- TAGS CONTAINER -->
     <div id="tags-container" class="max-w-7xl mx-auto px-4"></div>
     
@@ -159,54 +160,80 @@
   <!-- WIDGET DE LIBRAS -->
   <div id="libras-container"></div>
 
-  <!-- INICIALIZAÇÃO -->
-<script>
-  document.addEventListener('DOMContentLoaded', async () => {
-    console.log('🚀 Iniciando calculadora IMC...');
-    
-    // 1. Recupera a baseUrl perdida
-    const baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
-    
-    // 2. Redefine o init para usar o motor de IMC
-    CALCULATOR_SYSTEM.init = async function(configUrl) {
-      this.engine = new IMCCalculatorEngine(configUrl);
-      await this.engine.init();
-    };
-    
-    try {
-      // 3. Inicializa com o JSON específico (mesma pasta do index)
-      await CALCULATOR_SYSTEM.init('https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-config.json');
+  <!-- INICIALIZAÇÃO MODULAR -->
+  <script>
+    (async function() {
+      console.log('🚀 Iniciando calculadora IMC...');
       
-      // 4. Carrega componentes globais via baseUrl (Evita 404)
-      await loadModule('header-container', `${baseUrl}assets/components/header-v4.html`);
-      await loadModule('footer-container', `${baseUrl}assets/components/footer-v4.html`);
-      await loadModule('accessibility-container', `${baseUrl}assets/components/accessibility-v4.html`);
+      const baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
       
-      // 5. Carrega componentes de estrutura
-      await loadModule('author-container', `${baseUrl}components/author-section.html`);
-      await loadModule('modal-container', `${baseUrl}components/modal-generic.html`);
-      
-      // 6. Carrega Sidebars com IDs corrigidos
-      if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
-        for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
-          const containerId = sidebar.startsWith('sidebar-') ? sidebar : `sidebar-${sidebar}`;
-          await loadModule(containerId, `${baseUrl}sidebars/${sidebar}.html`);
+      // Função auxiliar para carregar módulos HTML
+      async function loadModule(id, url) {
+        const container = document.getElementById(id);
+        if (!container) return;
+        try {
+          const res = await fetch(url);
+          if (!res.ok) throw new Error(`Status ${res.status}`);
+          container.innerHTML = await res.text();
+          container.style.opacity = '1';
+        } catch(e) { 
+          console.warn(`Módulo ${id} não carregado:`, e); 
         }
       }
-      
-      // 7. Ativa visibilidade
-      setTimeout(() => {
-        const header = document.getElementById('header-container');
-        const footer = document.getElementById('footer-container');
-        if(header) header.style.opacity = '1';
-        if(footer) footer.style.opacity = '1';
-      }, 150);
 
-      console.log('✓ Calculadora IMC carregada com sucesso!');
-    } catch (err) {
-      console.error('❌ Erro Crítico:', err);
-    }
-  });
-</script>
+      try {
+        // Inicializa o motor da calculadora com o JSON específico
+        // Tenta usar a engine customizada (IMCCalculatorEngine) se disponível
+        if (typeof IMCCalculatorEngine !== 'undefined') {
+          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+          await CALCULATOR_SYSTEM.engine.init();
+        } else {
+          // Fallback para engine padrão
+          console.warn('IMCCalculatorEngine não encontrado, usando CalculatorEngine padrão');
+          await CALCULATOR_SYSTEM.init(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+        }
+        
+        // Carrega componentes globais
+        await loadModule('header-container', `${baseUrl}assets/components/header-v4.html`);
+        await loadModule('footer-container', `${baseUrl}assets/components/footer-v4.html`);
+        await loadModule('accessibility-container', `${baseUrl}assets/components/accessibility-v4.html`);
+        
+        // Carrega componentes de estrutura
+        await loadModule('author-container', `${baseUrl}assets/components/author-section.html`);
+        await loadModule('modal-container', `${baseUrl}assets/components/modal-generic.html`);
+        
+        // Carrega sidebars conforme configuração do JSON
+        if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
+          for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
+            const containerId = sidebar.startsWith('sidebar-') ? sidebar : `sidebar-${sidebar}`;
+            await loadModule(containerId, `${baseUrl}assets/sidebars/${sidebar}.html`);
+          }
+        }
+        
+        // Carrega VLibras se ativado na configuração
+        if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
+          await loadModule('libras-container', `${baseUrl}assets/components/widget-libras.html`);
+        }
+        
+        // Ativa visibilidade do header e footer
+        setTimeout(() => {
+          const header = document.getElementById('header-container');
+          const footer = document.getElementById('footer-container');
+          if(header) header.style.opacity = '1';
+          if(footer) footer.style.opacity = '1';
+        }, 150);
+
+        console.log('✓ Calculadora IMC carregada com sucesso!');
+      } catch (err) {
+        console.error('❌ Erro Crítico:', err);
+        // Exibe mensagem amigável para o usuário
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-4 rounded-xl shadow-xl z-[9999] animate-fade-in';
+        toast.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2"></i> Erro ao carregar a calculadora. Tente recarregar a página.';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 5000);
+      }
+    })();
+  </script>
 </body>
 </html>
