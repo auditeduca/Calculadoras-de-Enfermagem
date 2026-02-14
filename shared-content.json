@@ -1,0 +1,12 @@
+"modais": {
+  "metas_seguranca": {
+    "titulo": "Metas Internacionais de Segurança do Paciente",
+    "icone": "fa-bullseye",
+    "conteudo": "<html completo>"
+  },
+  "nove_certos": {
+    "titulo": "9 Certos da Medicação",
+    "icone": "fa-check-double",
+    "conteudo": "<html completo>"
+  }
+}
