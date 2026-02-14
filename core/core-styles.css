@@ -2,7 +2,7 @@
  * ═══════════════════════════════════════════════════════════════
  * CORE STYLES v4.2
  * CSS completo extraído da página de referência
- * Modularizado para reutilização
+ * Apenas estilos da calculadora e sidebar, sem duplicidade com módulos
  * ═══════════════════════════════════════════════════════════════
  */
 
@@ -362,7 +362,7 @@ input[type="number"] {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   ACCESSIBILITY
+   ACCESSIBILITY (apenas utilitário básico)
    ═══════════════════════════════════════════════════════════════ */
 
 .sr-only {
