@@ -1,302 +1,487 @@
 /**
  * CALCULATOR ENGINE - Motor de Renderização Modular
- * Versão 4.4.3 - Ajuste de URL de Conteúdo Compartilhado
+ * Versão 4.0 - Baseado em JSON
  */
 
 class CalculatorEngine {
-  constructor(configOrUrl) {
-    if (typeof configOrUrl === 'object' && configOrUrl !== null) {
-      this.config = configOrUrl;
-      this.configUrl = null;
-    } else {
-      this.configUrl = configOrUrl;
-      this.config = null;
-    }
+  constructor(configUrl) {
+    this.configUrl = configUrl;
+    this.config = null;
     this.resultData = null;
   }
 
+  /**
+   * Inicializa o sistema carregando a configuração
+   */
   async init() {
     try {
-      if (!this.config && this.configUrl) {
-        const response = await fetch(this.configUrl);
-        if (!response.ok) throw new Error(`Erro config: ${response.status}`);
-        this.config = await response.json();
-      }
-
-      if (!this.config) throw new Error("Configuração indefinida");
+      const response = await fetch(this.configUrl);
+      if (!response.ok) throw new Error(`Erro ao carregar config: ${response.status}`);
       
-      // Carrega modais com fallback remoto
-      await this.loadSharedModais();
+      this.config = await response.json();
       
-      this.render();
+      // Renderiza componentes
+      this.renderSEO();
+      this.renderBreadcrumb();
+      this.renderHeader();
+      this.renderTabs();
+      this.renderForm();
+      this.renderContentTabs();
+      this.renderSidebarMenu();
+      
+      // Tenta carregar modais compartilhados (não crítico)
+      this.loadSharedModais().catch(() => {
+        console.info('Info: Modais compartilhados não disponíveis.');
+      });
+      
       console.log('✓ Calculator Engine inicializado');
     } catch (error) {
-      console.error('Erro Engine:', error);
+      console.error('Erro ao inicializar Calculator Engine:', error);
     }
   }
 
-  render() {
-    if (!this.config) return;
-    
-    // Fix Styles (Fallback para URL absoluta correta)
-    this.fixStyles();
-
-    this.renderSEO();
-    this.renderHeader();
-    this.renderBreadcrumb();
-    this.renderTags();        
-    this.renderSidebarMenu(); 
-    this.renderTabs();
-    this.renderForm();
-    this.renderContentTabs();
-    
-    // Inicializa a primeira aba como ativa
-    this.switchTab('calc');
-  }
-
   /**
-   * Garante o carregamento do CSS Core via URL absoluta se falhar localmente
-   */
-  fixStyles() {
-    const cssId = 'core-styles-fixed';
-    const absoluteUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/core-styles.css';
-    
-    if (document.getElementById(cssId)) return;
-
-    // Remove links quebrados ou duplicados para limpar erros do console
-    try {
-        document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-            // Se o link contiver 'styles.css' mas não for o nosso core oficial, remove para evitar conflito/404
-            if (link.href && link.href.includes('styles.css') && link.href !== absoluteUrl && !link.href.includes('core-styles.css')) {
-               // link.remove(); // Opcional: manter comentado se quiser permitir styles.css locais customizados
-            }
-        });
-    } catch(e) { console.warn('Erro ao limpar styles:', e); }
-
-    const link = document.createElement('link');
-    link.id = cssId;
-    link.rel = 'stylesheet';
-    link.href = absoluteUrl;
-    link.crossOrigin = 'anonymous';
-    document.head.appendChild(link);
-    console.log('✓ Styles corrigido para: core/core-styles.css');
-  }
-
-  /**
-   * Carrega modais compartilhados com estratégia de Fallback (Local -> Remoto)
+   * Carrega conteúdo compartilhado para modais (ex: shared-content.json)
    */
   async loadSharedModais() {
-    const paths = [
-        'shared-content.json', // Tentativa 1: Local
-        'https://auditeduca.github.io/Calculadoras-de-Enfermagem/shared-content.json' // Tentativa 2: GitHub Pages (URL Atualizada)
-    ];
-
-    for (const path of paths) {
-        try {
-            const response = await fetch(path);
-            
-            // Validações de resposta
-            if (!response.ok) continue;
-            const contentType = response.headers.get("content-type");
-            if (contentType && contentType.indexOf("application/json") === -1) continue;
-
-            const shared = await response.json();
-            
-            if (shared.shared_modais && this.config) {
-                this.config.modais = { ...this.config.modais, ...shared.shared_modais };
-                console.log(`✓ Modais compartilhados carregados de: ${path}`);
-                return; // Sucesso, encerra o loop
-            }
-        } catch (e) {
-            // Falha silenciosa para tentar o próximo path
-        }
+    try {
+      const response = await fetch('shared-content.json');
+      if (!response.ok) throw new Error('Não foi possível carregar shared-content.json');
+      const shared = await response.json();
+      // Armazena para uso futuro
+      window.__sharedContent = shared.shared_content;
+      console.log('✓ Conteúdo compartilhado carregado');
+    } catch (error) {
+      // Fallback silencioso – apenas loga e continua
+      console.info('Info: Modais compartilhados não disponíveis (ignorado).');
     }
-    console.warn('Info: Modais compartilhados não disponíveis (Local e Remoto falharam).');
   }
 
-  // --- RENDERIZADORES DE UI ---
-
+  /**
+   * Renderiza tags SEO
+   */
   renderSEO() {
-    if (!this.config?.seo) return;
-    document.title = this.config.seo.title || document.title;
+    if (!this.config.seo) return;
+    
+    document.title = this.config.seo.title;
+    
     const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc && this.config.seo.description) metaDesc.content = this.config.seo.description;
+    if (metaDesc) metaDesc.content = this.config.seo.description;
   }
 
+  /**
+   * Renderiza breadcrumb
+   */
   renderBreadcrumb() {
     const nav = document.querySelector('nav.mb-8');
     if (!nav || !this.config.breadcrumb) return;
-    const items = Array.isArray(this.config.breadcrumb) ? this.config.breadcrumb : this.config.breadcrumb.items;
-    if (!items) return;
-    nav.innerHTML = items.map(item => {
-      if (item.url && item.url !== "" && item.url !== "#") return `<a href="${item.url}" class="hover:underline text-nurse-accent transition-colors">${item.label}</a>`;
+    
+    const items = this.config.breadcrumb.items.map((item, index) => {
+      if (item.url) {
+        return `<a href="${item.url}" class="hover:underline text-nurse-accent">${item.label}</a>`;
+      }
       return `<span class="text-nurse-primary dark:text-cyan-400 font-bold">${item.label}</span>`;
-    }).join('<i class="fa-solid fa-chevron-right text-[10px] mx-2 text-slate-400"></i>');
+    }).join('<i class="fa-solid fa-chevron-right text-[10px]"></i>');
+    
+    nav.innerHTML = items;
   }
 
+  /**
+   * Renderiza header da página
+   */
   renderHeader() {
-    const h = this.config.header;
-    if (!h) return;
-    const b = document.querySelector('header span.bg-nurse-primary');
-    const t = document.getElementById('header-title');
-    const d = document.getElementById('header-description');
-    if (b) b.textContent = h.categoria || h.badge || 'Calculadora';
-    if (t) t.innerHTML = h.titulo || '';
-    if (d) d.textContent = h.descricao || '';
+    const header = this.config.header;
+    if (!header) return;
+    
+    const badge = document.querySelector('header span.bg-nurse-primary');
+    const title = document.getElementById('header-title');
+    const desc = document.getElementById('header-description');
+    
+    if (badge) badge.textContent = header.badge;
+    if (title) title.innerHTML = header.titulo;
+    if (desc) desc.textContent = header.descricao;
   }
 
+  /**
+   * Renderiza abas de navegação
+   */
   renderTabs() {
     const nav = document.querySelector('article#calculator-container nav');
     if (!nav || !this.config.abas) return;
+    
     nav.innerHTML = this.config.abas.map(aba => `
-      <button onclick="CALCULATOR_SYSTEM.switchTab('${aba.id}')" class="tab-btn" id="btn-tab-${aba.id}">
-        ${aba.icon ? `<i class="fa-solid ${aba.icon} mr-2"></i>` : ''}${aba.label}
+      <button 
+        onclick="CALCULATOR_SYSTEM.switchTab('${aba.id}')" 
+        class="tab-btn ${aba.ativa ? 'active' : ''}" 
+        id="btn-tab-${aba.id}">
+        ${aba.label}
       </button>
     `).join('');
   }
 
+  /**
+   * Renderiza formulário dinamicamente
+   */
   renderForm() {
-    const c = document.getElementById('pane-calc');
-    if (!c || !this.config.formulario) return;
-    const f = this.config.formulario;
-    const sections = f.secoes.map(s => `
+    const formContainer = document.getElementById('pane-calc');
+    if (!formContainer || !this.config.formulario) return;
+    
+    const sectionsHTML = this.config.formulario.secoes.map(secao => `
       <div class="space-y-6">
-        ${s.titulo ? `<h3 class="text-xs font-black uppercase text-nurse-primary/50 mb-4 border-b pb-2">${s.titulo}</h3>` : ''}
-        <div class="grid md:grid-cols-2 gap-6">${s.campos.map(f => this.renderField(f)).join('')}</div>
+        <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 border-b pb-2">
+          ${secao.titulo}
+        </h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          ${secao.campos.map(campo => this.renderField(campo)).join('')}
+        </div>
       </div>
     `).join('');
     
-    c.innerHTML = `
-      <div class="space-y-10">${sections}
+    formContainer.innerHTML = `
+      <div class="space-y-10">
+        ${sectionsHTML}
+        
         <div class="grid grid-cols-2 gap-4 pt-4">
-          <button onclick="CALCULATOR_SYSTEM.calculate()" class="btn-primary-action"><i class="fa-solid fa-calculator"></i> ${f.botao_texto || 'Calcular'}</button>
-          <button onclick="CALCULATOR_SYSTEM.reset()" class="btn-secondary-action">${f.limpar_texto || 'Limpar'}</button>
+          <button onclick="CALCULATOR_SYSTEM.calculate()" class="btn-primary-action">
+            <i class="fa-solid fa-calculator"></i> Calcular
+          </button>
+          <button onclick="CALCULATOR_SYSTEM.reset()" class="btn-secondary-action">
+            Limpar
+          </button>
         </div>
-        <div id="results-wrapper" class="hidden pt-8 border-t border-slate-200 dark:border-slate-700 animate-fade-in">
+        
+        <div id="results-wrapper" class="hidden pt-8 border-t border-slate-200 dark:border-slate-700">
           <div class="bg-slate-50 dark:bg-slate-900/40 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-6">
-            <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-4">Resultado</p>
+            <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-4">Volume a Aspirar</p>
             <div id="res-total" class="text-6xl font-black text-[#1A3E74] dark:text-cyan-400 font-nunito">0,00</div>
-            <p id="res-unit" class="text-lg font-black text-nurse-secondary mt-2 uppercase"></p>
+            <p id="res-unit" class="text-lg font-black text-nurse-secondary mt-2 uppercase">mL</p>
           </div>
-          <div class="grid grid-cols-2 gap-4 mb-10">
-            <button onclick="CALCULATOR_SYSTEM.generatePDF()" class="btn-primary-action"><i class="fa-solid fa-file-pdf"></i> PDF</button>
-            <button onclick="CALCULATOR_SYSTEM.copyResult()" class="btn-secondary-action"><i class="fa-solid fa-copy"></i> Copiar</button>
+          
+          <div class="flex flex-col gap-4 mb-10">
+            <div class="grid grid-cols-2 gap-4">
+              <button onclick="CALCULATOR_SYSTEM.generatePDF()" class="btn-primary-action">
+                <i class="fa-solid fa-file-pdf"></i> PDF
+              </button>
+              <button onclick="CALCULATOR_SYSTEM.copyResult()" class="btn-secondary-action">
+                <i class="fa-solid fa-copy"></i> Copiar
+              </button>
+            </div>
           </div>
-          <div class="mb-12"><h3 class="text-xs font-black uppercase mb-4"><i class="fa-solid fa-clipboard-check"></i> Auditoria</h3><ul id="audit-list" class="space-y-3"></ul></div>
+          
+          <div class="mb-12">
+            <h3 class="text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-4">
+              <i class="fa-solid fa-clipboard-check"></i> Auditoria
+            </h3>
+            <ul id="audit-list" class="space-y-3"></ul>
+          </div>
         </div>
       </div>
     `;
   }
 
+  /**
+   * Renderiza um campo do formulário
+   */
   renderField(campo) {
-    const col = campo.col || 'md:col-span-1';
-    let input = '';
-    if (campo.type === 'select') {
-      input = `<select id="${campo.id}" class="input-field" ${campo.required?'required':''}>${campo.opcoes.map(o=>`<option value="${o.value}">${o.label}</option>`).join('')}</select>`;
-    } else {
-      input = `<input id="${campo.id}" type="${campo.type}" class="input-field" placeholder="${campo.placeholder||''}" ${campo.required?'required':''} step="${campo.step||'any'}">`;
+    const colClass = campo.col || 'md:col-span-1';
+    
+    let inputHTML = '';
+    
+    switch (campo.type) {
+      case 'select':
+        inputHTML = `
+          <select id="${campo.id}" class="input-field" ${campo.required ? 'required' : ''}>
+            ${campo.opcoes.map(opt => `
+              <option value="${opt.value}">${opt.label}</option>
+            `).join('')}
+          </select>
+        `;
+        break;
+        
+      case 'number':
+        inputHTML = `
+          <input 
+            id="${campo.id}" 
+            type="number" 
+            class="input-field" 
+            placeholder="${campo.placeholder || ''}"
+            ${campo.required ? 'required' : ''}
+            ${campo.validacao?.min ? `min="${campo.validacao.min}"` : ''}
+            ${campo.validacao?.max ? `max="${campo.validacao.max}"` : ''}
+          >
+        `;
+        break;
+        
+      default:
+        inputHTML = `
+          <input 
+            id="${campo.id}" 
+            type="${campo.type}" 
+            class="input-field" 
+            placeholder="${campo.placeholder || ''}"
+            ${campo.required ? 'required' : ''}
+          >
+        `;
     }
-    return `<div class="${col}"><label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" for="${campo.id}">${campo.label}</label>${input}</div>`;
+    
+    return `
+      <div class="${colClass}">
+        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+          ${campo.label}
+        </label>
+        ${inputHTML}
+      </div>
+    `;
   }
 
+  /**
+   * Renderiza conteúdo das abas
+   */
   renderContentTabs() {
     if (!this.config.conteudo) return;
-    const setHtml = (id, html) => { const el = document.getElementById(id); if(el) el.innerHTML = html; };
     
-    // Sobre
-    const s = this.config.conteudo.sobre;
-    if (s) setHtml('pane-sobre', s.texto && !s.titulo ? `<div class="prose dark:prose-invert">${s.texto}</div>` : `
-      ${s.titulo ? `<h2 class="text-2xl font-black mb-4 font-nunito">${s.titulo}</h2>` : ''}
-      ${s.texto || ''}
-      ${s.formula_visual ? `<div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl font-mono text-xs my-6 text-center border border-slate-200"><code>${s.formula_visual}</code></div>` : ''}
-      ${s.exemplo ? `<div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-2xl border-l-4 border-blue-500 mt-4"><h4 class="font-bold mb-3 text-blue-800 dark:text-blue-300">Exemplo:</h4><p class="text-sm">${s.exemplo.explicacao||''}</p></div>` : ''}
-    `);
-
-    // Ajuda
-    const a = this.config.conteudo.ajuda;
-    if (a) setHtml('pane-ajuda', `
-      ${a.titulo ? `<h2 class="text-2xl font-black mb-6 font-nunito">${a.titulo}</h2>` : ''}
-      <div class="space-y-6">${a.passos ? a.passos.map(p => `<div class="flex gap-4 items-start"><div class="w-8 h-8 rounded-full bg-nurse-primary text-white flex items-center justify-center font-bold text-sm flex-shrink-0">${p.numero}</div><div><h4 class="font-bold text-lg mb-1">${p.titulo}</h4><p class="text-slate-600 dark:text-slate-300 text-sm">${p.descricao}</p></div></div>`).join('') : ''}</div>
-    `);
-
-    // Referência
-    const r = this.config.conteudo.referencia;
-    if (r) setHtml('pane-referencia', `
-      <h2 class="text-2xl font-black mb-6 font-nunito">${r.titulo || 'Referências'}</h2>
-      <div class="space-y-4">${r.itens.map(i => `<div class="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl"><div class="flex items-start gap-3"><i class="fa-solid fa-book text-nurse-primary mt-1 opacity-70"></i><div class="flex-1"><h5 class="font-bold text-sm">${i.titulo}</h5><p class="text-xs text-slate-500 mt-1">${i.autores} ${i.ano ? `(${i.ano})` : ''}</p>${i.link?`<a href="${i.link}" target="_blank" class="text-xs text-nurse-accent hover:underline mt-2 inline-block">Acessar fonte</a>`:''}</div></div></div>`).join('')}</div>
-    `);
+    // ABA SOBRE
+    const sobrePane = document.getElementById('pane-sobre');
+    if (sobrePane && this.config.conteudo.sobre) {
+      const sobre = this.config.conteudo.sobre;
+      sobrePane.innerHTML = `
+        <h2 class="text-2xl font-black mb-4 font-nunito">${sobre.titulo}</h2>
+        ${sobre.texto}
+        <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl font-mono text-xs my-6">
+          <code>${sobre.formula_visual}</code>
+        </div>
+        ${sobre.exemplo ? `
+          <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-2xl border-l-4 border-blue-500">
+            <h4 class="font-bold mb-3">Exemplo Prático:</h4>
+            <p class="text-sm">${sobre.exemplo.explicacao}</p>
+            <div class="mt-4 font-mono text-sm">
+              <strong>Cálculo:</strong> ${sobre.exemplo.prescricao} UI ÷ ${sobre.exemplo.concentracao} UI/mL = ${sobre.exemplo.resultado} mL
+            </div>
+          </div>
+        ` : ''}
+      `;
+    }
+    
+    // ABA AJUDA
+    const ajudaPane = document.getElementById('pane-ajuda');
+    if (ajudaPane && this.config.conteudo.ajuda) {
+      const ajuda = this.config.conteudo.ajuda;
+      ajudaPane.innerHTML = `
+        <h2 class="text-2xl font-black mb-6 font-nunito">${ajuda.titulo}</h2>
+        <div class="space-y-6">
+          ${ajuda.passos.map(passo => `
+            <div class="flex gap-4 items-start">
+              <div class="w-10 h-10 rounded-full bg-nurse-primary text-white flex items-center justify-center font-bold flex-shrink-0">
+                ${passo.numero}
+              </div>
+              <div>
+                <h4 class="font-bold text-lg mb-2">${passo.titulo}</h4>
+                <p class="text-slate-600 dark:text-slate-300">${passo.descricao}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+    
+    // ABA REFERÊNCIA
+    const refPane = document.getElementById('pane-referencia');
+    if (refPane && this.config.conteudo.referencia) {
+      const ref = this.config.conteudo.referencia;
+      refPane.innerHTML = `
+        <h2 class="text-2xl font-black mb-6 font-nunito">${ref.titulo}</h2>
+        <div class="space-y-4">
+          ${ref.itens.map(item => `
+            <div class="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl">
+              <div class="flex items-start gap-3">
+                <i class="fa-solid ${this.getIconForType(item.tipo)} text-nurse-primary mt-1"></i>
+                <div class="flex-1">
+                  <h5 class="font-bold">${item.titulo}</h5>
+                  <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                    ${item.autores} ${item.ano ? `(${item.ano})` : ''}
+                  </p>
+                  ${item.link ? `
+                    <a href="${item.link}" target="_blank" class="text-sm text-nurse-accent hover:underline mt-2 inline-block">
+                      Acessar documento <i class="fa-solid fa-external-link-alt text-xs"></i>
+                    </a>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
   }
 
+  /**
+   * Retorna ícone baseado no tipo de referência
+   */
+  getIconForType(tipo) {
+    const icons = {
+      'artigo': 'fa-file-lines',
+      'protocolo': 'fa-clipboard-check',
+      'resolucao': 'fa-gavel',
+      'livro': 'fa-book'
+    };
+    return icons[tipo] || 'fa-file';
+  }
+
+  /**
+   * Renderiza menu lateral
+   */
   renderSidebarMenu() {
-    const s = document.getElementById('sidebar-tools');
-    if (!s || !this.config.menu_lateral) return;
-    s.innerHTML = this.config.menu_lateral.map(i => `
-      <button class="tool-btn" id="btn-${i.id}" aria-label="${i.label}" title="${i.label}" onclick="CALCULATOR_SYSTEM.${i.acao}('${i.parametro}')">
-        <i class="fa-solid ${i.icone}"></i><span class="btn-label">${i.label}</span>
-      </button>`).join('');
-  }
-
-  renderTags() {
-    const c = document.getElementById('tags-container');
-    if (!c || !this.config.tags) return;
-    c.innerHTML = `<div class="flex flex-wrap gap-2 mb-6">${this.config.tags.map(t => `<a href="busca-e-conteudo.html?tag=${encodeURIComponent(t.label)}" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-nurse-primary/10 text-nurse-primary dark:bg-cyan-400/10 dark:text-cyan-400 border border-nurse-primary/20 hover:bg-nurse-primary/20 transition-all"><i class="fa-solid ${t.icone} text-[10px]"></i>${t.label}</a>`).join('')}</div>`;
-  }
-
-  // --- LÓGICA DE AÇÃO ---
-
-  switchTab(tabId) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(`btn-tab-${tabId}`)?.classList.add('active');
-    ['calc', 'sobre', 'ajuda', 'referencia'].forEach(id => {
-      const el = document.getElementById(`pane-${id}`);
-      if(el) el.classList.add('hidden');
-    });
-    document.getElementById(`pane-${tabId}`)?.classList.remove('hidden');
-  }
-
-  calculate() {
-    const p = parseFloat(document.getElementById('prescricao_medica')?.value);
-    const c = parseFloat(document.getElementById('concentracao_insulina')?.value);
+    const sidebar = document.getElementById('sidebar-tools');
+    if (!sidebar || !this.config.menu_lateral) return;
     
-    if (isNaN(p)) {
-      if(window.showToast) window.showToast("Preencha os campos obrigatórios", "warning");
+    sidebar.innerHTML = this.config.menu_lateral.map(item => {
+      // Mapeia ações para funções do CALCULATOR_SYSTEM
+      let action = 'showModal'; // padrão
+      if (item.acao === 'switchTab') {
+        action = 'switchTab';
+      } else if (item.acao === 'showModalShared') {
+        action = 'showModalShared';
+      } else if (item.acao === 'tourGuiado') {
+        action = 'tourGuiado';
+      }
+      // Para ações não mapeadas, usa showModal
+      return `
+        <button 
+          class="tool-btn" 
+          onclick="CALCULATOR_SYSTEM.${action}('${item.parametro}')" 
+          title="${item.label}">
+          <i class="fas ${item.icone}"></i>
+          <span class="btn-label">${item.label}</span>
+        </button>
+      `;
+    }).join('');
+  }
+
+  /**
+   * Realiza o cálculo
+   */
+  calculate() {
+    const prescricao = parseFloat(document.getElementById('prescricao_medica').value);
+    const concentracao = parseFloat(document.getElementById('concentracao_insulina').value);
+    
+    // Validação
+    const validacao = this.config.formulario.secoes
+      .flatMap(s => s.campos)
+      .find(c => c.id === 'prescricao_medica')?.validacao;
+    
+    if (!prescricao || prescricao <= 0) {
+      window.showToast(validacao?.mensagem || "Informe uma prescrição válida!", "warning");
       return;
     }
     
-    let result = 0;
-    if(c) result = p / c;
+    // Cálculo
+    const volumeMl = prescricao / concentracao;
     
-    // Renderiza resultado
-    const rTotal = document.getElementById('res-total');
-    if(rTotal) rTotal.textContent = result.toLocaleString('pt-BR', {maximumFractionDigits:3});
+    // Atualiza interface
+    const casasDecimais = this.config.calculo.casas_decimais || 3;
+    document.getElementById('res-total').innerText = volumeMl.toLocaleString('pt-BR', { 
+      minimumFractionDigits: 2, 
+      maximumFractionDigits: casasDecimais 
+    });
+    document.getElementById('res-unit').innerText = `${this.config.calculo.unidade_resultado} (${volumeMl.toFixed(casasDecimais)} ${this.config.calculo.unidade_resultado})`;
     
-    document.getElementById('results-wrapper')?.classList.remove('hidden');
+    // Mostra resultados
+    document.getElementById('results-wrapper').classList.remove('hidden');
     
-    // Auditoria simples
-    const audit = document.getElementById('audit-list');
-    if(audit) audit.innerHTML = `<li class="bg-green-50 p-2 text-sm rounded border-l-4 border-green-500">Cálculo realizado: ${result.toFixed(3)}</li>`;
+    // Renderiza auditoria
+    this.renderAudit(prescricao, concentracao, volumeMl);
     
-    this.resultData = { p, c, result };
-    if(window.showToast) window.showToast("Cálculo realizado!", "success");
+    // Verifica alertas
+    this.checkAlerts(volumeMl);
+    
+    // Salva dados para PDF
+    this.resultData = { prescricao, concentracao, volumeMl };
+    
+    window.showToast("Cálculo realizado com sucesso!", "success");
   }
 
-  reset() {
-    document.querySelectorAll('.input-field').forEach(i => i.value = '');
-    document.getElementById('results-wrapper')?.classList.add('hidden');
-    this.resultData = null;
+  /**
+   * Renderiza auditoria do cálculo
+   */
+  renderAudit(prescricao, concentracao, resultado) {
+    const auditList = document.getElementById('audit-list');
+    if (!auditList) return;
+    
+    auditList.innerHTML = `
+      <li class="bg-green-50 dark:bg-green-900/20 p-3 rounded text-sm">
+        <i class="fa-solid fa-check text-green-600 mr-2"></i>
+        <strong>Fórmula:</strong> ${this.config.calculo.formula}
+      </li>
+      <li class="bg-slate-50 dark:bg-slate-900/50 p-3 rounded text-sm">
+        <i class="fa-solid fa-calculator text-slate-500 mr-2"></i>
+        <strong>Cálculo:</strong> ${prescricao} UI ÷ ${concentracao} UI/mL = ${resultado.toFixed(4)} mL
+      </li>
+      <li class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded text-sm">
+        <i class="fa-solid fa-info-circle text-blue-600 mr-2"></i>
+        <strong>Concentração:</strong> ${concentracao === 100 ? 'U100' : 'U300'}
+      </li>
+    `;
   }
 
-  copyResult() {
-    if(!this.resultData) return;
-    const txt = `Resultado: ${this.resultData.result}`;
-    navigator.clipboard.writeText(txt).then(() => {
-        if(window.showToast) window.showToast("Copiado!", "success");
+  /**
+   * Verifica alertas baseados em condições
+   */
+  checkAlerts(resultado) {
+    if (!this.config.calculo.alertas) return;
+    
+    this.config.calculo.alertas.forEach(alerta => {
+      const condicao = alerta.condicao.replace('resultado', resultado);
+      if (eval(condicao)) {
+        window.showToast(alerta.mensagem, alerta.tipo);
+      }
     });
   }
 
-  generatePDF() {
-    window.print();
+  /**
+   * Reseta o formulário
+   */
+  reset() {
+    this.config.formulario.secoes.forEach(secao => {
+      secao.campos.forEach(campo => {
+        const element = document.getElementById(campo.id);
+        if (element) {
+          element.value = campo.type === 'select' ? campo.opcoes[0].value : '';
+        }
+      });
+    });
+    
+    document.getElementById('results-wrapper').classList.add('hidden');
+    this.resultData = null;
+  }
+
+  /**
+   * Obtém dados do resultado para exportação
+   */
+  getResultData() {
+    return this.resultData;
+  }
+
+  /**
+   * Obtém configuração dos modais, com fallback para conteúdo compartilhado
+   */
+  getModalConfig(modalId) {
+    const modal = this.config.modais?.[modalId];
+    if (!modal) return null;
+    
+    // Se o modal referencia um conteúdo compartilhado, tenta buscar
+    if (modal.source === 'shared' && modal.shared_id && window.__sharedContent) {
+      const shared = window.__sharedContent[modal.shared_id];
+      if (shared) {
+        return {
+          titulo: shared.titulo,
+          icone: shared.icone,
+          conteudo: shared.html
+        };
+      }
+    }
+    return modal;
   }
 }
 
-window.CALCULATOR_ENGINE = CalculatorEngine;
+// Instância global
+window.CALCULATOR_ENGINE = null;

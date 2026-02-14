@@ -277,22 +277,29 @@
       "id": "metas-seguranca",
       "icone": "fa-bullseye",
       "label": "Metas",
-      "acao": "showModal",
-      "parametro": "metas_seguranca"
+      "acao": "showModalShared",
+      "parametro": "metas_internacionais"
     },
     {
       "id": "guia-rapido",
       "icone": "fa-question-circle",
       "label": "Ajuda",
-      "acao": "tourGuiado",
+      "acao": "showModal",
       "parametro": "ajuda"
     },
     {
       "id": "nove-certos",
       "icone": "fa-check-double",
       "label": "9 Acertos",
+      "acao": "showModalShared",
+      "parametro": "nove_acertos"
+    },
+    {
+      "id": "diagnostico-enfermagem",
+      "icone": "fa-stethoscope",
+      "label": "NANDA",
       "acao": "showModal",
-      "parametro": "nove_certos"
+      "parametro": "nanda"
     },
     {
       "id": "referencias",

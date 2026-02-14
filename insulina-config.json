@@ -375,7 +375,7 @@
       "id": "guia-rapido",
       "icone": "fa-question-circle",
       "label": "Ajuda",
-      "acao": "tourGuiado",
+      "acao": "showModal",
       "parametro": "ajuda"
     },
     {
@@ -389,8 +389,8 @@
       "id": "diagnostico-enfermagem",
       "icone": "fa-stethoscope",
       "label": "NANDA",
-      "acao": "searchNANDA",
-      "parametro": "insulina"
+      "acao": "showModal",
+      "parametro": "nanda"
     },
     {
       "id": "referencias",
