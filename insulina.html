@@ -43,7 +43,7 @@
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
   
   <!-- Core CSS Local -->
-  <link rel="stylesheet" href="core/styles.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/styles.css"/>
 
   <script>
     tailwind.config = {
@@ -268,8 +268,8 @@
   <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js"></script>
   
   <!-- Core Local -->
-  <script src="core/calculator-engine.js"></script>
-  <script src="core/calculator-system-v42.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/calculator-engine.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/calculator-system-v42.js"></script>
   
   <script>
     /**
@@ -284,19 +284,19 @@
           loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html'),
           loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html'),
           loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html'),
-          loadModule('modal-container', 'components/modal-generic.html'),
-          loadModule('author-container', 'components/author-section.html'),
-          loadModule('sidebar-simulado-enfermagem', 'sidebars/sidebar-simulado-enfermagem.html'),
-          loadModule('sidebar-compartilhar', 'sidebars/sidebar-compartilhar.html'),
-          loadModule('sidebar-outras-calculadoras', 'sidebars/sidebar-outras-calculadoras.html'),
-          loadModule('fab-container', 'components/fab-buttons.html')
+          loadModule('modal-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/modal-generic.html'),
+          loadModule('author-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/author-section.html'),
+          loadModule('sidear-simulado-enfermagem', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/sidebars/sidebar-simulado-enfermagem.html'),
+          loadModule('sidebar-compartilhar', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/sidebars/sidebar-compartilhar.html'),
+          loadModule('sidebar-outras-calculadoras', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/sidebars/sidebar-outras-calculadoras.html'),
+          loadModule('fab-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/fab-buttons.html')
         ]);
         
         // 2. Inicializar Calculator System
-        const configPath = 'insulina-config.json';
+        const configPath = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/insulina-config.json';
         await CALCULATOR_SYSTEM.init(configPath);
         
-        console.log('✅ Sistema inicializado com sucesso!');
+        console.log('✅ Sistema inicializado com sucesso!')
         
       } catch (error) {
         console.error('❌ Erro na inicialização:', error);
