@@ -1,6 +1,6 @@
 /**
  * CALCULATOR ENGINE - Motor de Renderização Modular
- * Versão 4.3.1 - Hotfix Styles URL e Proteção de Renderização
+ * Versão 4.3.2 - Fix Styles URL Absoluta
  */
 
 class CalculatorEngine {
@@ -73,29 +73,38 @@ class CalculatorEngine {
 
   /**
    * Injeta styles.css via URL absoluta se não estiver carregado
-   * Resolve problema de 404 em ambientes com caminhos relativos quebrados
+   * Remove referências quebradas locais para limpar erros 404
    */
   fixStyles() {
     const cssId = 'core-styles-fixed';
     const absoluteUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/styles.css';
 
-    if (!document.getElementById(cssId)) {
-        // Verifica se já existe algum styles.css falhando antes de injetar
-        const existingLinks = document.querySelectorAll('link[href*="styles.css"]');
-        let needsInjection = true;
-        
-        // Opcional: Poderíamos remover o link quebrado aqui, mas vamos apenas adicionar o correto
-        
-        if (needsInjection) {
-            const link = document.createElement('link');
-            link.id = cssId;
-            link.rel = 'stylesheet';
-            link.href = absoluteUrl;
-            link.crossOrigin = 'anonymous';
-            document.head.appendChild(link);
-            console.log('✓ Styles.css corrigido para URL absoluta (Hotfix)');
-        }
+    // Se já foi injetado, não faz nada
+    if (document.getElementById(cssId)) return;
+
+    // Tenta limpar links antigos que possam estar gerando 404
+    try {
+        const oldLinks = document.querySelectorAll('link[href*="styles.css"]');
+        oldLinks.forEach(link => {
+            // Só remove se não for o nosso URL absoluto (pra evitar loop ou conflito)
+            if (link.href !== absoluteUrl) {
+                link.remove();
+                console.log('🗑️ Link CSS quebrado removido:', link.href);
+            }
+        });
+    } catch (e) {
+        console.warn('Erro ao limpar links antigos:', e);
     }
+
+    // Injeta o novo link absoluto
+    const link = document.createElement('link');
+    link.id = cssId;
+    link.rel = 'stylesheet';
+    link.href = absoluteUrl;
+    link.crossOrigin = 'anonymous';
+    document.head.appendChild(link);
+    
+    console.log('✓ Styles.css corrigido para URL absoluta:', absoluteUrl);
   }
 
   /**
