@@ -1,41 +1,101 @@
 {
-  "seo": {
-    "title": "Calculadora de IMC Profissional - Enfermagem",
-    "description": "Ferramenta para cálculo do Índice de Massa Corporal com classificação da OMS."
-  },
-  "breadcrumb": [
-    { "label": "Home", "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/" },
-    { "label": "Calculadoras", "url": "#" },
-    { "label": "IMC", "url": "" }
-  ],
-  "header": {
+  "metadata": {
+    "id": "calc-imc",
+    "titulo": "IMC",
     "categoria": "Avaliação Nutricional",
-    "titulo": "Cálculo de IMC",
-    "descricao": "O Índice de Massa Corporal (IMC) é o padrão internacional para avaliar o grau de sobrepeso e obesidade."
+    "versao": "4.1",
+    "ultima_atualizacao": "2025-02-13"
   },
-  "abas": [
-    { "id": "calc", "label": "Calculadora", "icon": "fa-calculator" },
-    { "id": "sobre", "label": "Sobre o IMC", "icon": "fa-info-circle" },
-    { "id": "ajuda", "label": "Como usar", "icon": "fa-question-circle" }
+  "acessibilidade": {
+    "vlibras": true,
+    "leitor_tela": true,
+    "alto_contraste": false
+  },
+  "seo": {
+    "title": "Cálculo de IMC | Calculadoras de Enfermagem Profissional",
+    "description": "Calculadora profissional para cálculo do Índice de Massa Corporal com classificação da OMS e avaliação nutricional. Segurança e precisão na avaliação antropométrica."
+  },
+  "header": {
+    "badge": "Avaliação Nutricional",
+    "titulo": "Cálculo de IMC",
+    "descricao": "Ferramenta profissional para avaliação do estado nutricional através do Índice de Massa Corporal."
+  },
+  "breadcrumb": {
+    "items": [
+      { "label": "Início", "url": "index.html" },
+      { "label": "Calculadora de IMC", "url": null }
+    ]
+  },
+  "tags": [
+    {
+      "label": "Nutrição",
+      "icone": "fa-apple-alt"
+    },
+    {
+      "label": "OMS",
+      "icone": "fa-globe"
+    },
+    {
+      "label": "Adultos",
+      "icone": "fa-user"
+    },
+    {
+      "label": "Antropometria",
+      "icone": "fa-ruler"
+    }
   ],
   "formulario": {
     "secoes": [
       {
-        "titulo": "Dados do Paciente",
+        "id": "identificacao",
+        "titulo": "Identificação (Opcional)",
+        "campos": [
+          {
+            "id": "nome_paciente",
+            "label": "Nome do Paciente",
+            "type": "text",
+            "placeholder": "Opcional",
+            "required": false,
+            "col": "md:col-span-1"
+          },
+          {
+            "id": "data_nascimento",
+            "label": "Data Nascimento",
+            "type": "date",
+            "required": false,
+            "col": "md:col-span-1"
+          }
+        ]
+      },
+      {
+        "id": "parametros",
+        "titulo": "Dados Antropométricos",
         "campos": [
           {
             "id": "peso_kg",
-            "label": "Peso atual (kg)",
+            "label": "Peso Atual (kg)",
             "type": "number",
             "placeholder": "Ex: 70.5",
-            "required": true
+            "required": true,
+            "validacao": {
+              "min": 1,
+              "max": 300,
+              "mensagem": "Peso deve estar entre 1 e 300 kg"
+            },
+            "col": "md:col-span-1"
           },
           {
             "id": "altura_m",
             "label": "Altura (metros)",
             "type": "number",
             "placeholder": "Ex: 1.75",
-            "required": true
+            "required": true,
+            "validacao": {
+              "min": 0.5,
+              "max": 2.5,
+              "mensagem": "Altura deve estar entre 0,5 e 2,5 m"
+            },
+            "col": "md:col-span-1"
           }
         ]
       }
@@ -44,26 +104,183 @@
     "limpar_texto": "Limpar Dados"
   },
   "calculo": {
+    "formula": "IMC = Peso (kg) / Altura² (m²)",
+    "unidade_resultado": "kg/m²",
+    "casas_decimais": 1,
+    "validacoes": [
+      {
+        "tipo": "range",
+        "campo": "peso_kg",
+        "min": 1,
+        "max": 300,
+        "mensagem": "O peso deve estar entre 1 e 300 kg"
+      },
+      {
+        "tipo": "range",
+        "campo": "altura_m",
+        "min": 0.5,
+        "max": 2.5,
+        "mensagem": "A altura deve estar entre 0,5 e 2,5 m"
+      }
+    ],
     "alertas": [
       {
-        "condicao": "resultado > 30",
-        "mensagem": "Atenção: Resultado indica Obesidade. Recomenda-se avaliação clínica detalhada.",
-        "tipo": "warning"
+        "condicao": "resultado < 18.5",
+        "tipo": "info",
+        "mensagem": "📊 Classificação: Baixo Peso. Considere avaliação nutricional detalhada."
+      },
+      {
+        "condicao": "resultado >= 18.5 && resultado < 25",
+        "tipo": "success",
+        "mensagem": "✅ Classificação: Peso Normal. Mantenha hábitos saudáveis!"
+      },
+      {
+        "condicao": "resultado >= 25 && resultado < 30",
+        "tipo": "warning",
+        "mensagem": "⚠️ Classificação: Sobrepeso. Recomenda-se orientação nutricional."
+      },
+      {
+        "condicao": "resultado >= 30",
+        "tipo": "error",
+        "mensagem": "🚨 Atenção: Resultado indica Obesidade. Recomenda-se avaliação clínica detalhada."
       }
     ]
   },
-  "conteudo_sobre": {
-    "texto": "<h3>O que é o IMC?</h3><p>O Índice de Massa Corporal é um cálculo simples para avaliar se uma pessoa está no peso ideal.</p>"
+  "abas": [
+    {
+      "id": "calc",
+      "label": "Calculadora",
+      "icone": "fa-calculator",
+      "ativa": true
+    },
+    {
+      "id": "sobre",
+      "label": "Sobre",
+      "icone": "fa-book-open"
+    },
+    {
+      "id": "ajuda",
+      "label": "Instruções",
+      "icone": "fa-question-circle"
+    },
+    {
+      "id": "referencia",
+      "label": "Referência",
+      "icone": "fa-bookmark"
+    }
+  ],
+  "conteudo": {
+    "sobre": {
+      "titulo": "Sobre o Cálculo",
+      "texto": "<p>O Índice de Massa Corporal (IMC) é uma medida internacional usada para calcular se uma pessoa está no peso ideal. Foi desenvolvido pelo estatístico belga Adolphe Quetelet no século XIX.</p><p>O IMC é amplamente utilizado por profissionais de saúde para triagem e avaliação nutricional inicial, sendo reconhecido pela OMS como padrão de referência.</p>",
+      "formula_visual": "IMC = Peso (kg) / Altura² (m²)",
+      "exemplo": {
+        "peso": 70,
+        "altura": 1.75,
+        "resultado": 22.9,
+        "explicacao": "Para um paciente de 70 kg com 1,75 m de altura, o IMC é 22,9 kg/m² (Peso Normal)"
+      }
+    },
+    "ajuda": {
+      "titulo": "Como Usar",
+      "passos": [
+        {
+          "numero": 1,
+          "titulo": "Pesar o Paciente",
+          "descricao": "Utilize balança calibrada, com paciente descalço e com roupa leve"
+        },
+        {
+          "numero": 2,
+          "titulo": "Medir a Altura",
+          "descricao": "Use estadiômetro, paciente descalço, postura ereta, olhar no horizonte"
+        },
+        {
+          "numero": 3,
+          "titulo": "Inserir os Dados",
+          "descricao": "Digite o peso em quilogramas e a altura em metros na calculadora"
+        },
+        {
+          "numero": 4,
+          "titulo": "Interpretar o Resultado",
+          "descricao": "Observe a classificação segundo critérios da OMS e oriente o paciente adequadamente"
+        }
+      ]
+    },
+    "referencia": {
+      "titulo": "Bibliografia",
+      "itens": [
+        {
+          "tipo": "artigo",
+          "titulo": "Classificação de Peso pelo IMC - Organização Mundial da Saúde",
+          "autores": "OMS",
+          "ano": 2024,
+          "link": "https://www.who.int"
+        },
+        {
+          "tipo": "protocolo",
+          "titulo": "Protocolo de Avaliação Nutricional do Ministério da Saúde",
+          "autores": "Ministério da Saúde",
+          "ano": 2022,
+          "link": null
+        },
+        {
+          "tipo": "resolucao",
+          "titulo": "Resolução COFEN nº 564/2017 - Código de Ética dos Profissionais de Enfermagem",
+          "autores": "COFEN",
+          "ano": 2017,
+          "link": null
+        }
+      ]
+    }
   },
-  "conteudo_ajuda": {
-    "texto": "<h3>Como usar</h3><p>Preencha o peso e a altura e clique em calcular.</p>"
+  "modais": {
+    "tutorial": {
+      "titulo": "Tutorial Interativo",
+      "icone": "fa-question-circle",
+      "conteudo": "<div class='space-y-4'><h4 class='font-bold text-lg'>Passo a Passo</h4><ol class='list-decimal pl-5 space-y-2'><li>Confira os dados antropométricos do paciente</li><li>Certifique-se de usar balança e estadiômetro calibrados</li><li>Insira o peso em kg e altura em metros</li><li>Clique em calcular</li><li>Verifique o resultado e a classificação OMS</li><li>Oriente o paciente conforme necessário</li></ol></div>"
+    },
+    "nanda": {
+      "titulo": "Diagnósticos NANDA-I Relacionados",
+      "icone": "fa-stethoscope",
+      "conteudo": "<div class='space-y-3'><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Nutrição desequilibrada: mais do que as necessidades corporais</h5><p class='text-sm mt-2'>Relacionado a ingestão excessiva em relação às necessidades metabólicas</p></div><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Risco de sobrepeso</h5><p class='text-sm mt-2'>Relacionado a padrões alimentares inadequados e estilo de vida sedentário</p></div><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Conhecimento deficiente</h5><p class='text-sm mt-2'>Sobre regime terapêutico e hábitos alimentares saudáveis</p></div></div>"
+    },
+    "nove_certos": {
+      "titulo": "9 Certos da Medicação",
+      "icone": "fa-check-double",
+      "conteudo": "<ul class='space-y-2'><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>1. Paciente Certo</strong><p class='text-sm text-gray-600'>Confirme a identificação com pulseira e pergunte o nome</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>2. Medicamento Certo</strong><p class='text-sm text-gray-600'>Verifique nome, apresentação e validade</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>3. Dose Certa</strong><p class='text-sm text-gray-600'>Confira a dose prescrita e calculada</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>4. Via Certa</strong><p class='text-sm text-gray-600'>Confirme a via de administração prescrita</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>5. Horário Certo</strong><p class='text-sm text-gray-600'>Respeite o horário de administração</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>6. Registro Certo</strong><p class='text-sm text-gray-600'>Documente imediatamente após administrar</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>7. Orientação Certa</strong><p class='text-sm text-gray-600'>Oriente o paciente sobre o medicamento</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>8. Forma Certa</strong><p class='text-sm text-gray-600'>Verifique apresentação e compatibilidade</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>9. Resposta Certa</strong><p class='text-sm text-gray-600'>Monitore reações e efetividade</p></div></li></ul>"
+    },
+    "metas_seguranca": {
+      "titulo": "Metas Internacionais de Segurança do Paciente",
+      "icone": "fa-bullseye",
+      "conteudo": "<div class='space-y-3'><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 1: Identificação Correta</h5><p class='text-sm mt-2'>Identificar corretamente o paciente antes de qualquer procedimento</p></div><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 3: Segurança na Medicação</h5><p class='text-sm mt-2'>Melhorar a segurança de medicamentos de alta vigilância</p></div><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 6: Redução de Riscos</h5><p class='text-sm mt-2'>Reduzir o risco de danos ao paciente decorrente de quedas e erros de medicação</p></div></div>"
+    }
   },
   "sidebars": [
-    "sidebar-compartilhar",
     "sidebar-simulado-enfermagem",
+    "sidebar-compartilhar",
     "sidebar-outras-calculadoras"
   ],
-  "acessibilidade": {
-    "vlibras": true
-  }
+  "menu_lateral": [
+    {
+      "id": "guia-rapido",
+      "icone": "fa-question-circle",
+      "label": "Ajuda",
+      "acao": "switchTab",
+      "parametro": "ajuda"
+    },
+    {
+      "id": "nove-certos",
+      "icone": "fa-check-double",
+      "label": "9 Acertos",
+      "acao": "showModal",
+      "parametro": "nove_certos"
+    },
+    {
+      "id": "referencias",
+      "icone": "fa-bookmark",
+      "label": "Referências",
+      "acao": "switchTab",
+      "parametro": "referencia"
+    }
+  ]
 }
