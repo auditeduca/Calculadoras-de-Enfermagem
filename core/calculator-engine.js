@@ -23,20 +23,27 @@ class CalculatorEngine {
       // Carrega modais compartilhados (merge)
       await this.loadSharedModais();
       
-      // Renderiza componentes em ordem protegida
-      this.renderSEO();
-      this.renderBreadcrumb();
-      this.renderHeader();
-      this.renderTags(); // Novo método
-      this.renderTabs();
-      this.renderForm();
-      this.renderContentTabs();
-      this.renderSidebarMenu();
+      // Renderiza componentes usando o novo método centralizado
+      this.render();
       
       console.log('✓ Calculator Engine inicializado');
     } catch (error) {
       console.error('Erro ao inicializar Calculator Engine:', error);
     }
+  }
+
+  /**
+   * Método central de renderização (Novo v4.2)
+   */
+  render() {
+    this.renderSEO(); // Mantido nome original renderSEO para compatibilidade
+    this.renderHeader();
+    this.renderBreadcrumb();
+    this.renderTags();        // ⭐ ATUALIZADO
+    this.renderSidebarMenu(); // ⭐ ATUALIZADO
+    this.renderTabs();
+    this.renderForm();
+    this.renderContentTabs(); // Mantido nome original renderContentTabs
   }
 
   /**
@@ -53,31 +60,6 @@ class CalculatorEngine {
     } catch (e) {
       console.warn('Não foi possível carregar modais compartilhados:', e);
     }
-  }
-
-  /**
-   * Renderiza tags clicáveis
-   */
-  renderTags() {
-    const tagsContainer = document.getElementById('tags-container');
-    if (!tagsContainer || !this.config.tags) return;
-    
-    const tagsHTML = this.config.tags.map(tag => `
-      <a href="busca-e-conteudo.html?tag=${encodeURIComponent(tag.label)}" 
-         class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold
-                bg-nurse-primary/10 text-nurse-primary dark:bg-cyan-400/10 dark:text-cyan-400
-                border border-nurse-primary/20 dark:border-cyan-400/20
-                hover:bg-nurse-primary/20 transition-all cursor-pointer">
-        <i class="fa-solid ${tag.icone} text-[10px]"></i>
-        ${tag.label}
-      </a>
-    `).join('');
-    
-    tagsContainer.innerHTML = `
-      <div class="flex flex-wrap gap-2 mb-6">
-        ${tagsHTML}
-      </div>
-    `;
   }
 
   /**
@@ -377,24 +359,6 @@ class CalculatorEngine {
   }
 
   /**
-   * Renderiza menu lateral
-   */
-  renderSidebarMenu() {
-    const sidebar = document.getElementById('sidebar-tools');
-    if (!sidebar || !this.config.menu_lateral) return;
-    
-    sidebar.innerHTML = this.config.menu_lateral.map(item => `
-      <button 
-        class="tool-btn group" 
-        onclick="CALCULATOR_SYSTEM.${item.acao}('${item.parametro}')" 
-        title="${item.label}">
-        <i class="fas ${item.icone} group-hover:scale-110 transition-transform"></i>
-        <span class="btn-label">${item.label}</span>
-      </button>
-    `).join('');
-  }
-
-  /**
    * Realiza o cálculo (Lógica Padrão/Insulina)
    */
   calculate() {
@@ -524,6 +488,60 @@ class CalculatorEngine {
    */
   getModalConfig(modalId) {
     return this.config.modais?.[modalId] || null;
+  }
+
+  /**
+   * ═══════════════════════════════════════════════════════════
+   * NOVOS MÉTODOS v4.2
+   * ═══════════════════════════════════════════════════════════
+   */
+
+  /**
+   * Renderiza menu lateral (sidebar tools)
+   */
+  renderSidebarMenu() {
+    const sidebar = document.getElementById('sidebar-tools');
+    if (!sidebar || !this.config.menu_lateral) return;
+    
+    const html = this.config.menu_lateral.map(item => `
+      <button class="tool-btn"
+              id="btn-${item.id}"
+              aria-label="${item.label}"
+              title="${item.label}"
+              onclick="CALCULATOR_SYSTEM.${item.acao}('${item.parametro}')">
+        <i class="fa-solid ${item.icone}" aria-hidden="true"></i>
+        <span class="btn-label">${item.label}</span>
+      </button>
+    `).join('');
+    
+    sidebar.innerHTML = html;
+    console.log('✓ Menu lateral renderizado');
+  }
+
+  /**
+   * Renderiza tags clicáveis
+   */
+  renderTags() {
+    const container = document.getElementById('tags-container');
+    if (!container || !this.config.tags) return;
+    
+    const html = this.config.tags.map(tag => `
+      <a href="busca-e-conteudo.html?tag=${encodeURIComponent(tag.label)}" 
+         class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold
+                bg-nurse-primary/10 text-nurse-primary dark:bg-cyan-400/10 dark:text-cyan-400
+                border border-nurse-primary/20 dark:border-cyan-400/20
+                hover:bg-nurse-primary/20 transition-all cursor-pointer">
+        <i class="fa-solid ${tag.icone} text-[10px]"></i>
+        ${tag.label}
+      </a>
+    `).join('');
+    
+    container.innerHTML = `
+      <div class="flex flex-wrap gap-2 mb-6">
+        ${html}
+      </div>
+    `;
+    console.log('✓ Tags renderizadas');
   }
 }
 
