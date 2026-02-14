@@ -8,6 +8,7 @@ class CalculatorEngine {
     this.configUrl = configUrl;
     this.config = null;
     this.resultData = null;
+    this.baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/'; // URL base do repositório
   }
 
   /**
@@ -44,7 +45,9 @@ class CalculatorEngine {
    */
   async loadSharedModais() {
     try {
-      const response = await fetch('shared-modais.json');
+      // Usa URL absoluta para evitar problemas de caminho relativo
+      const url = this.baseUrl + 'shared-modais.json';
+      const response = await fetch(url);
       if (!response.ok) return;
       const shared = await response.json();
       if (shared.shared_modais) {

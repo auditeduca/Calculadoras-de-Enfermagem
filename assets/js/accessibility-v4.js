@@ -2,6 +2,7 @@
  * Módulo de Controle de Acessibilidade (AccessControl)
  * Gerencia todas as funcionalidades de acessibilidade do site
  * Versão completa com suporte a daltonismo, TTS, glossário, atalhos de teclado e mais
+ * (VLibras removido - gerenciado separadamente)
  */
 
 window.AccessControl = window.AccessControl || (function() {
@@ -177,7 +178,6 @@ window.AccessControl = window.AccessControl || (function() {
             localStorage.setItem('acc_theme', theme);
             state.theme = theme;
 
-            // Sincronizar com HeaderModule se disponível
             if (window.HeaderModule && typeof window.HeaderModule.toggleTheme === 'function') {
                 window.HeaderModule.toggleTheme();
             }
@@ -230,8 +230,6 @@ window.AccessControl = window.AccessControl || (function() {
     }
 
     function loadSavedState() {
-        // NÃO é chamado automaticamente - viola regra opt-in
-        // Mantido para uso explícito quando usuário solicita restaurar
         try {
             const saved = JSON.parse(localStorage.getItem('accessControlState') || '{}');
             Object.assign(state, saved);
@@ -241,11 +239,8 @@ window.AccessControl = window.AccessControl || (function() {
     }
 
     function restoreFromStorage() {
-        // Função explícita para restaurar estado anterior
-        // Usuário deve acionar esta função manualmente
         loadSavedState();
         
-        // Aplicar recursos restaurados
         if (state.fontSize > 0) {
             const values = ['1.2', '1.5', '2.0'];
             applyFeature('fontSize', values[state.fontSize - 1]);
@@ -366,12 +361,11 @@ window.AccessControl = window.AccessControl || (function() {
     }
 
     // ============================================
-    // CONTROLE DE RECURSOS SIMPLES (Com marcação de interação)
+    // CONTROLE DE RECURSOS SIMPLES
     // ============================================
     function toggleSimple(className, element) {
         if (!ensureElements()) return;
         
-        // Marcar interação do usuário para regra opt-in
         if (window.AccessibilityRule) {
             AccessibilityRule.markUserInteraction();
         }
@@ -384,7 +378,6 @@ window.AccessControl = window.AccessControl || (function() {
         if (className === 'stop-sounds') toggleStopSounds(isActive);
         if (className === 'magnifier') toggleMagnifier(isActive);
         if (className === 'stop-anim') {
-            // Apenas adicionar/remover classe CSS, sem estilos inline
             if (isActive) {
                 document.body.classList.add('stop-anim');
             } else {
@@ -402,7 +395,6 @@ window.AccessControl = window.AccessControl || (function() {
     function toggleAnimations(active) {
         if (active) {
             document.body.classList.add('stop-anim-active');
-            // Pausar todas as animações
             const animatedElements = document.querySelectorAll('*');
             animatedElements.forEach(el => {
                 const computedStyle = window.getComputedStyle(el);
@@ -410,14 +402,12 @@ window.AccessControl = window.AccessControl || (function() {
                     el.style.animationPlayState = 'paused';
                 }
             });
-            // Pausar transições
             const allElements = document.querySelectorAll('*');
             allElements.forEach(el => {
                 el.style.transitionPlayState = 'paused';
             });
         } else {
             document.body.classList.remove('stop-anim-active');
-            // Retomar animações
             const animatedElements = document.querySelectorAll('*');
             animatedElements.forEach(el => {
                 el.style.animationPlayState = '';
@@ -430,12 +420,11 @@ window.AccessControl = window.AccessControl || (function() {
     }
 
     // ============================================
-    // CICLO DE RECURSOS (Com marcação de interação)
+    // CICLO DE RECURSOS
     // ============================================
     function cycleFeature(feature, values, element) {
         if (!ensureElements()) return;
 
-        // Marcar interação do usuário para regra opt-in
         if (window.AccessibilityRule) {
             AccessibilityRule.markUserInteraction();
         }
@@ -479,7 +468,6 @@ window.AccessControl = window.AccessControl || (function() {
             announceToScreenReader(`${name}: ${displayValue}`);
         }
 
-        // Disparar evento para sincronização com botões externos
         window.dispatchEvent(new CustomEvent('accessibility:featureChanged', {
             detail: { feature, value, isActive: index !== -1 }
         }));
@@ -600,12 +588,11 @@ window.AccessControl = window.AccessControl || (function() {
     }
 
     // ============================================
-    // LUPA DE CONTEÚDO - CORRIGIDA
+    // LUPA DE CONTEÚDO
     // ============================================
     function toggleMagnifier(active) {
         state.magnifierActive = active;
         
-        // Garantir que o tooltip existe
         let tooltip = document.getElementById('magnifier-tooltip');
         if (!tooltip) {
             tooltip = document.createElement('div');
@@ -616,7 +603,6 @@ window.AccessControl = window.AccessControl || (function() {
             document.body.appendChild(tooltip);
         }
 
-        // Limpar handlers anteriores
         if (magnifierHandler) {
             document.removeEventListener('mouseover', magnifierHandler, true);
             magnifierHandler = null;
@@ -630,7 +616,6 @@ window.AccessControl = window.AccessControl || (function() {
             magnifierHandler = function(e) {
                 const target = e.target;
                 
-                // Ignorar elementos de UI
                 if (target.closest('#accessibility-panel') || 
                     target.closest('.side-widgets-container') || 
                     target.closest('#glossary-modal') || 
@@ -641,13 +626,11 @@ window.AccessControl = window.AccessControl || (function() {
                     return;
                 }
 
-                // Buscar texto visível
                 let text = '';
                 
                 if (target.childNodes.length === 1 && target.childNodes[0].nodeType === Node.TEXT_NODE) {
                     text = target.textContent.trim();
                 } else if (target.textContent) {
-                    // Limpar tags HTML e pegar texto limpo
                     const tempDiv = document.createElement('div');
                     tempDiv.innerHTML = target.innerHTML;
                     text = tempDiv.textContent.trim();
@@ -658,7 +641,6 @@ window.AccessControl = window.AccessControl || (function() {
                     tooltip.style.display = 'block';
                     tooltip.setAttribute('aria-hidden', 'false');
                     
-                    // Posicionar tooltip
                     const rect = target.getBoundingClientRect();
                     const tooltipRect = tooltip.getBoundingClientRect();
                     let x = rect.right + 15;
@@ -710,12 +692,11 @@ window.AccessControl = window.AccessControl || (function() {
     }
 
     // ============================================
-    // LEITOR DE TEXTO (TTS) (Com marcação de interação)
+    // LEITOR DE TEXTO (TTS)
     // ============================================
     function toggleTTSClick(element) {
         if (!ensureElements()) return;
 
-        // Marcar interação do usuário para regra opt-in
         if (window.AccessibilityRule) {
             AccessibilityRule.markUserInteraction();
         }
@@ -825,13 +806,6 @@ window.AccessControl = window.AccessControl || (function() {
     }
 
     // ============================================
-    // WIDGET VLIBRAS
-    // ============================================
-    function toggleLibrasWidget() {
-        document.querySelector('[vw-access-button]')?.click();
-    }
-
-    // ============================================
     // GLOSSÁRIO
     // ============================================
     let currentGlossaryLetter = 'A';
@@ -890,7 +864,6 @@ window.AccessControl = window.AccessControl || (function() {
             modal.querySelector('#alphabet-toggle').addEventListener('click', () => {
                 alphabetExpanded = !alphabetExpanded;
                 modal.querySelector('.glossary-alphabet').classList.toggle('collapsed', !alphabetExpanded);
-                // CSS will handle the rotation animation via .collapsed .alphabet-toggle i
             });
 
             modal.querySelectorAll('.alphabet-letter').forEach(btn => {
@@ -967,22 +940,17 @@ window.AccessControl = window.AccessControl || (function() {
 
     function setupTermLinks() {
         document.addEventListener('click', (e) => {
-            // Verificar se clicou em um elemento abbr ou com data-definition
             const term = e.target.closest('[data-definition], abbr[title]');
             
-            // Verificar se o elemento está dentro de painéis de acessibilidade
             if (term && !term.closest('#accessibility-panel, #glossary-modal, .shortcuts-modal, #keyboard-shortcuts-modal')) {
                 e.preventDefault();
                 e.stopPropagation();
                 
-                // Obter o termo para busca
                 let searchTerm = '';
                 
                 if (term.tagName === 'ABBR') {
-                    // Para abbr, usar o texto visível ou o atributo title
                     searchTerm = term.textContent?.trim() || term.getAttribute('title') || '';
                 } else {
-                    // Para data-definition
                     searchTerm = term.textContent?.trim() || term.getAttribute('data-definition') || term.getAttribute('title') || '';
                 }
                 
@@ -992,7 +960,6 @@ window.AccessControl = window.AccessControl || (function() {
             }
         });
         
-        // Adicionar cursor pointer e underline pontilhado em abbr para indicar que são clicáveis
         document.querySelectorAll('abbr[title]').forEach(abbr => {
             abbr.style.cursor = 'pointer';
             abbr.style.textDecoration = 'none';
@@ -1002,7 +969,6 @@ window.AccessControl = window.AccessControl || (function() {
             abbr.setAttribute('aria-label', `Ver definição de ${abbr.textContent?.trim()}`);
         });
         
-        // Suporte para teclado em abbr
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 const abbr = e.target.closest('abbr[title]');
@@ -1023,7 +989,6 @@ window.AccessControl = window.AccessControl || (function() {
     function resetAll() {
         ensureElements();
 
-        // Salvar posição do scroll antes de limpar
         const scrollX = window.scrollX;
         const scrollY = window.scrollY;
 
@@ -1035,20 +1000,16 @@ window.AccessControl = window.AccessControl || (function() {
 
         state.ttsRate = 1;
 
-        // Limpar estilos inline - apenas restaurar variáveis CSS
         document.documentElement.style.removeProperty('--font-scale');
         document.documentElement.style.removeProperty('--letter-spacing');
         document.documentElement.style.removeProperty('--line-height');
         document.body.removeAttribute('data-font-scale');
         document.getElementById('accessibility-panel')?.classList.remove('font-large');
 
-        // Remover classes de recursos
         allClasses.forEach(cls => elements.body?.classList.remove(cls));
         
-        // Limpar cursor customizado
         document.body.style.cursor = '';
 
-        // Remover handlers
         if (mouseMoveHandler) {
             window.removeEventListener('mousemove', mouseMoveHandler);
             mouseMoveHandler = null;
@@ -1066,7 +1027,6 @@ window.AccessControl = window.AccessControl || (function() {
             ttsClickHandler = null;
         }
 
-        // Desativar recursos
         toggleReadingMask(false);
         toggleReadingGuide(false);
         toggleMagnifier(false);
@@ -1075,7 +1035,6 @@ window.AccessControl = window.AccessControl || (function() {
 
         ThemeManager.resetToSystem();
 
-        // Atualizar UI dos cards
         document.querySelectorAll('.accessibility-card').forEach(card => {
             card.classList.remove('active');
             updateAriaPressed(card, false);
@@ -1084,21 +1043,17 @@ window.AccessControl = window.AccessControl || (function() {
             if (badge) badge.style.display = 'none';
         });
 
-        // Ocultar elementos de suporte
         ['reading-mask-top', 'reading-mask-bottom', 'reading-guide', 'magnifier-tooltip'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.style.display = 'none';
         });
 
-        // Limpar storage
         localStorage.removeItem('accessControlState');
         
-        // Disparar evento de reset
         window.dispatchEvent(new CustomEvent('Accessibility:Reset'));
         
         announceToScreenReader('Todas as configuracoes de acessibilidade foram restauradas');
 
-        // Feedback visual no botão
         const btn = document.querySelector('[data-action="resetAll"]');
         if (btn) {
             const original = btn.innerHTML;
@@ -1106,7 +1061,6 @@ window.AccessControl = window.AccessControl || (function() {
             setTimeout(() => btn.innerHTML = original, 1500);
         }
         
-        // Restaurar posição do scroll para evitar movimento da página
         requestAnimationFrame(() => {
             window.scrollTo(scrollX, scrollY);
         });
@@ -1135,7 +1089,7 @@ window.AccessControl = window.AccessControl || (function() {
 
     function handleAction(action) {
         const actions = {
-            togglePanel, toggleMaximize, toggleLibras: toggleLibrasWidget,
+            togglePanel, toggleMaximize,
             resetAll, showKeyboardShortcuts, closeShortcutsModal,
             openGlossary, closeGlossary
         };
@@ -1156,7 +1110,6 @@ window.AccessControl = window.AccessControl || (function() {
                 return handleCardClick(card);
             }
 
-            // Fechar painel ao clicar fora, exceto em widgets e modais
             if (!isPanelClosed()) {
                 const inPanel = elements.panel?.contains(e.target);
                 const inWidgets = elements.sideWidgets?.contains(e.target);
@@ -1170,13 +1123,11 @@ window.AccessControl = window.AccessControl || (function() {
             }
         });
 
-        // Sincronização com botão de aumentar fonte do header
         window.addEventListener('accessibility:featureChanged', (e) => {
             if (e.detail.feature === 'fontSize' && e.detail.value) {
                 const value = e.detail.value;
                 const level = ['1.2', '1.5', '2.0'].indexOf(value) + 1;
                 
-                // Atualizar indicador visual no header se existir
                 const headerIndicator = document.querySelector('.font-size-indicator, .header-font-level');
                 if (headerIndicator) {
                     const dots = headerIndicator.querySelectorAll('.dot, .level-dot');
@@ -1185,7 +1136,6 @@ window.AccessControl = window.AccessControl || (function() {
                     });
                 }
                 
-                // Atualizar badge do card no painel
                 const panelCard = document.querySelector('[data-feature="fontSize"]');
                 if (panelCard && e.detail.isActive !== false) {
                     const badge = panelCard.querySelector('.level-badge');
@@ -1274,7 +1224,7 @@ window.AccessControl = window.AccessControl || (function() {
     }
 
     // ============================================
-    // INICIALIZAÇÃO (Comportamento Opt-In)
+    // INICIALIZAÇÃO
     // ============================================
     function init() {
         if (state._initialized) return;
@@ -1284,12 +1234,8 @@ window.AccessControl = window.AccessControl || (function() {
         if (ensureElements()) {
             setupEvents();
             setupDrag();
-            // REMOVIDO: loadSavedState() - não restaura automaticamente
-            // Regra opt-in: recursos só são aplicados após interação explícita
             loadGlossary();
             setupTermLinks();
-
-            setTimeout(() => clearInterval(vlInterval), 15000);
         }
 
         state._initialized = true;
@@ -1303,7 +1249,7 @@ window.AccessControl = window.AccessControl || (function() {
         togglePanel,
         toggleMaximize,
         resetAll,
-        restoreFromStorage, // Nova: restaura estado sob demanda
+        restoreFromStorage,
         ThemeManager,
         state
     };
