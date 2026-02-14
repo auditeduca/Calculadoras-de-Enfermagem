@@ -68,7 +68,7 @@
   </script>
 
   <!-- Estilos Customizados -->
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/styles.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/styles.css"/>
 </head>
 <body class="flex flex-col min-h-screen custom-init">
 
@@ -205,34 +205,34 @@
         // Tenta usar a engine customizada (IMCCalculatorEngine) se disponível
         if (typeof IMCCalculatorEngine !== 'undefined') {
           console.log('✓ Usando Engine Customizada: IMCCalculatorEngine');
-          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-config.json');
           await CALCULATOR_SYSTEM.engine.init();
         } else {
           // Fallback para engine padrão
           console.warn('⚠️ IMCCalculatorEngine não encontrado ou ainda não carregado, usando CalculatorEngine padrão');
-          await CALCULATOR_SYSTEM.init(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+          await CALCULATOR_SYSTEM.init(baseUrl + 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-config.json');
         }
         
         // Carrega componentes globais
-        await loadModule('header-container', `${baseUrl}assets/components/header-v4.html`);
-        await loadModule('footer-container', `${baseUrl}assets/components/footer-v4.html`);
-        await loadModule('accessibility-container', `${baseUrl}assets/components/accessibility-v4.html`);
+        await loadModule('header-container', `${baseUrl}https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html`);
+        await loadModule('footer-container', `${baseUrl}https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html`);
+        await loadModule('accessibility-container', `${baseUrl}https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html`);
         
         // Carrega componentes de estrutura
-        await loadModule('author-container', `${baseUrl}assets/components/author-section.html`);
-        await loadModule('modal-container', `${baseUrl}assets/components/modal-generic.html`);
+        await loadModule('author-container', `${baseUrl}https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/author-section.html`);
+        await loadModule('modal-container', `${baseUrl}https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/modal-generic.html`);
         
         // Carrega sidebars conforme configuração do JSON
         if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
           for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
             const containerId = sidebar.startsWith('sidebar-') ? sidebar : `sidebar-${sidebar}`;
-            await loadModule(containerId, `${baseUrl}assets/sidebars/${sidebar}.html`);
+            await loadModule(containerId, `${baseUrl}https://auditeduca.github.io/Calculadoras-de-Enfermagem/sidebars/${sidebar}.html`);
           }
         }
         
         // Carrega VLibras se ativado na configuração
         if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
-          await loadModule('libras-container', `${baseUrl}assets/components/widget-libras.html`);
+          await loadModule('libras-container', `${baseUrl}https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/widget-libras.html`);
         }
         
         // Ativa visibilidade do header e footer
