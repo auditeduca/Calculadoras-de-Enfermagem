@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-  <!-- SEO (será atualizado via JS) -->
+  <!-- SEO -->
   <title id="page-title">Calculadora de Enfermagem</title>
   <meta name="description" content="Calculadora profissional de enfermagem">
   
@@ -25,6 +25,48 @@
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
 
+  <!-- Estilos Críticos -->
+  <style>
+    :root { --nurse-primary: #1A3E74; }
+    .tab-nav-item { @apply px-6 py-4 font-bold text-sm transition-all border-b-2 border-transparent hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer whitespace-nowrap; }
+    .tab-nav-item.active { @apply border-nurse-primary text-nurse-primary bg-white dark:bg-nurse-bgDark; }
+    .card-base { @apply bg-white dark:bg-nurse-bgDark rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden; }
+    
+    /* Sidebar Lateral Esquerda */
+    .sidebar-left-tools {
+        position: fixed;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+        background: rgba(255,255,255,0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 0 24px 24px 0;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.08);
+    }
+    .dark .sidebar-left-tools { background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255,255,255,0.1); border-left: 0; }
+
+    .tool-btn {
+        @apply w-12 h-12 flex items-center justify-center rounded-2xl transition-all duration-300 shadow-md;
+        background: var(--nurse-primary);
+        color: white;
+    }
+    .tool-btn:hover { @apply transform scale-110 -translate-y-1 shadow-xl; filter: brightness(1.2); }
+
+    /* Libras e Acessibilidade (Cantos Inferiores) */
+    #libras-container { position: fixed; right: 20px; bottom: 95px; z-index: 10000; }
+    #accessibility-container { position: fixed; right: 20px; bottom: 20px; z-index: 10000; }
+    
+    @media (max-width: 768px) {
+        .sidebar-left-tools { bottom: 0; left: 0; top: auto; transform: none; width: 100%; flex-direction: row; border-radius: 0; justify-content: center; height: 60px; padding: 5px; }
+        main { margin-left: 0 !important; padding-bottom: 80px; }
+    }
+  </style>
+
   <!-- Bibliotecas JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
@@ -41,17 +83,13 @@
   <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-custom-calculator.js" defer crossorigin="anonymous"></script>
   
   <script>
-    // Sincronização de cores entre Tailwind e Core Styles (variáveis CSS)
+    // Inicialização do Tailwind com proteção de erro
     (function initTailwind() {
       if (typeof tailwind !== 'undefined') {
         tailwind.config = {
           darkMode: 'class',
           theme: {
             extend: {
-              fontFamily: { 
-                nunito: ['"Nunito Sans"','sans-serif'], 
-                inter: ['Inter','sans-serif'] 
-              },
               colors: { 
                 'nurse-primary': 'var(--nurse-primary, #1A3E74)', 
                 'nurse-secondary': 'var(--nurse-secondary, #00bcd4)', 
@@ -59,86 +97,65 @@
                 'nurse-bgDark': 'var(--nurse-bgDark, #0F172A)',
                 'nurse-surface': 'var(--nurse-surface, #ffffff)',
                 'nurse-text': 'var(--nurse-text, #1e293b)'
-              },
-              animation: { 
-                'slide-in': 'slideIn 0.3s ease-out', 
-                'fade-in': 'fadeIn 0.3s ease-out', 
-                'pulse-slow': 'pulse 3s infinite' 
               }
             }
           }
         };
-      } else {
-        setTimeout(initTailwind, 50);
-      }
+      } else { setTimeout(initTailwind, 50); }
     })();
 
+    // Sistema de Toast Global
     window.showToast = function(message, type = 'error') {
-        const colors = {
-            success: 'bg-emerald-500 border-emerald-600',
-            error: 'bg-red-500 border-red-600',
-            warning: 'bg-amber-500 border-amber-600',
-            info: 'bg-nurse-primary border-blue-900'
-        };
-        const icons = {
-            success: 'fa-check-circle',
-            error: 'fa-triangle-exclamation',
-            warning: 'fa-circle-exclamation',
-            info: 'fa-circle-info'
-        };
-
+        const colors = { success: 'bg-emerald-500', error: 'bg-red-500', warning: 'bg-amber-500', info: 'bg-nurse-primary' };
         const toast = document.createElement('div');
-        toast.className = `fixed top-24 right-4 md:top-4 md:right-4 ${colors[type] || colors.info} border-b-4 text-white px-6 py-4 rounded-xl shadow-2xl z-[99999] flex items-center gap-3 min-w-[300px] animate-fade-in transform transition-all duration-300`;
-        toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-xl"></i><span class="font-medium">${message}</span>`;
+        toast.className = `fixed top-24 right-4 ${colors[type] || colors.info} text-white px-6 py-4 rounded-xl shadow-2xl z-[999999] animate-fade-in border-l-4 border-black/20`;
+        toast.innerHTML = `<span class="font-bold uppercase text-[10px] block opacity-70">${type}</span><span class="font-medium">${message}</span>`;
         document.body.appendChild(toast);
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateY(-20px)';
-            setTimeout(() => toast.remove(), 300);
-        }, 4000);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 4000);
     };
   </script>
 </head>
-<body class="flex flex-col min-h-screen custom-init">
+<body class="flex flex-col min-h-screen custom-init bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
 
-  <!-- Botão Libras deve ficar acima do botão de acessibilidade no carregamento -->
   <div id="libras-container"></div>
   <div id="accessibility-container"></div>
-  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] opacity-0 transition-opacity duration-500 shadow-sm"></div>
+  
+  <div id="header-container" class="sticky top-0 z-40 bg-white/80 dark:bg-nurse-bgDark/80 backdrop-blur-md min-h-[70px] transition-opacity duration-500 shadow-sm opacity-0"></div>
 
+  <!-- Sidebar Ferramentas -->
   <aside class="sidebar-left-tools" id="sidebar-tools"></aside>
 
-  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full" style="margin-left: 80px;">
-    <nav class="mb-8 font-semibold text-sm text-slate-600 dark:text-cyan-300 flex items-center gap-2"></nav>
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-12 w-full transition-all duration-300" style="margin-left: 80px;">
+    <nav id="breadcrumb" class="mb-8 font-semibold text-sm text-slate-500 dark:text-cyan-400 flex items-center gap-2"></nav>
 
     <header class="max-w-4xl mb-12">
-      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md"></span>
-      <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight"></h1>
+      <span id="badge-category" class="bg-nurse-primary text-white text-[10px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Calculadora Profissional</span>
+      <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight text-slate-800 dark:text-white"></h1>
       <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
-      <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic"></p>
+      <p id="header-description" class="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium italic"></p>
     </header>
     
-    <div id="tags-container" class="max-w-7xl mx-auto px-4"></div>
+    <div id="tags-container" class="max-w-7xl mx-auto mb-10"></div>
     
-    <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
-      <article id="calculator-container" class="card-base p-0">
-        <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto"></nav>
+    <div class="grid lg:grid-cols-[1fr,340px] gap-12 items-start">
+      <article id="calculator-container" class="card-base">
+        <nav id="tabs-nav" class="flex border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto"></nav>
         <div class="p-6 md:p-10">
-          <section id="pane-calc" class="tab-pane"></section>
-          <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none"></section>
-          <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none"></section>
-          <section id="pane-referencia" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none"></section>
+          <section id="pane-calc" class="tab-pane active"></section>
+          <section id="pane-sobre" class="tab-pane hidden prose dark:prose-invert max-w-none"></section>
+          <section id="pane-ajuda" class="tab-pane hidden prose dark:prose-invert max-w-none"></section>
+          <section id="pane-referencia" class="tab-pane hidden prose dark:prose-invert max-w-none"></section>
         </div>
       </article>
 
-      <aside class="space-y-6 sticky top-28 self-start">
+      <aside class="space-y-8 sticky top-28 self-start">
         <div id="sidebar-simulado-enfermagem"></div>
         <div id="sidebar-compartilhar"></div>
         <div id="sidebar-outras-calculadoras"></div>
       </aside>
     </div>
 
-    <div id="author-container"></div>
+    <div id="author-container" class="mt-16"></div>
   </main>
 
   <div id="footer-container" class="opacity-0 transition-opacity duration-500"></div>
@@ -156,127 +173,114 @@
           if (!res.ok) throw new Error(`Status ${res.status}`);
           container.innerHTML = await res.text();
           container.style.opacity = '1';
-        } catch(e) { console.warn(`Módulo ${id} não carregado:`, e); }
+        } catch(e) { console.warn(`Módulo ${id} falhou.`, e); }
       }
 
       const waitForGlobals = () => new Promise(resolve => {
         if (typeof CALCULATOR_SYSTEM !== 'undefined') return resolve();
         const interval = setInterval(() => {
-          if (typeof CALCULATOR_SYSTEM !== 'undefined') {
-            clearInterval(interval);
-            resolve();
-          }
+          if (typeof CALCULATOR_SYSTEM !== 'undefined') { clearInterval(interval); resolve(); }
         }, 100);
       });
+
+      function renderSidebarTools(shared) {
+        const sidebar = document.getElementById('sidebar-tools');
+        if (!sidebar) return;
+
+        // Erro 1 fix: fa-person-walking-arrow-right (sem espaço)
+        const tools = shared.ferramentas_laterais || [
+          { id: 'tour', icon: 'fa-person-walking-arrow-right', action: 'tourGuiado', title: 'Tour Guiado' },
+          { id: 'ajuda', icon: 'fa-circle-question', action: 'showModal', param: 'ajuda', title: 'Ajuda' },
+          { id: 'referencias', icon: 'fa-book-bookmark', action: 'showModal', param: 'referencias', title: 'Referências' },
+          { id: 'pdf', icon: 'fa-file-pdf', action: 'generatePDF', title: 'Salvar PDF' }
+        ];
+
+        sidebar.innerHTML = tools.map(tool => `
+            <button onclick="CALCULATOR_SYSTEM.${tool.action}('${tool.param || ''}')" 
+                    class="tool-btn" title="${tool.title}">
+                <i class="fa-solid ${tool.icon}"></i>
+            </button>
+        `).join('');
+      }
 
       try {
         await waitForGlobals();
 
-        // Carregamento do Shared Content
-        console.log('⏳ Carregando conteúdo compartilhado...');
+        // Carregamento Shared Content
         try {
             const sharedRes = await fetch(`${baseUrl}shared-content.json`);
             if (sharedRes.ok) {
                 CALCULATOR_SYSTEM.sharedContent = await sharedRes.json();
-                console.log('✓ Conteúdo compartilhado carregado.');
+                renderSidebarTools(CALCULATOR_SYSTEM.sharedContent);
+                console.log('✓ Conteúdo partilhado carregado.');
             }
-        } catch (e) {
-            console.warn('Não foi possível carregar o shared-content.json');
-        }
+        } catch (e) { console.warn('Shared content indisponível.'); }
 
+        // Inicialização Engine
         if (typeof IMCCalculatorEngine !== 'undefined') {
-          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(`${baseUrl}calculadoras/imc/exemplo-imc-config.json`);
           await CALCULATOR_SYSTEM.engine.init();
         } else {
-          await CALCULATOR_SYSTEM.init(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+          await CALCULATOR_SYSTEM.init(`${baseUrl}calculadoras/imc/exemplo-imc-config.json`);
         }
         
-        // Fixes de Binding - Calculate
-        if (typeof CALCULATOR_SYSTEM.calculate !== 'function') {
-            CALCULATOR_SYSTEM.calculate = function() {
-                try {
-                  if (CALCULATOR_SYSTEM.engine) {
-                      if (typeof CALCULATOR_SYSTEM.engine.calculate === 'function') return CALCULATOR_SYSTEM.engine.calculate();
-                      if (typeof CALCULATOR_SYSTEM.engine.handleCalculate === 'function') return CALCULATOR_SYSTEM.engine.handleCalculate();
-                  }
-                } catch (e) { window.showToast('Erro ao calcular.', 'error'); }
-            };
-        }
-
-        // Fixes de Binding - PDF
-        if (typeof CALCULATOR_SYSTEM.generatePDF !== 'function') {
-            CALCULATOR_SYSTEM.generatePDF = () => {
-                if (CALCULATOR_SYSTEM.engine?.generatePDF) return CALCULATOR_SYSTEM.engine.generatePDF();
-                window.showToast('PDF não disponível.', 'warning');
-            };
-        }
-
-        // Fixes de Binding - Clipboard
+        // --- FIXES DE BINDING ---
+        CALCULATOR_SYSTEM.calculate = () => CALCULATOR_SYSTEM.engine?.calculate?.();
+        CALCULATOR_SYSTEM.generatePDF = () => CALCULATOR_SYSTEM.engine?.generatePDF?.() || window.showToast('Funcionalidade PDF em manutenção.', 'warning');
+        CALCULATOR_SYSTEM.tourGuiado = () => window.showToast('O tour guiado será carregado em breve.', 'info');
+        
         CALCULATOR_SYSTEM.copyResult = function(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed"; textArea.style.left = "-9999px";
-            document.body.appendChild(textArea);
-            textArea.select();
-            const success = document.execCommand('copy');
-            document.body.removeChild(textArea);
-            if (success) window.showToast('Copiado!', 'success');
+            try {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed"; textArea.style.left = "-9999px";
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                window.showToast('Copiado para a área de transferência!', 'success');
+            } catch (err) { window.showToast('Erro ao copiar link.', 'error'); }
         };
 
-        // Binding seguro do método tourGuiado
-        if (typeof CALCULATOR_SYSTEM.tourGuiado !== 'function') {
-             CALCULATOR_SYSTEM.tourGuiado = function() {
-                 if(window.showToast) window.showToast('O tour guiado não está disponível nesta visualização.', 'info');
-             };
-        }
-
-        // Polyfill de Modal
         CALCULATOR_SYSTEM.closeModal = () => {
             const m = document.getElementById('custom-fallback-modal');
             if (m) { m.classList.add('opacity-0'); setTimeout(() => m.remove(), 300); }
         };
 
         CALCULATOR_SYSTEM.showModal = function(type) {
-            const config = CALCULATOR_SYSTEM.engine?.config || {};
             const shared = CALCULATOR_SYSTEM.sharedContent || {};
-            let title = 'Informação';
-            let content = '<p>Conteúdo não disponível.</p>';
-
-            if (type === 'referencias') {
-                title = 'Referências Bibliográficas';
-                const refs = config.referencias || shared.referencias || [];
-                content = `<ul class="list-disc pl-5 space-y-2">${refs.map(r => `<li class="text-sm">${r}</li>`).join('')}</ul>`;
-            } else if (type === 'ajuda') {
-                title = 'Ajuda e Instruções';
-                content = config.ajuda_html || shared.ajuda_html || document.getElementById('pane-ajuda')?.innerHTML || content;
-            } else if (type === 'compartilhar') {
-                title = 'Compartilhar';
-                content = `<div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg text-center"><p class="mb-4 text-sm">Copie o link abaixo:</p><button onclick="CALCULATOR_SYSTEM.copyResult(window.location.href)" class="bg-nurse-primary text-white px-4 py-2 rounded-lg text-xs">Copiar Link da Calculadora</button></div>`;
-            }
+            const config = CALCULATOR_SYSTEM.engine?.config || {};
+            const modalData = (shared.modais && shared.modais[type]) || {};
+            
+            let title = modalData.titulo || (type === 'referencias' ? 'Fontes e Referências' : 'Instruções');
+            let content = modalData.html || config.ajuda_html || shared.ajuda_html || '<p>Conteúdo em atualização.</p>';
 
             CALCULATOR_SYSTEM.closeModal();
             const modal = document.createElement('div');
             modal.id = 'custom-fallback-modal';
-            modal.className = 'fixed inset-0 bg-black/60 z-[99999] flex items-center justify-center p-4 transition-opacity duration-300 backdrop-blur-sm';
+            modal.className = 'fixed inset-0 bg-slate-900/80 z-[1000000] flex items-center justify-center p-4 transition-opacity duration-300 backdrop-blur-md';
             modal.innerHTML = `
-                <div class="bg-white dark:bg-slate-800 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform animate-slide-in">
-                    <div class="bg-nurse-primary p-4 flex justify-between items-center text-white">
-                        <h3 class="font-bold">${title}</h3>
-                        <button onclick="CALCULATOR_SYSTEM.closeModal()"><i class="fa-solid fa-times"></i></button>
+                <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden transform transition-all animate-slide-in">
+                    <div class="bg-nurse-primary p-5 flex justify-between items-center text-white">
+                        <h3 class="font-black uppercase tracking-tight">${title}</h3>
+                        <button onclick="CALCULATOR_SYSTEM.closeModal()" class="w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center"><i class="fa-solid fa-times"></i></button>
                     </div>
-                    <div class="p-6 max-h-[60vh] overflow-y-auto">${content}</div>
+                    <div class="p-8 max-h-[70vh] overflow-y-auto custom-scrollbar prose dark:prose-invert max-w-none">${content}</div>
+                    <div class="p-4 bg-slate-50 dark:bg-slate-900/50 flex justify-end">
+                        <button onclick="CALCULATOR_SYSTEM.closeModal()" class="px-6 py-2 bg-nurse-primary text-white rounded-xl font-bold text-sm">Entendi</button>
+                    </div>
                 </div>`;
             document.body.appendChild(modal);
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
         };
 
-        // Carregamento de módulos
+        // Carregamento de módulos essenciais
         await Promise.all([
           loadModule('header-container', `${baseUrl}assets/components/header-v4.html`),
           loadModule('footer-container', `${baseUrl}assets/components/footer-v4.html`),
           loadModule('accessibility-container', `${baseUrl}assets/components/accessibility-v4.html`),
           loadModule('author-container', `${baseUrl}assets/components/author-section.html`),
           loadModule('modal-container', `${baseUrl}assets/components/modal-generic.html`),
-          // Inclusão do widget de Libras no carregamento principal
           loadModule('libras-container', `${baseUrl}assets/components/widget-libras.html`)
         ]);
 
@@ -294,8 +298,8 @@
 
         console.log('✓ Calculadora pronta!');
       } catch (err) {
-        console.error('❌ Erro:', err);
-        window.showToast('Erro ao carregar sistema.', 'error');
+        console.error('❌ Erro Crítico:', err);
+        window.showToast('Erro de carregamento. Por favor, atualize a página.', 'error');
       }
     });
   </script>
