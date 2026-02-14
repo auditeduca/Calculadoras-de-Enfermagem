@@ -2,7 +2,8 @@
  * ═══════════════════════════════════════════════════════════════════
  * CALCULATOR SYSTEM v4.3
  * Sistema de gerenciamento de calculadoras de enfermagem
- * * ATUALIZAÇÕES v4.3:
+ * * ATUALIZAÇÕES v4.3.1:
+ * - Fix URL: shared-content.json (Github Pages)
  * - Fallback automático para shared-content.json (Local -> Remoto)
  * - Tratamento robusto de erros de fetch (JSON/404)
  * - Inicialização resiliente
@@ -70,7 +71,7 @@ const CALCULATOR_SYSTEM = {
   async loadSharedContent() {
     const paths = [
         'shared-content.json', // Tentativa 1: Local (desenvolvimento)
-        'https://auditeduca.github.io/Calculadoras-de-Enfermagem/shared-content.json' // Tentativa 2: Produção
+        'https://auditeduca.github.io/Calculadoras-de-Enfermagem/shared-content.json' // Tentativa 2: Produção (URL Absoluta)
     ];
 
     for (const path of paths) {

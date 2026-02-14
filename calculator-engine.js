@@ -1,6 +1,6 @@
 /**
  * CALCULATOR ENGINE - Motor de Renderização Modular
- * Versão 4.4.1 - Fallback Robusto para Modais e Styles
+ * Versão 4.4.2 - Fix URLs Absolutas (Core Styles & Modais)
  */
 
 class CalculatorEngine {
@@ -38,7 +38,7 @@ class CalculatorEngine {
   render() {
     if (!this.config) return;
     
-    // Fix Styles (Fallback para URL absoluta)
+    // Fix Styles (Fallback para URL absoluta correta)
     this.fixStyles();
 
     this.renderSEO();
@@ -59,16 +59,16 @@ class CalculatorEngine {
    */
   fixStyles() {
     const cssId = 'core-styles-fixed';
-    const absoluteUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/styles.css';
+    const absoluteUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/core-styles.css';
     
     if (document.getElementById(cssId)) return;
 
     // Remove links quebrados ou duplicados para limpar erros do console
     try {
         document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-            if (link.href && link.href.includes('styles.css') && link.href !== absoluteUrl) {
-                // Verifica se o link está quebrado (opcional, aqui assumimos limpeza para priorizar o absoluto)
-                // link.remove(); // Comentado para evitar FOUC se o local estiver funcionando, o novo será adicionado depois
+            // Se o link contiver 'styles.css' mas não for o nosso core oficial, remove para evitar conflito/404
+            if (link.href && link.href.includes('styles.css') && link.href !== absoluteUrl && !link.href.includes('core-styles.css')) {
+               // link.remove(); // Opcional: manter comentado se quiser permitir styles.css locais customizados
             }
         });
     } catch(e) { console.warn('Erro ao limpar styles:', e); }
@@ -79,7 +79,7 @@ class CalculatorEngine {
     link.href = absoluteUrl;
     link.crossOrigin = 'anonymous';
     document.head.appendChild(link);
-    console.log('✓ Styles.css assegurado via URL absoluta');
+    console.log('✓ Styles corrigido para: core/core-styles.css');
   }
 
   /**
