@@ -494,3 +494,8 @@ const CALCULATOR_SYSTEM = {
 
 // Disponibiliza globalmente
 window.CALCULATOR_SYSTEM = CALCULATOR_SYSTEM;
+
+// Expor showToast globalmente para compatibilidade com engines customizadas
+window.showToast = function(message, type = 'info') {
+  CALCULATOR_SYSTEM.notify(message, type);
+};
