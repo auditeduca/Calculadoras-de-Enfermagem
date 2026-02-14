@@ -1,6 +1,6 @@
 /**
  * CALCULATOR SYSTEM - Sistema Principal
- * Gerencia navegação, modais e funções auxiliares
+ * Gerencia navegação, modais, tutorial, notificações, PDF e compartilhamento
  */
 
 const CALCULATOR_SYSTEM = {
@@ -229,6 +229,33 @@ const CALCULATOR_SYSTEM = {
     }
   },
 
+  showModalShared(sharedId) {
+    // Tenta buscar do conteúdo compartilhado (se carregado via engine)
+    const shared = window.__sharedContent?.[sharedId];
+    if (shared) {
+      this.openModal(shared.titulo, shared.icone, shared.html);
+    } else {
+      // Fallback para um modal informativo
+      this.openModal(
+        'Conteúdo Compartilhado',
+        'fa-share-alt',
+        `<p>O conteúdo "${sharedId}" não está disponível no momento.</p>`
+      );
+    }
+  },
+
+  openModal(title, icon, content) {
+    const modal = document.getElementById('reference-modal');
+    if (!modal) return;
+
+    document.getElementById('modal-icon').className = `fa-solid ${icon} text-2xl`;
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-content').innerHTML = content;
+
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  },
+
   closeModal() {
     const modal = document.getElementById('reference-modal');
     if (modal) {
@@ -242,7 +269,7 @@ const CALCULATOR_SYSTEM = {
     document.querySelectorAll('.highlight-element').forEach(el => el.classList.remove('highlight-element'));
   },
 
-  // Tutorial navigation
+  // ========== TUTORIAL NAVIGATION ==========
   nextTutorialStep() {
     if (this.currentTutorialStep < 7) {
       this.currentTutorialStep++;
@@ -291,7 +318,7 @@ const CALCULATOR_SYSTEM = {
   highlightTutorialElements(step) {
     document.querySelectorAll('.highlight-element').forEach(el => el.classList.remove('highlight-element'));
     switch(step) {
-      case 2: 
+      case 2:
         document.getElementById('patient_name')?.classList.add('highlight-element');
         document.getElementById('patient_birthdate')?.classList.add('highlight-element');
         break;
@@ -410,7 +437,7 @@ const CALCULATOR_SYSTEM = {
     }
   },
 
-  // ========== Compartilhamento e Cópia ==========
+  // ========== COMPARTILHAMENTO E CÓPIA ==========
   share(platform) {
     const url = encodeURIComponent(window.location.href);
     const title = encodeURIComponent(document.title);
@@ -449,7 +476,7 @@ const CALCULATOR_SYSTEM = {
     }
   },
 
-  // ========== Notificações (toast) ==========
+  // ========== NOTIFICAÇÕES (TOAST) ==========
   notify(message, type = 'info') {
     const container = document.getElementById('notification-container');
     if (!container) return;
@@ -465,5 +492,5 @@ const CALCULATOR_SYSTEM = {
   }
 };
 
-// Função auxiliar para carregar módulos (já existe no template)
+// Disponibiliza globalmente
 window.CALCULATOR_SYSTEM = CALCULATOR_SYSTEM;
