@@ -1,6 +1,6 @@
 /**
  * CALCULATOR ENGINE - Motor de Renderização Modular
- * Versão 4.4.2 - Fix URLs Absolutas (Core Styles & Modais)
+ * Versão 4.4.3 - Ajuste de URL de Conteúdo Compartilhado
  */
 
 class CalculatorEngine {
@@ -88,7 +88,7 @@ class CalculatorEngine {
   async loadSharedModais() {
     const paths = [
         'shared-modais.json', // Tentativa 1: Local
-        'https://auditeduca.github.io/Calculadoras-de-Enfermagem/shared-modais.json' // Tentativa 2: GitHub Pages
+        'https://auditeduca.github.io/Calculadoras-de-Enfermagem/shared-content.json' // Tentativa 2: GitHub Pages (URL Atualizada)
     ];
 
     for (const path of paths) {
