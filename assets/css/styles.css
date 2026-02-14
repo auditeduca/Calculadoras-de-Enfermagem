@@ -1,371 +1,79 @@
-/**
- * STYLES.CSS - Estilos Customizados da Calculadora
- * Versão 4.0 - Modular
- */
+/* ============================================
+   SISTEMA MODULAR DE CALCULADORAS DE ENFERMAGEM
+   Estilos Globais e Variáveis CSS
+   ============================================ */
 
-/* ========================================
-   BASE STYLES
-   ======================================== */
-@layer base {
-  body {
-    @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter relative transition-colors duration-300;
-  }
+:root {
+  /* Cores Primárias */
+  --nurse-primary: #1A3E74;
+  --nurse-secondary: #00bcd4;
+  --nurse-accent: #00838f;
+  --nurse-bgDark: #0F172A;
   
-  h1 {
-    @apply font-nunito font-black tracking-tight text-nurse-primary dark:text-cyan-400;
-  }
-}
-
-/* ========================================
-   COMPONENTES REUTILIZÁVEIS
-   ======================================== */
-@layer components {
-  /* Cards */
-  .card-base {
-    @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden;
-  }
+  /* Cores Neutras */
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
   
-  /* Módulos da Sidebar */
-  .sidebar-module {
-    @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6;
-  }
+  /* Cores de Status */
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+  --info: #3b82f6;
   
-  /* Inputs */
-  .input-field {
-    @apply w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium;
-  }
+  /* Espaçamento */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
   
-  /* Botões */
-  .btn-primary-action {
-    @apply bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-  
-  .btn-secondary-action {
-    @apply bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider;
-  }
-  
-  /* Abas */
-  .tab-btn {
-    @apply flex-1 px-2 py-3 font-bold text-[10px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider;
-  }
-  
-  .tab-btn.active {
-    @apply border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50 dark:bg-slate-900/30;
-  }
-  
-  /* Toast Notifications */
-  .toast-msg {
-    @apply pointer-events-auto bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 font-bold text-sm min-w-[320px] border-l-4 border-nurse-secondary animate-slide-in transition-all;
-  }
-  
-  /* Botões de Compartilhamento */
-  .share-btn {
-    @apply w-10 h-10 rounded-full flex items-center justify-center bg-white/10 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md;
-  }
+  /* Transições */
+  --transition-base: 0.3s ease-in-out;
 }
 
-/* ========================================
-   ANIMAÇÕES
-   ======================================== */
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+/* ============================================
+   UTILITÁRIOS GERAIS
+   ============================================ */
+
+.hidden {
+  display: none !important;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.opacity-50 {
+  opacity: 0.5;
 }
 
-@keyframes highlight-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(0, 188, 212, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(0, 188, 212, 0);
-  }
-}
-
-/* ========================================
-   INPUTS - REMOVE SPINNERS
-   ======================================== */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-/* ========================================
-   TOOLTIPS
-   ======================================== */
-.tooltip-container {
-  position: relative;
-  display: inline-block;
-}
-
-.tooltip-container:hover .tooltip-text {
-  visibility: visible;
-  opacity: 1;
-  transform: translate(-50%, -10px);
-}
-
-.tooltip-text {
-  visibility: hidden;
-  width: 220px;
-  background-color: #1e293b;
-  color: white;
-  text-align: left;
-  border-radius: 8px;
-  padding: 10px;
-  position: absolute;
-  z-index: 1000;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: all 0.3s;
-  font-size: 12px;
-  font-weight: normal;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.tooltip-text::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #1e293b transparent transparent transparent;
-}
-
-/* ========================================
-   MODAL
-   ======================================== */
-#reference-modal {
-  backdrop-filter: blur(5px);
-}
-
-/* ========================================
-   MENU LATERAL FLUTUANTE
-   ======================================== */
-.sidebar-left-tools {
-  position: fixed;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 40;
-  padding: 10px 0;
-}
-
-.tool-btn {
-  background-color: white;
-  color: #1A3E74;
-  border: 1px solid #e2e8f0;
-  border-left: none;
-  width: 54px;
-  height: 54px;
-  border-radius: 0 14px 14px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.cursor-pointer {
   cursor: pointer;
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  outline: none;
 }
 
-.dark .tool-btn {
-  background-color: #1e293b;
-  color: #cbd5e1;
-  border-color: #334155;
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+.transition-all {
+  transition: all var(--transition-base);
 }
 
-.tool-btn i {
-  font-size: 18px;
-  transition: transform 0.2s;
+/* Animações Keyframes Globais */
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
-
-.btn-label {
-  display: none;
-  position: absolute;
-  left: 60px;
-  background: #1A3E74;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: bold;
-  white-space: nowrap;
-  pointer-events: none;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  z-index: 1001;
-}
-
-.dark .btn-label {
-  background: #0f172a;
-  border: 1px solid #334155;
-}
-
-.btn-label::before {
-  content: '';
-  position: absolute;
-  left: -4px;
-  top: 50%;
-  transform: translateY(-50%);
-  border-width: 4px;
-  border-style: solid;
-  border-color: transparent #1A3E74 transparent transparent;
-}
-
-.dark .btn-label::before {
-  border-color: transparent #0f172a transparent transparent;
-}
-
-.tool-btn:hover {
-  width: 65px;
-  background-color: #1A3E74;
-  color: #ffffff;
-  padding-left: 5px;
-}
-
-.dark .tool-btn:hover {
-  background-color: #00bcd4;
-  color: #0f172a;
-}
-
-.tool-btn:hover i {
-  transform: scale(1.1);
-}
-
-.tool-btn:hover .btn-label {
-  display: block;
-  animation: fadeIn 0.2s ease-out;
-}
-
-/* ========================================
-   RESPONSIVIDADE - MOBILE
-   ======================================== */
-@media (max-width: 768px) {
-  .sidebar-left-tools {
-    top: auto;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    width: auto;
-    height: 70px;
-    flex-direction: row;
-    transform: none;
-    justify-content: space-around;
-    align-items: center;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 20px;
-    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
-    padding: 0 5px;
-  }
   
-  .dark .sidebar-left-tools {
-    background: #1e293b;
-    border-color: #334155;
-    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
-  }
-  
-  .tool-btn {
-    border: none;
-    width: auto;
-    height: 100%;
-    flex: 1;
-    gap: 4px;
-    box-shadow: none;
-    background: transparent;
-    border-radius: 8px;
-  }
-  
-  .btn-label {
-    display: block;
-    position: static;
-    background: transparent;
-    color: currentColor;
-    font-size: 9px;
-    padding: 0;
-    box-shadow: none;
-  }
-  
-  .btn-label::before {
-    display: none;
-  }
-  
-  .tool-btn:hover,
-  .tool-btn:active {
-    width: auto;
-    background-color: rgba(26, 62, 116, 0.05);
-    color: #1A3E74;
-    padding-left: 0;
-  }
-  
-  body {
-    padding-bottom: 120px;
-  }
-  
-  main#main-content {
-    margin-left: 0 !important;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ========================================
-   PROSE - ESTILOS PARA CONTEÚDO
-   ======================================== */
-.prose {
-  max-width: none;
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
 }
 
-.prose h2 {
-  @apply text-nurse-primary dark:text-cyan-400 font-nunito;
-}
-
-.prose p {
-  @apply text-slate-600 dark:text-slate-300;
-}
-
-.prose code {
-  @apply bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded;
-}
-
-.prose a {
-  @apply text-nurse-accent hover:underline;
-}
-
-/* ========================================
-   UTILITIES
-   ======================================== */
-.text-balance {
-  text-wrap: balance;
-}
-
-.transition-smooth {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out forwards;
 }
