@@ -36,7 +36,13 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Core CSS -->
+  <!-- CSS Modulares (GitHub) -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
+  
+  <!-- Core CSS Local -->
   <link rel="stylesheet" href="core/styles.css"/>
 
   <script>
@@ -255,6 +261,13 @@
        SCRIPTS CORE
        ══════════════════════════════════════════════════════════ -->
   
+  <!-- Scripts Modulares (GitHub) -->
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js"></script>
+  
+  <!-- Core Local -->
   <script src="core/calculator-engine.js"></script>
   <script src="core/calculator-system-v42.js"></script>
   
@@ -268,19 +281,19 @@
       try {
         // 1. Carregar componentes HTML
         await Promise.all([
-          loadModule('accessibility-container', 'components/accessibility-v4.html'),
-          loadModule('header-container', 'components/header-v4.html'),
+          loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html'),
+          loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html'),
+          loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html'),
           loadModule('modal-container', 'components/modal-generic.html'),
           loadModule('author-container', 'components/author-section.html'),
-          loadModule('footer-container', 'components/footer-v4.html'),
           loadModule('sidebar-simulado-enfermagem', 'sidebars/sidebar-simulado-enfermagem.html'),
           loadModule('sidebar-compartilhar', 'sidebars/sidebar-compartilhar.html'),
-          loadModule('sidebar-outras-calculadoras', 'sidebars/sidebar-outras-calculadoras-v42.html'),
+          loadModule('sidebar-outras-calculadoras', 'sidebars/sidebar-outras-calculadoras.html'),
           loadModule('fab-container', 'components/fab-buttons.html')
         ]);
         
         // 2. Inicializar Calculator System
-        const configPath = 'insulina-config-v42-completo.json';
+        const configPath = 'insulina-config.json';
         await CALCULATOR_SYSTEM.init(configPath);
         
         console.log('✅ Sistema inicializado com sucesso!');
