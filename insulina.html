@@ -24,7 +24,8 @@
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/styles.css"/>
-
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/core-styles.css"/>
+  
   <!-- Bibliotecas JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
@@ -37,9 +38,9 @@
   <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
 
   <!-- Scripts Locais da Calculadora -->
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-engine.js" defer></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-system.js" defer></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-custom-calculator.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/calculator-engine.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/calculator-system.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/insulina-config.json" defer></script>
   
   <!-- Tailwind Config -->
   <script>
@@ -205,12 +206,12 @@
         // Tenta usar a engine customizada (IMCCalculatorEngine) se disponível
         if (typeof IMCCalculatorEngine !== 'undefined') {
           console.log('✓ Usando Engine Customizada: IMCCalculatorEngine');
-          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'insulina-config.json');
           await CALCULATOR_SYSTEM.engine.init();
         } else {
           // Fallback para engine padrão
           console.warn('⚠️ IMCCalculatorEngine não encontrado ou ainda não carregado, usando CalculatorEngine padrão');
-          await CALCULATOR_SYSTEM.init(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+          await CALCULATOR_SYSTEM.init(baseUrl + 'insulina-config.json');
         }
         
         // Carrega componentes globais
