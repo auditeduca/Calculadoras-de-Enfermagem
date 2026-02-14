@@ -18,7 +18,7 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- ESTILOS MODULARES (ordem correta: variáveis → core → módulos especializados) -->
+  <!-- Estilos Modulares (URLs Absolutas) -->
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/core-styles.css"/>
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
@@ -30,113 +30,107 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 
   <!-- Scripts Globais do Sistema -->
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer crossorigin="anonymous"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer crossorigin="anonymous"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer crossorigin="anonymous"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer crossorigin="anonymous"></script>
 
   <!-- Scripts Locais da Calculadora -->
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-engine.js" defer></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-system.js" defer></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-custom-calculator.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-engine.js" defer crossorigin="anonymous"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-system.js" defer crossorigin="anonymous"></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-custom-calculator.js" defer crossorigin="anonymous"></script>
   
-  <!-- Tailwind Config -->
   <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: { 
-            nunito: ['"Nunito Sans"','sans-serif'], 
-            inter: ['Inter','sans-serif'] 
-          },
-          colors: { 
-            'nurse-primary':'#1A3E74', 
-            'nurse-secondary':'#00bcd4', 
-            'nurse-accent':'#00838f', 
-            'nurse-bgDark':'#0F172A' 
-          },
-          animation: { 
-            'slide-in': 'slideIn 0.3s ease-out', 
-            'fade-in': 'fadeIn 0.3s ease-out', 
-            'pulse-slow': 'pulse 3s infinite' 
+    // Sincronização de cores entre Tailwind e Core Styles (variáveis CSS)
+    (function initTailwind() {
+      if (typeof tailwind !== 'undefined') {
+        tailwind.config = {
+          darkMode: 'class',
+          theme: {
+            extend: {
+              fontFamily: { 
+                nunito: ['"Nunito Sans"','sans-serif'], 
+                inter: ['Inter','sans-serif'] 
+              },
+              colors: { 
+                'nurse-primary': 'var(--nurse-primary, #1A3E74)', 
+                'nurse-secondary': 'var(--nurse-secondary, #00bcd4)', 
+                'nurse-accent': 'var(--nurse-accent, #00838f)', 
+                'nurse-bgDark': 'var(--nurse-bgDark, #0F172A)',
+                'nurse-surface': 'var(--nurse-surface, #ffffff)',
+                'nurse-text': 'var(--nurse-text, #1e293b)'
+              },
+              animation: { 
+                'slide-in': 'slideIn 0.3s ease-out', 
+                'fade-in': 'fadeIn 0.3s ease-out', 
+                'pulse-slow': 'pulse 3s infinite' 
+              }
+            }
           }
-        }
+        };
+      } else {
+        setTimeout(initTailwind, 50);
       }
-    }
+    })();
+
+    window.showToast = function(message, type = 'error') {
+        const colors = {
+            success: 'bg-emerald-500 border-emerald-600',
+            error: 'bg-red-500 border-red-600',
+            warning: 'bg-amber-500 border-amber-600',
+            info: 'bg-nurse-primary border-blue-900'
+        };
+        const icons = {
+            success: 'fa-check-circle',
+            error: 'fa-triangle-exclamation',
+            warning: 'fa-circle-exclamation',
+            info: 'fa-circle-info'
+        };
+
+        const toast = document.createElement('div');
+        toast.className = `fixed top-24 right-4 md:top-4 md:right-4 ${colors[type] || colors.info} border-b-4 text-white px-6 py-4 rounded-xl shadow-2xl z-[99999] flex items-center gap-3 min-w-[300px] animate-fade-in transform transition-all duration-300`;
+        toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-xl"></i><span class="font-medium">${message}</span>`;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+            setTimeout(() => toast.remove(), 300);
+        }, 4000);
+    };
   </script>
 </head>
 <body class="flex flex-col min-h-screen custom-init">
 
-  <!-- CONTAINERS GLOBAIS -->
+  <!-- Botão Libras deve ficar acima do botão de acessibilidade no carregamento -->
+  <div id="libras-container"></div>
   <div id="accessibility-container"></div>
   <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] opacity-0 transition-opacity duration-500 shadow-sm"></div>
 
-  <!-- MENU FLUTUANTE LATERAL -->
-  <aside class="sidebar-left-tools" id="sidebar-tools">
-    <!-- Será preenchido via JS -->
-  </aside>
+  <aside class="sidebar-left-tools" id="sidebar-tools"></aside>
 
-  <!-- CONTEÚDO PRINCIPAL -->
   <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full" style="margin-left: 80px;">
-    
-    <!-- BREADCRUMB -->
-    <nav class="mb-8 font-semibold text-sm text-slate-600 dark:text-cyan-300 flex items-center gap-2">
-      <!-- Será preenchido via JS -->
-    </nav>
+    <nav class="mb-8 font-semibold text-sm text-slate-600 dark:text-cyan-300 flex items-center gap-2"></nav>
 
-    <!-- HEADER DA PÁGINA -->
     <header class="max-w-4xl mb-12">
-      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">
-        <!-- Será preenchido via JS -->
-      </span>
-      <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">
-        <!-- Será preenchido via JS -->
-      </h1>
+      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md"></span>
+      <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight"></h1>
       <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
-      <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">
-        <!-- Será preenchido via JS -->
-      </p>
+      <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic"></p>
     </header>
     
-    <!-- TAGS CONTAINER -->
     <div id="tags-container" class="max-w-7xl mx-auto px-4"></div>
     
-    <!-- GRID PRINCIPAL -->
     <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
-      
-      <!-- CALCULADORA -->
       <article id="calculator-container" class="card-base p-0">
-        <!-- ABAS DE NAVEGAÇÃO -->
-        <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto">
-          <!-- Será preenchido via JS -->
-        </nav>
-
-        <!-- CONTEÚDO DAS ABAS -->
+        <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto"></nav>
         <div class="p-6 md:p-10">
-          <!-- ABA CALCULADORA -->
-          <section id="pane-calc" class="tab-pane">
-            <!-- Será preenchido via JS -->
-          </section>
-
-          <!-- ABA SOBRE -->
-          <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
-            <!-- Será preenchido via JS -->
-          </section>
-
-          <!-- ABA AJUDA -->
-          <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
-            <!-- Será preenchido via JS -->
-          </section>
-
-          <!-- ABA REFERÊNCIA -->
-          <section id="pane-referencia" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
-            <!-- Será preenchido via JS -->
-          </section>
+          <section id="pane-calc" class="tab-pane"></section>
+          <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none"></section>
+          <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none"></section>
+          <section id="pane-referencia" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none"></section>
         </div>
       </article>
 
-      <!-- SIDEBARS -->
       <aside class="space-y-6 sticky top-28 self-start">
         <div id="sidebar-simulado-enfermagem"></div>
         <div id="sidebar-compartilhar"></div>
@@ -144,29 +138,16 @@
       </aside>
     </div>
 
-    <!-- AUTOR -->
     <div id="author-container"></div>
   </main>
 
-  <!-- FOOTER -->
   <div id="footer-container" class="opacity-0 transition-opacity duration-500"></div>
-
-  <!-- MODAL GENÉRICO -->
   <div id="modal-container"></div>
 
-  <!-- WIDGET DE LIBRAS -->
-  <div id="libras-container"></div>
-
-  <!-- INICIALIZAÇÃO MODULAR CORRIGIDA -->
   <script>
-    // FIX: Envolvemos tudo no 'DOMContentLoaded' para garantir que os scripts 'defer' 
-    // tenham terminado de carregar e definir as variáveis globais (CALCULATOR_SYSTEM, etc)
     document.addEventListener('DOMContentLoaded', async function() {
-      console.log('🚀 DOM carregado. Iniciando script de inicialização...');
-      
       const baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
       
-      // Função auxiliar para carregar módulos HTML
       async function loadModule(id, url) {
         const container = document.getElementById(id);
         if (!container) return;
@@ -175,16 +156,11 @@
           if (!res.ok) throw new Error(`Status ${res.status}`);
           container.innerHTML = await res.text();
           container.style.opacity = '1';
-        } catch(e) { 
-          console.warn(`Módulo ${id} não carregado:`, e); 
-        }
+        } catch(e) { console.warn(`Módulo ${id} não carregado:`, e); }
       }
 
-      // Função de espera ativa para garantir que as globais existam
-      // (Safety check caso a rede esteja muito lenta ou ordem de execução varie)
       const waitForGlobals = () => new Promise(resolve => {
         if (typeof CALCULATOR_SYSTEM !== 'undefined') return resolve();
-        console.log('⏳ Aguardando CALCULATOR_SYSTEM...');
         const interval = setInterval(() => {
           if (typeof CALCULATOR_SYSTEM !== 'undefined') {
             clearInterval(interval);
@@ -194,60 +170,132 @@
       });
 
       try {
-        // Aguarda a definição da variável global crítica
         await waitForGlobals();
 
-        // Inicializa o motor da calculadora com o JSON específico
-        // Tenta usar a engine customizada (IMCCalculatorEngine) se disponível
+        // Carregamento do Shared Content
+        console.log('⏳ Carregando conteúdo compartilhado...');
+        try {
+            const sharedRes = await fetch(`${baseUrl}shared-content.json`);
+            if (sharedRes.ok) {
+                CALCULATOR_SYSTEM.sharedContent = await sharedRes.json();
+                console.log('✓ Conteúdo compartilhado carregado.');
+            }
+        } catch (e) {
+            console.warn('Não foi possível carregar o shared-content.json');
+        }
+
         if (typeof IMCCalculatorEngine !== 'undefined') {
-          console.log('✓ Usando Engine Customizada: IMCCalculatorEngine');
           CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
           await CALCULATOR_SYSTEM.engine.init();
         } else {
-          // Fallback para engine padrão
-          console.warn('⚠️ IMCCalculatorEngine não encontrado ou ainda não carregado, usando CalculatorEngine padrão');
           await CALCULATOR_SYSTEM.init(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
         }
-      
-        // Carrega componentes globais
-        await loadModule('header-container', `${baseUrl}assets/components/header-v4.html`);
-        await loadModule('footer-container', `${baseUrl}assets/components/footer-v4.html`);
-        await loadModule('accessibility-container', `${baseUrl}assets/components/accessibility-v4.html`);
         
-        // Carrega componentes de estrutura
-        await loadModule('author-container', `${baseUrl}components/author-section.html`);
-        await loadModule('modal-container', `${baseUrl}components/modal-generic.html`);
-        
-        // Carrega sidebars conforme configuração do JSON
+        // Fixes de Binding - Calculate
+        if (typeof CALCULATOR_SYSTEM.calculate !== 'function') {
+            CALCULATOR_SYSTEM.calculate = function() {
+                try {
+                  if (CALCULATOR_SYSTEM.engine) {
+                      if (typeof CALCULATOR_SYSTEM.engine.calculate === 'function') return CALCULATOR_SYSTEM.engine.calculate();
+                      if (typeof CALCULATOR_SYSTEM.engine.handleCalculate === 'function') return CALCULATOR_SYSTEM.engine.handleCalculate();
+                  }
+                } catch (e) { window.showToast('Erro ao calcular.', 'error'); }
+            };
+        }
+
+        // Fixes de Binding - PDF
+        if (typeof CALCULATOR_SYSTEM.generatePDF !== 'function') {
+            CALCULATOR_SYSTEM.generatePDF = () => {
+                if (CALCULATOR_SYSTEM.engine?.generatePDF) return CALCULATOR_SYSTEM.engine.generatePDF();
+                window.showToast('PDF não disponível.', 'warning');
+            };
+        }
+
+        // Fixes de Binding - Clipboard
+        CALCULATOR_SYSTEM.copyResult = function(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed"; textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.select();
+            const success = document.execCommand('copy');
+            document.body.removeChild(textArea);
+            if (success) window.showToast('Copiado!', 'success');
+        };
+
+        // Binding seguro do método tourGuiado
+        if (typeof CALCULATOR_SYSTEM.tourGuiado !== 'function') {
+             CALCULATOR_SYSTEM.tourGuiado = function() {
+                 if(window.showToast) window.showToast('O tour guiado não está disponível nesta visualização.', 'info');
+             };
+        }
+
+        // Polyfill de Modal
+        CALCULATOR_SYSTEM.closeModal = () => {
+            const m = document.getElementById('custom-fallback-modal');
+            if (m) { m.classList.add('opacity-0'); setTimeout(() => m.remove(), 300); }
+        };
+
+        CALCULATOR_SYSTEM.showModal = function(type) {
+            const config = CALCULATOR_SYSTEM.engine?.config || {};
+            const shared = CALCULATOR_SYSTEM.sharedContent || {};
+            let title = 'Informação';
+            let content = '<p>Conteúdo não disponível.</p>';
+
+            if (type === 'referencias') {
+                title = 'Referências Bibliográficas';
+                const refs = config.referencias || shared.referencias || [];
+                content = `<ul class="list-disc pl-5 space-y-2">${refs.map(r => `<li class="text-sm">${r}</li>`).join('')}</ul>`;
+            } else if (type === 'ajuda') {
+                title = 'Ajuda e Instruções';
+                content = config.ajuda_html || shared.ajuda_html || document.getElementById('pane-ajuda')?.innerHTML || content;
+            } else if (type === 'compartilhar') {
+                title = 'Compartilhar';
+                content = `<div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg text-center"><p class="mb-4 text-sm">Copie o link abaixo:</p><button onclick="CALCULATOR_SYSTEM.copyResult(window.location.href)" class="bg-nurse-primary text-white px-4 py-2 rounded-lg text-xs">Copiar Link da Calculadora</button></div>`;
+            }
+
+            CALCULATOR_SYSTEM.closeModal();
+            const modal = document.createElement('div');
+            modal.id = 'custom-fallback-modal';
+            modal.className = 'fixed inset-0 bg-black/60 z-[99999] flex items-center justify-center p-4 transition-opacity duration-300 backdrop-blur-sm';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-slate-800 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform animate-slide-in">
+                    <div class="bg-nurse-primary p-4 flex justify-between items-center text-white">
+                        <h3 class="font-bold">${title}</h3>
+                        <button onclick="CALCULATOR_SYSTEM.closeModal()"><i class="fa-solid fa-times"></i></button>
+                    </div>
+                    <div class="p-6 max-h-[60vh] overflow-y-auto">${content}</div>
+                </div>`;
+            document.body.appendChild(modal);
+        };
+
+        // Carregamento de módulos
+        await Promise.all([
+          loadModule('header-container', `${baseUrl}assets/components/header-v4.html`),
+          loadModule('footer-container', `${baseUrl}assets/components/footer-v4.html`),
+          loadModule('accessibility-container', `${baseUrl}assets/components/accessibility-v4.html`),
+          loadModule('author-container', `${baseUrl}assets/components/author-section.html`),
+          loadModule('modal-container', `${baseUrl}assets/components/modal-generic.html`),
+          // Inclusão do widget de Libras no carregamento principal
+          loadModule('libras-container', `${baseUrl}assets/components/widget-libras.html`)
+        ]);
+
         if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
-          for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
-            const containerId = sidebar.startsWith('sidebar-') ? sidebar : `sidebar-${sidebar}`;
-            await loadModule(containerId, `${baseUrl}sidebars/${sidebar}.html`);
+          for (const s of CALCULATOR_SYSTEM.engine.config.sidebars) {
+            await loadModule(s.startsWith('sidebar-') ? s : `sidebar-${s}`, `${baseUrl}assets/sidebars/${s}.html`);
           }
         }
         
-        // Carrega VLibras se ativado na configuração
-        if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
-          await loadModule('libras-container', `${baseUrl}components/widget-libras.html`);
-        }
-        
-        // Ativa visibilidade do header e footer
         setTimeout(() => {
-          const header = document.getElementById('header-container');
-          const footer = document.getElementById('footer-container');
-          if(header) header.style.opacity = '1';
-          if(footer) footer.style.opacity = '1';
+          ['header-container', 'footer-container'].forEach(id => {
+            const el = document.getElementById(id); if(el) el.style.opacity = '1';
+          });
         }, 150);
 
-        console.log('✓ Calculadora IMC carregada com sucesso!');
+        console.log('✓ Calculadora pronta!');
       } catch (err) {
-        console.error('❌ Erro Crítico:', err);
-        // Exibe mensagem amigável para o usuário
-        const toast = document.createElement('div');
-        toast.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-4 rounded-xl shadow-xl z-[9999] animate-fade-in';
-        toast.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2"></i> Erro ao carregar a calculadora. Tente recarregar a página.';
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 5000);
+        console.error('❌ Erro:', err);
+        window.showToast('Erro ao carregar sistema.', 'error');
       }
     });
   </script>
