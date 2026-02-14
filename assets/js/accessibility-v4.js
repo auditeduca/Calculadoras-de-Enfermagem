@@ -1289,23 +1289,6 @@ window.AccessControl = window.AccessControl || (function() {
             loadGlossary();
             setupTermLinks();
 
-            // Carregar VLibras
-            if (!document.querySelector('script[src*="vlibras"]')) {
-                const vScript = document.createElement('script');
-                vScript.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
-                vScript.async = true;
-                document.head.appendChild(vScript);
-            }
-
-            const vlInterval = setInterval(() => {
-                if (window.VLibras?.Widget) {
-                    clearInterval(vlInterval);
-                    if (!document.querySelector('[vw]')) {
-                        new window.VLibras.Widget('https://vlibras.gov.br/app');
-                    }
-                }
-            }, 300);
-
             setTimeout(() => clearInterval(vlInterval), 15000);
         }
 

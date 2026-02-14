@@ -1,7 +1,7 @@
 /**
  * CALCULATOR SYSTEM - Sistema Principal
  * Gerencia navegação, modais, notificações e funções auxiliares.
- * Versão: 4.1 (Modular & Anti-Conflito)
+ * Versão: 4.2 (Adicionado tour guiado)
  */
 
 const CALCULATOR_SYSTEM = {
@@ -76,7 +76,7 @@ const CALCULATOR_SYSTEM = {
     if (contentEl) contentEl.innerHTML = conteudo;
     
     modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden'; // Previne scroll
+    document.body.style.overflow = 'hidden';
   },
 
   /**
@@ -97,6 +97,65 @@ const CALCULATOR_SYSTEM = {
   showNANDAModal() { this.showModal('nanda'); },
   showMedicationChecklist() { this.showModal('nove_certos'); },
   showSafetyGoals() { this.showModal('metas_seguranca'); },
+
+  /**
+   * Inicia o tour guiado
+   */
+  tourGuiado(parametro) {
+    const steps = this.engine?.config?.conteudo?.ajuda?.tour_steps;
+    if (!steps || steps.length === 0) {
+      this.notify('Tour não disponível para esta calculadora.', 'warning');
+      return;
+    }
+    this.iniciarTour(steps);
+  },
+
+  iniciarTour(steps) {
+    if (typeof Shepherd === 'undefined') {
+      // Carregar Shepherd dinamicamente
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js';
+      script.onload = () => this.executarTour(steps);
+      document.head.appendChild(script);
+      // Carregar CSS
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/css/shepherd.css';
+      document.head.appendChild(link);
+    } else {
+      this.executarTour(steps);
+    }
+  },
+
+  executarTour(steps) {
+    const tour = new Shepherd.Tour({
+      useModalOverlay: true,
+      defaultStepOptions: {
+        classes: 'shepherd-theme-arrows',
+        scrollTo: { behavior: 'smooth', block: 'center' },
+        cancelIcon: { enabled: true }
+      }
+    });
+
+    steps.forEach((step, index) => {
+      tour.addStep({
+        id: `step-${index}`,
+        title: step.titulo,
+        text: step.descricao,
+        attachTo: {
+          element: step.elemento,
+          on: step.posicao || 'bottom'
+        },
+        buttons: [
+          ...(index > 0 ? [{ text: 'Anterior', action: tour.back }] : []),
+          ...(index < steps.length - 1 ? [{ text: 'Próximo', action: tour.next }] : []),
+          { text: 'Fechar', action: tour.cancel }
+        ]
+      });
+    });
+
+    tour.start();
+  },
 
   /**
    * Sistema de Compartilhamento Social
@@ -172,7 +231,6 @@ const CALCULATOR_SYSTEM = {
       
       doc.setFontSize(16);
       doc.setTextColor(0, 188, 212);
-      // Lógica genérica de exibição no PDF baseada no resultado
       const valorFormatado = typeof data === 'object' ? JSON.stringify(data) : data;
       doc.text(`Valor: ${valorFormatado}`, 20, 60);
       
@@ -256,7 +314,6 @@ document.addEventListener('keydown', (e) => {
  * INICIALIZAÇÃO AUTOMÁTICA (ORQUESTRAÇÃO)
  */
 document.addEventListener('DOMContentLoaded', async () => {
-  // TRAVA DE SEGURANÇA: Se a página tiver 'custom-init', este script para aqui.
   if (document.body.classList.contains('custom-init')) {
     console.log('⚠️ Sistema: Inicialização automática suspensa (Página Customizada).');
     return;

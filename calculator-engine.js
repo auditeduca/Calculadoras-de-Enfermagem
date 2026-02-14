@@ -1,6 +1,6 @@
 /**
  * CALCULATOR ENGINE - Motor de Renderização Modular
- * Versão 4.1 - Fixes: Breadcrumb Array & Null Safety
+ * Versão 4.2 - Adicionado merge de modais compartilhados e renderização de tags
  */
 
 class CalculatorEngine {
@@ -20,10 +20,14 @@ class CalculatorEngine {
       
       this.config = await response.json();
       
+      // Carrega modais compartilhados (merge)
+      await this.loadSharedModais();
+      
       // Renderiza componentes em ordem protegida
       this.renderSEO();
       this.renderBreadcrumb();
       this.renderHeader();
+      this.renderTags(); // Novo método
       this.renderTabs();
       this.renderForm();
       this.renderContentTabs();
@@ -33,6 +37,47 @@ class CalculatorEngine {
     } catch (error) {
       console.error('Erro ao inicializar Calculator Engine:', error);
     }
+  }
+
+  /**
+   * Carrega modais compartilhados do arquivo shared-modais.json
+   */
+  async loadSharedModais() {
+    try {
+      const response = await fetch('shared-modais.json');
+      if (!response.ok) return;
+      const shared = await response.json();
+      if (shared.shared_modais) {
+        this.config.modais = { ...this.config.modais, ...shared.shared_modais };
+      }
+    } catch (e) {
+      console.warn('Não foi possível carregar modais compartilhados:', e);
+    }
+  }
+
+  /**
+   * Renderiza tags clicáveis
+   */
+  renderTags() {
+    const tagsContainer = document.getElementById('tags-container');
+    if (!tagsContainer || !this.config.tags) return;
+    
+    const tagsHTML = this.config.tags.map(tag => `
+      <a href="busca-e-conteudo.html?tag=${encodeURIComponent(tag.label)}" 
+         class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold
+                bg-nurse-primary/10 text-nurse-primary dark:bg-cyan-400/10 dark:text-cyan-400
+                border border-nurse-primary/20 dark:border-cyan-400/20
+                hover:bg-nurse-primary/20 transition-all cursor-pointer">
+        <i class="fa-solid ${tag.icone} text-[10px]"></i>
+        ${tag.label}
+      </a>
+    `).join('');
+    
+    tagsContainer.innerHTML = `
+      <div class="flex flex-wrap gap-2 mb-6">
+        ${tagsHTML}
+      </div>
+    `;
   }
 
   /**
@@ -54,10 +99,8 @@ class CalculatorEngine {
    */
   renderBreadcrumb() {
     const nav = document.querySelector('nav.mb-8');
-    // Verifica se nav existe e se config.breadcrumb existe
     if (!nav || !this.config.breadcrumb) return;
     
-    // CORREÇÃO: Detecta se é um Array direto (Padrão IMC) ou Objeto com items (Legado)
     const itemsList = Array.isArray(this.config.breadcrumb) 
       ? this.config.breadcrumb 
       : this.config.breadcrumb.items;
@@ -68,7 +111,6 @@ class CalculatorEngine {
       if (item.url && item.url !== "" && item.url !== "#") {
         return `<a href="${item.url}" class="hover:underline text-nurse-accent transition-colors">${item.label}</a>`;
       }
-      // Item final ou sem link
       return `<span class="text-nurse-primary dark:text-cyan-400 font-bold">${item.label}</span>`;
     }).join('<i class="fa-solid fa-chevron-right text-[10px] mx-2 text-slate-400"></i>');
     
@@ -86,7 +128,6 @@ class CalculatorEngine {
     const title = document.getElementById('header-title');
     const desc = document.getElementById('header-description');
     
-    // Usa optional chaining e OR para evitar "undefined" na tela
     if (badge) badge.textContent = header.categoria || header.badge || 'Calculadora';
     if (title) title.innerHTML = header.titulo || '';
     if (desc) desc.textContent = header.descricao || '';
@@ -233,13 +274,12 @@ class CalculatorEngine {
   renderContentTabs() {
     if (!this.config.conteudo) return;
     
-    // ABA SOBRE (Procurando chaves 'sobre' ou 'conteudo_sobre' para compatibilidade)
+    // ABA SOBRE
     const sobrePane = document.getElementById('pane-sobre');
-    const conteudoSobre = this.config.conteudo.sobre || this.config.conteudo_sobre;
+    const conteudoSobre = this.config.conteudo.sobre;
     
     if (sobrePane && conteudoSobre) {
       const sobre = conteudoSobre;
-      // Verifica se é apenas texto HTML ou objeto estruturado
       if (sobre.texto && !sobre.titulo) {
          sobrePane.innerHTML = `<div class="prose dark:prose-invert">${sobre.texto}</div>`;
       } else {
@@ -266,7 +306,7 @@ class CalculatorEngine {
     
     // ABA AJUDA
     const ajudaPane = document.getElementById('pane-ajuda');
-    const conteudoAjuda = this.config.conteudo.ajuda || this.config.conteudo_ajuda;
+    const conteudoAjuda = this.config.conteudo.ajuda;
 
     if (ajudaPane && conteudoAjuda) {
       const ajuda = conteudoAjuda;
@@ -356,15 +396,11 @@ class CalculatorEngine {
 
   /**
    * Realiza o cálculo (Lógica Padrão/Insulina)
-   * NOTA: Calculadoras customizadas (como IMC) sobrescrevem este método.
    */
   calculate() {
-    // Tenta encontrar campos padrão de Insulina para manter compatibilidade
     const elPrescricao = document.getElementById('prescricao_medica');
     const elConcentracao = document.getElementById('concentracao_insulina');
 
-    // Se não houver campos de insulina, provavelmente é outra calculadora 
-    // que esqueceu de sobrescrever o método calculate().
     if (!elPrescricao || !elConcentracao) {
         console.warn('Método calculate() base chamado, mas campos de insulina não encontrados. Verifique se a classe filha implementou calculate().');
         return;
@@ -373,16 +409,13 @@ class CalculatorEngine {
     const prescricao = parseFloat(elPrescricao.value);
     const concentracao = parseFloat(elConcentracao.value);
     
-    // Validação
     if (!prescricao || prescricao <= 0) {
       if(window.showToast) window.showToast("Informe uma prescrição válida!", "warning");
       return;
     }
     
-    // Cálculo
     const volumeMl = prescricao / concentracao;
     
-    // Atualiza interface
     const casasDecimais = this.config.calculo?.casas_decimais || 3;
     const unidade = this.config.calculo?.unidade_resultado || 'mL';
 
@@ -395,17 +428,12 @@ class CalculatorEngine {
     const resUnit = document.getElementById('res-unit');
     if(resUnit) resUnit.innerText = `${unidade} (${volumeMl.toFixed(casasDecimais)} ${unidade})`;
     
-    // Mostra resultados
     const resultsWrapper = document.getElementById('results-wrapper');
     if(resultsWrapper) resultsWrapper.classList.remove('hidden');
     
-    // Renderiza auditoria
     this.renderAudit(prescricao, concentracao, volumeMl);
-    
-    // Verifica alertas
     this.checkAlerts(volumeMl);
     
-    // Salva dados para PDF
     this.resultData = { prescricao, concentracao, volumeMl };
     
     if(window.showToast) window.showToast("Cálculo realizado com sucesso!", "success");
@@ -449,8 +477,6 @@ class CalculatorEngine {
     if (!this.config.calculo?.alertas) return;
     
     this.config.calculo.alertas.forEach(alerta => {
-      // Cuidado: eval é perigoso em produção real, mas mantido para compatibilidade com o sistema atual.
-      // Em versões futuras, substituir por um parser de expressões seguro.
       try {
           const condicao = alerta.condicao.replace('resultado', resultado);
           if (eval(condicao)) {
@@ -471,7 +497,6 @@ class CalculatorEngine {
         secao.campos.forEach(campo => {
             const element = document.getElementById(campo.id);
             if (element) {
-            // Reseta para o primeiro valor se for select, ou vazio
             if (campo.type === 'select' && campo.opcoes.length > 0) {
                  element.value = campo.opcoes[0].value;
             } else {
@@ -502,5 +527,4 @@ class CalculatorEngine {
   }
 }
 
-// Instância global para depuração se necessário
 window.CALCULATOR_ENGINE = CalculatorEngine;

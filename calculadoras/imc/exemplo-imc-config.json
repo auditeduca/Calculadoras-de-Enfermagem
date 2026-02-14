@@ -204,6 +204,26 @@
           "titulo": "Interpretar o Resultado",
           "descricao": "Observe a classificação segundo critérios da OMS e oriente o paciente adequadamente"
         }
+      ],
+      "tour_steps": [
+        {
+          "titulo": "Campo Peso",
+          "descricao": "Digite o peso do paciente em kg. Utilize balança calibrada.",
+          "elemento": "#peso_kg",
+          "posicao": "bottom"
+        },
+        {
+          "titulo": "Campo Altura",
+          "descricao": "Digite a altura em metros. Use estadiômetro com o paciente em pé.",
+          "elemento": "#altura_m",
+          "posicao": "bottom"
+        },
+        {
+          "titulo": "Botão Calcular",
+          "descricao": "Clique aqui para obter o resultado.",
+          "elemento": ".btn-primary-action",
+          "posicao": "top"
+        }
       ]
     },
     "referencia": {
@@ -234,25 +254,10 @@
     }
   },
   "modais": {
-    "tutorial": {
-      "titulo": "Tutorial Interativo",
-      "icone": "fa-question-circle",
-      "conteudo": "<div class='space-y-4'><h4 class='font-bold text-lg'>Passo a Passo</h4><ol class='list-decimal pl-5 space-y-2'><li>Confira os dados antropométricos do paciente</li><li>Certifique-se de usar balança e estadiômetro calibrados</li><li>Insira o peso em kg e altura em metros</li><li>Clique em calcular</li><li>Verifique o resultado e a classificação OMS</li><li>Oriente o paciente conforme necessário</li></ol></div>"
-    },
-    "nanda": {
-      "titulo": "Diagnósticos NANDA-I Relacionados",
-      "icone": "fa-stethoscope",
-      "conteudo": "<div class='space-y-3'><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Nutrição desequilibrada: mais do que as necessidades corporais</h5><p class='text-sm mt-2'>Relacionado a ingestão excessiva em relação às necessidades metabólicas</p></div><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Risco de sobrepeso</h5><p class='text-sm mt-2'>Relacionado a padrões alimentares inadequados e estilo de vida sedentário</p></div><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Conhecimento deficiente</h5><p class='text-sm mt-2'>Sobre regime terapêutico e hábitos alimentares saudáveis</p></div></div>"
-    },
-    "nove_certos": {
-      "titulo": "9 Certos da Medicação",
-      "icone": "fa-check-double",
-      "conteudo": "<ul class='space-y-2'><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>1. Paciente Certo</strong><p class='text-sm text-gray-600'>Confirme a identificação com pulseira e pergunte o nome</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>2. Medicamento Certo</strong><p class='text-sm text-gray-600'>Verifique nome, apresentação e validade</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>3. Dose Certa</strong><p class='text-sm text-gray-600'>Confira a dose prescrita e calculada</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>4. Via Certa</strong><p class='text-sm text-gray-600'>Confirme a via de administração prescrita</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>5. Horário Certo</strong><p class='text-sm text-gray-600'>Respeite o horário de administração</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>6. Registro Certo</strong><p class='text-sm text-gray-600'>Documente imediatamente após administrar</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>7. Orientação Certa</strong><p class='text-sm text-gray-600'>Oriente o paciente sobre o medicamento</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>8. Forma Certa</strong><p class='text-sm text-gray-600'>Verifique apresentação e compatibilidade</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>9. Resposta Certa</strong><p class='text-sm text-gray-600'>Monitore reações e efetividade</p></div></li></ul>"
-    },
-    "metas_seguranca": {
-      "titulo": "Metas Internacionais de Segurança do Paciente",
-      "icone": "fa-bullseye",
-      "conteudo": "<div class='space-y-3'><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 1: Identificação Correta</h5><p class='text-sm mt-2'>Identificar corretamente o paciente antes de qualquer procedimento</p></div><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 3: Segurança na Medicação</h5><p class='text-sm mt-2'>Melhorar a segurança de medicamentos de alta vigilância</p></div><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 6: Redução de Riscos</h5><p class='text-sm mt-2'>Reduzir o risco de danos ao paciente decorrente de quedas e erros de medicação</p></div></div>"
+    "sobre": {
+      "titulo": "Sobre o Cálculo de IMC",
+      "icone": "fa-book-open",
+      "conteudo": "<h2 class='text-2xl font-black mb-4 font-nunito'>Sobre o Cálculo</h2><p>O Índice de Massa Corporal (IMC) é uma medida internacional usada para calcular se uma pessoa está no peso ideal. Foi desenvolvido pelo estatístico belga Adolphe Quetelet no século XIX.</p><p>O IMC é amplamente utilizado por profissionais de saúde para triagem e avaliação nutricional inicial, sendo reconhecido pela OMS como padrão de referência.</p><div class='bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl font-mono text-xs my-6 text-center border border-slate-200 dark:border-slate-700'><code>IMC = Peso (kg) / Altura² (m²)</code></div><div class='bg-blue-50 dark:bg-blue-900/20 p-6 rounded-2xl border-l-4 border-blue-500 mt-4'><h4 class='font-bold mb-3 text-blue-800 dark:text-blue-300'>Exemplo Prático:</h4><p class='text-sm'>Para um paciente de 70 kg com 1,75 m de altura, o IMC é 22,9 kg/m² (Peso Normal)</p></div>"
     }
   },
   "sidebars": [
@@ -262,10 +267,24 @@
   ],
   "menu_lateral": [
     {
+      "id": "sobre-calc",
+      "icone": "fa-book-open",
+      "label": "Conteúdo",
+      "acao": "showModal",
+      "parametro": "sobre"
+    },
+    {
+      "id": "metas-seguranca",
+      "icone": "fa-bullseye",
+      "label": "Metas",
+      "acao": "showModal",
+      "parametro": "metas_seguranca"
+    },
+    {
       "id": "guia-rapido",
       "icone": "fa-question-circle",
       "label": "Ajuda",
-      "acao": "switchTab",
+      "acao": "tourGuiado",
       "parametro": "ajuda"
     },
     {
