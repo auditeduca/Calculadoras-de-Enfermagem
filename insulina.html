@@ -5,28 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-  <!-- SEO Dinâmico (preenchido via JS) -->
-  <title id="page-title">Carregando...</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-  <meta name="author" content="Calculadoras de Enfermagem">
-  <meta name="robots" content="index, follow">
+  <!-- SEO (será atualizado via JS) -->
+  <title id="page-title">Calculadora de Enfermagem</title>
+  <meta name="description" content="Calculadora profissional de enfermagem">
   
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="">
-  <meta property="og:description" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
-  
-  <!-- Twitter Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="">
-  <meta name="twitter:description" content="">
-  <meta name="twitter:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
-
-  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
-
   <!-- Fontes e Ícones -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -36,15 +18,30 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- CSS Modulares (GitHub) -->
+  <!-- Estilos Modulares (URLs Absolutas) -->
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css"/>
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css"/>
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
-  
-  <!-- Core CSS Local -->
-  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/styles.css"/>
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/styles.css"/>
 
+  <!-- Bibliotecas JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+
+  <!-- Scripts Globais do Sistema -->
+  <!-- A ordem de defer é respeitada pelo navegador -->
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
+
+  <!-- Scripts Locais da Calculadora -->
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-engine.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculator-system.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-custom-calculator.js" defer></script>
+  
+  <!-- Tailwind Config -->
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -59,266 +56,204 @@
             'nurse-secondary':'#00bcd4', 
             'nurse-accent':'#00838f', 
             'nurse-bgDark':'#0F172A' 
+          },
+          animation: { 
+            'slide-in': 'slideIn 0.3s ease-out', 
+            'fade-in': 'fadeIn 0.3s ease-out', 
+            'pulse-slow': 'pulse 3s infinite' 
           }
         }
       }
     }
-
-    // Função para carregar módulos
-    async function loadModule(id, url) {
-      const container = document.getElementById(id);
-      if (!container) return;
-      try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`Status ${res.status}`);
-        container.innerHTML = await res.text();
-        container.style.opacity = "1";
-        const event = new CustomEvent('moduleLoaded', { detail: { id, url } });
-        container.dispatchEvent(event);
-      } catch(e) { 
-        console.warn(`Módulo ${id} não carregado:`, e); 
-      }
-    }
   </script>
+
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/styles.css"/>
 </head>
-<body class="flex flex-col min-h-screen bg-slate-50 dark:bg-nurse-bgDark text-slate-900 dark:text-slate-100">
+<body class="flex flex-col min-h-screen custom-init">
 
-  <!-- ══════════════════════════════════════════════════════════
-       CONTAINERS MODULARES
-       ══════════════════════════════════════════════════════════ -->
-  
-  <!-- Acessibilidade -->
+  <!-- CONTAINERS GLOBAIS -->
   <div id="accessibility-container"></div>
-  
-  <!-- Notificações -->
-  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
-  
-  <!-- Header -->
-  <div id="header-container" class="sticky top-0 z-50"></div>
-  
-  <!-- Tags Clicáveis -->
-  <div id="tags-container" class="max-w-7xl mx-auto px-4 pt-20"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] opacity-0 transition-opacity duration-500 shadow-sm"></div>
 
-  <!-- ══════════════════════════════════════════════════════════
-       MENU LATERAL ESQUERDO (Sidebar Tools)
-       Renderizado por calculator-engine.js via config.menu_lateral
-       ══════════════════════════════════════════════════════════ -->
-  <aside id="sidebar-tools" class="sidebar-left-tools">
-    <!-- Botões injetados dinamicamente -->
+  <!-- MENU FLUTUANTE LATERAL -->
+  <aside class="sidebar-left-tools" id="sidebar-tools">
+    <!-- Será preenchido via JS -->
   </aside>
 
-  <!-- ══════════════════════════════════════════════════════════
-       CONTEÚDO PRINCIPAL
-       ══════════════════════════════════════════════════════════ -->
-  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-8 pb-8 md:py-12 w-full ml-0 md:ml-20">
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full" style="margin-left: 80px;">
     
-    <!-- Breadcrumb -->
-    <nav class="mb-8">
-      <!-- Desktop -->
-      <div class="hidden md:flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300">
-        <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
-        <i class="fa-solid fa-chevron-right text-[10px]"></i>
-        <span id="breadcrumb-text">Calculadora</span>
-      </div>
-      <!-- Mobile -->
-      <div class="flex md:hidden items-center gap-2 text-sm text-slate-600 dark:text-cyan-300">
-        <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
-        <i class="fa-solid fa-chevron-right text-[10px]"></i>
-        <span id="breadcrumb-text-mobile">Calculadora</span>
-      </div>
+    <!-- BREADCRUMB -->
+    <nav class="mb-8 font-semibold text-sm text-slate-600 dark:text-cyan-300 flex items-center gap-2">
+      <!-- Será preenchido via JS -->
     </nav>
 
-    <!-- Header Calculadora -->
+    <!-- HEADER DA PÁGINA -->
     <header class="max-w-4xl mb-12">
-      <span id="header-badge" class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">
-        Categoria
+      <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">
+        <!-- Será preenchido via JS -->
       </span>
-      <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight font-nunito font-black">
-        Título da Calculadora
+      <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">
+        <!-- Será preenchido via JS -->
       </h1>
       <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
       <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">
-        Descrição da calculadora
+        <!-- Será preenchido via JS -->
       </p>
     </header>
-
-    <!-- Grid: Calculadora + Sidebar -->
+    
+    <!-- TAGS CONTAINER -->
+    <div id="tags-container" class="max-w-7xl mx-auto px-4"></div>
+    
+    <!-- GRID PRINCIPAL -->
     <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
       
-      <!-- ══════════════════════════════════════════════════════
-           CALCULADORA PRINCIPAL
-           ══════════════════════════════════════════════════════ -->
+      <!-- CALCULADORA -->
       <article id="calculator-container" class="card-base p-0">
-        
-        <!-- Abas -->
+        <!-- ABAS DE NAVEGAÇÃO -->
         <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto">
-          <!-- Abas injetadas dinamicamente -->
+          <!-- Será preenchido via JS -->
         </nav>
 
+        <!-- CONTEÚDO DAS ABAS -->
         <div class="p-6 md:p-10">
-          
-          <!-- Painel: Calculadora -->
+          <!-- ABA CALCULADORA -->
           <section id="pane-calc" class="tab-pane">
-            <!-- Formulário injetado dinamicamente -->
-            
-            <!-- Botões -->
-            <div class="grid grid-cols-2 gap-4 pt-4 mt-6">
-              <button id="btn-calculate" class="btn-primary-action">
-                <i class="fa-solid fa-calculator"></i> <span>Calcular</span>
-              </button>
-              <button id="btn-reset" class="btn-secondary-action">
-                <i class="fa-solid fa-rotate-left"></i> Limpar
-              </button>
-            </div>
-
-            <!-- Resultados (hidden inicialmente) -->
-            <div id="results-wrapper" class="hidden pt-8 border-t border-slate-200 dark:border-slate-700 mt-8">
-              
-              <!-- Resultado Principal -->
-              <div class="bg-slate-50 dark:bg-slate-900/40 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-6">
-                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4">Resultado</p>
-                <div id="res-total" class="text-6xl md:text-8xl font-black text-nurse-primary dark:text-cyan-400 font-nunito">0,00</div>
-                <p id="res-unit" class="text-lg font-black text-nurse-secondary mt-2 uppercase tracking-widest">unidade</p>
-              </div>
-
-              <!-- Botões de Ação -->
-              <div class="flex flex-col gap-4 mb-10">
-                <div class="grid grid-cols-2 gap-4">
-                  <button id="btn-pdf" class="btn-primary-action">
-                    <i class="fa-solid fa-file-pdf"></i> <span>Gerar PDF</span>
-                  </button>
-                  <button id="btn-copy" class="btn-secondary-action">
-                    <i class="fa-solid fa-copy"></i> Copiar
-                  </button>
-                </div>
-              </div>
-
-              <!-- Auditoria -->
-              <div class="mb-12">
-                <h3 class="text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-6">
-                  <i class="fa-solid fa-clipboard-check"></i> Auditoria do Cálculo
-                </h3>
-                <ul id="audit-list" class="space-y-3"></ul>
-              </div>
-
-            </div>
+            <!-- Será preenchido via JS -->
           </section>
 
-          <!-- Painel: Sobre -->
-          <section id="pane-sobre" class="tab-pane hidden">
-            <h2 class="text-2xl font-black mb-4 font-nunito">Sobre o Cálculo</h2>
-            <div id="sobre-content"></div>
+          <!-- ABA SOBRE -->
+          <section id="pane-sobre" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <!-- Será preenchido via JS -->
           </section>
 
-          <!-- Painel: Ajuda -->
-          <section id="pane-ajuda" class="tab-pane hidden">
-            <h2 class="text-2xl font-black mb-4 font-nunito">Instruções de Uso</h2>
-            <ul id="ajuda-content" class="space-y-3"></ul>
+          <!-- ABA AJUDA -->
+          <section id="pane-ajuda" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <!-- Será preenchido via JS -->
           </section>
 
-          <!-- Painel: Referência -->
-          <section id="pane-referencia" class="tab-pane hidden">
-            <h2 class="text-2xl font-black mb-4 font-nunito">Referências Bibliográficas</h2>
-            <div id="referencia-content" class="space-y-4"></div>
+          <!-- ABA REFERÊNCIA -->
+          <section id="pane-referencia" class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none">
+            <!-- Será preenchido via JS -->
           </section>
-
         </div>
       </article>
 
-      <!-- ══════════════════════════════════════════════════════
-           SIDEBAR DIREITA
-           ══════════════════════════════════════════════════════ -->
+      <!-- SIDEBARS -->
       <aside class="space-y-6 sticky top-28 self-start">
         <div id="sidebar-simulado-enfermagem"></div>
         <div id="sidebar-compartilhar"></div>
         <div id="sidebar-outras-calculadoras"></div>
       </aside>
-
     </div>
 
-    <!-- Seção do Autor -->
-    <div id="author-container" class="mt-20"></div>
-
+    <!-- AUTOR -->
+    <div id="author-container"></div>
   </main>
 
-  <!-- ══════════════════════════════════════════════════════════
-       MODAIS E OVERLAYS
-       ══════════════════════════════════════════════════════════ -->
-  
-  <!-- Modal Genérico -->
+  <!-- FOOTER -->
+  <div id="footer-container" class="opacity-0 transition-opacity duration-500"></div>
+
+  <!-- MODAL GENÉRICO -->
   <div id="modal-container"></div>
-  
-  <!-- FAB Buttons -->
-  <div id="fab-container"></div>
-  
-  <!-- VLibras -->
+
+  <!-- WIDGET DE LIBRAS -->
   <div id="libras-container"></div>
 
-  <!-- Footer -->
-  <div id="footer-container"></div>
-
-  <!-- ══════════════════════════════════════════════════════════
-       SCRIPTS CORE
-       ══════════════════════════════════════════════════════════ -->
-  
-  <!-- Scripts Modulares (GitHub) -->
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js"></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js"></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js"></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js"></script>
-  
-  <!-- Core Local -->
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/calculator-engine.js"></script>
-  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/calculator-system.js"></script>
-  
+  <!-- INICIALIZAÇÃO MODULAR CORRIGIDA -->
   <script>
-    /**
-     * Inicialização do Sistema
-     */
-    (async () => {
-      console.log('🚀 Inicializando Calculadora v4.2...');
+    // FIX: Envolvemos tudo no 'DOMContentLoaded' para garantir que os scripts 'defer' 
+    // tenham terminado de carregar e definir as variáveis globais (CALCULATOR_SYSTEM, etc)
+    document.addEventListener('DOMContentLoaded', async function() {
+      console.log('🚀 DOM carregado. Iniciando script de inicialização...');
       
-      try {
-        // 1. Carregar componentes HTML
-        await Promise.all([
-          loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html'),
-          loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html'),
-          loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html'),
-          loadModule('modal-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/modal-generic.html'),
-          loadModule('author-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/author-section.html'),
-          loadModule('sidear-simulado-enfermagem', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/sidebars/sidebar-simulado-enfermagem.html'),
-          loadModule('sidebar-compartilhar', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/sidebars/sidebar-compartilhar.html'),
-          loadModule('sidebar-outras-calculadoras', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/sidebars/sidebar-outras-calculadoras.html'),
-          loadModule('fab-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/components/fab-buttons.html')
-        ]);
-        
-        // 2. Inicializar Calculator System
-        const configPath = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/insulina-config.json';
-        await CALCULATOR_SYSTEM.init(configPath);
-        
-        console.log('✅ Sistema inicializado com sucesso!')
-        
-      } catch (error) {
-        console.error('❌ Erro na inicialização:', error);
-        
-        // Notificar usuário
-        const notif = document.createElement('div');
-        notif.className = 'fixed top-6 right-6 bg-red-500 text-white px-6 py-4 rounded-xl shadow-2xl z-[10000]';
-        notif.innerHTML = `
-          <div class="flex items-center gap-3">
-            <i class="fa-solid fa-exclamation-triangle text-2xl"></i>
-            <div>
-              <p class="font-bold">Erro ao carregar calculadora</p>
-              <p class="text-sm opacity-90">Recarregue a página ou tente novamente</p>
-            </div>
-          </div>
-        `;
-        document.body.appendChild(notif);
-        
-        setTimeout(() => notif.remove(), 5000);
+      const baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
+      
+      // Função auxiliar para carregar módulos HTML
+      async function loadModule(id, url) {
+        const container = document.getElementById(id);
+        if (!container) return;
+        try {
+          const res = await fetch(url);
+          if (!res.ok) throw new Error(`Status ${res.status}`);
+          container.innerHTML = await res.text();
+          container.style.opacity = '1';
+        } catch(e) { 
+          console.warn(`Módulo ${id} não carregado:`, e); 
+        }
       }
-    })();
-  </script>
 
+      // Função de espera ativa para garantir que as globais existam
+      // (Safety check caso a rede esteja muito lenta ou ordem de execução varie)
+      const waitForGlobals = () => new Promise(resolve => {
+        if (typeof CALCULATOR_SYSTEM !== 'undefined') return resolve();
+        console.log('⏳ Aguardando CALCULATOR_SYSTEM...');
+        const interval = setInterval(() => {
+          if (typeof CALCULATOR_SYSTEM !== 'undefined') {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 100);
+      });
+
+      try {
+        // Aguarda a definição da variável global crítica
+        await waitForGlobals();
+
+        // Inicializa o motor da calculadora com o JSON específico
+        // Tenta usar a engine customizada (IMCCalculatorEngine) se disponível
+        if (typeof IMCCalculatorEngine !== 'undefined') {
+          console.log('✓ Usando Engine Customizada: IMCCalculatorEngine');
+          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+          await CALCULATOR_SYSTEM.engine.init();
+        } else {
+          // Fallback para engine padrão
+          console.warn('⚠️ IMCCalculatorEngine não encontrado ou ainda não carregado, usando CalculatorEngine padrão');
+          await CALCULATOR_SYSTEM.init(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+        }
+        
+        // Carrega componentes globais
+        await loadModule('header-container', `${baseUrl}assets/components/header-v4.html`);
+        await loadModule('footer-container', `${baseUrl}assets/components/footer-v4.html`);
+        await loadModule('accessibility-container', `${baseUrl}assets/components/accessibility-v4.html`);
+        
+        // Carrega componentes de estrutura
+        await loadModule('author-container', `${baseUrl}assets/components/author-section.html`);
+        await loadModule('modal-container', `${baseUrl}assets/components/modal-generic.html`);
+        
+        // Carrega sidebars conforme configuração do JSON
+        if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
+          for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
+            const containerId = sidebar.startsWith('sidebar-') ? sidebar : `sidebar-${sidebar}`;
+            await loadModule(containerId, `${baseUrl}assets/sidebars/${sidebar}.html`);
+          }
+        }
+        
+        // Carrega VLibras se ativado na configuração
+        if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
+          await loadModule('libras-container', `${baseUrl}assets/components/widget-libras.html`);
+        }
+        
+        // Ativa visibilidade do header e footer
+        setTimeout(() => {
+          const header = document.getElementById('header-container');
+          const footer = document.getElementById('footer-container');
+          if(header) header.style.opacity = '1';
+          if(footer) footer.style.opacity = '1';
+        }, 150);
+
+        console.log('✓ Calculadora IMC carregada com sucesso!');
+      } catch (err) {
+        console.error('❌ Erro Crítico:', err);
+        // Exibe mensagem amigável para o usuário
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-4 rounded-xl shadow-xl z-[9999] animate-fade-in';
+        toast.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2"></i> Erro ao carregar a calculadora. Tente recarregar a página.';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 5000);
+      }
+    });
+  </script>
 </body>
 </html>
