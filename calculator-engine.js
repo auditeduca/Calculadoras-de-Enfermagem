@@ -87,7 +87,7 @@ class CalculatorEngine {
    */
   async loadSharedModais() {
     const paths = [
-        'shared-modais.json', // Tentativa 1: Local
+        'shared-content.json', // Tentativa 1: Local
         'https://auditeduca.github.io/Calculadoras-de-Enfermagem/shared-content.json' // Tentativa 2: GitHub Pages (URL Atualizada)
     ];
 
