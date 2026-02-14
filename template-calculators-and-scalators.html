@@ -24,6 +24,9 @@
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css"/>
   <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css"/>
 
+  <!-- Core Styles (Calculadora) -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/core-styles.css"/>
+
   <!-- Bibliotecas JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
@@ -63,11 +66,11 @@
       }
     }
   </script>
-
-  <!-- Estilos Customizados -->
-  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body class="flex flex-col min-h-screen">
+
+  <!-- NOTIFICAÇÕES (TOAST) -->
+  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
 
   <!-- CONTAINERS GLOBAIS -->
   <div id="accessibility-container"></div>
@@ -158,5 +161,92 @@
   <!-- WIDGET DE LIBRAS -->
   <div id="libras-container"></div>
 
+  <!-- PDF TEMPLATE (OCULTO) -->
+  <div id="pdf-render-template" style="position: absolute; left: -9999px; top: 0; width: 794px; background: white; padding: 40px; color: #0f172a;">
+    <div style="border-bottom: 3px solid #1A3E74; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+      <div style="width: 50px; height: 50px; background: #1A3E74; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+        <i class="fa-solid fa-calculator"></i>
+      </div>
+      <div style="text-align: right;">
+        <h1 style="font-size: 18px; color: #1A3E74; margin: 0; font-weight: 900; text-transform: uppercase;">Relatório de Auditoria</h1>
+        <p style="font-size: 9px; color: #64748b; margin: 0;">SISTEMA PROFISSIONAL DE ENFERMAGEM</p>
+      </div>
+    </div>
+    <div id="pdf-body" style="font-size: 11px; line-height: 1.6; font-family: 'Inter', sans-serif;"></div>
+  </div>
+
+  <!-- INICIALIZAÇÃO MODULAR -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      console.log('🚀 Inicializando calculadora...');
+      
+      const baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
+      
+      async function loadModule(id, url) {
+        const container = document.getElementById(id);
+        if (!container) return;
+        try {
+          const res = await fetch(url);
+          if (!res.ok) throw new Error(`Status ${res.status}`);
+          container.innerHTML = await res.text();
+          container.style.opacity = '1';
+        } catch(e) { 
+          console.warn(`Módulo ${id} não carregado:`, e); 
+        }
+      }
+
+      const waitForGlobals = () => new Promise(resolve => {
+        if (typeof CALCULATOR_SYSTEM !== 'undefined') return resolve();
+        const interval = setInterval(() => {
+          if (typeof CALCULATOR_SYSTEM !== 'undefined') {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 100);
+      });
+
+      try {
+        await waitForGlobals();
+
+        // Determina qual arquivo de configuração usar (pode ser alterado por página)
+        const configPath = window.location.pathname.includes('imc') 
+          ? 'configs/imc-config.json'
+          : 'configs/insulina-config.json';
+
+        await CALCULATOR_SYSTEM.init(baseUrl + configPath);
+      
+        await Promise.all([
+          loadModule('header-container', `${baseUrl}assets/components/header-v4.html`),
+          loadModule('footer-container', `${baseUrl}assets/components/footer-v4.html`),
+          loadModule('accessibility-container', `${baseUrl}assets/components/accessibility-v4.html`),
+          loadModule('author-container', `${baseUrl}components/author-section.html`),
+          loadModule('modal-container', `${baseUrl}components/modal-generic.html`)
+        ]);
+        
+        if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
+          for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
+            const containerId = sidebar.startsWith('sidebar-') ? sidebar : `sidebar-${sidebar}`;
+            await loadModule(containerId, `${baseUrl}sidebars/${sidebar}.html`);
+          }
+        }
+        
+        if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
+          await loadModule('libras-container', `${baseUrl}components/widget-libras.html`);
+        }
+        
+        setTimeout(() => {
+          const header = document.getElementById('header-container');
+          const footer = document.getElementById('footer-container');
+          if(header) header.style.opacity = '1';
+          if(footer) footer.style.opacity = '1';
+        }, 150);
+
+        console.log('✓ Calculadora carregada com sucesso!');
+      } catch (err) {
+        console.error('❌ Erro Crítico:', err);
+        CALCULATOR_SYSTEM.notify('Erro ao carregar a calculadora. Tente recarregar a página.', 'error');
+      }
+    });
+  </script>
 </body>
 </html>
