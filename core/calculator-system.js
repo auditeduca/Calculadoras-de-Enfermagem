@@ -1,14 +1,11 @@
 /**
  * ═══════════════════════════════════════════════════════════════════
- * CALCULATOR SYSTEM v4.2
+ * CALCULATOR SYSTEM v4.3
  * Sistema de gerenciamento de calculadoras de enfermagem
- * 
- * NOVIDADES v4.2:
- * - showModalShared(): Modais com conteúdo compartilhado
- * - tourGuiado(): Tour interativo com Shepherd.js
- * - searchNANDA(): Busca de diagnósticos de enfermagem
- * - Carregamento de shared-content.json
- * - Suporte a FAB buttons
+ * * ATUALIZAÇÕES v4.3:
+ * - Fallback automático para shared-content.json (Local -> Remoto)
+ * - Tratamento robusto de erros de fetch (JSON/404)
+ * - Inicialização resiliente
  * ═══════════════════════════════════════════════════════════════════
  */
 
@@ -22,457 +19,320 @@ const CALCULATOR_SYSTEM = {
    */
   async init(configPath) {
     try {
-      // Carrega conteúdo compartilhado
+      // 1. Carrega conteúdo compartilhado (Com fallback)
       await this.loadSharedContent();
       
-      // Carrega configuração da calculadora
+      // 2. Carrega configuração da calculadora
       const response = await fetch(configPath);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      if (!response.ok) throw new Error(`Erro HTTP ao carregar config: ${response.status}`);
       
       const config = await response.json();
       
-      // Cria engine
+      // 3. Cria engine
+      // Verifica se CalculatorEngine existe (pode não ter carregado se houve erro de script)
+      if (typeof CalculatorEngine === 'undefined') {
+          throw new Error('CalculatorEngine não está definido. Verifique o arquivo calculator-engine.js');
+      }
+      
       this.engine = new CalculatorEngine(config);
       
-      // Renderiza interface
+      // 4. Renderiza interface
       this.engine.render();
       
-      // Carrega VLibras se habilitado
+      // 5. Integrações opcionais
       if (config.acessibilidade?.vlibras) {
         await this.loadVLibras();
       }
       
-      // Carrega FAB buttons
       await this.loadFABButtons();
       
-      // Inicializa event listeners
+      // 6. Event Listeners
       this.initEventListeners();
       
-      console.log('✓ Calculator System v4.2 inicializado');
+      console.log('✓ Calculator System v4.3 inicializado');
       
-      return this.engine;
     } catch (error) {
       console.error('Erro ao inicializar Calculator System:', error);
-      throw error;
+      // Feedback visual simples em caso de erro crítico
+      const container = document.getElementById('calculator-container');
+      if(container) {
+          container.innerHTML = `<div class="p-4 text-red-600 bg-red-50 rounded-lg border border-red-200">
+            <strong>Erro de Inicialização:</strong> ${error.message}
+          </div>`;
+      }
     }
   },
-  
+
   /**
-   * ═══════════════════════════════════════════════════════════════
-   * CARREGAMENTO DE RECURSOS
-   * ═══════════════════════════════════════════════════════════════
-   */
-  
-  /**
-   * Carrega conteúdo compartilhado (Metas, 9 Acertos, etc)
+   * Carrega conteúdo compartilhado (Modais, Glossário, etc)
+   * Tenta localmente, se falhar, tenta no repositório oficial
    */
   async loadSharedContent() {
-    try {
-      const response = await fetch('shared-content.json');
-      if (response.ok) {
-        this.sharedContent = await response.json();
-        console.log('✓ Conteúdo compartilhado carregado');
-      }
-    } catch (error) {
-      console.warn('Conteúdo compartilhado não disponível:', error);
+    const paths = [
+        'shared-content.json', // Tentativa 1: Local (desenvolvimento)
+        'https://auditeduca.github.io/Calculadoras-de-Enfermagem/shared-content.json' // Tentativa 2: Produção
+    ];
+
+    for (const path of paths) {
+        try {
+            const response = await fetch(path);
+            
+            // Verifica status HTTP e Tipo de Conteúdo
+            const contentType = response.headers.get("content-type");
+            if (!response.ok) {
+                // Silenciosamente tenta o próximo se for 404
+                continue; 
+            }
+            
+            if (contentType && contentType.indexOf("application/json") === -1) {
+                // Se retornou HTML (ex: página 404 padrão), ignora
+                console.warn(`Ignorando resposta não-JSON de ${path}`);
+                continue;
+            }
+
+            this.sharedContent = await response.json();
+            console.log(`✓ Conteúdo compartilhado carregado de: ${path}`);
+            return; // Sucesso, para o loop
+
+        } catch (e) {
+            // Erros de rede ou parse, tenta o próximo
+            if (path === paths[paths.length - 1]) {
+                console.warn('Aviso: Conteúdo compartilhado não disponível (Local e Remoto falharam).');
+            }
+        }
     }
   },
-  
+
   /**
-   * Carrega VLibras
+   * Carrega VLibras Widget
    */
   async loadVLibras() {
-    try {
-      const container = document.getElementById('libras-container');
-      if (!container) return;
-      
-      const response = await fetch('components/widget-libras.html');
-      if (response.ok) {
-        container.innerHTML = await response.text();
-        console.log('✓ VLibras carregado');
-      }
-    } catch (error) {
-      console.warn('Erro ao carregar VLibras:', error);
-    }
+    if (document.getElementById('vlibras-widget')) return;
+    
+    const div = document.createElement('div');
+    div.id = 'vlibras-widget';
+    div.innerHTML = `
+      <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(div);
+
+    const script = document.createElement('script');
+    script.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
+    script.onload = () => {
+      new window.VLibras.Widget('https://vlibras.gov.br/app');
+      console.log('✓ VLibras carregado');
+    };
+    document.body.appendChild(script);
   },
-  
+
   /**
-   * Carrega FAB buttons
+   * Carrega Floating Action Buttons (FAB)
    */
   async loadFABButtons() {
-    try {
-      const container = document.getElementById('fab-container');
-      if (!container) return;
-      
-      const response = await fetch('components/fab-buttons.html');
-      if (response.ok) {
-        container.innerHTML = await response.text();
-        console.log('✓ FAB buttons carregados');
+    const fabContainer = document.getElementById('fab-container');
+    if (!fabContainer) return;
+
+    // Define botões padrão se não houver configuração externa
+    const buttons = [
+      { 
+        icon: 'fa-share-nodes', 
+        action: 'share', 
+        label: 'Compartilhar',
+        color: 'bg-blue-600' 
+      },
+      { 
+        icon: 'fa-circle-question', 
+        action: 'tour', 
+        label: 'Tutorial',
+        color: 'bg-emerald-600'
       }
-    } catch (error) {
-      console.warn('Erro ao carregar FAB buttons:', error);
+    ];
+
+    fabContainer.innerHTML = `
+      <div class="fab-group relative group">
+        <div class="absolute bottom-16 right-0 flex flex-col gap-3 opacity-0 translate-y-4 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300">
+          ${buttons.map(btn => `
+            <button onclick="CALCULATOR_SYSTEM.handleFabAction('${btn.action}')" 
+                    class="w-10 h-10 rounded-full ${btn.color} text-white shadow-lg hover:scale-110 transition-transform flex items-center justify-center relative"
+                    title="${btn.label}">
+              <i class="fa-solid ${btn.icon}"></i>
+              <span class="absolute right-12 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                ${btn.label}
+              </span>
+            </button>
+          `).join('')}
+        </div>
+        <button class="w-14 h-14 rounded-full bg-nurse-primary text-white shadow-xl hover:bg-nurse-secondary transition-colors flex items-center justify-center z-10">
+          <i class="fa-solid fa-plus text-xl group-hover:rotate-45 transition-transform duration-300"></i>
+        </button>
+      </div>
+    `;
+    console.log('✓ FAB buttons carregados');
+  },
+
+  /**
+   * Manipula ações dos botões FAB
+   */
+  handleFabAction(action) {
+    switch(action) {
+      case 'share':
+        this.sharePage();
+        break;
+      case 'tour':
+        this.startTour();
+        break;
     }
   },
-  
+
   /**
-   * Carrega Shepherd.js para tour guiado
+   * Compartilha a página atual
    */
-  async loadShepherd() {
-    return new Promise((resolve, reject) => {
-      if (typeof Shepherd !== 'undefined') {
-        resolve();
-        return;
+  async sharePage() {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          text: 'Confira esta calculadora de enfermagem:',
+          url: window.location.href
+        });
+      } catch (err) {
+        console.log('Compartilhamento cancelado');
       }
-      
-      // Carrega CSS
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'https://cdn.jsdelivr.net/npm/shepherd.js@11/dist/css/shepherd.css';
-      document.head.appendChild(link);
-      
-      // Carrega JS
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/shepherd.js@11/dist/js/shepherd.min.js';
-      script.onload = () => {
-        console.log('✓ Shepherd.js carregado');
-        resolve();
-      };
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
-  },
-  
-  /**
-   * ═══════════════════════════════════════════════════════════════
-   * AÇÕES DE ABAS E MODAIS
-   * ═══════════════════════════════════════════════════════════════
-   */
-  
-  /**
-   * Alterna entre abas
-   */
-  switchTab(tabId) {
-    // Remove classe ativa de todos os botões
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.classList.remove('active', 'bg-nurse-primary', 'text-white');
-      btn.classList.add('text-slate-600', 'dark:text-slate-400');
-    });
-    
-    // Esconde todos os painéis
-    document.querySelectorAll('.tab-pane').forEach(pane => {
-      pane.classList.add('hidden');
-    });
-    
-    // Ativa o botão e painel selecionados
-    const selectedBtn = document.getElementById(`btn-tab-${tabId}`);
-    const selectedPane = document.getElementById(`pane-${tabId}`);
-    
-    if (selectedBtn) {
-      selectedBtn.classList.add('active', 'bg-nurse-primary', 'text-white');
-      selectedBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
-    }
-    
-    if (selectedPane) {
-      selectedPane.classList.remove('hidden');
+    } else {
+      this.copyToClipboard(window.location.href);
+      if(window.showToast) window.showToast('Link copiado para a área de transferência!', 'success');
     }
   },
-  
+
   /**
-   * Mostra modal genérico
+   * Inicia o tour guiado
    */
-  showModal(modalId) {
-    const modal = document.getElementById('reference-modal');
-    if (!modal || !this.engine?.config?.modais?.[modalId]) return;
-    
-    const modalData = this.engine.config.modais[modalId];
-    
-    // Atualiza conteúdo
-    const iconEl = modal.querySelector('#modal-icon');
-    const titleEl = modal.querySelector('#modal-title');
-    const contentEl = modal.querySelector('#modal-content');
-    
-    if (iconEl) iconEl.className = `fa-solid ${modalData.icone} text-nurse-secondary`;
-    if (titleEl) titleEl.textContent = modalData.titulo;
-    if (contentEl) contentEl.innerHTML = modalData.conteudo;
-    
-    // Mostra modal
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    
-    // Foca no modal (acessibilidade)
-    const closeBtn = modal.querySelector('[data-close-modal]');
-    if (closeBtn) closeBtn.focus();
+  startTour() {
+    if (typeof Shepherd === 'undefined') {
+        // Carrega Shepherd.js sob demanda
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js';
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/css/shepherd.css';
+        
+        document.head.appendChild(link);
+        document.body.appendChild(script);
+        
+        script.onload = () => this.initTour();
+    } else {
+        this.initTour();
+    }
   },
-  
-  /**
-   * Mostra modal com conteúdo compartilhado ⭐ NOVO v4.2
-   */
-  showModalShared(sharedId) {
-    const modal = document.getElementById('reference-modal');
-    if (!modal || !this.sharedContent) return;
-    
-    const sharedData = this.sharedContent.shared_content[sharedId];
-    if (!sharedData) {
-      console.error(`Conteúdo compartilhado '${sharedId}' não encontrado`);
-      return;
+
+  initTour() {
+    if (!this.tour) {
+        this.tour = new Shepherd.Tour({
+            useModalOverlay: true,
+            defaultStepOptions: {
+                classes: 'shepherd-theme-custom',
+                scrollTo: true,
+                cancelIcon: { enabled: true }
+            }
+        });
+        
+        // Define passos do tour
+        this.tour.addSteps([
+            {
+                id: 'intro',
+                text: 'Bem-vindo! Vamos fazer um tour rápido pela calculadora.',
+                attachTo: { element: 'header', on: 'bottom' },
+                buttons: [{ text: 'Próximo', action: this.tour.next }]
+            },
+            {
+                id: 'input',
+                text: 'Aqui você insere os dados do paciente ou prescrição.',
+                attachTo: { element: '#pane-calc', on: 'right' },
+                buttons: [{ text: 'Voltar', action: this.tour.back }, { text: 'Próximo', action: this.tour.next }]
+            },
+            {
+                id: 'actions',
+                text: 'Use estes botões para calcular ou limpar o formulário.',
+                attachTo: { element: '.btn-primary-action', on: 'top' },
+                buttons: [{ text: 'Entendi', action: this.tour.complete }]
+            }
+        ]);
     }
     
-    // Atualiza conteúdo
-    const iconEl = modal.querySelector('#modal-icon');
-    const titleEl = modal.querySelector('#modal-title');
-    const contentEl = modal.querySelector('#modal-content');
-    
-    if (iconEl) iconEl.className = `fa-solid ${sharedData.icone} text-nurse-secondary`;
-    if (titleEl) titleEl.textContent = sharedData.titulo;
-    if (contentEl) contentEl.innerHTML = sharedData.html;
-    
-    // Mostra modal
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    
-    // Foca no modal
-    const closeBtn = modal.querySelector('[data-close-modal]');
-    if (closeBtn) closeBtn.focus();
-  },
-  
-  /**
-   * Fecha modal
-   */
-  closeModal() {
-    const modal = document.getElementById('reference-modal');
-    if (!modal) return;
-    
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-  },
-  
-  /**
-   * ═══════════════════════════════════════════════════════════════
-   * TOUR GUIADO ⭐ NOVO v4.2
-   * ═══════════════════════════════════════════════════════════════
-   */
-  
-  /**
-   * Inicia tour guiado interativo
-   */
-  async tourGuiado(parametro) {
-    if (!this.engine?.config?.conteudo?.[parametro]) return;
-    
-    // Carrega Shepherd.js se necessário
-    await this.loadShepherd();
-    
-    const config = this.engine.config.conteudo[parametro];
-    
-    // Cria tour
-    this.tour = new Shepherd.Tour({
-      useModalOverlay: true,
-      defaultStepOptions: {
-        cancelIcon: { enabled: true },
-        classes: 'shepherd-theme-custom',
-        scrollTo: { behavior: 'smooth', block: 'center' }
-      }
-    });
-    
-    // Adiciona steps
-    config.passos.forEach((passo, index) => {
-      const isLast = index === config.passos.length - 1;
-      
-      this.tour.addStep({
-        id: `step-${index}`,
-        title: `<i class="fa-solid ${passo.icone} mr-2"></i>${passo.titulo}`,
-        text: passo.descricao,
-        attachTo: {
-          element: passo.elemento || 'body',
-          on: 'bottom'
-        },
-        buttons: [
-          {
-            text: index === 0 ? 'Cancelar' : 'Anterior',
-            action: index === 0 ? this.tour.cancel : this.tour.back,
-            classes: 'shepherd-button-secondary'
-          },
-          {
-            text: isLast ? 'Concluir' : 'Próximo',
-            action: this.tour.next,
-            classes: 'shepherd-button-primary'
-          }
-        ]
-      });
-    });
-    
-    // Inicia tour
     this.tour.start();
   },
-  
-  /**
-   * ═══════════════════════════════════════════════════════════════
-   * BUSCA DE DIAGNÓSTICOS ⭐ NOVO v4.2
-   * ═══════════════════════════════════════════════════════════════
-   */
-  
-  /**
-   * Busca diagnósticos de enfermagem (NANDA, NIC, NOC)
-   */
-  searchNANDA(termo) {
-    if (!termo) termo = this.engine?.config?.metadata?.titulo || '';
-    
-    const query = encodeURIComponent(`${termo} NANDA NIC NOC diagnóstico de enfermagem`);
-    
-    // Abre busca no Google em nova aba
-    window.open(`https://www.google.com/search?q=${query}`, '_blank');
-  },
-  
-  /**
-   * ═══════════════════════════════════════════════════════════════
-   * UTILITÁRIOS
-   * ═══════════════════════════════════════════════════════════════
-   */
-  
-  /**
-   * Copia resultado para clipboard
-   */
-  async copyResult() {
-    const resultEl = document.getElementById('res-total');
-    const unitEl = document.getElementById('res-unit');
-    
-    if (!resultEl) return;
-    
-    const value = resultEl.textContent;
-    const unit = unitEl?.textContent || '';
-    const text = `${value} ${unit}`;
-    
-    try {
-      await navigator.clipboard.writeText(text);
-      
-      // Feedback visual
-      const btn = event?.target?.closest('button');
-      if (btn) {
-        const originalHTML = btn.innerHTML;
-        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copiado!';
-        btn.classList.add('bg-green-600');
-        
-        setTimeout(() => {
-          btn.innerHTML = originalHTML;
-          btn.classList.remove('bg-green-600');
-        }, 2000);
-      }
-    } catch (err) {
-      console.error('Erro ao copiar:', err);
-    }
-  },
-  
+
   /**
    * Inicializa event listeners globais
    */
   initEventListeners() {
-    // Modal - fechar ao clicar fora
-    document.addEventListener('click', (e) => {
-      const modal = document.getElementById('reference-modal');
-      if (e.target === modal) {
-        this.closeModal();
-      }
+    // Escuta eventos de cálculo para analytics ou logs
+    document.addEventListener('calculator:calculated', (e) => {
+      console.log('Cálculo realizado:', e.detail);
     });
+  },
+
+  // Proxies para métodos do engine (para manter compatibilidade com onclicks antigos)
+  calculate: (params) => CALCULATOR_SYSTEM.engine?.calculate(params),
+  reset: () => CALCULATOR_SYSTEM.engine?.reset(),
+  generatePDF: () => {
+    if(window.print) window.print();
+    else alert('Função de impressão não disponível');
+  },
+  copyResult: () => {
+    const res = document.getElementById('res-total')?.innerText;
+    if(res) {
+        navigator.clipboard.writeText(res);
+        if(window.showToast) window.showToast('Resultado copiado!', 'success');
+    }
+  },
+  
+  // Navegação de abas
+  switchTab: (tabId) => {
+    // Remove active de todos
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
     
-    // Modal - fechar com ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        this.closeModal();
-        if (this.tour?.isActive()) {
-          this.tour.cancel();
-        }
-      }
-    });
+    // Ativa selecionado
+    const btn = document.getElementById(`btn-tab-${tabId}`);
+    const pane = document.getElementById(`pane-${tabId}`);
     
-    // Botão fechar modal
-    document.querySelectorAll('[data-close-modal]').forEach(btn => {
-      btn.addEventListener('click', () => this.closeModal());
-    });
+    if(btn && pane) {
+        btn.classList.add('active');
+        pane.classList.remove('hidden');
+        pane.classList.add('animate-fade-in');
+    }
+  },
+
+  // Ações do menu lateral
+  openNandaSearch: () => {
+     window.location.href = 'busca-e-conteudo.html?type=nanda';
+  },
+  
+  openProtocolos: () => {
+     window.location.href = 'busca-e-conteudo.html?type=protocolos';
+  },
+  
+  openGlossario: () => {
+     window.location.href = 'busca-e-conteudo.html?type=glossario';
+  },
+
+  openModalShared: (modalId) => {
+      // Verifica se o modal existe no sharedContent carregado
+      const modalData = CALCULATOR_SYSTEM.sharedContent?.modais?.[modalId];
+      if (modalData) {
+          // Lógica para abrir modal (requer implementação de UI de modal genérico)
+          alert(modalData.titulo + '\n\n' + modalData.conteudo);
+      } else {
+          console.warn(`Modal ${modalId} não encontrado`);
+      }
   }
 };
 
-/**
- * ═══════════════════════════════════════════════════════════════
- * CSS CUSTOMIZADO PARA SHEPHERD.JS
- * ═══════════════════════════════════════════════════════════════
- */
-const shepherdStyles = `
-<style>
-.shepherd-theme-custom {
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-  max-width: 400px;
-}
-
-.shepherd-theme-custom .shepherd-header {
-  background: linear-gradient(135deg, #1A3E74 0%, #2E5A9C 100%);
-  color: white;
-  padding: 1rem;
-  border-radius: 1rem 1rem 0 0;
-  font-weight: 700;
-  font-size: 1.125rem;
-}
-
-.shepherd-theme-custom .shepherd-text {
-  padding: 1.5rem;
-  color: #475569;
-  line-height: 1.6;
-}
-
-.shepherd-theme-custom .shepherd-footer {
-  padding: 1rem;
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  border-top: 1px solid #e2e8f0;
-}
-
-.shepherd-button-primary {
-  background: #1A3E74;
-  color: white;
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.5rem;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.shepherd-button-primary:hover {
-  background: #00bcd4;
-}
-
-.shepherd-button-secondary {
-  background: #e2e8f0;
-  color: #475569;
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.5rem;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.shepherd-button-secondary:hover {
-  background: #cbd5e1;
-}
-
-.shepherd-modal-overlay-container {
-  background: rgba(0,0,0,0.5);
-}
-
-.shepherd-element {
-  z-index: 10000;
-}
-</style>
-`;
-
-// Injeta estilos no head quando o script carrega
-if (document.head) {
-  document.head.insertAdjacentHTML('beforeend', shepherdStyles);
-}
-
-// Torna disponível globalmente
+// Expõe globalmente
 window.CALCULATOR_SYSTEM = CALCULATOR_SYSTEM;
-
-console.log('✓ Calculator System v4.2 carregado');
