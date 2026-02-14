@@ -1,6 +1,6 @@
 /**
  * CALCULATOR ENGINE - Motor de Renderização Modular
- * Versão 4.3 - Correção de Compatibilidade de Construtor e Renderização
+ * Versão 4.3.1 - Hotfix Styles URL e Proteção de Renderização
  */
 
 class CalculatorEngine {
@@ -52,10 +52,15 @@ class CalculatorEngine {
    * Chamado explicitamente pelo calculator-system-v42.js
    */
   render() {
+    // 🛡️ Proteção contra config nula (Evita erro 'reading seo of null')
     if (!this.config) {
-        console.error("Erro: Tentativa de renderizar sem configuração carregada.");
+        console.error("Erro Crítico: Tentativa de renderizar sem configuração carregada.");
         return;
     }
+    
+    // 🚑 Fix: Garante carregamento do CSS Core (Url Absoluta)
+    this.fixStyles();
+
     this.renderSEO();
     this.renderHeader();
     this.renderBreadcrumb();
@@ -64,6 +69,33 @@ class CalculatorEngine {
     this.renderTabs();
     this.renderForm();
     this.renderContentTabs();
+  }
+
+  /**
+   * Injeta styles.css via URL absoluta se não estiver carregado
+   * Resolve problema de 404 em ambientes com caminhos relativos quebrados
+   */
+  fixStyles() {
+    const cssId = 'core-styles-fixed';
+    const absoluteUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/core/styles.css';
+
+    if (!document.getElementById(cssId)) {
+        // Verifica se já existe algum styles.css falhando antes de injetar
+        const existingLinks = document.querySelectorAll('link[href*="styles.css"]');
+        let needsInjection = true;
+        
+        // Opcional: Poderíamos remover o link quebrado aqui, mas vamos apenas adicionar o correto
+        
+        if (needsInjection) {
+            const link = document.createElement('link');
+            link.id = cssId;
+            link.rel = 'stylesheet';
+            link.href = absoluteUrl;
+            link.crossOrigin = 'anonymous';
+            document.head.appendChild(link);
+            console.log('✓ Styles.css corrigido para URL absoluta (Hotfix)');
+        }
+    }
   }
 
   /**
@@ -86,7 +118,7 @@ class CalculatorEngine {
    * Renderiza tags SEO
    */
   renderSEO() {
-    if (!this.config.seo) return;
+    if (!this.config?.seo) return;
     
     document.title = this.config.seo.title || document.title;
     
