@@ -38,7 +38,6 @@
   <!-- Scripts Locais da Calculadora -->
   <script src="calculator-engine.js" defer></script>
   <script src="calculator-system.js" defer></script>
-  <script src="calculadoras/imc/exemplo-imc-custom-calculator.js" defer></script>
 
   <!-- Tailwind Config -->
   <script>
@@ -184,11 +183,11 @@
         // Usar engine customizada para IMC
         if (typeof IMCCalculatorEngine !== 'undefined') {
           console.log('✓ Usando IMCCalculatorEngine');
-          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'configs/imc-config.json');
           await CALCULATOR_SYSTEM.engine.init();
         } else {
           console.warn('IMCCalculatorEngine não encontrado, usando fallback padrão');
-          await CALCULATOR_SYSTEM.init(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
+          await CALCULATOR_SYSTEM.init(baseUrl + 'config');
         }
 
         // Carregar componentes globais
