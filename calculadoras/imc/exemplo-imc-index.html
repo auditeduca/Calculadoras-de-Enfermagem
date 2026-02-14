@@ -205,7 +205,7 @@
         // Tenta usar a engine customizada (IMCCalculatorEngine) se disponível
         if (typeof IMCCalculatorEngine !== 'undefined') {
           console.log('✓ Usando Engine Customizada: IMCCalculatorEngine');
-          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/exemplo-imc-config.json');
+          CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
           await CALCULATOR_SYSTEM.engine.init();
         } else {
           // Fallback para engine padrão
@@ -220,7 +220,7 @@
         
         // Carrega componentes de estrutura
         await loadModule('author-container', `${baseUrl}components/author-section.html`);
-        await loadModule('modal-container', `${baseUrl}omponents/modal-generic.html`);
+        await loadModule('modal-container', `${baseUrl}components/modal-generic.html`);
         
         // Carrega sidebars conforme configuração do JSON
         if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
