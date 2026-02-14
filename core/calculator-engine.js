@@ -43,19 +43,19 @@ class CalculatorEngine {
   /**
    * Carrega conteúdo compartilhado para modais (ex: shared-content.json)
    */
-  async loadSharedModais() {
-    try {
-      const response = await fetch('shared-content.json');
-      if (!response.ok) throw new Error('Não foi possível carregar shared-content.json');
-      const shared = await response.json();
-      // Armazena para uso futuro
-      window.__sharedContent = shared.shared_content;
-      console.log('✓ Conteúdo compartilhado carregado');
-    } catch (error) {
-      // Fallback silencioso – apenas loga e continua
-      console.info('Info: Modais compartilhados não disponíveis (ignorado).');
-    }
+async loadSharedModais() {
+  try {
+    // Antes: const response = await fetch('shared-content.json');
+    // Agora: caminho relativo correto para a pasta /configs/
+    const response = await fetch('configs/shared-content.json');
+    if (!response.ok) throw new Error('Não foi possível carregar shared-content.json');
+    const shared = await response.json();
+    window.__sharedContent = shared.shared_content;
+    console.log('✓ Conteúdo compartilhado carregado');
+  } catch (error) {
+    console.info('Info: Modais compartilhados não disponíveis (ignorado).');
   }
+}
 
   /**
    * Renderiza tags SEO
