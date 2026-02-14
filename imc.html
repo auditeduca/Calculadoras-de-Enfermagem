@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-  <!-- SEO (será atualizado via JS) -->
+  <!-- SEO -->
   <title id="page-title">Calculadora de IMC | Enfermagem</title>
   <meta name="description" content="Calculadora profissional de IMC para avaliação nutricional com classificação OMS.">
 
@@ -15,29 +15,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
-  <!-- Tailwind CSS (produção: idealmente usar PostCSS, mas manter CDN para testes) -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Estilos Modulares (caminhos relativos à raiz) -->
+  <!-- Estilos Modulares -->
   <link rel="stylesheet" href="assets/css/variables-v4.css"/>
   <link rel="stylesheet" href="assets/css/core-styles.css"/>
   <link rel="stylesheet" href="assets/css/header-v4.css"/>
   <link rel="stylesheet" href="assets/css/footer-v4.css"/>
   <link rel="stylesheet" href="assets/css/accessibility-v4.css"/>
 
-  <!-- Bibliotecas JS (defer) -->
+  <!-- Bibliotecas JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 
-  <!-- Scripts Globais do Sistema (relativos) -->
+  <!-- Scripts Globais do Sistema -->
   <script src="assets/js/event-bus-v4.js" defer></script>
   <script src="assets/js/header-v4.js" defer></script>
   <script src="assets/js/footer-v4.js" defer></script>
   <script src="assets/js/accessibility-v4.js" defer></script>
 
-  <!-- Scripts Locais da Calculadora (ordem: engine base, sistema, custom IMC) -->
+  <!-- Scripts Locais da Calculadora (ordem correta) -->
   <script src="calculator-engine.js" defer></script>
   <script src="calculator-system.js" defer></script>
+  <!-- Engine customizada para IMC (obrigatório) -->
+  <script src="calculadoras/imc/exemplo-imc-custom-calculator.js" defer></script>
 
   <!-- Tailwind Config -->
   <script>
@@ -62,30 +64,25 @@
     }
   </script>
 
-  <!-- Estilos adicionais (fallback) -->
   <style>
     #notification-container { z-index: 10000; }
   </style>
 </head>
 <body class="flex flex-col min-h-screen bg-slate-50 dark:bg-nurse-bgDark">
 
-  <!-- NOTIFICAÇÕES (TOAST) -->
+  <!-- NOTIFICAÇÕES -->
   <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
 
   <!-- CONTAINERS GLOBAIS -->
   <div id="accessibility-container"></div>
   <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] opacity-0 transition-opacity duration-500 shadow-sm"></div>
 
-  <!-- MENU FLUTUANTE LATERAL -->
+  <!-- MENU LATERAL -->
   <aside class="sidebar-left-tools" id="sidebar-tools"></aside>
 
-  <!-- CONTEÚDO PRINCIPAL -->
   <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full" style="margin-left: 80px;">
-
-    <!-- BREADCRUMB -->
     <nav class="mb-8 font-semibold text-sm text-slate-600 dark:text-cyan-300 flex items-center gap-2"></nav>
 
-    <!-- HEADER DA PÁGINA -->
     <header class="max-w-4xl mb-12">
       <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md"></span>
       <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight"></h1>
@@ -93,13 +90,9 @@
       <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic"></p>
     </header>
 
-    <!-- TAGS CONTAINER -->
     <div id="tags-container" class="max-w-7xl mx-auto px-4"></div>
 
-    <!-- GRID PRINCIPAL -->
     <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
-
-      <!-- CALCULADORA -->
       <article id="calculator-container" class="card-base p-0">
         <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto"></nav>
         <div class="p-6 md:p-10">
@@ -110,7 +103,6 @@
         </div>
       </article>
 
-      <!-- SIDEBARS DIREITA -->
       <aside class="space-y-6 sticky top-28 self-start">
         <div id="sidebar-simulado-enfermagem"></div>
         <div id="sidebar-compartilhar"></div>
@@ -118,25 +110,17 @@
       </aside>
     </div>
 
-    <!-- AUTOR -->
     <div id="author-container"></div>
   </main>
 
-  <!-- FOOTER -->
   <div id="footer-container" class="opacity-0 transition-opacity duration-500"></div>
-
-  <!-- MODAL GENÉRICO -->
   <div id="modal-container"></div>
-
-  <!-- WIDGET DE LIBRAS -->
   <div id="libras-container"></div>
 
-  <!-- TEMPLATE PARA PDF (oculto) -->
+  <!-- TEMPLATE PDF -->
   <div id="pdf-render-template" style="position: absolute; left: -9999px; top: 0; width: 794px; background: white; padding: 40px; color: #0f172a;">
     <div style="border-bottom: 3px solid #1A3E74; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-      <div style="width: 50px; height: 50px; background: #1A3E74; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
-        <i class="fa-solid fa-calculator"></i>
-      </div>
+      <div style="width: 50px; height: 50px; background: #1A3E74; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;"><i class="fa-solid fa-calculator"></i></div>
       <div style="text-align: right;">
         <h1 style="font-size: 18px; color: #1A3E74; margin: 0; font-weight: 900; text-transform: uppercase;">Relatório de Auditoria</h1>
         <p style="font-size: 9px; color: #64748b; margin: 0;">SISTEMA PROFISSIONAL DE ENFERMAGEM</p>
@@ -145,12 +129,11 @@
     <div id="pdf-body" style="font-size: 11px; line-height: 1.6; font-family: 'Inter', sans-serif;"></div>
   </div>
 
-  <!-- INICIALIZAÇÃO MODULAR CORRIGIDA -->
   <script>
     document.addEventListener('DOMContentLoaded', async function() {
       console.log('🚀 Inicializando calculadora IMC...');
 
-      const baseUrl = './';  // raiz do projeto
+      const baseUrl = './';
 
       async function loadModule(id, url) {
         const container = document.getElementById(id);
@@ -178,25 +161,24 @@
       try {
         await waitForGlobals();
 
-        // Usar engine customizada para IMC (arquivo JSON específico)
+        // Usar engine customizada (IMCCalculatorEngine)
         if (typeof IMCCalculatorEngine !== 'undefined') {
           console.log('✓ Usando IMCCalculatorEngine');
+          // Caminho do JSON de configuração (após mover o arquivo)
           CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'configs/imc-config.json');
           await CALCULATOR_SYSTEM.engine.init();
         } else {
-          console.error('IMCCalculatorEngine não encontrado. Verifique se o script foi carregado corretamente.');
-          // Fallback: tentar com engine padrão, mas pode não funcionar para IMC
+          console.error('IMCCalculatorEngine não encontrado. Verifique se o script foi carregado.');
           await CALCULATOR_SYSTEM.init(baseUrl + 'configs/imc-config.json');
         }
 
-        // Carregar componentes globais
+        // Carregar componentes
         await loadModule('header-container', baseUrl + 'assets/components/header-v4.html');
         await loadModule('footer-container', baseUrl + 'assets/components/footer-v4.html');
         await loadModule('accessibility-container', baseUrl + 'assets/components/accessibility-v4.html');
         await loadModule('author-container', baseUrl + 'components/author-section.html');
         await loadModule('modal-container', baseUrl + 'components/modal-generic.html');
 
-        // Carregar sidebars conforme config (se existirem no JSON)
         if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
           for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
             const containerId = sidebar.startsWith('sidebar-') ? sidebar : `sidebar-${sidebar}`;
@@ -204,7 +186,6 @@
           }
         }
 
-        // VLibras (se configurado)
         if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
           await loadModule('libras-container', baseUrl + 'components/widget-libras.html');
         }
