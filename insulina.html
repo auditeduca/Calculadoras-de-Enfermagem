@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+  <!-- SEO Dinâmico (preenchido via JS) -->
+  <title id="page-title">Carregando...</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Calculadoras de Enfermagem">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
+  
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
+
+  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
+
+  <!-- Fontes e Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="core/styles.css"/>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { 
+            nunito: ['"Nunito Sans"','sans-serif'], 
+            inter: ['Inter','sans-serif'] 
+          },
+          colors: { 
+            'nurse-primary':'#1A3E74', 
+            'nurse-secondary':'#00bcd4', 
+            'nurse-accent':'#00838f', 
+            'nurse-bgDark':'#0F172A' 
+          }
+        }
+      }
+    }
+
+    // Função para carregar módulos
+    async function loadModule(id, url) {
+      const container = document.getElementById(id);
+      if (!container) return;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Status ${res.status}`);
+        container.innerHTML = await res.text();
+        container.style.opacity = "1";
+        const event = new CustomEvent('moduleLoaded', { detail: { id, url } });
+        container.dispatchEvent(event);
+      } catch(e) { 
+        console.warn(`Módulo ${id} não carregado:`, e); 
+      }
+    }
+  </script>
+</head>
+<body class="flex flex-col min-h-screen bg-slate-50 dark:bg-nurse-bgDark text-slate-900 dark:text-slate-100">
+
+  <!-- ══════════════════════════════════════════════════════════
+       CONTAINERS MODULARES
+       ══════════════════════════════════════════════════════════ -->
+  
+  <!-- Acessibilidade -->
+  <div id="accessibility-container"></div>
+  
+  <!-- Notificações -->
+  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
+  
+  <!-- Header -->
+  <div id="header-container" class="sticky top-0 z-50"></div>
+  
+  <!-- Tags Clicáveis -->
+  <div id="tags-container" class="max-w-7xl mx-auto px-4 pt-20"></div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       MENU LATERAL ESQUERDO (Sidebar Tools)
+       Renderizado por calculator-engine.js via config.menu_lateral
+       ══════════════════════════════════════════════════════════ -->
+  <aside id="sidebar-tools" class="sidebar-left-tools">
+    <!-- Botões injetados dinamicamente -->
+  </aside>
+
+  <!-- ══════════════════════════════════════════════════════════
+       CONTEÚDO PRINCIPAL
+       ══════════════════════════════════════════════════════════ -->
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-8 pb-8 md:py-12 w-full ml-0 md:ml-20">
+    
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+      <!-- Desktop -->
+      <div class="hidden md:flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300">
+        <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        <span id="breadcrumb-text">Calculadora</span>
+      </div>
+      <!-- Mobile -->
+      <div class="flex md:hidden items-center gap-2 text-sm text-slate-600 dark:text-cyan-300">
+        <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        <span id="breadcrumb-text-mobile">Calculadora</span>
+      </div>
+    </nav>
+
+    <!-- Header Calculadora -->
+    <header class="max-w-4xl mb-12">
+      <span id="header-badge" class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">
+        Categoria
+      </span>
+      <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight font-nunito font-black">
+        Título da Calculadora
+      </h1>
+      <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+      <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">
+        Descrição da calculadora
+      </p>
+    </header>
+
+    <!-- Grid: Calculadora + Sidebar -->
+    <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
+      
+      <!-- ══════════════════════════════════════════════════════
+           CALCULADORA PRINCIPAL
+           ══════════════════════════════════════════════════════ -->
+      <article id="calculator-container" class="card-base p-0">
+        
+        <!-- Abas -->
+        <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto">
+          <!-- Abas injetadas dinamicamente -->
+        </nav>
+
+        <div class="p-6 md:p-10">
+          
+          <!-- Painel: Calculadora -->
+          <section id="pane-calc" class="tab-pane">
+            <!-- Formulário injetado dinamicamente -->
+            
+            <!-- Botões -->
+            <div class="grid grid-cols-2 gap-4 pt-4 mt-6">
+              <button id="btn-calculate" class="btn-primary-action">
+                <i class="fa-solid fa-calculator"></i> <span>Calcular</span>
+              </button>
+              <button id="btn-reset" class="btn-secondary-action">
+                <i class="fa-solid fa-rotate-left"></i> Limpar
+              </button>
+            </div>
+
+            <!-- Resultados (hidden inicialmente) -->
+            <div id="results-wrapper" class="hidden pt-8 border-t border-slate-200 dark:border-slate-700 mt-8">
+              
+              <!-- Resultado Principal -->
+              <div class="bg-slate-50 dark:bg-slate-900/40 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-6">
+                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4">Resultado</p>
+                <div id="res-total" class="text-6xl md:text-8xl font-black text-nurse-primary dark:text-cyan-400 font-nunito">0,00</div>
+                <p id="res-unit" class="text-lg font-black text-nurse-secondary mt-2 uppercase tracking-widest">unidade</p>
+              </div>
+
+              <!-- Botões de Ação -->
+              <div class="flex flex-col gap-4 mb-10">
+                <div class="grid grid-cols-2 gap-4">
+                  <button id="btn-pdf" class="btn-primary-action">
+                    <i class="fa-solid fa-file-pdf"></i> <span>Gerar PDF</span>
+                  </button>
+                  <button id="btn-copy" class="btn-secondary-action">
+                    <i class="fa-solid fa-copy"></i> Copiar
+                  </button>
+                </div>
+              </div>
+
+              <!-- Auditoria -->
+              <div class="mb-12">
+                <h3 class="text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-6">
+                  <i class="fa-solid fa-clipboard-check"></i> Auditoria do Cálculo
+                </h3>
+                <ul id="audit-list" class="space-y-3"></ul>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Painel: Sobre -->
+          <section id="pane-sobre" class="tab-pane hidden">
+            <h2 class="text-2xl font-black mb-4 font-nunito">Sobre o Cálculo</h2>
+            <div id="sobre-content"></div>
+          </section>
+
+          <!-- Painel: Ajuda -->
+          <section id="pane-ajuda" class="tab-pane hidden">
+            <h2 class="text-2xl font-black mb-4 font-nunito">Instruções de Uso</h2>
+            <ul id="ajuda-content" class="space-y-3"></ul>
+          </section>
+
+          <!-- Painel: Referência -->
+          <section id="pane-referencia" class="tab-pane hidden">
+            <h2 class="text-2xl font-black mb-4 font-nunito">Referências Bibliográficas</h2>
+            <div id="referencia-content" class="space-y-4"></div>
+          </section>
+
+        </div>
+      </article>
+
+      <!-- ══════════════════════════════════════════════════════
+           SIDEBAR DIREITA
+           ══════════════════════════════════════════════════════ -->
+      <aside class="space-y-6 sticky top-28 self-start">
+        <div id="sidebar-simulado-enfermagem"></div>
+        <div id="sidebar-compartilhar"></div>
+        <div id="sidebar-outras-calculadoras"></div>
+      </aside>
+
+    </div>
+
+    <!-- Seção do Autor -->
+    <div id="author-container" class="mt-20"></div>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════════
+       MODAIS E OVERLAYS
+       ══════════════════════════════════════════════════════════ -->
+  
+  <!-- Modal Genérico -->
+  <div id="modal-container"></div>
+  
+  <!-- FAB Buttons -->
+  <div id="fab-container"></div>
+  
+  <!-- VLibras -->
+  <div id="libras-container"></div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCRIPTS CORE
+       ══════════════════════════════════════════════════════════ -->
+  
+  <script src="core/calculator-engine.js"></script>
+  <script src="core/calculator-system-v42.js"></script>
+  
+  <script>
+    /**
+     * Inicialização do Sistema
+     */
+    (async () => {
+      console.log('🚀 Inicializando Calculadora v4.2...');
+      
+      try {
+        // 1. Carregar componentes HTML
+        await Promise.all([
+          loadModule('accessibility-container', 'components/accessibility-v4.html'),
+          loadModule('header-container', 'components/header-v4.html'),
+          loadModule('modal-container', 'components/modal-generic.html'),
+          loadModule('author-container', 'components/author-section.html'),
+          loadModule('footer-container', 'components/footer-v4.html'),
+          loadModule('sidebar-simulado-enfermagem', 'sidebars/sidebar-simulado-enfermagem.html'),
+          loadModule('sidebar-compartilhar', 'sidebars/sidebar-compartilhar.html'),
+          loadModule('sidebar-outras-calculadoras', 'sidebars/sidebar-outras-calculadoras-v42.html'),
+          loadModule('fab-container', 'components/fab-buttons.html')
+        ]);
+        
+        // 2. Inicializar Calculator System
+        const configPath = 'insulina-config-v42-completo.json';
+        await CALCULATOR_SYSTEM.init(configPath);
+        
+        console.log('✅ Sistema inicializado com sucesso!');
+        
+      } catch (error) {
+        console.error('❌ Erro na inicialização:', error);
+        
+        // Notificar usuário
+        const notif = document.createElement('div');
+        notif.className = 'fixed top-6 right-6 bg-red-500 text-white px-6 py-4 rounded-xl shadow-2xl z-[10000]';
+        notif.innerHTML = `
+          <div class="flex items-center gap-3">
+            <i class="fa-solid fa-exclamation-triangle text-2xl"></i>
+            <div>
+              <p class="font-bold">Erro ao carregar calculadora</p>
+              <p class="text-sm opacity-90">Recarregue a página ou tente novamente</p>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(notif);
+        
+        setTimeout(() => notif.remove(), 5000);
+      }
+    })();
+  </script>
+
+</body>
+</html>

@@ -3,13 +3,14 @@
     "id": "calc-insulina",
     "titulo": "Insulina",
     "categoria": "Segurança Clínica",
-    "versao": "4.0",
-    "ultima_atualizacao": "2025-02-13"
+    "versao": "4.2",
+    "ultima_atualizacao": "2025-02-14",
+    "tipo": "calculadora"
   },
   "acessibilidade": {
     "vlibras": true,
-    "alto_contraste": false,
-    "leitor_tela": true
+    "leitor_tela": true,
+    "alto_contraste": false
   },
   "seo": {
     "title": "Cálculo de Insulina | Calculadoras de Enfermagem Profissional",
@@ -26,6 +27,24 @@
       { "label": "Calculadora de Insulina", "url": null }
     ]
   },
+  "tags": [
+    {
+      "label": "Medicação",
+      "icone": "fa-syringe"
+    },
+    {
+      "label": "MAV",
+      "icone": "fa-triangle-exclamation"
+    },
+    {
+      "label": "Segurança",
+      "icone": "fa-shield-halved"
+    },
+    {
+      "label": "Diabetes",
+      "icone": "fa-heart-pulse"
+    }
+  ],
   "formulario": {
     "secoes": [
       {
@@ -64,7 +83,11 @@
               "max": 500,
               "mensagem": "Informe uma prescrição válida!"
             },
-            "col": "md:col-span-1"
+            "col": "md:col-span-1",
+            "tour_step": {
+              "titulo": "Passo 1: Prescrição Médica",
+              "descricao": "Insira a dose em Unidades Internacionais (UI) conforme prescrição médica"
+            }
           },
           {
             "id": "concentracao_insulina",
@@ -75,11 +98,22 @@
               { "value": "100", "label": "100 UI/mL (U100)" },
               { "value": "300", "label": "300 UI/mL (U300)" }
             ],
-            "col": "md:col-span-1"
+            "col": "md:col-span-1",
+            "tour_step": {
+              "titulo": "Passo 2: Concentração",
+              "descricao": "Selecione a concentração da insulina disponível (verifique no rótulo)"
+            }
           }
         ]
       }
-    ]
+    ],
+    "botao_calcular": {
+      "texto": "Calcular Volume",
+      "tour_step": {
+        "titulo": "Passo 3: Calcular",
+        "descricao": "Clique aqui para calcular o volume em mL a ser aspirado"
+      }
+    }
   },
   "calculo": {
     "formula": "Volume (mL) = Prescrição (UI) / Concentração (UI/mL)",
@@ -98,12 +132,12 @@
       {
         "condicao": "resultado > 1",
         "tipo": "warning",
-        "mensagem": "Volume superior a 1mL. Verifique a concentração e prescrição."
+        "mensagem": "⚠️ Volume superior a 1mL. Verifique a concentração e prescrição."
       },
       {
         "condicao": "resultado < 0.1",
         "tipo": "info",
-        "mensagem": "Volume muito pequeno. Use seringa de precisão apropriada."
+        "mensagem": "📊 Volume muito pequeno. Use seringa de precisão apropriada."
       }
     ]
   },
@@ -133,8 +167,70 @@
   "conteudo": {
     "sobre": {
       "titulo": "Sobre o Cálculo",
-      "texto": "<p>Calculadora para aspiração em seringas de mL quando a prescrição é em UI.</p><p>A insulina é um hormônio essencial para o controle glicêmico e sua administração requer precisão absoluta.</p>",
-      "formula_visual": "Volume (mL) = Prescrição (UI) / Concentração (UI/mL)",
+      "subtitulo": "Conversão UI para mL em seringas de precisão",
+      "descricao": "Calculadora para aspiração em seringas de mL quando a prescrição é em UI. A insulina é um hormônio essencial para o controle glicêmico e sua administração requer precisão absoluta.",
+      "detalhes": {
+        "identificacao": {
+          "definicao": "Ferramenta que converte a dose prescrita em Unidades Internacionais (UI) para o volume exato em mililitros (mL) a ser aspirado da ampola ou frasco disponível.",
+          "classificacao_risco": "Medicamento de Alta Vigilância (MAV)",
+          "importancia": "Essencial quando há indisponibilidade de seringas graduadas em Unidades e o profissional precisa utilizar seringas de tuberculina (1 mL)."
+        },
+        "objetivos": {
+          "principal": "Automatizar a conversão UI → mL para minimizar erros de cálculo manual.",
+          "finalidade": [
+            "Redução da carga cognitiva do profissional",
+            "Minimização de erros matemáticos",
+            "Garantia da dose exata conforme prescrição médica",
+            "Padronização do preparo de insulina"
+          ]
+        },
+        "publico_alvo": ["Enfermeiros", "Técnicos de Enfermagem", "Auxiliares de Enfermagem"],
+        "indicacoes_clinicas": [
+          "Diabetes Mellitus Tipo 1",
+          "Diabetes Mellitus Tipo 2 insulinodependente",
+          "Diabetes Gestacional",
+          "Protocolos de Emergência (cetoacidose diabética)"
+        ],
+        "parametros_calculo": [
+          {
+            "variavel": "Prescrição Médica (UI)",
+            "descricao": "Dose em Unidades Internacionais prescrita pelo médico"
+          },
+          {
+            "variavel": "Concentração (UI/mL)",
+            "descricao": "Concentração da insulina disponível (100 UI/mL ou 300 UI/mL)"
+          }
+        ],
+        "logica_matematica": {
+          "formula": "Volume (mL) = Prescrição (UI) / Concentração (UI/mL)",
+          "formula_visual": "<div class='formula-box'>Volume a Aspirar (mL) = <span class='fraction'><span class='numerator'>Prescrição (UI)</span><span class='denominator'>Concentração (UI/mL)</span></span></div>",
+          "interpretacao": "O resultado indica o volume que deve ser aspirado com seringa de precisão (1 mL ou 3 mL).",
+          "exemplos": [
+            {
+              "prescricao": 15,
+              "concentracao": 100,
+              "resultado": 0.15,
+              "explicacao": "Para administrar 15 UI de insulina U100, aspire 0,15 mL"
+            },
+            {
+              "prescricao": 10,
+              "concentracao": 100,
+              "resultado": 0.10,
+              "explicacao": "Para administrar 10 UI de insulina U100, aspire 0,10 mL"
+            }
+          ]
+        },
+        "protocolos_seguranca": {
+          "obrigatoriedades": [
+            "Dupla checagem: conferência do cálculo por dois profissionais antes da aspiração",
+            "Verificação de rótulo: confirmar concentração da insulina",
+            "Verificação de validade: após aberto (28 dias sob refrigeração)",
+            "Hard Stop: A calculadora não substitui a conferência física do rótulo"
+          ],
+          "limitacoes": "Não realiza cálculos de infusão contínua (UI/kg/hora). Use calculadoras de bomba de infusão para esses casos.",
+          "alerta_critico": "🚨 ALERTA DE SEGURANÇA: Insulina U300 possui concentração 3x superior à U100. Erros de interpretação podem ser fatais."
+        }
+      },
       "exemplo": {
         "prescricao": 15,
         "concentracao": 100,
@@ -148,22 +244,30 @@
         {
           "numero": 1,
           "titulo": "Verifique a Prescrição",
-          "descricao": "Confira a prescrição médica e identifique a dose em UI"
+          "descricao": "Confira a prescrição médica e identifique a dose em UI",
+          "icone": "fa-file-prescription",
+          "elemento": "#prescricao_medica"
         },
         {
           "numero": 2,
           "titulo": "Selecione a Concentração",
-          "descricao": "Identifique se a insulina é U100 (100 UI/mL) ou U300 (300 UI/mL)"
+          "descricao": "Identifique se a insulina é U100 (100 UI/mL) ou U300 (300 UI/mL)",
+          "icone": "fa-vial",
+          "elemento": "#concentracao_insulina"
         },
         {
           "numero": 3,
           "titulo": "Calcule o Volume",
-          "descricao": "Clique em calcular para obter o volume a ser aspirado"
+          "descricao": "Clique em calcular para obter o volume a ser aspirado",
+          "icone": "fa-calculator",
+          "elemento": "button[type='submit']"
         },
         {
           "numero": 4,
           "titulo": "Confira os 9 Certos",
-          "descricao": "Sempre verifique os 9 certos da medicação antes de administrar"
+          "descricao": "Sempre verifique os 9 certos da medicação antes de administrar",
+          "icone": "fa-check-double",
+          "elemento": "#results-wrapper"
         }
       ]
     },
@@ -203,17 +307,19 @@
     "nanda": {
       "titulo": "Diagnósticos NANDA-I Relacionados",
       "icone": "fa-stethoscope",
-      "conteudo": "<div class='space-y-3'><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Risco de glicemia instável</h5><p class='text-sm mt-2'>Relacionado à administração inadequada de insulina</p></div><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Conhecimento deficiente</h5><p class='text-sm mt-2'>Sobre regime terapêutico e administração de insulina</p></div><div class='p-4 bg-blue-50 rounded-lg'><h5 class='font-bold'>Risco de resposta alérgica</h5><p class='text-sm mt-2'>Relacionado à administração de medicamentos</p></div></div>"
+      "conteudo": "<div class='space-y-3'><div class='p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg'><h5 class='font-bold'>Risco de glicemia instável</h5><p class='text-sm mt-2'>Relacionado à administração inadequada de insulina</p></div><div class='p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg'><h5 class='font-bold'>Conhecimento deficiente</h5><p class='text-sm mt-2'>Sobre regime terapêutico e administração de insulina</p></div><div class='p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg'><h5 class='font-bold'>Risco de resposta alérgica</h5><p class='text-sm mt-2'>Relacionado à administração de medicamentos</p></div></div>"
     },
     "nove_certos": {
       "titulo": "9 Certos da Medicação",
       "icone": "fa-check-double",
-      "conteudo": "<ul class='space-y-2'><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>1. Paciente Certo</strong><p class='text-sm text-gray-600'>Confirme a identificação com pulseira e pergunte o nome</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>2. Medicamento Certo</strong><p class='text-sm text-gray-600'>Verifique nome, apresentação e validade</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>3. Dose Certa</strong><p class='text-sm text-gray-600'>Confira a dose prescrita e calculada</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>4. Via Certa</strong><p class='text-sm text-gray-600'>Confirme a via de administração prescrita</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>5. Horário Certo</strong><p class='text-sm text-gray-600'>Respeite o horário de administração</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>6. Registro Certo</strong><p class='text-sm text-gray-600'>Documente imediatamente após administrar</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>7. Orientação Certa</strong><p class='text-sm text-gray-600'>Oriente o paciente sobre o medicamento</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>8. Forma Certa</strong><p class='text-sm text-gray-600'>Verifique apresentação e compatibilidade</p></div></li><li class='flex items-start gap-2'><i class='fa-solid fa-check text-green-600 mt-1'></i><div><strong>9. Resposta Certa</strong><p class='text-sm text-gray-600'>Monitore reações e efetividade</p></div></li></ul>"
+      "source": "shared",
+      "shared_id": "nove_acertos"
     },
     "metas_seguranca": {
       "titulo": "Metas Internacionais de Segurança do Paciente",
       "icone": "fa-bullseye",
-      "conteudo": "<div class='space-y-3'><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 1: Identificação Correta</h5><p class='text-sm mt-2'>Identificar corretamente o paciente antes de qualquer procedimento</p></div><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 3: Segurança na Medicação</h5><p class='text-sm mt-2'>Melhorar a segurança de medicamentos de alta vigilância</p></div><div class='p-4 bg-green-50 rounded-lg'><h5 class='font-bold'>Meta 6: Redução de Riscos</h5><p class='text-sm mt-2'>Reduzir o risco de danos ao paciente decorrente de quedas e erros de medicação</p></div></div>"
+      "source": "shared",
+      "shared_id": "metas_internacionais"
     }
   },
   "sidebars": [
@@ -221,27 +327,97 @@
     "sidebar-compartilhar",
     "sidebar-outras-calculadoras"
   ],
+  "ferramentas_relacionadas": {
+    "categoria": "calculadoras-medicamentos",
+    "itens": [
+      {
+        "id": "heparina",
+        "titulo": "Heparina",
+        "descricao": "Cálculo de aspiração de Heparina",
+        "icone": "fa-syringe",
+        "url": "heparina.html",
+        "badge": "MAV"
+      },
+      {
+        "id": "gotejamento",
+        "titulo": "Gotejamento",
+        "descricao": "Cálculo de velocidade de infusão",
+        "icone": "fa-droplet",
+        "url": "gotejamento.html",
+        "badge": "EV"
+      },
+      {
+        "id": "diluicao",
+        "titulo": "Diluição",
+        "descricao": "Cálculo de diluição de medicamentos",
+        "icone": "fa-flask",
+        "url": "diluicao.html",
+        "badge": "Novo"
+      }
+    ]
+  },
   "menu_lateral": [
+    {
+      "id": "conteudo-sobre",
+      "icone": "fa-book-open",
+      "label": "Conteúdo",
+      "acao": "showModal",
+      "parametro": "sobre_completo"
+    },
+    {
+      "id": "metas-seguranca",
+      "icone": "fa-bullseye",
+      "label": "Metas",
+      "acao": "showModalShared",
+      "parametro": "metas_internacionais"
+    },
     {
       "id": "guia-rapido",
       "icone": "fa-question-circle",
       "label": "Ajuda",
-      "acao": "switchTab",
+      "acao": "tourGuiado",
       "parametro": "ajuda"
     },
     {
       "id": "nove-certos",
       "icone": "fa-check-double",
       "label": "9 Acertos",
-      "acao": "showModal",
-      "parametro": "nove_certos"
+      "acao": "showModalShared",
+      "parametro": "nove_acertos"
+    },
+    {
+      "id": "diagnostico-enfermagem",
+      "icone": "fa-stethoscope",
+      "label": "NANDA",
+      "acao": "searchNANDA",
+      "parametro": "insulina"
     },
     {
       "id": "referencias",
       "icone": "fa-bookmark",
       "label": "Referências",
-      "acao": "switchTab",
+      "acao": "showModal",
       "parametro": "referencia"
     }
-  ]
+  ],
+  "topicos_relacionados": {
+    "titulo": "Tópicos Relacionados",
+    "itens": [
+      {
+        "titulo": "Diabetes Mellitus",
+        "tags": ["Diabetes", "Endocrinologia"],
+        "icone": "fa-heart-pulse"
+      },
+      {
+        "titulo": "Medicamentos de Alta Vigilância",
+        "tags": ["MAV", "Segurança"],
+        "icone": "fa-triangle-exclamation"
+      },
+      {
+        "titulo": "Protocolos de Segurança",
+        "tags": ["Segurança", "Protocolo"],
+        "icone": "fa-shield-halved"
+      }
+    ]
+  }
 }

@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<div class="top-bar" id="top-bar">
+    <div class="top-bar-container">
+        <div class="accessibility-controls" role="group" aria-label="Controles de acessibilidade">
+            <div class="font-size-controls" role="group" aria-label="Controle de tamanho da fonte">
+                <button type="button" class="font-btn font-btn-reduce" id="font-reduce" aria-label="Reduzir fonte" title="Reduzir fonte">
+                    <span class="font-btn-icon">A-</span>
+                </button>
+                <button type="button" class="font-btn font-btn-increase" id="font-increase" aria-label="Aumentar fonte" title="Aumentar fonte">
+                    <span class="font-btn-icon">A+</span>
+                </button>
+            </div>
+            <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+                <i class="fas fa-moon" aria-hidden="true"></i>
+            </button>
+            <div class="top-bar-divider" aria-hidden="true"></div>
+        </div>
+        <div class="skip-controls" role="group" aria-label="Navegação rápida">
+            <a href="#main-header" class="skip-btn" id="skip-top" aria-label="Ir para o topo da página">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+                <span class="skip-label">Topo</span>
+            </a>
+            <a href="#main-content" class="skip-btn" id="skip-content" aria-label="Ir para o conteúdo principal">
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                <span class="skip-label">Conteúdo</span>
+            </a>
+            <a href="#footer" class="skip-btn" id="skip-footer" aria-label="Ir para o rodapé">
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                <span class="skip-label">Rodapé</span>
+            </a>
+        </div>
+    </div>
+</div>
+<header class="main-header" id="main-header">
+    <div class="header-container">
+        <a href="index.html" class="site-logo" aria-label="Calculadoras de Enfermagem - Página Inicial">
+            <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="logo-image" style="height: 50px; width: auto;">
+        </a>
+        <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Início</a>
+                </li>
+                <li class="nav-item has-mega-menu">
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="sobre-nos">Sobre Nós</button>
+                    <div class="mega-panel mega-panel-sobre-nos" id="mega-panel-sobre-nos" data-menu="sobre-nos">
+                        <div class="panel-standard-height">
+                            <aside class="panel-sidebar header-scroll">
+                                <nav class="menu-tabs" aria-label="Categorias de Sobre Nós">
+                                    <button type="button" class="menu-tab-trigger active" data-tab="institucional" aria-selected="true">Institucional</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="acessibilidade" aria-selected="false">Acessibilidade Digital</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="sustentabilidade" aria-selected="false">Sustentabilidade Digital</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="politicas" aria-selected="false">Políticas do Site</button>
+                                </nav>
+                            </aside>
+                            <main class="panel-main-content header-scroll">
+                                <div class="tab-content active" id="tab-institucional">
+                                    <h3 class="mega-content-title">Institucional</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="missao.html">Missão, Visão e Valores</a></li>
+                                        <li><a href="objetivo.html">Objetivo do Site</a></li>
+                                        <li><a href="mapa-do-site.html">Mapa do Site</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-acessibilidade">
+                                    <h3 class="mega-content-title">Acessibilidade Digital</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="politicadeacessibilidade.html">Política de Acessibilidade Digital</a></li>
+                                        <li><a href="recursos-assistivos.html">Recursos Assistivos</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-sustentabilidade">
+                                    <h3 class="mega-content-title">Sustentabilidade Digital</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="nossocompromisso.html">Nosso compromisso</a></li>
+                                        <li><a href="impactodigital.html">Relatório de impacto</a></li>
+                                        <li><a href="tecnologiaverde.html">Tecnologia Verde</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-politicas">
+                                    <h3 class="mega-content-title">Políticas do Site</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="politica.html">Política de Privacidade</a></li>
+                                        <li><a href="termos.html">Política de Cookies</a></li>
+                                        <li><a href="notificacoes-legais.html">Isenção de Responsabilidade</a></li>
+                                    </ul>
+                                </div>
+                            </main>
+                            <aside class="panel-promo-area">
+                                <div class="glowing-frame mega-image-frame">
+                                    <div class="frame-image-container mega-image-container">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-sobre-nos.webp" alt="Sobre Nós" loading="lazy" style="max-width: 100%; height: auto;">
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-mega-menu">
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="ferramentas">Ferramentas</button>
+                    <div class="mega-panel mega-panel-ferramentas" id="mega-panel-ferramentas" data-menu="ferramentas">
+                        <div class="panel-standard-height">
+                            <aside class="panel-sidebar header-scroll">
+                                <nav class="menu-tabs" aria-label="Categorias de Ferramentas">
+                                    <button type="button" class="menu-tab-trigger active" data-tab="calculadoras-clinicas" aria-selected="true">Calculadoras Clínicas</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="escalas-clinicas" aria-selected="false">Escalas Clínicas</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="calendario-vacinal" aria-selected="false">Calendário Vacinal</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="ferramentas-especificas" aria-selected="false">Ferramentas Específicas</button>
+                                </nav>
+                            </aside>
+                            <main class="panel-main-content header-scroll">
+                                <div class="tab-content active" id="tab-calculadoras-clinicas">
+                                    <h3 class="mega-content-title">Calculadoras Clínicas</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="heparina.html">Aspiração de Heparina</a></li>
+                                        <li><a href="insulina.html">Aspiração de Insulina</a></li>
+                                        <li><a href="balancohidrico.html">Calculadora de Balanço Hídrico</a></li>
+                                        <li><a href="dimensionamento.html">Calculadora de Dimensionamento de Pessoal</a></li>
+                                        <li><a href="gasometria.html">Calculadora de Gasometria</a></li>
+                                        <li><a href="gotejamento.html">Calculadora de Gotejamento</a></li>
+                                        <li><a href="gestacional.html">Calculadora de Idade Gestacional e Data Provável do Parto</a></li>
+                                        <li><a href="imc.html">Calculadora de Índice de Massa Corporal</a></li>
+                                        <li><a href="medicamentos.html">Calculadora de Medicamentos</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-escalas-clinicas">
+                                    <h3 class="mega-content-title">Escalas Clínicas</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="aldrete.html">Aldrete</a></li>
+                                        <li><a href="apache.html">Apache</a></li>
+                                        <li><a href="apgar.html">Apgar</a></li>
+                                        <li><a href="asa.html">ASA</a></li>
+                                        <li><a href="ballard.html">Ballard</a></li>
+                                        <li><a href="barthel.html">Barthel</a></li>
+                                        <li><a href="berg.html">Berg</a></li>
+                                        <li><a href="bishop.html">Bishop</a></li>
+                                        <li><a href="bps.html">BPS</a></li>
+                                        <li><a href="braden.html">Braden</a></li>
+                                        <li><a href="cam.html">CAM</a></li>
+                                        <li><a href="capurro.html">Capurro</a></li>
+                                        <li><a href="cincinnati.html">Cincinnati</a></li>
+                                        <li><a href="cornell.html">Cornell</a></li>
+                                        <li><a href="cries.html">CRIES</a></li>
+                                        <li><a href="curb-65.html">CURB-65</a></li>
+                                        <li><a href="downes.html">Downes</a></li>
+                                        <li><a href="downton.html">Downton</a></li>
+                                        <li><a href="elpo.html">ELPO</a></li>
+                                        <li><a href="escalanumerica.html">Escala Numérica</a></li>
+                                        <li><a href="fast.html">FAST</a></li>
+                                        <li><a href="flacc.html">FLACC</a></li>
+                                        <li><a href="four.html">FOUR</a></li>
+                                        <li><a href="fugulin.html">Fugulin</a></li>
+                                        <li><a href="gds.html">GDS</a></li>
+                                        <li><a href="glasgow.html">Glasgow</a></li>
+                                        <li><a href="gosnell.html">Gosnell</a></li>
+                                        <li><a href="hamilton.html">Hamilton</a></li>
+                                        <li><a href="humpty.html">Humpty Dumpty</a></li>
+                                        <li><a href="johns.html">Johns</a></li>
+                                        <li><a href="jouvet.html">Jouvet</a></li>
+                                        <li><a href="katz.html">Katz</a></li>
+                                        <li><a href="lachs.html">Lachs</a></li>
+                                        <li><a href="lanss.html">LANSS</a></li>
+                                        <li><a href="lawton.html">Lawton</a></li>
+                                        <li><a href="manchester.html">Manchester</a></li>
+                                        <li><a href="meem.html">MEEM</a></li>
+                                        <li><a href="meows.html">MEOWS</a></li>
+                                        <li><a href="morse.html">Morse</a></li>
+                                        <li><a href="news.html">NEWS</a></li>
+                                        <li><a href="nihss.html">NIHSS</a></li>
+                                        <li><a href="nips.html">NIPS</a></li>
+                                        <li><a href="norton.html">Norton</a></li>
+                                        <li><a href="ofras.html">OFRAS</a></li>
+                                        <li><a href="painad.html">PAINAD</a></li>
+                                        <li><a href="pelod.html">PELOD</a></li>
+                                        <li><a href="perroca.html">Perroca</a></li>
+                                        <li><a href="pews.html">PEWS</a></li>
+                                        <li><a href="prism.html">PRISM</a></li>
+                                        <li><a href="qsofa.html">qSOFA</a></li>
+                                        <li><a href="ramsay.html">Ramsay</a></li>
+                                        <li><a href="rancholosamigos.html">Ranchos Los Amigos</a></li>
+                                        <li><a href="richmond.html">Richmond</a></li>
+                                        <li><a href="saps.html">SAPS</a></li>
+                                        <li><a href="silverman.html">Silverman</a></li>
+                                        <li><a href="sofa.html">SOFA</a></li>
+                                        <li><a href="tinetti.html">Tinetti</a></li>
+                                        <li><a href="waterlow.html">Waterlow</a></li>
+                                        <li><a href="zarit.html">Zarit</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-calendario-vacinal">
+                                    <h3 class="mega-content-title">Calendário Vacinal</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="calendariovacinalprematuros.html">Calendário Vacinal de Prematuros</a></li>
+                                        <li><a href="calendariovacinalcriancas.html">Calendário Vacinal de Crianças</a></li>
+                                        <li><a href="calendariovacinaladolescentes.html">Calendário Vacinal de Adolescentes</a></li>
+                                        <li><a href="calendariovacinaladultos.html">Calendário Vacinal de Adultos</a></li>
+                                        <li><a href="calendariovacinalidosos.html">Calendário Vacinal de Idosos</a></li>
+                                        <li><a href="calendariovacinalgestantes.html">Calendário Vacinal de Gestantes</a></li>
+                                        <li><a href="calendariovacinalespeciais.html">Calendário Vacinal de Pacientes Especiais</a></li>
+                                        <li><a href="calendariovacinalocupacional.html">Calendário Vacinal de Ocupacionais</a></li>
+                                        <li><a href="vacinaspneumococicas.html">Vacinas Pneumocócicas</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-ferramentas-especificas">
+                                    <h3 class="mega-content-title">Ferramentas Específicas</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="notificacao-compulsoria.html">Notificações Compulsórias</a></li>
+                                        <li><a href="diagnosticosnanda.html">Plano de Enfermagem</a></li>
+                                        <li><a href="cronometro.html">Cronometro</a></li>
+                                    </ul>
+                                </div>
+                            </main>
+                            <aside class="panel-promo-area">
+                                <div class="glowing-frame mega-image-frame">
+                                    <div class="frame-image-container mega-image-container">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-ferramentas.webp" alt="Ferramentas" loading="lazy" style="max-width: 100%; height: auto;">
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-mega-menu">
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="biblioteca">Biblioteca</button>
+                    <div class="mega-panel mega-panel-biblioteca" id="mega-panel-biblioteca" data-menu="biblioteca">
+                        <div class="panel-standard-height">
+                            <aside class="panel-sidebar header-scroll">
+                                <nav class="menu-tabs" aria-label="Categorias da Biblioteca">
+                                    <button type="button" class="menu-tab-trigger active" data-tab="teorias" aria-selected="true">Teorias de Enfermagem</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="escalas" aria-selected="false">Escalas de Avaliação</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="calculos" aria-selected="false">Cálculos</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="protocolos" aria-selected="false">Protocolos</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="procedimentos" aria-selected="false">Procedimentos</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="gasometria" aria-selected="false">Gasometria</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="genograma" aria-selected="false">Genograma</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="geriatria" aria-selected="false">Geriatria</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="vacinas" aria-selected="false">Vacinação</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="diagnosticos" aria-selected="false">Diagnósticos NANDA</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="materiais" aria-selected="false">Materiais</button>
+                                </nav>
+                            </aside>
+                            <main class="panel-main-content header-scroll">
+                                <div class="tab-content active" id="tab-teorias">
+                                    <h3 class="mega-content-title">Teorias de Enfermagem</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="biblioteca/teorias-de-enfermagem.html">Teorias de Enfermagem</a></li>
+                                        <li><a href="biblioteca/florence-nightngale-enfermeira-patrona-da-enfermagem.html">Florence Nightingale - Patrona</a></li>
+                                        <li><a href="biblioteca/florence-nightngale-teoria-ambiental.html">Florence Nightingale - Teoria Ambiental</a></li>
+                                        <li><a href="biblioteca/wanda-de-aguiar-horta-necessidades-humanas-basicas.html">Wanda de Aguiar Horta - Necessidades Humanas</a></li>
+                                        <li><a href="biblioteca/teoria-das-necessidades-humanas-basicas-wanda.html">Teoria das Necessidades Humanas Básicas</a></li>
+                                        <li><a href="biblioteca/callista-roy-teoria-da-adaptacao.html">Callista Roy - Teoria da Adaptação</a></li>
+                                        <li><a href="biblioteca/teoria-da-adaptacao-enfermagem.html">Teoria da Adaptação</a></li>
+                                        <li><a href="biblioteca/dorothea-orem-teoria-do-defict-do-auto-cuidado.html">Dorothea Orem - Autocuidado</a></li>
+                                        <li><a href="biblioteca/teoria-do-auto-cuidado-dorothea.html">Teoria do Autocuidado</a></li>
+                                        <li><a href="biblioteca/hildegard-peplau-teoria-das-relacoes-interpessoais.html">Hildegard Peplau - Relações Interpessoais</a></li>
+                                        <li><a href="biblioteca/teoria-das-relacoes-interpessoais.html">Teoria das Relações Interpessoais</a></li>
+                                        <li><a href="biblioteca/jean-watson-teoria-do-cuidado-humano.html">Jean Watson - Cuidado Humano</a></li>
+                                        <li><a href="biblioteca/teoria-do-cuidado-humano.html">Teoria do Cuidado Humano</a></li>
+                                        <li><a href="biblioteca/madeleine-leininger-teoria-do-cuidado-transcultural.html">Madeleine Leininger - Cuidado Transcultural</a></li>
+                                        <li><a href="biblioteca/teoria-do-cuidado-transcultural.html">Teoria do Cuidado Transcultural</a></li>
+                                        <li><a href="biblioteca/imogene-m-king-teoria-do-sistema-de-metas.html">Imogene King - Sistema de Metas</a></li>
+                                        <li><a href="biblioteca/teoria-do-sistema-de-metas.html">Teoria do Sistema de Metas</a></li>
+                                        <li><a href="biblioteca/martha-elizabeth-rogers-teoria-do-sistemas-de-metas.html">Martha Rogers</a></li>
+                                        <li><a href="biblioteca/teoria-dos-sistemas-enfermagem.html">Teoria dos Sistemas</a></li>
+                                        <li><a href="biblioteca/myra-estrin-levine-teoria-holistica.html">Myra Levine - Teoria Holística</a></li>
+                                        <li><a href="biblioteca/teoria-holistica-enfermagem.html">Teoria Holística</a></li>
+                                        <li><a href="biblioteca/merle-mishel-teoria-da-incerteza-da-doenca.html">Merle Mishel - Incerteza da Doença</a></li>
+                                        <li><a href="biblioteca/teoria-da-incerteza-da-doenca.html">Teoria da Incerteza</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-escalas">
+                                    <h3 class="mega-content-title">Escalas de Avaliação</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="biblioteca/escala-de-aldrete-e-kroulik.html">Escala de Aldrete e Kroulik</a></li>
+                                        <li><a href="biblioteca/aldrete-e-kroulik.html">Aldrete e Kroulik</a></li>
+                                        <li><a href="biblioteca/escala-de-apache-ii.html">Escala de Apache II</a></li>
+                                        <li><a href="biblioteca/escala-de-apache.html">Escala de Apache</a></li>
+                                        <li><a href="biblioteca/escala-de-apgar.html">Escala de Apgar</a></li>
+                                        <li><a href="biblioteca/escala-de-asa-centro-cirurgico.html">Escala ASA</a></li>
+                                        <li><a href="biblioteca/avaliacao-de-asa-american-society-of-anesthesiologists.html">ASA - American Society</a></li>
+                                        <li><a href="biblioteca/escala-de-ballard.html">Escala de Ballard</a></li>
+                                        <li><a href="biblioteca/escala-de-barthel.html">Escala de Barthel</a></li>
+                                        <li><a href="biblioteca/escala-de-berg-bbs.html">Escala de Berg - BBS</a></li>
+                                        <li><a href="biblioteca/escala-de-equilibrio-de-berg.html">Equilíbrio de Berg</a></li>
+                                        <li><a href="biblioteca/escala-de-braden.html">Escala de Braden</a></li>
+                                        <li><a href="biblioteca/escala-de-cam-icu.html">Escala de CAM-ICU</a></li>
+                                        <li><a href="biblioteca/escala-de-cincinnati.html">Escala de Cincinnati</a></li>
+                                        <li><a href="biblioteca/escala-de-cornell-enfermagem.html">Escala de Cornell</a></li>
+                                        <li><a href="biblioteca/escala-de-cries.html">Escala de CRIES</a></li>
+                                        <li><a href="biblioteca/escala-de-curb-65.html">Escala de CURB-65</a></li>
+                                        <li><a href="biblioteca/escala-de-dor-bps.html">Escala de Dor BPS</a></li>
+                                        <li><a href="biblioteca/escala-de-dor-em-pacientes-criticos-de-bps.html">Dor em Pacientes Críticos</a></li>
+                                        <li><a href="biblioteca/escala-de-fugulin.html">Escala de Fugulin</a></li>
+                                        <li><a href="biblioteca/katz-scale-nurse.html">Escala de Katz</a></li>
+                                        <li><a href="biblioteca/indice-de-bishop.html">Índice de Bishop</a></li>
+                                        <li><a href="biblioteca/metodo-de-capurro.html">Método de Capurro</a></li>
+                                        <li><a href="biblioteca/metodo-de-capurro-evalucion-de-la-edad-gestacional.html">Capurro - Idade Gestacional</a></li>
+                                        <li><a href="biblioteca/tabela-de-metodo-de-capurro.html">Tabela de Capurro</a></li>
+                                        <li><a href="biblioteca/mini-exame-do-estado-mental-meem.html">Mini-Exame do Estado Mental</a></li>
+                                        <li><a href="biblioteca/mini-exame-do-estado-mental-formulario-rio.html">MEEM - Formulário</a></li>
+                                        <li><a href="biblioteca/formulario-meem-rio.html">MEEM - Rio</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-calculos">
+                                    <h3 class="mega-content-title">Cálculos de Enfermagem</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="biblioteca/calculo-de-dosagem-de-medicamentos-enfermagem.html">Cálculo de Dosagem</a></li>
+                                        <li><a href="biblioteca/calculo-de-dosagem-de-medicamentos.html">Dosagem de Medicamentos</a></li>
+                                        <li><a href="biblioteca/calculo-de-medicamentos-regra-de-3.html">Regra de 3</a></li>
+                                        <li><a href="biblioteca/calculo-de-medicamentos.html">Cálculo de Medicamentos</a></li>
+                                        <li><a href="biblioteca/calculos-de-enfermagem.html">Cálculos de Enfermagem</a></li>
+                                        <li><a href="biblioteca/regra-de-3-calculo-de-medicamentos-enfermagem.html">Regra de 3</a></li>
+                                        <li><a href="biblioteca/regla-de-3-calculo-de-medicamentos-enfermagem-espanol.html">Regla de 3 - Español</a></li>
+                                        <li><a href="biblioteca/regola-del-tre-illustrata-calcolo-dei-farmaci.html">Regola del Tre - Italiano</a></li>
+                                        <li><a href="biblioteca/calculo-de-gotejamento.html">Cálculo de Gotejamento</a></li>
+                                        <li><a href="biblioteca/micro-e-macro-gotas.html">Micro e Macrogotas</a></li>
+                                        <li><a href="biblioteca/atencao-ao-gotejamento.html">Atenção ao Gotejamento</a></li>
+                                        <li><a href="biblioteca/tempodegotejamento.html">Tempo de Gotejamento</a></li>
+                                        <li><a href="biblioteca/tempo-di-gocciolamento.html">Tempo di Gocciolamento</a></li>
+                                        <li><a href="biblioteca/gotejamentoimagem.html">Gotejamento - Imagem</a></li>
+                                        <li><a href="biblioteca/gotejamentoko.html">Gotejamento KO</a></li>
+                                        <li><a href="biblioteca/gotejamentoru.html">Gotejamento RU</a></li>
+                                        <li><a href="biblioteca/goteo.html">Goteo</a></li>
+                                        <li><a href="biblioteca/erklarende-infografik-zu-tropfformeln.html">Tropfformeln</a></li>
+                                        <li><a href="biblioteca/dreisatz-illustration.html">Dreisatz</a></li>
+                                        <li><a href="biblioteca/ilustracaogotejamentoalemao.html">Ilustração Gotejamento Alemão</a></li>
+                                        <li><a href="biblioteca/ilustracaogotejamentocoreano.html">Ilustração Gotejamento Coreano</a></li>
+                                        <li><a href="biblioteca/ilustracaogotejamentofrances.html">Ilustração Gotejamento Francês</a></li>
+                                        <li><a href="biblioteca/ilustracaogotejamentoingles.html">Ilustração Gotejamento Inglês</a></li>
+                                        <li><a href="biblioteca/ilustracaogotejamentoitaliano.html">Ilustração Gotejamento Italiano</a></li>
+                                        <li><a href="biblioteca/indice-de-massa-corporal-imc.html">Índice de Massa Corporal</a></li>
+                                        <li><a href="biblioteca/indice-de-massa-corporal-ilustracao.html">IMC - Ilustração</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-protocolos">
+                                    <h3 class="mega-content-title">Protocolos e Diretrizes</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="biblioteca/metas-internacionais-de-seguranca-do-paciente.html">Metas Internacionais de Segurança</a></li>
+                                        <li><a href="biblioteca/protocolo-de-rcp-adulto-2020-aha.html">RCP Adulto 2020 AHA</a></li>
+                                        <li><a href="biblioteca/suportebasicodevida.html">Suporte Básico de Vida</a></li>
+                                        <li><a href="biblioteca/slide-suporte-basico-de-vida-aha-2020.html">SBV - Slide AHA 2020</a></li>
+                                        <li><a href="biblioteca/protocolo-de-news-enfermagem-saude.html">Protocolo NEWS</a></li>
+                                        <li><a href="biblioteca/pagina-calculadoras-de-enfermagem-protocolo-de-news.html">Protocolo NEWS - Página</a></li>
+                                        <li><a href="biblioteca/protocolo-de-news-horizontalizada.html">NEWS - Horizontalizada</a></li>
+                                        <li><a href="biblioteca/diretrizesaha2020.html">Diretrizes AHA 2020</a></li>
+                                        <li><a href="biblioteca/diretrizesaharcp2020.html">Diretrizes AHA RCP 2020</a></li>
+                                        <li><a href="biblioteca/doencas-de-notificacao-compulsoria.html">Doenças de Notificação Compulsória</a></li>
+                                        <li><a href="biblioteca/sistema-de-informacao-de-agravos-de-notificacao-sinan.html">SINAN</a></li>
+                                        <li><a href="biblioteca/dimensionamento-da-equipe-de-enfermagem.html">Dimensionamento de Pessoal</a></li>
+                                        <li><a href="biblioteca/5-hs-da-parada-cardiorespiratoria.html">5 Hs da Parada Cardiorrespiratória</a></li>
+                                        <li><a href="biblioteca/5-hs-da-parada-carddiorespiratoria-causas-provaveis.html">Causas Prováveis PCR</a></li>
+                                        <li><a href="biblioteca/hipocalemia-cuidados-pcr.html">Hipocalemia - PCR</a></li>
+                                        <li><a href="biblioteca/hipercalemia-cuidados-pcr.html">Hipercalemia - PCR</a></li>
+                                        <li><a href="biblioteca/hipotermia-cuidados-pcr.html">Hipotermia - PCR</a></li>
+                                        <li><a href="biblioteca/hipovolemia-cuidados-pcr.html">Hipovolemia - PCR</a></li>
+                                        <li><a href="biblioteca/hipoxia-cuidados-pcr.html">Hipóxia - PCR</a></li>
+                                        <li><a href="biblioteca/h-cuidados-pcr.html">H - Cuidados PCR</a></li>
+                                        <li><a href="biblioteca/acionando-o-time-de-resposta-rapida.html">Acionando o Time de Resposta Rápida</a></li>
+                                        <li><a href="biblioteca/criterios-para-o-acionamento-do-time-de-resposta-rapida.html">Critérios para Acionamento</a></li>
+                                        <li><a href="biblioteca/vantagens-do-time-de-resposta-rapida-no-hospital.html">Vantagens do Time de Resposta</a></li>
+                                        <li><a href="biblioteca/equipe-do-time-de-resposta-rapida-hospital.html">Equipe do Time de Resposta</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/vigilancia.html">Vigilância</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/time-de-resposta-rapida.html">Time de Resposta Rápida</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-procedimentos">
+                                    <h3 class="mega-content-title">Procedimentos e Cuidados</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="biblioteca/higienizacao-das-maos.html">Higienização das Mãos</a></li>
+                                        <li><a href="biblioteca/preparo-e-administracao-de-medicamento.html">Preparo e Administração</a></li>
+                                        <li><a href="biblioteca/medicacao-certa-na-enfermagem.html">Medicação Certa</a></li>
+                                        <li><a href="biblioteca/dosagem-correta-do-medicamento.html">Dosagem Correta</a></li>
+                                        <li><a href="biblioteca/curativo-enfermagem.html">Curativo</a></li>
+                                        <li><a href="biblioteca/propedeutica-de-enfermagem-exame-do-abdome-parte-1.html">Propedêutica - Abdome</a></li>
+                                        <li><a href="biblioteca/enfermagem-sinais-vitais.html">Sinais Vitais</a></li>
+                                        <li><a href="biblioteca/verificacao-periodica-de-sinais-vitais.html">Verificação de Sinais Vitais</a></li>
+                                        <li><a href="biblioteca/temperatura-sinais-vitais-enfermagem.html">Temperatura</a></li>
+                                        <li><a href="biblioteca/frequencia-cardiaca-enfermagem.html">Frequência Cardíaca</a></li>
+                                        <li><a href="biblioteca/enfermagem-verificar-pressao.html">Verificar Pressão</a></li>
+                                        <li><a href="biblioteca/verificar-pressao-arterial.html">Pressão Arterial</a></li>
+                                        <li><a href="biblioteca/nivel-de-consciencia-enfermagem.html">Nível de Consciência</a></li>
+                                        <li><a href="biblioteca/ausculta-enfermagem.html">Ausculta</a></li>
+                                        <li><a href="biblioteca/checagem.html">Checagem</a></li>
+                                        <li><a href="biblioteca/checklist-de-enfermagem.html">Checklist</a></li>
+                                        <li><a href="biblioteca/ciclo-pdca-hospital-enfermagem.html">Ciclo PDCA</a></li>
+                                        <li><a href="biblioteca/controle-de-dor-enfermagem.html">Controle de Dor</a></li>
+                                        <li><a href="biblioteca/controle-hidrico-enfermagem.html">Controle Hídrico</a></li>
+                                        <li><a href="biblioteca/balanco-hidrico.html">Balanço Hídrico</a></li>
+                                        <li><a href="biblioteca/balanco-hidrico-ilustrativo.html">Balanço Hídrico - Ilustrativo</a></li>
+                                        <li><a href="biblioteca/balanco-hidrico-icone.html">Balanço Hídrico - Ícone</a></li>
+                                        <li><a href="biblioteca/impresso-de-balanco-hidrico.html">Impresso de Balanço</a></li>
+                                        <li><a href="biblioteca/fluid-balance-illustration.html">Fluid Balance</a></li>
+                                        <li><a href="biblioteca/ilustracion-sobre-balance-hidrico.html">Balance Hídrico - Español</a></li>
+                                        <li><a href="biblioteca/bilancio-idrico-imagem.html">Bilancio Idrico</a></li>
+                                        <li><a href="biblioteca/idade-gestacional-e-data-provavel-do-parto.html">Idade Gestacional</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-gasometria">
+                                    <h3 class="mega-content-title">Gasometria Arterial</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="biblioteca/gasometria-arterial-enfermagem.html">Gasometria Arterial</a></li>
+                                        <li><a href="biblioteca/gasometria-arterial.html">Gasometria Arterial - Página</a></li>
+                                        <li><a href="biblioteca/a-importancia-da-compressao-adequada-apos-coleta-de-gasometria-na-uti-adulto.html">Compressão Adequada</a></li>
+                                        <li><a href="biblioteca/a-importancia-da-compressao-adequada-apos-coleta-de-gasometria-na-uti-adulto-01.html">Compressão - UTI Adulto</a></li>
+                                        <li><a href="biblioteca/troca-gasosa-enfermagem.html">Troca Gasosa</a></li>
+                                        <li><a href="biblioteca/fundamentos-da-enfermagem-em-uti.html">Fundamentos em UTI</a></li>
+                                        <li><a href="biblioteca/pulmao-enfermagem.html">Pulmão</a></li>
+                                        <li><a href="biblioteca/saude-do-coracao-enfermagem.html">Saúde do Coração</a></li>
+                                        <li><a href="biblioteca/saude-do-coracao.html">Coração</a></li>
+                                        <li><a href="biblioteca/coracao-desenho-saude.html">Coração - Desenho</a></li>
+                                        <li><a href="biblioteca/funcao-renal-saude.html">Função Renal</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-genograma">
+                                    <h3 class="mega-content-title">Genograma e Ecomapa</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="biblioteca/genograma-e-ecomapa.html">Genograma e Ecomapa</a></li>
+                                        <li><a href="biblioteca/genograma-e-ecomapa-como-ferramentas-terapeuticas.html">Ferramentas Terapêuticas</a></li>
+                                        <li><a href="biblioteca/genogramaeecomapa.html">Genograma Ecomapa</a></li>
+                                        <li><a href="biblioteca/admin-genograma-e-ecomapa.html">Admin Genograma</a></li>
+                                        <li><a href="biblioteca/admin-genograma-e-ecomapa-1.html">Admin Genograma 1</a></li>
+                                        <li><a href="biblioteca/admin-genograma-e-ecomapa-copia.html">Admin Genograma - Cópia</a></li>
+                                        <li><a href="biblioteca/admin-genograma-e-ecomapa-1-copia.html">Admin Genograma 1 - Cópia</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/genogramaeecomapa.html">Genograma e Ecomapa - Raiz</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/genogramaeecomapa.html">Genograma e Ecomapa</a></li>
+                                        <li><a href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/checagem.html">Checagem</a></li>
+                                        <li><a href="biblioteca/admin-rep-2011-377.html">Admin REP 2011-377</a></li>
+                                        <li><a href="biblioteca/admin-rep-2011-377-copia.html">Admin REP - Cópia</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-geriatria">
+                                    <h3 class="mega-content-title">Geriatria e Cuidados com Idosos</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="biblioteca/enfermagem-em-geriatria.html">Enfermagem em Geriatria</a></li>
+                                        <li><a href="biblioteca/cuidados-de-enfermagem-com-idosos.html">Cuidados com Idosos</a></li>
+                                        <li><a href="biblioteca/cuidados-com-idoso.html">Cuidados com o Idoso</a></li>
+                                        <li><a href="biblioteca/cuidador-de-idoso-enfermagem.html">Cuidador de Idoso</a></li>
+                                        <li><a href="biblioteca/atividades-basicas-de-vida-diaria-idoso.html">AVDI - Atividades Diárias</a></li>
+                                        <li><a href="biblioteca/atividades-de-vida-diaria.html">Atividades de Vida Diária</a></li>
+                                        <li><a href="biblioteca/depressao-na-terceira-idade.html">Depressão na Terceira Idade</a></li>
+                                        <li><a href="biblioteca/idoso-com-depressao.html">Idoso com Depressão</a></li>
+                                        <li><a href="biblioteca/fisioterapia-idoso.html">Fisioterapia para Idoso</a></li>
+                                        <li><a href="biblioteca/idoso-realizando-avd.html">Idoso Realizando AVD</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-vacinas">
+                                    <h3 class="mega-content-title">Vacinação</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="biblioteca/calendario-vacinal.html">Calendário Vacinal</a></li>
+                                        <li><a href="biblioteca/importancia-das-vacinas.html">Importância das Vacinas</a></li>
+                                        <li><a href="biblioteca/vacinas-calendario-nacional.html">Calendário Nacional</a></li>
+                                        <li><a href="biblioteca/vacinas-eventos-adversos.html">Eventos Adversos</a></li>
+                                        <li><a href="biblioteca/vacinas-conservacao.html">Conservação de Vacinas</a></li>
+                                        <li><a href="biblioteca/vacinas-importadas.html">Vacinas Importadas</a></li>
+                                        <li><a href="biblioteca/vacinas-refrigeracao.html">Refrigeração de Vacinas</a></li>
+                                        <li><a href="biblioteca/vacinas-para-viagem.html">Vacinas para Viagem</a></li>
+                                        <li><a href="biblioteca/vacinas-intercambiabilidade.html">Intercambiabilidade</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-diagnosticos">
+                                    <h3 class="mega-content-title">Diagnósticos NANDA</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="biblioteca/diagnosticos-nanda.html">Diagnósticos NANDA</a></li>
+                                        <li><a href="biblioteca/diagnosticos-nanda-lista.html">Lista de Diagnósticos</a></li>
+                                        <li><a href="biblioteca/diagnosticos-nanda-definicao.html">Definição e Classificação</a></li>
+                                        <li><a href="biblioteca/nanda-nursing-diagnoses-definitions.html">Nursing Diagnoses Definitions</a></li>
+                                        <li><a href="biblioteca/nursing-diagnosis-icnp.html">Nursing Diagnosis ICNP</a></li>
+                                        <li><a href="biblioteca/diagnosticos-enfermagem.html">Diagnósticos de Enfermagem</a></li>
+                                        <li><a href="biblioteca/avaliacao-inicial-enfermagem.html">Avaliação Inicial</a></li>
+                                        <li><a href="biblioteca/historia-de-enfermagem.html">História de Enfermagem</a></li>
+                                        <li><a href="biblioteca/exame-fisico-enfermagem.html">Exame Físico</a></li>
+                                        <li><a href="biblioteca/pensamento-critico-enfermagem.html">Pensamento Crítico</a></li>
+                                        <li><a href="biblioteca/tecnologia-enfermagem.html">Tecnologia em Enfermagem</a></li>
+                                        <li><a href="biblioteca/seguranca-do-paciente.html">Segurança do Paciente</a></li>
+                                        <li><a href="biblioteca/qualidade-em-enfermagem.html">Qualidade em Enfermagem</a></li>
+                                        <li><a href="biblioteca/processo-de-enfermagem.html">Processo de Enfermagem</a></li>
+                                        <li><a href="biblioteca/sistematizacao-assistencia-enfermagem.html">SAE - Sistematização</a></li>
+                                        <li><a href="biblioteca/sistematizacao-cuidados-enfermagem.html">Sistematização de Cuidados</a></li>
+                                        <li><a href="biblioteca/teoria-wanda-horta.html">Teoria de Wanda Horta</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-materiais">
+                                    <h3 class="mega-content-title">Materiais e Insumos</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="biblioteca/material-medico-hospitalar.html">Material Médico Hospitalar</a></li>
+                                        <li><a href="biblioteca/central-material-celulose.html">Central de Material - Celulose</a></li>
+                                        <li><a href="biblioteca/descarte-materiais.html">Descarte de Materiais</a></li>
+                                        <li><a href="biblioteca/classificacao-risco-materiais.html">Classificação de Risco</a></li>
+                                        <li><a href="biblioteca/legenda-simbolos-materiais.html">Legenda de Símbolos</a></li>
+                                        <li><a href="biblioteca/cateter-venoso-periferico.html">Cateter Venoso Periférico</a></li>
+                                        <li><a href="biblioteca/drenos-cirurgicos.html">Drenos Cirúrgicos</a></li>
+                                        <li><a href="biblioteca/sondas-sonorizacao.html">Sondas e Sonorização</a></li>
+                                        <li><a href="biblioteca/diluicao-medicamentos.html">Diluição de Medicamentos</a></li>
+                                        <li><a href="biblioteca/administracao-medicamentos.html">Administração de Medicamentos</a></li>
+                                    </ul>
+                                </div>
+                            </main>
+                            <aside class="panel-promo-area">
+                                <div class="glowing-frame mega-image-frame">
+                                    <div class="frame-image-container mega-image-container">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-biblioteca.webp" alt="Biblioteca" loading="lazy" style="max-width: 100%; height: auto;">
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-mega-menu">
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="carreiras">Carreiras</button>
+                    <div class="mega-panel mega-panel-carreiras" id="mega-panel-carreiras" data-menu="carreiras">
+                        <div class="panel-standard-height">
+                            <aside class="panel-sidebar header-scroll">
+                                <nav class="menu-tabs" aria-label="Categorias de Carreiras">
+                                    <button type="button" class="menu-tab-trigger active" data-tab="buscar-oportunidades" aria-selected="true">Buscar Oportunidades</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="ferramentas-trabalhistas" aria-selected="false">Ferramentas Trabalhistas</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="desenvolvimento-profissional" aria-selected="false">Desenvolvimento Profissional</button>
+                                </nav>
+                            </aside>
+                            <main class="panel-main-content header-scroll">
+                                <div class="tab-content active" id="tab-buscar-oportunidades">
+                                    <h3 class="mega-content-title">Buscar Oportunidades</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="empregos.html">Buscar Empregos</a></li>
+                                        <li><a href="cursos.html">Buscar Cursos</a></li>
+                                        <li><a href="concursos.html">Buscar Concursos</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-ferramentas-trabalhistas">
+                                    <h3 class="mega-content-title">Ferramentas Trabalhistas</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="adicional-noturno.html">Calculadora de Adicional Noturno</a></li>
+                                        <li><a href="clt-pj.html">Calculadora de CLT x PJ</a></li>
+                                        <li><a href="ferias.html">Calculadora de Férias</a></li>
+                                        <li><a href="decimoterceiroesalario.html">Calculadora de 13º Salário</a></li>
+                                        <li><a href="hora-extra.html">Calculadora de Hora Extra</a></li>
+                                        <li><a href="rescisao.html">Calculadora de Rescisão</a></li>
+                                        <li><a href="salario-hora.html">Calculadora de Salário Hora</a></li>
+                                        <li><a href="salario-liquido.html">Calculadora de Salário Líquido</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-desenvolvimento-profissional">
+                                    <h3 class="mega-content-title">Desenvolvimento Profissional</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="curriculo.html">Currículo</a></li>
+                                    </ul>
+                                </div>
+                            </main>
+                            <aside class="panel-promo-area">
+                                <div class="glowing-frame mega-image-frame">
+                                    <div class="frame-image-container mega-image-container">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-carreiras.webp" alt="Carreiras" loading="lazy" style="max-width: 100%; height: auto;">
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-mega-menu">
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="fale-conosco">Fale Conosco</button>
+                    <div class="mega-panel mega-panel-fale-conosco" id="mega-panel-fale-conosco" data-menu="fale-conosco">
+                        <div class="panel-standard-height">
+                            <aside class="panel-sidebar header-scroll">
+                                <nav class="menu-tabs" aria-label="Categorias de Contato">
+                                    <button type="button" class="menu-tab-trigger active" data-tab="contato" aria-selected="true">Contato</button>
+                                </nav>
+                            </aside>
+                            <main class="panel-main-content header-scroll">
+                                <div class="tab-content active" id="tab-contato">
+                                    <h3 class="mega-content-title">Fale Conosco</h3>
+                                    <ul class="mega-content-links">
+                                        <li><a href="fale.html">Contato</a></li>
+                                    </ul>
+                                </div>
+                            </main>
+                            <aside class="panel-promo-area">
+                                <div class="glowing-frame mega-image-frame">
+                                    <div class="frame-image-container mega-image-container">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-fale-conosco.webp" alt="Fale Conosco" loading="lazy" style="max-width: 100%; height: auto;">
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-mega-menu">
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="idiomas" id="nav-idiomas">
+                        <i class="fas fa-globe" aria-hidden="true"></i>
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)" class="active-lang-flag" id="active-lang-flag" loading="lazy" style="width: 24px; height: 18px; border-radius: 3px; vertical-align: middle;">
+                    </button>
+                    <div class="mega-panel mega-panel-idiomas" id="mega-panel-idiomas" data-menu="idiomas">
+                        <div class="panel-standard-height">
+                            <aside class="panel-sidebar header-scroll">
+                                <nav class="menu-tabs" aria-label="Regiões de Idiomas">
+                                    <button type="button" class="menu-tab-trigger active" data-tab="idiomas-americas" aria-selected="true">Américas</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="idiomas-europa" aria-selected="false">Europa</button>
+                                    <button type="button" class="menu-tab-trigger" data-tab="idiomas-asia" aria-selected="false">Ásia</button>
+                                </nav>
+                            </aside>
+                            <main class="panel-main-content header-scroll">
+                                <div class="tab-content active" id="tab-idiomas-americas">
+                                    <h3 class="mega-content-title">Américas</h3>
+                                    <ul class="mega-content-links idiomas-list">
+                                        <li>
+                                            <a href="#" data-lang="pt-br" onclick="selectLanguage(event, 'pt-br')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)" class="idioma-flag-link">
+                                                Português (Brasil)
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="es" onclick="selectLanguage(event, 'es')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-espanha.webp" alt="Español" class="idioma-flag-link">
+                                                Español
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="en" onclick="selectLanguage(event, 'en')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-eua.webp" alt="English" class="idioma-flag-link">
+                                                English
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-idiomas-europa">
+                                    <h3 class="mega-content-title">Europa</h3>
+                                    <ul class="mega-content-links idiomas-list">
+                                        <li>
+                                            <a href="#" data-lang="de" onclick="selectLanguage(event, 'de')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-alemanha.webp" alt="Deutsch" class="idioma-flag-link">
+                                                Deutsch
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="fr" onclick="selectLanguage(event, 'fr')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-franca.webp" alt="Français" class="idioma-flag-link">
+                                                Français
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="it" onclick="selectLanguage(event, 'it')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-italia.webp" alt="Italiano" class="idioma-flag-link">
+                                                Italiano
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="nl" onclick="selectLanguage(event, 'nl')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-holanda.webp" alt="Nederlands" class="idioma-flag-link">
+                                                Nederlands
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="pl" onclick="selectLanguage(event, 'pl')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-polonia.webp" alt="Polski" class="idioma-flag-link">
+                                                Polski
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="ru" onclick="selectLanguage(event, 'ru')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-russia.webp" alt="Русский" class="idioma-flag-link">
+                                                Русский
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="sv" onclick="selectLanguage(event, 'sv')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-suecia.webp" alt="Svenska" class="idioma-flag-link">
+                                                Svenska
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="tr" onclick="selectLanguage(event, 'tr')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-turquia.webp" alt="Türkçe" class="idioma-flag-link">
+                                                Türkçe
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="tab-idiomas-asia">
+                                    <h3 class="mega-content-title">Ásia</h3>
+                                    <ul class="mega-content-links idiomas-list">
+                                        <li>
+                                            <a href="#" data-lang="zh" onclick="selectLanguage(event, 'zh')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-china.webp" alt="中文" class="idioma-flag-link">
+                                                中文
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="ja" onclick="selectLanguage(event, 'ja')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-japao.webp" alt="日本語" class="idioma-flag-link">
+                                                日本語
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="ko" onclick="selectLanguage(event, 'ko')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-coreia.webp" alt="한국어" class="idioma-flag-link">
+                                                한국어
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="ar" onclick="selectLanguage(event, 'ar')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-arabia.webp" alt="العربية" class="idioma-flag-link">
+                                                العربية
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="hi" onclick="selectLanguage(event, 'hi')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-india.webp" alt="हिन्दी" class="idioma-flag-link">
+                                                हिन्दी
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="id" onclick="selectLanguage(event, 'id')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-indonesia.webp" alt="Bahasa Indonesia" class="idioma-flag-link">
+                                                Bahasa Indonesia
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="vi" onclick="selectLanguage(event, 'vi')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-vietna.webp" alt="Tiếng Việt" class="idioma-flag-link">
+                                                Tiếng Việt
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-lang="uk" onclick="selectLanguage(event, 'uk')">
+                                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-ucrania.webp" alt="Українська" class="idioma-flag-link">
+                                                Українська
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </main>
+                            <aside class="panel-promo-area">
+                                <div class="glowing-frame mega-image-frame">
+                                    <div class="frame-image-container mega-image-container">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/mega-menu-idiomas.webp" alt="Idiomas" loading="lazy" style="max-width: 100%; height: auto;">
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-mega-menu">
+                    <button type="button" class="nav-link nav-link-dropdown" aria-expanded="false" aria-haspopup="true" data-menu="buscar">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </button>
+                    <div class="mega-panel mega-search-panel" id="mega-panel-buscar" data-menu="buscar">
+                        <div class="panel-standard-height">
+                            <aside class="panel-sidebar header-scroll">
+                                <nav class="menu-tabs" aria-label="Categorias de Busca">
+                                    <button type="button" class="menu-tab-trigger active" data-tab="buscar-site" aria-selected="true">Buscar no Site</button>
+                                </nav>
+                            </aside>
+                            <main class="panel-main-content search-main-content">
+                                <div class="search-container">
+                                    <h3 class="mega-content-title">Buscar no Site</h3>
+                                    <div class="search-box">
+                                        <input type="search" class="search-input" id="header-search-input" placeholder="Buscar no site..." aria-label="Buscar no site">
+                                        <button type="button" class="search-btn" id="header-search-btn" aria-label="Buscar">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </main>
+                            <aside class="panel-promo-area">
+                                <div class="glowing-frame mega-image-frame">
+                                    <div class="frame-image-container mega-image-container">
+                                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp" alt="Buscar" loading="lazy" style="max-width: 100%; height: auto;">
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Mobile Header with Two Bands -->
+<div class="mobile-main-header">
+    <!-- Faixa 1: Accessibility Controls and Search -->
+    <div class="mobile-band-1">
+        <div class="mobile-band-1-container">
+            <div class="mobile-band-1-left">
+                <div class="mobile-font-controls">
+                    <button type="button" class="mobile-font-btn" id="mobile-font-reduce" aria-label="Reduzir fonte">
+                        <span class="font-btn-icon">A-</span>
+                    </button>
+                    <button type="button" class="mobile-font-btn" id="mobile-font-increase" aria-label="Aumentar fonte">
+                        <span class="font-btn-icon">A+</span>
+                    </button>
+                </div>
+                <button type="button" class="mobile-theme-btn" id="mobile-theme-toggle" aria-label="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button type="button" class="mobile-animation-btn" id="mobile-animation-toggle" aria-label="Pausar animações" title="Pausar animações">
+                    <i class="fas fa-pause"></i>
+                </button>
+            </div>
+            <button type="button" class="mobile-search-btn" id="mobile-search-toggle" aria-label="Buscar">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Faixa 2: Logo and Hamburger Menu -->
+    <div class="mobile-band-2">
+        <div class="mobile-band-2-container">
+            <a href="index.html" class="mobile-header-logo">
+                <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" style="height: 45px; width: auto;">
+            </a>
+            <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Search Container (Expandable) -->
+    <div class="mobile-search-container" id="mobile-search-container">
+        <div class="search-box">
+            <input type="search" class="search-input" id="mobile-menu-search-input" placeholder="Buscar no site..." aria-label="Buscar no site">
+            <button type="button" class="search-btn" aria-label="Buscar">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu mobile">
+    <div class="mobile-menu-header">
+        <a href="index.html" class="mobile-menu-logo-link" aria-label="Calculadoras de Enfermagem">
+            <img src="https://www.calculadorasdeenfermagem.com.br/icontopbar1.webp" alt="Calculadoras de Enfermagem" class="mobile-menu-logo-image" style="height: 45px; width: auto;">
+        </a>
+        <button type="button" class="mobile-menu-close" id="mobile-menu-close" aria-label="Fechar menu">
+            <span class="close-icon"><i class="fas fa-times"></i></span>
+        </button>
+    </div>
+    <ul class="mobile-nav-list">
+        <li class="mobile-nav-item">
+            <a href="index.html" class="mobile-nav-link">Início</a>
+        </li>
+        <li class="mobile-nav-item has-mobile-submenu">
+            <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
+                <span>Sobre Nós</span>
+                <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+            </button>
+            <ul class="mobile-submenu">
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Institucional</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="missao.html">Missão, Visão e Valores</a></li>
+                        <li><a href="objetivo.html">Objetivo do Site</a></li>
+                        <li><a href="mapa-do-site.html">Mapa do Site</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Acessibilidade Digital</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="politicadeacessibilidade.html">Política de Acessibilidade Digital</a></li>
+                        <li><a href="recursos-assistivos.html">Recursos Assistivos</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Sustentabilidade Digital</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="nossocompromisso.html">Nosso compromisso</a></li>
+                        <li><a href="impactodigital.html">Relatório de impacto</a></li>
+                        <li><a href="tecnologiaverde.html">Tecnologia Verde</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Políticas do Site</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="politica.html">Política de Privacidade</a></li>
+                        <li><a href="termos.html">Política de Cookies</a></li>
+                        <li><a href="notificacoes-legais.html">Isenção de Responsabilidade</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="mobile-nav-item has-mobile-submenu">
+            <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
+                <span>Ferramentas</span>
+                <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+            </button>
+            <ul class="mobile-submenu">
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Calculadoras Clínicas</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="heparina.html">Aspiração de Heparina</a></li>
+                        <li><a href="insulina.html">Aspiração de Insulina</a></li>
+                        <li><a href="balancohidrico.html">Calculadora de Balanço Hídrico</a></li>
+                        <li><a href="dimensionamento.html">Calculadora de Dimensionamento de Pessoal</a></li>
+                        <li><a href="gasometria.html">Calculadora de Gasometria</a></li>
+                        <li><a href="gotejamento.html">Calculadora de Gotejamento</a></li>
+                        <li><a href="gestacional.html">Calculadora de Idade Gestacional</a></li>
+                        <li><a href="imc.html">Calculadora de Índice de Massa Corporal</a></li>
+                        <li><a href="medicamentos.html">Calculadora de Medicamentos</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Escalas Clínicas</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="aldrete.html">Aldrete</a></li>
+                        <li><a href="apache.html">Apache</a></li>
+                        <li><a href="apgar.html">Apgar</a></li>
+                        <li><a href="asa.html">ASA</a></li>
+                        <li><a href="ballard.html">Ballard</a></li>
+                        <li><a href="barthel.html">Barthel</a></li>
+                        <li><a href="berg.html">Berg</a></li>
+                        <li><a href="bishop.html">Bishop</a></li>
+                        <li><a href="bps.html">BPS</a></li>
+                        <li><a href="braden.html">Braden</a></li>
+                        <li><a href="cam.html">CAM</a></li>
+                        <li><a href="capurro.html">Capurro</a></li>
+                        <li><a href="cincinnati.html">Cincinnati</a></li>
+                        <li><a href="cornell.html">Cornell</a></li>
+                        <li><a href="cries.html">CRIES</a></li>
+                        <li><a href="curb-65.html">CURB-65</a></li>
+                        <li><a href="downes.html">Downes</a></li>
+                        <li><a href="downton.html">Downton</a></li>
+                        <li><a href="elpo.html">ELPO</a></li>
+                        <li><a href="escalanumerica.html">Escala Numérica</a></li>
+                        <li><a href="fast.html">FAST</a></li>
+                        <li><a href="flacc.html">FLACC</a></li>
+                        <li><a href="four.html">FOUR</a></li>
+                        <li><a href="fugulin.html">Fugulin</a></li>
+                        <li><a href="gds.html">GDS</a></li>
+                        <li><a href="glasgow.html">Glasgow</a></li>
+                        <li><a href="gosnell.html">Gosnell</a></li>
+                        <li><a href="hamilton.html">Hamilton</a></li>
+                        <li><a href="humpty.html">Humpty Dumpty</a></li>
+                        <li><a href="johns.html">Johns</a></li>
+                        <li><a href="jouvet.html">Jouvet</a></li>
+                        <li><a href="katz.html">Katz</a></li>
+                        <li><a href="lachs.html">Lachs</a></li>
+                        <li><a href="lanss.html">LANSS</a></li>
+                        <li><a href="lawton.html">Lawton</a></li>
+                        <li><a href="manchester.html">Manchester</a></li>
+                        <li><a href="meem.html">MEEM</a></li>
+                        <li><a href="meows.html">MEOWS</a></li>
+                        <li><a href="morse.html">Morse</a></li>
+                        <li><a href="news.html">NEWS</a></li>
+                        <li><a href="nihss.html">NIHSS</a></li>
+                        <li><a href="nips.html">NIPS</a></li>
+                        <li><a href="norton.html">Norton</a></li>
+                        <li><a href="ofras.html">OFRAS</a></li>
+                        <li><a href="painad.html">PAINAD</a></li>
+                        <li><a href="pelod.html">PELOD</a></li>
+                        <li><a href="perroca.html">Perroca</a></li>
+                        <li><a href="pews.html">PEWS</a></li>
+                        <li><a href="prism.html">PRISM</a></li>
+                        <li><a href="qsofa.html">qSOFA</a></li>
+                        <li><a href="ramsay.html">Ramsay</a></li>
+                        <li><a href="rancholosamigos.html">Ranchos Los Amigos</a></li>
+                        <li><a href="richmond.html">Richmond</a></li>
+                        <li><a href="saps.html">SAPS</a></li>
+                        <li><a href="silverman.html">Silverman</a></li>
+                        <li><a href="sofa.html">SOFA</a></li>
+                        <li><a href="tinetti.html">Tinetti</a></li>
+                        <li><a href="waterlow.html">Waterlow</a></li>
+                        <li><a href="zarit.html">Zarit</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Calendário Vacinal</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="calendariovacinalprematuros.html">Calendário Vacinal de Prematuros</a></li>
+                        <li><a href="calendariovacinalcriancas.html">Calendário Vacinal de Crianças</a></li>
+                        <li><a href="calendariovacinaladolescentes.html">Calendário Vacinal de Adolescentes</a></li>
+                        <li><a href="calendariovacinaladultos.html">Calendário Vacinal de Adultos</a></li>
+                        <li><a href="calendariovacinalidosos.html">Calendário Vacinal de Idosos</a></li>
+                        <li><a href="calendariovacinalgestantes.html">Calendário Vacinal de Gestantes</a></li>
+                        <li><a href="calendariovacinalespeciais.html">Calendário Vacinal de Pacientes Especiais</a></li>
+                        <li><a href="calendariovacinalocupacional.html">Calendário Vacinal de Ocupacionais</a></li>
+                        <li><a href="vacinaspneumococicas.html">Vacinas Pneumocócicas</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Ferramentas Específicas</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="notificacao-compulsoria.html">Notificações Compulsórias</a></li>
+                        <li><a href="diagnosticosnanda.html">Plano de Enfermagem</a></li>
+                        <li><a href="cronometro.html">Cronometro</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="mobile-nav-item has-mobile-submenu">
+            <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
+                <span>Biblioteca</span>
+                <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+            </button>
+            <ul class="mobile-submenu">
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Teorias de Enfermagem</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="biblioteca/teorias-de-enfermagem.html">Teorias de Enfermagem</a></li>
+                        <li><a href="biblioteca/florence-nightngale-enfermeira-patrona-da-enfermagem.html">Florence Nightingale</a></li>
+                        <li><a href="biblioteca/wanda-de-aguiar-horta-necessidades-humanas-basicas.html">Wanda de Aguiar Horta</a></li>
+                        <li><a href="biblioteca/callista-roy-teoria-da-adaptacao.html">Callista Roy</a></li>
+                        <li><a href="biblioteca/dorothea-orem-teoria-do-defict-do-auto-cuidado.html">Dorothea Orem</a></li>
+                        <li><a href="biblioteca/hildegard-peplau-teoria-das-relacoes-interpessoais.html">Hildegard Peplau</a></li>
+                        <li><a href="biblioteca/jean-watson-teoria-do-cuidado-humano.html">Jean Watson</a></li>
+                        <li><a href="biblioteca/madeleine-leininger-teoria-do-cuidado-transcultural.html">Madeleine Leininger</a></li>
+                        <li><a href="biblioteca/imogene-m-king-teoria-do-sistema-de-metas.html">Imogene King</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Escalas de Avaliação</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="biblioteca/escala-de-aldrete-e-kroulik.html">Aldrete e Kroulik</a></li>
+                        <li><a href="biblioteca/escala-de-apache-ii.html">Apache II</a></li>
+                        <li><a href="biblioteca/escala-de-apgar.html">Apgar</a></li>
+                        <li><a href="biblioteca/escala-de-ballard.html">Ballard</a></li>
+                        <li><a href="biblioteca/escala-de-barthel.html">Barthel</a></li>
+                        <li><a href="biblioteca/escala-de-braden.html">Braden</a></li>
+                        <li><a href="biblioteca/escala-de-fugulin.html">Fugulin</a></li>
+                        <li><a href="biblioteca/metodo-de-capurro.html">Capurro</a></li>
+                        <li><a href="biblioteca/mini-exame-do-estado-mental-meem.html">MEEM</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Cálculos de Enfermagem</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="biblioteca/calculo-de-dosagem-de-medicamentos-enfermagem.html">Cálculo de Dosagem</a></li>
+                        <li><a href="biblioteca/regra-de-3-calculo-de-medicamentos-enfermagem.html">Regra de 3</a></li>
+                        <li><a href="biblioteca/calculo-de-gotejamento.html">Gotejamento</a></li>
+                        <li><a href="biblioteca/micro-e-macro-gotas.html">Micro e Macrogotas</a></li>
+                        <li><a href="biblioteca/indice-de-massa-corporal-imc.html">IMC</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Protocolos e Diretrizes</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="biblioteca/metas-internacionais-de-seguranca-do-paciente.html">Metas de Segurança</a></li>
+                        <li><a href="biblioteca/protocolo-de-rcp-adulto-2020-aha.html">RCP Adulto AHA</a></li>
+                        <li><a href="biblioteca/protocolo-de-news-enfermagem-saude.html">Protocolo NEWS</a></li>
+                        <li><a href="biblioteca/doencas-de-notificacao-compulsoria.html">Notificação Compulsória</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="mobile-nav-item has-mobile-submenu">
+            <button type="button" class="mobile-nav-link mobile-nav-dropdown" aria-expanded="false">
+                <span>Carreiras</span>
+                <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+            </button>
+            <ul class="mobile-submenu">
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Buscar Oportunidades</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="empregos.html">Buscar Empregos</a></li>
+                        <li><a href="cursos.html">Buscar Cursos</a></li>
+                        <li><a href="concursos.html">Buscar Concursos</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Ferramentas Trabalhistas</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="adicional-noturno.html">Adicional Noturno</a></li>
+                        <li><a href="clt-pj.html">CLT x PJ</a></li>
+                        <li><a href="ferias.html">Férias</a></li>
+                        <li><a href="decimoterceiroesalario.html">13º Salário</a></li>
+                        <li><a href="hora-extra.html">Hora Extra</a></li>
+                        <li><a href="rescisao.html">Rescisão</a></li>
+                        <li><a href="salario-hora.html">Salário Hora</a></li>
+                        <li><a href="salario-liquido.html">Salário Líquido</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-submenu-item has-mobile-submenu">
+                    <button type="button" class="mobile-submenu-dropdown" aria-expanded="false">
+                        <span>Desenvolvimento Profissional</span>
+                        <span class="submenu-arrow"><i class="fas fa-chevron-down"></i></span>
+                    </button>
+                    <ul class="mobile-submenu level-3">
+                        <li><a href="curriculo.html">Currículo</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="mobile-nav-item">
+            <a href="fale.html" class="mobile-nav-link">Fale Conosco</a>
+        </li>
+    </ul>
+    
+    <!-- Language Selector Section (Mobile Only) -->
+    <div class="mobile-language-section" id="mobile-idiomas-section">
+        <span class="mobile-language-label">Selecionar idioma</span>
+        <button type="button" class="mobile-language-toggle" id="mobile-idiomas-toggle" aria-expanded="false">
+            <span class="language-icon"><i class="fas fa-globe"></i></span>
+            <span class="language-current" id="mobile-idiomas-current">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)" style="width:20px;height:15px;border-radius:2px;margin-right:8px;vertical-align:middle">
+                <span>Português (Brasil)</span>
+            </span>
+            <span class="language-arrow"><i class="fas fa-chevron-down" id="mobile-idiomas-arrow"></i></span>
+        </button>
+        <div class="mobile-language-grid" id="mobile-idiomas-list" style="display:none">
+            <!-- 19 Idiomas disponíveis em linhas horizontais -->
+            <a href="#" data-lang="pt-br" class="language-flag-item active" title="Português (Brasil)">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-brasil.webp" alt="Português (Brasil)">
+            </a>
+            <a href="#" data-lang="es" class="language-flag-item" title="Español">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-espanha.webp" alt="Español">
+            </a>
+            <a href="#" data-lang="en" class="language-flag-item" title="English">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-eua.webp" alt="English">
+            </a>
+            <a href="#" data-lang="de" class="language-flag-item" title="Deutsch">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-alemanha.webp" alt="Deutsch">
+            </a>
+            <a href="#" data-lang="fr" class="language-flag-item" title="Français">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-franca.webp" alt="Français">
+            </a>
+            <a href="#" data-lang="it" class="language-flag-item" title="Italiano">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-italia.webp" alt="Italiano">
+            </a>
+            <a href="#" data-lang="nl" class="language-flag-item" title="Nederlands">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-holanda.webp" alt="Nederlands">
+            </a>
+            <a href="#" data-lang="pl" class="language-flag-item" title="Polski">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-polonia.webp" alt="Polski">
+            </a>
+            <a href="#" data-lang="ru" class="language-flag-item" title="Русский">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-russia.webp" alt="Русский">
+            </a>
+            <a href="#" data-lang="sv" class="language-flag-item" title="Svenska">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-suecia.webp" alt="Svenska">
+            </a>
+            <a href="#" data-lang="tr" class="language-flag-item" title="Türkçe">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-turquia.webp" alt="Türkçe">
+            </a>
+            <a href="#" data-lang="zh" class="language-flag-item" title="中文">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-china.webp" alt="中文">
+            </a>
+            <a href="#" data-lang="ja" class="language-flag-item" title="日本語">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-japao.webp" alt="日本語">
+            </a>
+            <a href="#" data-lang="ko" class="language-flag-item" title="한국어">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-coreia.webp" alt="한국어">
+            </a>
+            <a href="#" data-lang="ar" class="language-flag-item" title="العربية">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-arabia.webp" alt="العربية">
+            </a>
+            <a href="#" data-lang="hi" class="language-flag-item" title="हिन्दी">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-india.webp" alt="हिन्दी">
+            </a>
+            <a href="#" data-lang="id" class="language-flag-item" title="Bahasa Indonesia">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-indonesia.webp" alt="Bahasa Indonesia">
+            </a>
+            <a href="#" data-lang="vi" class="language-flag-item" title="Tiếng Việt">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-vietna.webp" alt="Tiếng Việt">
+            </a>
+            <a href="#" data-lang="uk" class="language-flag-item" title="Українська">
+                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/bandeiras/bandeira-ucrania.webp" alt="Українська">
+            </a>
+        </div>
+    </div>
+</nav>

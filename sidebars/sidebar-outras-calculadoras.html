@@ -1,56 +1,232 @@
 <!-- ═══════════════════════════════════════════════════════════════
-     MÓDULO SIDEBAR: OUTRAS CALCULADORAS
-     Arquivo: sidebar-outras-calculadoras.html
+     SIDEBAR: OUTRAS CALCULADORAS (DINÂMICO)
+     Versão: 4.2
      
-     Uso: await loadModule('sidebar-calcs', 'modulos/sidebar-outras-calculadoras.html');
+     Lê do JSON: ferramentas_relacionadas
+     Renderiza automaticamente 3 calculadoras relacionadas
      ═══════════════════════════════════════════════════════════════ -->
 
-<div class="card-base p-6">
-  <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary dark:text-cyan-400 mb-4 flex items-center gap-2 border-b pb-3">
-    <i class="fa-solid fa-list-ul"></i> Outras Calculadoras
-  </h3>
+<div class="sidebar-module" id="outras-calculadoras-container">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <h3 class="text-xl font-black text-nurse-primary dark:text-cyan-400">
+      <i class="fa-solid fa-calculator mr-2"></i>
+      Ferramentas Relacionadas
+    </h3>
+  </div>
   
-  <nav class="space-y-1 text-sm">
-    <a href="heparina.html" 
-       class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
-      <i class="fa-solid fa-syringe text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
-      <span>Cálculo de Heparina</span>
-    </a>
-    
-    <a href="medicamentos.html" 
-       class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
-      <i class="fa-solid fa-flask text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
-      <span>Diluição de Medicamentos</span>
-    </a>
-    
-    <a href="gotejamento.html" 
-       class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
-      <i class="fa-solid fa-droplet text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
-      <span>Cálculo de Gotejamento</span>
-    </a>
-    
-    <a href="imc.html" 
-       class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
-      <i class="fa-solid fa-weight-scale text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
-      <span>Cálculo de IMC</span>
-    </a>
-    
-    <a href="superficie-corporal.html" 
-       class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
-      <i class="fa-solid fa-ruler-combined text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
-      <span>Superfície Corporal</span>
-    </a>
-    
-    <a href="glasgow.html" 
-       class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group">
-      <i class="fa-solid fa-brain text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition"></i>
-      <span>Escala de Glasgow</span>
-    </a>
-  </nav>
+  <!-- Loading State -->
+  <div id="loading-ferramentas" class="space-y-4">
+    <div class="animate-pulse">
+      <div class="h-24 bg-slate-200 dark:bg-slate-700 rounded-2xl"></div>
+    </div>
+    <div class="animate-pulse">
+      <div class="h-24 bg-slate-200 dark:bg-slate-700 rounded-2xl"></div>
+    </div>
+    <div class="animate-pulse">
+      <div class="h-24 bg-slate-200 dark:bg-slate-700 rounded-2xl"></div>
+    </div>
+  </div>
   
-  <a href="index.html#calculadoras" 
-     class="mt-4 w-full flex items-center justify-center gap-2 px-4 py-2 bg-nurse-primary/5 hover:bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 rounded-lg text-xs font-bold transition group">
-    <span>Ver Todas</span>
-    <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+  <!-- Ferramentas (renderizado dinamicamente) -->
+  <div id="ferramentas-list" class="space-y-4 hidden"></div>
+  
+  <!-- Link para ver todas -->
+  <a 
+    href="busca-e-conteudo.html" 
+    class="block text-center mt-6 text-sm font-bold text-nurse-primary dark:text-cyan-400 hover:underline">
+    Ver todas as calculadoras →
   </a>
 </div>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   ESTILOS - SIDEBAR OUTRAS CALCULADORAS
+   ═══════════════════════════════════════════════════════════════ */
+
+.ferramenta-card {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.dark .ferramenta-card {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-color: #334155;
+}
+
+.ferramenta-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #1A3E74 0%, #00bcd4 100%);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.ferramenta-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 10px 15px -3px rgba(26, 62, 116, 0.1);
+  border-color: #00bcd4;
+}
+
+.ferramenta-card:hover::before {
+  transform: scaleY(1);
+}
+
+.ferramenta-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #1A3E74 0%, #2E5A9C 100%);
+  color: white;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.dark .ferramenta-icon {
+  background: linear-gradient(135deg, #00bcd4 0%, #00838f 100%);
+}
+
+.ferramenta-badge {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 9999px;
+}
+
+.badge-mav {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.dark .badge-mav {
+  background: #7f1d1d;
+  color: #fca5a5;
+}
+
+.badge-ev {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.dark .badge-ev {
+  background: #1e3a8a;
+  color: #93c5fd;
+}
+
+.badge-novo {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.dark .badge-novo {
+  background: #064e3b;
+  color: #6ee7b7;
+}
+</style>
+
+<script>
+/**
+ * ═══════════════════════════════════════════════════════════════
+ * LÓGICA - SIDEBAR OUTRAS CALCULADORAS
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+(function() {
+  'use strict';
+  
+  /**
+   * Renderiza ferramentas relacionadas do JSON
+   */
+  function renderFerramentasRelacionadas() {
+    const loadingEl = document.getElementById('loading-ferramentas');
+    const listEl = document.getElementById('ferramentas-list');
+    
+    if (!listEl || !window.CALCULATOR_SYSTEM?.engine?.config) return;
+    
+    const config = window.CALCULATOR_SYSTEM.engine.config;
+    const ferramentas = config.ferramentas_relacionadas?.itens;
+    
+    if (!ferramentas || ferramentas.length === 0) {
+      // Fallback: se não há ferramentas no JSON, esconde seção
+      const container = document.getElementById('outras-calculadoras-container');
+      if (container) container.style.display = 'none';
+      return;
+    }
+    
+    // Esconde loading, mostra lista
+    if (loadingEl) loadingEl.classList.add('hidden');
+    listEl.classList.remove('hidden');
+    
+    // Renderiza cada ferramenta
+    const html = ferramentas.map(ferramenta => `
+      <a href="${ferramenta.url}" class="ferramenta-card block">
+        <div class="flex items-start gap-3">
+          <!-- Ícone -->
+          <div class="ferramenta-icon">
+            <i class="fa-solid ${ferramenta.icone}"></i>
+          </div>
+          
+          <!-- Conteúdo -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-1">
+              <h4 class="font-bold text-slate-900 dark:text-white truncate">
+                ${ferramenta.titulo}
+              </h4>
+              ${ferramenta.badge ? `
+                <span class="ferramenta-badge badge-${ferramenta.badge.toLowerCase()}">
+                  ${ferramenta.badge}
+                </span>
+              ` : ''}
+            </div>
+            <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2">
+              ${ferramenta.descricao}
+            </p>
+          </div>
+          
+          <!-- Seta -->
+          <i class="fa-solid fa-chevron-right text-slate-400 dark:text-slate-600 text-sm mt-1"></i>
+        </div>
+      </a>
+    `).join('');
+    
+    listEl.innerHTML = html;
+  }
+  
+  /**
+   * Inicializa quando Calculator System estiver pronto
+   */
+  function init() {
+    if (window.CALCULATOR_SYSTEM?.engine?.config) {
+      renderFerramentasRelacionadas();
+    } else {
+      // Aguarda inicialização
+      setTimeout(init, 100);
+    }
+  }
+  
+  // Inicia quando DOM estiver pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  
+  console.log('✓ Sidebar Outras Calculadoras (dinâmico) carregado');
+})();
+</script>
