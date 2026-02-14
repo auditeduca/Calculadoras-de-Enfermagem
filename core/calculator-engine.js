@@ -1,29 +1,44 @@
 /**
  * CALCULATOR ENGINE - Motor de Renderização Modular
- * Versão 4.2 - Adicionado merge de modais compartilhados e renderização de tags
+ * Versão 4.3 - Correção de Compatibilidade de Construtor e Renderização
  */
 
 class CalculatorEngine {
-  constructor(configUrl) {
-    this.configUrl = configUrl;
-    this.config = null;
+  /**
+   * Construtor Híbrido: Aceita URL (string) ou Configuração (objeto)
+   * Corrige erro de integração com calculator-system-v42.js
+   */
+  constructor(configOrUrl) {
+    if (typeof configOrUrl === 'object' && configOrUrl !== null) {
+      // Inicialização via Sistema (passando objeto JSON)
+      this.config = configOrUrl;
+      this.configUrl = null;
+    } else {
+      // Inicialização Standalone (passando URL)
+      this.configUrl = configOrUrl;
+      this.config = null;
+    }
     this.resultData = null;
   }
 
   /**
-   * Inicializa o sistema carregando a configuração
+   * Inicializa o sistema carregando a configuração (se necessário)
    */
   async init() {
     try {
-      const response = await fetch(this.configUrl);
-      if (!response.ok) throw new Error(`Erro ao carregar config: ${response.status}`);
-      
-      this.config = await response.json();
+      // Se config já existe (passado via construtor), usa ele
+      if (!this.config && this.configUrl) {
+        const response = await fetch(this.configUrl);
+        if (!response.ok) throw new Error(`Erro ao carregar config: ${response.status}`);
+        this.config = await response.json();
+      }
+
+      if (!this.config) throw new Error("Configuração não definida");
       
       // Carrega modais compartilhados (merge)
       await this.loadSharedModais();
       
-      // Renderiza componentes usando o novo método centralizado
+      // Renderiza componentes (se chamado via init direto)
       this.render();
       
       console.log('✓ Calculator Engine inicializado');
@@ -34,16 +49,21 @@ class CalculatorEngine {
 
   /**
    * Método central de renderização (Novo v4.2)
+   * Chamado explicitamente pelo calculator-system-v42.js
    */
   render() {
-    this.renderSEO(); // Mantido nome original renderSEO para compatibilidade
+    if (!this.config) {
+        console.error("Erro: Tentativa de renderizar sem configuração carregada.");
+        return;
+    }
+    this.renderSEO();
     this.renderHeader();
     this.renderBreadcrumb();
-    this.renderTags();        // ⭐ ATUALIZADO
-    this.renderSidebarMenu(); // ⭐ ATUALIZADO
+    this.renderTags();        
+    this.renderSidebarMenu(); 
     this.renderTabs();
     this.renderForm();
-    this.renderContentTabs(); // Mantido nome original renderContentTabs
+    this.renderContentTabs();
   }
 
   /**
@@ -52,13 +72,13 @@ class CalculatorEngine {
   async loadSharedModais() {
     try {
       const response = await fetch('shared-modais.json');
-      if (!response.ok) return;
+      if (!response.ok) return; // Silencioso se não existir
       const shared = await response.json();
-      if (shared.shared_modais) {
+      if (shared.shared_modais && this.config) {
         this.config.modais = { ...this.config.modais, ...shared.shared_modais };
       }
     } catch (e) {
-      console.warn('Não foi possível carregar modais compartilhados:', e);
+      console.warn('Info: Modais compartilhados não carregados (opcional).');
     }
   }
 
@@ -489,12 +509,6 @@ class CalculatorEngine {
   getModalConfig(modalId) {
     return this.config.modais?.[modalId] || null;
   }
-
-  /**
-   * ═══════════════════════════════════════════════════════════
-   * NOVOS MÉTODOS v4.2
-   * ═══════════════════════════════════════════════════════════
-   */
 
   /**
    * Renderiza menu lateral (sidebar tools)
