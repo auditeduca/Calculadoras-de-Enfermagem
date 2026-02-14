@@ -15,7 +15,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
-  <!-- Tailwind CSS -->
+  <!-- Tailwind CSS (produção: idealmente usar PostCSS, mas manter CDN para testes) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Estilos Modulares (caminhos relativos à raiz) -->
@@ -35,9 +35,10 @@
   <script src="assets/js/footer-v4.js" defer></script>
   <script src="assets/js/accessibility-v4.js" defer></script>
 
-  <!-- Scripts Locais da Calculadora -->
+  <!-- Scripts Locais da Calculadora (ordem: engine base, sistema, custom IMC) -->
   <script src="calculator-engine.js" defer></script>
   <script src="calculator-system.js" defer></script>
+  <script src="calculadoras/imc/exemplo-imc-custom-calculator.js" defer></script>
 
   <!-- Tailwind Config -->
   <script>
@@ -64,7 +65,6 @@
 
   <!-- Estilos adicionais (fallback) -->
   <style>
-    /* Garantia de que o container de notificações tenha z-index alto */
     #notification-container { z-index: 10000; }
   </style>
 </head>
@@ -146,12 +146,11 @@
     <div id="pdf-body" style="font-size: 11px; line-height: 1.6; font-family: 'Inter', sans-serif;"></div>
   </div>
 
-  <!-- INICIALIZAÇÃO MODULAR -->
+  <!-- INICIALIZAÇÃO MODULAR CORRIGIDA -->
   <script>
     document.addEventListener('DOMContentLoaded', async function() {
       console.log('🚀 Inicializando calculadora IMC...');
 
-      // URLs relativas (funcionam tanto local quanto no GitHub Pages se a estrutura for mantida)
       const baseUrl = './';  // raiz do projeto
 
       async function loadModule(id, url) {
@@ -180,14 +179,15 @@
       try {
         await waitForGlobals();
 
-        // Usar engine customizada para IMC
+        // Usar engine customizada para IMC (arquivo JSON específico)
         if (typeof IMCCalculatorEngine !== 'undefined') {
           console.log('✓ Usando IMCCalculatorEngine');
           CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'configs/imc-config.json');
           await CALCULATOR_SYSTEM.engine.init();
         } else {
-          console.warn('IMCCalculatorEngine não encontrado, usando fallback padrão');
-          await CALCULATOR_SYSTEM.init(baseUrl + 'config');
+          console.error('IMCCalculatorEngine não encontrado. Verifique se o script foi carregado corretamente.');
+          // Fallback: tentar com engine padrão, mas pode não funcionar para IMC
+          await CALCULATOR_SYSTEM.init(baseUrl + 'configs/imc-config.json');
         }
 
         // Carregar componentes globais
@@ -197,7 +197,7 @@
         await loadModule('author-container', baseUrl + 'components/author-section.html');
         await loadModule('modal-container', baseUrl + 'components/modal-generic.html');
 
-        // Carregar sidebars conforme config
+        // Carregar sidebars conforme config (se existirem no JSON)
         if (CALCULATOR_SYSTEM.engine?.config?.sidebars) {
           for (const sidebar of CALCULATOR_SYSTEM.engine.config.sidebars) {
             const containerId = sidebar.startsWith('sidebar-') ? sidebar : `sidebar-${sidebar}`;
@@ -205,7 +205,7 @@
           }
         }
 
-        // VLibras
+        // VLibras (se configurado)
         if (CALCULATOR_SYSTEM.engine?.config?.acessibilidade?.vlibras) {
           await loadModule('libras-container', baseUrl + 'components/widget-libras.html');
         }
