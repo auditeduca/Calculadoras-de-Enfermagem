@@ -30,6 +30,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 
   <!-- Scripts Globais do Sistema -->
+  <!-- A ordem de defer é respeitada pelo navegador -->
   <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
   <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
   <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
@@ -160,10 +161,12 @@
   <!-- WIDGET DE LIBRAS -->
   <div id="libras-container"></div>
 
-  <!-- INICIALIZAÇÃO MODULAR -->
+  <!-- INICIALIZAÇÃO MODULAR CORRIGIDA -->
   <script>
-    (async function() {
-      console.log('🚀 Iniciando calculadora IMC...');
+    // FIX: Envolvemos tudo no 'DOMContentLoaded' para garantir que os scripts 'defer' 
+    // tenham terminado de carregar e definir as variáveis globais (CALCULATOR_SYSTEM, etc)
+    document.addEventListener('DOMContentLoaded', async function() {
+      console.log('🚀 DOM carregado. Iniciando script de inicialização...');
       
       const baseUrl = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
       
@@ -181,15 +184,32 @@
         }
       }
 
+      // Função de espera ativa para garantir que as globais existam
+      // (Safety check caso a rede esteja muito lenta ou ordem de execução varie)
+      const waitForGlobals = () => new Promise(resolve => {
+        if (typeof CALCULATOR_SYSTEM !== 'undefined') return resolve();
+        console.log('⏳ Aguardando CALCULATOR_SYSTEM...');
+        const interval = setInterval(() => {
+          if (typeof CALCULATOR_SYSTEM !== 'undefined') {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 100);
+      });
+
       try {
+        // Aguarda a definição da variável global crítica
+        await waitForGlobals();
+
         // Inicializa o motor da calculadora com o JSON específico
         // Tenta usar a engine customizada (IMCCalculatorEngine) se disponível
         if (typeof IMCCalculatorEngine !== 'undefined') {
+          console.log('✓ Usando Engine Customizada: IMCCalculatorEngine');
           CALCULATOR_SYSTEM.engine = new IMCCalculatorEngine(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
           await CALCULATOR_SYSTEM.engine.init();
         } else {
           // Fallback para engine padrão
-          console.warn('IMCCalculatorEngine não encontrado, usando CalculatorEngine padrão');
+          console.warn('⚠️ IMCCalculatorEngine não encontrado ou ainda não carregado, usando CalculatorEngine padrão');
           await CALCULATOR_SYSTEM.init(baseUrl + 'calculadoras/imc/exemplo-imc-config.json');
         }
         
@@ -233,7 +253,7 @@
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 5000);
       }
-    })();
+    });
   </script>
 </body>
 </html>
