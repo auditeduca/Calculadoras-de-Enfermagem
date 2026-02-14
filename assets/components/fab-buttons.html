@@ -1,0 +1,321 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     COMPONENTE: FAB BUTTONS (Floating Action Buttons)
+     Arquivo: fab-buttons.html
+     Versão: 1.0
+     
+     Botões flutuantes: Voltar ao Topo e Cookies
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- VOLTAR AO TOPO -->
+<button 
+  id="backToTopBtn" 
+  class="fab-btn fab-back-to-top hidden"
+  aria-label="Voltar ao topo da página"
+  title="Voltar ao Topo">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
+
+<!-- COOKIES -->
+<button 
+  id="cookiesBtn" 
+  class="fab-btn fab-cookies"
+  aria-label="Configurações de cookies"
+  title="Cookies"
+  onclick="openCookiesModal()">
+  <i class="fa-solid fa-cookie-bite"></i>
+</button>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   ESTILOS FAB (Floating Action Buttons)
+   ═══════════════════════════════════════════════════════════════ */
+
+.fab-btn {
+  position: fixed;
+  right: 1.5rem;
+  z-index: 998;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #1A3E74 0%, #2E5A9C 100%);
+  color: white;
+  font-size: 1.25rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(26, 62, 116, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fab-btn:hover {
+  background: linear-gradient(135deg, #00bcd4 0%, #00838f 100%);
+  box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4);
+  transform: translateY(-3px) scale(1.05);
+}
+
+.fab-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Posicionamento específico */
+.fab-back-to-top {
+  bottom: 9rem; /* Acima do botão de cookies */
+}
+
+.fab-cookies {
+  bottom: 1.5rem;
+}
+
+/* Animação de entrada */
+.fab-btn {
+  animation: fabFadeIn 0.4s ease-out;
+}
+
+@keyframes fabFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Estado hidden */
+.fab-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+}
+
+/* Dark mode */
+.dark .fab-btn {
+  background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.dark .fab-btn:hover {
+  background: linear-gradient(135deg, #00bcd4 0%, #00838f 100%);
+}
+
+/* Responsivo - Mobile */
+@media (max-width: 768px) {
+  .fab-btn {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1rem;
+    right: 1rem;
+  }
+  
+  .fab-back-to-top {
+    bottom: 7rem; /* Ajusta para não conflitar com menu inferior em mobile */
+  }
+  
+  .fab-cookies {
+    bottom: 1rem;
+  }
+}
+
+/* Garantir que não conflita com o menu lateral em mobile */
+@media (max-width: 768px) {
+  body.sidebar-open .fab-btn {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
+/* Badge de notificação (opcional para cookies) */
+.fab-btn .badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 0.125rem 0.375rem;
+  border-radius: 9999px;
+  border: 2px solid white;
+}
+
+.dark .fab-btn .badge {
+  border-color: #0F172A;
+}
+</style>
+
+<script>
+/**
+ * ═══════════════════════════════════════════════════════════════
+ * LÓGICA FAB BUTTONS
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+(function() {
+  'use strict';
+  
+  // Aguarda DOM estar pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFAB);
+  } else {
+    initFAB();
+  }
+  
+  function initFAB() {
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    const cookiesBtn = document.getElementById('cookiesBtn');
+    
+    if (!backToTopBtn) return;
+    
+    // ═══════════════════════════════════════════════════════════
+    // VOLTAR AO TOPO
+    // ═══════════════════════════════════════════════════════════
+    
+    /**
+     * Mostra/esconde botão baseado no scroll
+     */
+    function toggleBackToTop() {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.remove('hidden');
+      } else {
+        backToTopBtn.classList.add('hidden');
+      }
+    }
+    
+    /**
+     * Scroll suave para o topo
+     */
+    function scrollToTop(e) {
+      e.preventDefault();
+      
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      
+      // Foca no primeiro elemento focável (acessibilidade)
+      setTimeout(() => {
+        const firstFocusable = document.querySelector('a, button, input, [tabindex]:not([tabindex="-1"])');
+        if (firstFocusable) {
+          firstFocusable.focus();
+        }
+      }, 500);
+    }
+    
+    // Event Listeners - Voltar ao Topo
+    window.addEventListener('scroll', toggleBackToTop, { passive: true });
+    backToTopBtn.addEventListener('click', scrollToTop);
+    
+    // Verifica posição inicial
+    toggleBackToTop();
+    
+    // ═══════════════════════════════════════════════════════════
+    // COOKIES
+    // ═══════════════════════════════════════════════════════════
+    
+    /**
+     * Verifica se precisa mostrar badge
+     */
+    function checkCookieConsent() {
+      const consent = localStorage.getItem('cookieConsent');
+      
+      if (!consent || consent === 'pending') {
+        // Adiciona badge de notificação
+        if (cookiesBtn && !cookiesBtn.querySelector('.badge')) {
+          const badge = document.createElement('span');
+          badge.className = 'badge';
+          badge.textContent = '!';
+          badge.setAttribute('aria-label', 'Configuração pendente');
+          cookiesBtn.appendChild(badge);
+        }
+      }
+    }
+    
+    // Verifica ao carregar
+    if (cookiesBtn) {
+      checkCookieConsent();
+    }
+    
+    // ═══════════════════════════════════════════════════════════
+    // FUNÇÕES GLOBAIS
+    // ═══════════════════════════════════════════════════════════
+    
+    /**
+     * Abre modal de cookies (função global para ser chamada de onclick)
+     */
+    window.openCookiesModal = function() {
+      // Se existe modal de acessibilidade global
+      if (typeof window.openAccessibilityPanel === 'function') {
+        window.openAccessibilityPanel();
+        
+        // Muda para aba de cookies se existir
+        setTimeout(() => {
+          const cookiesTab = document.querySelector('[data-tab="cookies"]');
+          if (cookiesTab) {
+            cookiesTab.click();
+          }
+        }, 100);
+      } else {
+        // Fallback: abre modal simples
+        showCookieConsentDialog();
+      }
+    };
+    
+    /**
+     * Modal simples de cookies (fallback)
+     */
+    function showCookieConsentDialog() {
+      const existingModal = document.getElementById('cookie-consent-modal');
+      if (existingModal) {
+        existingModal.remove();
+      }
+      
+      const modal = document.createElement('div');
+      modal.id = 'cookie-consent-modal';
+      modal.innerHTML = `
+        <div style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1rem;">
+          <div style="background: white; border-radius: 1rem; max-width: 500px; width: 100%; padding: 2rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);">
+            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #1A3E74;">
+              <i class="fa-solid fa-cookie-bite" style="margin-right: 0.5rem;"></i>
+              Configurações de Cookies
+            </h3>
+            <p style="margin-bottom: 1.5rem; color: #475569;">
+              Usamos cookies para melhorar sua experiência. Escolha suas preferências abaixo:
+            </p>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <button onclick="acceptAllCookies(); closeCookieModal();" 
+                      style="flex: 1; background: #1A3E74; color: white; padding: 0.75rem; border-radius: 0.5rem; border: none; font-weight: 600; cursor: pointer;">
+                Aceitar Todos
+              </button>
+              <button onclick="rejectAllCookies(); closeCookieModal();" 
+                      style="flex: 1; background: #e2e8f0; color: #475569; padding: 0.75rem; border-radius: 0.5rem; border: none; font-weight: 600; cursor: pointer;">
+                Rejeitar Todos
+              </button>
+            </div>
+            <button onclick="closeCookieModal();" 
+                    style="margin-top: 0.75rem; width: 100%; background: transparent; color: #64748b; padding: 0.5rem; border: none; font-size: 0.875rem; cursor: pointer;">
+              Fechar
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+    
+    /**
+     * Fecha modal simples de cookies
+     */
+    window.closeCookieModal = function() {
+      const modal = document.getElementById('cookie-consent-modal');
+      if (modal) {
+        modal.remove();
+      }
+      checkCookieConsent(); // Atualiza badge
+    };
+    
+    console.log('✓ FAB Buttons inicializados');
+  }
+})();
+</script>

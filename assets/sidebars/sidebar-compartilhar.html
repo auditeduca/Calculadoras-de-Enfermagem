@@ -1,0 +1,35 @@
+<!-- SIDEBAR: COMPARTILHAR -->
+<div class="sidebar-module">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+      <i class="fa-solid fa-share-nodes text-2xl"></i>
+    </div>
+    <div>
+      <h3 class="text-lg font-black">Compartilhar</h3>
+      <p class="text-xs opacity-80">Divulgue esta ferramenta</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-5 gap-2 mb-4">
+    <button onclick="CALCULATOR_SYSTEM.share('whatsapp')" class="share-btn" title="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </button>
+    <button onclick="CALCULATOR_SYSTEM.share('telegram')" class="share-btn" title="Telegram">
+      <i class="fab fa-telegram"></i>
+    </button>
+    <button onclick="CALCULATOR_SYSTEM.share('facebook')" class="share-btn" title="Facebook">
+      <i class="fab fa-facebook"></i>
+    </button>
+    <button onclick="CALCULATOR_SYSTEM.share('twitter')" class="share-btn" title="Twitter">
+      <i class="fab fa-twitter"></i>
+    </button>
+    <button onclick="CALCULATOR_SYSTEM.share('linkedin')" class="share-btn" title="LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </button>
+  </div>
+
+  <button onclick="CALCULATOR_SYSTEM.copyLink()" class="w-full bg-white/20 hover:bg-white/30 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 text-xs">
+    <i class="fa-solid fa-link"></i>
+    COPIAR LINK
+  </button>
+</div>
