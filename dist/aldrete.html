@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escala de Aldrete</title>
+    <meta name="description" content="Avaliação pós-anestésica">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <link rel="canonical" href="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Escala de Aldrete">
+    <meta property="og:description" content="Avaliação pós-anestésica">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Calculadoras de Enfermagem">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Escala de Aldrete">
+    <meta name="twitter:description" content="Avaliação pós-anestésica">
+    <meta name="twitter:image" content="">
+    <meta name="twitter:creator" content="@CalculadorasEnf">
+
+    <!-- Favicon -->
+    <link rel="icon" href="" type="image/webp">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome (via CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind CSS (opcional) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CSS dos módulos com URLs absolutas -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+
+    <!-- CSS adicional da calculadora (se houver) - também absoluto -->
+</head>
+<body class="flex flex-col min-h-screen bg-slate-50 dark:bg-nurse-bgDark text-slate-900 dark:text-slate-100 antialiased font-inter transition-colors duration-300">
+
+    <!-- Skip links (acessibilidade) -->
+    <a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
+    <a href="#footer" class="skip-link">Ir para o rodapé</a>
+
+    <!-- Placeholder para o Header (carregado via JavaScript) -->
+    <div id="header-container"></div>
+
+    <!-- Conteúdo principal -->
+    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
+        <!-- Breadcrumb (se fornecido no JSON) -->
+
+        <!-- Título e descrição da calculadora -->
+        <header class="max-w-4xl mb-12">
+            <span class="badge text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Escala Clínica</span>
+            <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Escala de Aldrete</h1>
+            <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8" aria-hidden="true"></div>
+            <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">Descrição</p>
+        </header>
+
+        <!-- Container da calculadora (formulário e resultados) -->
+        <div id="calculator-container" class="card-base p-6 md:p-10">
+            <!-- Área do formulário (será preenchida pelo JavaScript) -->
+            <div id="calculator-form"></div>
+
+            <!-- Botões Calcular e Limpar (serão inseridos via JS) -->
+            <div class="grid grid-cols-2 gap-4 pt-4">
+                <button id="btn-calculate" class="btn-primary-action" style="display: none;">Calcular</button>
+                <button id="btn-reset" class="btn-secondary-action" style="display: none;">Limpar</button>
+            </div>
+
+            <!-- Área de resultados (inicialmente oculta) -->
+            <div id="results-wrapper" class="hidden pt-8 border-t border-slate-200 dark:border-slate-700">
+                <div class="bg-slate-50 dark:bg-slate-900/40 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-6 relative">
+                    <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4" id="result-label">Resultado</p>
+                    <div id="res-total" class="text-6xl md:text-8xl font-black text-[#1A3E74] dark:text-cyan-400 tracking-tighter font-nunito leading-none">0,00</div>
+                    <p id="res-unit" class="text-lg font-black text-nurse-secondary mt-2 uppercase tracking-widest">unidades</p>
+                </div>
+
+                <!-- Botões de ação do resultado (PDF, copiar, etc.) -->
+                <div id="result-actions" class="flex flex-col gap-4 mb-10"></div>
+
+                <!-- Auditoria do cálculo -->
+                <div id="audit-section" class="mb-12">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                            <i class="fa-solid fa-clipboard-check"></i> Auditoria do Cálculo
+                        </h2>
+                        <button id="audit-help" class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold">
+                            <i class="fa-solid fa-circle-info mr-1"></i> Sobre Auditoria
+                        </button>
+                    </div>
+                    <ul id="audit-list" class="space-y-3"></ul>
+                </div>
+
+                <!-- Checklists de segurança (fixos) -->
+                <div id="safety-checklists" class="space-y-8 mb-12">
+                    <h2 class="text-xl font-black text-nurse-primary dark:text-cyan-400 flex items-center gap-2 border-l-4 border-nurse-secondary pl-4">
+                        <i class="fa-solid fa-user-shield"></i> Check-list de Segurança do Paciente
+                    </h2>
+                    <div class="bg-white dark:bg-slate-900/30 p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-inner">
+                        <div class="mb-8">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                                    <i class="fa-solid fa-check-double"></i> 9 Certos da Medicação
+                                </h3>
+                                <button id="show-nine-rights" class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold">
+                                    <i class="fa-solid fa-circle-info mr-1"></i> Ver Referência
+                                </button>
+                            </div>
+                            <div id="checklist-9rights" class="grid grid-cols-1 md:grid-cols-2 gap-2"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                                    <i class="fa-solid fa-star"></i> Metas Internacionais de Segurança
+                                </h3>
+                                <button id="show-safety-goals" class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold">
+                                    <i class="fa-solid fa-circle-info mr-1"></i> Ver Referência
+                                </button>
+                            </div>
+                            <div id="checklist-safety-goals" class="space-y-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Autor e tags (se fornecidos no JSON) -->
+
+    </main>
+
+    <!-- Placeholder para o Footer (carregado via JavaScript) -->
+    <div id="footer-container"></div>
+
+    <!-- Placeholder para o Accessibility Widget (carregado via JavaScript) -->
+    <div id="accessibility-container"></div>
+
+    <!-- Scripts do sistema com URLs absolutas -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
+
+    <!-- Scripts para carregar componentes HTML -->
+    <script>
+        // Carrega o header
+        fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('header-container').innerHTML = data)
+            .catch(err => console.warn('Erro ao carregar header:', err));
+
+        // Carrega o footer
+        fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer-container').innerHTML = data)
+            .catch(err => console.warn('Erro ao carregar footer:', err));
+
+        // Carrega o accessibility widget
+        fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('accessibility-container').innerHTML = data)
+            .catch(err => console.warn('Erro ao carregar accessibility:', err));
+    </script>
+
+    <!-- INJEÇÃO DO CONFIG PARA O MÓDULO DA CALCULADORA -->
+    <script>
+      window.PAGE_CONFIG = {"calculation": {"result": {"decimals": 0, "label": "Pontua\u00e7\u00e3o", "unit": "pontos"}}, "form": {"sections": []}, "header": {"badge": "Escala Cl\u00ednica", "description": "Descri\u00e7\u00e3o", "title": "Escala de Aldrete"}, "metadata": {"category": "escalas", "id": "aldrete", "lastUpdate": "2026-02-05", "title": "Escala de Aldrete", "type": "scale", "version": "1.0.0"}, "script": "js/aldrete.js", "seo": {"description": "Avalia\u00e7\u00e3o p\u00f3s-anest\u00e9sica", "title": "Escala de Aldrete"}};
+    </script>
+
+    <!-- Script específico da calculadora com URL absoluta -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/js/aldrete.js" defer></script>
+</body>
+</html>

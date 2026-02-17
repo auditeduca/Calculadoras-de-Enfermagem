@@ -1,0 +1,280 @@
+{
+  "metadata": {
+    "id": "insulina",
+    "title": "Cálculo de Insulina | Calculadoras de Enfermagem Profissional",
+    "category": "farmacologia",
+    "version": "1.0.0",
+    "lastUpdate": "2026-02-05",
+    "type": "calculator"
+  },
+  "accessibility": {
+    "vlibras": true,
+    "screenReader": true,
+    "highContrast": true,
+    "librasAvailable": true
+  },
+  "seo": {
+    "title": "Cálculo de Insulina – Ferramenta Profissional para Enfermagem",
+    "description": "Calculadora precisa para aspiração de insulina em seringas de 100UI e 300UI. Inclui auditoria e checklists de segurança.",
+    "keywords": "insulina, enfermagem, cálculo de medicação, segurança do paciente",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/insulina.html",
+    "ogImage": "https://www.calculadorasdeenfermagem.com.br/assets/images/author-info.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Calculadora Clínica",
+    "title": "Cálculo de Insulina",
+    "description": "Ferramenta profissional para aspiração precisa em seringas de 100UI ou 300UI."
+  },
+  "breadcrumb": [
+    { "text": "Início", "url": "index.html" },
+    { "text": "Ferramentas", "url": null },
+    { "text": "Calculadoras Clínicas", "url": null },
+    { "text": "Cálculo de Insulina", "url": null, "active": true }
+  ],
+  "tags": [
+    { "text": "insulina", "url": "busca.html?tag=insulina", "lang": "pt", "abbr": null },
+    { "text": "farmacologia", "url": "busca.html?tag=farmacologia", "lang": "pt", "abbr": null },
+    { "text": "segurança-do-paciente", "url": "busca.html?tag=seguranca", "lang": "pt", "abbr": null }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true,
+            "tooltip": "Identificação do paciente para fins de registro.",
+            "libras": false
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true,
+            "tooltip": "Para cálculo de idade e verificação de faixa etária.",
+            "libras": false
+          }
+        ]
+      },
+      {
+        "title": "Parâmetros Clínicos",
+        "fields": [
+          {
+            "id": "prescribedDose",
+            "type": "number",
+            "label": "Prescrição Médica (UI)",
+            "placeholder": "Ex: 15",
+            "required": true,
+            "min": 0,
+            "step": 0.5,
+            "unit": "UI",
+            "tooltip": "Quantidade de insulina prescrita em unidades internacionais.",
+            "libras": false
+          },
+          {
+            "id": "insulinConcentration",
+            "type": "select",
+            "label": "Concentração da Insulina (UI/mL)",
+            "options": [
+              { "value": 100, "label": "100 UI/mL (Insulina Regular U100)" },
+              { "value": 200, "label": "200 UI/mL (Insulina Glargine U200)" },
+              { "value": 300, "label": "300 UI/mL (Insulina Degludec U300)" }
+            ],
+            "default": 100,
+            "tooltip": "Concentração da insulina.",
+            "libras": false
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Calcular",
+        "icon": "fa-calculator",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "formula": "volume = prescribedDose / insulinConcentration",
+    "result": {
+      "label": "Dose a Aspirar",
+      "unit": "mL",
+      "decimals": 2
+    },
+    "audit": {
+      "title": "Auditoria do Cálculo",
+      "steps": [
+        {
+          "label": "Prescrição Médica",
+          "sourceField": "prescribedDose",
+          "suffix": "UI",
+          "icon": "fa-file-medical"
+        },
+        {
+          "label": "Concentração",
+          "sourceField": "insulinConcentration",
+          "format": "concentrationType",
+          "suffix": "UI/mL",
+          "icon": "fa-vial"
+        },
+        {
+          "label": "Fórmula",
+          "fixedValue": "Volume = Prescrição / Concentração",
+          "icon": "fa-calculator"
+        },
+        {
+          "label": "Fórmula com Valores",
+          "dynamicExpression": "{{ prescribedDose }} UI / {{ insulinConcentration }} UI/mL = {{ volume }} mL",
+          "icon": "fa-calculator"
+        },
+        {
+          "label": "Volume Final",
+          "sourceField": "volume",
+          "suffix": "mL",
+          "icon": "fa-check-double"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      },
+      {
+        "type": "secondary",
+        "label": "Diagnóstico de Enfermagem",
+        "icon": "fa-stethoscope",
+        "action": "searchNursingDiagnosis",
+        "searchQuery": "{{ title }} {{ result }} NANDA NIC NOC"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Calculadora",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Sobre o Cálculo de Insulina",
+        "body": "<p>Esta calculadora permite o cálculo preciso da quantidade de insulina a ser aspirada em seringas de insulina, considerando diferentes concentrações (U100, U200, U300).</p><div class='bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 font-mono text-xs overflow-x-auto'><span class='text-nurse-secondary font-bold block mb-2 uppercase tracking-widest'>Equação Auditada</span><code>Volume (mL) = Prescrição (UI) / Concentração (UI/mL)</code></div>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Informe a prescrição médica em unidades internacionais (UI)",
+        "Selecione a concentração da insulina (U100, U200 ou U300)",
+        "Clique em \"Calcular\" para obter o volume a aspirar",
+        "Utilize os checklists de segurança para auditoria",
+        "Gere PDF ou copie o resultado para registro"
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<div class='p-5 bg-slate-50 dark:bg-slate-900/40 rounded-2xl space-y-3 border border-slate-100 dark:border-slate-700'><p>• <strong>Sociedade Brasileira de Diabetes (SBD).</strong> Diretrizes da SBD 2023. São Paulo: Clannad, 2023.</p><p>• <strong>Conselho Federal de Enfermagem (COFEN).</strong> Guia de Boas Práticas: Administração de Medicamentos. Brasília, 2020.</p><p>• <strong>Potter, P. A.; Perry, A. G.</strong> Fundamentos de Enfermagem. 10ª Ed. Rio de Janeiro: Elsevier, 2021.</p><p>• <strong>NANDA-I.</strong> Diagnósticos de Enfermagem: Definições e Classificação 2021-2023. Porto Alegre: Artmed, 2021.</p></div>"
+      }
+    }
+  ],
+  "modals": {
+    "tutorial": {
+      "title": "Tutorial de Uso - Calculadora de Insulina",
+      "icon": "fa-question-circle",
+      "content": "<div id='tutorial-content' class='space-y-6'>...</div>",
+      "libras": false
+    },
+    "nanda": {
+      "title": "Diagnósticos de Enfermagem - NANDA",
+      "icon": "fa-stethoscope",
+      "content": "<div class='space-y-4'>...</div>",
+      "libras": false
+    },
+    "nineRights": {
+      "title": "9 Certos da Medicação",
+      "icon": "fa-check-double",
+      "source": "shared",
+      "sharedId": "nineRights",
+      "libras": true
+    },
+    "safetyGoals": {
+      "title": "Metas Internacionais de Segurança",
+      "icon": "fa-star",
+      "source": "shared",
+      "sharedId": "safetyGoals",
+      "libras": true
+    }
+  },
+  "sidebar": {
+    "modules": [
+      {
+        "type": "simulados",
+        "title": "Desafio Clínico",
+        "content": "Teste sua agilidade e precisão em simulados reais de enfermagem.",
+        "link": {
+          "url": "https://simulados-para-enfermagem.com.br/",
+          "label": "Acessar Simulados",
+          "icon": "fa-bolt"
+        },
+        "libras": false
+      },
+      {
+        "type": "share",
+        "title": "Compartilhar",
+        "networks": [
+          { "name": "Facebook", "icon": "fab fa-facebook-f", "url": "https://www.facebook.com/sharer/sharer.php?u={{url}}" },
+          { "name": "WhatsApp", "icon": "fab fa-whatsapp", "url": "https://api.whatsapp.com/send?text={{text}}%20{{url}}" },
+          { "name": "LinkedIn", "icon": "fab fa-linkedin-in", "url": "https://www.linkedin.com/sharing/share-offsite/?url={{url}}" },
+          { "name": "Twitter", "icon": "fab fa-x-twitter", "url": "https://twitter.com/intent/tweet?text={{title}}&url={{url}}" },
+          { "name": "Link", "icon": "fas fa-link", "action": "copyLink" }
+        ],
+        "libras": false
+      },
+      {
+        "type": "related",
+        "title": "Outras Calculadoras",
+        "items": [
+          { "text": "Cálculo de Heparina", "description": "Calcule a dose de heparina com base no peso e tempo de tromboplastina.", "icon": "fa-calculator", "url": "heparina.html" },
+          { "text": "Diluição de Medicamentos", "description": "Aprenda a diluir medicamentos de forma segura.", "icon": "fa-flask", "url": "medicamentos.html" },
+          { "text": "Cálculo de Gotejamento", "description": "Determine o gotejamento de soros e medicamentos.", "icon": "fa-droplet", "url": "gotejamento.html" }
+        ],
+        "libras": false
+      }
+    ]
+  },
+  "author": {
+    "name": "Calculadoras de Enfermagem Profissional",
+    "quote": "Transformando a complexidade técnica em segurança para o paciente através da precisão dos dados e protocolos clínicos rigorosos.",
+    "image": "https://www.calculadorasdeenfermagem.com.br/assets/images/author-info.webp"
+  },
+  "script": "js/insulina.js"
+}

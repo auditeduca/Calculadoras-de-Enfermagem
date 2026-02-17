@@ -1,280 +1,74 @@
-@ -1,85 +1,49 @@
-<!-- Footer Component - Cookie Consent System V8.0 -->
-<!-- Loaded inside #footer-container -->
-
-<!-- Cookie Overlay (Background for modals) -->
-<div id="cookie-overlay" class="cookie-overlay hidden" aria-hidden="true"></div>
-
-<!-- Cookie Banner -->
-<div id="cookie-banner" class="cookie-banner hidden" role="dialog" aria-label="Aviso de Cookies">
-    <div class="cookie-banner-icon">
-        <i class="fas fa-cookie-bite"></i>
-    </div>
-    <div class="cookie-banner-container">
-        <div class="cookie-content">
-            <p id="cookie-description">
-                Seu conhecimento importa e sua privacidade também.
-                Nós da Calculadora de Enfermagem utilizamos cookies para aprimorar sua experiência de navegação e analisar nosso tráfego.
-                Queremos assegurar-lhe a melhor utilização possível e a melhoria contínua do nosso website.
-                Assim, podemos também apresentar-lhe conteúdo e publicidade baseados no seu perfil de utilização,
-                e, para isso, trabalhamos em conjunto com parceiro selecionado (Google).
-            </p>
-            <div class="cookie-banner-actions">
-                <button id="cookie-accept-all" class="cookie-btn cookie-btn-primary">
-                    Concordar com tudo
-                </button>
-                <button id="cookie-settings" class="cookie-btn cookie-btn-secondary">
-                    Definições
-                </button>
-            </div>
-            <div class="cookie-banner-links">
-                <a href="/politica-privacidade" class="cookie-link-text">Política de Privacidade</a>
-                <span class="cookie-links-separator">|</span>
-                <a href="/isencao-responsabilidade" class="cookie-link-text">Isenção de Responsabilidade</a>
-            </div>
+<!DOCTYPE html>
+<!-- INÍCIO DO FOOTER -->
+<footer class="bg-gray-800 text-gray-300 pt-12 pb-8 mt-12" role="contentinfo">
+    <div class="container mx-auto px-8">
+        <div class="mb-8">
+            <img src="https://www.calculadorasdeenfermagem.com.br/iconrodape1.webp" alt="Logotipo Calculadoras de Enfermagem" class="h-12 w-auto mb-6" onerror="this.onerror=null;this.src='https://placehold.co/200x48/FFFFFF/1A3E74?text=Logo'">
+            <hr class="border-gray-700">
         </div>
-    </div>
-</div>
-
-<!-- Cookie Modal (Main preferences) -->
-<div id="cookie-modal" class="cookie-modal hidden" role="dialog" aria-label="Preferências de Cookies">
-    <div class="cookie-modal-header">
-        <h3>Preferências de Cookies</h3>
-        <button id="cookie-modal-close" class="cookie-modal-close" aria-label="Fechar">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-    <div class="cookie-modal-body">
-        <div class="cookie-categories">
-            <!-- Necessary (Always enabled) -->
-            <div class="cookie-category cookie-category-active">
-@ -98,7 +62,6 @@
-                        <p class="cookie-service-name">Google Tag Manager | BR</p>
-                        <button class="cookie-info-btn" data-modal-target="modal-necessary">
-                            <i class="fas fa-info-circle"></i>
-                        </button>
-                    </div>
-                </div>
-@ -124,7 +87,6 @@
-                        <p class="cookie-service-name">Google Analytics | BR</p>
-                        <button class="cookie-info-btn" data-modal-target="modal-analytics">
-                            <i class="fas fa-info-circle"></i>
-                        </button>
-                    </div>
-                </div>
-@ -150,7 +112,6 @@
-                        <p class="cookie-service-name">Google AdSense | BR</p>
-                        <button class="cookie-info-btn" data-modal-target="modal-marketing">
-                            <i class="fas fa-info-circle"></i>
-                        </button>
-                    </div>
-                </div>
-@ -247,209 +208,209 @@
-                <h5>Tecnologias</h5>
-                <p>Cookies, Pixel, Local Storage</p>
-            </div>
-            <div dobra do cookie-detail-section">
-                <h5>Dados Recolhidos</h5>
-                <p>Endereço IP, informações do dispositivo, comportamento de navegação</p>
-            </div>
-            <div class="cookie-detail-section">
-                <h5>Base Jurídica</h5>
-                <p>Consentimento, Art. 7(1) LGPD</p>
-            </div>
-            <div class="cookie-detail-section">
-                <h5>Período de Retenção</h5>
-                <p>14 meses</p>
-            </div>
-            <div class="cookie-detail-links">
-                <a href="https://business.safety.google/privacy/" target="_blank" rel="noopener" class="cookie-link">
-                    <i class="fas fa-external-link-alt"></i> Política de Privacidade
-                </a>
-                <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener" class="cookie-link">
-                    <i class="fas fa-external-link-alt"></i> Desativar
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="cookie-detail-footer">
-        <button class="cookie-btn cookie-btn-secondary cookie-detail-back" data-close="modal-analytics">
-            <i class="fas fa-arrow-left"></i> Voltar
-        </button>
-    </div>
-</div>
-
-<!-- Modal: Marketing (Google AdSense) -->
-<div id="modal-marketing" class="cookie-detail-modal hidden" role="dialog" aria-label="Detalhes de Marketing">
-    <div class="cookie-detail-header">
-        <h3>Marketing</h3>
-        <h4>Google AdSense | BR</h4>
-        <button class="cookie-btn cookie-btn-icon cookie-modal-close" data-close="modal-marketing" aria-label="Fechar">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-    <div class="cookie-detail-body">
-        <div class="cookie-detail-content">
-            <div class="cookie-detail-section">
-                <h5>Descrição do Serviço</h5>
-                <p>Rede de publicidade online para exibição de anúncios relevantes baseados no conteúdo visitado.</p>
-            </div>
-            <div class="cookie-detail-section">
-                <h5>Empresa</h5>
-                <p>Google Ireland Limited, Dublin, D04 E5W5, Ireland</p>
-            </div>
-            <div class="cookie-detail-section">
-                <h5>Finalidades</h5>
-                <p>Exibição de anúncios personalizados, Remarketing, Relatórios de desempenho</p>
-            </div>
-            <div class="cookie-detail-section">
-                <h5>Tecnologias</h5>
-                <p>Cookies, DoubleClick, Pixel</p>
-            </div>
-            <div class="cookie-detail-section">
-                <h5>Dados Recolhidos</h5>
-                <p>Histórico de navegação, interesses do usuário, identificadores de publicidade</p>
-            </div>
-            <div class="cookie-detail-section">
-                <h5>Base Jurídica</h5>
-                <p>Consentimento, Art. 7(1) LGPD</p>
-            </div>
-            <div class="cookie-detail-section">
-                <h5>Período de Retenção</h5>
-                <p>6 meses</p>
-            </div>
-            <div class="cookie-detail-links">
-                <a href="https://business.safety.google/privacy/" target="_blank" rel="noopener" class="cookie-link">
-                    <i class="fas fa-external-link-alt"></i> Política de Privacidade
-                </a>
-                <a href="https://myadcenter.google.com/controls" target="_blank" rel="noopener" class="cookie-link">
-                    <i class="fas fa-external-link-alt"></i> Configurar Anúncios
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="cookie-detail-footer">
-        <button class="cookie-btn cookie-btn-secondary cookie-detail-back" data-close="modal-marketing">
-            <i class="fas fa-arrow-left"></i> Voltar
-        </button>
-    </div>
-</div>
-
-<!-- Toast Notification -->
-<div id="toast-notification" class="toast-notification hidden">
-    <i class="fas fa-check-circle"></i>
-    <span class="toast-message">Preferências salvas com sucesso!</span>
-</div>
-
-<!-- Back to Top Button -->
-<button id="backToTop" class="back-to-top hidden" aria-label="Voltar ao topo">
-    <i class="fas fa-arrow-up"></i>
-</button>
-
-<!-- Cookie FAB (Floating Action Button) -->
-<button id="cookie-fab" class="cookie-fab hidden" aria-label="Abrir configurações de cookies">
-    <i class="fas fa-cookie-bite"></i>
-</button>
-
-<!-- Main Footer Content -->
-<div id="footer">
-    <div class="footer-container">
-        <!-- Logo e linha divisória full-width -->
-        <div class="footer-header">
-            <img src="https://www.calculadorasdeenfermagem.com.br/img/iconrodape1-80.webp" 
-                 alt="Calculadoras de Enfermagem" 
-                 class="footer-main-logo"
-                 onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 80%22><rect fill=%22%231A3E74%22 width=%2280%22 height=%2280%22 rx=%2210%22/><text fill=%22white%22 x=%2240%22 y=%2245%22 text-anchor=%22middle%22 font-size=%2224%22>CE</text></svg>'">
-        </div>
-        <div class="footer-main-divider"></div>
         
-        <div class="footer-content">
-            <!-- Column 1: Institucional -->
-            <div class="footer-section">
-                <h3>Institucional</h3>
-                <ul class="footer-links">
-                    <li><a href="/">Início</a></li>
-                    <li><a href="/sobre">Sobre Nós</a></li>
-                    <li><a href="/mapa-do-site">Mapa do Site</a></li>
-                    <li><a href="/politicas">Políticas do Site</a></li>
-                    <li><a href="/termos">Termos e Condições</a></li>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+                <h4 class="font-bold text-white mb-4 font-nunito-sans">Institucional</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="https://www.calculadorasdeenfermagem.com.br/" class="hover:text-white">Início</a></li>
+                    <li><a href="https://www.calculadorasdeenfermagem.com.br/missao.html" class="hover:text-white">Sobre Nós</a></li>
+                    <li><a href="https://www.calculadorasdeenfermagem.com.br/mapa-do-site.html" class="hover:text-white">Mapa do Site</a></li>
+                    <li><a href="https://www.calculadorasdeenfermagem.com.br/politica.html" class="hover:text-white">Políticas do Site</a></li>
+                    <li><a href="https://www.calculadorasdeenfermagem.com.br/termos.html" class="hover:text-white">Termos e Condições de Uso</a></li>
                 </ul>
             </div>
 
-            <!-- Column 2: Acessibilidade Digital -->
-            <div class="footer-section">
-                <h3>Acessibilidade Digital</h3>
-                <ul class="footer-links">
-                    <li><a href="/acessibilidade">Política de Acessibilidade</a></li>
-                    <li><a href="/recursos-acessibilidade">Recursos de Acessibilidade</a></li>
+            <div>
+                <h4 class="font-bold text-white mb-4 font-nunito-sans">Sustentabilidade Digital</h4>
+                <ul class="space-y-2 text-sm mb-6">
+                    <li><a href="https://www.calculadorasdeenfermagem.com.br/nossocompromisso.html" class="hover:text-white">Nosso Compromisso</a></li>
+                    <li><a href="https://www.calculadorasdeenfermagem.com.br/impactodigital.html" class="hover:text-white">Relatório de Impacto</a></li>
+                    <li><a href="https://www.calculadorasdeenfermagem.com.br/tecnologiaverde.html" class="hover:text-white">Tecnologia Verde</a></li>
+                </ul>
+
+                <h4 class="font-bold text-white mb-4 font-nunito-sans">Acessibilidade</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="https://www.calculadorasdeenfermagem.com.br/politicadeacessibilidade.html" class="hover:text-white">Política de Acessibilidade</a></li>
+                    <li><a href="https://www.calculadorasdeenfermagem.com.br/politicadeacessibilidade.html" class="hover:text-white">Recursos de Acessibilidade</a></li>
                 </ul>
             </div>
 
-            <!-- Column 3: Sustentabilidade Digital -->
-            <div class="footer-section">
-                <h3>Sustentabilidade Digital</h3>
-                <ul class="footer-links">
-                    <li><a href="/sustentabilidade">Nosso Compromisso</a></li>
-                    <li><a href="/relatorio-impacto">Relatório de Impacto</a></li>
-                    <li><a href="/tecnologia-verde">Tecnologia Verde</a></li>
-                </ul>
-            </div>
-
-            <!-- Column 4: Nosso Compromisso -->
-            <div class="footer-section footer-brand-section">
-                <h3>Nosso Compromisso</h3>
-                <p class="footer-tagline">
-                    Adotamos como princípio de governança o comprometimento com elevados padrões de acessibilidade digital, sustentabilidade digital e proteção de dados.
-                </p>
-                <div class="footer-seals">
-                    <img src="https://www.calculadorasdeenfermagem.com.br/seloacessibilidade.webp"
-                         alt="Selo: Certificado de Acessibilidade Digital"
-                         class="footer-seal"
-                         onerror="this.style.display='none'">
-                    <img src="https://www.calculadorasdeenfermagem.com.br/selosustentabilidade.webp"
-                         alt="Selo: Certificado de Sustentabilidade Digital"
-                         class="footer-seal"
-                         onerror="this.style.display='none'">
-                    <img src="https://www.calculadorasdeenfermagem.com.br/selolgpd.webp"
-                         alt="Selo: Certificado de Proteção de Dados e LGPD"
-                         class="footer-seal"
-                         onerror="this.onerror=null;this.src='https://placehold.co/64x64/1A3E74/FFFFFF?text=Selo'">
+            <div>
+                <h4 class="font-bold text-white mb-4 font-nunito-sans">Nosso Compromisso</h4>
+                <p class="text-sm mb-4">Nosso site adota como princípio de governança, o comprometimento com elevados padrões de acessibilidade digital, sustentabilidade digital e proteção de dados.</p>
+                <div class="flex items-center space-x-4">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/seloacessibilidade.webp" alt="Selo: Certificado de Acessibilidade Digital" class="h-16" onerror="this.style.display='none'">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/selosustentabilidade.webp" alt="Selo: Certificado de Sustentabilidade Digital" class="h-16" onerror="this.style.display='none'">
+                    <img src="https://www.calculadorasdeenfermagem.com.br/selolgpd.webp" alt="Selo: Certificado de Proteção de Dados e LGPD" class="h-16" onerror="this.onerror=null;this.src='https://placehold.co/64x64/1A3E74/FFFFFF?text=Selo'">
                 </div>
             </div>
         </div>
-
-        <!-- Footer Bottom -->
-        <div class="footer-bottom-divider"></div>
-        <div class="footer-bottom">
-            <div class="footer-copyright">
-                <p>&copy; <span id="current-year">2026</span> Calculadoras de Enfermagem. Todos os direitos reservados.</p>
-                <div class="footer-legal-links">
-                    <a href="https://www.calculadorasdeenfermagem.com.br/politica.html">
-                        Central de Privacidade
-                    </a>
-                    <a href="https://www.calculadorasdeenfermagem.com.br/notificacoes-legais.html">
-                        Notificações Legais
-                    </a>
-                    <a href="https://www.calculadorasdeenfermagem.com.br/termos.html">
-                        Configurações
-                    </a>
+        
+        <div class="border-t border-gray-700 pt-6 text-sm">
+            
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start space-y-4 sm:space-y-0">
+                
+                <div class="flex flex-col space-y-2 text-left">
+                    <p class="text-left">&copy; 2025-2026 Calculadoras de Enfermagem. Todos os direitos reservados.</p>
+                    
+                    <div class="flex flex-wrap gap-x-4 gap-y-2 justify-start mt-1">
+                        <a href="/configuracoes.html" class="hover:text-white transition-colors text-xs sm:text-sm" aria-label="Configurações de Conta">Configurações</a>
+                        <a href="/central-privacidade.html" class="hover:text-white transition-colors text-xs sm:text-sm" aria-label="Central de Privacidade e Proteção de Dados">Central de Privacidade</a>
+                        <a href="/notificacoes-legais.html" class="hover:text-white transition-colors text-xs sm:text-sm" aria-label="Notificações Legais e Termos">Notificações Legais</a>
+                    </div>
                 </div>
-            </div>
-            <div class="social-links-container">
-                <span class="social-links-label">Siga-nos</span>
-                <div class="social-links">
-                    <a href="https://www.linkedin.com/company/calculadoras-de-enfermagem" target="_blank" rel="noopener" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="https://www.instagram.com/calculadorasdeenfermagem/" target="_blank" rel="noopener" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://www.tiktok.com/@calculadorasdeenf" target="_blank" rel="noopener" aria-label="TikTok">
-                        <i class="fab fa-tiktok"></i>
-                    </a>
-                    <a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" target="_blank" rel="noopener" aria-label="YouTube">
-                        <i class="fab fa-youtube"></i>
-                    </a>
+                
+                <div class="flex flex-col space-y-3 items-start sm:items-end">
+                    <div class="flex space-x-4 text-2xl text-white">
+                        <a href="https://www.linkedin.com/company/calculadoras-de-enfermagem" target="_blank" class="hover:text-gray-300 transition-colors" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/calculadorasdeenfermagem/" target="_blank" class="hover:text-gray-300 transition-colors" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="https://www.tiktok.com/@calculadorasdeenf" target="_blank" class="hover:text-gray-300 transition-colors" aria-label="TikTok"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
+                        <a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" target="_blank" class="hover:text-gray-300 transition-colors" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</footer>
+<!-- FIM DO FOOTER -->

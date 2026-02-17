@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="{{ lang | default('pt-br') }}" class="scroll-smooth" dir="{{ dir | default('ltr') }}">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+  <!-- SEO Básico -->
+  <title>{{ seo.title | default('Calculadoras de Enfermagem Profissional') }}</title>
+  <meta name="description" content="{{ seo.description | default('Ferramentas profissionais para enfermagem com segurança e precisão.') }}">
+  <meta name="keywords" content="{{ seo.keywords | default('enfermagem, cálculo, saúde') }}">
+  <meta name="author" content="{{ seo.author | default('Calculadoras de Enfermagem') }}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{{ seo.canonical | default('https://auditeduca.github.io/Calculadoras-de-Enfermagem/') }}"/>
+
+  <!-- Hreflang - Links para versões em outros idiomas -->
+  {% set base_url = 'https://www.calculadorasdeenfermagem.com.br' %}
+  {% set page_file = metadata.id + '.html' %}
+  <link rel="alternate" hreflang="pt-br" href="{{ base_url }}/{{ page_file }}">
+  <link rel="alternate" hreflang="en" href="{{ base_url }}/en/{{ page_file }}">
+  <link rel="alternate" hreflang="es" href="{{ base_url }}/es/{{ page_file }}">
+  <link rel="alternate" hreflang="fr" href="{{ base_url }}/fr/{{ page_file }}">
+  <link rel="alternate" hreflang="de" href="{{ base_url }}/de/{{ page_file }}">
+  <link rel="alternate" hreflang="it" href="{{ base_url }}/it/{{ page_file }}">
+  <link rel="alternate" hreflang="ja" href="{{ base_url }}/ja/{{ page_file }}">
+  <link rel="alternate" hreflang="zh" href="{{ base_url }}/zh/{{ page_file }}">
+  <link rel="alternate" hreflang="hi" href="{{ base_url }}/hi/{{ page_file }}">
+  <link rel="alternate" hreflang="ar" href="{{ base_url }}/ar/{{ page_file }}">
+  <link rel="alternate" hreflang="ru" href="{{ base_url }}/ru/{{ page_file }}">
+  <link rel="alternate" hreflang="tr" href="{{ base_url }}/tr/{{ page_file }}">
+  <link rel="alternate" hreflang="ko" href="{{ base_url }}/ko/{{ page_file }}">
+  <link rel="alternate" hreflang="nl" href="{{ base_url }}/nl/{{ page_file }}">
+  <link rel="alternate" hreflang="pl" href="{{ base_url }}/pl/{{ page_file }}">
+  <link rel="alternate" hreflang="sv" href="{{ base_url }}/sv/{{ page_file }}">
+  <link rel="alternate" hreflang="id" href="{{ base_url }}/id/{{ page_file }}">
+  <link rel="alternate" hreflang="vi" href="{{ base_url }}/vi/{{ page_file }}">
+  <link rel="alternate" hreflang="uk" href="{{ base_url }}/uk/{{ page_file }}">
+  <link rel="alternate" hreflang="x-default" href="{{ base_url }}/{{ page_file }}">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ seo.title }}">
+  <meta property="og:description" content="{{ seo.description }}">
+  <meta property="og:url" content="{{ seo.canonical }}">
+  <meta property="og:image" content="{{ seo.ogImage | default('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp') }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="{{ seo.ogLocale | default('pt_BR') }}">
+  <meta property="og:site_name" content="{{ seo.ogSiteName | default('Calculadoras de Enfermagem') }}">
+  <meta property="og:updated_time" content="{{ metadata.lastUpdate | default('2026-02-05') }}T00:00:00-03:00">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="{{ seo.twitterCard | default('summary_large_image') }}">
+  <meta name="twitter:title" content="{{ seo.title }}">
+  <meta name="twitter:description" content="{{ seo.description }}">
+  <meta name="twitter:image" content="{{ seo.ogImage }}">
+  <meta name="twitter:creator" content="{{ seo.twitterCreator | default('@CalculadorasEnf') }}">
+
+  <!-- Favicon -->
+  <link rel="icon" href="{{ seo.ogImage }}" type="image/webp"/>
+  <link rel="apple-touch-icon" href="{{ seo.ogImage }}">
+
+  <!-- Google Analytics (gtag.js) – carregado de forma assíncrona -->
+  {% if tracking.gtag %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ tracking.gtag }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ tracking.gtag }}', { 'anonymize_ip': true });
+  </script>
+  {% endif %}
+
+  <!-- Google AdSense – carregado de forma assíncrona -->
+  {% if tracking.adsense %}
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ tracking.adsense }}"
+          crossorigin="anonymous"></script>
+  {% endif %}
+
+  <!-- Pré-conexão para otimização de recursos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+  <!-- Fontes e Ícones (carregados com fallback) -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+  <!-- Tailwind CSS (via CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Estilos Modulares (CSS Externo) -->
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css" media="all">
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css" media="all">
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css" media="all">
+  <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css" media="all">
+
+  <!-- Schema.org (estruturado) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "{{ metadata.title | default('Calculadora de Enfermagem') }}",
+    "description": "{{ seo.description }}",
+    "applicationCategory": "MedicalApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "screenshot": "{{ seo.ogImage }}",
+    "author": {
+      "@type": "Organization",
+      "name": "{{ seo.author }}"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    },
+    "datePublished": "{{ metadata.lastUpdate }}",
+    "dateModified": "{{ metadata.lastUpdate }}"
+  }
+  </script>
+
+  <style>
+    /* Skip link – acessibilidade */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: #1A3E74;
+      color: white;
+      padding: 8px 16px;
+      z-index: 100;
+      text-decoration: none;
+      border-radius: 0 0 8px 0;
+      transition: top 0.3s;
+    }
+    .skip-link:focus {
+      top: 0;
+      outline: 2px solid #00bcd4;
+    }
+    /* Garantir contraste em foco */
+    *:focus-visible {
+      outline: 3px solid #00bcd4;
+      outline-offset: 2px;
+    }
+    /* Tooltip personalizado */
+    .tooltip-container {
+      position: relative;
+      display: inline-block;
+    }
+    .tooltip-container:hover .tooltip-text,
+    .tooltip-container:focus-within .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(-50%, -10px);
+    }
+    .tooltip-text {
+      visibility: hidden;
+      width: 220px;
+      background-color: #1e293b;
+      color: white;
+      text-align: left;
+      border-radius: 8px;
+      padding: 10px;
+      position: absolute;
+      z-index: 1000;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: all 0.3s;
+      font-size: 12px;
+      font-weight: normal;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      line-height: 1.4;
+    }
+    /* Animações */
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-in {
+      animation: slideIn 0.3s ease-out;
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.3s ease-out;
+    }
+    /* Barra lateral de ferramentas (mantida do original) */
+    .sidebar-left-tools {
+      position: fixed;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 40;
+      padding: 10px 0;
+    }
+    .tool-btn {
+      background-color: white;
+      color: #1A3E74;
+      border: 1px solid #e2e8f0;
+      border-left: none;
+      width: 54px;
+      height: 54px;
+      border-radius: 0 14px 14px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      outline: none;
+    }
+    .dark .tool-btn {
+      background-color: #1e293b;
+      color: #cbd5e1;
+      border-color: #334155;
+      box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    }
+    .tool-btn i {
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+    .btn-label {
+      display: none;
+      position: absolute;
+      left: 60px;
+      background: #1A3E74;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: bold;
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      z-index: 1001;
+    }
+    .dark .btn-label {
+      background: #0f172a;
+      border: 1px solid #334155;
+    }
+    .btn-label::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 4px;
+      border-style: solid;
+      border-color: transparent #1A3E74 transparent transparent;
+    }
+    .dark .btn-label::before {
+      border-color: transparent #0f172a transparent transparent;
+    }
+    .tool-btn:hover {
+      width: 65px;
+      background-color: #1A3E74;
+      color: #ffffff;
+      padding-left: 5px;
+    }
+    .dark .tool-btn:hover {
+      background-color: #00bcd4;
+      color: #0f172a;
+    }
+    .tool-btn:hover i {
+      transform: scale(1.1);
+    }
+    .tool-btn:hover .btn-label {
+      display: block;
+      animation: fadeIn 0.2s ease-out;
+    }
+    @media (max-width: 768px) {
+      .sidebar-left-tools {
+        top: auto;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        width: auto;
+        height: 70px;
+        flex-direction: row;
+        transform: none;
+        justify-content: space-around;
+        align-items: center;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
+        padding: 0 5px;
+      }
+      .dark .sidebar-left-tools {
+        background: #1e293b;
+        border-color: #334155;
+      }
+      .tool-btn {
+        border: none;
+        width: auto;
+        height: 100%;
+        flex: 1;
+        gap: 4px;
+        box-shadow: none;
+        background: transparent;
+        border-radius: 8px;
+        color: #64748b;
+      }
+      .dark .tool-btn {
+        color: #94a3b8;
+      }
+      .btn-label {
+        display: block;
+        position: static;
+        background: transparent;
+        color: currentColor;
+        font-size: 9px;
+        padding: 0;
+        box-shadow: none;
+      }
+      .btn-label::before {
+        display: none;
+      }
+      .tool-btn:hover, .tool-btn:active {
+        width: auto;
+        background-color: rgba(26, 62, 116, 0.05);
+        color: #1A3E74;
+        padding-left: 0;
+      }
+      .dark .tool-btn:hover, .dark .tool-btn:active {
+        background-color: rgba(0, 188, 212, 0.1);
+        color: #00bcd4;
+      }
+      body {
+        padding-bottom: 120px;
+      }
+      main {
+        margin-left: 0 !important;
+      }
+    }
+    /* Badge com contraste melhorado */
+    .badge {
+      background-color: #1A3E74;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen bg-slate-50 dark:bg-nurse-bgDark text-slate-900 dark:text-slate-100 antialiased font-inter relative transition-colors duration-300 overflow-x-hidden">
+
+  <!-- Skip link para acessibilidade -->
+  <a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
+
+  <!-- Indicador de offline (acessível) -->
+  <div id="offline-indicator" 
+       class="fixed bottom-4 right-4 bg-yellow-500 text-white px-4 py-3 rounded-xl shadow-xl z-[9999] hidden animate-fade-in"
+       role="alert"
+       aria-live="polite"
+       aria-atomic="true">
+    <div class="flex items-center gap-3">
+      <i class="fa-solid fa-wifi-slash text-lg" aria-hidden="true"></i>
+      <div>
+        <p class="font-bold text-sm">Você está offline</p>
+        <p class="text-xs opacity-90">Algumas funcionalidades podem estar limitadas</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BARRA LATERAL DE FERRAMENTAS -->
+  <aside class="sidebar-left-tools" id="sidebar-tools" aria-label="Ferramentas rápidas">
+    <button class="tool-btn" id="btn-conteudo" 
+            aria-label="Abrir conteúdo sobre a calculadora"
+            title="Sobre a Calculadora"
+            onclick="CALCULATOR_SYSTEM.switchTab('about')">
+      <i class="fas fa-book-open" aria-hidden="true"></i>
+      <span class="btn-label">Conteúdo</span>
+    </button>
+    <button class="tool-btn" id="btn-ajuda" 
+            aria-label="Abrir tutorial de uso"
+            title="Tutorial de Uso"
+            onclick="CALCULATOR_SYSTEM.showTutorial()">
+      <i class="fas fa-question-circle" aria-hidden="true"></i>
+      <span class="btn-label">Ajuda</span>
+    </button>
+    <button class="tool-btn" id="btn-nanda" 
+            aria-label="Abrir diagnósticos NANDA"
+            title="Diagnósticos NANDA"
+            onclick="CALCULATOR_SYSTEM.showNANDAModal()">
+      <i class="fas fa-stethoscope" aria-hidden="true"></i>
+      <span class="btn-label">Nanda</span>
+    </button>
+    <button class="tool-btn" id="btn-9acertos" 
+            aria-label="Abrir lista dos 9 certos da medicação"
+            title="9 Certos da Medicação"
+            onclick="CALCULATOR_SYSTEM.showMedicationChecklist()">
+      <i class="fas fa-check-double" aria-hidden="true"></i>
+      <span class="btn-label">9 Acertos</span>
+    </button>
+    <button class="tool-btn" id="btn-metas" 
+            aria-label="Abrir metas de segurança"
+            title="Metas de Segurança"
+            onclick="CALCULATOR_SYSTEM.showSafetyGoals()">
+      <i class="fas fa-bullseye" aria-hidden="true"></i>
+      <span class="btn-label">Metas</span>
+    </button>
+  </aside>
+
+  <!-- CONTAINERS PARA MÓDULOS MODULARES -->
+  <div id="accessibility-container" role="complementary" aria-label="Ferramentas de acessibilidade"></div>
+  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none" role="status" aria-live="polite"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50 shadow-sm" role="banner"></div>
+
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full lg:ml-[80px] ml-0" tabindex="-1">
+
+    <!-- BREADCRUMB -->
+    <nav id="breadcrumb" class="mb-8 font-semibold" aria-label="Breadcrumb">
+      <div class="hidden md:flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300">
+        {% for item in breadcrumb %}
+          {% if item.url %}
+            <a href="{{ item.url }}" class="hover:underline text-nurse-accent" {% if loop.last %}aria-current="page"{% endif %}>{{ item.text }}</a>
+            <i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>
+          {% else %}
+            <span {% if item.active %}class="text-nurse-primary dark:text-cyan-400 font-bold" aria-current="page"{% endif %}>{{ item.text }}</span>
+            {% if not loop.last %}<i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>{% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      <!-- Mobile -->
+      <div class="flex md:hidden items-center gap-2 text-sm text-slate-600 dark:text-cyan-300">
+        <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+        <i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>
+        <span>Ferramentas :</span>
+        <span class="text-nurse-primary dark:text-cyan-400 font-bold">{{ header.title | default('Calculadora') }}</span>
+      </div>
+    </nav>
+
+    <!-- HEADER (Título e descrição) -->
+    <header class="max-w-4xl mb-12">
+      <span class="badge text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md" role="text">{{ header.badge | default('Ferramenta Clínica') }}</span>
+      <h1 id="header-title" class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">{{ header.title | default('Título da Calculadora') }}</h1>
+      <div class="h-2 w-24 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8" aria-hidden="true"></div>
+      <p id="header-description" class="text-xl text-slate-600 dark:text-slate-300 font-medium italic">{{ header.description | default('Descrição da ferramenta') }}</p>
+    </header>
+
+    <div class="grid lg:grid-cols-[1fr,340px] gap-10 items-start">
+
+      <!-- CONTAINER PRINCIPAL -->
+      <article id="calculator-container" class="bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden p-0" aria-label="Calculadora principal">
+
+        <!-- Abas -->
+        <nav class="flex border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 overflow-x-auto" role="tablist" aria-label="Seções da calculadora">
+          {% for tab in tabs %}
+            <button onclick="CALCULATOR_SYSTEM.switchTab('{{ tab.id }}')" 
+                    class="flex-1 px-2 py-3 font-bold text-[10px] transition-all border-b-4 border-transparent text-slate-400 hover:text-nurse-primary whitespace-nowrap text-center uppercase tracking-wider {% if loop.first %}border-nurse-secondary text-nurse-primary dark:text-cyan-400 bg-slate-50/50 dark:bg-slate-900/30{% endif %}" 
+                    id="btn-tab-{{ tab.id }}"
+                    role="tab"
+                    aria-selected="{% if loop.first %}true{% else %}false{% endif %}"
+                    aria-controls="pane-{{ tab.id }}"
+                    tabindex="{% if loop.first %}0{% else %}-1{% endif %}">
+              {{ tab.label }}
+            </button>
+          {% endfor %}
+        </nav>
+
+        <div class="p-6 md:p-10">
+          <!-- Aba Calculadora -->
+          <section id="pane-calculator" 
+                   class="{% if tabs[0].id != 'calculator' %}hidden{% endif %} space-y-10"
+                   role="tabpanel"
+                   aria-labelledby="btn-tab-calculator"
+                   tabindex="0">
+            <div class="space-y-6">
+              {% for section in form.sections %}
+                <h2 class="text-xs font-black uppercase tracking-widest text-nurse-primary/50 mb-4 border-b pb-2">{{ section.title }}</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                  {% for field in section.fields %}
+                    <div class="field-group">
+                      <label for="{{ field.id }}" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 font-inter">
+                        {{ field.label }}
+                        {% if field.required %}<span class="text-red-500 ml-1" aria-hidden="true">*</span><span class="sr-only">obrigatório</span>{% endif %}
+                        {% if field.tooltip %}
+                          <span class="tooltip-container ml-1">
+                            <button type="button" class="text-nurse-secondary ml-1 cursor-help hover:text-nurse-primary transition-colors text-xs" aria-label="Mais informações sobre {{ field.label }}" aria-describedby="tooltip-{{ field.id }}">
+                              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                            </button>
+                            <span class="tooltip-text" id="tooltip-{{ field.id }}" role="tooltip">{{ field.tooltip }}</span>
+                          </span>
+                        {% endif %}
+                        {% if field.libras and accessibility.librasAvailable %}
+                          <i class="fa-solid fa-hands ml-1 text-nurse-secondary" title="Libras disponível" aria-label="Tradução em Libras disponível"></i>
+                        {% endif %}
+                      </label>
+                      {% if field.type == 'select' %}
+                        <select id="{{ field.id }}" name="{{ field.id }}" class="w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium" {% if field.required %}required{% endif %} aria-required="{% if field.required %}true{% else %}false{% endif %}">
+                          {% for option in field.options %}
+                            <option value="{{ option.value }}" {% if option.value == field.default %}selected{% endif %}>{{ option.label }}</option>
+                          {% endfor %}
+                        </select>
+                      {% elif field.type == 'number' %}
+                        <input type="number" id="{{ field.id }}" name="{{ field.id }}" placeholder="{{ field.placeholder }}" 
+                               {% if field.min %}min="{{ field.min }}"{% endif %}
+                               {% if field.max %}max="{{ field.max }}"{% endif %}
+                               {% if field.step %}step="{{ field.step }}"{% endif %}
+                               class="w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium" 
+                               {% if field.required %}required{% endif %}
+                               aria-required="{% if field.required %}true{% else %}false{% endif %}"
+                               inputmode="numeric">
+                        {% if field.unit %}<span class="text-xs text-slate-500 mt-1 block">Unidade: {{ field.unit }}</span>{% endif %}
+                      {% elif field.type == 'date' %}
+                        <input type="date" id="{{ field.id }}" name="{{ field.id }}" class="w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium" {% if field.required %}required{% endif %} aria-required="{% if field.required %}true{% else %}false{% endif %}">
+                      {% else %}
+                        <input type="text" id="{{ field.id }}" name="{{ field.id }}" placeholder="{{ field.placeholder }}" class="w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:border-nurse-secondary outline-none transition-all font-medium" {% if field.required %}required{% endif %} aria-required="{% if field.required %}true{% else %}false{% endif %}">
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- Botões Calcular e Limpar -->
+            <div class="grid grid-cols-2 gap-4 pt-4">
+              <button id="btn-calculate" onclick="CALCULATOR_SYSTEM.calculate()" class="bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Calcular">
+                <i class="fa-solid {{ form.buttons.calculate.icon | default('fa-calculator') }}" aria-hidden="true"></i> <span>{{ form.buttons.calculate.label | default('Calcular') }}</span>
+              </button>
+              <button onclick="CALCULATOR_SYSTEM.reset()" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider" aria-label="Limpar campos">
+                <i class="fa-solid {{ form.buttons.reset.icon | default('fa-rotate-left') }}" aria-hidden="true"></i> {{ form.buttons.reset.label | default('Limpar') }}
+              </button>
+            </div>
+
+            <!-- Área de Resultados (inicialmente oculta) -->
+            <div id="results-wrapper" class="hidden pt-8 border-t border-slate-200 dark:border-slate-700" aria-live="polite">
+              <div class="bg-slate-50 dark:bg-slate-900/40 rounded-3xl p-8 text-center border-2 border-dashed border-nurse-primary/20 mb-6 relative">
+                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mb-4">{{ calculation.result.label | default('Resultado') }}</p>
+                <div id="res-total" class="text-6xl md:text-8xl font-black text-[#1A3E74] dark:text-cyan-400 tracking-tighter font-nunito leading-none" aria-label="Valor do resultado">0,00</div>
+                <p id="res-unit" class="text-lg font-black text-nurse-secondary mt-2 uppercase tracking-widest">{{ calculation.result.unit | default('') }}</p>
+              </div>
+
+              <!-- Botões de ação do resultado -->
+              <div class="flex flex-col gap-4 mb-10">
+                <div class="grid grid-cols-2 gap-4">
+                  {% for btn in calculation.actionButtons %}
+                    {% if btn.type == 'primary' %}
+                      <button onclick="CALCULATOR_SYSTEM.{{ btn.action }}()" class="bg-nurse-primary hover:bg-nurse-secondary text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm uppercase tracking-wider" aria-label="{{ btn.label }}">
+                        <i class="fa-solid {{ btn.icon }}" aria-hidden="true"></i> <span>{{ btn.label }}</span>
+                      </button>
+                    {% else %}
+                      <button onclick="CALCULATOR_SYSTEM.{{ btn.action }}()" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider {% if loop.last %}bg-nurse-accent text-white hover:bg-nurse-primary{% endif %}" aria-label="{{ btn.label }}">
+                        <i class="fa-solid {{ btn.icon }}" aria-hidden="true"></i> {{ btn.label }}
+                      </button>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Auditoria do Cálculo -->
+              <div class="mb-12">
+                <div class="flex justify-between items-center mb-6">
+                  <h2 class="text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                    <i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> {{ calculation.audit.title | default('Auditoria do Cálculo') }}
+                  </h2>
+                  <button onclick="CALCULATOR_SYSTEM.showAuditHelp()" class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold" aria-label="Sobre a auditoria">
+                    <i class="fa-solid fa-circle-info mr-1" aria-hidden="true"></i> Sobre Auditoria
+                  </button>
+                </div>
+                <ul id="audit-list" class="space-y-3" aria-label="Passos da auditoria"></ul>
+              </div>
+
+              <!-- Checklists de Segurança -->
+              <div class="space-y-8 mb-12">
+                <h2 class="text-xl font-black text-nurse-primary dark:text-cyan-400 flex items-center gap-2 border-l-4 border-nurse-secondary pl-4">
+                    <i class="fa-solid fa-user-shield" aria-hidden="true"></i> Check-list de Segurança do Paciente
+                </h2>
+                <div class="bg-white dark:bg-slate-900/30 p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-inner">
+                    <div class="mb-8">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                                <i class="fa-solid fa-check-double" aria-hidden="true"></i> 9 Certos da Medicação
+                            </h3>
+                            <button onclick="CALCULATOR_SYSTEM.showMedicationChecklist()" class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold">
+                                <i class="fa-solid fa-circle-info mr-1" aria-hidden="true"></i> Ver Referência
+                            </button>
+                        </div>
+                        <div id="checklist-9certos" class="grid grid-cols-1 md:grid-cols-2 gap-2" role="group" aria-label="Checklist 9 certos"></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                                <i class="fa-solid fa-star" aria-hidden="true"></i> Metas Internacionais de Segurança
+                            </h3>
+                            <button onclick="CALCULATOR_SYSTEM.showSafetyGoals()" class="text-xs text-nurse-secondary hover:text-nurse-primary font-bold">
+                                <i class="fa-solid fa-circle-info mr-1" aria-hidden="true"></i> Ver Referência
+                            </button>
+                        </div>
+                        <div id="checklist-metas" class="space-y-2" role="group" aria-label="Metas de segurança"></div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Demais abas -->
+          {% for tab in tabs %}
+            {% if tab.id != 'calculator' %}
+              <section id="pane-{{ tab.id }}" 
+                       class="tab-pane hidden prose prose-slate dark:prose-invert max-w-none"
+                       role="tabpanel"
+                       aria-labelledby="btn-tab-{{ tab.id }}"
+                       tabindex="0">
+                <h2 class="text-2xl font-black mb-4 font-nunito">{{ tab.content.title | default(tab.label) }}</h2>
+                {% if tab.type == 'list' %}
+                  <ul class="space-y-3 text-sm">
+                    {% for item in tab.items %}
+                      <li class="flex gap-3 text-sm font-medium">
+                        <i class="fa-solid fa-check-circle text-nurse-secondary mt-1" aria-hidden="true"></i>
+                        <span>{{ item }}</span>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <div>{{ tab.content.body | safe }}</div>
+                {% endif %}
+              </section>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </article>
+
+      <!-- BARRA LATERAL DIREITA -->
+      <aside class="space-y-6 sticky top-28 self-start" aria-label="Módulos complementares">
+        {% for module in sidebar.modules %}
+          {% if module.type == 'simulados' %}
+            <div class="rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6">
+              <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white font-nunito">
+                <i class="fa-solid fa-trophy" aria-hidden="true"></i> {{ module.title }}
+              </h3>
+              <p class="text-sm text-white/90 mb-6 font-medium leading-relaxed font-inter">{{ module.content }}</p>
+              <a href="{{ module.link.url }}" target="_blank" rel="noopener noreferrer"
+                 class="w-full bg-white text-nurse-primary font-black py-4 rounded-xl hover:bg-slate-100 transition shadow-lg text-sm uppercase tracking-wide flex items-center justify-center gap-2 group"
+                 aria-label="{{ module.link.label }} (abre em nova janela)">
+                  {{ module.link.label }} <i class="fa-solid {{ module.link.icon }} text-nurse-secondary group-hover:scale-125 transition-transform" aria-hidden="true"></i>
+              </a>
+            </div>
+          {% elif module.type == 'share' %}
+            <div class="rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-cyan-600 to-nurse-secondary mb-6">
+              <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white font-nunito">
+                <i class="fa-solid fa-share-nodes" aria-hidden="true"></i> {{ module.title }}
+              </h3>
+              <div class="flex gap-3 justify-center" role="group" aria-label="Redes sociais">
+                {% for network in module.networks %}
+                  {% if network.action %}
+                    <button onclick="CALCULATOR_SYSTEM.{{ network.action }}()" class="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md" title="{{ network.name }}" aria-label="Compartilhar no {{ network.name }}">
+                      <i class="{{ network.icon }}" aria-hidden="true"></i>
+                    </button>
+                  {% else %}
+                    <a href="{{ network.url | replace('{{url}}', seo.canonical) | replace('{{title}}', seo.title) }}" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md" title="{{ network.name }}" aria-label="Compartilhar no {{ network.name }} (abre em nova janela)" rel="noopener noreferrer">
+                      <i class="{{ network.icon }}" aria-hidden="true"></i>
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% elif module.type == 'related' %}
+            <div class="bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all overflow-hidden p-6">
+              <h3 class="text-xs font-black uppercase tracking-widest text-nurse-primary dark:text-cyan-400 mb-4 flex items-center gap-2 border-b pb-3">
+                <i class="fa-solid fa-list-ul" aria-hidden="true"></i> {{ module.title }}
+              </h3>
+              <nav class="space-y-1 text-sm" aria-label="Outras calculadoras">
+                {% for item in module.items %}
+                  <a href="{{ item.url }}" class="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-nurse-primary/5 hover:text-nurse-primary transition font-bold text-xs group" {% if item.description %}title="{{ item.description }}"{% endif %}>
+                    <i class="fa-solid {{ item.icon }} text-[10px] opacity-30 group-hover:opacity-100 group-hover:text-nurse-secondary transition" aria-hidden="true"></i>
+                    <span>{{ item.text }}</span>
+                    {% if item.description %}
+                      <span class="sr-only">{{ item.description }}</span>
+                    {% endif %}
+                  </a>
+                {% endfor %}
+              </nav>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </aside>
+    </div>
+
+    <!-- SEÇÃO DO AUTOR -->
+    <section id="author-section" class="max-w-7xl mx-auto px-4 py-12 border-t border-slate-200 dark:border-slate-800 mt-20" aria-label="Sobre o autor">
+      <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 flex flex-col md:flex-row gap-10 items-center border border-slate-200 dark:border-slate-700 shadow-sm mb-12 transition-all hover:shadow-xl">
+        <div class="relative flex-shrink-0">
+          <div class="w-32 md:w-40 shadow-2xl border-4 border-white dark:border-slate-700 rounded-3xl overflow-hidden bg-slate-100">
+            <img src="{{ author.image }}" alt="{{ author.name }}" class="w-full h-auto block object-cover" loading="lazy">
+          </div>
+          <div class="absolute -bottom-2 -right-2 bg-nurse-secondary text-white w-8 h-8 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-800 shadow-lg" aria-hidden="true">
+            <i class="fa-solid fa-check text-[10px]"></i>
+          </div>
+        </div>
+        <div class="text-center md:text-left">
+          <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400 font-nunito">{{ author.name }}</h3>
+          <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed max-w-2xl font-inter italic">
+            "{{ author.quote }}"
+          </p>
+        </div>
+      </div>
+
+      <!-- TAGS -->
+      <div class="flex flex-wrap gap-2 items-center">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2 flex items-center">
+          <i class="fa-solid fa-tags mr-2" aria-hidden="true"></i> Tópicos:
+        </span>
+        <span id="tags-container" class="flex flex-wrap gap-2" role="list" aria-label="Tags relacionadas">
+          {% for tag in tags %}
+            <a href="{{ tag.url }}" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer" lang="{{ tag.lang }}" {% if tag.abbr %}title="{{ tag.abbr }}"{% endif %} role="listitem">
+              #{{ tag.text }}
+            </a>
+          {% endfor %}
+        </span>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-container" class="relative z-10 transition-opacity duration-500 opacity-50" role="contentinfo"></div>
+
+  <!-- MODAL DE REFERÊNCIAS -->
+  <div id="reference-modal" 
+       class="fixed inset-0 z-[10001] hidden" 
+       aria-hidden="true"
+       aria-labelledby="modal-title"
+       aria-describedby="modal-content"
+       role="dialog">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="CALCULATOR_SYSTEM.closeModal()" role="presentation"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[90vh] overflow-hidden">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl mx-4 overflow-hidden flex flex-col max-h-[90vh]">
+        <div class="bg-nurse-primary dark:bg-slate-900 text-white p-6 flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <i id="modal-icon" class="fa-solid text-2xl" aria-hidden="true"></i>
+            <h3 id="modal-title" class="text-xl font-bold font-nunito"></h3>
+          </div>
+          <button onclick="CALCULATOR_SYSTEM.closeModal()" class="text-white hover:text-nurse-secondary text-xl" aria-label="Fechar modal">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+        <div id="modal-content" class="p-6 overflow-y-auto flex-grow text-sm"></div>
+        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 border-t border-slate-200 dark:border-slate-700">
+          <button onclick="CALCULATOR_SYSTEM.closeModal()" class="w-full bg-nurse-accent hover:bg-nurse-primary text-white font-bold py-3 rounded-xl transition" aria-label="Fechar">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF TEMPLATE (OCULTO) -->
+  <div id="pdf-render-template" style="position: absolute; left: -9999px; top: 0; width: 794px; background: white; padding: 40px; color: #0f172a;" aria-hidden="true"></div>
+
+  <!-- SCRIPTS DO SISTEMA -->
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer></script>
+  <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer></script>
+
+  <!-- Configuração da página (injetada pelo gerador) -->
+  <script>
+    window.PAGE_CONFIG = {{ page_config | tojson }};
+  </script>
+
+  <!-- Script específico da calculadora -->
+  <script src="{{ script }}" defer></script>
+
+  <!-- Script base do sistema (com suporte a módulos) -->
+  <script>
+    // ============================================
+    // Funções de carregamento de módulos (copiadas do original)
+    // ============================================
+    async function loadModule(id, url) {
+      const container = document.getElementById(id);
+      if (!container) return;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Status ${res.status}`);
+        container.innerHTML = await res.text();
+        container.style.opacity = "1";
+        const event = new CustomEvent('moduleLoaded', { detail: { id, url } });
+        container.dispatchEvent(event);
+      } catch(e) { 
+        console.warn(`Módulo ${id} não carregado:`, e); 
+      }
+    }
+
+    // Inicialização dos módulos
+    async function loadSystemModules() {
+      try {
+        await loadModule('accessibility-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/accessibility-v4.html');
+        await loadModule('header-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/header-v4.html');
+        await loadModule('footer-container', 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/components/footer-v4.html');
+        if (typeof window.initializeAccessibility === 'function') window.initializeAccessibility();
+        if (typeof window.initializeHeader === 'function') window.initializeHeader();
+      } catch (error) { console.error('Erro ao carregar módulos:', error); }
+    }
+
+    // Funções auxiliares para menu e mega menu (do original)
+    function initHamburgerMenu() {
+      const hamburgerBtn = document.getElementById('hamburger-menu');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (hamburgerBtn && mobileMenu) {
+        hamburgerBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+          mobileMenu.classList.toggle('flex');
+          const spans = hamburgerBtn.querySelectorAll('span');
+          if (mobileMenu.classList.contains('hidden')) {
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+          } else {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+          }
+        });
+      }
+    }
+
+    function initMegaMenu() {
+      const megaMenuTriggers = document.querySelectorAll('.has-mega-menu');
+      megaMenuTriggers.forEach(trigger => {
+        const megaMenu = trigger.querySelector('.mega-menu');
+        if (megaMenu) {
+          trigger.addEventListener('mouseenter', () => { megaMenu.style.display = 'block'; });
+          trigger.addEventListener('mouseleave', () => { megaMenu.style.display = 'none'; });
+          trigger.addEventListener('click', (e) => {
+            if (window.innerWidth < 1024) {
+              e.preventDefault();
+              megaMenu.style.display = megaMenu.style.display === 'block' ? 'none' : 'block';
+            }
+          });
+        }
+      });
+    }
+
+    // Evento disparado quando um módulo é carregado
+    document.addEventListener('moduleLoaded', (e) => {
+      if (e.detail.id === 'header-container') {
+        initHamburgerMenu();
+        initMegaMenu();
+      }
+    });
+
+    // Gerenciamento de tema claro/escuro (se botão existir no header)
+    function initTheme() {
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          document.documentElement.classList.toggle('dark');
+          localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+      }
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') document.documentElement.classList.add('dark');
+    }
+
+    // Objeto principal (delega para módulo específico se existir)
+    const CALCULATOR_SYSTEM = {
+      config: window.PAGE_CONFIG || {},
+      switchTab(tabId) {
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('[role="tab"]').forEach(b => {
+          b.classList.remove('border-nurse-secondary', 'text-nurse-primary', 'dark:text-cyan-400', 'bg-slate-50/50', 'dark:bg-slate-900/30');
+          b.setAttribute('aria-selected', 'false');
+          b.setAttribute('tabindex', '-1');
+        });
+        document.getElementById(`pane-${tabId}`)?.classList.remove('hidden');
+        const activeTab = document.getElementById(`btn-tab-${tabId}`);
+        if (activeTab) {
+          activeTab.classList.add('border-nurse-secondary', 'text-nurse-primary', 'dark:text-cyan-400', 'bg-slate-50/50', 'dark:bg-slate-900/30');
+          activeTab.setAttribute('aria-selected', 'true');
+          activeTab.setAttribute('tabindex', '0');
+          activeTab.focus();
+        }
+      },
+      showTutorial() { this.showModal('tutorial'); },
+      showNANDAModal() { this.showModal('nanda'); },
+      showMedicationChecklist() { this.showModal('nineRights'); },
+      showSafetyGoals() { this.showModal('safetyGoals'); },
+      showAuditHelp() { this.notify('A auditoria verifica cada etapa do cálculo.', 'info'); },
+      share(platform) {
+        const url = encodeURIComponent(window.location.href);
+        const title = encodeURIComponent(document.title);
+        const text = encodeURIComponent("Confira esta calculadora profissional de enfermagem!");
+        const urls = {
+          facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+          whatsapp: `https://api.whatsapp.com/send?text=${text}%20${url}`,
+          linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+          twitter: `https://twitter.com/intent/tweet?text=${title}&url=${url}`
+        };
+        if (urls[platform]) window.open(urls[platform], '_blank', 'width=600,height=400,noopener,noreferrer');
+      },
+      copyLink() {
+        navigator.clipboard.writeText(window.location.href)
+          .then(() => this.notify('Link copiado!', 'success'))
+          .catch(() => this.notify('Erro ao copiar link', 'error'));
+      },
+      showModal(type) {
+        const modal = document.getElementById('reference-modal');
+        const modalData = this.config.modals && this.config.modals[type];
+        if (!modal || !modalData) return;
+        document.getElementById('modal-icon').className = `fa-solid ${modalData.icon} text-2xl`;
+        document.getElementById('modal-title').textContent = modalData.title;
+        document.getElementById('modal-content').innerHTML = DOMSanitizer.sanitize(modalData.content);
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      },
+      closeModal() {
+        const modal = document.getElementById('reference-modal');
+        if (modal) {
+          modal.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
+      },
+      notify(message, type = 'info') {
+        const container = document.getElementById('notification-container');
+        if (!container) return;
+        const toast = document.createElement('div');
+        toast.className = `pointer-events-auto bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 font-bold text-sm min-w-[320px] border-l-4 border-nurse-secondary animate-slide-in ${type === 'success' ? 'border-green-500' : type === 'error' ? 'border-red-500' : type === 'warning' ? 'border-yellow-500' : 'border-nurse-secondary'}`;
+        toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-circle-info'}"></i><span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(50px)'; setTimeout(() => toast.remove(), 500); }, 4000);
+      }
+    };
+
+    // Inicialização ao carregar o DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSystemModules();
+      initTheme();
+      if (window.calculatorModule && window.calculatorModule.init) window.calculatorModule.init();
+    });
+
+    window.CALCULATOR_SYSTEM = CALCULATOR_SYSTEM;
+  </script>
+</body>
+</html>

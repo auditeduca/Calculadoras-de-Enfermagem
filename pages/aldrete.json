@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "id": "aldrete",
+    "title": "Escala de Aldrete",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-02-05",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Aldrete",
+    "description": "Avaliação pós-anestésica"
+  },
+  "header": {
+    "badge": "Escala Clínica",
+    "title": "Escala de Aldrete",
+    "description": "Descrição"
+  },
+  "form": {
+    "sections": []
+  },
+  "calculation": {
+    "result": { "label": "Pontuação", "unit": "pontos", "decimals": 0 }
+  },
+  "script": "js/aldrete.js"
+}

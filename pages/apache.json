@@ -1,0 +1,390 @@
+{
+  "metadata": {
+    "id": "apache",
+    "title": "APACHE II - Prognóstico em UTI | Enfermagem",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-02-05",
+    "type": "scale"
+  },
+  "accessibility": {
+    "vlibras": true,
+    "screenReader": true,
+    "highContrast": true,
+    "librasAvailable": true
+  },
+  "seo": {
+    "title": "APACHE II – Escala de Gravidade para UTI",
+    "description": "Avalie a gravidade e prognóstico de pacientes em UTI com a escala APACHE II. Ferramenta essencial para medicina intensiva e enfermagem.",
+    "keywords": "APACHE, UTI, prognóstico, gravidade, escala, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/apache.html",
+    "ogImage": "https://www.calculadorasdeenfermagem.com.br/assets/images/author-info.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escala Clínica",
+    "title": "APACHE II",
+    "description": "Avaliação de gravidade e prognóstico em UTI."
+  },
+  "breadcrumb": [
+    { "text": "Início", "url": "index.html" },
+    { "text": "Ferramentas", "url": null },
+    { "text": "Escalas Clínicas", "url": null },
+    { "text": "APACHE II", "url": null, "active": true }
+  ],
+  "tags": [
+    { "text": "APACHE", "url": "busca.html?tag=apache", "lang": "pt", "abbr": null },
+    { "text": "UTI", "url": "busca.html?tag=uti", "lang": "pt", "abbr": null },
+    { "text": "prognóstico", "url": "busca.html?tag=prognostico", "lang": "pt", "abbr": null }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true,
+            "tooltip": "Identificação do paciente para fins de registro.",
+            "libras": false
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true,
+            "tooltip": "Para cálculo de idade e verificação de faixa etária.",
+            "libras": false
+          }
+        ]
+      },
+      {
+        "title": "Pontuação Fisiológica Aguda (APS)",
+        "fields": [
+          {
+            "id": "temperatura",
+            "type": "select",
+            "label": "Temperatura (°C)",
+            "options": [
+              { "value": 0, "label": "36 - 38.4" },
+              { "value": 1, "label": "34 - 35.9 ou 38.5 - 38.9" },
+              { "value": 2, "label": "32 - 33.9 ou 39 - 40.9" },
+              { "value": 3, "label": "30 - 31.9 ou 41 - 41.9" },
+              { "value": 4, "label": "≤ 29.9 ou ≥ 42" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "Temperatura retal mais alta nas últimas 24h.",
+            "libras": false
+          },
+          {
+            "id": "pam",
+            "type": "select",
+            "label": "PAM (mmHg)",
+            "options": [
+              { "value": 0, "label": "70 - 109" },
+              { "value": 2, "label": "50 - 69 ou 110 - 129" },
+              { "value": 3, "label": "130 - 159" },
+              { "value": 4, "label": "≤ 49 ou ≥ 160" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "Pressão arterial média (PAM).",
+            "libras": false
+          },
+          {
+            "id": "fc",
+            "type": "select",
+            "label": "Frequência Cardíaca (bpm)",
+            "options": [
+              { "value": 0, "label": "70 - 109" },
+              { "value": 2, "label": "55 - 69 ou 110 - 139" },
+              { "value": 3, "label": "40 - 54 ou 140 - 179" },
+              { "value": 4, "label": "≤ 39 ou ≥ 180" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "Frequência cardíaca (ventricular).",
+            "libras": false
+          },
+          {
+            "id": "fr",
+            "type": "select",
+            "label": "Frequência Respiratória (irpm)",
+            "options": [
+              { "value": 0, "label": "12 - 24" },
+              { "value": 1, "label": "10 - 11 ou 25 - 34" },
+              { "value": 2, "label": "6 - 9 ou 35 - 49" },
+              { "value": 3, "label": "35 - 49 (se VM? Checar)" },
+              { "value": 4, "label": "≤ 5 ou ≥ 50" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "Frequência respiratória (não ventilado ou ventilado).",
+            "libras": false
+          },
+          {
+            "id": "oxigenacao",
+            "type": "select",
+            "label": "Oxigenação (FiO2 ≥ 0.5)",
+            "options": [
+              { "value": 0, "label": "PaO2 > 70 (FiO2<0.5) ou A-aDO2 < 200 (FiO2≥0.5)" },
+              { "value": 2, "label": "PaO2 61-70 (FiO2<0.5) ou A-aDO2 200-349 (FiO2≥0.5)" },
+              { "value": 3, "label": "PaO2 55-60 (FiO2<0.5) ou A-aDO2 350-499 (FiO2≥0.5)" },
+              { "value": 4, "label": "PaO2 <55 (FiO2<0.5) ou A-aDO2 ≥500 (FiO2≥0.5)" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "PaO2 (FiO2<0.5) ou A-aDO2 (FiO2≥0.5).",
+            "libras": false
+          },
+          {
+            "id": "ph",
+            "type": "select",
+            "label": "pH arterial",
+            "options": [
+              { "value": 0, "label": "7.33 - 7.49" },
+              { "value": 1, "label": "7.25 - 7.32 ou 7.5 - 7.59" },
+              { "value": 2, "label": "7.15 - 7.24 ou 7.6 - 7.69" },
+              { "value": 3, "label": "<7.15 ou ≥7.7" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "pH arterial mais alterado.",
+            "libras": false
+          },
+          {
+            "id": "sodio",
+            "type": "select",
+            "label": "Sódio (mEq/L)",
+            "options": [
+              { "value": 0, "label": "130 - 149" },
+              { "value": 1, "label": "150 - 154" },
+              { "value": 2, "label": "120 - 129 ou 155 - 159" },
+              { "value": 3, "label": "111 - 119 ou 160 - 179" },
+              { "value": 4, "label": "≤110 ou ≥180" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "Sódio sérico.",
+            "libras": false
+          },
+          {
+            "id": "potassio",
+            "type": "select",
+            "label": "Potássio (mEq/L)",
+            "options": [
+              { "value": 0, "label": "3.5 - 5.4" },
+              { "value": 1, "label": "3 - 3.4 ou 5.5 - 5.9" },
+              { "value": 2, "label": "2.5 - 2.9 ou 6 - 6.9" },
+              { "value": 3, "label": "<2.5 ou ≥7" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "Potássio sérico.",
+            "libras": false
+          },
+          {
+            "id": "creatinina",
+            "type": "select",
+            "label": "Creatinina (mg/dL) – duplicar se IRA",
+            "options": [
+              { "value": 0, "label": "0.6 - 1.4" },
+              { "value": 2, "label": "<0.6 ou 1.5 - 1.9" },
+              { "value": 3, "label": "2 - 3.4" },
+              { "value": 4, "label": "≥3.5" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "Creatinina sérica (se IRA aguda, pontuação duplicada).",
+            "libras": false
+          },
+          {
+            "id": "hematocrito",
+            "type": "select",
+            "label": "Hematócrito (%)",
+            "options": [
+              { "value": 0, "label": "30 - 45.9" },
+              { "value": 1, "label": "46 - 49.9" },
+              { "value": 2, "label": "20 - 29.9 ou 50 - 59.9" },
+              { "value": 3, "label": "<20 ou ≥60" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "Hematócrito.",
+            "libras": false
+          },
+          {
+            "id": "leucocitos",
+            "type": "select",
+            "label": "Leucócitos (x1000/mm³)",
+            "options": [
+              { "value": 0, "label": "3 - 14.9" },
+              { "value": 1, "label": "15 - 19.9" },
+              { "value": 2, "label": "1 - 2.9 ou 20 - 39.9" },
+              { "value": 3, "label": "<1 ou ≥40" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "Leucócitos totais.",
+            "libras": false
+          }
+        ]
+      },
+      {
+        "title": "Pontuação por Idade",
+        "fields": [
+          {
+            "id": "idade",
+            "type": "select",
+            "label": "Idade (anos)",
+            "options": [
+              { "value": 0, "label": "≤44" },
+              { "value": 2, "label": "45 - 54" },
+              { "value": 3, "label": "55 - 64" },
+              { "value": 5, "label": "65 - 74" },
+              { "value": 6, "label": "≥75" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "Idade do paciente.",
+            "libras": false
+          }
+        ]
+      },
+      {
+        "title": "Doença Crônica",
+        "fields": [
+          {
+            "id": "doenca_cronica",
+            "type": "select",
+            "label": "História de insuficiência de órgão ou imunocomprometido",
+            "options": [
+              { "value": 0, "label": "Sem doença crônica" },
+              { "value": 2, "label": "Doença crônica (não cirúrgico ou pós-operatório de urgência)" },
+              { "value": 5, "label": "Doença crônica (pós-operatório eletivo)" }
+            ],
+            "default": 0,
+            "required": true,
+            "tooltip": "História de insuficiência de órgão ou imunocomprometido.",
+            "libras": false
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Calcular",
+        "icon": "fa-calculator",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "formula": "apache_ii = aps + idade + doenca_cronica",
+    "result": {
+      "label": "APACHE II",
+      "unit": "pontos",
+      "decimals": 0
+    },
+    "audit": {
+      "title": "Auditoria da Avaliação",
+      "steps": [
+        { "label": "APS", "sourceField": "aps", "suffix": "pontos", "icon": "fa-heart-pulse" },
+        { "label": "Idade", "sourceField": "idade_score", "suffix": "pontos", "icon": "fa-calendar" },
+        { "label": "Doença Crônica", "sourceField": "cronica_score", "suffix": "pontos", "icon": "fa-hospital" },
+        { "label": "APACHE II Total", "sourceField": "apache_total", "suffix": "pontos", "icon": "fa-star" }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Sobre o APACHE II",
+        "body": "<p>O APACHE II (Acute Physiology and Chronic Health Evaluation II) é um sistema de classificação de gravidade usado em Unidades de Terapia Intensiva (UTI). Foi desenvolvido por Knaus et al. em 1985 e é amplamente utilizado para predizer mortalidade hospitalar. A pontuação é composta por três partes: 12 variáveis fisiológicas (APS), idade e doença crônica. Quanto maior a pontuação, maior o risco de morte.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Selecione o valor mais alterado (pior) nas últimas 24h para cada parâmetro fisiológico.",
+        "A pontuação APS será somada automaticamente.",
+        "Adicione a pontuação por idade e doença crônica.",
+        "A pontuação total APACHE II será calculada."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<div class='p-5 bg-slate-50 dark:bg-slate-900/40 rounded-2xl'><p>• <strong>Knaus WA, Draper EA, Wagner DP, Zimmerman JE.</strong> APACHE II: a severity of disease classification system. Crit Care Med, 1985.</p></div>"
+      }
+    }
+  ],
+  "modals": {
+    "tutorial": {
+      "title": "Tutorial - APACHE II",
+      "icon": "fa-question-circle",
+      "content": "<div>...</div>",
+      "libras": false
+    },
+    "nanda": {
+      "title": "Diagnósticos de Enfermagem - NANDA",
+      "icon": "fa-stethoscope",
+      "content": "<div>...</div>",
+      "libras": false
+    },
+    "nineRights": {
+      "title": "9 Certos da Medicação",
+      "icon": "fa-check-double",
+      "source": "shared",
+      "sharedId": "nineRights",
+      "libras": true
+    },
+    "safetyGoals": {
+      "title": "Metas Internacionais de Segurança",
+      "icon": "fa-star",
+      "source": "shared",
+      "sharedId": "safetyGoals",
+      "libras": true
+    }
+  },
+  "sidebar": {},
+  "author": {},
+  "script": "js/apache.js"
+}

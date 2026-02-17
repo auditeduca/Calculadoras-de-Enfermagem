@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "id": "barthel",
+    "title": "Escala de Barthel",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-02-05",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Barthel",
+    "description": "Dependência funcional"
+  },
+  "header": {
+    "badge": "Escala Clínica",
+    "title": "Escala de Barthel",
+    "description": "Descrição"
+  },
+  "form": {
+    "sections": []
+  },
+  "calculation": {
+    "result": { "label": "Pontuação", "unit": "pontos", "decimals": 0 }
+  },
+  "script": "js/barthel.js"
+}
