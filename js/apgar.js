@@ -1,5 +1,5 @@
-// js/apache.js
-// v2.0 — Corrigido: calculate/reset dinâmicos pelo JSON, validação obrigatórios, interpretação clínica, generatePDF real
+// js/apgar.js
+// v2.0 — Corrigido: window.PAGE_CONFIG, renderForm(), generatePDF real, interpretação na UI, seletores por id, DOMContentLoaded guard
 const calculatorModule = {
   uiState: { resultsVisible: false },
 
@@ -9,6 +9,7 @@ const calculatorModule = {
     this.renderActionButtons();
   },
 
+  // CORRIGIDO C-02 / A-01 pattern: renderForm() dinâmico com window.PAGE_CONFIG
   renderForm: function() {
     const formContainer = document.getElementById('calculator-form');
     if (!formContainer) return;
@@ -31,8 +32,8 @@ const calculatorModule = {
           html += `</select>`;
         } else if (field.type === 'text') {
           html += `<input type="text" id="${field.id}" placeholder="${field.placeholder || ''}" class="w-full p-3 border rounded-lg">`;
-        } else if (field.type === 'date') {
-          html += `<input type="date" id="${field.id}" class="w-full p-3 border rounded-lg">`;
+        } else if (field.type === 'date' || field.type === 'datetime-local') {
+          html += `<input type="${field.type}" id="${field.id}" class="w-full p-3 border rounded-lg">`;
         }
         if (field.tooltip) {
           html += `<p class="text-xs text-slate-500 mt-1">${field.tooltip}</p>`;
@@ -61,22 +62,21 @@ const calculatorModule = {
       button.innerHTML = `<i class="fa-solid ${btn.icon}"></i> ${btn.label}`;
       button.addEventListener('click', (e) => {
         e.preventDefault();
-        if (typeof this[btn.action] === 'function') {
-          this[btn.action]();
-        }
+        if (typeof this[btn.action] === 'function') this[btn.action]();
       });
       container.appendChild(button);
     });
   },
 
   setupValidations: function() {
+    // patientBirthdate pode ser datetime-local no Apgar
     const birthField = document.getElementById('patientBirthdate');
     if (birthField) {
-      birthField.addEventListener('change', () => this.validateDate(birthField));
+      birthField.addEventListener('change', () => this.validateDateTime(birthField));
     }
   },
 
-  validateDate: function(field) {
+  validateDateTime: function(field) {
     const value = field.value;
     if (!value) return true;
     const date = new Date(value);
@@ -86,7 +86,6 @@ const calculatorModule = {
       return false;
     }
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
     if (date > today) {
       field.classList.add('border-red-500', 'bg-red-50');
       return false;
@@ -95,85 +94,76 @@ const calculatorModule = {
     return true;
   },
 
-  // CORRIGIDO A-06/A-08: calculate() dinâmico pelo JSON + validação de campos obrigatórios
   calculate: function() {
     const btn = document.getElementById('btn-calculate');
     const originalText = btn.innerHTML;
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Calculando...';
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Avaliando...';
     btn.disabled = true;
 
     setTimeout(() => {
       try {
+        const getVal = (id) => {
+          const el = document.getElementById(id);
+          if (!el) return NaN;
+          return parseInt(el.value, 10);
+        };
+
+        // 1º minuto
+        const f1   = getVal('frequencia1');
+        const r1   = getVal('respiracao1');
+        const t1   = getVal('tonus1');
+        const ref1 = getVal('reflexo1');
+        const c1   = getVal('cor1');
+        const apgar1 = f1 + r1 + t1 + ref1 + c1;
+
+        // 5º minuto
+        const f5   = getVal('frequencia5');
+        const r5   = getVal('respiracao5');
+        const t5   = getVal('tonus5');
+        const ref5 = getVal('reflexo5');
+        const c5   = getVal('cor5');
+        const apgar5 = f5 + r5 + t5 + ref5 + c5;
+
         const errors = [];
-        const scores = {}; // id -> valor numérico
-        let aps = 0;
-        let idade_score = 0;
-        let cronica_score = 0;
-
-        // CORRIGIDO A-06: itera form.sections do JSON para coletar e somar
-        window.PAGE_CONFIG.form.sections.forEach(section => {
-          section.fields.forEach(field => {
-            if (field.type !== 'select') return; // só selects pontuam
-            const el = document.getElementById(field.id);
-            if (!el) return;
-
-            if (field.required) {
-              const val = parseInt(el.value, 10);
-              if (isNaN(val)) {
-                errors.push(`Campo obrigatório não preenchido: ${field.label}`);
-                el.classList.add('border-red-500', 'bg-red-50');
-                return;
-              }
-              scores[field.id] = val;
-
-              // Soma por seção semântica usando title
-              const sectionTitle = section.title.toLowerCase();
-              if (sectionTitle.includes('fisiológica') || sectionTitle.includes('aps') || sectionTitle.includes('aguda')) {
-                aps += val;
-              } else if (sectionTitle.includes('idade')) {
-                idade_score = val;
-              } else if (sectionTitle.includes('crônica') || sectionTitle.includes('cronica')) {
-                cronica_score = val;
-              }
-            }
-          });
-        });
-
-        const birthField = document.getElementById('patientBirthdate');
-        if (birthField && birthField.value) {
-          if (!this.validateDate(birthField)) errors.push('Data de nascimento inválida');
+        if (isNaN(apgar1) || isNaN(apgar5)) {
+          errors.push('Preencha todos os campos de avaliação (1º e 5º minuto)');
         }
-
         if (errors.length > 0) {
           errors.forEach(err => window.CALCULATOR_SYSTEM?.notify?.(err, 'error'));
           this.playSound('error');
           return;
         }
 
-        const apache_total = aps + idade_score + cronica_score;
+        const birthField = document.getElementById('patientBirthdate');
+        if (birthField && birthField.value) {
+          if (!this.validateDateTime(birthField)) {
+            window.CALCULATOR_SYSTEM?.notify?.('Data/hora de nascimento inválida', 'error');
+            this.playSound('error');
+            return;
+          }
+        }
 
+        // CORRIGIDO C-02: usa window.PAGE_CONFIG em vez do padrão antigo
         window.CALCULATOR_SYSTEM = window.CALCULATOR_SYSTEM || {};
         window.CALCULATOR_SYSTEM.lastResult = {
-          aps,
-          idade_score,
-          cronica_score,
-          apache_total,
-          unit: 'pontos',
-          scores
+          apgar1, apgar5,
+          f1, r1, t1, ref1, c1,
+          f5, r5, t5, ref5, c5,
+          unit: 'pontos'
         };
 
-        document.getElementById('res-total').innerText = apache_total;
+        document.getElementById('res-total').innerText = `${apgar1} / ${apgar5}`;
         document.getElementById('res-unit').innerText = 'pontos';
         document.getElementById('results-wrapper').classList.remove('hidden');
         this.uiState.resultsVisible = true;
 
         this.renderAudit(window.CALCULATOR_SYSTEM.lastResult);
-        this.renderInterpretation(apache_total);
+        this.renderInterpretation(apgar1, apgar5);  // CORRIGIDO M-06: exibir na UI
         this.renderChecklists();
 
-        // CORRIGIDO M-05: interpretação clínica de mortalidade estimada
-        const interp = this.getInterpretation(apache_total);
-        window.CALCULATOR_SYSTEM?.notify?.(`APACHE II = ${apache_total} pts — ${interp.label} (mortalidade estimada: ${interp.mortality})`, 'success');
+        const i1 = this.getInterpretation(apgar1);
+        const i5 = this.getInterpretation(apgar5);
+        window.CALCULATOR_SYSTEM?.notify?.(`1º min: ${i1} | 5º min: ${i5}`, 'success');
         this.playSound('success');
 
       } catch (error) {
@@ -186,38 +176,42 @@ const calculatorModule = {
     }, 400);
   },
 
-  // CORRIGIDO M-05: interpretação clínica APACHE II
   getInterpretation: function(score) {
-    // Baseado em Knaus et al. 1985 — mortalidade hospitalar estimada
+    // Interpretações do JSON se disponível, fallback padrão
     const ranges = window.PAGE_CONFIG?.calculation?.interpretation || [
-      { max: 4,  label: 'Gravidade mínima',  mortality: '< 4%' },
-      { max: 9,  label: 'Gravidade baixa',   mortality: '8%' },
-      { max: 14, label: 'Gravidade moderada',mortality: '15%' },
-      { max: 19, label: 'Gravidade alta',    mortality: '25%' },
-      { max: 24, label: 'Gravidade muito alta', mortality: '40%' },
-      { max: 29, label: 'Gravidade severa',  mortality: '55%' },
-      { max: 34, label: 'Gravidade crítica', mortality: '73%' },
-      { max: Infinity, label: 'Gravidade extrema', mortality: '> 85%' }
+      { max: 3,  label: 'Asfixia grave',     color: 'text-red-600' },
+      { max: 6,  label: 'Asfixia moderada',  color: 'text-yellow-600' },
+      { max: 10, label: 'Boa vitalidade',    color: 'text-green-600' }
     ];
-    return ranges.find(r => score <= r.max) || ranges[ranges.length - 1];
+    const range = ranges.find(r => score <= r.max) || ranges[ranges.length - 1];
+    return range.label;
   },
 
-  renderInterpretation: function(score) {
-    const interp = this.getInterpretation(score);
+  // CORRIGIDO M-06: interpretação persistida na UI
+  renderInterpretation: function(apgar1, apgar5) {
     let interpEl = document.getElementById('res-interpretation');
     if (!interpEl) {
       interpEl = document.createElement('div');
       interpEl.id = 'res-interpretation';
-      interpEl.className = 'mt-4 p-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm font-bold text-center animate-fade-in';
+      interpEl.className = 'mt-4 p-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm text-center animate-fade-in grid grid-cols-2 gap-3';
       const resultBox = document.querySelector('#results-wrapper .text-center');
       if (resultBox) resultBox.appendChild(interpEl);
     }
+    const interp1 = this.getInterpretation(apgar1);
+    const interp5 = this.getInterpretation(apgar5);
     interpEl.innerHTML = `
-      <span class="text-nurse-primary dark:text-cyan-400">${interp.label}</span>
-      <span class="text-slate-500 ml-2">— Mortalidade estimada: <strong>${interp.mortality}</strong></span>
+      <div class="p-2 rounded-lg bg-white dark:bg-slate-700">
+        <span class="text-[10px] uppercase font-black tracking-wider text-slate-400 block">1º Minuto</span>
+        <span class="font-bold text-nurse-primary dark:text-cyan-400">${apgar1} pts — ${interp1}</span>
+      </div>
+      <div class="p-2 rounded-lg bg-white dark:bg-slate-700">
+        <span class="text-[10px] uppercase font-black tracking-wider text-slate-400 block">5º Minuto</span>
+        <span class="font-bold text-nurse-primary dark:text-cyan-400">${apgar5} pts — ${interp5}</span>
+      </div>
     `;
   },
 
+  // CORRIGIDO C-02: usa window.PAGE_CONFIG.calculation.audit.steps
   renderAudit: function(result) {
     const steps = window.PAGE_CONFIG.calculation.audit.steps;
     const list = document.getElementById('audit-list');
@@ -275,7 +269,7 @@ const calculatorModule = {
     }
   },
 
-  // CORRIGIDO A-07: reset dinâmico pelo JSON
+  // CORRIGIDO A-09: usa getElementById em vez de querySelector frágil
   reset: function() {
     const btn = document.getElementById('btn-reset');
     const originalText = btn.innerHTML;
@@ -287,7 +281,7 @@ const calculatorModule = {
         section.fields.forEach(field => {
           const el = document.getElementById(field.id);
           if (!el) return;
-          if (field.type === 'text' || field.type === 'date') {
+          if (['text', 'date', 'datetime-local'].includes(field.type)) {
             el.value = '';
           } else if (field.type === 'select') {
             el.value = field.default !== undefined ? String(field.default) : el.options[0]?.value;
@@ -307,16 +301,16 @@ const calculatorModule = {
       document.querySelectorAll('#checklist-9rights input, #checklist-9certos input, #checklist-safety-goals input, #checklist-metas input').forEach(cb => cb.checked = false);
 
       window.CALCULATOR_SYSTEM?.notify?.('Campos resetados', 'info');
-      this.playSound('info');
+      this.playSound('info'); // CORRIGIDO A-11: case 'info' existe agora
       btn.innerHTML = originalText;
       btn.disabled = false;
     }, 400);
   },
 
-  // CORRIGIDO M-04: generatePDF real com pdfData completo
+  // CORRIGIDO C-03: generatePDF real (não mais vazio)
   generatePDF: async function() {
     if (!window.CALCULATOR_SYSTEM?.lastResult) {
-      window.CALCULATOR_SYSTEM?.notify?.('Realize um cálculo primeiro', 'error');
+      window.CALCULATOR_SYSTEM?.notify?.('Realize uma avaliação primeiro', 'error');
       this.playSound('error');
       return;
     }
@@ -345,13 +339,8 @@ const calculatorModule = {
       });
 
       const result = window.CALCULATOR_SYSTEM.lastResult;
-      const interp = this.getInterpretation(result.apache_total);
-      const steps = window.PAGE_CONFIG.calculation.audit.steps;
-      const auditSteps = steps.map(step => {
-        let value = result[step.sourceField];
-        if (step.suffix) value += ' ' + step.suffix;
-        return { label: step.label, value: value || '—' };
-      });
+      const interp1 = this.getInterpretation(result.apgar1);
+      const interp5 = this.getInterpretation(result.apgar5);
 
       const pdfData = {
         patientName,
@@ -359,11 +348,14 @@ const calculatorModule = {
         inputs,
         result: {
           label: window.PAGE_CONFIG.calculation.result.label,
-          value: result.apache_total,
+          value: `${result.apgar1} / ${result.apgar5}`,
           unit: 'pontos',
-          interpretation: `${interp.label} — Mortalidade estimada: ${interp.mortality}`
+          interpretation: `1º min: ${interp1} | 5º min: ${interp5}`
         },
-        auditSteps,
+        auditSteps: [
+          { label: 'Apgar 1º minuto', value: `${result.apgar1} pontos — ${interp1}` },
+          { label: 'Apgar 5º minuto', value: `${result.apgar5} pontos — ${interp5}` }
+        ],
         showNineRights: true,
         showSafetyGoals: true,
         canonicalUrl: window.PAGE_CONFIG.seo?.canonical || window.location.href
@@ -392,8 +384,9 @@ const calculatorModule = {
 
     try {
       const result = window.CALCULATOR_SYSTEM.lastResult;
-      const interp = this.getInterpretation(result.apache_total);
-      const text = `APACHE II: ${result.apache_total} pontos | APS: ${result.aps} | ${interp.label} — Mortalidade estimada: ${interp.mortality}`;
+      const i1 = this.getInterpretation(result.apgar1);
+      const i5 = this.getInterpretation(result.apgar5);
+      const text = `Apgar 1º min: ${result.apgar1} (${i1}) | 5º min: ${result.apgar5} (${i5})`;
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(text);
       } else {
@@ -416,6 +409,7 @@ const calculatorModule = {
     }
   },
 
+  // CORRIGIDO A-11: adicionado case 'info'
   playSound: function(type) {
     try {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -456,6 +450,7 @@ const calculatorModule = {
   }
 };
 
+// CORRIGIDO A-10: guard DOMContentLoaded
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => calculatorModule.init());
 } else {
