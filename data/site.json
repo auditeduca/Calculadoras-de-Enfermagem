@@ -1,0 +1,122 @@
+{
+  "site": {
+    "name": "Calculadoras de Enfermagem Profissional",
+    "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem",
+    "logo": "/assets/images/author-info.webp",
+    "author": "Calculadoras de Enfermagem",
+    "social": {
+      "twitter": "@CalculadorasEnf"
+    }
+  },
+  "pages": {
+    "insulina": {
+      "title": "Cálculo de Insulina | Calculadoras de Enfermagem Profissional",
+      "description": "Calculadora profissional para aspiração de insulina em seringas de 100UI e 300UI. Segurança do paciente com 9 certos e auditoria de cálculo clínica.",
+      "keywords": "insulina, enfermagem, cálculo de medicação, segurança do paciente, seringa insulina, auditoria clínica",
+      "canonical": "/insulina",
+      "ogImage": "/assets/images/author-info.webp",
+      "header": {
+        "badge": "Segurança Clínica",
+        "title": "Cálculo de Insulina",
+        "description": "Ferramenta profissional para aspiração precisa em seringas de 100UI ou 300UI."
+      },
+      "calculator": {
+        "fields": [
+          {
+            "id": "prescricao",
+            "label": "Prescrição Médica (UI)",
+            "type": "number",
+            "placeholder": "Ex: 15",
+            "required": true,
+            "min": 0,
+            "step": 0.5,
+            "tooltip": "Quantidade de insulina prescrita pelo médico em unidades internacionais (UI)."
+          },
+          {
+            "id": "concentracao",
+            "label": "Concentração da Insulina (UI/mL)",
+            "type": "select",
+            "options": [
+              { "value": 100, "label": "100 UI/mL (Insulina Regular U100)" },
+              { "value": 200, "label": "200 UI/mL (Insulina Glargine U200)" },
+              { "value": 300, "label": "300 UI/mL (Insulina Degludec U300)" }
+            ],
+            "default": 100,
+            "tooltip": "Concentração da insulina. Padrão: 100 UI/mL."
+          }
+        ],
+        "formula": "Volume (mL) = Prescrição (UI) / Concentração (UI/mL)"
+      },
+      "auditSteps": [
+        { "label": "Prescrição Médica", "icon": "fa-file-medical" },
+        { "label": "Concentração da Insulina", "icon": "fa-vial" },
+        { "label": "Tipo de Seringa", "value": "Seringa de Insulina 1mL", "icon": "fa-syringe" },
+        { "label": "Fator de Cálculo", "icon": "fa-calculator" },
+        { "label": "Volume Final Auditado", "icon": "fa-check-double" }
+      ],
+      "checklists": {
+        "noveCertos": [
+          "Paciente Certo",
+          "Medicação Certa",
+          "Dose Certa",
+          "Via Certa",
+          "Hora Certa",
+          "Registro Certo",
+          "Validade Certa",
+          "Resposta Certa",
+          "Forma Farmacêutica Certa"
+        ],
+        "metas": [
+          { "id": 1, "text": "Identificar o paciente corretamente", "class": "glass-meta-blue" },
+          { "id": 2, "text": "Comunicação Efetiva na passagem de plantão", "class": "glass-meta-blue" },
+          { "id": 3, "text": "Segurança de Medicamentos de Alta Vigilância", "class": "glass-meta-orange" },
+          { "id": 6, "text": "Reduzir risco de quedas do paciente", "class": "glass-meta-blue" }
+        ]
+      },
+      "modals": {
+        "tutorial": {
+          "title": "Tutorial de Uso - Calculadora de Insulina",
+          "icon": "fa-question-circle",
+          "content": "<div>Conteúdo do tutorial...</div>"
+        },
+        "nanda": {
+          "title": "Diagnósticos de Enfermagem - NANDA",
+          "icon": "fa-stethoscope",
+          "content": "<div>Conteúdo dos diagnósticos...</div>"
+        },
+        "medication": {
+          "title": "9 Certos da Medicação",
+          "icon": "fa-check-double",
+          "content": "<div>Lista dos 9 certos...</div>"
+        },
+        "safety": {
+          "title": "Metas Internacionais de Segurança",
+          "icon": "fa-star",
+          "content": "<div>Metas de segurança...</div>"
+        }
+      },
+      "sidebar": {
+        "tools": [
+          { "id": "conteudo", "icon": "fa-book-open", "label": "Conteúdo", "action": "switchTab('sobre')" },
+          { "id": "ajuda", "icon": "fa-question-circle", "label": "Ajuda", "action": "showTutorial()" },
+          { "id": "nanda", "icon": "fa-stethoscope", "label": "Nanda", "action": "showNANDAModal()" },
+          { "id": "9acertos", "icon": "fa-check-double", "label": "9 Acertos", "action": "showMedicationChecklist()" },
+          { "id": "metas", "icon": "fa-bullseye", "label": "Metas", "action": "showSafetyGoals()" }
+        ]
+      },
+      "footer": {
+        "tags": ["#insulina", "#farmacologia", "#segurança-do-paciente", "#auditoria", "#enfermagem", "#cálculo-clínico"]
+      }
+    }
+  },
+  "global": {
+    "accessibility": {
+      "fontSize": "1rem",
+      "highContrast": false
+    },
+    "analytics": {
+      "enabled": true,
+      "gtag": "G-XXXXXXXXXX"
+    }
+  }
+}

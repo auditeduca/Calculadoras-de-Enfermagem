@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mapa do Site | Guia de Navegação - Calculadoras de Enfermagem</title>
+    
+    <!-- [CONFIGURAÇÃO GLOBAL] -->
+    <script>
+        window.NURSE_CONFIG = {
+            baseUrl: 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/',
+            debug: false
+        };
+
+        async function loadModule(id, fileName) {
+            const container = document.getElementById(id);
+            if (!container) return;
+            try {
+                const response = await fetch(`${window.NURSE_CONFIG.baseUrl}assets/components/${fileName}.html`, {
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
+                if (!response.ok) throw new Error(`Erro: ${response.status}`);
+                const html = await response.text();
+                container.innerHTML = html;
+                container.classList.remove('opacity-50', 'opacity-30');
+                container.style.opacity = "1";
+            } catch (err) {
+                console.error(`Falha no módulo ${fileName}:`, err);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadModule('accessibility-container', 'accessibility-v4');
+            loadModule('header-container', 'header-v4');
+            loadModule('footer-container', 'footer-v4');
+        });
+    </script>
+
+    <!-- Performance Resource Hints -->
+    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+    <!-- Google AdSense & Analytics -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX" crossorigin="anonymous"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- SEO & Metadados Atualizados para Mapa do Site -->
+    <meta name="description" content="Navegue por todas as seções das Calculadoras de Enfermagem. Encontre rapidamente ferramentas clínicas, escalas, suporte institucional e recursos de sustentabilidade.">
+    <meta name="keywords" content="mapa do site, guia de navegação, escalas enfermagem, calculadoras clínicas, institucional, suporte técnico">
+    <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/mapa-do-site.html">
+    <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp">
+
+    <!-- Internacionalização (19 Idiomas) -->
+    <link rel="alternate" hreflang="pt-br" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/mapa-do-site.html">
+    <link rel="alternate" hreflang="en" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/en/mapa-do-site.html">
+    <link rel="alternate" hreflang="es" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/es/mapa-do-site.html">
+    <link rel="alternate" hreflang="fr" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/fr/mapa-do-site.html">
+    <link rel="alternate" hreflang="de" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/de/mapa-do-site.html">
+    <link rel="alternate" hreflang="it" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/it/mapa-do-site.html">
+    <link rel="alternate" hreflang="ja" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ja/mapa-do-site.html">
+    <link rel="alternate" hreflang="zh" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/zh/mapa-do-site.html">
+    <link rel="alternate" hreflang="hi" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/hi/mapa-do-site.html">
+    <link rel="alternate" hreflang="ar" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ar/mapa-do-site.html">
+    <link rel="alternate" hreflang="ru" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ru/mapa-do-site.html">
+    <link rel="alternate" hreflang="tr" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/tr/mapa-do-site.html">
+    <link rel="alternate" hreflang="ko" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/ko/mapa-do-site.html">
+    <link rel="alternate" hreflang="nl" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/nl/mapa-do-site.html">
+    <link rel="alternate" hreflang="pl" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/pl/mapa-do-site.html">
+    <link rel="alternate" hreflang="sv" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/sv/mapa-do-site.html">
+    <link rel="alternate" hreflang="id" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/id/mapa-do-site.html">
+    <link rel="alternate" hreflang="vi" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/vi/mapa-do-site.html">
+    <link rel="alternate" hreflang="uk" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/uk/mapa-do-site.html">
+    <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/mapa-do-site.html">
+
+    <!-- SEO Estruturado -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Mapa do Site - Calculadoras de Enfermagem",
+      "description": "Índice completo de todas as ferramentas e páginas institucionais da plataforma.",
+      "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/mapa-do-site.html",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/mapa-do-site.html"
+      },
+      "author": { "@type": "Organization", "name": "Calculadoras de Enfermagem" }
+    }
+    </script>
+
+    <!-- Estilos Externos V4 -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { nunito: ['"Nunito Sans"', 'sans-serif'], inter: ['Inter', 'sans-serif'] },
+                    colors: { 'nurse-primary': '#1A3E74', 'nurse-accent': '#00838f', 'nurse-bgDark': '#0F172A' }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter transition-colors duration-300; }
+            h1, h2, h3 { @apply font-nunito tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
+            :focus-visible { @apply outline-none ring-4 ring-cyan-500 ring-offset-2 dark:ring-offset-nurse-bgDark rounded-sm; }
+        }
+        @layer components {
+            .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all; }
+            .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+            .toc-link { @apply flex items-center gap-2 py-2.5 text-sm text-white/90 hover:text-white hover:translate-x-1 border-b border-white/10 last:border-0 transition-all font-semibold; }
+            .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md focus:ring-2 focus:ring-white; }
+            .text-aaa { @apply text-slate-700 dark:text-slate-200 leading-relaxed; }
+            .skeleton { @apply animate-pulse bg-slate-200 dark:bg-slate-700 rounded; }
+            .map-list { @apply mt-4 space-y-2; }
+            .map-item { @apply flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 hover:text-nurse-accent transition-colors; }
+            .tag-pill { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen relative overflow-x-hidden">
+
+    <div id="accessibility-container"></div>
+
+    <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="skeleton h-8 w-40"></div>
+            <div class="hidden md:flex gap-6"><div class="skeleton h-4 w-16"></div><div class="skeleton h-4 w-16"></div></div>
+        </div>
+    </div>
+
+    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 py-8 md:py-12 w-full">
+        
+        <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
+            <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+            <i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>
+            <span>Suporte</span>
+            <i class="fa-solid fa-chevron-right text-[10px]" aria-hidden="true"></i>
+            <span class="text-nurse-primary dark:text-cyan-400 font-bold" aria-current="page">Mapa do Site</span>
+        </nav>
+
+        <header class="max-w-4xl mb-12">
+            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Navegação</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Mapa Estrutural do Site</h1>
+            <div class="w-24 h-2 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+            <p class="text-xl text-aaa font-medium mb-8">Encontre rapidamente todas as calculadoras, ferramentas clínicas e páginas informativas da nossa plataforma.</p>
+        </header>
+
+        <div class="mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 group">
+            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-objetivo.webp" 
+                 alt="Arquitetura de informação e navegação do site." 
+                 class="w-full h-[350px] md:h-[500px] object-cover object-[center_35%] transition-transform duration-1000 group-hover:scale-105" 
+                 loading="eager" fetchpriority="high">
+        </div>
+
+        <div class="grid lg:grid-cols-[1fr,340px] gap-10 lg:gap-16 items-start">
+            
+            <article class="card-base p-8 md:p-14">
+                <div class="prose prose-lg prose-slate dark:prose-invert max-w-none">
+                    <p class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-12 leading-snug border-l-8 border-nurse-accent pl-8 italic">
+                        Organizamos a nossa plataforma para que o acesso à informação crítica seja sempre rápido e intuitivo.
+                    </p>
+
+                    <div class="space-y-16">
+                        <!-- Pilar 1: Ferramentas Clínicas -->
+                        <section id="pane-ferramentas" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">01</span>
+                                Ferramentas Clínicas
+                            </h2>
+                            <p class="text-aaa text-lg mb-4">Acesso direto às calculadoras e escalas de avaliação assistencial.</p>
+                            <ul class="map-list">
+                                <li><a href="index.html" class="map-item"><i class="fa-solid fa-calculator text-nurse-accent"></i> Página Inicial e Painel de Calculadoras</a></li>
+                                <li><a href="index.html#escalas" class="map-item"><i class="fa-solid fa-list-check text-nurse-accent"></i> Escalas de Avaliação Clínica</a></li>
+                                <li><a href="index.html#medicamentos" class="map-item"><i class="fa-solid fa-pills text-nurse-accent"></i> Cálculos de Medicamentos e Diluições</a></li>
+                            </ul>
+                        </section>
+
+                        <!-- Pilar 2: Institucional -->
+                        <section id="pane-institucional" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">02</span>
+                                Institucional e Estratégia
+                            </h2>
+                            <p class="text-aaa text-lg mb-4">Saiba mais sobre o projeto, a nossa missão e os nossos objetivos estratégicos.</p>
+                            <ul class="map-list">
+                                <li><a href="objetivo.html" class="map-item"><i class="fa-solid fa-bullseye text-nurse-accent"></i> Objetivos da Plataforma</a></li>
+                                <li><a href="missao.html" class="map-item"><i class="fa-solid fa-shield-heart text-nurse-accent"></i> Missão, Visão e Valores</a></li>
+                                <li><a href="impactodigital.html" class="map-item"><i class="fa-solid fa-chart-line text-nurse-accent"></i> Relatório de Impacto Digital</a></li>
+                            </ul>
+                        </section>
+
+                        <!-- Pilar 3: Responsabilidade -->
+                        <section id="pane-responsabilidade" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">03</span>
+                                Apoio e Responsabilidade
+                            </h2>
+                            <p class="text-aaa text-lg mb-4">Canais de suporte e compromissos com a inclusão e o meio ambiente.</p>
+                            <ul class="map-list">
+                                <li><a href="fale.html" class="map-item"><i class="fa-solid fa-headset text-nurse-accent"></i> Fale Conosco e Suporte</a></li>
+                                <li><a href="politicadeacessibilidade.html" class="map-item"><i class="fa-solid fa-universal-access text-nurse-accent"></i> Política de Acessibilidade Digital</a></li>
+                                <li><a href="tecnologiaverde.html" class="map-item"><i class="fa-solid fa-leaf text-nurse-accent"></i> Sustentabilidade e Tecnologia Verde</a></li>
+                            </ul>
+                        </section>
+
+                        <!-- Pilar 4: Utilidades -->
+                        <section id="pane-utilidades" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">04</span>
+                                Utilidades e Legal
+                            </h2>
+                            <p class="text-aaa text-lg mb-4">Documentação legal e ferramentas de navegação auxiliares.</p>
+                            <ul class="map-list">
+                                <li><a href="mapa-do-site.html" class="map-item font-bold text-nurse-primary"><i class="fa-solid fa-sitemap text-nurse-accent"></i> Mapa do Site (Página Atual)</a></li>
+                                <li><a href="#" class="map-item"><i class="fa-solid fa-gavel text-nurse-accent"></i> Termos de Uso e Privacidade</a></li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Bio / Autor -->
+                <footer class="bg-slate-100 dark:bg-slate-900/60 rounded-[2.5rem] p-8 md:p-10 mt-20 flex flex-col md:flex-row gap-8 items-center border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Logotipo" class="w-24 h-24 rounded-full border-4 border-white dark:border-slate-800 shadow-xl object-cover">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400">Calculadoras de Enfermagem</h3>
+                        <p class="text-aaa text-md italic font-medium">"Orientando a jornada digital do enfermeiro através de uma estrutura clara e ética."</p>
+                    </div>
+                </footer>
+
+                <!-- Tags -->
+                <section class="mt-12 pt-8 border-t-2 border-slate-200 dark:border-slate-700">
+                    <div class="flex flex-wrap gap-2 items-center">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2 flex items-center"><i class="fa-solid fa-tags mr-2"></i> Navegação:</span>
+                        <span class="tag-pill">#MapaDoSite</span><span class="tag-pill">#GuiaEnfermagem</span><span class="tag-pill">#SuporteDigital</span><span class="tag-pill">#Início</span>
+                    </div>
+                </section>
+            </article>
+
+            <!-- Barra Lateral Sincronizada -->
+            <aside class="space-y-8 sticky top-32 self-start hidden lg:block">
+                <div class="sidebar-module">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-list-ul"></i> Seções do Guia</h3>
+                    <nav class="flex flex-col">
+                        <a href="#pane-ferramentas" class="toc-link">1. Clínicas</a>
+                        <a href="#pane-institucional" class="toc-link">2. Institucional</a>
+                        <a href="#pane-responsabilidade" class="toc-link">3. Responsabilidade</a>
+                        <a href="#pane-utilidades" class="toc-link">4. Utilidades</a>
+                    </nav>
+                </div>
+
+                <div class="card-base p-4 text-center border border-dashed border-slate-300">
+                    <div class="bg-slate-100 dark:bg-slate-800 h-[250px] flex items-center justify-center text-slate-400 text-xs">Espaço para Guia Rápido</div>
+                </div>
+
+                <div class="sidebar-module from-teal-700 to-nurse-secondary shadow-nurse-accent/20">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-share-alt"></i> Compartilhar Guia</h3>
+                    <div class="flex gap-3.5 flex-wrap">
+                        <a href="#" class="share-btn" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn" onclick="window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="share-btn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/" target="_blank" class="share-btn"><i class="fab fa-instagram"></i></a>
+                        <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Link copiado!');"><i class="fas fa-link"></i></button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Conteúdo Relacionado -->
+    <section class="bg-slate-200/50 dark:bg-slate-900/80 py-24 border-t border-slate-300 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-black mb-16 flex items-center justify-center gap-4">
+                <i class="fa-solid fa-layer-group text-nurse-accent"></i> Páginas de Destaque
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
+                <a href="index.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-objetivo.webp" alt="Calculadoras" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-nurse-primary text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Ferramentas</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Calculadoras e Escalas</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Acesse o hub central de ferramentas clínicas validadas.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Aceder agora <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+                <a href="fale.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-missao.webp" alt="Suporte" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-teal-600 text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Suporte</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Centro de Ajuda</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Entre em contacto e receba suporte da nossa equipa técnica.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Falar connosco <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+                <a href="impactodigital.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-sustentabilidade-digital.webp" alt="Impacto" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-green-700 text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Inovação</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Impacto Digital</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Veja como a tecnologia está a transformar o cuidado assistencial.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Ver impacto <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-container" class="relative z-10 bg-nurse-primary dark:bg-slate-900 min-h-[150px] mt-12 transition-opacity duration-500 opacity-50">
+        <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col gap-4">
+            <div class="skeleton h-6 w-32"></div>
+            <div class="skeleton h-4 w-64"></div>
+        </div>
+    </div>
+
+    <!-- Scripts Modulares V4 -->
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/event-bus-v4.js" defer crossorigin="anonymous"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/header-v4.js" defer crossorigin="anonymous"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/footer-v4.js" defer crossorigin="anonymous"></script>
+    <script src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/js/accessibility-v4.js" defer crossorigin="anonymous"></script>
+</body>
+</html>
