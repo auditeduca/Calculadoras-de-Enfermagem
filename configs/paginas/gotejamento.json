@@ -1,0 +1,215 @@
+{
+  "metadata": {
+    "id": "gotejamento",
+    "title": "Gotejamento de Soro",
+    "category": "farmacologia",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "calculator"
+  },
+  "seo": {
+    "title": "Gotejamento de Soro | Calculadoras de Enfermagem",
+    "description": "Gotas por minuto e mL por hora a partir do volume, do tempo e do equipo.",
+    "keywords": "Gotejamento de Soro, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/gotejamento/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Calculadora Clínica",
+    "title": "Gotejamento de Soro",
+    "description": "Gotas por minuto e mL por hora a partir do volume, do tempo e do equipo."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Gotejamento de Soro",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Parâmetros",
+        "fields": [
+          {
+            "id": "volume",
+            "type": "number",
+            "label": "Volume",
+            "placeholder": "Ex: 500",
+            "unit": "mL",
+            "required": true,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "tempo",
+            "type": "number",
+            "label": "Tempo",
+            "placeholder": "Ex: 8",
+            "unit": "",
+            "required": true,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "unidadeTempo",
+            "type": "select",
+            "label": "Unidade de tempo",
+            "required": true,
+            "default": 60,
+            "options": [
+              {
+                "value": 60,
+                "label": "Horas"
+              },
+              {
+                "value": 1,
+                "label": "Minutos"
+              }
+            ]
+          },
+          {
+            "id": "equipo",
+            "type": "select",
+            "label": "Tipo de equipo",
+            "required": true,
+            "default": 20,
+            "options": [
+              {
+                "value": 20,
+                "label": "Macrogotas (20 gotas/mL)"
+              },
+              {
+                "value": 60,
+                "label": "Microgotas (60 gotas/mL)"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Calcular",
+        "icon": "fa-calculator",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "minutos = tempo * unidadeTempo; gotasMin = volume * equipo / minutos; mlHora = volume * 60 / minutos",
+    "result": {
+      "label": "Gotejamento",
+      "unit": "gotas/min",
+      "decimals": 0,
+      "key": "gotasMin",
+      "interpretationOf": "gotasMin"
+    },
+    "interpretation": [
+      {
+        "max": 1000000,
+        "label": "Velocidade de infusão",
+        "color": "text-nurse-primary",
+        "bg": "bg-slate-50",
+        "conduct": "Gotas/min = volume × fator do equipo ÷ tempo em minutos. Confira o fator impresso no equipo."
+      }
+    ],
+    "audit": {
+      "title": "Auditoria",
+      "steps": [
+        {
+          "label": "Tempo",
+          "sourceField": "minutos",
+          "suffix": "min",
+          "icon": "fa-clock"
+        },
+        {
+          "label": "Gotas por minuto",
+          "sourceField": "gotasMin",
+          "icon": "fa-tint"
+        },
+        {
+          "label": "mL por hora",
+          "sourceField": "mlHora",
+          "suffix": "mL/h",
+          "icon": "fa-gauge"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Calculadora",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Gotejamento de Soro",
+        "body": "<p>O número de gotas por minuto usa o volume em mL, o tempo convertido em minutos e o fator do equipo (20 ou 60 gotas por mL).</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Informe o volume total a infundir.",
+        "Escolha se o tempo está em horas ou em minutos.",
+        "Selecione o equipo. O resultado em mL/h aparece na auditoria."
+      ]
+    }
+  ]
+}

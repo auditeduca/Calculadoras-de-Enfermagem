@@ -12,9 +12,8 @@
      cabeçalho com rotas (gerado de data/site.json), rodapé com logotipo
      oficial e sistema de cookies. Nada disso precisa ser copiado à mão.
 
-     Para calculadoras dirigidas por JSON, defina window.PAGE_CONFIG com o
-     JSON validado por schema/calculadora (ver configs/insulina-config.json
-     e MAPEAMENTO-IDS.md).
+     Calculadoras novas não copiam este arquivo: edite configs/paginas/<id>.json
+     e rode python3 tools/gerar_paginas.py. O runtime é js/calculadora.js.
      ============================================================ -->
 <html lang="pt-br" class="scroll-smooth">
 <head>

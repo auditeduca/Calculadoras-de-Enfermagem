@@ -1,0 +1,229 @@
+{
+  "metadata": {
+    "id": "balancohidrico",
+    "title": "Balanço Hídrico",
+    "category": "clinica",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "calculator"
+  },
+  "seo": {
+    "title": "Balanço Hídrico | Calculadoras de Enfermagem",
+    "description": "Soma das entradas e saídas de líquidos em mililitros.",
+    "keywords": "Balanço Hídrico, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/balancohidrico/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Calculadora Clínica",
+    "title": "Balanço Hídrico",
+    "description": "Soma das entradas e saídas de líquidos em mililitros."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Balanço Hídrico",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Parâmetros",
+        "fields": [
+          {
+            "id": "ingestaoOral",
+            "type": "number",
+            "label": "Ingestão oral",
+            "placeholder": "Ex: 500",
+            "unit": "mL",
+            "required": false,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "ingestaoSonda",
+            "type": "number",
+            "label": "Sonda nasogástrica",
+            "placeholder": "Ex: 200",
+            "unit": "mL",
+            "required": false,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "ingestaoParenteral",
+            "type": "number",
+            "label": "Parenteral (IV)",
+            "placeholder": "Ex: 300",
+            "unit": "mL",
+            "required": false,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "eliminacaoUrina",
+            "type": "number",
+            "label": "Urina",
+            "placeholder": "Ex: 800",
+            "unit": "mL",
+            "required": false,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "eliminacaoVomito",
+            "type": "number",
+            "label": "Vômito",
+            "placeholder": "Ex: 100",
+            "unit": "mL",
+            "required": false,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "eliminacaoDrenos",
+            "type": "number",
+            "label": "Drenos",
+            "placeholder": "Ex: 0",
+            "unit": "mL",
+            "required": false,
+            "min": 0,
+            "step": "any"
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Calcular",
+        "icon": "fa-calculator",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "balanco = ingestaoOral + ingestaoSonda + ingestaoParenteral - eliminacaoUrina - eliminacaoVomito - eliminacaoDrenos",
+    "result": {
+      "label": "Balanço",
+      "unit": "mL",
+      "decimals": 0,
+      "key": "balanco",
+      "interpretationOf": "balanco"
+    },
+    "interpretation": [
+      {
+        "max": -0.0001,
+        "label": "Balanço negativo",
+        "color": "text-yellow-700",
+        "bg": "bg-yellow-50",
+        "conduct": "Saídas superam as entradas. Reavaliar hidratação e perdas."
+      },
+      {
+        "max": 0,
+        "label": "Equilíbrio",
+        "color": "text-green-700",
+        "bg": "bg-green-50",
+        "conduct": "Entradas e saídas se equivalem neste intervalo."
+      },
+      {
+        "max": 10000000,
+        "label": "Balanço positivo",
+        "color": "text-blue-700",
+        "bg": "bg-blue-50",
+        "conduct": "Entradas superam as saídas. Observar sobrecarga hídrica."
+      }
+    ],
+    "audit": {
+      "title": "Auditoria",
+      "steps": [
+        {
+          "label": "Fórmula",
+          "fixedValue": "Entradas − saídas",
+          "icon": "fa-calculator"
+        },
+        {
+          "label": "Balanço",
+          "sourceField": "balanco",
+          "suffix": "mL",
+          "icon": "fa-droplet"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Calculadora",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Balanço Hídrico",
+        "body": "<p>O balanço hídrico é a diferença entre o volume infundido ou ingerido e o volume eliminado no período.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Lance cada entrada e saída em mL. Campo vazio conta como zero.",
+        "O resultado positivo indica retenção; o negativo, perda.",
+        "Registre o período a que o balanço se refere no prontuário."
+      ]
+    }
+  ]
+}

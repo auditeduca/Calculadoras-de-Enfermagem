@@ -1,0 +1,211 @@
+{
+  "metadata": {
+    "id": "imc",
+    "title": "Índice de Massa Corporal",
+    "category": "clinica",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "calculator"
+  },
+  "seo": {
+    "title": "Índice de Massa Corporal | Calculadoras de Enfermagem",
+    "description": "IMC a partir do peso em quilogramas e da altura em metros.",
+    "keywords": "Índice de Massa Corporal, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/imc/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Calculadora Clínica",
+    "title": "Índice de Massa Corporal",
+    "description": "IMC a partir do peso em quilogramas e da altura em metros."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Índice de Massa Corporal",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Parâmetros",
+        "fields": [
+          {
+            "id": "peso",
+            "type": "number",
+            "label": "Peso",
+            "placeholder": "Ex: 70",
+            "unit": "kg",
+            "required": true,
+            "min": 0,
+            "step": "0.1"
+          },
+          {
+            "id": "altura",
+            "type": "number",
+            "label": "Altura",
+            "placeholder": "Ex: 1.70",
+            "unit": "m",
+            "required": true,
+            "min": 0.4,
+            "max": 2.5,
+            "step": 0.01
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Calcular",
+        "icon": "fa-calculator",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "imc = peso / (altura * altura)",
+    "result": {
+      "label": "IMC",
+      "unit": "kg/m²",
+      "decimals": 1,
+      "key": "imc",
+      "interpretationOf": "imc"
+    },
+    "interpretation": [
+      {
+        "max": 18.49,
+        "label": "Baixo peso",
+        "color": "text-yellow-700",
+        "bg": "bg-yellow-50",
+        "conduct": "IMC abaixo de 18,5 kg/m²."
+      },
+      {
+        "max": 24.99,
+        "label": "Eutrofia",
+        "color": "text-green-700",
+        "bg": "bg-green-50",
+        "conduct": "IMC entre 18,5 e 24,9 kg/m²."
+      },
+      {
+        "max": 29.99,
+        "label": "Sobrepeso",
+        "color": "text-yellow-700",
+        "bg": "bg-yellow-50",
+        "conduct": "IMC entre 25 e 29,9 kg/m²."
+      },
+      {
+        "max": 34.99,
+        "label": "Obesidade grau I",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50",
+        "conduct": "IMC entre 30 e 34,9 kg/m²."
+      },
+      {
+        "max": 39.99,
+        "label": "Obesidade grau II",
+        "color": "text-red-700",
+        "bg": "bg-red-50",
+        "conduct": "IMC entre 35 e 39,9 kg/m²."
+      },
+      {
+        "max": 1000,
+        "label": "Obesidade grau III",
+        "color": "text-red-800",
+        "bg": "bg-red-50",
+        "conduct": "IMC igual ou acima de 40 kg/m²."
+      }
+    ],
+    "audit": {
+      "title": "Auditoria",
+      "steps": [
+        {
+          "label": "Fórmula",
+          "fixedValue": "peso / altura²",
+          "icon": "fa-calculator"
+        },
+        {
+          "label": "IMC",
+          "sourceField": "imc",
+          "suffix": "kg/m²",
+          "icon": "fa-weight-scale"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Calculadora",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Índice de Massa Corporal",
+        "body": "<p>O índice de massa corporal divide o peso pela altura ao quadrado. A faixa segue os pontos de corte usuais para adultos.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Informe o peso em quilogramas.",
+        "Informe a altura em metros (1,70 e não 170).",
+        "A faixa exibida vale como referência para adultos."
+      ]
+    }
+  ]
+}
