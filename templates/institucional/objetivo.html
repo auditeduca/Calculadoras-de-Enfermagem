@@ -1,85 +1,224 @@
-<style>
-:root { --navy: #1a3e74; --navy-light: #1e4d8c; --navy-dark: #163269; }
-.meem-card-navy { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, var(--navy-dark) 100%); border-radius: 16px; box-shadow: 0 10px 30px rgba(26, 62, 116, 0.45); overflow: hidden; position: relative; color: #fff; }
-.heavy-shadow-card { background: #fff; border-radius: 16px; border: 1px solid #e2e8f0; padding: 32px; box-shadow: 0 15px 35px -5px rgba(26, 62, 116, 0.2); height: 100%; }
-.custom-bullet-list { list-style: none; padding: 0; margin-top: 12px; }
-.custom-bullet-list li { position: relative; padding-left: 20px; margin-bottom: 8px; color: #475569; font-size: 15px; line-height: 1.6; }
-.custom-bullet-list li::before { content: ""; position: absolute; left: 0; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--navy-light); }
-.custom-bullet-list.dark-list li { color: #bfdbfe; }
-.custom-bullet-list.dark-list li::before { background: #60a5fa; }
-.content-text p { color: #475569; font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
-.crumbs { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #64748b; margin-bottom: 24px; flex-wrap: wrap; }
-.crumbs a { color: var(--navy); font-weight: 700; }
-.tag-pill { display: inline-block; padding: 6px 12px; background: #f1f5f9; color: #1e293b; border-radius: 8px; font-size: 11px; font-weight: 700; text-decoration: none; }
-</style>
+<style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter transition-colors duration-300; }
+            h1, h2, h3 { @apply font-nunito tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
+            :focus-visible { @apply outline-none ring-4 ring-cyan-500 ring-offset-2 dark:ring-offset-nurse-bgDark rounded-sm; }
+        }
+        @layer components {
+            .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all; }
+            .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+            .toc-link { @apply flex items-center gap-2 py-2.5 text-sm text-white/90 hover:text-white hover:translate-x-1 border-b border-white/10 last:border-0 transition-all font-semibold; }
+            .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md focus:ring-2 focus:ring-white; }
+            .text-aaa { @apply text-slate-700 dark:text-slate-200 leading-relaxed; }
+            .skeleton { @apply animate-pulse bg-slate-200 dark:bg-slate-700 rounded; }
+            .alert-box { @apply flex gap-4 p-6 rounded-2xl mb-8 border-l-4 border-nurse-accent bg-slate-50 text-slate-900 dark:bg-slate-900/20 dark:text-slate-100 shadow-sm font-inter; }
+            .tag-pill { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
+            .periodo { @apply px-4 py-2 rounded-full border border-slate-200 text-sm font-bold text-nurse-primary bg-white; }
+            .periodo.active { @apply bg-nurse-primary text-white border-nurse-primary; }
+            .metricas-dot { @apply inline-block w-2 h-2 rounded-full bg-slate-400 mr-2; }
+            .metricas-dot.ok { background: #16a34a; }
+            .metricas-dot.err { background: #dc2626; }
+        }
+    </style>
 <!--CORPO-->
-<nav class="crumbs" aria-label="Trilha">
-  <a href="index.html">Início</a>
-  <span aria-hidden="true">&gt;</span>
-  <span style="color:#1e293b;font-weight:600">Objetivo do Site</span>
-</nav>
-<section class="mb-10 meem-card-navy">
-  <div class="flex flex-col md:flex-row items-center justify-between px-8 md:px-12 py-10 md:py-12 relative z-10">
-    <div class="w-full md:w-3/4 text-left">
-      <p class="text-blue-200 text-xs font-bold uppercase tracking-widest mb-2">Propósito da Plataforma</p>
-      <h1 class="text-white text-3xl md:text-5xl font-black leading-tight mb-4">Objetivo do Site</h1>
-      <p class="text-blue-100 text-base max-w-3xl leading-relaxed">Oferecer a profissionais e estudantes de enfermagem uma ferramenta prática para o cálculo de medicamentos e doses, com base em prescrições médicas, simulações ou questões de cursos. O usuário insere os dados solicitados e a calculadora realiza automaticamente as fórmulas matemáticas necessárias.</p>
-    </div>
-    <div class="w-full md:w-1/4 flex justify-center md:justify-end mt-6 md:mt-0">
-      <img src="assets/images/logotipo-calculadoras-de-enfermagem.webp" alt="Logotipo Calculadoras de Enfermagem" width="120" height="120" style="object-fit:contain">
-    </div>
-  </div>
-</section>
-<section class="mb-10 content-text">
-  <p>Disponibilizamos também a aplicação das principais escalas assistenciais utilizadas na enfermagem e na área da saúde, que exigem o cálculo por meio da soma de escores (pontuações) para identificar riscos ou auxiliar na elaboração de um plano de cuidado pelo enfermeiro. Exemplos incluem: Escala de Braden, Escala de Morse e Escala de Fugulin. Além disso, a plataforma oferece escalas de monitoramento que apoiam intervenções médicas, como a Escala de Aldrete e Kroulik, amplamente utilizadas pela equipe de enfermagem e fundamentais para orientar a liberação de pacientes na SRPA.</p>
-  <p>Essas escalas, na maioria das vezes, são aplicadas pela equipe de enfermagem e funcionam como um guia para a definição de condutas por toda a equipe multiprofissional — incluindo técnicos de enfermagem, enfermeiros, médicos e fisioterapeutas. Em algumas delas, a atuação do enfermeiro é mais ativa; em outras, o instrumento serve apenas como base de monitoramento para subsidiar a decisão médica. Um exemplo disso é a Escala de Aldrete: embora seja aplicada e monitorada pela enfermagem na SRPA, a decisão final sobre alta ou permanência do paciente em monitoramento cabe exclusivamente ao médico anestesista.</p>
-  <p>Os cálculos matemáticos disponibilizados pelas calculadoras deste site têm caráter consultivo e didático, com base em referências bibliográficas reconhecidas, que devem ser consultadas para validação do conteúdo. A revisão dos cálculos de medicações, insulina e gotejamento não substitui a aplicação manual dos métodos tradicionais — como o uso de papel, lápis e as regras matemáticas padronizadas. Em hipótese alguma as calculadoras devem ser consideradas como único meio para se chegar ao resultado final. Elas servem como apoio comparativo e educativo, mas não substituem o raciocínio crítico e a responsabilidade técnica do profissional. Nenhum cálculo automatizado substitui a análise e julgamento do profissional de enfermagem — e jamais substituirá.</p>
-  <p>Em caso de dúvidas sobre a formulação ou os resultados dos cálculos, recomenda-se consultar seu professor de enfermagem ou enfermeiro responsável, que estão habilitados para oferecer esclarecimentos, tirar dúvidas e orientar o correto procedimento para a realização dos cálculos e obtenção dos resultados.</p>
-</section>
-<section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-  <div class="meem-card-navy p-8">
-    <h2 class="text-2xl font-bold text-white mb-3">Uma plataforma global</h2>
-    <p class="text-blue-100 leading-relaxed mb-6">Conectamos profissionais, instituições e conhecimento em mais de 195 países, promovendo uma enfermagem mais forte, colaborativa e sustentável.</p>
-    <p class="text-white font-bold mb-2">Nossa jornada:</p>
-    <ul class="custom-bullet-list dark-list">
-      <li><strong>195+</strong> países conectados</li>
-      <li><strong>140+ milhões</strong> de profissionais impactados</li>
-      <li><strong>18+</strong> idiomas disponíveis</li>
-    </ul>
-  </div>
-  <div class="heavy-shadow-card">
-    <h2 class="text-2xl font-bold mb-3" style="color:#1A3E74">Gestão que gera impacto</h2>
-    <p class="text-slate-600 leading-relaxed mb-6">Recursos e indicadores para apoiar líderes e instituições de saúde na tomada de decisões estratégicas e eficientes.</p>
-    <ul class="custom-bullet-list">
-      <li>Dimensionamento de equipe de enfermagem</li>
-      <li>Escala de Fugulin — complexidade assistencial</li>
-      <li>Classificação de paciente — Perroca (SCP)</li>
-      <li>SBAR — passagem de plantão</li>
-    </ul>
-  </div>
-</section>
-<section class="mb-10">
-  <div class="heavy-shadow-card">
-    <p class="text-blue-600 font-bold text-xs uppercase tracking-wider mb-2">Educação</p>
-    <h2 class="text-2xl font-bold mb-3" style="color:#1A3E74">Educação que transforma</h2>
-    <p class="text-slate-600 leading-relaxed mb-6">Conteúdos atualizados, baseados em evidências e desenvolvidos por especialistas para impulsionar a carreira clínica.</p>
-    <ul class="custom-bullet-list">
-      <li>Biblioteca de provas de enfermagem</li>
-      <li>Quiz interativo de questões</li>
-      <li>Simulados por banca e instituição</li>
-      <li>Diagnósticos de Enfermagem — NANDA</li>
-    </ul>
-  </div>
-</section>
-<section class="mb-10 rounded-xl p-8 border border-emerald-100" style="background:#ecfdf5">
-  <h2 class="text-2xl font-bold mb-4" style="color:#065f46">Compromisso com a Sustentabilidade Digital</h2>
-  <p class="text-slate-700 leading-relaxed mb-4">Adotamos práticas voltadas à eficiência digital, incluindo hospedagem com foco em eficiência energética, uso de imagens WebP, estrutura modular, otimização contínua de desempenho e um script de cookies leve. Monitoramos regularmente o site com ferramentas como Website Carbon, EcoGrader, Google Lighthouse, Chrome DevTools, GTmetrix e Pingdom.</p>
-  <p class="text-slate-700 leading-relaxed">Mesmo em desenvolvimento, os resultados iniciais indicam redução no consumo de recursos, melhoria contínua da performance e uma experiência de navegação mais eficiente. O compromisso é evoluir constantemente, implementando metas anuais de eficiência digital e publicando relatórios periódicos com métricas auditáveis.</p>
-</section>
-<div class="flex flex-wrap gap-2">
-  <a class="tag-pill" href="busca.html?topico=Objetivo">#Objetivo</a>
-  <a class="tag-pill" href="busca.html?topico=Educacao">#Educacao</a>
-  <a class="tag-pill" href="busca.html?topico=Sustentabilidade">#Sustentabilidade</a>
-  <a class="tag-pill" href="busca.html?topico=SegurancaDoPaciente">#SegurancaDoPaciente</a>
-</div>
+        <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
+            <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+            <span aria-hidden="true">&gt;</span>
+            <span>Sobre Nós</span>
+            <span aria-hidden="true">&gt;</span>
+            <span class="text-nurse-primary dark:text-cyan-400 font-bold" aria-current="page">Objetivo do Site</span>
+        </nav>
+
+        <header class="max-w-4xl mb-12">
+            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Institucional</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Objetivo do Site</h1>
+            <div class="w-24 h-2 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+            <p class="text-xl text-aaa font-medium mb-8">Ferramentas práticas para o cálculo de medicamentos e doses, escalas assistenciais, gestão, educação e sustentabilidade.</p>
+        </header>
+
+        <div class="mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 group">
+            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-objetivo.webp" alt="Objetivo do site Calculadoras de Enfermagem." class="w-full h-[350px] md:h-[500px] object-cover object-top transition-transform duration-1000 group-hover:scale-105" loading="eager" fetchpriority="high">
+        </div>
+
+        <div class="grid lg:grid-cols-[1fr,340px] gap-10 lg:gap-16 items-start">
+            <article class="card-base p-8 md:p-14">
+                <div class="prose prose-lg prose-slate dark:prose-invert max-w-none">
+                    <p class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-12 leading-snug border-l-8 border-nurse-accent pl-8 italic">
+                        O usuário insere os dados solicitados e a calculadora realiza as fórmulas. O resultado é apoio comparativo e educativo.
+                    </p>
+                    <div class="space-y-16">
+                        
+                        <section id="pane-proposito" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">01</span>
+                                Propósito da plataforma
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">Oferecer a profissionais e estudantes de enfermagem uma ferramenta prática para o cálculo de medicamentos e doses, com base em prescrições médicas, simulações ou questões de cursos.</p>
+                        </section>
+
+                        <section id="pane-escalas" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">02</span>
+                                Escalas assistenciais
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">Disponibilizamos também a aplicação das principais escalas assistenciais utilizadas na enfermagem e na área da saúde, que exigem o cálculo por meio da soma de escores para identificar riscos ou auxiliar na elaboração de um plano de cuidado pelo enfermeiro. Exemplos incluem a Escala de Braden, a Escala de Morse e a Escala de Fugulin.</p>
+                            <p class="text-aaa text-lg text-justify mb-6">A plataforma oferece escalas de monitoramento que apoiam intervenções médicas, como a Escala de Aldrete e Kroulik, utilizadas pela equipe de enfermagem e fundamentais para orientar a liberação de pacientes na SRPA.</p>
+                            <p class="text-aaa text-lg text-justify mb-6">Essas escalas funcionam como um guia para a definição de condutas por toda a equipe multiprofissional, incluindo técnicos de enfermagem, enfermeiros, médicos e fisioterapeutas. Em algumas, a atuação do enfermeiro é mais ativa. Em outras, o instrumento serve como base de monitoramento para subsidiar a decisão médica. Na Escala de Aldrete, a enfermagem aplica e monitora na SRPA, e a decisão final sobre alta ou permanência cabe ao médico anestesista.</p>
+                        </section>
+
+                        <section id="pane-consulta" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">03</span>
+                                Caráter consultivo
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">Os cálculos matemáticos disponibilizados pelas calculadoras deste site têm caráter consultivo e didático, com base em referências bibliográficas reconhecidas, que devem ser consultadas para validação do conteúdo. A revisão dos cálculos de medicações, insulina e gotejamento não substitui a aplicação manual dos métodos tradicionais.</p>
+                            <div class="alert-box"><i class="fa-solid fa-user-nurse text-2xl mt-1 shrink-0 text-nurse-accent"></i><div><span class="font-bold block uppercase text-xs tracking-widest mb-1 opacity-80">Julgamento profissional</span>Nenhum cálculo automatizado substitui a análise e o julgamento do profissional de enfermagem. Em caso de dúvida, consulte o professor ou o enfermeiro responsável.</div></div>
+                        </section>
+
+                        <section id="pane-global" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">04</span>
+                                Uma plataforma global
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">Conectamos profissionais, instituições e conhecimento em mais de 195 países.</p>
+                            <ul class="grid md:grid-cols-3 gap-6 list-none p-0">
+                                <li class="bg-slate-50 dark:bg-slate-900/40 p-5 rounded-2xl border border-slate-200 dark:border-slate-700"><strong class="text-nurse-accent block mb-1">195+</strong> países conectados</li>
+                                <li class="bg-slate-50 dark:bg-slate-900/40 p-5 rounded-2xl border border-slate-200 dark:border-slate-700"><strong class="text-nurse-accent block mb-1">140+ milhões</strong> de profissionais impactados</li>
+                                <li class="bg-slate-50 dark:bg-slate-900/40 p-5 rounded-2xl border border-slate-200 dark:border-slate-700"><strong class="text-nurse-accent block mb-1">18+</strong> idiomas disponíveis</li>
+                            </ul>
+                        </section>
+
+                        <section id="pane-gestao" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">05</span>
+                                Gestão que gera impacto
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">Recursos e indicadores para apoiar líderes e instituições de saúde na tomada de decisões.</p>
+                            <ul class="list-disc pl-6 space-y-3 text-aaa text-lg"><li>Dimensionamento de equipe de enfermagem</li><li>Escala de Fugulin — complexidade assistencial</li><li>Classificação de paciente — Perroca (SCP)</li><li>SBAR — passagem de plantão</li></ul>
+                        </section>
+
+                        <section id="pane-educacao" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">06</span>
+                                Educação que transforma
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">Conteúdos atualizados, baseados em evidências e desenvolvidos para a carreira clínica.</p>
+                            <ul class="list-disc pl-6 space-y-3 text-aaa text-lg"><li>Biblioteca de provas de enfermagem</li><li>Quiz interativo de questões</li><li>Simulados por banca e instituição</li><li>Diagnósticos de Enfermagem — NANDA</li></ul>
+                        </section>
+
+                        <section id="pane-sustentabilidade" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">07</span>
+                                Sustentabilidade digital
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">Adotamos práticas voltadas à eficiência digital, incluindo hospedagem com foco em eficiência energética, uso de imagens WebP, estrutura modular, otimização contínua de desempenho e um script de cookies leve. O site é monitorado com Website Carbon, EcoGrader, Google Lighthouse, Chrome DevTools, GTmetrix e Pingdom.</p>
+                            <p class="text-aaa text-lg text-justify mb-6">Os resultados iniciais indicam redução no consumo de recursos e melhoria contínua da performance. O compromisso é evoluir com metas anuais de eficiência digital e relatórios periódicos.</p>
+                        </section>
+                    </div>
+                </div>
+                
+                <footer class="bg-slate-100 dark:bg-slate-900/60 rounded-[2.5rem] p-8 md:p-10 mt-20 flex flex-col md:flex-row gap-8 items-center border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Logotipo" class="w-24 h-24 rounded-full border-4 border-white dark:border-slate-800 shadow-xl object-cover">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400">Calculadoras de Enfermagem</h3>
+                        <p class="text-aaa text-md italic font-medium">"Nossa missão é proteger vidas através da precisão técnica."</p>
+                    </div>
+                </footer>
+                
+                <section class="mt-12 pt-8 border-t-2 border-slate-200 dark:border-slate-700">
+                    <h3 class="text-xl font-bold mb-8 flex items-center gap-3"><i class="fa-solid fa-book-medical text-nurse-accent"></i> Referências</h3>
+                    <div class="space-y-5">
+                        <div class="pl-4 border-l-4 border-nurse-accent py-1"><p class="text-aaa text-sm">Fluxo editorial interno — Calculadoras de Enfermagem.</p></div>
+                    </div>
+                
+                    <div class="mt-10 flex flex-wrap gap-2 items-center">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2 flex items-center"><i class="fa-solid fa-tags mr-2"></i> Tópicos:</span>
+                        <a class="tag-pill" href="busca.html?topico=Objetivo">#Objetivo</a><a class="tag-pill" href="busca.html?topico=Educacao">#Educacao</a><a class="tag-pill" href="busca.html?topico=Sustentabilidade">#Sustentabilidade</a><a class="tag-pill" href="busca.html?topico=SegurancaDoPaciente">#SegurancaDoPaciente</a>
+                    </div>
+                </section>
+            </article>
+            
+            <aside class="space-y-8 sticky top-32 self-start hidden lg:block">
+                <div class="sidebar-module">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-list-ul"></i> Conteúdo</h3>
+                    <nav class="flex flex-col">
+                        <a href="#pane-proposito" class="toc-link">1. Propósito</a>
+                        <a href="#pane-escalas" class="toc-link">2. Escalas</a>
+                        <a href="#pane-consulta" class="toc-link">3. Caráter consultivo</a>
+                        <a href="#pane-global" class="toc-link">4. Plataforma global</a>
+                        <a href="#pane-gestao" class="toc-link">5. Gestão</a>
+                        <a href="#pane-educacao" class="toc-link">6. Educação</a>
+                        <a href="#pane-sustentabilidade" class="toc-link">7. Sustentabilidade</a>
+                    </nav>
+                </div>
+                <div class="card-base p-4 text-center border border-dashed border-slate-300">
+                    <div class="bg-slate-100 dark:bg-slate-800 h-[250px] flex items-center justify-center text-slate-400 text-xs">Anúncio AdSense</div>
+                </div>
+                <div class="sidebar-module from-teal-700 to-nurse-secondary shadow-nurse-accent/20">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-share-alt"></i> Compartilhar</h3>
+                    <div class="flex gap-3.5 flex-wrap">
+                        <a href="#" class="share-btn" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn" onclick="window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="share-btn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/" target="_blank" class="share-btn"><i class="fab fa-instagram"></i></a>
+                        <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Link copiado!');"><i class="fas fa-link"></i></button>
+                    </div>
+                </div>
+            </aside>
+        </div>
 <!--DEPOIS-->
+
+    <section class="bg-slate-200/50 dark:bg-slate-900/80 py-24 border-t border-slate-300 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-black mb-16 flex items-center justify-center gap-4">
+                <i class="fa-solid fa-layer-group text-nurse-accent"></i> Conteúdo Relacionado
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
+                
+                <a href="missao.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-missao.webp" alt="Missão" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-nurse-primary text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Institucional</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Missão, visão e valores</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Os pilares éticos da plataforma.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+                <a href="responsabilidade-inteligencia-artificial.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-privacidade-digital.webp" alt="Governança" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-nurse-primary text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Governança</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Uso de inteligência artificial</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Como o conteúdo é produzido, checado e revisado.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+                <a href="equipe-editorial.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-fale-conosco.webp" alt="Equipe" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-teal-700 text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Editorial</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Equipe editorial</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">A revisão indicada é de Cauê Zipfel.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+

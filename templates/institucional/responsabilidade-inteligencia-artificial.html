@@ -1,120 +1,210 @@
-<style>
-.ia-page { color: #1e293b; }
-.ia-crumbs { display: flex; gap: 8px; align-items: center; font-size: 14px; color: #64748b; margin-bottom: 16px; flex-wrap: wrap; }
-.ia-crumbs a { color: #1a3e74; font-weight: 700; }
-.ia-hero { border-radius: 24px; background: linear-gradient(135deg, #1e407c 0%, #1e5a91 55%, #1a4c7a 100%); color: #fff; padding: 34px; box-shadow: 0 18px 40px -12px rgba(15, 23, 42, .18); }
-.ia-hero h1 { font-size: clamp(24px, 3.4vw, 34px); font-weight: 800; margin: 12px 0 8px; line-height: 1.15; }
-.ia-hero p { color: #dbeafe; margin: 0; max-width: 820px; }
-.ia-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-.ia-chip { font-size: 12px; font-weight: 600; color: #e0ebff; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); padding: 6px 12px; border-radius: 999px; }
-.ia-card { background: #fff; border: 1px solid #cbd5e1; border-radius: 16px; box-shadow: 0 4px 20px rgba(15, 23, 42, .1); margin: 18px 0; }
-.ia-card h2 { margin: 0; padding: 16px 20px; border-bottom: 1px solid #e2e8f0; font-size: 17px; color: #1e3a8a; }
-.ia-card .body { padding: 18px 20px; color: #475569; font-size: 14px; line-height: 1.7; }
-.ia-card .body p { margin: 0 0 12px; }
-.fluxo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.fstep { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; }
-.fstep h3 { margin: 8px 0 4px; font-size: 13px; color: #1e3a8a; }
-.fstep p { margin: 0; font-size: 12px; color: #64748b; }
-.camada { display: flex; gap: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #1e407c; border-radius: 12px; padding: 13px 15px; margin-bottom: 10px; }
-.camada h3 { margin: 0 0 4px; font-size: 13.5px; color: #1e3a8a; }
-.camada p { margin: 0; font-size: 12.5px; }
-.nota { margin-top: 18px; border-left: 2px solid #bfdbfe; padding-left: 16px; color: #475569; font-size: 14px; }
-@media (max-width: 900px) { .fluxo { grid-template-columns: 1fr; } }
-</style>
+<style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter transition-colors duration-300; }
+            h1, h2, h3 { @apply font-nunito tracking-tight text-nurse-primary dark:text-cyan-400 font-extrabold; }
+            :focus-visible { @apply outline-none ring-4 ring-cyan-500 ring-offset-2 dark:ring-offset-nurse-bgDark rounded-sm; }
+        }
+        @layer components {
+            .card-base { @apply bg-white dark:bg-slate-800/90 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm transition-all; }
+            .sidebar-module { @apply rounded-2xl p-6 shadow-lg text-white bg-gradient-to-br from-[#1A3E74] to-[#2E5A9C] dark:from-[#1e293b] dark:to-[#0f172a] mb-6; }
+            .toc-link { @apply flex items-center gap-2 py-2.5 text-sm text-white/90 hover:text-white hover:translate-x-1 border-b border-white/10 last:border-0 transition-all font-semibold; }
+            .share-btn { @apply w-11 h-11 rounded-full flex items-center justify-center bg-white/20 text-white hover:bg-white hover:text-nurse-primary transition-all shadow-md focus:ring-2 focus:ring-white; }
+            .text-aaa { @apply text-slate-700 dark:text-slate-200 leading-relaxed; }
+            .skeleton { @apply animate-pulse bg-slate-200 dark:bg-slate-700 rounded; }
+            .alert-box { @apply flex gap-4 p-6 rounded-2xl mb-8 border-l-4 border-nurse-accent bg-slate-50 text-slate-900 dark:bg-slate-900/20 dark:text-slate-100 shadow-sm font-inter; }
+            .tag-pill { @apply px-3 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 rounded-lg text-[11px] font-bold hover:bg-nurse-accent hover:text-white transition-all cursor-pointer; }
+            .periodo { @apply px-4 py-2 rounded-full border border-slate-200 text-sm font-bold text-nurse-primary bg-white; }
+            .periodo.active { @apply bg-nurse-primary text-white border-nurse-primary; }
+            .metricas-dot { @apply inline-block w-2 h-2 rounded-full bg-slate-400 mr-2; }
+            .metricas-dot.ok { background: #16a34a; }
+            .metricas-dot.err { background: #dc2626; }
+        }
+    </style>
 <!--CORPO-->
-<div class="ia-page">
-<nav class="ia-crumbs" aria-label="Trilha">
-  <a href="index.html">Início</a><span aria-hidden="true">&gt;</span><span>Sobre Nós</span><span aria-hidden="true">&gt;</span><span style="color:#1e293b;font-weight:600">Responsabilidade no uso de IA</span>
-</nav>
-<section class="ia-hero">
-  <span style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#bfdbfe">Governança editorial</span>
-  <h1>Responsabilidade no uso da inteligência artificial na educação em saúde e na literatura de enfermagem</h1>
-  <p>Como produzimos, validamos e auditamos cada conteúdo publicado — com tripla checagem por IA, biblioteca de governança de alto risco e revisão de enfermeiro habilitado.</p>
-  <div class="ia-chips"><span class="ia-chip">Tripla checagem por IA</span><span class="ia-chip">Conteúdo de alto risco</span><span class="ia-chip">Revisão de enfermeiro(a)</span><span class="ia-chip">Rastreabilidade</span></div>
-</section>
-<section class="ia-card" aria-labelledby="metodo-titulo">
-  <h2 id="metodo-titulo">Nosso método de trabalho com conteúdos e validação</h2>
-  <div class="body">
-    <p>Todo conteúdo publicado neste site — calculadoras, escalas, guias, simulados, artigos e formulários — passa por um <strong>fluxo editorial estruturado</strong>. A inteligência artificial participa como ferramenta de apoio à organização, à comparação e à identificação de inconsistências. Ela <strong>não é a fonte do conteúdo</strong>: as fontes oficiais, científicas e normativas continuam sendo a base de tudo o que publicamos.</p>
-    <div class="fluxo">
-      <div class="fstep"><h3>1. Seleção de fontes</h3><p>Identificação de fontes oficiais, científicas e normativas, com verificação de autoridade e vigência.</p></div>
-      <div class="fstep"><h3>2. Organização com IA</h3><p>A IA auxilia na estruturação e redação do material a partir das fontes selecionadas.</p></div>
-      <div class="fstep"><h3>3. Tripla checagem por IA</h3><p>Três camadas independentes comparam o conteúdo com as fontes e sinalizam divergências.</p></div>
-      <div class="fstep"><h3>4. Auditoria e contraprova</h3><p>Verificação de critérios, pontuações, faixas e redação do instrumento contra o documento-fonte.</p></div>
-      <div class="fstep"><h3>5. Revisão do enfermeiro(a)</h3><p>Profissional habilitado e em atividade revisa e aprova antes da publicação.</p></div>
-      <div class="fstep"><h3>6. Registro e publicação</h3><p>Evidências e aprovações são registradas no fluxo interno; só então a página é publicada.</p></div>
-    </div>
-  </div>
-</section>
-<section class="ia-card" aria-labelledby="biblioteca-titulo">
-  <h2 id="biblioteca-titulo">Biblioteca de governança de conteúdo de alto risco</h2>
-  <div class="body">
-    <p>Nem todo conteúdo tem o mesmo peso. Mantemos uma <strong>biblioteca de governança de conteúdo de alto risco</strong>, que classifica páginas, ferramentas e documentos conforme o <strong>potencial de impacto clínico, regulatório e educacional</strong>.</p>
-    <p>Conteúdos classificados como de alto risco — por exemplo, escalas e calculadoras usadas em decisões assistenciais, doses e cálculos, interpretação de exames, legislação e processos ético-profissionais — recebem tratamento editorial reforçado:</p>
-    <ul>
-      <li><strong>Fontes oficiais obrigatórias:</strong> apenas referências identificáveis, com autoridade reconhecida, são aceitas como base.</li>
-      <li><strong>Conferência integral do instrumento:</strong> critérios, alternativas, pontuações, faixas de classificação e redação são conferidos contra o documento-fonte, sem substituições silenciosas.</li>
-      <li><strong>Registro de divergências:</strong> quando versões ou fontes divergem, a divergência é registrada e resolvida antes da publicação.</li>
-      <li><strong>Bloqueio sem revisão humana:</strong> conteúdo de alto risco não é publicado sem a revisão de profissional de enfermagem habilitado.</li>
-    </ul>
-  </div>
-</section>
-<section class="ia-card" aria-labelledby="checagem-titulo">
-  <h2 id="checagem-titulo">Sistema de tripla checagem por IA</h2>
-  <div class="body">
-    <p>A tripla checagem é a espinha dorsal do controle de qualidade automatizado. São <strong>três camadas independentes</strong>, executadas em momentos distintos e com propósitos distintos.</p>
-    <div class="camada"><div><h3>1ª checagem — Organização e fidelidade à fonte</h3><p>O conteúdo gerado é confrontado com a fonte de referência: título, estrutura, termos e dados devem corresponder ao documento original, sem invenção e sem alteração silenciosa.</p></div></div>
-    <div class="camada"><div><h3>2ª checagem — Identificação, autoridade, URL, versão e data</h3><p>As referências são auditadas item a item: identificação do documento, autoridade da fonte, URL acessível, versão vigente e data de publicação. Fontes revogadas ou desatualizadas são sinalizadas.</p></div></div>
-    <div class="camada"><div><h3>3ª checagem — Contraprova e consistência</h3><p>Uma auditoria independente e final procura critério faltante ou duplicado, alternativa com pontuação incorreta, texto alterado, ordem errada, cálculo errado e classificação errada. Divergências encontradas são corrigidas e a auditoria é executada novamente.</p></div></div>
-    <p>Hashes de integridade confirmam que o arquivo entregue é o mesmo que foi auditado. Eles garantem a <strong>integridade técnica do documento</strong> — e não a veracidade ou a vigência de uma fonte externa.</p>
-  </div>
-</section>
-<section class="ia-card" aria-labelledby="revisao-titulo">
-  <h2 id="revisao-titulo">Revisão literária do profissional enfermeiro</h2>
-  <div class="body">
-    <p>A automação termina antes da decisão final. Antes da publicação, <strong>páginas, documentos, artigos, calculadoras e escalas passam por revisão editorial de profissional de enfermagem habilitado e em atividade</strong>, registrada no fluxo interno do projeto.</p>
-    <p>É o enfermeiro quem avalia a adequação técnica e clínica do conteúdo, a pertinência das fontes, a redação final e a segurança da informação apresentada. A IA organiza, compara e aponta inconsistências — <strong>não decide por ele</strong>. O julgamento clínico, jurídico e profissional permanece humano.</p>
-    <p>A revisão indicada nesta publicação é a de <a href="equipe-editorial.html">Cauê Zipfel</a>. Recursos de IA podem auxiliar na organização, na comparação e na identificação de inconsistências, mas <strong>não substituem essa revisão humana, a fonte oficial, o julgamento clínico ou jurídico, nem a orientação profissional</strong>.</p>
-  </div>
-</section>
-<section class="ia-card" aria-labelledby="governanca-titulo">
-  <h2 id="governanca-titulo">Sistema de governança e auditoria</h2>
-  <div class="body">
-    <p>Cada página publicada carrega controles editoriais rastreáveis. O processo de auditoria verifica, para cada referência utilizada:</p>
-    <ul>
-      <li><strong>Identificação:</strong> o documento existe e corresponde ao citado.</li>
-      <li><strong>Autoridade:</strong> a fonte tem competência reconhecida sobre o tema.</li>
-      <li><strong>URL:</strong> o link é acessível e leva ao documento correto.</li>
-      <li><strong>Versão:</strong> a edição referenciada é a vigente.</li>
-      <li><strong>Data:</strong> a data de publicação informada é real e atual.</li>
-    </ul>
-    <p>O sistema sinaliza divergências entre fontes, entre versões e entre a fonte e a implementação publicada. Nenhuma divergência é resolvida por escolha arbitrária: ela é registrada, analisada e corrigida somente após verificação. O processo é projetado com princípios de minimização de dados, finalidade, transparência, rastreabilidade, acessibilidade e ética editorial.</p>
-  </div>
-</section>
-<section class="ia-card" aria-labelledby="limites-titulo">
-  <h2 id="limites-titulo">O que esses controles significam</h2>
-  <div class="body">
-    <ul>
-      <li>Os controles apoiam a conferência das fontes e do conteúdo e não substituem a fonte oficial.</li>
-      <li>Hashes e evidências não constituem prova autônoma de vigência ou veracidade de fonte externa.</li>
-      <li>O processo não representa certificação de conformidade com a LGPD ou normas internacionais, nem substitui orientação profissional.</li>
-      <li>Nenhum conteúdo deste site dispensa a consulta à legislação vigente, às normas dos conselhos profissionais e às fontes oficiais.</li>
-    </ul>
-  </div>
-</section>
-<section class="ia-card" aria-labelledby="referencias-titulo">
-  <h2 id="referencias-titulo">Referências</h2>
-  <div class="body">
-    <ol>
-      <li>BRASIL. <strong>Lei nº 13.709, de 14 de agosto de 2018</strong>. Lei Geral de Proteção de Dados Pessoais (LGPD). Disponível em: <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm">planalto.gov.br</a>.</li>
-      <li>CONSELHO FEDERAL DE ENFERMAGEM. <strong>Resolução COFEN nº 736/2024</strong>. Regulamenta a implementação do Processo de Enfermagem. Disponível em: <a href="https://www.cofen.gov.br/resolucao-cofen-no-736-de-17-de-janeiro-de-2024/">cofen.gov.br</a>.</li>
-      <li>Fluxo editorial interno — Calculadoras de Enfermagem (documento de processo interno, registrado no fluxo do projeto).</li>
-    </ol>
-  </div>
-</section>
-<aside class="nota" aria-label="Transparência de governança editorial">
-  <p>Esta página segue controles editoriais de governança para rastrear as fontes utilizadas. O processo verifica identificação, autoridade, URL, versão e data das referências, sinaliza divergências e, quando aplicável, preserva evidências técnicas de integridade. Esses controles apoiam a conferência, mas não substituem a fonte oficial nem constituem prova autônoma de vigência ou veracidade.</p>
-  <p>Antes da publicação, páginas, documentos, artigos, calculadoras e escalas devem passar por revisão editorial de profissional de enfermagem habilitado e em atividade, registrada no fluxo interno. Recursos de IA podem auxiliar na organização, comparação e identificação de inconsistências, mas não substituem essa revisão humana, a fonte oficial, o julgamento clínico ou jurídico, nem a orientação profissional.</p>
-</aside>
-</div>
+        <nav class="flex items-center gap-2 text-sm text-slate-600 dark:text-cyan-300 mb-8 font-semibold" aria-label="Breadcrumb">
+            <a href="index.html" class="hover:underline text-nurse-accent">Início</a>
+            <span aria-hidden="true">&gt;</span>
+            <span>Sobre Nós</span>
+            <span aria-hidden="true">&gt;</span>
+            <span class="text-nurse-primary dark:text-cyan-400 font-bold" aria-current="page">Responsabilidade no uso de IA</span>
+        </nav>
+
+        <header class="max-w-4xl mb-12">
+            <span class="bg-nurse-primary text-white text-[11px] font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-4 inline-block shadow-md">Governança editorial</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Responsabilidade no uso da inteligência artificial</h1>
+            <div class="w-24 h-2 bg-gradient-to-r from-nurse-accent to-nurse-primary rounded-full mb-8"></div>
+            <p class="text-xl text-aaa font-medium mb-8">Como produzimos, validamos e auditamos cada conteúdo publicado, com tripla checagem, governança de alto risco e revisão de enfermeiro habilitado.</p>
+        </header>
+
+        <div class="mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 group">
+            <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-privacidade-digital.webp" alt="Governança editorial do uso de inteligência artificial." class="w-full h-[350px] md:h-[500px] object-cover object-top transition-transform duration-1000 group-hover:scale-105" loading="eager" fetchpriority="high">
+        </div>
+
+        <div class="grid lg:grid-cols-[1fr,340px] gap-10 lg:gap-16 items-start">
+            <article class="card-base p-8 md:p-14">
+                <div class="prose prose-lg prose-slate dark:prose-invert max-w-none">
+                    <p class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-12 leading-snug border-l-8 border-nurse-accent pl-8 italic">
+                        A inteligência artificial organiza, compara e aponta inconsistências. Ela não é a fonte do conteúdo e não decide a publicação.
+                    </p>
+                    <div class="space-y-16">
+                        
+                        <section id="pane-metodo" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">01</span>
+                                Método de trabalho
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">Todo conteúdo publicado neste site — calculadoras, escalas, guias, simulados, artigos e formulários — passa por um fluxo editorial estruturado. As fontes oficiais, científicas e normativas continuam sendo a base.</p>
+                            <ul class="list-disc pl-6 space-y-3 text-aaa text-lg"><li><strong>Seleção de fontes.</strong> Identificação de fontes oficiais, científicas e normativas, com verificação de autoridade e vigência.</li><li><strong>Organização com IA.</strong> A IA auxilia na estruturação e redação a partir das fontes selecionadas.</li><li><strong>Tripla checagem por IA.</strong> Três camadas independentes comparam o conteúdo com as fontes e sinalizam divergências.</li><li><strong>Auditoria e contraprova.</strong> Critérios, pontuações, faixas e redação são conferidos contra o documento-fonte.</li><li><strong>Revisão do enfermeiro.</strong> Profissional habilitado e em atividade revisa e aprova antes da publicação.</li><li><strong>Registro e publicação.</strong> Evidências e aprovações ficam no fluxo interno; só então a página é publicada.</li></ul>
+                        </section>
+
+                        <section id="pane-biblioteca" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">02</span>
+                                Conteúdo de alto risco
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">A biblioteca de governança classifica páginas, ferramentas e documentos conforme o potencial de impacto clínico, regulatório e educacional. Escalas e calculadoras usadas em decisões assistenciais, doses, interpretação de exames, legislação e processos ético-profissionais recebem tratamento reforçado.</p>
+                            <ul class="list-disc pl-6 space-y-3 text-aaa text-lg"><li><strong>Fontes oficiais obrigatórias.</strong> Só entram referências identificáveis, com autoridade reconhecida.</li><li><strong>Conferência integral do instrumento.</strong> Critérios, alternativas, pontuações, faixas e redação são conferidos contra o documento-fonte.</li><li><strong>Registro de divergências.</strong> Quando versões ou fontes divergem, a divergência é registrada e resolvida antes da publicação.</li><li><strong>Bloqueio sem revisão humana.</strong> Conteúdo de alto risco não é publicado sem a revisão de profissional de enfermagem habilitado.</li></ul>
+                        </section>
+
+                        <section id="pane-checagem" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">03</span>
+                                Tripla checagem
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">São três camadas independentes, em momentos distintos e com propósitos distintos.</p>
+                            <ul class="list-disc pl-6 space-y-3 text-aaa text-lg"><li><strong>1ª checagem — fidelidade à fonte.</strong> Título, estrutura, termos e dados correspondem ao documento original.</li><li><strong>2ª checagem — identificação, autoridade, URL, versão e data.</strong> Fontes revogadas ou desatualizadas são sinalizadas.</li><li><strong>3ª checagem — contraprova.</strong> A auditoria procura critério faltante ou duplicado, pontuação incorreta, texto alterado, ordem errada, cálculo errado e classificação errada. Divergências são corrigidas e a auditoria é executada novamente.</li></ul>
+                            <p class="text-aaa text-lg text-justify mb-6">Hashes de integridade confirmam que o arquivo entregue é o mesmo que foi auditado. Eles garantem a integridade técnica do documento, e não a veracidade ou a vigência de uma fonte externa.</p>
+                        </section>
+
+                        <section id="pane-revisao" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">04</span>
+                                Revisão do enfermeiro
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">Antes da publicação, páginas, documentos, artigos, calculadoras e escalas passam por revisão editorial de profissional de enfermagem habilitado e em atividade, registrada no fluxo interno.</p>
+                            <p class="text-aaa text-lg text-justify mb-6">A revisão indicada nesta publicação é a de <a href="equipe-editorial.html" class="text-nurse-accent font-bold">Cauê Zipfel</a>. A IA não substitui essa revisão humana, a fonte oficial, o julgamento clínico ou jurídico, nem a orientação profissional.</p>
+                        </section>
+
+                        <section id="pane-governanca" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">05</span>
+                                Auditoria das referências
+                            </h2>
+                            
+                            <p class="text-aaa text-lg text-justify mb-6">Para cada referência, o processo verifica identificação, autoridade, URL, versão vigente e data. Divergências entre fontes, versões e a implementação publicada são registradas, analisadas e corrigidas após verificação. O processo segue minimização de dados, finalidade, transparência, rastreabilidade, acessibilidade e ética editorial.</p>
+                        </section>
+
+                        <section id="pane-limites" class="scroll-mt-36">
+                            <h2 class="text-2xl md:text-3xl font-extrabold mb-6 flex items-center gap-5">
+                                <span class="flex items-center justify-center min-w-[3.5rem] h-14 rounded-2xl bg-nurse-primary/10 text-nurse-primary dark:text-cyan-400 text-2xl font-black shadow-inner">06</span>
+                                O que esses controles significam
+                            </h2>
+                            
+                            <ul class="list-disc pl-6 space-y-3 text-aaa text-lg"><li>Os controles apoiam a conferência e não substituem a fonte oficial.</li><li>Hashes e evidências não constituem prova autônoma de vigência ou veracidade de fonte externa.</li><li>O processo não representa certificação de conformidade com a LGPD ou normas internacionais, nem substitui orientação profissional.</li><li>Nenhum conteúdo deste site dispensa a consulta à legislação vigente, às normas dos conselhos profissionais e às fontes oficiais.</li></ul>
+                        </section>
+                    </div>
+                </div>
+                
+                <footer class="bg-slate-100 dark:bg-slate-900/60 rounded-[2.5rem] p-8 md:p-10 mt-20 flex flex-col md:flex-row gap-8 items-center border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Logotipo" class="w-24 h-24 rounded-full border-4 border-white dark:border-slate-800 shadow-xl object-cover">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-2xl font-black mb-3 text-nurse-primary dark:text-cyan-400">Calculadoras de Enfermagem</h3>
+                        <p class="text-aaa text-md italic font-medium">"Nossa missão é proteger vidas através da precisão técnica."</p>
+                    </div>
+                </footer>
+                
+                <section class="mt-12 pt-8 border-t-2 border-slate-200 dark:border-slate-700">
+                    <h3 class="text-xl font-bold mb-8 flex items-center gap-3"><i class="fa-solid fa-book-medical text-nurse-accent"></i> Referências</h3>
+                    <div class="space-y-5">
+                        <div class="pl-4 border-l-4 border-nurse-accent py-1"><p class="text-aaa text-sm">BRASIL. <strong>Lei nº 13.709, de 14 de agosto de 2018</strong>. Lei Geral de Proteção de Dados Pessoais. Disponível em <a class="text-nurse-accent font-bold" href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm">planalto.gov.br</a>.</p></div>
+                        <div class="pl-4 border-l-4 border-nurse-accent py-1"><p class="text-aaa text-sm">CONSELHO FEDERAL DE ENFERMAGEM. <strong>Resolução COFEN nº 736/2024</strong>. Processo de Enfermagem. Disponível em <a class="text-nurse-accent font-bold" href="https://www.cofen.gov.br/resolucao-cofen-no-736-de-17-de-janeiro-de-2024/">cofen.gov.br</a>.</p></div>
+                        <div class="pl-4 border-l-4 border-nurse-accent py-1"><p class="text-aaa text-sm">Fluxo editorial interno — Calculadoras de Enfermagem.</p></div>
+                    </div>
+                
+                    <div class="mt-10 flex flex-wrap gap-2 items-center">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2 flex items-center"><i class="fa-solid fa-tags mr-2"></i> Tópicos:</span>
+                        <a class="tag-pill" href="busca.html?topico=GovernancaEditorial">#GovernancaEditorial</a><a class="tag-pill" href="busca.html?topico=InteligenciaArtificial">#InteligenciaArtificial</a><a class="tag-pill" href="busca.html?topico=RevisaoDeEnfermagem">#RevisaoDeEnfermagem</a>
+                    </div>
+                </section>
+            </article>
+            
+            <aside class="space-y-8 sticky top-32 self-start hidden lg:block">
+                <div class="sidebar-module">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-list-ul"></i> Conteúdo</h3>
+                    <nav class="flex flex-col">
+                        <a href="#pane-metodo" class="toc-link">1. Método</a>
+                        <a href="#pane-biblioteca" class="toc-link">2. Alto risco</a>
+                        <a href="#pane-checagem" class="toc-link">3. Tripla checagem</a>
+                        <a href="#pane-revisao" class="toc-link">4. Revisão</a>
+                        <a href="#pane-governanca" class="toc-link">5. Auditoria</a>
+                        <a href="#pane-limites" class="toc-link">6. Limites</a>
+                    </nav>
+                </div>
+                <div class="card-base p-4 text-center border border-dashed border-slate-300">
+                    <div class="bg-slate-100 dark:bg-slate-800 h-[250px] flex items-center justify-center text-slate-400 text-xs">Anúncio AdSense</div>
+                </div>
+                <div class="sidebar-module from-teal-700 to-nurse-secondary shadow-nurse-accent/20">
+                    <h3 class="border-b-2 border-white/20 pb-4 mb-5 font-bold flex items-center gap-3 text-xl text-white"><i class="fas fa-share-alt"></i> Compartilhar</h3>
+                    <div class="flex gap-3.5 flex-wrap">
+                        <a href="#" class="share-btn" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn" onclick="window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="share-btn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href)); return false;"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/" target="_blank" class="share-btn"><i class="fab fa-instagram"></i></a>
+                        <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Link copiado!');"><i class="fas fa-link"></i></button>
+                    </div>
+                </div>
+            </aside>
+        </div>
 <!--DEPOIS-->
+
+    <section class="bg-slate-200/50 dark:bg-slate-900/80 py-24 border-t border-slate-300 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-black mb-16 flex items-center justify-center gap-4">
+                <i class="fa-solid fa-layer-group text-nurse-accent"></i> Conteúdo Relacionado
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
+                
+                <a href="equipe-editorial.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-fale-conosco.webp" alt="Equipe" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-teal-700 text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Editorial</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Equipe editorial</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">A revisão indicada é de Cauê Zipfel.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+                <a href="objetivo.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-objetivo.webp" alt="Objetivo" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-nurse-primary text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Institucional</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Objetivo do site</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">O propósito das calculadoras e das escalas.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+                <a href="reembolso.html" class="card-base group flex flex-col hover:shadow-2xl hover:-translate-y-2">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/featured-cookies.webp" alt="Reembolso" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <span class="absolute bottom-4 left-6 bg-nurse-primary text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-lg">Políticas</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-xl font-black mb-3 group-hover:text-nurse-accent">Política de reembolso</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Prazos e condições de cancelamento.</p>
+                        <span class="text-nurse-accent font-black text-[11px] uppercase tracking-widest mt-auto">Saiba mais <i class="fa-solid fa-arrow-right-long ml-2 group-hover:translate-x-2 transition-transform"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
