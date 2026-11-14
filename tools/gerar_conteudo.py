@@ -245,16 +245,13 @@ def render_notificacao(cfg):
 
 
 def corpo(cfg, site, paginas):
-    miolo = []
-    if cfg.get("kind") != "inicio":
-        miolo.append(
-            '<nav class="text-sm text-slate-500 mb-4" aria-label="Trilha">'
-            f'<a class="hover:underline" href="index.html">Início</a>'
-            f' <span aria-hidden="true">/</span> <span>{esc(cfg["title"])}</span></nav>'
-        )
-    miolo.append(
-        f'<h1 class="text-3xl md:text-4xl font-black text-nurse-primary dark:text-white font-nunito">{esc(cfg["title"])}</h1>'
-    )
+    miolo = [
+        '<nav class="text-sm text-slate-500 mb-4" aria-label="Trilha">'
+        f'<a class="hover:underline" href="index.html">Início</a>'
+        + ("" if cfg["id"] == "index" else f' <span aria-hidden="true">/</span> <span>{esc(cfg["title"])}</span>')
+        + "</nav>",
+        f'<h1 class="text-3xl md:text-4xl font-black text-nurse-primary dark:text-white font-nunito">{esc(cfg["title"])}</h1>',
+    ]
     if cfg.get("lead"):
         miolo.append(f'<p class="mt-3 text-lg text-slate-600 dark:text-slate-300 max-w-3xl">{esc(cfg["lead"])}</p>')
     tipo = cfg.get("kind") or "pagina"
