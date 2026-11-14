@@ -224,6 +224,14 @@
         "O resultado positivo indica retenção; o negativo, perda.",
         "Registre o período a que o balanço se refere no prontuário."
       ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>HINKLE, Janice L.; CHEEVER, Kerry H. Brunner &amp; Suddarth: tratado de enfermagem médico-cirúrgica. 14. ed. Rio de Janeiro: Guanabara Koogan, 2020.</p><p>Nesta página o balanço é a soma de ingestão oral, por sonda e parenteral, menos urina, vômito e drenos, em mililitros.</p>"
+      }
     }
   ]
 }

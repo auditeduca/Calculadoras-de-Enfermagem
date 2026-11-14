@@ -1,5 +1,8 @@
 # Mapeamento de IDs e Consistência do Sistema
 
+Este arquivo descreve a geração anterior. O mapa da versão 1.0.1 está em
+`INDEX.md`. Vários containers citados abaixo não existem mais no site.
+
 ## 📋 Visão Geral
 
 Este documento garante que todos os IDs, classes e referências estejam consistentes entre HTML, JSON, JS e componentes modulares.

@@ -18,6 +18,8 @@
         "logoFooter": { "type": "string" },
         "favicon": { "type": "string" },
         "author": { "type": "string" },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "versionDate": { "type": "string" },
         "social": { "type": "object" }
       }
     },

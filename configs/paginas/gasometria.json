@@ -198,6 +198,14 @@
         "A classificação descreve o componente dominante; distúrbios mistos exigem correlação clínica.",
         "PaO₂ abaixo de 80 mmHg é destacada como hipoxemia."
       ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>SEIFTER, Julian L. Integration of acid-base and electrolyte disorders. The New England Journal of Medicine, v. 371, n. 19, p. 1821-1831, 2014.</p><p>As faixas desta página são pH 7,35 e 7,45, PaCO₂ 35 e 45 mmHg, bicarbonato 22 e 26 mEq/L, e PaO₂ 80 e 60 mmHg.</p>"
+      }
     }
   ]
 }

@@ -210,6 +210,14 @@
         "Escolha se o tempo está em horas ou em minutos.",
         "Selecione o equipo. O resultado em mL/h aparece na auditoria."
       ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>HINKLE, Janice L.; CHEEVER, Kerry H. Brunner &amp; Suddarth: tratado de enfermagem médico-cirúrgica. 14. ed. Rio de Janeiro: Guanabara Koogan, 2020.</p><p>Gotas por minuto = volume em mL × fator do equipo ÷ tempo em minutos. Mililitros por hora = volume × 60 ÷ tempo em minutos.</p>"
+      }
     }
   ]
 }

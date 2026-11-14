@@ -9,6 +9,8 @@ Gerado por `tools/auditar.py`. Somente leitura — nada foi alterado.
 - `configs/paginas/*.json`: OK
 - Cascas geradas sincronizadas: sim
 - Páginas ainda com CALCULATOR_DATA ou campo de scraping: nenhuma
+- Ferramentas sem aba Referências: nenhuma
+- Links internos das páginas: todos existem
 
 ## 2. Fila de revisão clínica (0)
 

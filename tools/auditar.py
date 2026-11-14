@@ -65,6 +65,27 @@ def check_site_json():
     return falhas, quebradas
 
 
+def check_referencias():
+    faltam = []
+    for arq in sorted((RAIZ / "configs" / "paginas").glob("*.json")):
+        cfg = json.loads(arq.read_text(encoding="utf-8"))
+        ids = [aba.get("id") for aba in cfg.get("tabs") or []]
+        if "references" not in ids:
+            faltam.append(arq.stem)
+    return faltam
+
+
+def check_links_de_conteudo():
+    quebradas = []
+    alvos = list((RAIZ / "templates" / "institucional").glob("*.html"))
+    alvos += [p for p in RAIZ.glob("*.html")]
+    for arq in alvos:
+        for href in gerar_componentes.hrefs_internos(arq.read_text(encoding="utf-8", errors="replace")):
+            if not gerar_componentes.rota_existe(href):
+                quebradas.append(f"{arq.relative_to(RAIZ)}: {href}")
+    return quebradas
+
+
 def check_paginas():
     falhas, _ = [], []
     _validas, erros = gerar_paginas.configs_validas()
@@ -138,8 +159,13 @@ def main():
     fila = fila_revisao()
     lixo = check_lixo_clinico()
     orfaos = check_orfaos()
+    sem_referencia = check_referencias()
+    links_corpo = check_links_de_conteudo()
 
-    bloqueantes = falhas_site + falhas_paginas + rotas_quebradas + dessinc + lixo
+    bloqueantes = (
+        falhas_site + falhas_paginas + rotas_quebradas + dessinc + lixo
+        + sem_referencia + links_corpo
+    )
 
     linhas = [
         "# Relatório de Auditoria",
@@ -153,6 +179,8 @@ def main():
         f"- `configs/paginas/*.json`: {'OK' if not falhas_paginas else 'FALHAS: ' + '; '.join(falhas_paginas)}",
         f"- Cascas geradas sincronizadas: {'sim' if not dessinc else 'NÃO: ' + ', '.join(dessinc)}",
         f"- Páginas ainda com CALCULATOR_DATA ou campo de scraping: {'nenhuma' if not lixo else ', '.join(lixo)}",
+        f"- Ferramentas sem aba Referências: {'nenhuma' if not sem_referencia else ', '.join(sem_referencia)}",
+        f"- Links internos das páginas: {'todos existem' if not links_corpo else 'QUEBRADOS: ' + '; '.join(links_corpo)}",
         "",
         f"## 2. Fila de revisão clínica ({len(fila)})",
         "",
