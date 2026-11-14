@@ -1,0 +1,17 @@
+{
+  "id": "modelo-caso",
+  "kind": "modelo",
+  "profile": "case",
+  "template_id": "TPL-CASE-001",
+  "title": "Modelo de caso",
+  "description": "Molde reutilizável de caso: cenário, dados, pergunta e discussão.",
+  "keywords": "modelo, caso clínico",
+  "lead": "O caso é um exercício. Esta página não descreve um paciente real.",
+  "slots": [
+    "Cenário",
+    "Dados disponíveis",
+    "Pergunta",
+    "Discussão",
+    "Referências"
+  ]
+}

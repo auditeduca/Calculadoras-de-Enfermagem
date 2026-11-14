@@ -1,4 +1,4 @@
-# Calculadoras de Enfermagem — versão 1.0.1
+# Calculadoras de Enfermagem — versão 1.1.0
 
 Site estático. A versão corrente e o histórico estão em `docs/VERSOES.md`.
 O número também fica em `data/site.json` e no rodapé.
@@ -25,8 +25,10 @@ python3 tools/auditar.py
 
 ## O que está publicado
 
-- 70 ferramentas no menu Ferramentas.
+- 70 ferramentas no menu Ferramentas, mais o SBAR.
 - Páginas institucionais, mapa e busca por tópico.
+- Entrar, conta e área do assinante. A autenticação desta origem está desligada.
+- Modelos de artigo, quiz, flashcard, caso e guia de bolso em `configs/conteudo/modelo-*.json`.
 - Menu de idioma só com português, até haver tradução em `configs/i18n`.
 
 `js/calculadora.js` lê o JSON da ferramenta. Os modos são `score`, `formula` e `named` (gasometria e idade gestacional).

@@ -1,0 +1,16 @@
+{
+  "id": "modelo-flashcard",
+  "kind": "modelo",
+  "profile": "flashcard",
+  "template_id": "TPL-FLASHCARD-001",
+  "title": "Modelo de flashcard",
+  "description": "Molde reutilizável de flashcard: frente, verso e referência.",
+  "keywords": "modelo, flashcard",
+  "lead": "Cada cartão tem uma frente, um verso e a fonte. O baralho só é publicado com conteúdo conferido.",
+  "slots": [
+    "Título do baralho",
+    "Frente",
+    "Verso",
+    "Referência"
+  ]
+}

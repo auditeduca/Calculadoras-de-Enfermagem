@@ -1,0 +1,17 @@
+{
+  "id": "modelo-guia",
+  "kind": "modelo",
+  "profile": "pocket-guide",
+  "template_id": "TPL-POCKET-GUIDE-001",
+  "title": "Modelo de guia de bolso",
+  "description": "Molde reutilizável de guia de bolso: passos curtos e a fonte de cada um.",
+  "keywords": "modelo, guia de bolso",
+  "lead": "O guia cabe numa consulta rápida. Cada passo precisa apontar a fonte antes de ser publicado.",
+  "slots": [
+    "Título",
+    "Quando usar",
+    "Passos",
+    "Quando não usar",
+    "Referências"
+  ]
+}

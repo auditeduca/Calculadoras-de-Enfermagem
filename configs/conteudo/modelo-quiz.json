@@ -1,0 +1,17 @@
+{
+  "id": "modelo-quiz",
+  "kind": "modelo",
+  "profile": "quiz",
+  "template_id": "TPL-QUIZ-001",
+  "title": "Modelo de quiz",
+  "description": "Molde reutilizável de quiz: perguntas, justificativa e objetivo de aprendizagem.",
+  "keywords": "modelo, quiz, questão",
+  "lead": "O molde reserva o lugar das questões. Esta página não publica um banco de provas.",
+  "slots": [
+    "Título",
+    "Objetivo de aprendizagem",
+    "Questões",
+    "Justificativa de cada questão",
+    "Referências"
+  ]
+}

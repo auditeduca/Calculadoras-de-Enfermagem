@@ -1,0 +1,9 @@
+{
+  "id": "entrar",
+  "kind": "entrar",
+  "title": "Entrar",
+  "description": "Entrada separada do site público. Nesta origem a autenticação está desligada.",
+  "keywords": "entrar, conta, assinante, calculadoras de enfermagem",
+  "lead": "Esta tela não é o site público. Sem autenticação ligada, as ferramentas continuam abertas e a área do assinante mostra o catálogo publicado.",
+  "robots": "noindex, follow"
+}
