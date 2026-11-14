@@ -1,0 +1,623 @@
+{
+  "metadata": {
+    "id": "tinetti",
+    "title": "Escala de Tinetti (POMA)",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Tinetti (POMA) | Calculadoras de Enfermagem",
+    "description": "Equilíbrio (16) e marcha (12). Total de 0 a 28. Quanto maior, melhor.",
+    "keywords": "Escala de Tinetti (POMA), enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/tinetti/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Tinetti (POMA)",
+    "description": "Equilíbrio (16) e marcha (12). Total de 0 a 28. Quanto maior, melhor."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Tinetti (POMA)",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "sentado",
+            "type": "select",
+            "label": "Equilíbrio sentado",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — inclina ou escorrega",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — estável",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "levanta",
+            "type": "select",
+            "label": "Levantar da cadeira",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz sem ajuda",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — consegue com os braços",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — consegue sem os braços",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "tentativas",
+            "type": "select",
+            "label": "Tentativas para levantar",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — mais de uma",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — uma",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "pe_imediato",
+            "type": "select",
+            "label": "Equilíbrio de pé imediato",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — instável",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — estável com apoio",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — estável sem apoio",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "pe",
+            "type": "select",
+            "label": "Equilíbrio de pé",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — instável",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — estável com base alargada ou apoio",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — base estreita, sem apoio",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "empurrar",
+            "type": "select",
+            "label": "Empurrão no esterno",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — começa a cair",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — agarra ou dá mais de um passo",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — estável",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "olhos",
+            "type": "select",
+            "label": "Olhos fechados",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — instável",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — estável",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "giro360",
+            "type": "select",
+            "label": "Girar 360°",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — passos descontínuos ou instável",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — contínuo mas lento",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — contínuo e estável",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "sentar",
+            "type": "select",
+            "label": "Sentar",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — inseguro, avalia mal a distância",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — usa os braços ou cai sentado",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — seguro",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "inicio",
+            "type": "select",
+            "label": "Início da marcha",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — hesitação ou várias tentativas",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sem hesitação",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "passo_cd",
+            "type": "select",
+            "label": "Comprimento do passo direito",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não ultrapassa o esquerdo",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — ultrapassa o esquerdo",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "passo_ad",
+            "type": "select",
+            "label": "Altura do passo direito",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não sai totalmente do chão",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sai do chão",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "passo_ce",
+            "type": "select",
+            "label": "Comprimento do passo esquerdo",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não ultrapassa o direito",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — ultrapassa o direito",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "passo_ae",
+            "type": "select",
+            "label": "Altura do passo esquerdo",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não sai totalmente do chão",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sai do chão",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "simetria",
+            "type": "select",
+            "label": "Simetria do passo",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — desigual",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — igual",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "continuidade",
+            "type": "select",
+            "label": "Continuidade do passo",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — para entre os passos",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — contínuo",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "trajeto",
+            "type": "select",
+            "label": "Trajeto",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — desvio marcado",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — desvio leve ou usa auxílio",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — reto, sem auxílio",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "tronco",
+            "type": "select",
+            "label": "Tronco",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — balanço marcado ou usa auxílio",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — flexão ou abertura dos braços",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — sem balanço nem flexão",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "base",
+            "type": "select",
+            "label": "Base de apoio",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — calcanhares afastados",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — calcanhares quase se tocam",
+                "score": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Tinetti (POMA)",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 18,
+        "label": "Risco alto de queda",
+        "conduct": "Até 18.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 23,
+        "label": "Risco moderado",
+        "conduct": "19 a 23.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 28,
+        "label": "Risco baixo",
+        "conduct": "24 a 28.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Equilíbrio sentado",
+          "sourceField": "sentado"
+        },
+        {
+          "label": "Levantar da cadeira",
+          "sourceField": "levanta"
+        },
+        {
+          "label": "Tentativas para levantar",
+          "sourceField": "tentativas"
+        },
+        {
+          "label": "Equilíbrio de pé imediato",
+          "sourceField": "pe_imediato"
+        },
+        {
+          "label": "Equilíbrio de pé",
+          "sourceField": "pe"
+        },
+        {
+          "label": "Empurrão no esterno",
+          "sourceField": "empurrar"
+        },
+        {
+          "label": "Olhos fechados",
+          "sourceField": "olhos"
+        },
+        {
+          "label": "Girar 360°",
+          "sourceField": "giro360"
+        },
+        {
+          "label": "Sentar",
+          "sourceField": "sentar"
+        },
+        {
+          "label": "Início da marcha",
+          "sourceField": "inicio"
+        },
+        {
+          "label": "Comprimento do passo direito",
+          "sourceField": "passo_cd"
+        },
+        {
+          "label": "Altura do passo direito",
+          "sourceField": "passo_ad"
+        },
+        {
+          "label": "Comprimento do passo esquerdo",
+          "sourceField": "passo_ce"
+        },
+        {
+          "label": "Altura do passo esquerdo",
+          "sourceField": "passo_ae"
+        },
+        {
+          "label": "Simetria do passo",
+          "sourceField": "simetria"
+        },
+        {
+          "label": "Continuidade do passo",
+          "sourceField": "continuidade"
+        },
+        {
+          "label": "Trajeto",
+          "sourceField": "trajeto"
+        },
+        {
+          "label": "Tronco",
+          "sourceField": "tronco"
+        },
+        {
+          "label": "Base de apoio",
+          "sourceField": "base"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Tinetti (POMA)",
+        "body": "<p>Equilíbrio (16) e marcha (12). Total de 0 a 28. Quanto maior, melhor.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Tinetti ME. Performance-oriented assessment of mobility problems in elderly patients. J Am Geriatr Soc. 1986.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

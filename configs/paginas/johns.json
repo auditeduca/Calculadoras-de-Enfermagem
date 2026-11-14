@@ -1,0 +1,389 @@
+{
+  "metadata": {
+    "id": "johns",
+    "title": "Escala Johns Hopkins de queda",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala Johns Hopkins de queda | Calculadoras de Enfermagem",
+    "description": "Risco de queda em adulto. Abaixo de 6 é baixo, 6 a 13 moderado, 14 ou mais alto.",
+    "keywords": "Escala Johns Hopkins de queda, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/johns/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala Johns Hopkins de queda",
+    "description": "Risco de queda em adulto. Abaixo de 6 é baixo, 6 a 13 moderado, 14 ou mais alto."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala Johns Hopkins de queda",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "idade",
+            "type": "select",
+            "label": "Idade",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — menor de 60 anos",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 60 a 69",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 70 a 79",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 80 ou mais",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "queda",
+            "type": "select",
+            "label": "Queda nos últimos 6 meses",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — sim",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "eliminacao",
+            "type": "select",
+            "label": "Eliminação",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — sem urgência nem incontinência",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — incontinência ou urgência/frequência",
+                "score": 2
+              },
+              {
+                "value": 4,
+                "label": "4 — incontinência e urgência/frequência",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "farmaco",
+            "type": "select",
+            "label": "Medicação de risco",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhuma das classes de risco",
+                "score": 0
+              },
+              {
+                "value": 3,
+                "label": "3 — uma classe (opioide, anticonvulsivante, anti-hipertensivo, diurético, hipnótico, laxante, sedativo ou psicotrópico)",
+                "score": 3
+              },
+              {
+                "value": 5,
+                "label": "5 — duas ou mais",
+                "score": 5
+              },
+              {
+                "value": 7,
+                "label": "7 — procedimento com sedação nas últimas 24 horas",
+                "score": 7
+              }
+            ]
+          },
+          {
+            "id": "equipamento",
+            "type": "select",
+            "label": "Equipamentos que limitam a mobilidade",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhum",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — um",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — dois",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — três ou mais",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "mobilidade",
+            "type": "select",
+            "label": "Mobilidade (some os critérios presentes)",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhum",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — um: precisa de ajuda, marcha instável ou déficit sensorial que atrapalha a marcha",
+                "score": 2
+              },
+              {
+                "value": 4,
+                "label": "4 — dois critérios",
+                "score": 4
+              },
+              {
+                "value": 6,
+                "label": "6 — os três critérios",
+                "score": 6
+              }
+            ]
+          },
+          {
+            "id": "cognicao",
+            "type": "select",
+            "label": "Cognição (some os critérios presentes)",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhum",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — consciência alterada da própria capacidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — impulsividade",
+                "score": 2
+              },
+              {
+                "value": 4,
+                "label": "4 — não compreende as limitações",
+                "score": 4
+              },
+              {
+                "value": 3,
+                "label": "3 — consciência alterada e impulsividade",
+                "score": 3
+              },
+              {
+                "value": 5,
+                "label": "5 — consciência alterada e não compreende limitações",
+                "score": 5
+              },
+              {
+                "value": 6,
+                "label": "6 — impulsividade e não compreende limitações",
+                "score": 6
+              },
+              {
+                "value": 7,
+                "label": "7 — os três",
+                "score": 7
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala Johns Hopkins de queda",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 5,
+        "label": "Risco baixo",
+        "conduct": "Abaixo de 6.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 13,
+        "label": "Risco moderado",
+        "conduct": "6 a 13.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 35,
+        "label": "Risco alto",
+        "conduct": "14 ou mais.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Idade",
+          "sourceField": "idade"
+        },
+        {
+          "label": "Queda nos últimos 6 meses",
+          "sourceField": "queda"
+        },
+        {
+          "label": "Eliminação",
+          "sourceField": "eliminacao"
+        },
+        {
+          "label": "Medicação de risco",
+          "sourceField": "farmaco"
+        },
+        {
+          "label": "Equipamentos que limitam a mobilidade",
+          "sourceField": "equipamento"
+        },
+        {
+          "label": "Mobilidade (some os critérios presentes)",
+          "sourceField": "mobilidade"
+        },
+        {
+          "label": "Cognição (some os critérios presentes)",
+          "sourceField": "cognicao"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala Johns Hopkins de queda",
+        "body": "<p>Risco de queda em adulto. Abaixo de 6 é baixo, 6 a 13 moderado, 14 ou mais alto.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Poe SS et al. The Johns Hopkins Fall Risk Assessment Tool. J Nurs Care Qual. 2007. Mobilidade e cognição somam os critérios marcados.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

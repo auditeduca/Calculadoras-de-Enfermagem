@@ -1,0 +1,464 @@
+{
+  "metadata": {
+    "id": "prism",
+    "title": "PRISM",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "PRISM | Calculadoras de Enfermagem",
+    "description": "Parâmetros fisiológicos do PRISM original para gravidade em terapia intensiva pediátrica. Não calcula a mortalidade do PRISM III ou IV, que são licenciados.",
+    "keywords": "PRISM, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/prism/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "PRISM",
+    "description": "Parâmetros fisiológicos do PRISM original para gravidade em terapia intensiva pediátrica. Não calcula a mortalidade do PRISM III ou IV, que são licenciados."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "PRISM",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "pas",
+            "type": "select",
+            "label": "Pressão arterial sistólica",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — na faixa esperada para a idade",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa para a idade, sem choque",
+                "score": 2
+              },
+              {
+                "value": 6,
+                "label": "6 — muito baixa para a idade ou em choque",
+                "score": 6
+              }
+            ]
+          },
+          {
+            "id": "fc",
+            "type": "select",
+            "label": "Frequência cardíaca",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — na faixa",
+                "score": 0
+              },
+              {
+                "value": 4,
+                "label": "4 — taquicardia ou bradicardia acentuada para a idade",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "fr",
+            "type": "select",
+            "label": "Frequência respiratória ou apneia",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — na faixa",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — taquipneia acentuada",
+                "score": 1
+              },
+              {
+                "value": 5,
+                "label": "5 — apneia",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "oxigenacao",
+            "type": "select",
+            "label": "Oxigenação",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — PaO₂/FiO₂ acima de 300, sem suporte invocado",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — PaO₂/FiO₂ 200 a 300",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — PaO₂/FiO₂ abaixo de 200 ou PaCO₂ acima de 50 mmHg",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "glasgow",
+            "type": "select",
+            "label": "Glasgow",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 15",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 13 ou 14",
+                "score": 1
+              },
+              {
+                "value": 3,
+                "label": "3 — 8 a 12",
+                "score": 3
+              },
+              {
+                "value": 5,
+                "label": "5 — 7 ou menos",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "pupila",
+            "type": "select",
+            "label": "Pupilas",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — reagentes",
+                "score": 0
+              },
+              {
+                "value": 4,
+                "label": "4 — uma ou as duas fixas",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "coagulacao",
+            "type": "select",
+            "label": "Coagulação",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — TP e TTPa habituais",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — TP ou TTPa acima de 1,5 vez o controle",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "bilirrubina",
+            "type": "select",
+            "label": "Bilirrubina total",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — abaixo de 2 mg/dL fora do período neonatal imediato",
+                "score": 0
+              },
+              {
+                "value": 6,
+                "label": "6 — 2 mg/dL ou mais",
+                "score": 6
+              }
+            ]
+          },
+          {
+            "id": "potassio",
+            "type": "select",
+            "label": "Potássio",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 3 a 6,5 mEq/L",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 6,5 a 7,5",
+                "score": 1
+              },
+              {
+                "value": 5,
+                "label": "5 — abaixo de 3 ou acima de 7,5",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "calcio",
+            "type": "select",
+            "label": "Cálcio total",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 8 a 12 mg/dL",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — 7 a 8 ou 12 a 15",
+                "score": 2
+              },
+              {
+                "value": 6,
+                "label": "6 — abaixo de 7 ou acima de 15",
+                "score": 6
+              }
+            ]
+          },
+          {
+            "id": "glicose",
+            "type": "select",
+            "label": "Glicose",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 40 a 200 mg/dL",
+                "score": 0
+              },
+              {
+                "value": 4,
+                "label": "4 — abaixo de 40 ou acima de 200",
+                "score": 4
+              },
+              {
+                "value": 8,
+                "label": "8 — abaixo de 40 com convulsão ou acima de 400",
+                "score": 8
+              }
+            ]
+          },
+          {
+            "id": "bicarbonato",
+            "type": "select",
+            "label": "Bicarbonato",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — acima de 16 mEq/L",
+                "score": 0
+              },
+              {
+                "value": 3,
+                "label": "3 — 16 ou menos",
+                "score": 3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "PRISM",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 5,
+        "label": "Disfunção leve",
+        "conduct": "Reavaliar a tendência, não um percentual de morte.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 15,
+        "label": "Disfunção moderada",
+        "conduct": "Suporte de órgão e reavaliação seriada.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 40,
+        "label": "Disfunção grave",
+        "conduct": "Quanto maior o escore, maior a gravidade fisiológica.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Pressão arterial sistólica",
+          "sourceField": "pas"
+        },
+        {
+          "label": "Frequência cardíaca",
+          "sourceField": "fc"
+        },
+        {
+          "label": "Frequência respiratória ou apneia",
+          "sourceField": "fr"
+        },
+        {
+          "label": "Oxigenação",
+          "sourceField": "oxigenacao"
+        },
+        {
+          "label": "Glasgow",
+          "sourceField": "glasgow"
+        },
+        {
+          "label": "Pupilas",
+          "sourceField": "pupila"
+        },
+        {
+          "label": "Coagulação",
+          "sourceField": "coagulacao"
+        },
+        {
+          "label": "Bilirrubina total",
+          "sourceField": "bilirrubina"
+        },
+        {
+          "label": "Potássio",
+          "sourceField": "potassio"
+        },
+        {
+          "label": "Cálcio total",
+          "sourceField": "calcio"
+        },
+        {
+          "label": "Glicose",
+          "sourceField": "glicose"
+        },
+        {
+          "label": "Bicarbonato",
+          "sourceField": "bicarbonato"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "PRISM",
+        "body": "<p>Parâmetros fisiológicos do PRISM original para gravidade em terapia intensiva pediátrica. Não calcula a mortalidade do PRISM III ou IV, que são licenciados.</p><p>Os pesos seguem a lógica publicada do PRISM de Pollack (1988) em faixas de beira-leito. Pressão e frequência precisam ser julgadas para a idade. O PRISM III e o IV têm tabelas licenciadas e não são calculados aqui.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Pollack MM, Ruttimann UE, Getson PR. Pediatric risk of mortality (PRISM) score. Crit Care Med. 1988.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

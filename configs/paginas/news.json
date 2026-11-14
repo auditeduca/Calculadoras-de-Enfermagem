@@ -1,0 +1,389 @@
+{
+  "metadata": {
+    "id": "news",
+    "title": "NEWS2",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "NEWS2 | Calculadoras de Enfermagem",
+    "description": "Alerta precoce em adulto. Escala 1 de saturação. Um parâmetro isolado com 3 pontos também exige resposta urgente.",
+    "keywords": "NEWS2, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/news/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "NEWS2",
+    "description": "Alerta precoce em adulto. Escala 1 de saturação. Um parâmetro isolado com 3 pontos também exige resposta urgente."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "NEWS2",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "fr",
+            "type": "select",
+            "label": "Frequência respiratória",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — 8 ou menos",
+                "score": 3
+              },
+              {
+                "value": 1,
+                "label": "1 — 9 a 11",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "0 — 12 a 20",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — 21 a 24",
+                "score": 2
+              },
+              {
+                "value": "3-1",
+                "label": "3 — 25 ou mais",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "spo2",
+            "type": "select",
+            "label": "Saturação, escala 1",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — 91% ou menos",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — 92 ou 93%",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — 94 ou 95%",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "0 — 96% ou mais",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "oxigenio",
+            "type": "select",
+            "label": "Oxigênio suplementar",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ar ambiente",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — em uso",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "pas",
+            "type": "select",
+            "label": "Pressão arterial sistólica",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — 90 ou menos",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — 91 a 100",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — 101 a 110",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "0 — 111 a 219",
+                "score": 0
+              },
+              {
+                "value": "3-1",
+                "label": "3 — 220 ou mais",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "fc",
+            "type": "select",
+            "label": "Frequência cardíaca",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — 40 ou menos",
+                "score": 3
+              },
+              {
+                "value": 1,
+                "label": "1 — 41 a 50",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "0 — 51 a 90",
+                "score": 0
+              },
+              {
+                "value": "1-1",
+                "label": "1 — 91 a 110",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 111 a 130",
+                "score": 2
+              },
+              {
+                "value": "3-1",
+                "label": "3 — 131 ou mais",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "consciencia",
+            "type": "select",
+            "label": "Consciência",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — alerta",
+                "score": 0
+              },
+              {
+                "value": 3,
+                "label": "3 — confusão nova, voz, dor ou irresponsivo",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "temp",
+            "type": "select",
+            "label": "Temperatura (°C)",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — 35 ou menos",
+                "score": 3
+              },
+              {
+                "value": 1,
+                "label": "1 — 35,1 a 36",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "0 — 36,1 a 38",
+                "score": 0
+              },
+              {
+                "value": "1-1",
+                "label": "1 — 38,1 a 39",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 39,1 ou mais",
+                "score": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "NEWS2",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 4,
+        "label": "Baixo",
+        "conduct": "0 a 4. Se houver um parâmetro em 3, responda como risco baixo-médio.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 6,
+        "label": "Médio",
+        "conduct": "5 ou 6. Avaliação urgente.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 20,
+        "label": "Alto",
+        "conduct": "7 ou mais. Resposta de emergência.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Frequência respiratória",
+          "sourceField": "fr"
+        },
+        {
+          "label": "Saturação, escala 1",
+          "sourceField": "spo2"
+        },
+        {
+          "label": "Oxigênio suplementar",
+          "sourceField": "oxigenio"
+        },
+        {
+          "label": "Pressão arterial sistólica",
+          "sourceField": "pas"
+        },
+        {
+          "label": "Frequência cardíaca",
+          "sourceField": "fc"
+        },
+        {
+          "label": "Consciência",
+          "sourceField": "consciencia"
+        },
+        {
+          "label": "Temperatura (°C)",
+          "sourceField": "temp"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "NEWS2",
+        "body": "<p>Alerta precoce em adulto. Escala 1 de saturação. Um parâmetro isolado com 3 pontos também exige resposta urgente.</p><p>Escala 1 de saturação. Para insuficiência respiratória hipercápnica use a escala 2 do cartão oficial, que não está nesta página.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Royal College of Physicians. National Early Warning Score (NEWS) 2. London: RCP; 2017.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

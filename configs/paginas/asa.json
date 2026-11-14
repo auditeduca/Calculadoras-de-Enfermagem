@@ -1,0 +1,223 @@
+{
+  "metadata": {
+    "id": "asa",
+    "title": "Classificação ASA",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Classificação ASA | Calculadoras de Enfermagem",
+    "description": "Estado físico perioperatório da American Society of Anesthesiologists.",
+    "keywords": "Classificação ASA, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/asa/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Classificação ASA",
+    "description": "Estado físico perioperatório da American Society of Anesthesiologists."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Classificação ASA",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "asa",
+            "type": "select",
+            "label": "Classe ASA",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "I — hígido, sem doença sistêmica",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "II — doença sistêmica leve, sem limitação funcional",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "III — doença sistêmica grave, com limitação funcional",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "IV — doença grave com ameaça constante à vida",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "V — moribundo, sem expectativa de sobreviver sem a cirurgia",
+                "score": 5
+              },
+              {
+                "value": 6,
+                "label": "VI — morte encefálica, doador de órgãos",
+                "score": 6
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Classificação ASA",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 1,
+        "label": "ASA I",
+        "conduct": "Risco basal. O sufixo E (emergência) é registrado à parte e não soma ponto.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 2,
+        "label": "ASA II",
+        "conduct": "Doença leve controlada.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 3,
+        "label": "ASA III",
+        "conduct": "Doença grave. Planejar monitorização e pós-operatório.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 4,
+        "label": "ASA IV",
+        "conduct": "Ameaça constante à vida.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 5,
+        "label": "ASA V",
+        "conduct": "Moribundo.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 6,
+        "label": "ASA VI",
+        "conduct": "Morte encefálica declarada.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Classe ASA",
+          "sourceField": "asa"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Classificação ASA",
+        "body": "<p>Estado físico perioperatório da American Society of Anesthesiologists.</p><p>A classe descreve o estado físico, não o risco isolado do procedimento. Emergência recebe o sufixo E no prontuário.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>American Society of Anesthesiologists. ASA Physical Status Classification System.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

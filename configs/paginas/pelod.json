@@ -1,0 +1,383 @@
+{
+  "metadata": {
+    "id": "pelod",
+    "title": "PELOD-2",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "PELOD-2 | Calculadoras de Enfermagem",
+    "description": "Disfunção de órgãos pediátrica. Os cortes de PAM e creatinina dependem da idade: escolha a opção depois de consultar a linha etária da tabela.",
+    "keywords": "PELOD-2, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/pelod/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "PELOD-2",
+    "description": "Disfunção de órgãos pediátrica. Os cortes de PAM e creatinina dependem da idade: escolha a opção depois de consultar a linha etária da tabela."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "PELOD-2",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "glasgow",
+            "type": "select",
+            "label": "Glasgow",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 11 ou mais",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 5 a 10",
+                "score": 1
+              },
+              {
+                "value": 4,
+                "label": "4 — 3 ou 4",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "pupila",
+            "type": "select",
+            "label": "Pupilas",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — as duas reagentes",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — as duas fixas",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "lactato",
+            "type": "select",
+            "label": "Lactato",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — abaixo de 5 mmol/L",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 5 a 10,9",
+                "score": 1
+              },
+              {
+                "value": 4,
+                "label": "4 — 11 ou mais",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "pam",
+            "type": "select",
+            "label": "Pressão arterial média",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — na faixa etária do PELOD-2",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — abaixo do limite etário do PELOD-2",
+                "score": 2
+              },
+              {
+                "value": 4,
+                "label": "4 — muito abaixo do limite, com sinais de hipoperfusão",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "creatinina",
+            "type": "select",
+            "label": "Creatinina",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — abaixo do limite etário",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — no primeiro degrau acima do limite etário",
+                "score": 2
+              },
+              {
+                "value": 4,
+                "label": "4 — no degrau máximo da tabela etária",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "pao2",
+            "type": "select",
+            "label": "PaO₂/FiO₂",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — acima de 60",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — 60 ou menos, ou PaCO₂ acima de 58 mmHg",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "vm",
+            "type": "select",
+            "label": "Ventilação mecânica invasiva",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 3,
+                "label": "3 — sim",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "leucocitos",
+            "type": "select",
+            "label": "Leucócitos",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 2.000/mm³ ou mais",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — abaixo de 2.000/mm³",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "plaquetas",
+            "type": "select",
+            "label": "Plaquetas",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 142.000/mm³ ou mais",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 77.000 a 141.000",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — abaixo de 77.000",
+                "score": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "PELOD-2",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 5,
+        "label": "Disfunção leve",
+        "conduct": "Reavaliar em série. A mortalidade do modelo logístico não é calculada nesta página.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 10,
+        "label": "Disfunção moderada",
+        "conduct": "Suporte de órgão.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 30,
+        "label": "Disfunção grave",
+        "conduct": "Quanto maior o escore, maior a disfunção orgânica.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Glasgow",
+          "sourceField": "glasgow"
+        },
+        {
+          "label": "Pupilas",
+          "sourceField": "pupila"
+        },
+        {
+          "label": "Lactato",
+          "sourceField": "lactato"
+        },
+        {
+          "label": "Pressão arterial média",
+          "sourceField": "pam"
+        },
+        {
+          "label": "Creatinina",
+          "sourceField": "creatinina"
+        },
+        {
+          "label": "PaO₂/FiO₂",
+          "sourceField": "pao2"
+        },
+        {
+          "label": "Ventilação mecânica invasiva",
+          "sourceField": "vm"
+        },
+        {
+          "label": "Leucócitos",
+          "sourceField": "leucocitos"
+        },
+        {
+          "label": "Plaquetas",
+          "sourceField": "plaquetas"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "PELOD-2",
+        "body": "<p>Disfunção de órgãos pediátrica. Os cortes de PAM e creatinina dependem da idade: escolha a opção depois de consultar a linha etária da tabela.</p><p>Leteurtre e colaboradores, 2013. PAM e creatinina têm limites por idade na tabela original; a opção deve ser a da linha etária, não um número único para toda criança.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Leteurtre S et al. PELOD-2: an update of the Pediatric Logistic Organ Dysfunction score. Crit Care Med. 2013.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

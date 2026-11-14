@@ -1,21 +1,86 @@
 <!DOCTYPE html>
 <!-- gerado por tools/gerar_paginas.py — não editar à mão -->
-<html lang="pt-br">
+<html lang="pt-br" class="scroll-smooth">
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="robots" content="noindex"/>
-  <title>Em revisão clínica | Calculadoras de Enfermagem</title>
+  <title>Escala CRIES | Calculadoras de Enfermagem</title>
+  <meta name="description" content="Dor no recém-nascido, sobretudo no pós-operatório. Total de 0 a 10. A partir de 4, tratar."/>
+  <meta name="keywords" content="Escala CRIES, enfermagem, escala"/>
+  <meta name="author" content="Calculadoras de Enfermagem"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/cries/"/>
+  <link rel="alternate" hreflang="pt-br" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/cries/"/>
+  <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/cries/"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Escala CRIES | Calculadoras de Enfermagem"/>
+  <meta property="og:description" content="Dor no recém-nascido, sobretudo no pós-operatório. Total de 0 a 10. A partir de 4, tratar."/>
+  <meta property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/cries/"/>
+  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Escala CRIES | Calculadoras de Enfermagem"/>
+  <meta name="twitter:description" content="Dor no recém-nascido, sobretudo no pós-operatório. Total de 0 a 10. A partir de 4, tratar."/>
+  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/favicon-calculadoras-de-enfermagem.webp" type="image/webp"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: {
+      fontFamily: { nunito: ['"Nunito Sans"', 'sans-serif'], inter: ['Inter', 'sans-serif'] },
+      colors: { 'nurse-primary': '#1A3E74', 'nurse-secondary': '#00838f', 'nurse-bgDark': '#0F172A' }
+    }}};
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
   <script src="../../assets/js/module-loader-v5.js" defer></script>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter"
+      data-calc="cries" data-config="../../configs/paginas/cries.json" data-i18n="">
   <div id="accessibility-container"></div>
-  <div id="header-container" class="min-h-[70px]"></div>
-  <main class="max-w-2xl mx-auto px-4 py-16">
-    <h1 class="text-2xl font-black text-slate-900">Ferramenta em revisão clínica</h1>
-    <p class="mt-4 leading-relaxed">A calculadora <strong>cries</strong> deixa de ser publicada enquanto não houver uma configuração clínica válida em <code>configs/paginas/cries.json</code>. O conteúdo anterior misturava campos de formulário que não calculam o escore.</p>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px]"></div>
+  <main id="main-content" class="max-w-6xl mx-auto px-4 pt-8 pb-16">
+    <nav id="breadcrumb" class="text-sm text-slate-500 mb-4 flex flex-wrap gap-2 items-center" aria-label="Trilha"></nav>
+    <header class="mb-6">
+      <span id="calc-badge" class="inline-block text-xs font-bold uppercase tracking-wider text-nurse-secondary mb-2"></span>
+      <h1 id="calc-title" class="text-3xl font-black text-nurse-primary dark:text-white font-nunito"></h1>
+      <p id="calc-description" class="mt-2 text-slate-600 dark:text-slate-300 max-w-3xl"></p>
+    </header>
+    <div id="calc-tabs" class="flex flex-wrap gap-2 mb-6" role="tablist"></div>
+    <div id="pane-calculator" class="grid lg:grid-cols-5 gap-6">
+      <section class="lg:col-span-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
+        <form id="calculator-form" onsubmit="return false"></form>
+        <div class="flex flex-wrap gap-3 mt-6">
+          <button type="button" id="btn-calculate" class="px-5 py-3 rounded-xl bg-nurse-primary text-white font-bold"></button>
+          <button type="button" id="btn-reset" class="px-5 py-3 rounded-xl border border-slate-300 font-bold"></button>
+        </div>
+      </section>
+      <aside class="lg:col-span-2 space-y-4">
+        <div id="results-wrapper" class="hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
+          <div class="text-center">
+            <p id="res-label" class="text-xs uppercase tracking-wider text-slate-500 font-bold"></p>
+            <p id="res-total" class="text-4xl font-black text-nurse-primary dark:text-cyan-300 mt-2"></p>
+            <p id="res-unit" class="text-sm text-slate-500"></p>
+          </div>
+          <ul id="audit-list" class="mt-4 space-y-2"></ul>
+          <div id="result-actions" class="flex flex-wrap gap-2 mt-4"></div>
+        </div>
+        <div id="checklist-9rights" class="space-y-2"></div>
+        <div id="checklist-safety-goals" class="space-y-2"></div>
+      </aside>
+    </div>
+    <div id="pane-content" class="hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 prose max-w-none"></div>
   </main>
+  <div id="calc-toast" class="hidden" role="status"></div>
+  <div id="calc-modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 max-w-lg w-full rounded-2xl p-6 max-h-[80vh] overflow-auto" role="dialog" aria-modal="true">
+      <h2 id="calc-modal-title" class="font-bold text-lg mb-3"></h2>
+      <div id="calc-modal-body" class="text-sm leading-relaxed"></div>
+      <button type="button" id="calc-modal-close" class="mt-4 px-4 py-2 rounded-lg bg-nurse-primary text-white font-bold">Fechar</button>
+    </div>
+  </div>
   <div id="footer-container"></div>
+  <script src="../../js/calculadora.js" defer></script>
 </body>
 </html>

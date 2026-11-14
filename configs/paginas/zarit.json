@@ -1,0 +1,981 @@
+{
+  "metadata": {
+    "id": "zarit",
+    "title": "Escala de Zarit",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Zarit | Calculadoras de Enfermagem",
+    "description": "Sobrecarga do cuidador. Vinte e dois itens de 0 a 4. Total de 0 a 88.",
+    "keywords": "Escala de Zarit, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/zarit/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Zarit",
+    "description": "Sobrecarga do cuidador. Vinte e dois itens de 0 a 4. Total de 0 a 88."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Zarit",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "z1",
+            "type": "select",
+            "label": "Pede mais ajuda do que precisa",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z2",
+            "type": "select",
+            "label": "Não sobra tempo para você",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z3",
+            "type": "select",
+            "label": "Estresse entre o cuidado e outras responsabilidades",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z4",
+            "type": "select",
+            "label": "Constrangimento com o comportamento",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z5",
+            "type": "select",
+            "label": "Raiva quando a pessoa está por perto",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z6",
+            "type": "select",
+            "label": "A relação foi prejudicada",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z7",
+            "type": "select",
+            "label": "Medo do que o futuro reserva",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z8",
+            "type": "select",
+            "label": "A pessoa depende de você",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z9",
+            "type": "select",
+            "label": "Sente-se tenso perto da pessoa",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z10",
+            "type": "select",
+            "label": "A saúde foi afetada",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z11",
+            "type": "select",
+            "label": "Não tem privacidade suficiente",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z12",
+            "type": "select",
+            "label": "A vida social foi prejudicada",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z13",
+            "type": "select",
+            "label": "Desconforto em receber visitas por causa da pessoa",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z14",
+            "type": "select",
+            "label": "A pessoa espera que só você cuide dela",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z15",
+            "type": "select",
+            "label": "Dinheiro insuficiente para o cuidado",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z16",
+            "type": "select",
+            "label": "Não conseguirá cuidar por muito mais tempo",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z17",
+            "type": "select",
+            "label": "Perdeu o controle da própria vida",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z18",
+            "type": "select",
+            "label": "Gostaria de entregar o cuidado a outra pessoa",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z19",
+            "type": "select",
+            "label": "Incerteza sobre o que fazer",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z20",
+            "type": "select",
+            "label": "Sente que deveria fazer mais",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z21",
+            "type": "select",
+            "label": "Sente que poderia cuidar melhor",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "z22",
+            "type": "select",
+            "label": "De modo global, quanto se sente sobrecarregado",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nunca",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — raramente",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — às vezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — frequentemente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase sempre",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Zarit",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 20,
+        "label": "Sobrecarga ausente ou leve",
+        "conduct": "0 a 20.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 40,
+        "label": "Sobrecarga leve a moderada",
+        "conduct": "21 a 40.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 60,
+        "label": "Sobrecarga moderada a grave",
+        "conduct": "41 a 60.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 88,
+        "label": "Sobrecarga grave",
+        "conduct": "61 a 88. Oferecer suporte ao cuidador.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Pede mais ajuda do que precisa",
+          "sourceField": "z1"
+        },
+        {
+          "label": "Não sobra tempo para você",
+          "sourceField": "z2"
+        },
+        {
+          "label": "Estresse entre o cuidado e outras responsabilidades",
+          "sourceField": "z3"
+        },
+        {
+          "label": "Constrangimento com o comportamento",
+          "sourceField": "z4"
+        },
+        {
+          "label": "Raiva quando a pessoa está por perto",
+          "sourceField": "z5"
+        },
+        {
+          "label": "A relação foi prejudicada",
+          "sourceField": "z6"
+        },
+        {
+          "label": "Medo do que o futuro reserva",
+          "sourceField": "z7"
+        },
+        {
+          "label": "A pessoa depende de você",
+          "sourceField": "z8"
+        },
+        {
+          "label": "Sente-se tenso perto da pessoa",
+          "sourceField": "z9"
+        },
+        {
+          "label": "A saúde foi afetada",
+          "sourceField": "z10"
+        },
+        {
+          "label": "Não tem privacidade suficiente",
+          "sourceField": "z11"
+        },
+        {
+          "label": "A vida social foi prejudicada",
+          "sourceField": "z12"
+        },
+        {
+          "label": "Desconforto em receber visitas por causa da pessoa",
+          "sourceField": "z13"
+        },
+        {
+          "label": "A pessoa espera que só você cuide dela",
+          "sourceField": "z14"
+        },
+        {
+          "label": "Dinheiro insuficiente para o cuidado",
+          "sourceField": "z15"
+        },
+        {
+          "label": "Não conseguirá cuidar por muito mais tempo",
+          "sourceField": "z16"
+        },
+        {
+          "label": "Perdeu o controle da própria vida",
+          "sourceField": "z17"
+        },
+        {
+          "label": "Gostaria de entregar o cuidado a outra pessoa",
+          "sourceField": "z18"
+        },
+        {
+          "label": "Incerteza sobre o que fazer",
+          "sourceField": "z19"
+        },
+        {
+          "label": "Sente que deveria fazer mais",
+          "sourceField": "z20"
+        },
+        {
+          "label": "Sente que poderia cuidar melhor",
+          "sourceField": "z21"
+        },
+        {
+          "label": "De modo global, quanto se sente sobrecarregado",
+          "sourceField": "z22"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Zarit",
+        "body": "<p>Sobrecarga do cuidador. Vinte e dois itens de 0 a 4. Total de 0 a 88.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Zarit SH, Reever KE, Bach-Peterson J. Relatives of the impaired elderly: correlates of feelings of burden. Gerontologist. 1980.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

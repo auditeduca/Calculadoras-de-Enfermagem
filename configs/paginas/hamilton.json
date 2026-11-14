@@ -1,0 +1,685 @@
+{
+  "metadata": {
+    "id": "hamilton",
+    "title": "Escala de Hamilton para ansiedade (HAM-A)",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Hamilton para ansiedade (HAM-A) | Calculadoras de Enfermagem",
+    "description": "Quatorze itens de 0 a 4. Total de 0 a 56.",
+    "keywords": "Escala de Hamilton para ansiedade (HAM-A), enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/hamilton/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Hamilton para ansiedade (HAM-A)",
+    "description": "Quatorze itens de 0 a 4. Total de 0 a 56."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Hamilton para ansiedade (HAM-A)",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "h1",
+            "type": "select",
+            "label": "Humor ansioso",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h2",
+            "type": "select",
+            "label": "Tensão",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h3",
+            "type": "select",
+            "label": "Medos",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h4",
+            "type": "select",
+            "label": "Insônia",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h5",
+            "type": "select",
+            "label": "Dificuldade intelectual",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h6",
+            "type": "select",
+            "label": "Humor deprimido",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h7",
+            "type": "select",
+            "label": "Sintomas musculares",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h8",
+            "type": "select",
+            "label": "Sintomas sensoriais",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h9",
+            "type": "select",
+            "label": "Sintomas cardiovasculares",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h10",
+            "type": "select",
+            "label": "Sintomas respiratórios",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h11",
+            "type": "select",
+            "label": "Sintomas gastrintestinais",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h12",
+            "type": "select",
+            "label": "Sintomas geniturinários",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h13",
+            "type": "select",
+            "label": "Sintomas autonômicos",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "h14",
+            "type": "select",
+            "label": "Comportamento na entrevista",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — moderado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — grave",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — muito grave / incapacitante",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Hamilton para ansiedade (HAM-A)",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 17,
+        "label": "Ansiedade leve",
+        "conduct": "Até 17.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 24,
+        "label": "Ansiedade leve a moderada",
+        "conduct": "18 a 24.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 30,
+        "label": "Ansiedade moderada a grave",
+        "conduct": "25 a 30.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 56,
+        "label": "Ansiedade grave",
+        "conduct": "31 ou mais.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Humor ansioso",
+          "sourceField": "h1"
+        },
+        {
+          "label": "Tensão",
+          "sourceField": "h2"
+        },
+        {
+          "label": "Medos",
+          "sourceField": "h3"
+        },
+        {
+          "label": "Insônia",
+          "sourceField": "h4"
+        },
+        {
+          "label": "Dificuldade intelectual",
+          "sourceField": "h5"
+        },
+        {
+          "label": "Humor deprimido",
+          "sourceField": "h6"
+        },
+        {
+          "label": "Sintomas musculares",
+          "sourceField": "h7"
+        },
+        {
+          "label": "Sintomas sensoriais",
+          "sourceField": "h8"
+        },
+        {
+          "label": "Sintomas cardiovasculares",
+          "sourceField": "h9"
+        },
+        {
+          "label": "Sintomas respiratórios",
+          "sourceField": "h10"
+        },
+        {
+          "label": "Sintomas gastrintestinais",
+          "sourceField": "h11"
+        },
+        {
+          "label": "Sintomas geniturinários",
+          "sourceField": "h12"
+        },
+        {
+          "label": "Sintomas autonômicos",
+          "sourceField": "h13"
+        },
+        {
+          "label": "Comportamento na entrevista",
+          "sourceField": "h14"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Hamilton para ansiedade (HAM-A)",
+        "body": "<p>Quatorze itens de 0 a 4. Total de 0 a 56.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Hamilton M. The assessment of anxiety states by rating. Br J Med Psychol. 1959.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

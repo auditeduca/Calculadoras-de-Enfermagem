@@ -1,0 +1,271 @@
+{
+  "metadata": {
+    "id": "glasgow",
+    "title": "Escala de coma de Glasgow",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de coma de Glasgow | Calculadoras de Enfermagem",
+    "description": "Abertura ocular, resposta verbal e motora. Total de 3 a 15.",
+    "keywords": "Escala de coma de Glasgow, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/glasgow/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de coma de Glasgow",
+    "description": "Abertura ocular, resposta verbal e motora. Total de 3 a 15."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de coma de Glasgow",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "ocular",
+            "type": "select",
+            "label": "Abertura ocular",
+            "required": true,
+            "options": [
+              {
+                "value": 4,
+                "label": "4 — espontânea",
+                "score": 4
+              },
+              {
+                "value": 3,
+                "label": "3 — à voz",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — à dor",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — nenhuma",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "verbal",
+            "type": "select",
+            "label": "Resposta verbal",
+            "required": true,
+            "options": [
+              {
+                "value": 5,
+                "label": "5 — orientada",
+                "score": 5
+              },
+              {
+                "value": 4,
+                "label": "4 — confusa",
+                "score": 4
+              },
+              {
+                "value": 3,
+                "label": "3 — palavras",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — sons",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — nenhuma (se intubado, registre tubo à parte; a soma clássica usa 1)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "motora",
+            "type": "select",
+            "label": "Resposta motora",
+            "required": true,
+            "options": [
+              {
+                "value": 6,
+                "label": "6 — obedece a comandos",
+                "score": 6
+              },
+              {
+                "value": 5,
+                "label": "5 — localiza a dor",
+                "score": 5
+              },
+              {
+                "value": 4,
+                "label": "4 — retirada",
+                "score": 4
+              },
+              {
+                "value": 3,
+                "label": "3 — flexão anormal",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — extensão",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — nenhuma",
+                "score": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de coma de Glasgow",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 8,
+        "label": "Grave",
+        "conduct": "3 a 8.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 12,
+        "label": "Moderado",
+        "conduct": "9 a 12.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 15,
+        "label": "Leve",
+        "conduct": "13 a 15.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Abertura ocular",
+          "sourceField": "ocular"
+        },
+        {
+          "label": "Resposta verbal",
+          "sourceField": "verbal"
+        },
+        {
+          "label": "Resposta motora",
+          "sourceField": "motora"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de coma de Glasgow",
+        "body": "<p>Abertura ocular, resposta verbal e motora. Total de 3 a 15.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Teasdale G, Jennett B. Assessment of coma and impaired consciousness. Lancet. 1974. Teasdale G et al. The Glasgow Coma Scale at 40 years. Lancet Neurol. 2014.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

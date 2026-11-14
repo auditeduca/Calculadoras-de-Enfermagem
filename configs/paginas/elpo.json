@@ -1,0 +1,412 @@
+{
+  "metadata": {
+    "id": "elpo",
+    "title": "Escala ELPO",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala ELPO | Calculadoras de Enfermagem",
+    "description": "Risco de lesão decorrente do posicionamento cirúrgico. De 7 a 35; 20 ou mais é maior risco.",
+    "keywords": "Escala ELPO, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/elpo/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala ELPO",
+    "description": "Risco de lesão decorrente do posicionamento cirúrgico. De 7 a 35; 20 ou mais é maior risco."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala ELPO",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "posicao",
+            "type": "select",
+            "label": "Posição cirúrgica",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — supina",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — lateral",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — Trendelenburg",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — prona",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — litotômica",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "tempo",
+            "type": "select",
+            "label": "Tempo de cirurgia",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — até 1 hora",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — mais de 1 até 2 horas",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — mais de 2 até 4 horas",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — mais de 4 até 6 horas",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — acima de 6 horas",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "anestesia",
+            "type": "select",
+            "label": "Tipo de anestesia",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — local",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — sedação",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — regional",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — geral",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — geral e regional",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "suporte",
+            "type": "select",
+            "label": "Superfície de suporte",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — colchão e coxins viscoelásticos",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — colchão convencional e coxins viscoelásticos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — colchão convencional e coxins de espuma",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — colchão convencional e coxins de algodão",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — sem suporte, suporte rígido ou perneiras estreitas",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "membros",
+            "type": "select",
+            "label": "Posição dos membros",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — anatômica",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — abertura dos membros superiores menor que 90°",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — joelhos ou membros inferiores abaixo de 90°, ou pescoço sem alinhamento",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — joelhos acima de 90° ou membros inferiores acima de 90°",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — joelhos acima de 90° com abertura acima de 90°, ou membros superiores acima de 90°",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "comorbidade",
+            "type": "select",
+            "label": "Comorbidade de maior risco",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — nenhuma",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — doença vascular",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — diabetes",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — obesidade ou desnutrição",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — lesão por pressão prévia, neuropatia ou trombose venosa diagnosticada",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "idade",
+            "type": "select",
+            "label": "Idade",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — 18 a 39 anos",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 40 a 59",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 60 a 69",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — 70 a 79",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — 80 ou mais",
+                "score": 5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala ELPO",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 19,
+        "label": "Menor risco",
+        "conduct": "Escore até 19. Manter proteção de proeminências.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 35,
+        "label": "Maior risco",
+        "conduct": "Escore de 20 ou mais. Reforçar dispositivos e reavaliar se a posição mudar.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Posição cirúrgica",
+          "sourceField": "posicao"
+        },
+        {
+          "label": "Tempo de cirurgia",
+          "sourceField": "tempo"
+        },
+        {
+          "label": "Tipo de anestesia",
+          "sourceField": "anestesia"
+        },
+        {
+          "label": "Superfície de suporte",
+          "sourceField": "suporte"
+        },
+        {
+          "label": "Posição dos membros",
+          "sourceField": "membros"
+        },
+        {
+          "label": "Comorbidade de maior risco",
+          "sourceField": "comorbidade"
+        },
+        {
+          "label": "Idade",
+          "sourceField": "idade"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala ELPO",
+        "body": "<p>Risco de lesão decorrente do posicionamento cirúrgico. De 7 a 35; 20 ou mais é maior risco.</p><p>Sete itens de 1 a 5 (Lopes e colaboradores, versão 2). Estime o tempo ao posicionar e reclassifique ao final. Havendo mais de uma comorbidade, use a de maior pontuação.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Lopes CMM et al. Escala de avaliação de risco para lesões decorrentes do posicionamento cirúrgico. Rev. Latino-Am. Enfermagem. 2016.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

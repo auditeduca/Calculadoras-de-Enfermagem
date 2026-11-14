@@ -1,0 +1,386 @@
+{
+  "metadata": {
+    "id": "meows",
+    "title": "MEOWS",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "MEOWS | Calculadoras de Enfermagem",
+    "description": "Escore obstétrico de alerta precoce, no formato somado. Um parâmetro com 3 pontos, mesmo isolado, também pede avaliação imediata.",
+    "keywords": "MEOWS, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/meows/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "MEOWS",
+    "description": "Escore obstétrico de alerta precoce, no formato somado. Um parâmetro com 3 pontos, mesmo isolado, também pede avaliação imediata."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "MEOWS",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "fr",
+            "type": "select",
+            "label": "Frequência respiratória",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — 9 ou menos, ou 30 ou mais",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — 25 a 29",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — 21 a 24",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "0 — 10 a 20",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "spo2",
+            "type": "select",
+            "label": "Saturação de oxigênio",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — 93% ou menos",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — 94 ou 95%",
+                "score": 2
+              },
+              {
+                "value": 0,
+                "label": "0 — 96% ou mais",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "temp",
+            "type": "select",
+            "label": "Temperatura (°C)",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — 35 ou menos",
+                "score": 3
+              },
+              {
+                "value": 1,
+                "label": "1 — 35,1 a 36",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "0 — 36,1 a 37,9",
+                "score": 0
+              },
+              {
+                "value": "1-1",
+                "label": "1 — 38 a 38,9",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 39 ou mais",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "pas",
+            "type": "select",
+            "label": "Pressão arterial sistólica",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — 90 ou menos, ou 160 ou mais",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — 91 a 100, ou 140 a 159",
+                "score": 2
+              },
+              {
+                "value": 0,
+                "label": "0 — 101 a 139",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "pad",
+            "type": "select",
+            "label": "Pressão arterial diastólica",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — 110 ou mais",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — 90 a 109",
+                "score": 2
+              },
+              {
+                "value": 0,
+                "label": "0 — abaixo de 90",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "fc",
+            "type": "select",
+            "label": "Frequência cardíaca",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — abaixo de 50 ou acima de 120",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — 111 a 120",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — 100 a 110",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "0 — 50 a 99",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "consciencia",
+            "type": "select",
+            "label": "Consciência",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — alerta",
+                "score": 0
+              },
+              {
+                "value": 3,
+                "label": "3 — alterada",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "aspecto",
+            "type": "select",
+            "label": "Aspecto clínico",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — habitual",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — a equipe se preocupa com o aspecto",
+                "score": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "MEOWS",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 1,
+        "label": "Rotina",
+        "conduct": "0 ou 1, e nenhum parâmetro em 3.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 3,
+        "label": "Alerta",
+        "conduct": "2 ou 3. Avisar a equipe e repetir em curto prazo.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 24,
+        "label": "Resposta imediata",
+        "conduct": "4 ou mais, ou qualquer parâmetro vermelho de 3 pontos.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Frequência respiratória",
+          "sourceField": "fr"
+        },
+        {
+          "label": "Saturação de oxigênio",
+          "sourceField": "spo2"
+        },
+        {
+          "label": "Temperatura (°C)",
+          "sourceField": "temp"
+        },
+        {
+          "label": "Pressão arterial sistólica",
+          "sourceField": "pas"
+        },
+        {
+          "label": "Pressão arterial diastólica",
+          "sourceField": "pad"
+        },
+        {
+          "label": "Frequência cardíaca",
+          "sourceField": "fc"
+        },
+        {
+          "label": "Consciência",
+          "sourceField": "consciencia"
+        },
+        {
+          "label": "Aspecto clínico",
+          "sourceField": "aspecto"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "MEOWS",
+        "body": "<p>Escore obstétrico de alerta precoce, no formato somado. Um parâmetro com 3 pontos, mesmo isolado, também pede avaliação imediata.</p><p>Os limites são os gatilhos usuais do MEOWS britânico convertidos em pontos (vermelho 3, âmbar 1 ou 2). Confirme o cartão da maternidade se os cortes locais forem outros.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Lewis G, ed. Saving Mothers' Lives: CEMACH. The Seventh Report on Confidential Enquiries into Maternal Deaths. 2007.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

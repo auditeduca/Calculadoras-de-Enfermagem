@@ -1,0 +1,320 @@
+{
+  "metadata": {
+    "id": "downes",
+    "title": "Wood-Downes modificada por Ferres",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Wood-Downes modificada por Ferres | Calculadoras de Enfermagem",
+    "description": "Desconforto respiratório e bronquiolite no lactente. Cinco itens de 0 a 3.",
+    "keywords": "Wood-Downes modificada por Ferres, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/downes/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Wood-Downes modificada por Ferres",
+    "description": "Desconforto respiratório e bronquiolite no lactente. Cinco itens de 0 a 3."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Wood-Downes modificada por Ferres",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "sibilo",
+            "type": "select",
+            "label": "Sibilos",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausentes",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — no fim da expiração",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — em toda a expiração",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — inspiração e expiração",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "tiragem",
+            "type": "select",
+            "label": "Tiragem",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — subcostal ou intercostal",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — mais supraclavicular ou batimento nasal leve",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — universal, com batimento de asa",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "fr",
+            "type": "select",
+            "label": "Frequência respiratória do lactente",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — até 30",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 31 a 45",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 46 a 60",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — acima de 60",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "fc",
+            "type": "select",
+            "label": "Frequência cardíaca",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — abaixo de 120",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 120 a 140",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 141 a 160",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — acima de 160",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "entrada",
+            "type": "select",
+            "label": "Entrada de ar e cianose",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — boa, sem cianose",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — diminuída ou cianose ao chorar",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — muito diminuída ou cianose em ar ambiente",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — quase ausente ou cianose em repouso",
+                "score": 3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Wood-Downes modificada por Ferres",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 3,
+        "label": "Leve",
+        "conduct": "0 a 3.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 7,
+        "label": "Moderado",
+        "conduct": "4 a 7.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 15,
+        "label": "Grave",
+        "conduct": "8 a 15.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Sibilos",
+          "sourceField": "sibilo"
+        },
+        {
+          "label": "Tiragem",
+          "sourceField": "tiragem"
+        },
+        {
+          "label": "Frequência respiratória do lactente",
+          "sourceField": "fr"
+        },
+        {
+          "label": "Frequência cardíaca",
+          "sourceField": "fc"
+        },
+        {
+          "label": "Entrada de ar e cianose",
+          "sourceField": "entrada"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Wood-Downes modificada por Ferres",
+        "body": "<p>Desconforto respiratório e bronquiolite no lactente. Cinco itens de 0 a 3.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Wood DW, Downes JJ, Lecks HI. A clinical scoring system for the diagnosis of respiratory failure. Am J Dis Child. 1972. Modificação de Ferres.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

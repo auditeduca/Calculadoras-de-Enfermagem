@@ -1,0 +1,278 @@
+{
+  "metadata": {
+    "id": "pews",
+    "title": "PEWS de Brighton",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "PEWS de Brighton | Calculadoras de Enfermagem",
+    "description": "Alerta pediátrico em comportamento, circulação e respiração, mais dois pontos se houver nebulização contínua ou vômito persistente.",
+    "keywords": "PEWS de Brighton, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/pews/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "PEWS de Brighton",
+    "description": "Alerta pediátrico em comportamento, circulação e respiração, mais dois pontos se houver nebulização contínua ou vômito persistente."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "PEWS de Brighton",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "comportamento",
+            "type": "select",
+            "label": "Comportamento",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — brincando ou apropriado",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sonolento",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — irritável",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — letárgico, confuso ou resposta reduzida à dor",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "circulacao",
+            "type": "select",
+            "label": "Circulação",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — rosado, enchimento capilar 1 a 2 s",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — pálido ou enchimento de 3 s",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — acinzentado ou enchimento de 4 s, ou taquicardia acima do esperado",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — moteado, acinzentado, enchimento de 5 s ou mais, ou bradicardia",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "respiracao",
+            "type": "select",
+            "label": "Respiração",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — normal para a idade, sem esforço",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — mais de 10 acima do normal ou uso leve de músculo acessório",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — mais de 20 acima do normal, retração ou 50% ou mais de oxigênio",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — mais de 5 abaixo do normal, gemido, estridor ou 50% ou mais com retração grave",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "extra",
+            "type": "select",
+            "label": "Nebulização ou vômito",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — nebulização a cada 15 minutos ou vômito persistente",
+                "score": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "PEWS de Brighton",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 2,
+        "label": "Rotina",
+        "conduct": "0 a 2.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 4,
+        "label": "Chamar avaliação",
+        "conduct": "3 ou 4. Um domínio isolado em 3 também pede revisão.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 11,
+        "label": "Resposta imediata",
+        "conduct": "5 ou mais.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Comportamento",
+          "sourceField": "comportamento"
+        },
+        {
+          "label": "Circulação",
+          "sourceField": "circulacao"
+        },
+        {
+          "label": "Respiração",
+          "sourceField": "respiracao"
+        },
+        {
+          "label": "Nebulização ou vômito",
+          "sourceField": "extra"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "PEWS de Brighton",
+        "body": "<p>Alerta pediátrico em comportamento, circulação e respiração, mais dois pontos se houver nebulização contínua ou vômito persistente.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Monaghan A. Detecting and managing deterioration in children. Paediatr Nurs. 2005. PEWS de Brighton.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

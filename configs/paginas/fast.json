@@ -1,0 +1,219 @@
+{
+  "metadata": {
+    "id": "fast",
+    "title": "Escala FAST",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala FAST | Calculadoras de Enfermagem",
+    "description": "Face, braço e fala na triagem do AVC. O tempo de início é registrado à parte e não entra na soma.",
+    "keywords": "Escala FAST, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/fast/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala FAST",
+    "description": "Face, braço e fala na triagem do AVC. O tempo de início é registrado à parte e não entra na soma."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala FAST",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "face",
+            "type": "select",
+            "label": "Face",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — simétrica",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — desvio ou assimetria",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "braco",
+            "type": "select",
+            "label": "Braço",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — sustenta",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — fraqueza ou queda",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "fala",
+            "type": "select",
+            "label": "Fala",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — normal",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — anormal ou ausente",
+                "score": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala FAST",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 0,
+        "label": "FAST sem alteração",
+        "conduct": "Registrar mesmo assim a hora em que a pessoa foi vista bem pela última vez.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 3,
+        "label": "FAST alterado",
+        "conduct": "Um ou mais itens. Acionar o protocolo de AVC e anotar o horário.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Face",
+          "sourceField": "face"
+        },
+        {
+          "label": "Braço",
+          "sourceField": "braco"
+        },
+        {
+          "label": "Fala",
+          "sourceField": "fala"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala FAST",
+        "body": "<p>Face, braço e fala na triagem do AVC. O tempo de início é registrado à parte e não entra na soma.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>American Stroke Association. Stroke warning signs: Face, Arm, Speech, Time.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

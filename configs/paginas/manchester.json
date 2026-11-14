@@ -1,0 +1,211 @@
+{
+  "metadata": {
+    "id": "manchester",
+    "title": "Prioridade do Protocolo de Manchester",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Prioridade do Protocolo de Manchester | Calculadoras de Enfermagem",
+    "description": "Registra a cor já classificada por profissional treinado e o tempo-alvo. Não reproduz os fluxogramas e discriminadores, que são licenciados.",
+    "keywords": "Prioridade do Protocolo de Manchester, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/manchester/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Prioridade do Protocolo de Manchester",
+    "description": "Registra a cor já classificada por profissional treinado e o tempo-alvo. Não reproduz os fluxogramas e discriminadores, que são licenciados."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Prioridade do Protocolo de Manchester",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "cor",
+            "type": "select",
+            "label": "Prioridade definida na classificação",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — vermelho, emergência, imediato",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — laranja, muito urgente, 10 minutos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — amarelo, urgente, 60 minutos",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — verde, pouco urgente, 120 minutos",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — azul, não urgente, 240 minutos",
+                "score": 5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Prioridade do Protocolo de Manchester",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 1,
+        "label": "Vermelho — imediato",
+        "conduct": "Risco imediato de morte.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 2,
+        "label": "Laranja — 10 minutos",
+        "conduct": "Muito urgente.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 3,
+        "label": "Amarelo — 60 minutos",
+        "conduct": "Urgente.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 4,
+        "label": "Verde — 120 minutos",
+        "conduct": "Pouco urgente.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 5,
+        "label": "Azul — 240 minutos",
+        "conduct": "Não urgente.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Prioridade definida na classificação",
+          "sourceField": "cor"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Prioridade do Protocolo de Manchester",
+        "body": "<p>Registra a cor já classificada por profissional treinado e o tempo-alvo. Não reproduz os fluxogramas e discriminadores, que são licenciados.</p><p>A classificação de Manchester é feita no fluxograma oficial, por quem tem o treinamento. Esta página guarda a prioridade e o tempo-alvo; não substitui o sistema licenciado.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Manchester Triage Group. Emergency Triage. Wiley. O material dos discriminadores permanece com os detentores dos direitos.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

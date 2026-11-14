@@ -1,0 +1,241 @@
+{
+  "metadata": {
+    "id": "cam",
+    "title": "CAM-ICU",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "CAM-ICU | Calculadoras de Enfermagem",
+    "description": "Delirium na UTI. Positivo se a alteração é aguda ou flutuante, há desatenção e, além disso, consciência alterada ou pensamento desorganizado.",
+    "keywords": "CAM-ICU, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/cam/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "CAM-ICU",
+    "description": "Delirium na UTI. Positivo se a alteração é aguda ou flutuante, há desatenção e, além disso, consciência alterada ou pensamento desorganizado."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "CAM-ICU",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "inicio",
+            "type": "select",
+            "label": "Início agudo ou curso flutuante",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sim",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "desatencao",
+            "type": "select",
+            "label": "Desatenção (mais de dois erros no teste de letras ou de figuras)",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sim",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "consciencia",
+            "type": "select",
+            "label": "Nível de consciência diferente de RASS zero",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — RASS zero",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — RASS diferente de zero",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "pensamento",
+            "type": "select",
+            "label": "Pensamento desorganizado",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sim",
+                "score": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "cam = inicio * desatencao * (consciencia + pensamento)",
+    "result": {
+      "label": "CAM-ICU",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "cam",
+      "interpretationOf": "cam"
+    },
+    "interpretation": [
+      {
+        "max": 0,
+        "label": "CAM-ICU negativo",
+        "conduct": "Não preenche o critério neste momento. Reavaliar se fluctuar.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 4,
+        "label": "CAM-ICU positivo",
+        "conduct": "Tratar causa, revisar fármacos e aplicar as medidas não farmacológicas.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Início agudo ou curso flutuante",
+          "sourceField": "inicio"
+        },
+        {
+          "label": "Desatenção (mais de dois erros no teste de letras ou de figuras)",
+          "sourceField": "desatencao"
+        },
+        {
+          "label": "Nível de consciência diferente de RASS zero",
+          "sourceField": "consciencia"
+        },
+        {
+          "label": "Pensamento desorganizado",
+          "sourceField": "pensamento"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "cam",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "CAM-ICU",
+        "body": "<p>Delirium na UTI. Positivo se a alteração é aguda ou flutuante, há desatenção e, além disso, consciência alterada ou pensamento desorganizado.</p><p>O produto é zero quando falta a alteração aguda ou a desatenção, ou quando os dois últimos itens são negativos. Qualquer valor maior que zero é positivo.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Ely EW et al. Delirium in mechanically ventilated patients: validity and reliability of the CAM-ICU. JAMA. 2001.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

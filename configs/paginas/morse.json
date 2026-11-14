@@ -1,0 +1,302 @@
+{
+  "metadata": {
+    "id": "morse",
+    "title": "Escala de Morse",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Morse | Calculadoras de Enfermagem",
+    "description": "Risco de queda em adulto hospitalizado.",
+    "keywords": "Escala de Morse, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/morse/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Morse",
+    "description": "Risco de queda em adulto hospitalizado."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Morse",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "queda",
+            "type": "select",
+            "label": "Queda recente",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 25,
+                "label": "25 — sim",
+                "score": 25
+              }
+            ]
+          },
+          {
+            "id": "diagnostico",
+            "type": "select",
+            "label": "Diagnóstico secundário",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 15,
+                "label": "15 — sim",
+                "score": 15
+              }
+            ]
+          },
+          {
+            "id": "auxilio",
+            "type": "select",
+            "label": "Auxílio para deambular",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhum, acamado ou cadeira de rodas",
+                "score": 0
+              },
+              {
+                "value": 15,
+                "label": "15 — muleta, bengala ou andador",
+                "score": 15
+              },
+              {
+                "value": 30,
+                "label": "30 — apoia-se na mobília",
+                "score": 30
+              }
+            ]
+          },
+          {
+            "id": "acesso",
+            "type": "select",
+            "label": "Acesso venoso ou heparinizado",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 20,
+                "label": "20 — sim",
+                "score": 20
+              }
+            ]
+          },
+          {
+            "id": "marcha",
+            "type": "select",
+            "label": "Marcha",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — normal, acamado ou cadeira",
+                "score": 0
+              },
+              {
+                "value": 10,
+                "label": "10 — fraca",
+                "score": 10
+              },
+              {
+                "value": 20,
+                "label": "20 — comprometida",
+                "score": 20
+              }
+            ]
+          },
+          {
+            "id": "mental",
+            "type": "select",
+            "label": "Estado mental",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — orientado quanto à própria capacidade",
+                "score": 0
+              },
+              {
+                "value": 15,
+                "label": "15 — superestima ou esquece limitações",
+                "score": 15
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Morse",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 24,
+        "label": "Risco baixo",
+        "conduct": "Precaução padrão de queda.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 44,
+        "label": "Risco médio",
+        "conduct": "Precaução reforçada.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 125,
+        "label": "Risco alto",
+        "conduct": "45 ou mais. Plano individual de prevenção de quedas.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Queda recente",
+          "sourceField": "queda"
+        },
+        {
+          "label": "Diagnóstico secundário",
+          "sourceField": "diagnostico"
+        },
+        {
+          "label": "Auxílio para deambular",
+          "sourceField": "auxilio"
+        },
+        {
+          "label": "Acesso venoso ou heparinizado",
+          "sourceField": "acesso"
+        },
+        {
+          "label": "Marcha",
+          "sourceField": "marcha"
+        },
+        {
+          "label": "Estado mental",
+          "sourceField": "mental"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Morse",
+        "body": "<p>Risco de queda em adulto hospitalizado.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Morse JM, Morse RM, Tylko SJ. Development of a scale to identify the fall-prone patient. Can J Aging. 1989.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

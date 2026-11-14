@@ -1,0 +1,307 @@
+{
+  "metadata": {
+    "id": "lanss",
+    "title": "Escala LANSS",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala LANSS | Calculadoras de Enfermagem",
+    "description": "Discrimina dor neuropática. Total de 0 a 24. Doze ou mais sugere mecanismo neuropático.",
+    "keywords": "Escala LANSS, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/lanss/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala LANSS",
+    "description": "Discrimina dor neuropática. Total de 0 a 24. Doze ou mais sugere mecanismo neuropático."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala LANSS",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "formigamento",
+            "type": "select",
+            "label": "A dor parece uma sensação estranha na pele (agulhada, formigamento)?",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "Sim — 5",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "aspecto",
+            "type": "select",
+            "label": "A pele da área dolorosa parece diferente (cor, mancha, fina)?",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "Sim — 5",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "toque",
+            "type": "select",
+            "label": "A pele está anormalmente sensível ao toque?",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 3,
+                "label": "Sim — 3",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "choque",
+            "type": "select",
+            "label": "A dor vem em crises, como choque ou explosão?",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "Sim — 2",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "queimacao",
+            "type": "select",
+            "label": "A dor parece queimação?",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "alodinia",
+            "type": "select",
+            "label": "Alodinia ao roçar leve na área dolorosa",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "Sim — 5",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "agulha",
+            "type": "select",
+            "label": "Limiar de picada de agulha alterado na área dolorosa",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 3,
+                "label": "Sim — 3",
+                "score": 3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala LANSS",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 11,
+        "label": "Dor provavelmente não neuropática",
+        "conduct": "Abaixo de 12.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 24,
+        "label": "Dor provavelmente neuropática",
+        "conduct": "12 ou mais. Correlacionar com o exame.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "A dor parece uma sensação estranha na pele (agulhada, formigamento)?",
+          "sourceField": "formigamento"
+        },
+        {
+          "label": "A pele da área dolorosa parece diferente (cor, mancha, fina)?",
+          "sourceField": "aspecto"
+        },
+        {
+          "label": "A pele está anormalmente sensível ao toque?",
+          "sourceField": "toque"
+        },
+        {
+          "label": "A dor vem em crises, como choque ou explosão?",
+          "sourceField": "choque"
+        },
+        {
+          "label": "A dor parece queimação?",
+          "sourceField": "queimacao"
+        },
+        {
+          "label": "Alodinia ao roçar leve na área dolorosa",
+          "sourceField": "alodinia"
+        },
+        {
+          "label": "Limiar de picada de agulha alterado na área dolorosa",
+          "sourceField": "agulha"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala LANSS",
+        "body": "<p>Discrimina dor neuropática. Total de 0 a 24. Doze ou mais sugere mecanismo neuropático.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Bennett M. The LANSS Pain Scale. Pain. 2001.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

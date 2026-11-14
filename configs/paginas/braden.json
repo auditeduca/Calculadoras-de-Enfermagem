@@ -1,0 +1,361 @@
+{
+  "metadata": {
+    "id": "braden",
+    "title": "Escala de Braden",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Braden | Calculadoras de Enfermagem",
+    "description": "Risco de lesão por pressão em seis domínios. Quanto menor o escore, maior o risco.",
+    "keywords": "Escala de Braden, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/braden/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Braden",
+    "description": "Risco de lesão por pressão em seis domínios. Quanto menor o escore, maior o risco."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Braden",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "sensorial",
+            "type": "select",
+            "label": "Percepção sensorial",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — completamente limitada",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — muito limitada",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — levemente limitada",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — nenhum prejuízo",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "umidade",
+            "type": "select",
+            "label": "Umidade",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — constantemente úmida",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — muito úmida",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — ocasionalmente úmida",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — raramente úmida",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "atividade",
+            "type": "select",
+            "label": "Atividade",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — acamado",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — confinado à cadeira",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — deambula ocasionalmente",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — deambula com frequência",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "mobilidade",
+            "type": "select",
+            "label": "Mobilidade",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — completamente imóvel",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — muito limitada",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — levemente limitada",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — sem limitação",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "nutricao",
+            "type": "select",
+            "label": "Nutrição",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — muito pobre",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — provavelmente inadequada",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — adequada",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — excelente",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "friccao",
+            "type": "select",
+            "label": "Fricção e cisalhamento",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — problema",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — problema em potencial",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — nenhum problema aparente",
+                "score": 3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Braden",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 9,
+        "label": "Risco muito alto",
+        "conduct": "Superfície de redistribuição, reposicionamento rigoroso e nutrição.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 12,
+        "label": "Risco alto",
+        "conduct": "Plano intensivo de prevenção de lesão por pressão.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 14,
+        "label": "Risco moderado",
+        "conduct": "Prevenção padrão reforçada.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 18,
+        "label": "Risco baixo",
+        "conduct": "Manter prevenção e reavaliar se o estado mudar.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 23,
+        "label": "Sem risco pela Braden",
+        "conduct": "Manter inspeção da pele.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Percepção sensorial",
+          "sourceField": "sensorial"
+        },
+        {
+          "label": "Umidade",
+          "sourceField": "umidade"
+        },
+        {
+          "label": "Atividade",
+          "sourceField": "atividade"
+        },
+        {
+          "label": "Mobilidade",
+          "sourceField": "mobilidade"
+        },
+        {
+          "label": "Nutrição",
+          "sourceField": "nutricao"
+        },
+        {
+          "label": "Fricção e cisalhamento",
+          "sourceField": "friccao"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Braden",
+        "body": "<p>Risco de lesão por pressão em seis domínios. Quanto menor o escore, maior o risco.</p><p>Seis subescalas, de 6 a 23. O corte clássico de risco é 18 ou menos.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Bergstrom N, Braden B, Laguzza A, Holman V. The Braden Scale for Predicting Pressure Sore Risk. Nurs Res. 1987.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

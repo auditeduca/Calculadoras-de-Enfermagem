@@ -1,0 +1,299 @@
+{
+  "metadata": {
+    "id": "katz",
+    "title": "Índice de Katz",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Índice de Katz | Calculadoras de Enfermagem",
+    "description": "Atividades básicas da vida diária. Cada independência vale 1. Total de 0 a 6.",
+    "keywords": "Índice de Katz, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/katz/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Índice de Katz",
+    "description": "Atividades básicas da vida diária. Cada independência vale 1. Total de 0 a 6."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Índice de Katz",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "banho",
+            "type": "select",
+            "label": "Banho",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "vestir",
+            "type": "select",
+            "label": "Vestir-se",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "banheiro",
+            "type": "select",
+            "label": "Uso do banheiro",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "transferir",
+            "type": "select",
+            "label": "Transferência",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "continencia",
+            "type": "select",
+            "label": "Continência",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "alimentar",
+            "type": "select",
+            "label": "Alimentação",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Índice de Katz",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 1,
+        "label": "Dependência importante",
+        "conduct": "0 ou 1 atividade independente.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 3,
+        "label": "Dependência acentuada",
+        "conduct": "2 ou 3.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 5,
+        "label": "Dependência parcial",
+        "conduct": "4 ou 5.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 6,
+        "label": "Independente",
+        "conduct": "As seis atividades.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Banho",
+          "sourceField": "banho"
+        },
+        {
+          "label": "Vestir-se",
+          "sourceField": "vestir"
+        },
+        {
+          "label": "Uso do banheiro",
+          "sourceField": "banheiro"
+        },
+        {
+          "label": "Transferência",
+          "sourceField": "transferir"
+        },
+        {
+          "label": "Continência",
+          "sourceField": "continencia"
+        },
+        {
+          "label": "Alimentação",
+          "sourceField": "alimentar"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Índice de Katz",
+        "body": "<p>Atividades básicas da vida diária. Cada independência vale 1. Total de 0 a 6.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Katz S et al. Studies of illness in the aged. The index of ADL. JAMA. 1963.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

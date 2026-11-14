@@ -1,0 +1,258 @@
+{
+  "metadata": {
+    "id": "meem",
+    "title": "Mini-Exame do Estado Mental",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Mini-Exame do Estado Mental | Calculadoras de Enfermagem",
+    "description": "Informe os pontos obtidos em cada domínio. Total de 0 a 30. O corte de 24 é o clássico; a escolaridade muda o limiar.",
+    "keywords": "Mini-Exame do Estado Mental, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/meem/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Mini-Exame do Estado Mental",
+    "description": "Informe os pontos obtidos em cada domínio. Total de 0 a 30. O corte de 24 é o clássico; a escolaridade muda o limiar."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Mini-Exame do Estado Mental",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "tempo",
+            "type": "number",
+            "label": "Orientação no tempo (0 a 5)",
+            "required": true,
+            "min": 0,
+            "max": 5,
+            "step": 1,
+            "tooltip": "Ano, estação, mês, dia e dia da semana."
+          },
+          {
+            "id": "local",
+            "type": "number",
+            "label": "Orientação no espaço (0 a 5)",
+            "required": true,
+            "min": 0,
+            "max": 5,
+            "step": 1,
+            "tooltip": "Estado, cidade, bairro, local e andar."
+          },
+          {
+            "id": "registro",
+            "type": "number",
+            "label": "Registro de três palavras (0 a 3)",
+            "required": true,
+            "min": 0,
+            "max": 3,
+            "step": 1,
+            "tooltip": "Repetição imediata."
+          },
+          {
+            "id": "atencao",
+            "type": "number",
+            "label": "Atenção e cálculo (0 a 5)",
+            "required": true,
+            "min": 0,
+            "max": 5,
+            "step": 1,
+            "tooltip": "Cem menos sete, cinco vezes, ou soletrar mundo de trás para frente."
+          },
+          {
+            "id": "evocacao",
+            "type": "number",
+            "label": "Evocação das três palavras (0 a 3)",
+            "required": true,
+            "min": 0,
+            "max": 3,
+            "step": 1,
+            "tooltip": "Informe de 0 a 3."
+          },
+          {
+            "id": "linguagem",
+            "type": "number",
+            "label": "Linguagem (0 a 8)",
+            "required": true,
+            "min": 0,
+            "max": 8,
+            "step": 1,
+            "tooltip": "Nomear, repetir, comando de três etapas, ler, escrever."
+          },
+          {
+            "id": "praxia",
+            "type": "number",
+            "label": "Cópia do desenho (0 ou 1)",
+            "required": true,
+            "min": 0,
+            "max": 1,
+            "step": 1,
+            "tooltip": "Informe de 0 a 1."
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "meem = tempo + local + registro + atencao + evocacao + linguagem + praxia",
+    "result": {
+      "label": "Mini-Exame do Estado Mental",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "meem",
+      "interpretationOf": "meem"
+    },
+    "interpretation": [
+      {
+        "max": 17,
+        "label": "Comprometimento importante",
+        "conduct": "Reavaliar com a escolaridade. Abaixo de 20 no analfabeto já é o corte de Brucki.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 23,
+        "label": "Abaixo do corte clássico",
+        "conduct": "Menor que 24 sugere comprometimento no corte não ajustado.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 30,
+        "label": "No corte clássico ou acima",
+        "conduct": "24 a 30. Brucki: analfabeto 20, 1–4 anos 25, 5–8 anos 26, 9–11 anos 28, 12 anos ou mais 29.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Orientação no tempo (0 a 5)",
+          "sourceField": "tempo"
+        },
+        {
+          "label": "Orientação no espaço (0 a 5)",
+          "sourceField": "local"
+        },
+        {
+          "label": "Registro de três palavras (0 a 3)",
+          "sourceField": "registro"
+        },
+        {
+          "label": "Atenção e cálculo (0 a 5)",
+          "sourceField": "atencao"
+        },
+        {
+          "label": "Evocação das três palavras (0 a 3)",
+          "sourceField": "evocacao"
+        },
+        {
+          "label": "Linguagem (0 a 8)",
+          "sourceField": "linguagem"
+        },
+        {
+          "label": "Cópia do desenho (0 ou 1)",
+          "sourceField": "praxia"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "meem",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Mini-Exame do Estado Mental",
+        "body": "<p>Informe os pontos obtidos em cada domínio. Total de 0 a 30. O corte de 24 é o clássico; a escolaridade muda o limiar.</p><p>Os estímulos do teste não são reproduzidos aqui. Lance só a pontuação de cada domínio. Compare o total com a escolaridade (Brucki e colaboradores, 2003).</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Folstein MF, Folstein SE, McHugh PR. Mini-mental state. J Psychiatr Res. 1975. Brucki SMD et al. Sugestões para o uso do mini-exame do estado mental no Brasil. Arq Neuropsiquiatr. 2003.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

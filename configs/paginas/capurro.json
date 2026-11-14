@@ -1,0 +1,330 @@
+{
+  "metadata": {
+    "id": "capurro",
+    "title": "Método de Capurro somático",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Método de Capurro somático | Calculadoras de Enfermagem",
+    "description": "Idade gestacional somática. Dias = 204 + escore. O método somatoneurológico usa outros sinais e a constante 200; não está nesta página.",
+    "keywords": "Método de Capurro somático, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/capurro/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Método de Capurro somático",
+    "description": "Idade gestacional somática. Dias = 204 + escore. O método somatoneurológico usa outros sinais e a constante 200; não está nesta página."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Método de Capurro somático",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "pele",
+            "type": "select",
+            "label": "Textura da pele",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — gelatinosa",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — fina e lisa",
+                "score": 5
+              },
+              {
+                "value": 10,
+                "label": "10 — mais grossa, descamação superficial",
+                "score": 10
+              },
+              {
+                "value": 15,
+                "label": "15 — grossa, fissuras superficiais",
+                "score": 15
+              },
+              {
+                "value": 20,
+                "label": "20 — grossa, fissuras profundas",
+                "score": 20
+              }
+            ]
+          },
+          {
+            "id": "orelha",
+            "type": "select",
+            "label": "Forma da orelha",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — chata, sem incurvação",
+                "score": 0
+              },
+              {
+                "value": 8,
+                "label": "8 — borda parcial",
+                "score": 8
+              },
+              {
+                "value": 16,
+                "label": "16 — pavilhão parcialmente incurvado",
+                "score": 16
+              },
+              {
+                "value": 24,
+                "label": "24 — pavilhão incurvado",
+                "score": 24
+              }
+            ]
+          },
+          {
+            "id": "glandula",
+            "type": "select",
+            "label": "Tamanho da glândula mamária",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não palpável",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — palpável até 5 mm",
+                "score": 5
+              },
+              {
+                "value": 10,
+                "label": "10 — 5 a 10 mm",
+                "score": 10
+              },
+              {
+                "value": 15,
+                "label": "15 — maior que 10 mm",
+                "score": 15
+              }
+            ]
+          },
+          {
+            "id": "mamilo",
+            "type": "select",
+            "label": "Formação do mamilo",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — pouco visível, sem aréola",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — visível, aréola lisa e menor que 7,5 mm",
+                "score": 5
+              },
+              {
+                "value": 10,
+                "label": "10 — pontilhado, aréola maior que 7,5 mm",
+                "score": 10
+              },
+              {
+                "value": 15,
+                "label": "15 — aréola de borda elevada",
+                "score": 15
+              }
+            ]
+          },
+          {
+            "id": "pregas",
+            "type": "select",
+            "label": "Pregas plantares",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — sem pregas",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — marcas mal definidas",
+                "score": 5
+              },
+              {
+                "value": 10,
+                "label": "10 — marcas na metade anterior",
+                "score": 10
+              },
+              {
+                "value": 15,
+                "label": "15 — marcas além da metade anterior",
+                "score": 15
+              },
+              {
+                "value": 20,
+                "label": "20 — pregas em toda a planta",
+                "score": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "soma = pele + orelha + glandula + mamilo + pregas; dias = 204 + soma; semanas = dias / 7",
+    "result": {
+      "label": "Método de Capurro somático",
+      "unit": "semanas",
+      "decimals": 1,
+      "key": "semanas",
+      "interpretationOf": "semanas"
+    },
+    "interpretation": [
+      {
+        "max": 36.9,
+        "label": "Pré-termo",
+        "conduct": "Menos de 37 semanas.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 41.9,
+        "label": "A termo",
+        "conduct": "37 a 41 semanas.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 50,
+        "label": "Pós-termo",
+        "conduct": "42 semanas ou mais.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Textura da pele",
+          "sourceField": "pele"
+        },
+        {
+          "label": "Forma da orelha",
+          "sourceField": "orelha"
+        },
+        {
+          "label": "Tamanho da glândula mamária",
+          "sourceField": "glandula"
+        },
+        {
+          "label": "Formação do mamilo",
+          "sourceField": "mamilo"
+        },
+        {
+          "label": "Pregas plantares",
+          "sourceField": "pregas"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "semanas",
+          "suffix": "semanas"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Método de Capurro somático",
+        "body": "<p>Idade gestacional somática. Dias = 204 + escore. O método somatoneurológico usa outros sinais e a constante 200; não está nesta página.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Capurro H et al. A simplified method for diagnosis of gestational age in the newborn infant. J Pediatr. 1978.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

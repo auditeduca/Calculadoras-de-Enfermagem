@@ -1,0 +1,310 @@
+{
+  "metadata": {
+    "id": "bishop",
+    "title": "Escore de Bishop",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escore de Bishop | Calculadoras de Enfermagem",
+    "description": "Maturidade do colo para indução do parto. Total de 0 a 13.",
+    "keywords": "Escore de Bishop, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/bishop/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escore de Bishop",
+    "description": "Maturidade do colo para indução do parto. Total de 0 a 13."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escore de Bishop",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "dilatacao",
+            "type": "select",
+            "label": "Dilatação",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — fechado",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 1 a 2 cm",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 3 a 4 cm",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 5 cm ou mais",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "apagamento",
+            "type": "select",
+            "label": "Apagamento",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 0 a 30%",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 40 a 50%",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 60 a 70%",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 80% ou mais",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "plano",
+            "type": "select",
+            "label": "Plano da apresentação",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — −3",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — −2",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — −1 ou 0",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — +1 ou +2",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "consistencia",
+            "type": "select",
+            "label": "Consistência",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — firme",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — média",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — amolecida",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "posicao",
+            "type": "select",
+            "label": "Posição",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — posterior",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — média",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — anterior",
+                "score": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escore de Bishop",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 5,
+        "label": "Desfavorável",
+        "conduct": "Até 5. A indução tem menor chance de sucesso.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 8,
+        "label": "Intermediário",
+        "conduct": "6 a 8.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 13,
+        "label": "Favorável",
+        "conduct": "9 ou mais.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Dilatação",
+          "sourceField": "dilatacao"
+        },
+        {
+          "label": "Apagamento",
+          "sourceField": "apagamento"
+        },
+        {
+          "label": "Plano da apresentação",
+          "sourceField": "plano"
+        },
+        {
+          "label": "Consistência",
+          "sourceField": "consistencia"
+        },
+        {
+          "label": "Posição",
+          "sourceField": "posicao"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escore de Bishop",
+        "body": "<p>Maturidade do colo para indução do parto. Total de 0 a 13.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Bishop EH. Pelvic scoring for elective induction. Obstet Gynecol. 1964.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

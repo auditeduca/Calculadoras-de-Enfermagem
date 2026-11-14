@@ -1,0 +1,678 @@
+{
+  "metadata": {
+    "id": "berg",
+    "title": "Escala de equilíbrio de Berg",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de equilíbrio de Berg | Calculadoras de Enfermagem",
+    "description": "Quatorze tarefas de equilíbrio, de 0 a 4. Total de 0 a 56.",
+    "keywords": "Escala de equilíbrio de Berg, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/berg/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de equilíbrio de Berg",
+    "description": "Quatorze tarefas de equilíbrio, de 0 a 4. Total de 0 a 56."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de equilíbrio de Berg",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "sentado_pe",
+            "type": "select",
+            "label": "De sentado para de pé",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "em_pe",
+            "type": "select",
+            "label": "Permanecer em pé sem apoio",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "sentado",
+            "type": "select",
+            "label": "Permanecer sentado sem apoio",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "pe_sentado",
+            "type": "select",
+            "label": "De pé para sentado",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "transferencia",
+            "type": "select",
+            "label": "Transferências",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "olhos_fechados",
+            "type": "select",
+            "label": "Em pé, olhos fechados",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "pes_juntos",
+            "type": "select",
+            "label": "Em pé, pés juntos",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "alcance",
+            "type": "select",
+            "label": "Alcance à frente com o braço estendido",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "objeto",
+            "type": "select",
+            "label": "Apanhar objeto do chão",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "olhar_tras",
+            "type": "select",
+            "label": "Virar-se para olhar para trás",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "giro",
+            "type": "select",
+            "label": "Girar 360 graus",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "banco",
+            "type": "select",
+            "label": "Colocar os pés alternados em um banco",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "tandem",
+            "type": "select",
+            "label": "Um pé à frente do outro",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "unipodal",
+            "type": "select",
+            "label": "Apoio unipodal",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — incapaz ou precisa de ajuda máxima",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — precisa de ajuda mínima ou várias tentativas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — realiza com supervisão ou apoio das mãos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — realiza com pequena instabilidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — realiza com segurança, sem as mãos",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de equilíbrio de Berg",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 20,
+        "label": "Risco alto de queda",
+        "conduct": "0 a 20. Em geral restrito à cadeira de rodas.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 40,
+        "label": "Risco médio",
+        "conduct": "21 a 40. Deambula com assistência.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 56,
+        "label": "Risco baixo",
+        "conduct": "41 a 56. Independente. Abaixo de 45 o risco de queda já é maior.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "De sentado para de pé",
+          "sourceField": "sentado_pe"
+        },
+        {
+          "label": "Permanecer em pé sem apoio",
+          "sourceField": "em_pe"
+        },
+        {
+          "label": "Permanecer sentado sem apoio",
+          "sourceField": "sentado"
+        },
+        {
+          "label": "De pé para sentado",
+          "sourceField": "pe_sentado"
+        },
+        {
+          "label": "Transferências",
+          "sourceField": "transferencia"
+        },
+        {
+          "label": "Em pé, olhos fechados",
+          "sourceField": "olhos_fechados"
+        },
+        {
+          "label": "Em pé, pés juntos",
+          "sourceField": "pes_juntos"
+        },
+        {
+          "label": "Alcance à frente com o braço estendido",
+          "sourceField": "alcance"
+        },
+        {
+          "label": "Apanhar objeto do chão",
+          "sourceField": "objeto"
+        },
+        {
+          "label": "Virar-se para olhar para trás",
+          "sourceField": "olhar_tras"
+        },
+        {
+          "label": "Girar 360 graus",
+          "sourceField": "giro"
+        },
+        {
+          "label": "Colocar os pés alternados em um banco",
+          "sourceField": "banco"
+        },
+        {
+          "label": "Um pé à frente do outro",
+          "sourceField": "tandem"
+        },
+        {
+          "label": "Apoio unipodal",
+          "sourceField": "unipodal"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de equilíbrio de Berg",
+        "body": "<p>Quatorze tarefas de equilíbrio, de 0 a 4. Total de 0 a 56.</p><p>Cada tarefa tem critério próprio no instrumento original. Aqui os cinco níveis resumem a gradação de 0 a 4; use o descritor fino da ficha de Berg se dois níveis parecerem iguais.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Berg K, Wood-Dauphinee S, Williams JI, Maki B. Measuring balance in the elderly: validation of an instrument. Can J Public Health. 1992.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

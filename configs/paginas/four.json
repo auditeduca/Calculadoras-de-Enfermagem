@@ -1,0 +1,308 @@
+{
+  "metadata": {
+    "id": "four",
+    "title": "Escala FOUR",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala FOUR | Calculadoras de Enfermagem",
+    "description": "Resposta ocular, motora, de tronco e respiratória. Útil quando a verbal da Glasgow não pode ser testada. Total de 0 a 16.",
+    "keywords": "Escala FOUR, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/four/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala FOUR",
+    "description": "Resposta ocular, motora, de tronco e respiratória. Útil quando a verbal da Glasgow não pode ser testada. Total de 0 a 16."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala FOUR",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "ocular",
+            "type": "select",
+            "label": "Resposta ocular",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não abre, mesmo à dor",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — abre à dor",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — abre à voz forte",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — aberta, mas não acompanha",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — aberta e acompanha ou pisca ao comando",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "motora",
+            "type": "select",
+            "label": "Resposta motora",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — sem resposta ou estado mioclônico",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — extensão à dor",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — flexão à dor",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — localiza a dor",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — polegar, punho ou sinal de paz",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "tronco",
+            "type": "select",
+            "label": "Reflexos de tronco",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — pupila, córnea e tosse ausentes",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — pupila e córnea ausentes",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — pupila ou córnea ausente",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — uma pupila larga e fixa",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — pupila e córnea presentes",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "resp",
+            "type": "select",
+            "label": "Respiração",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — no ritmo do ventilador ou apneia",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — respira acima do ventilador",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — não intubado, irregular",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — não intubado, Cheyne-Stokes",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — não intubado, regular",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala FOUR",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 8,
+        "label": "Comprometimento grave",
+        "conduct": "0 a 8.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 12,
+        "label": "Comprometimento moderado",
+        "conduct": "9 a 12.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 16,
+        "label": "Comprometimento leve ou ausente",
+        "conduct": "13 a 16.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Resposta ocular",
+          "sourceField": "ocular"
+        },
+        {
+          "label": "Resposta motora",
+          "sourceField": "motora"
+        },
+        {
+          "label": "Reflexos de tronco",
+          "sourceField": "tronco"
+        },
+        {
+          "label": "Respiração",
+          "sourceField": "resp"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala FOUR",
+        "body": "<p>Resposta ocular, motora, de tronco e respiratória. Útil quando a verbal da Glasgow não pode ser testada. Total de 0 a 16.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Wijdicks EFM et al. Validation of a new coma scale: The FOUR score. Ann Neurol. 2005.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

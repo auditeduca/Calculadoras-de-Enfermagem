@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "id": "rancholosamigos",
+    "title": "Escala Rancho Los Amigos",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala Rancho Los Amigos | Calculadoras de Enfermagem",
+    "description": "Nível cognitivo-comportamental depois de lesão cerebral, de I a VIII.",
+    "keywords": "Escala Rancho Los Amigos, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/rancholosamigos/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala Rancho Los Amigos",
+    "description": "Nível cognitivo-comportamental depois de lesão cerebral, de I a VIII."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala Rancho Los Amigos",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "nivel",
+            "type": "select",
+            "label": "Nível",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "I — sem resposta",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "II — resposta generalizada",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "III — resposta localizada",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "IV — confuso-agitado",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "V — confuso, inapropriado, não agitado",
+                "score": 5
+              },
+              {
+                "value": 6,
+                "label": "VI — confuso, apropriado",
+                "score": 6
+              },
+              {
+                "value": 7,
+                "label": "VII — automático, apropriado",
+                "score": 7
+              },
+              {
+                "value": 8,
+                "label": "VIII — propositado, apropriado",
+                "score": 8
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala Rancho Los Amigos",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 3,
+        "label": "Resposta ausente ou inespecífica",
+        "conduct": "Níveis I a III.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 5,
+        "label": "Confuso",
+        "conduct": "Níveis IV e V. Proteger no nível IV.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 8,
+        "label": "Apropriado",
+        "conduct": "Níveis VI a VIII. O VIII é o mais funcional desta versão.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Nível",
+          "sourceField": "nivel"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala Rancho Los Amigos",
+        "body": "<p>Nível cognitivo-comportamental depois de lesão cerebral, de I a VIII.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Hagen C, Malkmus D, Durham P. Levels of cognitive functioning. Rancho Los Amigos Hospital. 1972.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

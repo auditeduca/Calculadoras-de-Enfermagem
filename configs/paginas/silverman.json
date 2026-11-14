@@ -1,0 +1,295 @@
+{
+  "metadata": {
+    "id": "silverman",
+    "title": "Boletim de Silverman-Andersen",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Boletim de Silverman-Andersen | Calculadoras de Enfermagem",
+    "description": "Desconforto respiratório do recém-nascido. Cinco sinais de 0 a 2. Total de 0 a 10.",
+    "keywords": "Boletim de Silverman-Andersen, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/silverman/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Boletim de Silverman-Andersen",
+    "description": "Desconforto respiratório do recém-nascido. Cinco sinais de 0 a 2. Total de 0 a 10."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Boletim de Silverman-Andersen",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "torax_sup",
+            "type": "select",
+            "label": "Retração torácica superior",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — acentuado",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "torax_inf",
+            "type": "select",
+            "label": "Retração torácica inferior",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — acentuado",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "xifoide",
+            "type": "select",
+            "label": "Retração xifoide",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — acentuado",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "batimento",
+            "type": "select",
+            "label": "Batimento de asa de nariz",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — acentuado",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "gemido",
+            "type": "select",
+            "label": "Gemido expiratório",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — acentuado",
+                "score": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Boletim de Silverman-Andersen",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 3,
+        "label": "Desconforto leve",
+        "conduct": "0 a 3.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 6,
+        "label": "Desconforto moderado",
+        "conduct": "4 a 6.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 10,
+        "label": "Desconforto grave",
+        "conduct": "7 a 10.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Retração torácica superior",
+          "sourceField": "torax_sup"
+        },
+        {
+          "label": "Retração torácica inferior",
+          "sourceField": "torax_inf"
+        },
+        {
+          "label": "Retração xifoide",
+          "sourceField": "xifoide"
+        },
+        {
+          "label": "Batimento de asa de nariz",
+          "sourceField": "batimento"
+        },
+        {
+          "label": "Gemido expiratório",
+          "sourceField": "gemido"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Boletim de Silverman-Andersen",
+        "body": "<p>Desconforto respiratório do recém-nascido. Cinco sinais de 0 a 2. Total de 0 a 10.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Silverman WA, Andersen DH. A controlled clinical trial of effects of water mist on obstructive respiratory signs, death rate and necropsy findings among premature infants. Pediatrics. 1956.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "metadata": {
+    "id": "escalanumerica",
+    "title": "Escala numérica de dor",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala numérica de dor | Calculadoras de Enfermagem",
+    "description": "Intensidade da dor de 0 a 10 referida pelo paciente.",
+    "keywords": "Escala numérica de dor, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/escalanumerica/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala numérica de dor",
+    "description": "Intensidade da dor de 0 a 10 referida pelo paciente."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala numérica de dor",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "dor",
+            "type": "select",
+            "label": "Nota referida",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — sem dor",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — dor",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — dor",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — dor",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — dor",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — dor",
+                "score": 5
+              },
+              {
+                "value": 6,
+                "label": "6 — dor",
+                "score": 6
+              },
+              {
+                "value": 7,
+                "label": "7 — dor",
+                "score": 7
+              },
+              {
+                "value": 8,
+                "label": "8 — dor",
+                "score": 8
+              },
+              {
+                "value": 9,
+                "label": "9 — dor",
+                "score": 9
+              },
+              {
+                "value": 10,
+                "label": "10 — dor máxima",
+                "score": 10
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala numérica de dor",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 0,
+        "label": "Sem dor",
+        "conduct": "Reavaliar conforme o quadro.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 3,
+        "label": "Dor leve",
+        "conduct": "1 a 3.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 6,
+        "label": "Dor moderada",
+        "conduct": "4 a 6. Rever analgesia.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 10,
+        "label": "Dor intensa",
+        "conduct": "7 a 10. Analgesia e reavaliação em curto prazo.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Nota referida",
+          "sourceField": "dor"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala numérica de dor",
+        "body": "<p>Intensidade da dor de 0 a 10 referida pelo paciente.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Jensen MP, Karoly P, Braver S. The measurement of clinical pain intensity. Pain. 1986.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

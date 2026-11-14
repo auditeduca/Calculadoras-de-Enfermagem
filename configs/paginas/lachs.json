@@ -1,0 +1,402 @@
+{
+  "metadata": {
+    "id": "lachs",
+    "title": "Rastreio funcional de Lachs",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Rastreio funcional de Lachs | Calculadoras de Enfermagem",
+    "description": "Onze itens. Marque sim quando o rastreio daquele domínio está alterado.",
+    "keywords": "Rastreio funcional de Lachs, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/lachs/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Rastreio funcional de Lachs",
+    "description": "Onze itens. Marque sim quando o rastreio daquele domínio está alterado."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Rastreio funcional de Lachs",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "visao",
+            "type": "select",
+            "label": "Visão",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (alterado)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "audicao",
+            "type": "select",
+            "label": "Audição",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (alterado)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "braco",
+            "type": "select",
+            "label": "Função do braço",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (alterado)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "perna",
+            "type": "select",
+            "label": "Função da perna",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (alterado)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "urina",
+            "type": "select",
+            "label": "Continência urinária",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (alterado)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "nutricao",
+            "type": "select",
+            "label": "Nutrição ou perda de peso",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (alterado)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "cognicao",
+            "type": "select",
+            "label": "Estado mental",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (alterado)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "humor",
+            "type": "select",
+            "label": "Humor deprimido",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (alterado)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "avd",
+            "type": "select",
+            "label": "Atividades de vida diária",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (alterado)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "casa",
+            "type": "select",
+            "label": "Ambiente doméstico inseguro",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (alterado)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "apoio",
+            "type": "select",
+            "label": "Apoio social insuficiente",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (alterado)",
+                "score": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Rastreio funcional de Lachs",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 0,
+        "label": "Nenhum item alterado",
+        "conduct": "Repetir o rastreio no intervalo institucional.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 2,
+        "label": "Poucos itens alterados",
+        "conduct": "Investigar cada um.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 11,
+        "label": "Vários itens alterados",
+        "conduct": "Três ou mais. Avaliação geriátrica ampla.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Visão",
+          "sourceField": "visao"
+        },
+        {
+          "label": "Audição",
+          "sourceField": "audicao"
+        },
+        {
+          "label": "Função do braço",
+          "sourceField": "braco"
+        },
+        {
+          "label": "Função da perna",
+          "sourceField": "perna"
+        },
+        {
+          "label": "Continência urinária",
+          "sourceField": "urina"
+        },
+        {
+          "label": "Nutrição ou perda de peso",
+          "sourceField": "nutricao"
+        },
+        {
+          "label": "Estado mental",
+          "sourceField": "cognicao"
+        },
+        {
+          "label": "Humor deprimido",
+          "sourceField": "humor"
+        },
+        {
+          "label": "Atividades de vida diária",
+          "sourceField": "avd"
+        },
+        {
+          "label": "Ambiente doméstico inseguro",
+          "sourceField": "casa"
+        },
+        {
+          "label": "Apoio social insuficiente",
+          "sourceField": "apoio"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Rastreio funcional de Lachs",
+        "body": "<p>Onze itens. Marque sim quando o rastreio daquele domínio está alterado.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Lachs MS et al. A simple procedure for general screening for functional disability in elderly patients. Ann Intern Med. 1990.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}
