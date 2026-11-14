@@ -459,7 +459,7 @@ def gerar_header(cfg, quebradas):
     <div class="mobile-search-container" id="mobile-search-container">
         <div class="search-box">
             <input type="search" class="search-input" id="mobile-menu-search-input" placeholder="Buscar no site..." aria-label="Buscar no site">
-            <button type="button" class="search-btn" aria-label="Buscar">
+            <button type="button" class="search-btn" id="mobile-search-submit" aria-label="Buscar">
                 <i class="fas fa-search"></i>
             </button>
         </div>

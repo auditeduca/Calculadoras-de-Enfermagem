@@ -756,6 +756,40 @@
         });
     }
 
+    function irParaBusca(consulta) {
+        var ancora = document.querySelector('a[href*="mapa-do-site.html"], a[href*="index.html"]');
+        var raiz = ancora ? ancora.href.replace(/[^/]*$/, '') : '';
+        var url = raiz + 'busca.html';
+        var texto = (consulta || '').trim();
+        if (texto) url += '?q=' + encodeURIComponent(texto);
+        window.location.href = url;
+    }
+
+    function initBusca() {
+        [
+            ['header-search-input', 'header-search-btn'],
+            ['mobile-menu-search-input', 'mobile-search-submit']
+        ].forEach(function (par) {
+            var campo = getElement(par[0]);
+            var botao = getElement(par[1]);
+            if (campo) {
+                campo.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        irParaBusca(campo.value);
+                    }
+                });
+            }
+            if (botao) {
+                botao.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    irParaBusca(campo ? campo.value : '');
+                });
+            }
+        });
+    }
+
     // ============================================
     // INICIALIZAÇÃO PRINCIPAL
     // ============================================
@@ -791,6 +825,7 @@
         initMobileMenu();
         initMobileLanguageToggle();
         initMobileSearchToggle();
+        initBusca();
 
         State.loaded = true;
         return true;
