@@ -265,7 +265,7 @@ def corpo(cfg, site, paginas):
     miolo = [
         '<nav class="text-sm text-slate-500 mb-4" aria-label="Trilha">'
         f'<a class="hover:underline" href="index.html">Início</a>'
-        + ("" if cfg["id"] == "index" else f' <span aria-hidden="true">/</span> <span>{esc(cfg["title"])}</span>')
+        + ("" if cfg["id"] == "index" else f' <span aria-hidden="true">&gt;</span> <span>{esc(cfg["title"])}</span>')
         + "</nav>",
         f'<h1 class="text-3xl md:text-4xl font-black text-nurse-primary dark:text-white font-nunito">{esc(cfg["title"])}</h1>',
     ]
