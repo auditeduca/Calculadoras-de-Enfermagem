@@ -28,35 +28,68 @@
           "id": "institucional",
           "label": "Institucional",
           "links": [
-            { "text": "Missão, Visão e Valores", "href": "missao.html" },
-            { "text": "Objetivo do Site", "href": "objetivo.html" },
-            { "text": "Mapa do Site", "href": "mapa-do-site.html" }
+            {
+              "text": "Missão, Visão e Valores",
+              "href": "missao.html"
+            },
+            {
+              "text": "Objetivo do Site",
+              "href": "objetivo.html"
+            },
+            {
+              "text": "Mapa do Site",
+              "href": "mapa-do-site.html"
+            }
           ]
         },
         {
           "id": "acessibilidade",
           "label": "Acessibilidade Digital",
           "links": [
-            { "text": "Política de Acessibilidade Digital", "href": "politicadeacessibilidade.html" },
-            { "text": "Recursos Assistivos", "href": "recursos-assistivos.html" }
+            {
+              "text": "Política de Acessibilidade Digital",
+              "href": "politicadeacessibilidade.html"
+            },
+            {
+              "text": "Recursos Assistivos",
+              "href": "recursos-assistivos.html"
+            }
           ]
         },
         {
           "id": "sustentabilidade",
           "label": "Sustentabilidade Digital",
           "links": [
-            { "text": "Nosso Compromisso", "href": "nossocompromisso.html" },
-            { "text": "Relatório de Impacto", "href": "impactodigital.html" },
-            { "text": "Tecnologia Verde", "href": "tecnologiaverde.html" }
+            {
+              "text": "Nosso Compromisso",
+              "href": "nossocompromisso.html"
+            },
+            {
+              "text": "Relatório de Impacto",
+              "href": "impactodigital.html"
+            },
+            {
+              "text": "Tecnologia Verde",
+              "href": "tecnologiaverde.html"
+            }
           ]
         },
         {
           "id": "politicas",
           "label": "Políticas do Site",
           "links": [
-            { "text": "Política de Privacidade", "href": "politica.html" },
-            { "text": "Política de Cookies", "href": "termos.html" },
-            { "text": "Isenção de Responsabilidade", "href": "notificacoes-legais.html" }
+            {
+              "text": "Política de Privacidade",
+              "href": "politica.html"
+            },
+            {
+              "text": "Política de Cookies",
+              "href": "termos.html"
+            },
+            {
+              "text": "Isenção de Responsabilidade",
+              "href": "notificacoes-legais.html"
+            }
           ]
         }
       ]
@@ -71,89 +104,74 @@
           "id": "calculadoras-clinicas",
           "label": "Calculadoras Clínicas",
           "links": [
-            { "text": "Aspiração de Heparina", "href": "heparina.html" },
-            { "text": "Aspiração de Insulina", "href": "insulina.html" },
-            { "text": "Balanço Hídrico", "href": "calculadoras/balancohidrico/" },
-            { "text": "Dimensionamento de Pessoal", "href": "calculadoras/dimensionamento/" },
-            { "text": "Gasometria Arterial", "href": "calculadoras/gasometria/" },
-            { "text": "Gotejamento", "href": "calculadoras/gotejamento/" },
-            { "text": "Idade Gestacional e DPP", "href": "calculadoras/gestacional/" },
-            { "text": "Índice de Massa Corporal (IMC)", "href": "imc.html" },
-            { "text": "Cálculo de Medicamentos", "href": "calculadoras/medicamentos/" }
+            {
+              "text": "Aspiração de Heparina",
+              "href": "calculadoras/heparina/"
+            },
+            {
+              "text": "Aspiração de Insulina",
+              "href": "calculadoras/insulina/"
+            },
+            {
+              "text": "Balanço Hídrico",
+              "href": "calculadoras/balancohidrico/"
+            },
+            {
+              "text": "Dimensionamento de Pessoal",
+              "href": "calculadoras/dimensionamento/"
+            },
+            {
+              "text": "Gasometria Arterial",
+              "href": "calculadoras/gasometria/"
+            },
+            {
+              "text": "Gotejamento",
+              "href": "calculadoras/gotejamento/"
+            },
+            {
+              "text": "Idade Gestacional e DPP",
+              "href": "calculadoras/gestacional/"
+            },
+            {
+              "text": "Índice de Massa Corporal (IMC)",
+              "href": "calculadoras/imc/"
+            },
+            {
+              "text": "Cálculo de Medicamentos",
+              "href": "calculadoras/medicamentos/"
+            }
           ]
         },
         {
           "id": "escalas-clinicas",
           "label": "Escalas Clínicas",
           "links": [
-            { "text": "Aldrete e Kroulik", "href": "aldrete.html" },
-            { "text": "APACHE II", "href": "apache.html" },
-            { "text": "Apgar", "href": "apgar.html" },
-            { "text": "ASA", "href": "calculadoras/asa/" },
-            { "text": "Ballard", "href": "calculadoras/ballard/" },
-            { "text": "Barthel", "href": "barthel.html" },
-            { "text": "Berg", "href": "calculadoras/berg/" },
-            { "text": "Bishop", "href": "calculadoras/bishop/" },
-            { "text": "BPS", "href": "calculadoras/bps/" },
-            { "text": "Braden", "href": "calculadoras/braden/" },
-            { "text": "CAM-ICU", "href": "calculadoras/cam/" },
-            { "text": "Capurro", "href": "calculadoras/capurro/" },
-            { "text": "Cincinnati", "href": "calculadoras/cincinnati/" },
-            { "text": "Cornell", "href": "calculadoras/cornell/" },
-            { "text": "CRIES", "href": "calculadoras/cries/" },
-            { "text": "CURB-65", "href": "calculadoras/curb-65/" },
-            { "text": "Downes", "href": "calculadoras/downes/" },
-            { "text": "Downton", "href": "calculadoras/downton/" },
-            { "text": "ELPO", "href": "calculadoras/elpo/" },
-            { "text": "Escala Numérica de Dor", "href": "calculadoras/escalanumerica/" },
-            { "text": "FAST", "href": "calculadoras/fast/" },
-            { "text": "FLACC", "href": "calculadoras/flacc/" },
-            { "text": "FOUR", "href": "calculadoras/four/" },
-            { "text": "Fugulin", "href": "calculadoras/fugulin/" },
-            { "text": "GDS", "href": "calculadoras/gds/" },
-            { "text": "Glasgow", "href": "calculadoras/glasgow/" },
-            { "text": "Gosnell", "href": "calculadoras/gosnell/" },
-            { "text": "Hamilton", "href": "calculadoras/hamilton/" },
-            { "text": "Hendrich II", "href": "calculadoras/hendrich/" },
-            { "text": "Humpty Dumpty", "href": "calculadoras/humpty/" },
-            { "text": "Johns Hopkins", "href": "calculadoras/johns/" },
-            { "text": "Jouvet", "href": "calculadoras/jouvet/" },
-            { "text": "Katz", "href": "calculadoras/katz/" },
-            { "text": "Lachs", "href": "calculadoras/lachs/" },
-            { "text": "LANSS", "href": "calculadoras/lanss/" },
-            { "text": "Lawton", "href": "calculadoras/lawton/" },
-            { "text": "Manchester", "href": "calculadoras/manchester/" },
-            { "text": "MEEM", "href": "calculadoras/meem/" },
-            { "text": "MEOWS", "href": "calculadoras/meows/" },
-            { "text": "MoCA", "href": "calculadoras/moca/" },
-            { "text": "Morse", "href": "calculadoras/morse/" },
-            { "text": "NEWS", "href": "calculadoras/news/" },
-            { "text": "NIHSS", "href": "calculadoras/nihss/" },
-            { "text": "NIPS", "href": "calculadoras/nips/" },
-            { "text": "Norton", "href": "calculadoras/norton/" },
-            { "text": "OFRAS", "href": "calculadoras/ofras/" },
-            { "text": "PAINAD", "href": "calculadoras/painad/" },
-            { "text": "PELOD", "href": "calculadoras/pelod/" },
-            { "text": "Perroca", "href": "calculadoras/perroca/" },
-            { "text": "PEWS", "href": "calculadoras/pews/" },
-            { "text": "PRISM", "href": "calculadoras/prism/" },
-            { "text": "qSOFA", "href": "calculadoras/qsofa/" },
-            { "text": "Ramsay", "href": "calculadoras/ramsay/" },
-            { "text": "RASS (Richmond)", "href": "calculadoras/richmond/" },
-            { "text": "Rancho Los Amigos", "href": "calculadoras/rancholosamigos/" },
-            { "text": "SAPS", "href": "calculadoras/saps/" },
-            { "text": "Silverman-Andersen", "href": "calculadoras/silverman/" },
-            { "text": "SOFA", "href": "calculadoras/sofa/" },
-            { "text": "Tinetti", "href": "calculadoras/tinetti/" },
-            { "text": "Waterlow", "href": "calculadoras/waterlow/" },
-            { "text": "Zarit", "href": "calculadoras/zarit/" }
+            {
+              "text": "Aldrete e Kroulik",
+              "href": "calculadoras/aldrete/"
+            },
+            {
+              "text": "APACHE II",
+              "href": "calculadoras/apache/"
+            },
+            {
+              "text": "Apgar",
+              "href": "calculadoras/apgar/"
+            },
+            {
+              "text": "Barthel",
+              "href": "calculadoras/barthel/"
+            }
           ]
         },
         {
           "id": "ferramentas-especificas",
           "label": "Ferramentas Específicas",
           "links": [
-            { "text": "Notificações Compulsórias", "href": "notificacao-compulsoria.html" }
+            {
+              "text": "Notificações Compulsórias",
+              "href": "notificacao-compulsoria.html"
+            }
           ]
         }
       ]
@@ -172,37 +190,113 @@
         "id": "idiomas-americas",
         "label": "Américas",
         "items": [
-          { "code": "pt-br", "label": "Português (Brasil)", "flag": "assets/images/bandeiras/bandeira-brasil.webp" },
-          { "code": "es", "label": "Español", "flag": "assets/images/bandeiras/bandeira-espanha.webp" },
-          { "code": "en", "label": "English", "flag": "assets/images/bandeiras/bandeira-eua.webp" }
+          {
+            "code": "pt-br",
+            "label": "Português (Brasil)",
+            "flag": "assets/images/bandeiras/bandeira-brasil.webp"
+          },
+          {
+            "code": "es",
+            "label": "Español",
+            "flag": "assets/images/bandeiras/bandeira-espanha.webp"
+          },
+          {
+            "code": "en",
+            "label": "English",
+            "flag": "assets/images/bandeiras/bandeira-eua.webp"
+          }
         ]
       },
       {
         "id": "idiomas-europa",
         "label": "Europa",
         "items": [
-          { "code": "de", "label": "Deutsch", "flag": "assets/images/bandeiras/bandeira-alemanha.webp" },
-          { "code": "fr", "label": "Français", "flag": "assets/images/bandeiras/bandeira-franca.webp" },
-          { "code": "it", "label": "Italiano", "flag": "assets/images/bandeiras/bandeira-italia.webp" },
-          { "code": "nl", "label": "Nederlands", "flag": "assets/images/bandeiras/bandeira-holanda.webp" },
-          { "code": "pl", "label": "Polski", "flag": "assets/images/bandeiras/bandeira-polonia.webp" },
-          { "code": "ru", "label": "Русский", "flag": "assets/images/bandeiras/bandeira-russia.webp" },
-          { "code": "sv", "label": "Svenska", "flag": "assets/images/bandeiras/bandeira-suecia.webp" },
-          { "code": "tr", "label": "Türkçe", "flag": "assets/images/bandeiras/bandeira-turquia.webp" }
+          {
+            "code": "de",
+            "label": "Deutsch",
+            "flag": "assets/images/bandeiras/bandeira-alemanha.webp"
+          },
+          {
+            "code": "fr",
+            "label": "Français",
+            "flag": "assets/images/bandeiras/bandeira-franca.webp"
+          },
+          {
+            "code": "it",
+            "label": "Italiano",
+            "flag": "assets/images/bandeiras/bandeira-italia.webp"
+          },
+          {
+            "code": "nl",
+            "label": "Nederlands",
+            "flag": "assets/images/bandeiras/bandeira-holanda.webp"
+          },
+          {
+            "code": "pl",
+            "label": "Polski",
+            "flag": "assets/images/bandeiras/bandeira-polonia.webp"
+          },
+          {
+            "code": "ru",
+            "label": "Русский",
+            "flag": "assets/images/bandeiras/bandeira-russia.webp"
+          },
+          {
+            "code": "sv",
+            "label": "Svenska",
+            "flag": "assets/images/bandeiras/bandeira-suecia.webp"
+          },
+          {
+            "code": "tr",
+            "label": "Türkçe",
+            "flag": "assets/images/bandeiras/bandeira-turquia.webp"
+          }
         ]
       },
       {
         "id": "idiomas-asia",
         "label": "Ásia",
         "items": [
-          { "code": "zh", "label": "中文", "flag": "assets/images/bandeiras/bandeira-china.webp" },
-          { "code": "ja", "label": "日本語", "flag": "assets/images/bandeiras/bandeira-japao.webp" },
-          { "code": "ko", "label": "한국어", "flag": "assets/images/bandeiras/bandeira-coreia.webp" },
-          { "code": "ar", "label": "العربية", "flag": "assets/images/bandeiras/bandeira-arabia.webp" },
-          { "code": "hi", "label": "हिन्दी", "flag": "assets/images/bandeiras/bandeira-india.webp" },
-          { "code": "id", "label": "Bahasa Indonesia", "flag": "assets/images/bandeiras/bandeira-indonesia.webp" },
-          { "code": "vi", "label": "Tiếng Việt", "flag": "assets/images/bandeiras/bandeira-vietna.webp" },
-          { "code": "uk", "label": "Українська", "flag": "assets/images/bandeiras/bandeira-ucrania.webp" }
+          {
+            "code": "zh",
+            "label": "中文",
+            "flag": "assets/images/bandeiras/bandeira-china.webp"
+          },
+          {
+            "code": "ja",
+            "label": "日本語",
+            "flag": "assets/images/bandeiras/bandeira-japao.webp"
+          },
+          {
+            "code": "ko",
+            "label": "한국어",
+            "flag": "assets/images/bandeiras/bandeira-coreia.webp"
+          },
+          {
+            "code": "ar",
+            "label": "العربية",
+            "flag": "assets/images/bandeiras/bandeira-arabia.webp"
+          },
+          {
+            "code": "hi",
+            "label": "हिन्दी",
+            "flag": "assets/images/bandeiras/bandeira-india.webp"
+          },
+          {
+            "code": "id",
+            "label": "Bahasa Indonesia",
+            "flag": "assets/images/bandeiras/bandeira-indonesia.webp"
+          },
+          {
+            "code": "vi",
+            "label": "Tiếng Việt",
+            "flag": "assets/images/bandeiras/bandeira-vietna.webp"
+          },
+          {
+            "code": "uk",
+            "label": "Українська",
+            "flag": "assets/images/bandeiras/bandeira-ucrania.webp"
+          }
         ]
       }
     ]
@@ -212,25 +306,52 @@
       {
         "title": "Institucional",
         "links": [
-          { "text": "Início", "href": "index.html" },
-          { "text": "Missão, Visão e Valores", "href": "missao.html" },
-          { "text": "Objetivo do Site", "href": "objetivo.html" },
-          { "text": "Mapa do Site", "href": "mapa-do-site.html" }
+          {
+            "text": "Início",
+            "href": "index.html"
+          },
+          {
+            "text": "Missão, Visão e Valores",
+            "href": "missao.html"
+          },
+          {
+            "text": "Objetivo do Site",
+            "href": "objetivo.html"
+          },
+          {
+            "text": "Mapa do Site",
+            "href": "mapa-do-site.html"
+          }
         ]
       },
       {
         "title": "Acessibilidade Digital",
         "links": [
-          { "text": "Política de Acessibilidade", "href": "politicadeacessibilidade.html" },
-          { "text": "Recursos Assistivos", "href": "recursos-assistivos.html" }
+          {
+            "text": "Política de Acessibilidade",
+            "href": "politicadeacessibilidade.html"
+          },
+          {
+            "text": "Recursos Assistivos",
+            "href": "recursos-assistivos.html"
+          }
         ]
       },
       {
         "title": "Sustentabilidade Digital",
         "links": [
-          { "text": "Nosso Compromisso", "href": "nossocompromisso.html" },
-          { "text": "Relatório de Impacto", "href": "impactodigital.html" },
-          { "text": "Tecnologia Verde", "href": "tecnologiaverde.html" }
+          {
+            "text": "Nosso Compromisso",
+            "href": "nossocompromisso.html"
+          },
+          {
+            "text": "Relatório de Impacto",
+            "href": "impactodigital.html"
+          },
+          {
+            "text": "Tecnologia Verde",
+            "href": "tecnologiaverde.html"
+          }
         ]
       }
     ],
@@ -239,15 +360,40 @@
       "text": "Adotamos como princípio de governança o comprometimento com elevados padrões de acessibilidade digital, sustentabilidade digital e proteção de dados."
     },
     "legalLinks": [
-      { "text": "Central de Privacidade", "href": "politica.html" },
-      { "text": "Notificações Legais", "href": "notificacoes-legais.html" },
-      { "text": "Política de Cookies", "href": "termos.html" }
+      {
+        "text": "Central de Privacidade",
+        "href": "politica.html"
+      },
+      {
+        "text": "Notificações Legais",
+        "href": "notificacoes-legais.html"
+      },
+      {
+        "text": "Política de Cookies",
+        "href": "termos.html"
+      }
     ],
     "social": [
-      { "name": "LinkedIn", "icon": "fab fa-linkedin-in", "url": "https://www.linkedin.com/company/calculadoras-de-enfermagem" },
-      { "name": "Instagram", "icon": "fab fa-instagram", "url": "https://www.instagram.com/calculadorasdeenfermagem/" },
-      { "name": "TikTok", "icon": "fab fa-tiktok", "url": "https://www.tiktok.com/@calculadorasdeenf" },
-      { "name": "YouTube", "icon": "fab fa-youtube", "url": "https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" }
+      {
+        "name": "LinkedIn",
+        "icon": "fab fa-linkedin-in",
+        "url": "https://www.linkedin.com/company/calculadoras-de-enfermagem"
+      },
+      {
+        "name": "Instagram",
+        "icon": "fab fa-instagram",
+        "url": "https://www.instagram.com/calculadorasdeenfermagem/"
+      },
+      {
+        "name": "TikTok",
+        "icon": "fab fa-tiktok",
+        "url": "https://www.tiktok.com/@calculadorasdeenf"
+      },
+      {
+        "name": "YouTube",
+        "icon": "fab fa-youtube",
+        "url": "https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg"
+      }
     ],
     "copyrightName": "Calculadoras de Enfermagem"
   }

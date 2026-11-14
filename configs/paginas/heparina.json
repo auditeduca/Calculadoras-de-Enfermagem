@@ -1,0 +1,185 @@
+{
+  "metadata": {
+    "id": "heparina",
+    "title": "Aspiração de Heparina",
+    "category": "farmacologia",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "calculator"
+  },
+  "seo": {
+    "title": "Aspiração de Heparina | Calculadoras de Enfermagem",
+    "description": "Volume a aspirar quando a apresentação traz a quantidade total de heparina e o volume do frasco.",
+    "keywords": "Aspiração de Heparina, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/heparina/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Calculadora Clínica",
+    "title": "Aspiração de Heparina",
+    "description": "Volume a aspirar quando a apresentação traz a quantidade total de heparina e o volume do frasco."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Aspiração de Heparina",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Parâmetros",
+        "fields": [
+          {
+            "id": "heparinaConcentracao",
+            "type": "number",
+            "label": "Quantidade no frasco",
+            "placeholder": "Ex: 5000",
+            "unit": "UI",
+            "required": true,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "heparinaVolume",
+            "type": "number",
+            "label": "Volume do frasco",
+            "placeholder": "Ex: 5",
+            "unit": "mL",
+            "required": true,
+            "min": 0,
+            "step": "0.1"
+          },
+          {
+            "id": "heparinaPrescricao",
+            "type": "number",
+            "label": "Prescrição",
+            "placeholder": "Ex: 2500",
+            "unit": "UI",
+            "required": true,
+            "min": 0,
+            "step": "any"
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Calcular",
+        "icon": "fa-calculator",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "volume = heparinaPrescricao * heparinaVolume / heparinaConcentracao",
+    "result": {
+      "label": "Volume a aspirar",
+      "unit": "mL",
+      "decimals": 2,
+      "key": "volume",
+      "interpretationOf": "volume"
+    },
+    "interpretation": [
+      {
+        "max": 100000,
+        "label": "Volume calculado",
+        "color": "text-nurse-primary",
+        "bg": "bg-slate-50",
+        "conduct": "Volume = prescrição × volume do frasco ÷ quantidade do frasco. Heparina é medicamento de alta vigilância: faça dupla checagem."
+      }
+    ],
+    "audit": {
+      "title": "Auditoria",
+      "steps": [
+        {
+          "label": "Fórmula",
+          "fixedValue": "Prescrição × volume do frasco / quantidade do frasco",
+          "icon": "fa-calculator"
+        },
+        {
+          "label": "Volume",
+          "sourceField": "volume",
+          "suffix": "mL",
+          "icon": "fa-syringe"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Calculadora",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Aspiração de Heparina",
+        "body": "<p>Quando o rótulo informa a quantidade total (por exemplo 5.000 UI) em um volume (por exemplo 5 mL), o volume a aspirar é a prescrição vezes o volume do frasco, dividido pela quantidade do frasco.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia a quantidade total de UI no rótulo, não a concentração já dividida, se for esse o caso.",
+        "Informe o volume do frasco e a dose prescrita.",
+        "Confira o volume na seringa com uma segunda pessoa."
+      ]
+    }
+  ]
+}

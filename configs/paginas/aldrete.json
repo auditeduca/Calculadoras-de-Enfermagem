@@ -1,0 +1,465 @@
+{
+  "metadata": {
+    "id": "aldrete",
+    "title": "Escala de Aldrete – Recuperação Pós-Anestésica | Enfermagem",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-02-05",
+    "type": "scale"
+  },
+  "accessibility": {
+    "vlibras": true,
+    "screenReader": true,
+    "highContrast": true,
+    "librasAvailable": true
+  },
+  "seo": {
+    "title": "Escala de Aldrete – Avaliação da Recuperação Pós-Anestésica",
+    "description": "Avalie a recuperação pós-anestésica de pacientes em sala de SRPA com a Escala de Aldrete. Guia completo para enfermagem.",
+    "keywords": "aldrete, escala, recuperação pós-anestésica, SRPA, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/aldrete/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escala Clínica",
+    "title": "Escala de Aldrete",
+    "description": "Avalie a recuperação pós-anestésica do paciente em sala de recuperação pós-anestésica (SRPA)."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escalas Clínicas",
+      "url": null
+    },
+    {
+      "text": "Escala de Aldrete",
+      "url": null,
+      "active": true
+    }
+  ],
+  "tags": [
+    {
+      "text": "aldrete",
+      "url": "busca.html?tag=aldrete",
+      "lang": "pt",
+      "abbr": null
+    },
+    {
+      "text": "recuperação pós-anestésica",
+      "url": "busca.html?tag=srpa",
+      "lang": "pt",
+      "abbr": null
+    },
+    {
+      "text": "escala",
+      "url": "busca.html?tag=escala",
+      "lang": "pt",
+      "abbr": null
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true,
+            "tooltip": "Identificação do paciente para fins de registro.",
+            "libras": false
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true,
+            "tooltip": "Para cálculo de idade e verificação de faixa etária.",
+            "libras": false
+          }
+        ]
+      },
+      {
+        "title": "Parâmetros Clínicos",
+        "fields": [
+          {
+            "id": "activity",
+            "type": "select",
+            "label": "Atividade",
+            "options": [
+              {
+                "value": 2,
+                "label": "Move 4 extremidades voluntariamente ou sob comando"
+              },
+              {
+                "value": 1,
+                "label": "Move 2 extremidades"
+              },
+              {
+                "value": 0,
+                "label": "Não move extremidades"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Avaliar capacidade motora.",
+            "libras": false
+          },
+          {
+            "id": "respiration",
+            "type": "select",
+            "label": "Respiração",
+            "options": [
+              {
+                "value": 2,
+                "label": "Respira profundamente e tosse livremente"
+              },
+              {
+                "value": 1,
+                "label": "Dispneia ou respiração superficial limitada"
+              },
+              {
+                "value": 0,
+                "label": "Apneia"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Avaliar padrão respiratório.",
+            "libras": false
+          },
+          {
+            "id": "circulation",
+            "type": "select",
+            "label": "Circulação",
+            "options": [
+              {
+                "value": 2,
+                "label": "PA dentro de 20 mmHg do nível pré-anestésico"
+              },
+              {
+                "value": 1,
+                "label": "PA dentro de 20-50 mmHg do nível pré-anestésico"
+              },
+              {
+                "value": 0,
+                "label": "PA fora de 50 mmHg do nível pré-anestésico"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Comparar pressão arterial com a pré-anestésica.",
+            "libras": false
+          },
+          {
+            "id": "consciousness",
+            "type": "select",
+            "label": "Consciência",
+            "options": [
+              {
+                "value": 2,
+                "label": "Totalmente acordado"
+              },
+              {
+                "value": 1,
+                "label": "Desperta ao ser chamado"
+              },
+              {
+                "value": 0,
+                "label": "Não responde"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Nível de consciência.",
+            "libras": false
+          },
+          {
+            "id": "oxygenation",
+            "type": "select",
+            "label": "Saturação de Oxigênio",
+            "options": [
+              {
+                "value": 2,
+                "label": "SpO2 > 92% em ar ambiente"
+              },
+              {
+                "value": 1,
+                "label": "SpO2 > 90% com suplemento de O2"
+              },
+              {
+                "value": 0,
+                "label": "SpO2 < 90% mesmo com suplemento"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Saturação de oxigênio.",
+            "libras": false
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Avaliar",
+        "icon": "fa-check",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "formula": "total = activity + respiration + circulation + consciousness + oxygenation",
+    "result": {
+      "label": "Pontuação Aldrete",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "audit": {
+      "title": "Auditoria da Avaliação",
+      "steps": [
+        {
+          "label": "Atividade",
+          "sourceField": "activity",
+          "icon": "fa-person-walking"
+        },
+        {
+          "label": "Respiração",
+          "sourceField": "respiration",
+          "icon": "fa-lungs"
+        },
+        {
+          "label": "Circulação",
+          "sourceField": "circulation",
+          "icon": "fa-heart-pulse"
+        },
+        {
+          "label": "Consciência",
+          "sourceField": "consciousness",
+          "icon": "fa-brain"
+        },
+        {
+          "label": "Oxigenação",
+          "sourceField": "oxygenation",
+          "icon": "fa-wind"
+        },
+        {
+          "label": "Pontuação Total",
+          "sourceField": "total",
+          "suffix": "pontos",
+          "icon": "fa-star"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      },
+      {
+        "type": "secondary",
+        "label": "Diagnóstico de Enfermagem",
+        "icon": "fa-stethoscope",
+        "action": "searchNursingDiagnosis"
+      }
+    ],
+    "mode": "formula",
+    "interpretation": [
+      {
+        "max": 4,
+        "label": "Recuperação insatisfatória",
+        "color": "text-red-600",
+        "bg": "bg-red-50",
+        "conduct": "Manter em SRPA com monitoramento intensivo"
+      },
+      {
+        "max": 6,
+        "label": "Recuperação moderada",
+        "color": "text-yellow-600",
+        "bg": "bg-yellow-50",
+        "conduct": "Aguardar evolução e reavaliar em 30 minutos"
+      },
+      {
+        "max": 8,
+        "label": "Recuperação boa",
+        "color": "text-blue-600",
+        "bg": "bg-blue-50",
+        "conduct": "Próximo da alta da SRPA — manter monitorização"
+      },
+      {
+        "max": 10,
+        "label": "Alta da SRPA recomendada",
+        "color": "text-green-600",
+        "bg": "bg-green-50",
+        "conduct": "Escore alto — elegível para alta conforme protocolo da unidade"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Sobre a Escala de Aldrete",
+        "body": "<p>A Escala de Aldrete é um instrumento utilizado para avaliar a recuperação pós-anestésica de pacientes na Sala de Recuperação Pós-Anestésica (SRPA). Ela avalia cinco critérios: atividade muscular, respiração, circulação, consciência e saturação de oxigênio, cada um com pontuação de 0 a 2, totalizando no máximo 10 pontos.</p><p>Uma pontuação igual ou superior a 9 indica que o paciente está apto para alta da SRPA.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Selecione a opção correspondente ao estado do paciente em cada critério.",
+        "A pontuação total será calculada automaticamente.",
+        "Utilize os checklists de segurança para auditoria.",
+        "Gere PDF ou copie o resultado para registro."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<div class='p-5 bg-slate-50 dark:bg-slate-900/40 rounded-2xl space-y-3 border border-slate-100 dark:border-slate-700'><p>• <strong>Aldrete, J. A., & Kroulik, D.</strong> A postanesthetic recovery score. Anesthesia & Analgesia, 1970.</p><p>• <strong>Sociedade Brasileira de Anestesiologia.</strong> Diretrizes de Recuperação Pós-Anestésica, 2022.</p></div>"
+      }
+    }
+  ],
+  "modals": {
+    "tutorial": {
+      "title": "Tutorial de Uso - Escala de Aldrete",
+      "icon": "fa-question-circle",
+      "content": "<div>...</div>",
+      "libras": false
+    },
+    "nanda": {
+      "title": "Diagnósticos de Enfermagem - NANDA",
+      "icon": "fa-stethoscope",
+      "content": "<div>...</div>",
+      "libras": false
+    },
+    "nineRights": {
+      "title": "9 Certos da Medicação",
+      "icon": "fa-check-double",
+      "source": "shared",
+      "sharedId": "nineRights",
+      "libras": true
+    },
+    "safetyGoals": {
+      "title": "Metas Internacionais de Segurança",
+      "icon": "fa-star",
+      "source": "shared",
+      "sharedId": "safetyGoals",
+      "libras": true
+    }
+  },
+  "sidebar": {
+    "modules": [
+      {
+        "type": "simulados",
+        "title": "Desafio Clínico",
+        "content": "Teste sua agilidade e precisão em simulados reais de enfermagem.",
+        "link": {
+          "url": "https://simulados-para-enfermagem.com.br/",
+          "label": "Acessar Simulados",
+          "icon": "fa-bolt"
+        },
+        "libras": false
+      },
+      {
+        "type": "share",
+        "title": "Compartilhar",
+        "networks": [
+          {
+            "name": "Facebook",
+            "icon": "fab fa-facebook-f",
+            "url": "https://www.facebook.com/sharer/sharer.php?u={{url}}"
+          },
+          {
+            "name": "WhatsApp",
+            "icon": "fab fa-whatsapp",
+            "url": "https://api.whatsapp.com/send?text={{text}}%20{{url}}"
+          },
+          {
+            "name": "LinkedIn",
+            "icon": "fab fa-linkedin-in",
+            "url": "https://www.linkedin.com/sharing/share-offsite/?url={{url}}"
+          },
+          {
+            "name": "Twitter",
+            "icon": "fab fa-x-twitter",
+            "url": "https://twitter.com/intent/tweet?text={{title}}&url={{url}}"
+          },
+          {
+            "name": "Link",
+            "icon": "fas fa-link",
+            "action": "copyLink"
+          }
+        ],
+        "libras": false
+      },
+      {
+        "type": "related",
+        "title": "Outras Calculadoras",
+        "items": [
+          {
+            "text": "Cálculo de Insulina",
+            "description": "Calcule a dose de insulina.",
+            "icon": "fa-calculator",
+            "url": "insulina.html"
+          },
+          {
+            "text": "Balanço Hídrico",
+            "description": "Monitore a ingestão e eliminação de líquidos.",
+            "icon": "fa-droplet",
+            "url": "balanco-hidrico.html"
+          },
+          {
+            "text": "Cálculo de Gotejamento",
+            "description": "Determine o gotejamento de soros.",
+            "icon": "fa-clock",
+            "url": "gotejamento.html"
+          }
+        ],
+        "libras": false
+      }
+    ]
+  },
+  "author": {
+    "name": "Calculadoras de Enfermagem Profissional",
+    "quote": "Transformando a complexidade técnica em segurança para o paciente através da precisão dos dados e protocolos clínicos rigorosos.",
+    "image": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp"
+  }
+}

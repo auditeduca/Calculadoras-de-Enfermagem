@@ -96,25 +96,61 @@ rodapé sem logotipo oficial, páginas fora de padrão e problemas de contraste.
   meta/SEO padronizados, favicon e logotipo oficiais, tokens Tailwind do
   projeto e integração automática dos modulares via carregador.
 
-## 3. Pendências sugeridas (não incluídas nesta mudança)
+## 2.7 Pipeline de agentes determinísticos (2ª etapa)
 
-1. **Conteúdo da Biblioteca** — criar as páginas ou importá-las; depois
-   declarar as rotas em `data/site.json`.
-2. **Carreiras / Calendário Vacinal** — mesmas condições acima.
-3. **Limpeza de legado** — remover componentes v1/v2 não referenciados, a
-   pasta `components/` duplicada na raiz, arquivos `Novo(a) Documento...`,
-   `package.json.bak`, `teste*.html` e `calculator-engine..js`.
-4. **Migração das 68 calculadoras para o motor JSON v4** — hoje cada página
-   de `calculadoras/` tem lógica própria embutida; o alvo é `PAGE_CONFIG` +
-   `calculator-engine.js`, como nas páginas v4 da raiz (apgar.html etc.).
-5. **Revisão de contraste página a página** — os tokens globais foram
-   corrigidos; vale auditar usos pontuais de cores fora dos tokens.
-6. **Reserva de espaço do cabeçalho** — nas páginas de `calculadoras/` o
-   contêiner do cabeçalho é criado em tempo de execução, o que gera um salto
-   de layout breve na carga. Mitigação futura: declarar os contêineres no
-   HTML (como no template v5) ao migrar essas páginas para o motor JSON.
-7. **Unificar domínio canônico** — há referências mistas a
-   `auditeduca.github.io`, `calculadoras-enfermagem.github.io` e
-   `www.calculadorasdeenfermagem.com.br` (fora do ar). O `baseUrl` em
-   `data/site.json` centraliza isso para os componentes; os metadados das
-   páginas antigas ainda carregam os valores antigos.
+Para eliminar artefatos concorrentes, o repositório passou a seguir o
+princípio de **um escritor por artefato**: humanos editam somente fontes
+(JSON, schemas, templates); todo derivado é gerado por ferramenta
+determinística e carrega aviso de "não editar à mão".
+
+| Agente | Papel | Escreve |
+|---|---|---|
+| `tools/gerar_componentes.py` | Gera cabeçalho/rodapé de `data/site.json` | `assets/components/header-v4.html`, `footer-v4.html`, `docs/relatorio-rotas.md` |
+| `tools/gerar_paginas.py` | Única fonte do `PAGE_CONFIG`: extrai/injeta `configs/paginas/<id>.json` nas páginas raiz (round-trip byte a byte) | linha `window.PAGE_CONFIG` de `aldrete/apache/apgar/barthel/insulina.html` |
+| `tools/integrar_paginas.py` | Insere o carregador de modulares em páginas sem integração | tag `<script>` nas páginas |
+| `tools/auditar.py` | Somente leitura: valida schemas, rotas, sincronismo, configs corrompidas e órfãos | `docs/relatorio-auditoria.md` (sai com erro se houver falha bloqueante) |
+
+Ordem do pipeline: `gerar_componentes → gerar_paginas → auditar`.
+Com isso, os metadados das 5 páginas raiz foram corrigidos via JSON
+(domínio morto `www.calculadorasdeenfermagem.com.br` → URL oficial do site).
+
+### Achado crítico da auditoria
+**59 das 68 páginas de `calculadoras/` têm `CALCULATOR_DATA` corrompida**:
+os campos clínicos foram substituídos por campos de formulário de
+comentários/newsletter (resquício de scraping). Essas páginas renderizam,
+mas não calculam o escore correto. A lista completa está em
+`docs/relatorio-auditoria.md`. A correção é criar a config clínica real de
+cada uma em `configs/paginas/` e regenerá-las pelo pipeline.
+
+### Expurgo executado (1ª rodada)
+45 arquivos comprovadamente órfãos removidos: variantes duplicadas da
+insulina (`calculator-insulina-v4.*`, `insulina-otimizado.html`), JSONs de
+config espalhados (raiz e `pages/`), gerações v1/v2 de
+header/footer/accessibility (HTML, CSS e JS), arquivos de teste e lixo
+(`Novo(a) Documento de Texto*.txt`, `package.json.bak`,
+`calculator-engine..js`). Os demais candidatos permanecem listados no
+relatório do auditor para decisão manual (ex.: resíduos de Next.js,
+motor `calculator-engine`/`calculator-system`, `assets/pages/`).
+
+## 3. Fábrica de calculadoras
+
+As 13 ferramentas com configuração clínica válida são geradas por
+`tools/gerar_paginas.py` em `calculadoras/<id>/index.html` e lidas por
+`js/calculadora.js`. A raiz `<id>.html` só redireciona. As outras 57 pastas
+de `calculadoras/` exibem aviso de revisão e saíram do menu. Idiomas não
+tinham strings próprias nas 95 cópias; as pastas foram removidas e o gerador
+só recria `<lang>/<id>.html` quando existe `configs/i18n/<lang>/<id>.json`.
+
+`python3 tools/auditar.py` falha se a trava clínica, uma rota do menu ou o
+sincronismo das cascas quebrar.
+
+## 4. Pendências de conteúdo
+
+1. **Fila clínica** — as 57 ferramentas em revisão voltam ao menu quando
+   ganharem `configs/paginas/<id>.json` que passe na trava.
+2. **Biblioteca, carreiras e calendário vacinal** — criar as páginas e
+   declará-las em `data/site.json`.
+3. **Contraste pontual** — os tokens globais já estão em AA; usos fora dos
+   tokens ainda podem ser revistos página a página.
+4. **Traduções** — um overlay em `configs/i18n/<lang>/<id>.json` passa a
+   gerar a página daquele idioma.

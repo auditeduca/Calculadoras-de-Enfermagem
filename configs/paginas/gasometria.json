@@ -1,0 +1,203 @@
+{
+  "metadata": {
+    "id": "gasometria",
+    "title": "Gasometria Arterial",
+    "category": "clinica",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "calculator"
+  },
+  "seo": {
+    "title": "Gasometria Arterial | Calculadoras de Enfermagem",
+    "description": "Classificação do equilíbrio ácido-básico a partir de pH, PaCO₂, HCO₃ e PaO₂.",
+    "keywords": "Gasometria Arterial, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/gasometria/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Calculadora Clínica",
+    "title": "Gasometria Arterial",
+    "description": "Classificação do equilíbrio ácido-básico a partir de pH, PaCO₂, HCO₃ e PaO₂."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Gasometria Arterial",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Parâmetros",
+        "fields": [
+          {
+            "id": "ph",
+            "type": "number",
+            "label": "pH",
+            "placeholder": "Ex: 7.40",
+            "required": true,
+            "min": 6.5,
+            "max": 8,
+            "step": 0.01
+          },
+          {
+            "id": "paco2",
+            "type": "number",
+            "label": "PaCO₂",
+            "placeholder": "Ex: 40",
+            "unit": "mmHg",
+            "required": true,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "po2",
+            "type": "number",
+            "label": "PaO₂",
+            "placeholder": "Ex: 90",
+            "unit": "mmHg",
+            "required": true,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "hco3",
+            "type": "number",
+            "label": "HCO₃",
+            "placeholder": "Ex: 24",
+            "unit": "mEq/L",
+            "required": true,
+            "min": 0,
+            "step": "any"
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Calcular",
+        "icon": "fa-calculator",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "mode": "named",
+    "formula": "gasometria",
+    "result": {
+      "label": "Classificação",
+      "unit": "",
+      "decimals": 0,
+      "key": "classificacao"
+    },
+    "interpretation": [
+      {
+        "max": 100000,
+        "label": "Ver resultado",
+        "conduct": "A classificação é definida pelo runtime a partir de pH, PaCO₂ e HCO₃."
+      }
+    ],
+    "audit": {
+      "title": "Auditoria",
+      "steps": [
+        {
+          "label": "pH",
+          "sourceField": "ph",
+          "icon": "fa-vial"
+        },
+        {
+          "label": "PaCO₂",
+          "sourceField": "paco2",
+          "suffix": "mmHg",
+          "icon": "fa-lungs"
+        },
+        {
+          "label": "HCO₃",
+          "sourceField": "hco3",
+          "suffix": "mEq/L",
+          "icon": "fa-flask"
+        },
+        {
+          "label": "Classificação",
+          "sourceField": "classificacao",
+          "icon": "fa-notes-medical"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Calculadora",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Gasometria Arterial",
+        "body": "<p>A leitura combina pH, PaCO₂ e bicarbonato para nomear o distúrbio predominante e sinaliza hipoxemia quando a PaO₂ cai abaixo de 80 mmHg.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Use os valores do exame de gasometria arterial.",
+        "A classificação descreve o componente dominante; distúrbios mistos exigem correlação clínica.",
+        "PaO₂ abaixo de 80 mmHg é destacada como hipoxemia."
+      ]
+    }
+  ]
+}

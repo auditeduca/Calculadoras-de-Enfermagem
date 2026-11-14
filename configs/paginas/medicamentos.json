@@ -1,0 +1,185 @@
+{
+  "metadata": {
+    "id": "medicamentos",
+    "title": "Cálculo de Medicamentos",
+    "category": "farmacologia",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "calculator"
+  },
+  "seo": {
+    "title": "Cálculo de Medicamentos | Calculadoras de Enfermagem",
+    "description": "Volume a aspirar a partir da dose prescrita, da quantidade no frasco e do volume do frasco.",
+    "keywords": "Cálculo de Medicamentos, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/medicamentos/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Calculadora Clínica",
+    "title": "Cálculo de Medicamentos",
+    "description": "Volume a aspirar a partir da dose prescrita, da quantidade no frasco e do volume do frasco."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Cálculo de Medicamentos",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Parâmetros",
+        "fields": [
+          {
+            "id": "prescricao",
+            "type": "number",
+            "label": "Prescrição",
+            "placeholder": "Ex: 120",
+            "unit": "mg",
+            "required": true,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "concentracao",
+            "type": "number",
+            "label": "Quantidade no frasco",
+            "placeholder": "Ex: 240",
+            "unit": "mg",
+            "required": true,
+            "min": 0,
+            "step": "any"
+          },
+          {
+            "id": "volumeTotal",
+            "type": "number",
+            "label": "Volume do frasco",
+            "placeholder": "Ex: 10",
+            "unit": "mL",
+            "required": true,
+            "min": 0,
+            "step": "0.1"
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Calcular",
+        "icon": "fa-calculator",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "volume = prescricao * volumeTotal / concentracao",
+    "result": {
+      "label": "Volume a aspirar",
+      "unit": "mL",
+      "decimals": 2,
+      "key": "volume",
+      "interpretationOf": "volume"
+    },
+    "interpretation": [
+      {
+        "max": 100000,
+        "label": "Volume calculado",
+        "color": "text-nurse-primary",
+        "bg": "bg-slate-50",
+        "conduct": "Volume = prescrição × volume do frasco ÷ quantidade do frasco. Confira unidade e apresentação."
+      }
+    ],
+    "audit": {
+      "title": "Auditoria",
+      "steps": [
+        {
+          "label": "Fórmula",
+          "fixedValue": "Prescrição × volume / quantidade",
+          "icon": "fa-calculator"
+        },
+        {
+          "label": "Volume",
+          "sourceField": "volume",
+          "suffix": "mL",
+          "icon": "fa-syringe"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Calculadora",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Cálculo de Medicamentos",
+        "body": "<p>Regra de três da aspiração: a dose prescrita está para a quantidade contida no frasco assim como o volume a aspirar está para o volume do frasco.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Use a mesma unidade na prescrição e na quantidade do frasco.",
+        "Informe o volume total da apresentação.",
+        "Confira o volume calculado antes de administrar."
+      ]
+    }
+  ]
+}

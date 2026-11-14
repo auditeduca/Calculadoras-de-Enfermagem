@@ -1,0 +1,204 @@
+{
+  "metadata": {
+    "id": "dimensionamento",
+    "title": "Dimensionamento de Pessoal",
+    "category": "gestao",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "calculator"
+  },
+  "seo": {
+    "title": "Dimensionamento de Pessoal | Calculadoras de Enfermagem",
+    "description": "Quadro de enfermagem a partir das horas de cuidado por categoria de paciente.",
+    "keywords": "Dimensionamento de Pessoal, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/dimensionamento/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Calculadora Clínica",
+    "title": "Dimensionamento de Pessoal",
+    "description": "Quadro de enfermagem a partir das horas de cuidado por categoria de paciente."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Dimensionamento de Pessoal",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Parâmetros",
+        "fields": [
+          {
+            "id": "cargaHoraria",
+            "type": "number",
+            "label": "Carga horária semanal",
+            "placeholder": "Ex: 36",
+            "unit": "h/semana",
+            "required": true,
+            "min": 0,
+            "step": "1"
+          },
+          {
+            "id": "numCM",
+            "type": "number",
+            "label": "Pacientes de cuidado mínimo",
+            "placeholder": "Ex: 5",
+            "unit": "pacientes",
+            "required": false,
+            "min": 0,
+            "step": "1"
+          },
+          {
+            "id": "numCI",
+            "type": "number",
+            "label": "Pacientes de cuidado intermediário",
+            "placeholder": "Ex: 8",
+            "unit": "pacientes",
+            "required": false,
+            "min": 0,
+            "step": "1"
+          },
+          {
+            "id": "numCAD",
+            "type": "number",
+            "label": "Pacientes de alta dependência",
+            "placeholder": "Ex: 3",
+            "unit": "pacientes",
+            "required": false,
+            "min": 0,
+            "step": "1"
+          },
+          {
+            "id": "numCSI",
+            "type": "number",
+            "label": "Pacientes semi-intensivos",
+            "placeholder": "Ex: 0",
+            "unit": "pacientes",
+            "required": false,
+            "min": 0,
+            "step": "1"
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Calcular",
+        "icon": "fa-calculator",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "pessoal = (numCM * 4 + numCI * 6 + numCAD * 10 + numCSI * 10) * 7 / cargaHoraria",
+    "result": {
+      "label": "Quadro de pessoal",
+      "unit": "profissionais",
+      "decimals": 1,
+      "key": "pessoal",
+      "interpretationOf": "pessoal"
+    },
+    "interpretation": [
+      {
+        "max": 100000,
+        "label": "Quadro estimado",
+        "color": "text-nurse-primary",
+        "bg": "bg-slate-50",
+        "conduct": "Horas de cuidado por 24 h: mínimo 4, intermediário 6, alta dependência 10, semi-intensivo 10. O quadro divide o total semanal pela carga horária."
+      }
+    ],
+    "audit": {
+      "title": "Auditoria",
+      "steps": [
+        {
+          "label": "Fórmula",
+          "fixedValue": "(Σ pacientes × horas) × 7 / carga horária",
+          "icon": "fa-calculator"
+        },
+        {
+          "label": "Profissionais",
+          "sourceField": "pessoal",
+          "icon": "fa-user-nurse"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Calculadora",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Dimensionamento de Pessoal",
+        "body": "<p>Estimativa do quadro de enfermagem com as horas de cuidado de enfermagem usadas como referência de dimensionamento.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Informe a carga horária semanal do contrato.",
+        "Conte os pacientes de cada categoria assistencial.",
+        "O resultado é uma estimativa de postos, não a escala pronta do serviço."
+      ]
+    }
+  ]
+}

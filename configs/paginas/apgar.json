@@ -1,0 +1,557 @@
+{
+  "metadata": {
+    "id": "apgar",
+    "title": "Escala de Apgar - Vitalidade do Recém-Nascido | Enfermagem",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-02-05",
+    "type": "scale"
+  },
+  "accessibility": {
+    "vlibras": true,
+    "screenReader": true,
+    "highContrast": true,
+    "librasAvailable": true
+  },
+  "seo": {
+    "title": "Escala de Apgar – Avaliação da Vitalidade do Recém-Nascido",
+    "description": "Avalie a vitalidade do recém-nascido no 1º e 5º minutos de vida com a Escala de Apgar. Ferramenta essencial para enfermagem obstétrica e neonatal.",
+    "keywords": "apgar, recém-nascido, vitalidade, neonato, obstetrícia, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/apgar/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escala Clínica",
+    "title": "Escala de Apgar",
+    "description": "Avaliação da vitalidade do recém-nascido no 1º e 5º minutos de vida."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escalas Clínicas",
+      "url": null
+    },
+    {
+      "text": "Escala de Apgar",
+      "url": null,
+      "active": true
+    }
+  ],
+  "tags": [
+    {
+      "text": "apgar",
+      "url": "busca.html?tag=apgar",
+      "lang": "pt",
+      "abbr": null
+    },
+    {
+      "text": "recém-nascido",
+      "url": "busca.html?tag=recem-nascido",
+      "lang": "pt",
+      "abbr": "RN"
+    },
+    {
+      "text": "neonatologia",
+      "url": "busca.html?tag=neonatologia",
+      "lang": "pt",
+      "abbr": null
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Recém-Nascido",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome da Mãe",
+            "placeholder": "Nome da mãe (opcional)",
+            "optional": true,
+            "tooltip": "Identificação da mãe para fins de registro.",
+            "libras": false
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "datetime-local",
+            "label": "Data e Hora do Nascimento",
+            "optional": true,
+            "tooltip": "Data e hora do nascimento para registro.",
+            "libras": false
+          }
+        ]
+      },
+      {
+        "title": "Avaliação no 1º Minuto",
+        "fields": [
+          {
+            "id": "frequencia1",
+            "type": "select",
+            "label": "Frequência Cardíaca",
+            "options": [
+              {
+                "value": 0,
+                "label": "0 – Ausente"
+              },
+              {
+                "value": 1,
+                "label": "1 – < 100 bpm"
+              },
+              {
+                "value": 2,
+                "label": "2 – ≥ 100 bpm"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Frequência cardíaca do recém-nascido.",
+            "libras": false
+          },
+          {
+            "id": "respiracao1",
+            "type": "select",
+            "label": "Esforço Respiratório",
+            "options": [
+              {
+                "value": 0,
+                "label": "0 – Ausente"
+              },
+              {
+                "value": 1,
+                "label": "1 – Lento ou irregular"
+              },
+              {
+                "value": 2,
+                "label": "2 – Bom, choro forte"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Esforço respiratório do recém-nascido.",
+            "libras": false
+          },
+          {
+            "id": "tonus1",
+            "type": "select",
+            "label": "Tônus Muscular",
+            "options": [
+              {
+                "value": 0,
+                "label": "0 – Flácido"
+              },
+              {
+                "value": 1,
+                "label": "1 – Alguma flexão de extremidades"
+              },
+              {
+                "value": 2,
+                "label": "2 – Movimento ativo"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Tônus muscular do recém-nascido.",
+            "libras": false
+          },
+          {
+            "id": "reflexo1",
+            "type": "select",
+            "label": "Irritabilidade Reflexa",
+            "options": [
+              {
+                "value": 0,
+                "label": "0 – Sem resposta"
+              },
+              {
+                "value": 1,
+                "label": "1 – Careta ou choro fraco"
+              },
+              {
+                "value": 2,
+                "label": "2 – Choro vigoroso ou espirro"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Resposta a estímulos (aspiração, toque).",
+            "libras": false
+          },
+          {
+            "id": "cor1",
+            "type": "select",
+            "label": "Coloração da Pele",
+            "options": [
+              {
+                "value": 0,
+                "label": "0 – Pálido ou cianótico"
+              },
+              {
+                "value": 1,
+                "label": "1 – Corpo rosado, extremidades cianóticas"
+              },
+              {
+                "value": 2,
+                "label": "2 – Totalmente rosado"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Coloração da pele do recém-nascido.",
+            "libras": false
+          }
+        ]
+      },
+      {
+        "title": "Avaliação no 5º Minuto",
+        "fields": [
+          {
+            "id": "frequencia5",
+            "type": "select",
+            "label": "Frequência Cardíaca",
+            "options": [
+              {
+                "value": 0,
+                "label": "0 – Ausente"
+              },
+              {
+                "value": 1,
+                "label": "1 – < 100 bpm"
+              },
+              {
+                "value": 2,
+                "label": "2 – ≥ 100 bpm"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Frequência cardíaca do recém-nascido.",
+            "libras": false
+          },
+          {
+            "id": "respiracao5",
+            "type": "select",
+            "label": "Esforço Respiratório",
+            "options": [
+              {
+                "value": 0,
+                "label": "0 – Ausente"
+              },
+              {
+                "value": 1,
+                "label": "1 – Lento ou irregular"
+              },
+              {
+                "value": 2,
+                "label": "2 – Bom, choro forte"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Esforço respiratório do recém-nascido.",
+            "libras": false
+          },
+          {
+            "id": "tonus5",
+            "type": "select",
+            "label": "Tônus Muscular",
+            "options": [
+              {
+                "value": 0,
+                "label": "0 – Flácido"
+              },
+              {
+                "value": 1,
+                "label": "1 – Alguma flexão de extremidades"
+              },
+              {
+                "value": 2,
+                "label": "2 – Movimento ativo"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Tônus muscular do recém-nascido.",
+            "libras": false
+          },
+          {
+            "id": "reflexo5",
+            "type": "select",
+            "label": "Irritabilidade Reflexa",
+            "options": [
+              {
+                "value": 0,
+                "label": "0 – Sem resposta"
+              },
+              {
+                "value": 1,
+                "label": "1 – Careta ou choro fraco"
+              },
+              {
+                "value": 2,
+                "label": "2 – Choro vigoroso ou espirro"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Resposta a estímulos (aspiração, toque).",
+            "libras": false
+          },
+          {
+            "id": "cor5",
+            "type": "select",
+            "label": "Coloração da Pele",
+            "options": [
+              {
+                "value": 0,
+                "label": "0 – Pálido ou cianótico"
+              },
+              {
+                "value": 1,
+                "label": "1 – Corpo rosado, extremidades cianóticas"
+              },
+              {
+                "value": 2,
+                "label": "2 – Totalmente rosado"
+              }
+            ],
+            "default": 2,
+            "required": true,
+            "tooltip": "Coloração da pele do recém-nascido.",
+            "libras": false
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Avaliar",
+        "icon": "fa-check",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "formula": "apgar1 = frequencia1 + respiracao1 + tonus1 + reflexo1 + cor1; apgar5 = frequencia5 + respiracao5 + tonus5 + reflexo5 + cor5",
+    "result": {
+      "label": "Apgar 1' / 5'",
+      "unit": "pontos",
+      "decimals": 0,
+      "keys": [
+        "apgar1",
+        "apgar5"
+      ],
+      "key": "apgar5",
+      "interpretationOf": "apgar5"
+    },
+    "audit": {
+      "title": "Auditoria da Avaliação",
+      "steps": [
+        {
+          "label": "Apgar 1º minuto",
+          "sourceField": "apgar1",
+          "suffix": "pontos",
+          "icon": "fa-1"
+        },
+        {
+          "label": "Apgar 5º minuto",
+          "sourceField": "apgar5",
+          "suffix": "pontos",
+          "icon": "fa-5"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ],
+    "interpretation": [
+      {
+        "max": 3,
+        "label": "Asfixia grave",
+        "color": "text-red-600",
+        "bg": "bg-red-50",
+        "conduct": "Reanimação imediata — chamar pediatra urgência"
+      },
+      {
+        "max": 6,
+        "label": "Asfixia moderada",
+        "color": "text-yellow-600",
+        "bg": "bg-yellow-50",
+        "conduct": "Estimulação e suporte de O2 — monitorar continuamente"
+      },
+      {
+        "max": 10,
+        "label": "Boa vitalidade",
+        "color": "text-green-600",
+        "bg": "bg-green-50",
+        "conduct": "Cuidados de rotina ao recém-nascido"
+      }
+    ],
+    "mode": "formula"
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Sobre a Escala de Apgar",
+        "body": "<p>A Escala de Apgar foi desenvolvida pela anestesiologista Virginia Apgar em 1952 para avaliar a vitalidade do recém-nascido no 1º e 5º minutos de vida. Cinco sinais são avaliados: frequência cardíaca, esforço respiratório, tônus muscular, irritabilidade reflexa e coloração da pele. Cada item recebe pontuação de 0 a 2, totalizando 0 a 10 pontos.</p><p><strong>Interpretação:</strong><br>7-10: Boa vitalidade<br>4-6: Asfixia moderada<br>0-3: Asfixia grave</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Selecione a pontuação para cada um dos 5 itens no 1º minuto.",
+        "Repita a seleção para o 5º minuto.",
+        "A pontuação total de cada momento será calculada automaticamente.",
+        "Gere PDF ou copie o resultado para registro."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<div class='p-5 bg-slate-50 dark:bg-slate-900/40 rounded-2xl space-y-3 border border-slate-100 dark:border-slate-700'><p>• <strong>Apgar V.</strong> A proposal for a new method of evaluation of the newborn infant. Curr Res Anesth Analg, 1953.</p><p>• <strong>Sociedade Brasileira de Pediatria.</strong> Diretrizes de Reanimação Neonatal, 2022.</p></div>"
+      }
+    }
+  ],
+  "modals": {
+    "tutorial": {
+      "title": "Tutorial - Escala de Apgar",
+      "icon": "fa-question-circle",
+      "content": "<div>...</div>",
+      "libras": false
+    },
+    "nanda": {
+      "title": "Diagnósticos de Enfermagem - NANDA",
+      "icon": "fa-stethoscope",
+      "content": "<div>...</div>",
+      "libras": false
+    },
+    "nineRights": {
+      "title": "9 Certos da Medicação",
+      "icon": "fa-check-double",
+      "source": "shared",
+      "sharedId": "nineRights",
+      "libras": true
+    },
+    "safetyGoals": {
+      "title": "Metas Internacionais de Segurança",
+      "icon": "fa-star",
+      "source": "shared",
+      "sharedId": "safetyGoals",
+      "libras": true
+    }
+  },
+  "sidebar": {
+    "modules": [
+      {
+        "type": "simulados",
+        "title": "Desafio Clínico",
+        "content": "Teste sua agilidade e precisão em simulados reais de enfermagem.",
+        "link": {
+          "url": "https://simulados-para-enfermagem.com.br/",
+          "label": "Acessar Simulados",
+          "icon": "fa-bolt"
+        },
+        "libras": false
+      },
+      {
+        "type": "share",
+        "title": "Compartilhar",
+        "networks": [
+          {
+            "name": "Facebook",
+            "icon": "fab fa-facebook-f",
+            "url": "https://www.facebook.com/sharer/sharer.php?u={{url}}"
+          },
+          {
+            "name": "WhatsApp",
+            "icon": "fab fa-whatsapp",
+            "url": "https://api.whatsapp.com/send?text={{text}}%20{{url}}"
+          },
+          {
+            "name": "LinkedIn",
+            "icon": "fab fa-linkedin-in",
+            "url": "https://www.linkedin.com/sharing/share-offsite/?url={{url}}"
+          },
+          {
+            "name": "Twitter",
+            "icon": "fab fa-x-twitter",
+            "url": "https://twitter.com/intent/tweet?text={{title}}&url={{url}}"
+          },
+          {
+            "name": "Link",
+            "icon": "fas fa-link",
+            "action": "copyLink"
+          }
+        ],
+        "libras": false
+      },
+      {
+        "type": "related",
+        "title": "Outras Calculadoras",
+        "items": [
+          {
+            "text": "Capurro",
+            "description": "Idade gestacional pelo método de Capurro.",
+            "icon": "fa-calculator",
+            "url": "capurro.html"
+          },
+          {
+            "text": "Ballard",
+            "description": "Idade gestacional pelo método de Ballard.",
+            "icon": "fa-calculator",
+            "url": "ballard.html"
+          },
+          {
+            "text": "Silverman Andersen",
+            "description": "Avaliação do desconforto respiratório neonatal.",
+            "icon": "fa-calculator",
+            "url": "silverman.html"
+          }
+        ],
+        "libras": false
+      }
+    ]
+  },
+  "author": {
+    "name": "Calculadoras de Enfermagem Profissional",
+    "quote": "Transformando a complexidade técnica em segurança para o paciente através da precisão dos dados e protocolos clínicos rigorosos.",
+    "image": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp"
+  }
+}
