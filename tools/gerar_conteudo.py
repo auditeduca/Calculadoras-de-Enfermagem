@@ -4,8 +4,9 @@
 Gerador das páginas que não são calculadora.
 
 Fonte editável: configs/conteudo/<id>.json e a navegação de data/site.json.
-Este script é o único escritor de index.html, mapa-do-site.html e das páginas
-institucionais e de notificação. A casca é templates/pagina-casca.html.
+O layout visual das institucionais fica em templates/institucional/<id>.html,
+com o miolo, o estilo e a faixa de imagens que a página já tinha. A casca
+templates/pagina-casca.html continua sendo o único escritor do HTML final.
 
 Uso:
     python3 tools/gerar_conteudo.py
@@ -18,7 +19,10 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 DIR_CONTEUDO = RAIZ / "configs" / "conteudo"
+DIR_LAYOUT = RAIZ / "templates" / "institucional"
 CASCA = RAIZ / "templates" / "pagina-casca.html"
+MAIN_SIMPLES = "max-w-6xl mx-auto px-4 pt-8 pb-16"
+MAIN_INSTITUCIONAL = "flex-grow max-w-7xl mx-auto px-4 py-8 md:py-12 w-full"
 SITE = RAIZ / "data" / "site.json"
 
 PERIODO = {"imediata": "Imediata (24h)", "semanal": "Semanal"}
@@ -76,7 +80,17 @@ def escrever(caminho, conteudo, somente_checar, divergencias):
         caminho.write_text(conteudo, encoding="utf-8")
 
 
-def render_casca(cfg, corpo, extra=""):
+def layout_de(pid):
+    arq = DIR_LAYOUT / f"{pid}.html"
+    if not arq.is_file():
+        return None
+    bruto = arq.read_text(encoding="utf-8")
+    estilo, _, resto = bruto.partition("<!--CORPO-->")
+    miolo, _, depois = resto.partition("<!--DEPOIS-->")
+    return estilo.strip(), miolo.strip(), depois.strip()
+
+
+def render_casca(cfg, corpo, extra="", head_extra="", depois="", main_class=MAIN_SIMPLES):
     site = carregar_site()["site"]
     canonical = f"{base_url()}/{rota(cfg['id'])}"
     if cfg["id"] == "index":
@@ -93,6 +107,9 @@ def render_casca(cfg, corpo, extra=""):
         "FAVICON": esc(favicon),
         "BODY": corpo,
         "EXTRA": extra,
+        "HEAD_EXTRA": head_extra,
+        "AFTER": depois,
+        "MAIN_CLASS": main_class,
     }
     if cfg["id"] == "index":
         troca["TITLE"] = esc(cfg["title"])
@@ -283,7 +300,14 @@ def gerar(somente_checar=False):
     existentes = {rota(pid) for pid in paginas}
     divergencias = []
     for pid, cfg in paginas.items():
-        html = render_casca(cfg, corpo(cfg, site, existentes), extra(cfg))
+        layout = layout_de(pid)
+        if layout:
+            estilo, miolo, depois = layout
+            html = render_casca(
+                cfg, miolo, extra(cfg), estilo, depois, MAIN_INSTITUCIONAL
+            )
+        else:
+            html = render_casca(cfg, corpo(cfg, site, existentes), extra(cfg))
         escrever(destino(pid), html, somente_checar, divergencias)
     return divergencias
 

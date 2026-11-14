@@ -30,17 +30,19 @@
   <script>
     tailwind.config = { darkMode: 'class', theme: { extend: {
       fontFamily: { nunito: ['"Nunito Sans"', 'sans-serif'], inter: ['Inter', 'sans-serif'] },
-      colors: { 'nurse-primary': '#1A3E74', 'nurse-secondary': '#00838f', 'nurse-bgDark': '#0F172A' }
+      colors: { 'nurse-primary': '#1A3E74', 'nurse-secondary': '#00838f', 'nurse-accent': '#00838f', 'nurse-bgDark': '#0F172A' }
     }}};
   </script>
+{{HEAD_EXTRA}}
   <script src="assets/js/module-loader-v5.js" defer></script>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter">
   <div id="accessibility-container"></div>
   <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px]"></div>
-  <main id="main-content" class="max-w-6xl mx-auto px-4 pt-8 pb-16">
+  <main id="main-content" class="{{MAIN_CLASS}}">
 {{BODY}}
   </main>
+{{AFTER}}
   <div id="footer-container"></div>
 {{EXTRA}}
 </body>
