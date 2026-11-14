@@ -302,7 +302,7 @@
     nav.className = 'text-sm text-slate-500 mb-4';
     nav.setAttribute('aria-label', 'Trilha');
     nav.innerHTML = '<a class="hover:underline" href="' + escapar(inicio) + '">Início</a>'
-      + ' <span aria-hidden="true">/</span> <span>' + escapar(atual) + '</span>';
+      + ' <span aria-hidden="true">&gt;</span> <span>' + escapar(atual) + '</span>';
   }
 
   function renderAbas(cfg) {
