@@ -105,7 +105,7 @@
 
   function carregarComponente(item) {
     var container = document.getElementById(item.id);
-    if (!container) return Promise.resolve();
+    if (!container) return Promise.resolve(false);
     return fetch(BASE + '/' + item.url)
       .then(function (res) {
         if (!res.ok) throw new Error('Status ' + res.status);
@@ -117,9 +117,13 @@
         var evento = new CustomEvent('moduleLoaded', { detail: { id: item.id, url: item.url } });
         container.dispatchEvent(evento);
         document.dispatchEvent(new CustomEvent('moduleLoaded', { detail: { id: item.id, url: item.url } }));
+        return true;
       })
       .catch(function (e) {
         console.warn('[loader-v5] Módulo ' + item.id + ' não carregado:', e);
+        // Esconde a casca vazia para não deixar faixas semi-transparentes.
+        if (!container.innerHTML.trim()) container.style.display = 'none';
+        return false;
       });
   }
 
@@ -134,15 +138,25 @@
       .then(function () {
         return Promise.all(COMPONENTES.map(carregarComponente));
       })
-      .then(function () {
-        if (window.HeaderModule && typeof window.HeaderModule.init === 'function') {
+      .then(function (resultados) {
+        var ok = {};
+        COMPONENTES.forEach(function (c, i) { ok[c.id] = resultados[i]; });
+
+        // Só inicializa cada módulo se o respectivo componente foi injetado;
+        // caso contrário, initFooter entraria em retry infinito procurando
+        // um rodapé que nunca chegou.
+        if (ok['header-container'] && window.HeaderModule && typeof window.HeaderModule.init === 'function') {
           window.HeaderModule.init();
         }
-        window.dispatchEvent(new CustomEvent('Module:footer-v2-container:Ready'));
-        if (window.AccessControl && typeof window.AccessControl.init === 'function') {
-          window.AccessControl.init();
+        if (ok['footer-container']) {
+          window.dispatchEvent(new CustomEvent('Module:footer-v2-container:Ready'));
         }
-        if (typeof window.initializeAccessibility === 'function') window.initializeAccessibility();
+        if (ok['accessibility-container']) {
+          if (window.AccessControl && typeof window.AccessControl.init === 'function') {
+            window.AccessControl.init();
+          }
+          if (typeof window.initializeAccessibility === 'function') window.initializeAccessibility();
+        }
       });
   }
 
