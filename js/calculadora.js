@@ -297,14 +297,12 @@
   function renderTrilha(cfg, rootUrl) {
     var nav = document.getElementById('breadcrumb');
     if (!nav) return;
-    nav.innerHTML = (cfg.breadcrumb || []).map(function (item, idx, arr) {
-      var sep = idx < arr.length - 1 ? '<span aria-hidden="true">/</span>' : '';
-      if (item.url) {
-        var href = /^https?:/.test(item.url) ? item.url : rootUrl + '/' + item.url.replace(/^\//, '');
-        return '<a class="hover:underline" href="' + escapar(href) + '">' + escapar(item.text) + '</a>' + sep;
-      }
-      return '<span class="font-semibold text-nurse-primary">' + escapar(item.text) + '</span>' + sep;
-    }).join(' ');
+    var atual = (cfg.header && cfg.header.title) || (cfg.metadata && cfg.metadata.title) || '';
+    var inicio = rootUrl.replace(/\/$/, '') + '/index.html';
+    nav.className = 'text-sm text-slate-500 mb-4';
+    nav.setAttribute('aria-label', 'Trilha');
+    nav.innerHTML = '<a class="hover:underline" href="' + escapar(inicio) + '">Início</a>'
+      + ' <span aria-hidden="true">/</span> <span>' + escapar(atual) + '</span>';
   }
 
   function renderAbas(cfg) {
