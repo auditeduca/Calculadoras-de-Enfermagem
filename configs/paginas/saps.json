@@ -1,0 +1,1035 @@
+{
+  "metadata": {
+    "id": "saps",
+    "title": "SAPS 3",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "SAPS 3 | Calculadoras de Enfermagem",
+    "description": "Escore de admissão na UTI. Todo paciente recebe 16 pontos de base. A probabilidade de morte não é calculada aqui.",
+    "keywords": "SAPS 3, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/saps/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "SAPS 3",
+    "description": "Escore de admissão na UTI. Todo paciente recebe 16 pontos de base. A probabilidade de morte não é calculada aqui."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "SAPS 3",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "idade",
+            "type": "select",
+            "label": "Idade",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — menor de 40",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — 40 a 59",
+                "score": 5
+              },
+              {
+                "value": 9,
+                "label": "9 — 60 a 69",
+                "score": 9
+              },
+              {
+                "value": 13,
+                "label": "13 — 70 a 74",
+                "score": 13
+              },
+              {
+                "value": 15,
+                "label": "15 — 75 a 79",
+                "score": 15
+              },
+              {
+                "value": 18,
+                "label": "18 — 80 ou mais",
+                "score": 18
+              }
+            ]
+          },
+          {
+            "id": "permanencia",
+            "type": "select",
+            "label": "Dias no hospital antes da UTI",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — menos de 14",
+                "score": 0
+              },
+              {
+                "value": 6,
+                "label": "6 — 14 a 27",
+                "score": 6
+              },
+              {
+                "value": 7,
+                "label": "7 — 28 ou mais",
+                "score": 7
+              }
+            ]
+          },
+          {
+            "id": "procedencia",
+            "type": "select",
+            "label": "Local antes da UTI",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — centro cirúrgico",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — emergência",
+                "score": 5
+              },
+              {
+                "value": 7,
+                "label": "7 — outra UTI",
+                "score": 7
+              },
+              {
+                "value": 8,
+                "label": "8 — enfermaria ou outro",
+                "score": 8
+              }
+            ]
+          },
+          {
+            "id": "vasoativa",
+            "type": "select",
+            "label": "Droga vasoativa antes da UTI",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 3,
+                "label": "3 — sim",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "cancer_terapia",
+            "type": "select",
+            "label": "Terapia oncológica, imunossupressão ou corticoide",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 3,
+                "label": "3 — sim",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "cancer_hemato",
+            "type": "select",
+            "label": "Câncer hematológico",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 6,
+                "label": "6 — sim",
+                "score": 6
+              }
+            ]
+          },
+          {
+            "id": "ic_nyha",
+            "type": "select",
+            "label": "Insuficiência cardíaca NYHA IV",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 6,
+                "label": "6 — sim",
+                "score": 6
+              }
+            ]
+          },
+          {
+            "id": "cirrose",
+            "type": "select",
+            "label": "Cirrose",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 8,
+                "label": "8 — sim",
+                "score": 8
+              }
+            ]
+          },
+          {
+            "id": "aids",
+            "type": "select",
+            "label": "AIDS",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 8,
+                "label": "8 — sim",
+                "score": 8
+              }
+            ]
+          },
+          {
+            "id": "cancer_meta",
+            "type": "select",
+            "label": "Câncer metastático",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 11,
+                "label": "11 — sim",
+                "score": 11
+              }
+            ]
+          },
+          {
+            "id": "admissao",
+            "type": "select",
+            "label": "Admissão na UTI",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — planejada",
+                "score": 0
+              },
+              {
+                "value": 3,
+                "label": "3 — não planejada",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "cirurgia",
+            "type": "select",
+            "label": "Situação cirúrgica",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — cirurgia eletiva",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — sem cirurgia",
+                "score": 5
+              },
+              {
+                "value": 6,
+                "label": "6 — cirurgia de emergência",
+                "score": 6
+              }
+            ]
+          },
+          {
+            "id": "sitio",
+            "type": "select",
+            "label": "Sítio cirúrgico, se houver",
+            "required": true,
+            "options": [
+              {
+                "value": -11,
+                "label": "−11 — transplante",
+                "score": -11
+              },
+              {
+                "value": -8,
+                "label": "−8 — trauma isolado ou múltiplo",
+                "score": -8
+              },
+              {
+                "value": -6,
+                "label": "−6 — revascularização miocárdica sem troca valvar",
+                "score": -6
+              },
+              {
+                "value": 0,
+                "label": "0 — outro ou sem cirurgia",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — neurocirurgia por acidente vascular",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "ritmo",
+            "type": "select",
+            "label": "Motivo: distúrbio do ritmo",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": -5,
+                "label": "−5 — sim. Se também houver convulsão, deixe este em não e marque só a convulsão",
+                "score": -5
+              }
+            ]
+          },
+          {
+            "id": "convulsao",
+            "type": "select",
+            "label": "Motivo: convulsão",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": -4,
+                "label": "−4 — sim",
+                "score": -4
+              }
+            ]
+          },
+          {
+            "id": "choque_hipo",
+            "type": "select",
+            "label": "Motivo: choque hipovolêmico ou abdome agudo",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 3,
+                "label": "3 — sim",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "choque_septico",
+            "type": "select",
+            "label": "Motivo: choque séptico, anafilático, misto ou indefinido",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — sim",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "coma_neuro",
+            "type": "select",
+            "label": "Motivo: coma, estupor, agitação, confusão ou delirium",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 4,
+                "label": "4 — sim",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "falencia_hepatica",
+            "type": "select",
+            "label": "Motivo: falência hepática",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 6,
+                "label": "6 — sim",
+                "score": 6
+              }
+            ]
+          },
+          {
+            "id": "deficit_focal",
+            "type": "select",
+            "label": "Motivo: déficit neurológico focal",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 7,
+                "label": "7 — sim",
+                "score": 7
+              }
+            ]
+          },
+          {
+            "id": "pancreatite",
+            "type": "select",
+            "label": "Motivo: pancreatite grave",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 9,
+                "label": "9 — sim",
+                "score": 9
+              }
+            ]
+          },
+          {
+            "id": "efeito_massa",
+            "type": "select",
+            "label": "Motivo: efeito de massa intracraniano",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 10,
+                "label": "10 — sim",
+                "score": 10
+              }
+            ]
+          },
+          {
+            "id": "infeccao_nosocomial",
+            "type": "select",
+            "label": "Infecção adquirida no hospital",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 4,
+                "label": "4 — sim",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "infeccao_resp",
+            "type": "select",
+            "label": "Infecção do trato respiratório inferior",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — sim",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "gcs",
+            "type": "select",
+            "label": "Menor Glasgow estimado",
+            "required": true,
+            "options": [
+              {
+                "value": 15,
+                "label": "15 — 3 ou 4",
+                "score": 15
+              },
+              {
+                "value": 10,
+                "label": "10 — 5",
+                "score": 10
+              },
+              {
+                "value": 7,
+                "label": "7 — 6",
+                "score": 7
+              },
+              {
+                "value": 2,
+                "label": "2 — 7 a 12",
+                "score": 2
+              },
+              {
+                "value": 0,
+                "label": "0 — 13 ou mais",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "bilirrubina",
+            "type": "select",
+            "label": "Maior bilirrubina",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — menor que 2 mg/dL",
+                "score": 0
+              },
+              {
+                "value": 4,
+                "label": "4 — 2 a menos de 6",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — 6 ou mais",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "temperatura",
+            "type": "select",
+            "label": "Maior temperatura",
+            "required": true,
+            "options": [
+              {
+                "value": 7,
+                "label": "7 — menor que 35 °C",
+                "score": 7
+              },
+              {
+                "value": 0,
+                "label": "0 — 35 ou mais",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "creatinina",
+            "type": "select",
+            "label": "Maior creatinina",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — menor que 1,2 mg/dL",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — 1,2 a menos de 2",
+                "score": 2
+              },
+              {
+                "value": 7,
+                "label": "7 — 2 a menos de 3,5",
+                "score": 7
+              },
+              {
+                "value": 8,
+                "label": "8 — 3,5 ou mais",
+                "score": 8
+              }
+            ]
+          },
+          {
+            "id": "fc",
+            "type": "select",
+            "label": "Maior frequência cardíaca",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — menor que 120",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — 120 a 159",
+                "score": 5
+              },
+              {
+                "value": 7,
+                "label": "7 — 160 ou mais",
+                "score": 7
+              }
+            ]
+          },
+          {
+            "id": "leucocitos",
+            "type": "select",
+            "label": "Maior leucócito",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — menor que 15.000/mm³",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — 15.000 ou mais",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "ph",
+            "type": "select",
+            "label": "Menor pH",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — 7,25 ou menos",
+                "score": 3
+              },
+              {
+                "value": 0,
+                "label": "0 — maior que 7,25",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "plaquetas",
+            "type": "select",
+            "label": "Menor plaqueta",
+            "required": true,
+            "options": [
+              {
+                "value": 13,
+                "label": "13 — menor que 20.000",
+                "score": 13
+              },
+              {
+                "value": 8,
+                "label": "8 — 20.000 a menos de 50.000",
+                "score": 8
+              },
+              {
+                "value": 5,
+                "label": "5 — 50.000 a menos de 100.000",
+                "score": 5
+              },
+              {
+                "value": 0,
+                "label": "0 — 100.000 ou mais",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "pas",
+            "type": "select",
+            "label": "Menor pressão sistólica",
+            "required": true,
+            "options": [
+              {
+                "value": 11,
+                "label": "11 — menor que 40",
+                "score": 11
+              },
+              {
+                "value": 8,
+                "label": "8 — 40 a 69",
+                "score": 8
+              },
+              {
+                "value": 3,
+                "label": "3 — 70 a 119",
+                "score": 3
+              },
+              {
+                "value": 0,
+                "label": "0 — 120 ou mais",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "oxigenacao",
+            "type": "select",
+            "label": "Oxigenação",
+            "required": true,
+            "options": [
+              {
+                "value": 11,
+                "label": "11 — PaO₂/FiO₂ menor que 100 em ventilação mecânica",
+                "score": 11
+              },
+              {
+                "value": 7,
+                "label": "7 — PaO₂/FiO₂ de 100 ou mais em ventilação mecânica",
+                "score": 7
+              },
+              {
+                "value": 5,
+                "label": "5 — PaO₂ menor que 60 sem ventilação mecânica",
+                "score": 5
+              },
+              {
+                "value": 0,
+                "label": "0 — PaO₂ de 60 ou mais sem ventilação mecânica",
+                "score": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "saps = 16 + idade + permanencia + procedencia + vasoativa + cancer_terapia + cancer_hemato + ic_nyha + cirrose + aids + cancer_meta + admissao + cirurgia + sitio + ritmo + convulsao + choque_hipo + choque_septico + coma_neuro + falencia_hepatica + deficit_focal + pancreatite + efeito_massa + infeccao_nosocomial + infeccao_resp + gcs + bilirrubina + temperatura + creatinina + fc + leucocitos + ph + plaquetas + pas + oxigenacao",
+    "result": {
+      "label": "SAPS 3",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "saps",
+      "interpretationOf": "saps"
+    },
+    "interpretation": [
+      {
+        "max": 40,
+        "label": "Escore baixo a moderado",
+        "conduct": "A mortalidade sobe com o escore. Esta página não aplica a equação logística.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 60,
+        "label": "Escore intermediário",
+        "conduct": "Reavaliar o contexto cirúrgico e infeccioso.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 80,
+        "label": "Escore alto",
+        "conduct": "Gravidade elevada na admissão.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 217,
+        "label": "Escore muito alto",
+        "conduct": "O máximo teórico do SAPS 3 é 217.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Idade",
+          "sourceField": "idade"
+        },
+        {
+          "label": "Dias no hospital antes da UTI",
+          "sourceField": "permanencia"
+        },
+        {
+          "label": "Local antes da UTI",
+          "sourceField": "procedencia"
+        },
+        {
+          "label": "Droga vasoativa antes da UTI",
+          "sourceField": "vasoativa"
+        },
+        {
+          "label": "Terapia oncológica, imunossupressão ou corticoide",
+          "sourceField": "cancer_terapia"
+        },
+        {
+          "label": "Câncer hematológico",
+          "sourceField": "cancer_hemato"
+        },
+        {
+          "label": "Insuficiência cardíaca NYHA IV",
+          "sourceField": "ic_nyha"
+        },
+        {
+          "label": "Cirrose",
+          "sourceField": "cirrose"
+        },
+        {
+          "label": "AIDS",
+          "sourceField": "aids"
+        },
+        {
+          "label": "Câncer metastático",
+          "sourceField": "cancer_meta"
+        },
+        {
+          "label": "Admissão na UTI",
+          "sourceField": "admissao"
+        },
+        {
+          "label": "Situação cirúrgica",
+          "sourceField": "cirurgia"
+        },
+        {
+          "label": "Sítio cirúrgico, se houver",
+          "sourceField": "sitio"
+        },
+        {
+          "label": "Motivo: distúrbio do ritmo",
+          "sourceField": "ritmo"
+        },
+        {
+          "label": "Motivo: convulsão",
+          "sourceField": "convulsao"
+        },
+        {
+          "label": "Motivo: choque hipovolêmico ou abdome agudo",
+          "sourceField": "choque_hipo"
+        },
+        {
+          "label": "Motivo: choque séptico, anafilático, misto ou indefinido",
+          "sourceField": "choque_septico"
+        },
+        {
+          "label": "Motivo: coma, estupor, agitação, confusão ou delirium",
+          "sourceField": "coma_neuro"
+        },
+        {
+          "label": "Motivo: falência hepática",
+          "sourceField": "falencia_hepatica"
+        },
+        {
+          "label": "Motivo: déficit neurológico focal",
+          "sourceField": "deficit_focal"
+        },
+        {
+          "label": "Motivo: pancreatite grave",
+          "sourceField": "pancreatite"
+        },
+        {
+          "label": "Motivo: efeito de massa intracraniano",
+          "sourceField": "efeito_massa"
+        },
+        {
+          "label": "Infecção adquirida no hospital",
+          "sourceField": "infeccao_nosocomial"
+        },
+        {
+          "label": "Infecção do trato respiratório inferior",
+          "sourceField": "infeccao_resp"
+        },
+        {
+          "label": "Menor Glasgow estimado",
+          "sourceField": "gcs"
+        },
+        {
+          "label": "Maior bilirrubina",
+          "sourceField": "bilirrubina"
+        },
+        {
+          "label": "Maior temperatura",
+          "sourceField": "temperatura"
+        },
+        {
+          "label": "Maior creatinina",
+          "sourceField": "creatinina"
+        },
+        {
+          "label": "Maior frequência cardíaca",
+          "sourceField": "fc"
+        },
+        {
+          "label": "Maior leucócito",
+          "sourceField": "leucocitos"
+        },
+        {
+          "label": "Menor pH",
+          "sourceField": "ph"
+        },
+        {
+          "label": "Menor plaqueta",
+          "sourceField": "plaquetas"
+        },
+        {
+          "label": "Menor pressão sistólica",
+          "sourceField": "pas"
+        },
+        {
+          "label": "Oxigenação",
+          "sourceField": "oxigenacao"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "saps",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "SAPS 3",
+        "body": "<p>Escore de admissão na UTI. Todo paciente recebe 16 pontos de base. A probabilidade de morte não é calculada aqui.</p><p>Comorbidades e motivos somam quando coexistem, como na ficha original. Se houver distúrbio do ritmo e convulsão, marque só a convulsão (−4). A equação de Moreno (logit = −32,6659 + ln(SAPS 3 + 20,5958) × 7,3068) fica registrada na referência e não é executada, porque a casca só faz aritmética.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Moreno RP et al. SAPS 3 — from evaluation of the patient to evaluation of the intensive care unit. Part 2. Intensive Care Med. 2005.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

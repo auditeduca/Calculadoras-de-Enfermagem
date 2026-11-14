@@ -1,0 +1,320 @@
+{
+  "metadata": {
+    "id": "norton",
+    "title": "Escala de Norton",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Norton | Calculadoras de Enfermagem",
+    "description": "Risco de lesão por pressão. Quanto menor o escore, maior o risco.",
+    "keywords": "Escala de Norton, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/norton/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Norton",
+    "description": "Risco de lesão por pressão. Quanto menor o escore, maior o risco."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Norton",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "fisico",
+            "type": "select",
+            "label": "Condição física",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — ruim",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — pobre",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — regular",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — boa",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "mental",
+            "type": "select",
+            "label": "Estado mental",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — estuporoso",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — confuso",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — apático",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alerta",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "atividade",
+            "type": "select",
+            "label": "Atividade",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — acamado",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — cadeira de rodas",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — deambula com ajuda",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — deambula",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "mobilidade",
+            "type": "select",
+            "label": "Mobilidade",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — imóvel",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — muito limitada",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — levemente limitada",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — plena",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "continencia",
+            "type": "select",
+            "label": "Incontinência",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — dupla",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — urinária habitual",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — ocasional",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — nenhuma / continente",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Norton",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 12,
+        "label": "Risco alto",
+        "conduct": "Prevenção intensiva de lesão por pressão.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 14,
+        "label": "Risco moderado",
+        "conduct": "O corte clássico de Norton é 14 ou menos.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 20,
+        "label": "Menor risco",
+        "conduct": "Manter inspeção da pele.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Condição física",
+          "sourceField": "fisico"
+        },
+        {
+          "label": "Estado mental",
+          "sourceField": "mental"
+        },
+        {
+          "label": "Atividade",
+          "sourceField": "atividade"
+        },
+        {
+          "label": "Mobilidade",
+          "sourceField": "mobilidade"
+        },
+        {
+          "label": "Incontinência",
+          "sourceField": "continencia"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Norton",
+        "body": "<p>Risco de lesão por pressão. Quanto menor o escore, maior o risco.</p><p>Cinco itens de 1 a 4. Total de 5 a 20.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Norton D, McLaren R, Exton-Smith AN. An investigation of geriatric nursing problems in hospital. 1962.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

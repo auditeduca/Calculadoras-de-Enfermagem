@@ -1,0 +1,209 @@
+{
+  "metadata": {
+    "id": "ramsay",
+    "title": "Escala de Ramsay",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Ramsay | Calculadoras de Enfermagem",
+    "description": "Nível de sedação de 1 a 6.",
+    "keywords": "Escala de Ramsay, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/ramsay/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Ramsay",
+    "description": "Nível de sedação de 1 a 6."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Ramsay",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "ramsay",
+            "type": "select",
+            "label": "Nível",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — ansioso, agitado ou inquieto",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — cooperativo, orientado e tranquilo",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — responde apenas a comandos",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — resposta rápida ao estímulo glabelar ou auditivo forte",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — resposta lenta a esses estímulos",
+                "score": 5
+              },
+              {
+                "value": 6,
+                "label": "6 — sem resposta",
+                "score": 6
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Ramsay",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 1,
+        "label": "Ansioso ou agitado",
+        "conduct": "Nível 1.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 2,
+        "label": "Cooperativo e tranquilo",
+        "conduct": "Nível 2. Alvo frequente fora da ventilação.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 4,
+        "label": "Sedação leve a moderada",
+        "conduct": "Níveis 3 e 4.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 6,
+        "label": "Sedação profunda",
+        "conduct": "Níveis 5 e 6. Reservar a indicação explícita.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Nível",
+          "sourceField": "ramsay"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Ramsay",
+        "body": "<p>Nível de sedação de 1 a 6.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Ramsay MA et al. Controlled sedation with alphaxalone-alphadolone. Br Med J. 1974.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

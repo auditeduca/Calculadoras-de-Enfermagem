@@ -1,0 +1,396 @@
+{
+  "metadata": {
+    "id": "sofa",
+    "title": "SOFA",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "SOFA | Calculadoras de Enfermagem",
+    "description": "Disfunção de seis órgãos, de 0 a 4 cada um. Total de 0 a 24. O aumento em relação ao basal importa tanto quanto o valor.",
+    "keywords": "SOFA, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/sofa/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "SOFA",
+    "description": "Disfunção de seis órgãos, de 0 a 4 cada um. Total de 0 a 24. O aumento em relação ao basal importa tanto quanto o valor."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "SOFA",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "resp",
+            "type": "select",
+            "label": "Respiração (PaO₂/FiO₂)",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 400 ou mais",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — menos de 400",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — menos de 300",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — menos de 200 com suporte ventilatório",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — menos de 100 com suporte ventilatório",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "coag",
+            "type": "select",
+            "label": "Coagulação (plaquetas ×10³/mm³)",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 150 ou mais",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — menos de 150",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — menos de 100",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — menos de 50",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — menos de 20",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "figado",
+            "type": "select",
+            "label": "Fígado (bilirrubina mg/dL)",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — menor que 1,2",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 1,2 a 1,9",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 2 a 5,9",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 6 a 11,9",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — 12 ou mais",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "cardio",
+            "type": "select",
+            "label": "Cardiovascular",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — sem hipotensão",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — PAM menor que 70 mmHg",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — dopamina até 5 µg/kg/min ou qualquer dobutamina",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — dopamina acima de 5, ou adrenalina/noradrenalina até 0,1 µg/kg/min",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — dopamina acima de 15, ou adrenalina/noradrenalina acima de 0,1 µg/kg/min",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "neuro",
+            "type": "select",
+            "label": "Neurológico (Glasgow)",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 15",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 13 ou 14",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 10 a 12",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 6 a 9",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — menor que 6",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "renal",
+            "type": "select",
+            "label": "Renal",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — creatinina menor que 1,2 mg/dL",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 1,2 a 1,9",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 2 a 3,4",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 3,5 a 4,9 ou diurese menor que 500 mL/dia",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — 5 ou mais, ou diurese menor que 200 mL/dia",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "SOFA",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 1,
+        "label": "Disfunção mínima",
+        "conduct": "0 ou 1.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 6,
+        "label": "Disfunção leve a moderada",
+        "conduct": "2 a 6.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 9,
+        "label": "Disfunção importante",
+        "conduct": "7 a 9.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 12,
+        "label": "Disfunção grave",
+        "conduct": "10 a 12.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 24,
+        "label": "Disfunção muito grave",
+        "conduct": "13 a 24. A mortalidade varia com a população; use a tendência de 24 horas.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Respiração (PaO₂/FiO₂)",
+          "sourceField": "resp"
+        },
+        {
+          "label": "Coagulação (plaquetas ×10³/mm³)",
+          "sourceField": "coag"
+        },
+        {
+          "label": "Fígado (bilirrubina mg/dL)",
+          "sourceField": "figado"
+        },
+        {
+          "label": "Cardiovascular",
+          "sourceField": "cardio"
+        },
+        {
+          "label": "Neurológico (Glasgow)",
+          "sourceField": "neuro"
+        },
+        {
+          "label": "Renal",
+          "sourceField": "renal"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "SOFA",
+        "body": "<p>Disfunção de seis órgãos, de 0 a 4 cada um. Total de 0 a 24. O aumento em relação ao basal importa tanto quanto o valor.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Vincent JL et al. The SOFA score to describe organ dysfunction/failure. Intensive Care Med. 1996.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

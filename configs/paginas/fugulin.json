@@ -1,0 +1,558 @@
+{
+  "metadata": {
+    "id": "fugulin",
+    "title": "Escala de Fugulin",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Fugulin | Calculadoras de Enfermagem",
+    "description": "Complexidade do cuidado de enfermagem em doze áreas de 1 a 4. Total de 12 a 48.",
+    "keywords": "Escala de Fugulin, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/fugulin/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Fugulin",
+    "description": "Complexidade do cuidado de enfermagem em doze áreas de 1 a 4. Total de 12 a 48."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Fugulin",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "mental",
+            "type": "select",
+            "label": "Estado mental",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — orientado",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — períodos de desorientação",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — períodos de inconsciência",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — inconsciente",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "oxigenio",
+            "type": "select",
+            "label": "Oxigenação",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — sem suporte",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — cateter ou máscara",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — ventilação intermitente ou traqueostomia estável",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — ventilação mecânica contínua",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "sinais",
+            "type": "select",
+            "label": "Sinais vitais",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — controle de rotina",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — intervalos de 4 horas",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — intervalos de 2 horas",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — controle contínuo",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "motilidade",
+            "type": "select",
+            "label": "Motilidade",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — move todos os segmentos",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — limitação",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — dificuldade para se mover",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — incapaz",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "deambulacao",
+            "type": "select",
+            "label": "Deambulação",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — sem ajuda",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — com ajuda",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — cadeira de rodas",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — restrito ao leito",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "alimentacao",
+            "type": "select",
+            "label": "Alimentação",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — via oral sozinho",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — via oral com ajuda",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — sonda",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — parenteral",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "corpo",
+            "type": "select",
+            "label": "Cuidado corporal",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — banho de chuveiro",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — banho com ajuda",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — banho no leito com participação",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — banho no leito pela equipe",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "eliminacao",
+            "type": "select",
+            "label": "Eliminação",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — banheiro sozinho",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — comadre ou fralda",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — sonda vesical",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — evacuação no leito e dispositivo",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "terapeutica",
+            "type": "select",
+            "label": "Terapêutica",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — via oral, intramuscular ou subcutânea",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — endovenosa intermitente",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — endovenosa contínua",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — droga vasoativa",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "pele",
+            "type": "select",
+            "label": "Integridade da pele",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — íntegra",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — cor ou umidade alteradas",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — lesão em cicatrização",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — lesão extensa ou várias",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "curativo",
+            "type": "select",
+            "label": "Curativos em 24 horas",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — nenhum ou um simples",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — um curativo",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — dois ou três",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quatro ou mais, ou curativo complexo",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "tempo_curativo",
+            "type": "select",
+            "label": "Tempo de enfermagem nos curativos",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — até 15 minutos",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 15 a 30 minutos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 30 a 60 minutos",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — mais de 60 minutos",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Fugulin",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 17,
+        "label": "Cuidados mínimos",
+        "conduct": "12 a 17.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 22,
+        "label": "Cuidados intermediários",
+        "conduct": "18 a 22.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 28,
+        "label": "Alta dependência",
+        "conduct": "23 a 28.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 34,
+        "label": "Semi-intensivo",
+        "conduct": "29 a 34.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 48,
+        "label": "Intensivo",
+        "conduct": "Acima de 34.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Estado mental",
+          "sourceField": "mental"
+        },
+        {
+          "label": "Oxigenação",
+          "sourceField": "oxigenio"
+        },
+        {
+          "label": "Sinais vitais",
+          "sourceField": "sinais"
+        },
+        {
+          "label": "Motilidade",
+          "sourceField": "motilidade"
+        },
+        {
+          "label": "Deambulação",
+          "sourceField": "deambulacao"
+        },
+        {
+          "label": "Alimentação",
+          "sourceField": "alimentacao"
+        },
+        {
+          "label": "Cuidado corporal",
+          "sourceField": "corpo"
+        },
+        {
+          "label": "Eliminação",
+          "sourceField": "eliminacao"
+        },
+        {
+          "label": "Terapêutica",
+          "sourceField": "terapeutica"
+        },
+        {
+          "label": "Integridade da pele",
+          "sourceField": "pele"
+        },
+        {
+          "label": "Curativos em 24 horas",
+          "sourceField": "curativo"
+        },
+        {
+          "label": "Tempo de enfermagem nos curativos",
+          "sourceField": "tempo_curativo"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Fugulin",
+        "body": "<p>Complexidade do cuidado de enfermagem em doze áreas de 1 a 4. Total de 12 a 48.</p><p>Versão de doze áreas usada no dimensionamento (as nove originais mais pele, curativo e tempo de curativo). As horas de enfermagem por categoria seguem a resolução vigente do COFEN.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Fugulin FMT, Gaidzinski RR, Kurcgant P. Sistema de classificação de pacientes. Rev Latino-am Enfermagem. Santos F et al., 2007, para as áreas de curativo. COFEN, Resolução 543/2017.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+{
+  "metadata": {
+    "id": "hendrich",
+    "title": "Escala de Hendrich II",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Hendrich II | Calculadoras de Enfermagem",
+    "description": "Risco de queda hospitalar. Cinco ou mais pontos indicam risco alto.",
+    "keywords": "Escala de Hendrich II, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/hendrich/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Hendrich II",
+    "description": "Risco de queda hospitalar. Cinco ou mais pontos indicam risco alto."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Hendrich II",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "confusao",
+            "type": "select",
+            "label": "Confusão, desorientação ou impulsividade",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 4,
+                "label": "4 — sim",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "depressao",
+            "type": "select",
+            "label": "Depressão sintomática",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — sim",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "eliminacao",
+            "type": "select",
+            "label": "Eliminação alterada",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sim",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "tontura",
+            "type": "select",
+            "label": "Tontura ou vertigem",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sim",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "sexo",
+            "type": "select",
+            "label": "Sexo masculino",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sim",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "antiepiletico",
+            "type": "select",
+            "label": "Antiepiléptico",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — qualquer um",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "benzo",
+            "type": "select",
+            "label": "Benzodiazepínico",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — qualquer um",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "levantar",
+            "type": "select",
+            "label": "Teste de levantar e andar",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — levanta em um movimento",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — empurra e consegue em uma tentativa",
+                "score": 1
+              },
+              {
+                "value": 3,
+                "label": "3 — várias tentativas, mas consegue",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — não levanta sem ajuda",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Hendrich II",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 4,
+        "label": "Risco baixo",
+        "conduct": "Abaixo de 5.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 16,
+        "label": "Risco alto",
+        "conduct": "5 ou mais.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Confusão, desorientação ou impulsividade",
+          "sourceField": "confusao"
+        },
+        {
+          "label": "Depressão sintomática",
+          "sourceField": "depressao"
+        },
+        {
+          "label": "Eliminação alterada",
+          "sourceField": "eliminacao"
+        },
+        {
+          "label": "Tontura ou vertigem",
+          "sourceField": "tontura"
+        },
+        {
+          "label": "Sexo masculino",
+          "sourceField": "sexo"
+        },
+        {
+          "label": "Antiepiléptico",
+          "sourceField": "antiepiletico"
+        },
+        {
+          "label": "Benzodiazepínico",
+          "sourceField": "benzo"
+        },
+        {
+          "label": "Teste de levantar e andar",
+          "sourceField": "levantar"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Hendrich II",
+        "body": "<p>Risco de queda hospitalar. Cinco ou mais pontos indicam risco alto.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Hendrich AL, Bender PS, Nyhuis A. Validation of the Hendrich II Fall Risk Model. Appl Nurs Res. 2003.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

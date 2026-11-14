@@ -1,0 +1,297 @@
+{
+  "metadata": {
+    "id": "nips",
+    "title": "Escala NIPS",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala NIPS | Calculadoras de Enfermagem",
+    "description": "Dor no recém-nascido e no prematuro. Total de 0 a 7.",
+    "keywords": "Escala NIPS, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/nips/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala NIPS",
+    "description": "Dor no recém-nascido e no prematuro. Total de 0 a 7."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala NIPS",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "face",
+            "type": "select",
+            "label": "Face",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — relaxada",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — careta",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "choro",
+            "type": "select",
+            "label": "Choro",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — resmungo",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — vigoroso",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "resp",
+            "type": "select",
+            "label": "Respiração",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — relaxada",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — diferente do basal",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "bracos",
+            "type": "select",
+            "label": "Braços",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — relaxados",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — fletidos ou estendidos",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "pernas",
+            "type": "select",
+            "label": "Pernas",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — relaxadas",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — fletidas ou estendidas",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "alerta",
+            "type": "select",
+            "label": "Estado de alerta",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — dormindo ou calmo",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — inquieto",
+                "score": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala NIPS",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 2,
+        "label": "Dor mínima ou ausente",
+        "conduct": "0 a 2.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 4,
+        "label": "Dor moderada",
+        "conduct": "3 a 4.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 7,
+        "label": "Dor intensa",
+        "conduct": "5 a 7.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Face",
+          "sourceField": "face"
+        },
+        {
+          "label": "Choro",
+          "sourceField": "choro"
+        },
+        {
+          "label": "Respiração",
+          "sourceField": "resp"
+        },
+        {
+          "label": "Braços",
+          "sourceField": "bracos"
+        },
+        {
+          "label": "Pernas",
+          "sourceField": "pernas"
+        },
+        {
+          "label": "Estado de alerta",
+          "sourceField": "alerta"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala NIPS",
+        "body": "<p>Dor no recém-nascido e no prematuro. Total de 0 a 7.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Lawrence J et al. The development of a tool to assess neonatal pain. Neonatal Netw. 1993.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

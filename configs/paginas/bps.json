@@ -1,0 +1,263 @@
+{
+  "metadata": {
+    "id": "bps",
+    "title": "Escala BPS",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala BPS | Calculadoras de Enfermagem",
+    "description": "Dor em paciente crítico sob ventilação mecânica. Total de 3 a 12.",
+    "keywords": "Escala BPS, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/bps/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala BPS",
+    "description": "Dor em paciente crítico sob ventilação mecânica. Total de 3 a 12."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala BPS",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "face",
+            "type": "select",
+            "label": "Expressão facial",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — relaxada",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — parcialmente tensa",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — totalmente tensa",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — careta",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "membros",
+            "type": "select",
+            "label": "Membros superiores",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — sem movimento",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — parcialmente fletidos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — totalmente fletidos, com flexão dos dedos",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — permanentemente retraídos",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "ventila",
+            "type": "select",
+            "label": "Adaptação ao ventilador",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — tolera",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — tosse, mas tolera",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — briga com o ventilador",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — não é possível ventilar",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala BPS",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 3,
+        "label": "Sem dor",
+        "conduct": "Escore 3.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 5,
+        "label": "Dor leve",
+        "conduct": "4 ou 5.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 8,
+        "label": "Dor moderada",
+        "conduct": "6 a 8. Muitos protocolos tratam a partir de 6.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 12,
+        "label": "Dor intensa",
+        "conduct": "9 a 12.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Expressão facial",
+          "sourceField": "face"
+        },
+        {
+          "label": "Membros superiores",
+          "sourceField": "membros"
+        },
+        {
+          "label": "Adaptação ao ventilador",
+          "sourceField": "ventila"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala BPS",
+        "body": "<p>Dor em paciente crítico sob ventilação mecânica. Total de 3 a 12.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Payen JF et al. Assessing pain in critically ill sedated patients by using a behavioral pain scale. Crit Care Med. 2001.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

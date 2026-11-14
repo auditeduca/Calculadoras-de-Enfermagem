@@ -1,0 +1,664 @@
+{
+  "metadata": {
+    "id": "ballard",
+    "title": "New Ballard Score",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "New Ballard Score | Calculadoras de Enfermagem",
+    "description": "Idade gestacional pelo New Ballard. A soma vai de −10 a 50 e cada 5 pontos equivalem a 2 semanas, a partir de 20.",
+    "keywords": "New Ballard Score, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/ballard/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "New Ballard Score",
+    "description": "Idade gestacional pelo New Ballard. A soma vai de −10 a 50 e cada 5 pontos equivalem a 2 semanas, a partir de 20."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "New Ballard Score",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "postura",
+            "type": "select",
+            "label": "Postura",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — extensão",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — flexão parcial das pernas",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — flexão de braços e pernas",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — flexão dos quatro membros",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — flexão acentuada",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "punho",
+            "type": "select",
+            "label": "Ângulo do punho",
+            "required": true,
+            "options": [
+              {
+                "value": -1,
+                "label": "−1 — maior que 90°",
+                "score": -1
+              },
+              {
+                "value": 0,
+                "label": "0 — 90°",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 60°",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 45°",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 30°",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — 0°",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "braco",
+            "type": "select",
+            "label": "Recuo do braço",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — 180°",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 140 a 180°",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 110 a 140°",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 90 a 110°",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — menor que 90°",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "popliteo",
+            "type": "select",
+            "label": "Ângulo poplíteo",
+            "required": true,
+            "options": [
+              {
+                "value": -1,
+                "label": "−1 — 180°",
+                "score": -1
+              },
+              {
+                "value": 0,
+                "label": "0 — 160°",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — 140°",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 120°",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 100°",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — 90°",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — menor que 90°",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "xale",
+            "type": "select",
+            "label": "Sinal do xale",
+            "required": true,
+            "options": [
+              {
+                "value": -1,
+                "label": "−1 — cotovelo passa a linha axilar oposta",
+                "score": -1
+              },
+              {
+                "value": 0,
+                "label": "0 — cotovelo na linha axilar oposta",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — cotovelo além da linha média",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — cotovelo na linha média",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — cotovelo não chega à linha média",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — cotovelo perto do ombro",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "calcaneo",
+            "type": "select",
+            "label": "Calcanhar-orelha",
+            "required": true,
+            "options": [
+              {
+                "value": -1,
+                "label": "−1 — sem resistência",
+                "score": -1
+              },
+              {
+                "value": 0,
+                "label": "0 — pouca resistência",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — resistência leve",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — resistência moderada",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — resistência importante",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — pernas permanecem estendidas",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "pele",
+            "type": "select",
+            "label": "Pele",
+            "required": true,
+            "options": [
+              {
+                "value": -1,
+                "label": "−1 — pegajosa, friável, transparente",
+                "score": -1
+              },
+              {
+                "value": 0,
+                "label": "0 — gelatinosa, vermelha",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — lisa, rosada, veias visíveis",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — descamação superficial",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — áreas pálidas, raras veias",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — fissuras, sem veias",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — couro, rachada",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "lanugo",
+            "type": "select",
+            "label": "Lanugo",
+            "required": true,
+            "options": [
+              {
+                "value": -1,
+                "label": "−1 — ausente",
+                "score": -1
+              },
+              {
+                "value": 0,
+                "label": "0 — esparso",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — abundante",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — afinando",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — áreas sem pelo",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — quase ausente",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "plantar",
+            "type": "select",
+            "label": "Superfície plantar",
+            "required": true,
+            "options": [
+              {
+                "value": -1,
+                "label": "−1 — menor que 40 mm, sem pregas",
+                "score": -1
+              },
+              {
+                "value": 0,
+                "label": "0 — maior que 50 mm, sem pregas",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — marcas vermelhas tênues",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — prega transversa anterior",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — pregas nos dois terços anteriores",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — pregas em toda a planta",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "mama",
+            "type": "select",
+            "label": "Mama",
+            "required": true,
+            "options": [
+              {
+                "value": -1,
+                "label": "−1 — imperceptível",
+                "score": -1
+              },
+              {
+                "value": 0,
+                "label": "0 — pouco perceptível",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — aréola plana, sem broto",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — broto de 1 a 2 mm",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — broto de 3 a 4 mm",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — broto de 5 a 10 mm",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "olho",
+            "type": "select",
+            "label": "Olho e orelha",
+            "required": true,
+            "options": [
+              {
+                "value": -1,
+                "label": "−1 — pálpebras fundidas, frouxas",
+                "score": -1
+              },
+              {
+                "value": 0,
+                "label": "0 — pálpebras fundidas, firmes",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — pavilhão plano, fica dobrado",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — pavilhão curvo, recolhe devagar",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — formado e firme, recolhe pronto",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — cartilagem espessa",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "genitalia",
+            "type": "select",
+            "label": "Genitália do sexo do recém-nascido",
+            "required": true,
+            "options": [
+              {
+                "value": -1,
+                "label": "−1 — escroto liso e vazio, ou clitóris proeminente com lábios planos",
+                "score": -1
+              },
+              {
+                "value": 0,
+                "label": "0 — escroto vazio com rugas mínimas, ou pequenos lábios salientes",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — testículos no canal alto, ou clitóris visível e pequenos lábios proeminentes",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — testículos em descenso, ou grandes e pequenos lábios iguais",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — testículos na bolsa, ou grandes lábios cobrem os pequenos",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — testículos pendentes, ou grandes lábios cobrem clitóris e pequenos lábios",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "total = postura + punho + braco + popliteo + xale + calcaneo + pele + lanugo + plantar + mama + olho + genitalia; semanas = 24 + total * 0.4",
+    "result": {
+      "label": "New Ballard Score",
+      "unit": "semanas",
+      "decimals": 1,
+      "key": "semanas",
+      "interpretationOf": "semanas"
+    },
+    "interpretation": [
+      {
+        "max": 36.9,
+        "label": "Pré-termo",
+        "conduct": "Menos de 37 semanas.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 41.9,
+        "label": "A termo",
+        "conduct": "37 a 41 semanas.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 50,
+        "label": "Pós-termo",
+        "conduct": "42 semanas ou mais.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Postura",
+          "sourceField": "postura"
+        },
+        {
+          "label": "Ângulo do punho",
+          "sourceField": "punho"
+        },
+        {
+          "label": "Recuo do braço",
+          "sourceField": "braco"
+        },
+        {
+          "label": "Ângulo poplíteo",
+          "sourceField": "popliteo"
+        },
+        {
+          "label": "Sinal do xale",
+          "sourceField": "xale"
+        },
+        {
+          "label": "Calcanhar-orelha",
+          "sourceField": "calcaneo"
+        },
+        {
+          "label": "Pele",
+          "sourceField": "pele"
+        },
+        {
+          "label": "Lanugo",
+          "sourceField": "lanugo"
+        },
+        {
+          "label": "Superfície plantar",
+          "sourceField": "plantar"
+        },
+        {
+          "label": "Mama",
+          "sourceField": "mama"
+        },
+        {
+          "label": "Olho e orelha",
+          "sourceField": "olho"
+        },
+        {
+          "label": "Genitália do sexo do recém-nascido",
+          "sourceField": "genitalia"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "semanas",
+          "suffix": "semanas"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "New Ballard Score",
+        "body": "<p>Idade gestacional pelo New Ballard. A soma vai de −10 a 50 e cada 5 pontos equivalem a 2 semanas, a partir de 20.</p><p>Escolha, na genitália, o critério do sexo do recém-nascido. Semanas = 24 + 0,4 × escore.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Ballard JL et al. New Ballard Score, expanded to include extremely premature infants. J Pediatr. 1991.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

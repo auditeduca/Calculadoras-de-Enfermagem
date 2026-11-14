@@ -1,0 +1,352 @@
+{
+  "metadata": {
+    "id": "humpty",
+    "title": "Escala Humpty Dumpty",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala Humpty Dumpty | Calculadoras de Enfermagem",
+    "description": "Risco de queda em criança hospitalizada. De 7 a 23; 12 ou mais é risco alto.",
+    "keywords": "Escala Humpty Dumpty, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/humpty/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala Humpty Dumpty",
+    "description": "Risco de queda em criança hospitalizada. De 7 a 23; 12 ou mais é risco alto."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala Humpty Dumpty",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "idade",
+            "type": "select",
+            "label": "Idade",
+            "required": true,
+            "options": [
+              {
+                "value": 4,
+                "label": "4 — menor de 3 anos",
+                "score": 4
+              },
+              {
+                "value": 3,
+                "label": "3 — 3 a menos de 7",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — 7 a menos de 13",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — 13 ou mais",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "sexo",
+            "type": "select",
+            "label": "Sexo",
+            "required": true,
+            "options": [
+              {
+                "value": 2,
+                "label": "2 — masculino",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — feminino",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "diagnostico",
+            "type": "select",
+            "label": "Diagnóstico",
+            "required": true,
+            "options": [
+              {
+                "value": 4,
+                "label": "4 — neurológico",
+                "score": 4
+              },
+              {
+                "value": 3,
+                "label": "3 — oxigenação, respiratório, desidratação, anemia, anorexia, síncope ou tontura",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — psiquiátrico ou comportamental",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — outro",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "cognicao",
+            "type": "select",
+            "label": "Cognição",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — não percebe as próprias limitações",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — esquece as limitações",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — orientado quanto à própria capacidade",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "ambiente",
+            "type": "select",
+            "label": "Fator ambiental",
+            "required": true,
+            "options": [
+              {
+                "value": 4,
+                "label": "4 — queda prévia ou lactente colocado em cama",
+                "score": 4
+              },
+              {
+                "value": 3,
+                "label": "3 — usa dispositivo de auxílio ou lactente no berço",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — criança colocada em cama",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — área ambulatorial",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "sedacao",
+            "type": "select",
+            "label": "Cirurgia, sedação ou anestesia",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — nas últimas 24 horas",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — nas últimas 48 horas",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — há mais de 48 horas ou nenhuma",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "farmaco",
+            "type": "select",
+            "label": "Medicação",
+            "required": true,
+            "options": [
+              {
+                "value": 3,
+                "label": "3 — dois ou mais: hipnótico, barbitúrico, fenotiazina, antidepressivo, laxante, diurético ou opioide",
+                "score": 3
+              },
+              {
+                "value": 2,
+                "label": "2 — um desses",
+                "score": 2
+              },
+              {
+                "value": 1,
+                "label": "1 — outra medicação ou nenhuma",
+                "score": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala Humpty Dumpty",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 11,
+        "label": "Risco baixo",
+        "conduct": "7 a 11. Precaução padrão pediátrica.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 23,
+        "label": "Risco alto",
+        "conduct": "12 ou mais. Protocolo de alto risco.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Idade",
+          "sourceField": "idade"
+        },
+        {
+          "label": "Sexo",
+          "sourceField": "sexo"
+        },
+        {
+          "label": "Diagnóstico",
+          "sourceField": "diagnostico"
+        },
+        {
+          "label": "Cognição",
+          "sourceField": "cognicao"
+        },
+        {
+          "label": "Fator ambiental",
+          "sourceField": "ambiente"
+        },
+        {
+          "label": "Cirurgia, sedação ou anestesia",
+          "sourceField": "sedacao"
+        },
+        {
+          "label": "Medicação",
+          "sourceField": "farmaco"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala Humpty Dumpty",
+        "body": "<p>Risco de queda em criança hospitalizada. De 7 a 23; 12 ou mais é risco alto.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Hill-Rodriguez D et al. The Humpty Dumpty Falls Scale. J Spec Pediatr Nurs. 2009.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

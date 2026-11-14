@@ -102,26 +102,26 @@
       "tabs": [
         {
           "id": "calculadoras-clinicas",
-          "label": "Calculadoras Clínicas",
+          "label": "Calculadoras clínicas",
           "links": [
             {
-              "text": "Aspiração de Heparina",
+              "text": "Aspiração de heparina",
               "href": "calculadoras/heparina/"
             },
             {
-              "text": "Aspiração de Insulina",
+              "text": "Aspiração de insulina",
               "href": "calculadoras/insulina/"
             },
             {
-              "text": "Balanço Hídrico",
+              "text": "Balanço hídrico",
               "href": "calculadoras/balancohidrico/"
             },
             {
-              "text": "Dimensionamento de Pessoal",
+              "text": "Dimensionamento de pessoal",
               "href": "calculadoras/dimensionamento/"
             },
             {
-              "text": "Gasometria Arterial",
+              "text": "Gasometria arterial",
               "href": "calculadoras/gasometria/"
             },
             {
@@ -129,47 +129,305 @@
               "href": "calculadoras/gotejamento/"
             },
             {
-              "text": "Idade Gestacional e DPP",
+              "text": "Idade gestacional e DPP",
               "href": "calculadoras/gestacional/"
             },
             {
-              "text": "Índice de Massa Corporal (IMC)",
+              "text": "Índice de massa corporal",
               "href": "calculadoras/imc/"
             },
             {
-              "text": "Cálculo de Medicamentos",
+              "text": "Cálculo de medicamentos",
               "href": "calculadoras/medicamentos/"
             }
           ]
         },
         {
-          "id": "escalas-clinicas",
-          "label": "Escalas Clínicas",
+          "id": "risco-assistencial",
+          "label": "Risco assistencial",
           "links": [
             {
               "text": "Aldrete e Kroulik",
               "href": "calculadoras/aldrete/"
             },
             {
-              "text": "APACHE II",
-              "href": "calculadoras/apache/"
+              "text": "Classificação ASA",
+              "href": "calculadoras/asa/"
             },
+            {
+              "text": "Braden",
+              "href": "calculadoras/braden/"
+            },
+            {
+              "text": "Norton",
+              "href": "calculadoras/norton/"
+            },
+            {
+              "text": "Gosnell",
+              "href": "calculadoras/gosnell/"
+            },
+            {
+              "text": "Waterlow",
+              "href": "calculadoras/waterlow/"
+            },
+            {
+              "text": "ELPO",
+              "href": "calculadoras/elpo/"
+            },
+            {
+              "text": "Morse",
+              "href": "calculadoras/morse/"
+            },
+            {
+              "text": "Downton",
+              "href": "calculadoras/downton/"
+            },
+            {
+              "text": "Hendrich II",
+              "href": "calculadoras/hendrich/"
+            },
+            {
+              "text": "Humpty Dumpty",
+              "href": "calculadoras/humpty/"
+            },
+            {
+              "text": "Johns Hopkins",
+              "href": "calculadoras/johns/"
+            },
+            {
+              "text": "OFRAS",
+              "href": "calculadoras/ofras/"
+            },
+            {
+              "text": "Berg",
+              "href": "calculadoras/berg/"
+            },
+            {
+              "text": "Tinetti",
+              "href": "calculadoras/tinetti/"
+            }
+          ]
+        },
+        {
+          "id": "dor-sedacao",
+          "label": "Dor e sedação",
+          "links": [
+            {
+              "text": "Escala numérica",
+              "href": "calculadoras/escalanumerica/"
+            },
+            {
+              "text": "BPS",
+              "href": "calculadoras/bps/"
+            },
+            {
+              "text": "FLACC",
+              "href": "calculadoras/flacc/"
+            },
+            {
+              "text": "CRIES",
+              "href": "calculadoras/cries/"
+            },
+            {
+              "text": "NIPS",
+              "href": "calculadoras/nips/"
+            },
+            {
+              "text": "PAINAD",
+              "href": "calculadoras/painad/"
+            },
+            {
+              "text": "LANSS",
+              "href": "calculadoras/lanss/"
+            },
+            {
+              "text": "Ramsay",
+              "href": "calculadoras/ramsay/"
+            },
+            {
+              "text": "Richmond (RASS)",
+              "href": "calculadoras/richmond/"
+            }
+          ]
+        },
+        {
+          "id": "neurologia",
+          "label": "Neurologia e cognição",
+          "links": [
+            {
+              "text": "Glasgow",
+              "href": "calculadoras/glasgow/"
+            },
+            {
+              "text": "FOUR",
+              "href": "calculadoras/four/"
+            },
+            {
+              "text": "Jouvet",
+              "href": "calculadoras/jouvet/"
+            },
+            {
+              "text": "Cincinnati",
+              "href": "calculadoras/cincinnati/"
+            },
+            {
+              "text": "FAST",
+              "href": "calculadoras/fast/"
+            },
+            {
+              "text": "NIHSS",
+              "href": "calculadoras/nihss/"
+            },
+            {
+              "text": "Rancho Los Amigos",
+              "href": "calculadoras/rancholosamigos/"
+            },
+            {
+              "text": "Mini-Exame do Estado Mental",
+              "href": "calculadoras/meem/"
+            },
+            {
+              "text": "MoCA",
+              "href": "calculadoras/moca/"
+            },
+            {
+              "text": "CAM-ICU",
+              "href": "calculadoras/cam/"
+            },
+            {
+              "text": "Depressão geriátrica",
+              "href": "calculadoras/gds/"
+            },
+            {
+              "text": "Cornell",
+              "href": "calculadoras/cornell/"
+            },
+            {
+              "text": "Hamilton — ansiedade",
+              "href": "calculadoras/hamilton/"
+            },
+            {
+              "text": "Zarit",
+              "href": "calculadoras/zarit/"
+            }
+          ]
+        },
+        {
+          "id": "funcionalidade",
+          "label": "Funcionalidade",
+          "links": [
+            {
+              "text": "Barthel",
+              "href": "calculadoras/barthel/"
+            },
+            {
+              "text": "Katz",
+              "href": "calculadoras/katz/"
+            },
+            {
+              "text": "Lawton",
+              "href": "calculadoras/lawton/"
+            },
+            {
+              "text": "Lachs",
+              "href": "calculadoras/lachs/"
+            }
+          ]
+        },
+        {
+          "id": "obstetricia-neonato",
+          "label": "Obstetrícia e neonatologia",
+          "links": [
             {
               "text": "Apgar",
               "href": "calculadoras/apgar/"
             },
             {
-              "text": "Barthel",
-              "href": "calculadoras/barthel/"
+              "text": "Bishop",
+              "href": "calculadoras/bishop/"
+            },
+            {
+              "text": "Ballard",
+              "href": "calculadoras/ballard/"
+            },
+            {
+              "text": "Capurro somático",
+              "href": "calculadoras/capurro/"
+            },
+            {
+              "text": "Silverman-Andersen",
+              "href": "calculadoras/silverman/"
+            },
+            {
+              "text": "Wood-Downes",
+              "href": "calculadoras/downes/"
+            },
+            {
+              "text": "MEOWS",
+              "href": "calculadoras/meows/"
+            },
+            {
+              "text": "PEWS",
+              "href": "calculadoras/pews/"
+            },
+            {
+              "text": "PRISM",
+              "href": "calculadoras/prism/"
+            },
+            {
+              "text": "PELOD-2",
+              "href": "calculadoras/pelod/"
+            }
+          ]
+        },
+        {
+          "id": "gravidade",
+          "label": "Gravidade e triagem",
+          "links": [
+            {
+              "text": "APACHE II",
+              "href": "calculadoras/apache/"
+            },
+            {
+              "text": "NEWS2",
+              "href": "calculadoras/news/"
+            },
+            {
+              "text": "qSOFA",
+              "href": "calculadoras/qsofa/"
+            },
+            {
+              "text": "SOFA",
+              "href": "calculadoras/sofa/"
+            },
+            {
+              "text": "CURB-65",
+              "href": "calculadoras/curb-65/"
+            },
+            {
+              "text": "SAPS 3",
+              "href": "calculadoras/saps/"
+            },
+            {
+              "text": "Manchester",
+              "href": "calculadoras/manchester/"
+            },
+            {
+              "text": "Fugulin",
+              "href": "calculadoras/fugulin/"
+            },
+            {
+              "text": "Perroca",
+              "href": "calculadoras/perroca/"
             }
           ]
         },
         {
           "id": "ferramentas-especificas",
-          "label": "Ferramentas Específicas",
+          "label": "Ferramentas específicas",
           "links": [
             {
-              "text": "Notificações Compulsórias",
+              "text": "Notificações compulsórias",
               "href": "notificacao-compulsoria.html"
             }
           ]

@@ -1,0 +1,211 @@
+{
+  "metadata": {
+    "id": "jouvet",
+    "title": "Escala de coma de Jouvet",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de coma de Jouvet | Calculadoras de Enfermagem",
+    "description": "Classificação clínica do rebaixamento da consciência usada no ensino de neurologia.",
+    "keywords": "Escala de coma de Jouvet, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/jouvet/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de coma de Jouvet",
+    "description": "Classificação clínica do rebaixamento da consciência usada no ensino de neurologia."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de coma de Jouvet",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "grau",
+            "type": "select",
+            "label": "Grau que melhor descreve o paciente",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — obnubilação: sonolento, responde à voz, orienta-se com dificuldade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — coma leve: não abre os olhos ao chamado, localiza a dor",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — coma médio: só retirada ou resposta inespecífica à dor",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — coma profundo: sem resposta de despertar; podem restar reflexos de tronco",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — arreativo: sem resposta e sem reflexos de tronco",
+                "score": 5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de coma de Jouvet",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 1,
+        "label": "Obnubilação",
+        "conduct": "Proteger via aérea e investigar a causa.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 2,
+        "label": "Coma leve",
+        "conduct": "Monitorizar e tratar a causa.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 3,
+        "label": "Coma médio",
+        "conduct": "Risco de via aérea. Avaliação neurológica urgente.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 4,
+        "label": "Coma profundo",
+        "conduct": "Suporte avançado.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 5,
+        "label": "Coma arreativo",
+        "conduct": "Avaliar reflexos de tronco e seguir o protocolo de morte encefálica se for o caso.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Grau que melhor descreve o paciente",
+          "sourceField": "grau"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de coma de Jouvet",
+        "body": "<p>Classificação clínica do rebaixamento da consciência usada no ensino de neurologia.</p><p>A Jouvet descreve perceptividade, reatividade e vigilância. Esta página registra o grau clínico correspondente, não uma soma de subitens.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Jouvet M. Coma and other disorders of consciousness. In: Vinken PJ, Bruyn GW, eds. Handbook of Clinical Neurology. 1969.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

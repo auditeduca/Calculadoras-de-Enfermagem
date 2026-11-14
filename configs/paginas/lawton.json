@@ -1,0 +1,336 @@
+{
+  "metadata": {
+    "id": "lawton",
+    "title": "Escala de Lawton",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Lawton | Calculadoras de Enfermagem",
+    "description": "Atividades instrumentais. Cada uma independente vale 1. Total de 0 a 8.",
+    "keywords": "Escala de Lawton, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/lawton/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Lawton",
+    "description": "Atividades instrumentais. Cada uma independente vale 1. Total de 0 a 8."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Lawton",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "telefone",
+            "type": "select",
+            "label": "Usar o telefone",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "compras",
+            "type": "select",
+            "label": "Fazer compras",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "comida",
+            "type": "select",
+            "label": "Preparar comida",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "casa",
+            "type": "select",
+            "label": "Cuidar da casa",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "roupa",
+            "type": "select",
+            "label": "Lavar roupa",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "transporte",
+            "type": "select",
+            "label": "Usar transporte",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "medicacao",
+            "type": "select",
+            "label": "Tomar a própria medicação",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "dinheiro",
+            "type": "select",
+            "label": "Cuidar do dinheiro",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Sim — 1 (independente)",
+                "score": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Lawton",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 2,
+        "label": "Dependência importante",
+        "conduct": "Até 2.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 5,
+        "label": "Dependência parcial",
+        "conduct": "3 a 5.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 8,
+        "label": "Independente",
+        "conduct": "6 a 8. A versão original às vezes omite três itens domésticos nos homens; registre quais foram avaliados.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Usar o telefone",
+          "sourceField": "telefone"
+        },
+        {
+          "label": "Fazer compras",
+          "sourceField": "compras"
+        },
+        {
+          "label": "Preparar comida",
+          "sourceField": "comida"
+        },
+        {
+          "label": "Cuidar da casa",
+          "sourceField": "casa"
+        },
+        {
+          "label": "Lavar roupa",
+          "sourceField": "roupa"
+        },
+        {
+          "label": "Usar transporte",
+          "sourceField": "transporte"
+        },
+        {
+          "label": "Tomar a própria medicação",
+          "sourceField": "medicacao"
+        },
+        {
+          "label": "Cuidar do dinheiro",
+          "sourceField": "dinheiro"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Lawton",
+        "body": "<p>Atividades instrumentais. Cada uma independente vale 1. Total de 0 a 8.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Lawton MP, Brody EM. Assessment of older people: self-maintaining and instrumental activities of daily living. Gerontologist. 1969.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

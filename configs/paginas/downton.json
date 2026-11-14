@@ -1,0 +1,303 @@
+{
+  "metadata": {
+    "id": "downton",
+    "title": "Escala de Downton",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Downton | Calculadoras de Enfermagem",
+    "description": "Risco de queda, muito usada em idosos. Três ou mais pontos indicam risco.",
+    "keywords": "Escala de Downton, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/downton/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Downton",
+    "description": "Risco de queda, muito usada em idosos. Três ou mais pontos indicam risco."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Downton",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "quedas",
+            "type": "select",
+            "label": "Quedas anteriores",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sim",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "farmaco",
+            "type": "select",
+            "label": "Medicamento de maior pontuação em uso",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhum destes",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — tranquilizante ou sedativo",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — diurético",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — anti-hipertensivo",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — antiparkinsoniano",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — antidepressivo",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "sensorial",
+            "type": "select",
+            "label": "Déficits sensoriais presentes",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhum",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — um (visual, auditivo ou de membro)",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — dois",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — três",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "mental",
+            "type": "select",
+            "label": "Estado mental",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — orientado",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — confuso",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "marcha",
+            "type": "select",
+            "label": "Deambulação",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — normal",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — segura com ajuda",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — insegura, com ou sem ajuda",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — impossível",
+                "score": 3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Downton",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 2,
+        "label": "Risco baixo",
+        "conduct": "Abaixo de 3.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 11,
+        "label": "Risco alto",
+        "conduct": "3 ou mais. Prevenção de quedas.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Quedas anteriores",
+          "sourceField": "quedas"
+        },
+        {
+          "label": "Medicamento de maior pontuação em uso",
+          "sourceField": "farmaco"
+        },
+        {
+          "label": "Déficits sensoriais presentes",
+          "sourceField": "sensorial"
+        },
+        {
+          "label": "Estado mental",
+          "sourceField": "mental"
+        },
+        {
+          "label": "Deambulação",
+          "sourceField": "marcha"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Downton",
+        "body": "<p>Risco de queda, muito usada em idosos. Três ou mais pontos indicam risco.</p><p>Medicamentos: escolha o grupo de maior pontuação, não some todos. Déficits sensoriais somam.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Downton JH. Falls in the elderly. London: Edward Arnold; 1993.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

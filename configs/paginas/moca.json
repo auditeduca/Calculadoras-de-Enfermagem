@@ -1,0 +1,273 @@
+{
+  "metadata": {
+    "id": "moca",
+    "title": "MoCA — escore por domínio",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "MoCA — escore por domínio | Calculadoras de Enfermagem",
+    "description": "Lance os pontos de cada domínio do Montreal Cognitive Assessment. Não reproduz os estímulos do teste, que são de uso licenciado. Total até 30.",
+    "keywords": "MoCA — escore por domínio, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/moca/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "MoCA — escore por domínio",
+    "description": "Lance os pontos de cada domínio do Montreal Cognitive Assessment. Não reproduz os estímulos do teste, que são de uso licenciado. Total até 30."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "MoCA — escore por domínio",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "visuo",
+            "type": "number",
+            "label": "Visuoespacial e executivo (0 a 5)",
+            "required": true,
+            "min": 0,
+            "max": 5,
+            "step": 1,
+            "tooltip": "Informe de 0 a 5."
+          },
+          {
+            "id": "nomeacao",
+            "type": "number",
+            "label": "Nomeação (0 a 3)",
+            "required": true,
+            "min": 0,
+            "max": 3,
+            "step": 1,
+            "tooltip": "Informe de 0 a 3."
+          },
+          {
+            "id": "atencao",
+            "type": "number",
+            "label": "Atenção (0 a 6)",
+            "required": true,
+            "min": 0,
+            "max": 6,
+            "step": 1,
+            "tooltip": "Informe de 0 a 6."
+          },
+          {
+            "id": "linguagem",
+            "type": "number",
+            "label": "Linguagem (0 a 3)",
+            "required": true,
+            "min": 0,
+            "max": 3,
+            "step": 1,
+            "tooltip": "Informe de 0 a 3."
+          },
+          {
+            "id": "abstracao",
+            "type": "number",
+            "label": "Abstração (0 a 2)",
+            "required": true,
+            "min": 0,
+            "max": 2,
+            "step": 1,
+            "tooltip": "Informe de 0 a 2."
+          },
+          {
+            "id": "evocacao",
+            "type": "number",
+            "label": "Evocação diferida (0 a 5)",
+            "required": true,
+            "min": 0,
+            "max": 5,
+            "step": 1,
+            "tooltip": "Informe de 0 a 5."
+          },
+          {
+            "id": "orientacao",
+            "type": "number",
+            "label": "Orientação (0 a 6)",
+            "required": true,
+            "min": 0,
+            "max": 6,
+            "step": 1,
+            "tooltip": "Informe de 0 a 6."
+          },
+          {
+            "id": "ajuste",
+            "type": "select",
+            "label": "Ajuste de escolaridade",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não somar",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — somar 1 se a escolaridade é de 12 anos ou menos e o bruto ainda não é 30",
+                "score": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "formula",
+    "formula": "moca = visuo + nomeacao + atencao + linguagem + abstracao + evocacao + orientacao + ajuste",
+    "result": {
+      "label": "MoCA — escore por domínio",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "moca",
+      "interpretationOf": "moca"
+    },
+    "interpretation": [
+      {
+        "max": 25,
+        "label": "Abaixo do corte",
+        "conduct": "Menor que 26 sugere comprometimento cognitivo leve, no corte original.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      },
+      {
+        "max": 31,
+        "label": "No corte ou acima",
+        "conduct": "26 a 30.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Visuoespacial e executivo (0 a 5)",
+          "sourceField": "visuo"
+        },
+        {
+          "label": "Nomeação (0 a 3)",
+          "sourceField": "nomeacao"
+        },
+        {
+          "label": "Atenção (0 a 6)",
+          "sourceField": "atencao"
+        },
+        {
+          "label": "Linguagem (0 a 3)",
+          "sourceField": "linguagem"
+        },
+        {
+          "label": "Abstração (0 a 2)",
+          "sourceField": "abstracao"
+        },
+        {
+          "label": "Evocação diferida (0 a 5)",
+          "sourceField": "evocacao"
+        },
+        {
+          "label": "Orientação (0 a 6)",
+          "sourceField": "orientacao"
+        },
+        {
+          "label": "Ajuste de escolaridade",
+          "sourceField": "ajuste"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "moca",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "MoCA — escore por domínio",
+        "body": "<p>Lance os pontos de cada domínio do Montreal Cognitive Assessment. Não reproduz os estímulos do teste, que são de uso licenciado. Total até 30.</p><p>O teste completo (trilhas, cubo, relógio, figuras e listas) pertence aos autores e não é copiado nesta página. Use a folha oficial para aplicar e lance aqui só o resultado.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Nasreddine ZS et al. The Montreal Cognitive Assessment, MoCA. J Am Geriatr Soc. 2005.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

@@ -1,0 +1,295 @@
+{
+  "metadata": {
+    "id": "cries",
+    "title": "Escala CRIES",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala CRIES | Calculadoras de Enfermagem",
+    "description": "Dor no recém-nascido, sobretudo no pós-operatório. Total de 0 a 10. A partir de 4, tratar.",
+    "keywords": "Escala CRIES, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/cries/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala CRIES",
+    "description": "Dor no recém-nascido, sobretudo no pós-operatório. Total de 0 a 10. A partir de 4, tratar."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala CRIES",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "choro",
+            "type": "select",
+            "label": "Choro",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — agudo",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — agudo e inconsolável",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "oxigenio",
+            "type": "select",
+            "label": "Oxigênio para SatO₂ acima de 95%",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — até 30%",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — mais de 30%",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "sinais",
+            "type": "select",
+            "label": "Sinais vitais",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — iguais ao basal",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — até 20% acima",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — mais de 20% acima",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "expressao",
+            "type": "select",
+            "label": "Expressão",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhuma",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — careta",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — careta e gemido",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "sono",
+            "type": "select",
+            "label": "Sono",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — sem interrupção",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — despertares frequentes",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — constantemente acordado",
+                "score": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala CRIES",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 3,
+        "label": "Dor mínima ou ausente",
+        "conduct": "Até 3.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 6,
+        "label": "Dor moderada",
+        "conduct": "4 a 6. Analgesia.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 10,
+        "label": "Dor intensa",
+        "conduct": "7 a 10.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Choro",
+          "sourceField": "choro"
+        },
+        {
+          "label": "Oxigênio para SatO₂ acima de 95%",
+          "sourceField": "oxigenio"
+        },
+        {
+          "label": "Sinais vitais",
+          "sourceField": "sinais"
+        },
+        {
+          "label": "Expressão",
+          "sourceField": "expressao"
+        },
+        {
+          "label": "Sono",
+          "sourceField": "sono"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala CRIES",
+        "body": "<p>Dor no recém-nascido, sobretudo no pós-operatório. Total de 0 a 10. A partir de 4, tratar.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Krechel SW, Bildner J. CRIES: a new neonatal postoperative pain measurement score. Paediatr Anaesth. 1995.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

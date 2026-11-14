@@ -1,0 +1,490 @@
+{
+  "metadata": {
+    "id": "gds",
+    "title": "Escala de depressão geriátrica (GDS-15)",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de depressão geriátrica (GDS-15) | Calculadoras de Enfermagem",
+    "description": "Quinze perguntas sim ou não. O ponto vale quando a resposta é a depressiva.",
+    "keywords": "Escala de depressão geriátrica (GDS-15), enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/gds/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de depressão geriátrica (GDS-15)",
+    "description": "Quinze perguntas sim ou não. O ponto vale quando a resposta é a depressiva."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de depressão geriátrica (GDS-15)",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "satisfeito",
+            "type": "select",
+            "label": "Está satisfeito com a vida?",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Sim — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Não — 1",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "atividades",
+            "type": "select",
+            "label": "Abandonou muitas atividades e interesses?",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "Sim — 1",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "vazia",
+            "type": "select",
+            "label": "Sente a vida vazia?",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "Sim — 1",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "tedio",
+            "type": "select",
+            "label": "Sente-se entediado com frequência?",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "Sim — 1",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "animo",
+            "type": "select",
+            "label": "Está de bom ânimo a maior parte do tempo?",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Sim — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Não — 1",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "medo",
+            "type": "select",
+            "label": "Tem medo de que algo ruim lhe aconteça?",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "Sim — 1",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "feliz",
+            "type": "select",
+            "label": "Sente-se feliz a maior parte do tempo?",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Sim — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Não — 1",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "desamparo",
+            "type": "select",
+            "label": "Sente-se frequentemente desamparado?",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "Sim — 1",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "casa",
+            "type": "select",
+            "label": "Prefere ficar em casa a sair e fazer coisas novas?",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "Sim — 1",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "memoria",
+            "type": "select",
+            "label": "Acha que tem mais problemas de memória do que a maioria?",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "Sim — 1",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "viver",
+            "type": "select",
+            "label": "Acha maravilhoso estar vivo?",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Sim — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Não — 1",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "inutil",
+            "type": "select",
+            "label": "Sente-se inútil no estado atual?",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "Sim — 1",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "energia",
+            "type": "select",
+            "label": "Sente-se cheio de energia?",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "Sim — 0",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "Não — 1",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "desespero",
+            "type": "select",
+            "label": "Acha a situação sem esperança?",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "Sim — 1",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              }
+            ]
+          },
+          {
+            "id": "outros",
+            "type": "select",
+            "label": "Acha que a maioria das pessoas está melhor do que você?",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "Sim — 1",
+                "score": 1
+              },
+              {
+                "value": 0,
+                "label": "Não — 0",
+                "score": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de depressão geriátrica (GDS-15)",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 5,
+        "label": "Sem depressão pelo rastreio",
+        "conduct": "0 a 5.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 10,
+        "label": "Depressão leve",
+        "conduct": "6 a 10.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 15,
+        "label": "Depressão grave",
+        "conduct": "11 a 15. Encaminhar avaliação.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Está satisfeito com a vida?",
+          "sourceField": "satisfeito"
+        },
+        {
+          "label": "Abandonou muitas atividades e interesses?",
+          "sourceField": "atividades"
+        },
+        {
+          "label": "Sente a vida vazia?",
+          "sourceField": "vazia"
+        },
+        {
+          "label": "Sente-se entediado com frequência?",
+          "sourceField": "tedio"
+        },
+        {
+          "label": "Está de bom ânimo a maior parte do tempo?",
+          "sourceField": "animo"
+        },
+        {
+          "label": "Tem medo de que algo ruim lhe aconteça?",
+          "sourceField": "medo"
+        },
+        {
+          "label": "Sente-se feliz a maior parte do tempo?",
+          "sourceField": "feliz"
+        },
+        {
+          "label": "Sente-se frequentemente desamparado?",
+          "sourceField": "desamparo"
+        },
+        {
+          "label": "Prefere ficar em casa a sair e fazer coisas novas?",
+          "sourceField": "casa"
+        },
+        {
+          "label": "Acha que tem mais problemas de memória do que a maioria?",
+          "sourceField": "memoria"
+        },
+        {
+          "label": "Acha maravilhoso estar vivo?",
+          "sourceField": "viver"
+        },
+        {
+          "label": "Sente-se inútil no estado atual?",
+          "sourceField": "inutil"
+        },
+        {
+          "label": "Sente-se cheio de energia?",
+          "sourceField": "energia"
+        },
+        {
+          "label": "Acha a situação sem esperança?",
+          "sourceField": "desespero"
+        },
+        {
+          "label": "Acha que a maioria das pessoas está melhor do que você?",
+          "sourceField": "outros"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de depressão geriátrica (GDS-15)",
+        "body": "<p>Quinze perguntas sim ou não. O ponto vale quando a resposta é a depressiva.</p><p>Versão de 15 itens. Nas perguntas de bem-estar, o ponto é o Não.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Sheikh JI, Yesavage JA. Geriatric Depression Scale (GDS): recent evidence and development of a shorter version. Clin Gerontol. 1986.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

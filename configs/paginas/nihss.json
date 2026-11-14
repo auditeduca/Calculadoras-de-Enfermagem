@@ -1,0 +1,639 @@
+{
+  "metadata": {
+    "id": "nihss",
+    "title": "Escala NIHSS",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala NIHSS | Calculadoras de Enfermagem",
+    "description": "Gravidade do déficit neurológico no AVC. Total de 0 a 42.",
+    "keywords": "Escala NIHSS, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/nihss/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala NIHSS",
+    "description": "Gravidade do déficit neurológico no AVC. Total de 0 a 42."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala NIHSS",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "loc",
+            "type": "select",
+            "label": "1a. Nível de consciência",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — alerta",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — desperta a estímulo menor",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — precisa de estímulo repetido ou doloroso",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — só reflexo ou sem resposta",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "perguntas",
+            "type": "select",
+            "label": "1b. Perguntas (mês e idade)",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — duas certas",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — uma certa",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — nenhuma",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "comandos",
+            "type": "select",
+            "label": "1c. Comandos (abrir os olhos e fechar a mão)",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — os dois",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — um",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — nenhum",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "olhar",
+            "type": "select",
+            "label": "2. Olhar conjugado",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — normal",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — paralisia parcial",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — desvio forçado ou paralisia total",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "visual",
+            "type": "select",
+            "label": "3. Campos visuais",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — sem perda",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — hemianopsia parcial",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — hemianopsia completa",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — cegueira bilateral ou cortical",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "face",
+            "type": "select",
+            "label": "4. Paralisia facial",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — normal",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — apagamento do sulco",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — paralisia parcial",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — paralisia completa",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "braco_e",
+            "type": "select",
+            "label": "5a. Braço esquerdo",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não cai em 10 s",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — cai sem tocar a cama",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — algum esforço contra a gravidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — sem esforço contra a gravidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — sem movimento",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "braco_d",
+            "type": "select",
+            "label": "5b. Braço direito",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não cai em 10 s",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — cai sem tocar a cama",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — algum esforço contra a gravidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — sem esforço contra a gravidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — sem movimento",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "perna_e",
+            "type": "select",
+            "label": "6a. Perna esquerda",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não cai em 5 s",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — cai sem tocar a cama",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — algum esforço contra a gravidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — sem esforço contra a gravidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — sem movimento",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "perna_d",
+            "type": "select",
+            "label": "6b. Perna direita",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não cai em 5 s",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — cai sem tocar a cama",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — algum esforço contra a gravidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — sem esforço contra a gravidade",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — sem movimento",
+                "score": 4
+              }
+            ]
+          },
+          {
+            "id": "ataxia",
+            "type": "select",
+            "label": "7. Ataxia de membro",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — ausente",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — um membro",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — dois membros",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "sensibilidade",
+            "type": "select",
+            "label": "8. Sensibilidade",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — normal",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — perda leve a moderada",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — perda grave ou total",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "linguagem",
+            "type": "select",
+            "label": "9. Linguagem",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — normal",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — afasia leve a moderada",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — afasia grave",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — mudo ou afasia global",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "disartria",
+            "type": "select",
+            "label": "10. Disartria",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — normal",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — leve a moderada",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — grave ou anartria",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "extincao",
+            "type": "select",
+            "label": "11. Extinção ou desatenção",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhuma",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — uma modalidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — mais de uma modalidade",
+                "score": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala NIHSS",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 0,
+        "label": "Sem déficit mensurado",
+        "conduct": "NIHSS 0.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 4,
+        "label": "Leve",
+        "conduct": "1 a 4.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 15,
+        "label": "Moderado",
+        "conduct": "5 a 15.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 20,
+        "label": "Moderado a grave",
+        "conduct": "16 a 20.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 42,
+        "label": "Grave",
+        "conduct": "21 a 42.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "1a. Nível de consciência",
+          "sourceField": "loc"
+        },
+        {
+          "label": "1b. Perguntas (mês e idade)",
+          "sourceField": "perguntas"
+        },
+        {
+          "label": "1c. Comandos (abrir os olhos e fechar a mão)",
+          "sourceField": "comandos"
+        },
+        {
+          "label": "2. Olhar conjugado",
+          "sourceField": "olhar"
+        },
+        {
+          "label": "3. Campos visuais",
+          "sourceField": "visual"
+        },
+        {
+          "label": "4. Paralisia facial",
+          "sourceField": "face"
+        },
+        {
+          "label": "5a. Braço esquerdo",
+          "sourceField": "braco_e"
+        },
+        {
+          "label": "5b. Braço direito",
+          "sourceField": "braco_d"
+        },
+        {
+          "label": "6a. Perna esquerda",
+          "sourceField": "perna_e"
+        },
+        {
+          "label": "6b. Perna direita",
+          "sourceField": "perna_d"
+        },
+        {
+          "label": "7. Ataxia de membro",
+          "sourceField": "ataxia"
+        },
+        {
+          "label": "8. Sensibilidade",
+          "sourceField": "sensibilidade"
+        },
+        {
+          "label": "9. Linguagem",
+          "sourceField": "linguagem"
+        },
+        {
+          "label": "10. Disartria",
+          "sourceField": "disartria"
+        },
+        {
+          "label": "11. Extinção ou desatenção",
+          "sourceField": "extincao"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala NIHSS",
+        "body": "<p>Gravidade do déficit neurológico no AVC. Total de 0 a 42.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Brott T et al. Measurements of acute cerebral infarction: a clinical examination scale. Stroke. 1989. National Institutes of Health Stroke Scale.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

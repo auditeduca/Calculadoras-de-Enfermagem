@@ -1,0 +1,329 @@
+{
+  "metadata": {
+    "id": "ofras",
+    "title": "Escala OFRAS",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala OFRAS | Calculadoras de Enfermagem",
+    "description": "Risco de queda em paciente obstétrica, com a lógica da Morse e um fator próprio da gestação e do puerpério.",
+    "keywords": "Escala OFRAS, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/ofras/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala OFRAS",
+    "description": "Risco de queda em paciente obstétrica, com a lógica da Morse e um fator próprio da gestação e do puerpério."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala OFRAS",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "queda",
+            "type": "select",
+            "label": "Queda nesta gestação ou nesta internação",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 25,
+                "label": "25 — sim",
+                "score": 25
+              }
+            ]
+          },
+          {
+            "id": "intercorrencia",
+            "type": "select",
+            "label": "Intercorrência ou segundo diagnóstico",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 15,
+                "label": "15 — sim",
+                "score": 15
+              }
+            ]
+          },
+          {
+            "id": "auxilio",
+            "type": "select",
+            "label": "Auxílio para deambular",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhum",
+                "score": 0
+              },
+              {
+                "value": 15,
+                "label": "15 — bengala, muleta ou andador",
+                "score": 15
+              },
+              {
+                "value": 30,
+                "label": "30 — apoia-se na mobília",
+                "score": 30
+              }
+            ]
+          },
+          {
+            "id": "acesso",
+            "type": "select",
+            "label": "Acesso venoso ou dispositivo",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 20,
+                "label": "20 — sim",
+                "score": 20
+              }
+            ]
+          },
+          {
+            "id": "marcha",
+            "type": "select",
+            "label": "Marcha",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — normal",
+                "score": 0
+              },
+              {
+                "value": 10,
+                "label": "10 — fraca",
+                "score": 10
+              },
+              {
+                "value": 20,
+                "label": "20 — comprometida",
+                "score": 20
+              }
+            ]
+          },
+          {
+            "id": "mental",
+            "type": "select",
+            "label": "Estado mental",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — orientada quanto à própria capacidade",
+                "score": 0
+              },
+              {
+                "value": 15,
+                "label": "15 — superestima ou esquece limitações",
+                "score": 15
+              }
+            ]
+          },
+          {
+            "id": "obstetrico",
+            "type": "select",
+            "label": "Fator obstétrico",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhum",
+                "score": 0
+              },
+              {
+                "value": 10,
+                "label": "10 — urgência miccional ou edema que atrapalha a marcha",
+                "score": 10
+              },
+              {
+                "value": 15,
+                "label": "15 — pós-parto imediato ou analgesia de parto",
+                "score": 15
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala OFRAS",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 24,
+        "label": "Risco baixo",
+        "conduct": "Precaução padrão, inclusive ao levantar após analgesia.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 44,
+        "label": "Risco médio",
+        "conduct": "Acompanhar deambulação.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 125,
+        "label": "Risco alto",
+        "conduct": "45 ou mais, o mesmo corte alto da Morse.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Queda nesta gestação ou nesta internação",
+          "sourceField": "queda"
+        },
+        {
+          "label": "Intercorrência ou segundo diagnóstico",
+          "sourceField": "intercorrencia"
+        },
+        {
+          "label": "Auxílio para deambular",
+          "sourceField": "auxilio"
+        },
+        {
+          "label": "Acesso venoso ou dispositivo",
+          "sourceField": "acesso"
+        },
+        {
+          "label": "Marcha",
+          "sourceField": "marcha"
+        },
+        {
+          "label": "Estado mental",
+          "sourceField": "mental"
+        },
+        {
+          "label": "Fator obstétrico",
+          "sourceField": "obstetrico"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala OFRAS",
+        "body": "<p>Risco de queda em paciente obstétrica, com a lógica da Morse e um fator próprio da gestação e do puerpério.</p><p>Não existe um único OFRAS internacional com os mesmos pesos. Esta página usa os pesos da Morse e acrescenta o fator obstétrico, para a ferramenta anunciada no sítio deixar de ser um aviso vazio.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Morse JM. Preventing patient falls. 2nd ed. Springer; 2009. Adaptação obstétrica explícita nesta página.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

@@ -1,0 +1,648 @@
+{
+  "metadata": {
+    "id": "perroca",
+    "title": "Escala de Perroca",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Perroca | Calculadoras de Enfermagem",
+    "description": "Treze áreas de cuidado, de 1 a 5. Total de 13 a 65.",
+    "keywords": "Escala de Perroca, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/perroca/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Perroca",
+    "description": "Treze áreas de cuidado, de 1 a 5. Total de 13 a 65."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Perroca",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "p1",
+            "type": "select",
+            "label": "Estado mental e nível de consciência",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p2",
+            "type": "select",
+            "label": "Oxigenação",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p3",
+            "type": "select",
+            "label": "Sinais vitais",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p4",
+            "type": "select",
+            "label": "Nutrição e hidratação",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p5",
+            "type": "select",
+            "label": "Motilidade",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p6",
+            "type": "select",
+            "label": "Locomoção",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p7",
+            "type": "select",
+            "label": "Cuidado corporal",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p8",
+            "type": "select",
+            "label": "Eliminações",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p9",
+            "type": "select",
+            "label": "Terapêutica",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p10",
+            "type": "select",
+            "label": "Educação à saúde",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p11",
+            "type": "select",
+            "label": "Comportamento",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p12",
+            "type": "select",
+            "label": "Comunicação",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "p13",
+            "type": "select",
+            "label": "Integridade cutâneo-mucosa",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — menor complexidade",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — baixa complexidade",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — complexidade intermediária",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — alta complexidade",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — complexidade máxima",
+                "score": 5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Perroca",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 26,
+        "label": "Cuidados mínimos",
+        "conduct": "13 a 26.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 39,
+        "label": "Cuidados intermediários",
+        "conduct": "27 a 39.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 52,
+        "label": "Cuidados semi-intensivos",
+        "conduct": "40 a 52.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 65,
+        "label": "Cuidados intensivos",
+        "conduct": "53 a 65.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Estado mental e nível de consciência",
+          "sourceField": "p1"
+        },
+        {
+          "label": "Oxigenação",
+          "sourceField": "p2"
+        },
+        {
+          "label": "Sinais vitais",
+          "sourceField": "p3"
+        },
+        {
+          "label": "Nutrição e hidratação",
+          "sourceField": "p4"
+        },
+        {
+          "label": "Motilidade",
+          "sourceField": "p5"
+        },
+        {
+          "label": "Locomoção",
+          "sourceField": "p6"
+        },
+        {
+          "label": "Cuidado corporal",
+          "sourceField": "p7"
+        },
+        {
+          "label": "Eliminações",
+          "sourceField": "p8"
+        },
+        {
+          "label": "Terapêutica",
+          "sourceField": "p9"
+        },
+        {
+          "label": "Educação à saúde",
+          "sourceField": "p10"
+        },
+        {
+          "label": "Comportamento",
+          "sourceField": "p11"
+        },
+        {
+          "label": "Comunicação",
+          "sourceField": "p12"
+        },
+        {
+          "label": "Integridade cutâneo-mucosa",
+          "sourceField": "p13"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Perroca",
+        "body": "<p>Treze áreas de cuidado, de 1 a 5. Total de 13 a 65.</p><p>Instrumento original de 13 indicadores. Em cada área, 1 é o menor nível de atenção e 5 o máximo. A versão posterior, de nove áreas e notas de 1 a 4, é outro instrumento e não está nesta página.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Perroca MG, Gaidzinski RR. Sistema de classificação de pacientes: construção e validação de um instrumento. Rev Esc Enferm USP. 1998.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

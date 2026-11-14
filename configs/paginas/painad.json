@@ -1,0 +1,302 @@
+{
+  "metadata": {
+    "id": "painad",
+    "title": "Escala PAINAD",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala PAINAD | Calculadoras de Enfermagem",
+    "description": "Dor em idoso com demência avançada. Total de 0 a 10.",
+    "keywords": "Escala PAINAD, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/painad/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala PAINAD",
+    "description": "Dor em idoso com demência avançada. Total de 0 a 10."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala PAINAD",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "resp",
+            "type": "select",
+            "label": "Respiração",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — normal",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — ocasionalmente difícil",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — ruidosa, rápida ou Cheyne-Stokes",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "vocal",
+            "type": "select",
+            "label": "Vocalização",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhuma",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — gemido ou fala negativa ocasional",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — chamado repetido, gemido alto ou choro",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "face",
+            "type": "select",
+            "label": "Expressão facial",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — sorrindo ou inexpressiva",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — triste, assustada ou carrancuda",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — careta",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "corpo",
+            "type": "select",
+            "label": "Linguagem corporal",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — relaxado",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — tenso, inquieto",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — rígido, punhos cerrados ou agressivo",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "consolo",
+            "type": "select",
+            "label": "Consolabilidade",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não precisa",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — distraído por voz ou toque",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — impossível consolar",
+                "score": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala PAINAD",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 0,
+        "label": "Sem dor observável",
+        "conduct": "Reavaliar se o quadro mudar.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 3,
+        "label": "Dor leve",
+        "conduct": "1 a 3.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 6,
+        "label": "Dor moderada",
+        "conduct": "4 a 6.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 10,
+        "label": "Dor intensa",
+        "conduct": "7 a 10.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Respiração",
+          "sourceField": "resp"
+        },
+        {
+          "label": "Vocalização",
+          "sourceField": "vocal"
+        },
+        {
+          "label": "Expressão facial",
+          "sourceField": "face"
+        },
+        {
+          "label": "Linguagem corporal",
+          "sourceField": "corpo"
+        },
+        {
+          "label": "Consolabilidade",
+          "sourceField": "consolo"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala PAINAD",
+        "body": "<p>Dor em idoso com demência avançada. Total de 0 a 10.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Warden V, Hurley AC, Volicer L. Development and psychometric evaluation of the Pain Assessment in Advanced Dementia (PAINAD) scale. J Am Med Dir Assoc. 2003.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

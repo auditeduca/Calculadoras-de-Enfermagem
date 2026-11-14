@@ -1,0 +1,236 @@
+{
+  "metadata": {
+    "id": "richmond",
+    "title": "Escala de Richmond (RASS)",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Richmond (RASS) | Calculadoras de Enfermagem",
+    "description": "Agitação e sedação de −5 a +4. O alvo usual em ventilação é 0 a −2, salvo outra meta.",
+    "keywords": "Escala de Richmond (RASS), enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/richmond/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Richmond (RASS)",
+    "description": "Agitação e sedação de −5 a +4. O alvo usual em ventilação é 0 a −2, salvo outra meta."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Richmond (RASS)",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "rass",
+            "type": "select",
+            "label": "RASS",
+            "required": true,
+            "options": [
+              {
+                "value": -5,
+                "label": "−5 — não desperta a voz nem a dor",
+                "score": -5
+              },
+              {
+                "value": -4,
+                "label": "−4 — sem resposta à voz, move-se à dor",
+                "score": -4
+              },
+              {
+                "value": -3,
+                "label": "−3 — movimento ou abertura ocular à voz, sem contato visual",
+                "score": -3
+              },
+              {
+                "value": -2,
+                "label": "−2 — desperta brevemente à voz, contato visual menor que 10 segundos",
+                "score": -2
+              },
+              {
+                "value": -1,
+                "label": "−1 — desperta à voz e mantém contato por 10 segundos ou mais",
+                "score": -1
+              },
+              {
+                "value": 0,
+                "label": "0 — alerta e calmo",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — inquieto, ansioso, sem movimento agressivo",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — agitação frequente, briga com o ventilador",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — muito agitado, remove tubos",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — combativo, violento",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Richmond (RASS)",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": -4,
+        "label": "Sedação profunda",
+        "conduct": "−5 ou −4.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": -1,
+        "label": "Sedação leve",
+        "conduct": "−3 a −1.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 0,
+        "label": "Alerta e calmo",
+        "conduct": "RASS 0.",
+        "color": "text-amber-700",
+        "bg": "bg-amber-50"
+      },
+      {
+        "max": 1,
+        "label": "Inquieto",
+        "conduct": "RASS +1.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 4,
+        "label": "Agitado",
+        "conduct": "+2 a +4. Proteger e tratar a causa.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "RASS",
+          "sourceField": "rass"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Richmond (RASS)",
+        "body": "<p>Agitação e sedação de −5 a +4. O alvo usual em ventilação é 0 a −2, salvo outra meta.</p><p></p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Sessler CN et al. The Richmond Agitation-Sedation Scale. Am J Respir Crit Care Med. 2002.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}

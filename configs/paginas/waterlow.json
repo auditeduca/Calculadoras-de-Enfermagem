@@ -1,0 +1,577 @@
+{
+  "metadata": {
+    "id": "waterlow",
+    "title": "Escala de Waterlow",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "scale"
+  },
+  "seo": {
+    "title": "Escala de Waterlow | Calculadoras de Enfermagem",
+    "description": "Risco de lesão por pressão. Quanto maior o escore, maior o risco.",
+    "keywords": "Escala de Waterlow, enfermagem, escala",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/waterlow/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escalas",
+    "title": "Escala de Waterlow",
+    "description": "Risco de lesão por pressão. Quanto maior o escore, maior o risco."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escala de Waterlow",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do paciente",
+            "placeholder": "Opcional",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Avaliação",
+        "fields": [
+          {
+            "id": "imc",
+            "type": "select",
+            "label": "Complexão / IMC",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — IMC 20–24,9",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — IMC 25–29,9",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — IMC ≥ 30",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — IMC < 20",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "sexo",
+            "type": "select",
+            "label": "Sexo",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — masculino",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — feminino",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "idade",
+            "type": "select",
+            "label": "Idade",
+            "required": true,
+            "options": [
+              {
+                "value": 1,
+                "label": "1 — 14 a 49 anos",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — 50 a 64",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — 65 a 74",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — 75 a 80",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — 81 ou mais",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "pele",
+            "type": "select",
+            "label": "Tipo de pele (some os achados e escolha o total)",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — saudável",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — um achado: papel, seca, edemaciada ou úmida",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — descorada ou dois achados leves",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — pele quebrada ou três achados",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "continencia",
+            "type": "select",
+            "label": "Continência",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — continente ou cateter",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — incontinência ocasional",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — incontinência fecal ou cateter e fezes",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — dupla incontinência",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "mobilidade",
+            "type": "select",
+            "label": "Mobilidade",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — plena",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — inquieto",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — apático",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — restrito",
+                "score": 3
+              },
+              {
+                "value": 4,
+                "label": "4 — inerte ou tração",
+                "score": 4
+              },
+              {
+                "value": 5,
+                "label": "5 — restrito à cadeira",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "apetite",
+            "type": "select",
+            "label": "Apetite",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — médio / adequado",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — pobre",
+                "score": 1
+              },
+              {
+                "value": 2,
+                "label": "2 — só sonda ou líquidos",
+                "score": 2
+              },
+              {
+                "value": 3,
+                "label": "3 — jejum ou anorético",
+                "score": 3
+              }
+            ]
+          },
+          {
+            "id": "tabagismo",
+            "type": "select",
+            "label": "Tabagismo",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 1,
+                "label": "1 — sim",
+                "score": 1
+              }
+            ]
+          },
+          {
+            "id": "anemia",
+            "type": "select",
+            "label": "Anemia",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 2,
+                "label": "2 — sim",
+                "score": 2
+              }
+            ]
+          },
+          {
+            "id": "icc",
+            "type": "select",
+            "label": "Insuficiência cardíaca",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — sim",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "dvp",
+            "type": "select",
+            "label": "Doença vascular periférica",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — sim",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "caquexia",
+            "type": "select",
+            "label": "Caquexia terminal",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 8,
+                "label": "8 — sim",
+                "score": 8
+              }
+            ]
+          },
+          {
+            "id": "neuro",
+            "type": "select",
+            "label": "Déficit neurológico",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — nenhum",
+                "score": 0
+              },
+              {
+                "value": 4,
+                "label": "4 — diabetes, AVC ou déficit motor/sensitivo",
+                "score": 4
+              },
+              {
+                "value": 6,
+                "label": "6 — paraplegia",
+                "score": 6
+              }
+            ]
+          },
+          {
+            "id": "cirurgia",
+            "type": "select",
+            "label": "Cirurgia ou trauma maior",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 5,
+                "label": "5 — ortopédica abaixo da cintura, coluna ou mais de 2 h de mesa",
+                "score": 5
+              }
+            ]
+          },
+          {
+            "id": "farmacos",
+            "type": "select",
+            "label": "Medicação de risco",
+            "required": true,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — não",
+                "score": 0
+              },
+              {
+                "value": 4,
+                "label": "4 — corticoide em dose alta, citotóxico ou anti-inflamatório",
+                "score": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "calculation": {
+    "mode": "score",
+    "formula": "total = score",
+    "result": {
+      "label": "Escala de Waterlow",
+      "unit": "pontos",
+      "decimals": 0,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 9,
+        "label": "Sem risco pela Waterlow",
+        "conduct": "Manter inspeção da pele.",
+        "color": "text-green-700",
+        "bg": "bg-green-50"
+      },
+      {
+        "max": 14,
+        "label": "Em risco",
+        "conduct": "A partir de 10 pontos.",
+        "color": "text-lime-700",
+        "bg": "bg-lime-50"
+      },
+      {
+        "max": 19,
+        "label": "Risco alto",
+        "conduct": "A partir de 15 pontos.",
+        "color": "text-orange-700",
+        "bg": "bg-orange-50"
+      },
+      {
+        "max": 64,
+        "label": "Risco muito alto",
+        "conduct": "A partir de 20 pontos. Prevenção máxima.",
+        "color": "text-red-700",
+        "bg": "bg-red-50"
+      }
+    ],
+    "audit": {
+      "title": "Itens considerados",
+      "steps": [
+        {
+          "label": "Complexão / IMC",
+          "sourceField": "imc"
+        },
+        {
+          "label": "Sexo",
+          "sourceField": "sexo"
+        },
+        {
+          "label": "Idade",
+          "sourceField": "idade"
+        },
+        {
+          "label": "Tipo de pele (some os achados e escolha o total)",
+          "sourceField": "pele"
+        },
+        {
+          "label": "Continência",
+          "sourceField": "continencia"
+        },
+        {
+          "label": "Mobilidade",
+          "sourceField": "mobilidade"
+        },
+        {
+          "label": "Apetite",
+          "sourceField": "apetite"
+        },
+        {
+          "label": "Tabagismo",
+          "sourceField": "tabagismo"
+        },
+        {
+          "label": "Anemia",
+          "sourceField": "anemia"
+        },
+        {
+          "label": "Insuficiência cardíaca",
+          "sourceField": "icc"
+        },
+        {
+          "label": "Doença vascular periférica",
+          "sourceField": "dvp"
+        },
+        {
+          "label": "Caquexia terminal",
+          "sourceField": "caquexia"
+        },
+        {
+          "label": "Déficit neurológico",
+          "sourceField": "neuro"
+        },
+        {
+          "label": "Cirurgia ou trauma maior",
+          "sourceField": "cirurgia"
+        },
+        {
+          "label": "Medicação de risco",
+          "sourceField": "farmacos"
+        },
+        {
+          "label": "Resultado",
+          "sourceField": "total",
+          "suffix": "pontos"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Escala de Waterlow",
+        "body": "<p>Risco de lesão por pressão. Quanto maior o escore, maior o risco.</p><p>Itens clássicos de Waterlow mais riscos especiais. Se houver vários tipos de pele, some os pontos originais e escolha a faixa correspondente.</p><p>O escore apoia o julgamento clínico. Não substitui o instrumento original, o protocolo da instituição nem a avaliação à beira do leito.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Leia cada item e escolha a opção que descreve o paciente agora.",
+        "O primeiro item de cada lista permanece selecionado até ser trocado. Revise todos antes de calcular.",
+        "Em caso de dúvida entre dois níveis, use o de maior gravidade clínica.",
+        "Registre o resultado no prontuário junto com a hora e o contexto."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>Waterlow J. Pressure sores: a risk assessment card. Nurs Times. 1985.</p><p>Conselho Federal de Enfermagem. Resolução COFEN nº 736/2024 — código de ética. A ferramenta não substitui a Sistematização da Assistência de Enfermagem.</p>"
+      }
+    }
+  ]
+}
