@@ -509,6 +509,8 @@ def extra(cfg):
         return '  <script src="js/notificacao.js" defer></script>\n'
     if cfg.get("kind") == "busca":
         return '  <script src="js/busca.js" defer></script>\n'
+    if cfg.get("id") == "metricas":
+        return '  <script src="js/metricas.js" defer></script>\n'
     return ""
 
 
