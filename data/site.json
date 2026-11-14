@@ -1,122 +1,254 @@
 {
+  "$schema": "../schema/site.schema.json",
   "site": {
-    "name": "Calculadoras de Enfermagem Profissional",
-    "url": "https://auditeduca.github.io/Calculadoras-de-Enfermagem",
-    "logo": "/assets/images/author-info.webp",
+    "name": "Calculadoras de Enfermagem",
+    "fullName": "Calculadoras de Enfermagem Profissional",
+    "baseUrl": "https://auditeduca.github.io/Calculadoras-de-Enfermagem",
+    "logoHeader": "assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "logoFooter": "assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "favicon": "assets/images/favicon-calculadoras-de-enfermagem.webp",
     "author": "Calculadoras de Enfermagem",
     "social": {
       "twitter": "@CalculadorasEnf"
     }
   },
-  "pages": {
-    "insulina": {
-      "title": "Cálculo de Insulina | Calculadoras de Enfermagem Profissional",
-      "description": "Calculadora profissional para aspiração de insulina em seringas de 100UI e 300UI. Segurança do paciente com 9 certos e auditoria de cálculo clínica.",
-      "keywords": "insulina, enfermagem, cálculo de medicação, segurança do paciente, seringa insulina, auditoria clínica",
-      "canonical": "/insulina",
-      "ogImage": "/assets/images/author-info.webp",
-      "header": {
-        "badge": "Segurança Clínica",
-        "title": "Cálculo de Insulina",
-        "description": "Ferramenta profissional para aspiração precisa em seringas de 100UI ou 300UI."
-      },
-      "calculator": {
-        "fields": [
-          {
-            "id": "prescricao",
-            "label": "Prescrição Médica (UI)",
-            "type": "number",
-            "placeholder": "Ex: 15",
-            "required": true,
-            "min": 0,
-            "step": 0.5,
-            "tooltip": "Quantidade de insulina prescrita pelo médico em unidades internacionais (UI)."
-          },
-          {
-            "id": "concentracao",
-            "label": "Concentração da Insulina (UI/mL)",
-            "type": "select",
-            "options": [
-              { "value": 100, "label": "100 UI/mL (Insulina Regular U100)" },
-              { "value": 200, "label": "200 UI/mL (Insulina Glargine U200)" },
-              { "value": 300, "label": "300 UI/mL (Insulina Degludec U300)" }
-            ],
-            "default": 100,
-            "tooltip": "Concentração da insulina. Padrão: 100 UI/mL."
-          }
-        ],
-        "formula": "Volume (mL) = Prescrição (UI) / Concentração (UI/mL)"
-      },
-      "auditSteps": [
-        { "label": "Prescrição Médica", "icon": "fa-file-medical" },
-        { "label": "Concentração da Insulina", "icon": "fa-vial" },
-        { "label": "Tipo de Seringa", "value": "Seringa de Insulina 1mL", "icon": "fa-syringe" },
-        { "label": "Fator de Cálculo", "icon": "fa-calculator" },
-        { "label": "Volume Final Auditado", "icon": "fa-check-double" }
-      ],
-      "checklists": {
-        "noveCertos": [
-          "Paciente Certo",
-          "Medicação Certa",
-          "Dose Certa",
-          "Via Certa",
-          "Hora Certa",
-          "Registro Certo",
-          "Validade Certa",
-          "Resposta Certa",
-          "Forma Farmacêutica Certa"
-        ],
-        "metas": [
-          { "id": 1, "text": "Identificar o paciente corretamente", "class": "glass-meta-blue" },
-          { "id": 2, "text": "Comunicação Efetiva na passagem de plantão", "class": "glass-meta-blue" },
-          { "id": 3, "text": "Segurança de Medicamentos de Alta Vigilância", "class": "glass-meta-orange" },
-          { "id": 6, "text": "Reduzir risco de quedas do paciente", "class": "glass-meta-blue" }
-        ]
-      },
-      "modals": {
-        "tutorial": {
-          "title": "Tutorial de Uso - Calculadora de Insulina",
-          "icon": "fa-question-circle",
-          "content": "<div>Conteúdo do tutorial...</div>"
-        },
-        "nanda": {
-          "title": "Diagnósticos de Enfermagem - NANDA",
-          "icon": "fa-stethoscope",
-          "content": "<div>Conteúdo dos diagnósticos...</div>"
-        },
-        "medication": {
-          "title": "9 Certos da Medicação",
-          "icon": "fa-check-double",
-          "content": "<div>Lista dos 9 certos...</div>"
-        },
-        "safety": {
-          "title": "Metas Internacionais de Segurança",
-          "icon": "fa-star",
-          "content": "<div>Metas de segurança...</div>"
-        }
-      },
-      "sidebar": {
-        "tools": [
-          { "id": "conteudo", "icon": "fa-book-open", "label": "Conteúdo", "action": "switchTab('sobre')" },
-          { "id": "ajuda", "icon": "fa-question-circle", "label": "Ajuda", "action": "showTutorial()" },
-          { "id": "nanda", "icon": "fa-stethoscope", "label": "Nanda", "action": "showNANDAModal()" },
-          { "id": "9acertos", "icon": "fa-check-double", "label": "9 Acertos", "action": "showMedicationChecklist()" },
-          { "id": "metas", "icon": "fa-bullseye", "label": "Metas", "action": "showSafetyGoals()" }
-        ]
-      },
-      "footer": {
-        "tags": ["#insulina", "#farmacologia", "#segurança-do-paciente", "#auditoria", "#enfermagem", "#cálculo-clínico"]
-      }
-    }
-  },
-  "global": {
-    "accessibility": {
-      "fontSize": "1rem",
-      "highContrast": false
+  "nav": [
+    {
+      "type": "link",
+      "label": "Início",
+      "href": "index.html"
     },
-    "analytics": {
-      "enabled": true,
-      "gtag": "G-XXXXXXXXXX"
+    {
+      "type": "mega",
+      "id": "sobre-nos",
+      "label": "Sobre Nós",
+      "promoImage": "assets/images/mega-menu-sobre-nos.webp",
+      "tabs": [
+        {
+          "id": "institucional",
+          "label": "Institucional",
+          "links": [
+            { "text": "Missão, Visão e Valores", "href": "missao.html" },
+            { "text": "Objetivo do Site", "href": "objetivo.html" },
+            { "text": "Mapa do Site", "href": "mapa-do-site.html" }
+          ]
+        },
+        {
+          "id": "acessibilidade",
+          "label": "Acessibilidade Digital",
+          "links": [
+            { "text": "Política de Acessibilidade Digital", "href": "politicadeacessibilidade.html" },
+            { "text": "Recursos Assistivos", "href": "recursos-assistivos.html" }
+          ]
+        },
+        {
+          "id": "sustentabilidade",
+          "label": "Sustentabilidade Digital",
+          "links": [
+            { "text": "Nosso Compromisso", "href": "nossocompromisso.html" },
+            { "text": "Relatório de Impacto", "href": "impactodigital.html" },
+            { "text": "Tecnologia Verde", "href": "tecnologiaverde.html" }
+          ]
+        },
+        {
+          "id": "politicas",
+          "label": "Políticas do Site",
+          "links": [
+            { "text": "Política de Privacidade", "href": "politica.html" },
+            { "text": "Política de Cookies", "href": "termos.html" },
+            { "text": "Isenção de Responsabilidade", "href": "notificacoes-legais.html" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "mega",
+      "id": "ferramentas",
+      "label": "Ferramentas",
+      "promoImage": "assets/images/mega-menu-ferramentas.webp",
+      "tabs": [
+        {
+          "id": "calculadoras-clinicas",
+          "label": "Calculadoras Clínicas",
+          "links": [
+            { "text": "Aspiração de Heparina", "href": "heparina.html" },
+            { "text": "Aspiração de Insulina", "href": "insulina.html" },
+            { "text": "Balanço Hídrico", "href": "calculadoras/balancohidrico/" },
+            { "text": "Dimensionamento de Pessoal", "href": "calculadoras/dimensionamento/" },
+            { "text": "Gasometria Arterial", "href": "calculadoras/gasometria/" },
+            { "text": "Gotejamento", "href": "calculadoras/gotejamento/" },
+            { "text": "Idade Gestacional e DPP", "href": "calculadoras/gestacional/" },
+            { "text": "Índice de Massa Corporal (IMC)", "href": "imc.html" },
+            { "text": "Cálculo de Medicamentos", "href": "calculadoras/medicamentos/" }
+          ]
+        },
+        {
+          "id": "escalas-clinicas",
+          "label": "Escalas Clínicas",
+          "links": [
+            { "text": "Aldrete e Kroulik", "href": "aldrete.html" },
+            { "text": "APACHE II", "href": "apache.html" },
+            { "text": "Apgar", "href": "apgar.html" },
+            { "text": "ASA", "href": "calculadoras/asa/" },
+            { "text": "Ballard", "href": "calculadoras/ballard/" },
+            { "text": "Barthel", "href": "barthel.html" },
+            { "text": "Berg", "href": "calculadoras/berg/" },
+            { "text": "Bishop", "href": "calculadoras/bishop/" },
+            { "text": "BPS", "href": "calculadoras/bps/" },
+            { "text": "Braden", "href": "calculadoras/braden/" },
+            { "text": "CAM-ICU", "href": "calculadoras/cam/" },
+            { "text": "Capurro", "href": "calculadoras/capurro/" },
+            { "text": "Cincinnati", "href": "calculadoras/cincinnati/" },
+            { "text": "Cornell", "href": "calculadoras/cornell/" },
+            { "text": "CRIES", "href": "calculadoras/cries/" },
+            { "text": "CURB-65", "href": "calculadoras/curb-65/" },
+            { "text": "Downes", "href": "calculadoras/downes/" },
+            { "text": "Downton", "href": "calculadoras/downton/" },
+            { "text": "ELPO", "href": "calculadoras/elpo/" },
+            { "text": "Escala Numérica de Dor", "href": "calculadoras/escalanumerica/" },
+            { "text": "FAST", "href": "calculadoras/fast/" },
+            { "text": "FLACC", "href": "calculadoras/flacc/" },
+            { "text": "FOUR", "href": "calculadoras/four/" },
+            { "text": "Fugulin", "href": "calculadoras/fugulin/" },
+            { "text": "GDS", "href": "calculadoras/gds/" },
+            { "text": "Glasgow", "href": "calculadoras/glasgow/" },
+            { "text": "Gosnell", "href": "calculadoras/gosnell/" },
+            { "text": "Hamilton", "href": "calculadoras/hamilton/" },
+            { "text": "Hendrich II", "href": "calculadoras/hendrich/" },
+            { "text": "Humpty Dumpty", "href": "calculadoras/humpty/" },
+            { "text": "Johns Hopkins", "href": "calculadoras/johns/" },
+            { "text": "Jouvet", "href": "calculadoras/jouvet/" },
+            { "text": "Katz", "href": "calculadoras/katz/" },
+            { "text": "Lachs", "href": "calculadoras/lachs/" },
+            { "text": "LANSS", "href": "calculadoras/lanss/" },
+            { "text": "Lawton", "href": "calculadoras/lawton/" },
+            { "text": "Manchester", "href": "calculadoras/manchester/" },
+            { "text": "MEEM", "href": "calculadoras/meem/" },
+            { "text": "MEOWS", "href": "calculadoras/meows/" },
+            { "text": "MoCA", "href": "calculadoras/moca/" },
+            { "text": "Morse", "href": "calculadoras/morse/" },
+            { "text": "NEWS", "href": "calculadoras/news/" },
+            { "text": "NIHSS", "href": "calculadoras/nihss/" },
+            { "text": "NIPS", "href": "calculadoras/nips/" },
+            { "text": "Norton", "href": "calculadoras/norton/" },
+            { "text": "OFRAS", "href": "calculadoras/ofras/" },
+            { "text": "PAINAD", "href": "calculadoras/painad/" },
+            { "text": "PELOD", "href": "calculadoras/pelod/" },
+            { "text": "Perroca", "href": "calculadoras/perroca/" },
+            { "text": "PEWS", "href": "calculadoras/pews/" },
+            { "text": "PRISM", "href": "calculadoras/prism/" },
+            { "text": "qSOFA", "href": "calculadoras/qsofa/" },
+            { "text": "Ramsay", "href": "calculadoras/ramsay/" },
+            { "text": "RASS (Richmond)", "href": "calculadoras/richmond/" },
+            { "text": "Rancho Los Amigos", "href": "calculadoras/rancholosamigos/" },
+            { "text": "SAPS", "href": "calculadoras/saps/" },
+            { "text": "Silverman-Andersen", "href": "calculadoras/silverman/" },
+            { "text": "SOFA", "href": "calculadoras/sofa/" },
+            { "text": "Tinetti", "href": "calculadoras/tinetti/" },
+            { "text": "Waterlow", "href": "calculadoras/waterlow/" },
+            { "text": "Zarit", "href": "calculadoras/zarit/" }
+          ]
+        },
+        {
+          "id": "ferramentas-especificas",
+          "label": "Ferramentas Específicas",
+          "links": [
+            { "text": "Notificações Compulsórias", "href": "notificacao-compulsoria.html" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "label": "Fale Conosco",
+      "href": "fale.html"
     }
+  ],
+  "languages": {
+    "default": "pt-br",
+    "promoImage": "assets/images/mega-menu-idiomas.webp",
+    "groups": [
+      {
+        "id": "idiomas-americas",
+        "label": "Américas",
+        "items": [
+          { "code": "pt-br", "label": "Português (Brasil)", "flag": "assets/images/bandeiras/bandeira-brasil.webp" },
+          { "code": "es", "label": "Español", "flag": "assets/images/bandeiras/bandeira-espanha.webp" },
+          { "code": "en", "label": "English", "flag": "assets/images/bandeiras/bandeira-eua.webp" }
+        ]
+      },
+      {
+        "id": "idiomas-europa",
+        "label": "Europa",
+        "items": [
+          { "code": "de", "label": "Deutsch", "flag": "assets/images/bandeiras/bandeira-alemanha.webp" },
+          { "code": "fr", "label": "Français", "flag": "assets/images/bandeiras/bandeira-franca.webp" },
+          { "code": "it", "label": "Italiano", "flag": "assets/images/bandeiras/bandeira-italia.webp" },
+          { "code": "nl", "label": "Nederlands", "flag": "assets/images/bandeiras/bandeira-holanda.webp" },
+          { "code": "pl", "label": "Polski", "flag": "assets/images/bandeiras/bandeira-polonia.webp" },
+          { "code": "ru", "label": "Русский", "flag": "assets/images/bandeiras/bandeira-russia.webp" },
+          { "code": "sv", "label": "Svenska", "flag": "assets/images/bandeiras/bandeira-suecia.webp" },
+          { "code": "tr", "label": "Türkçe", "flag": "assets/images/bandeiras/bandeira-turquia.webp" }
+        ]
+      },
+      {
+        "id": "idiomas-asia",
+        "label": "Ásia",
+        "items": [
+          { "code": "zh", "label": "中文", "flag": "assets/images/bandeiras/bandeira-china.webp" },
+          { "code": "ja", "label": "日本語", "flag": "assets/images/bandeiras/bandeira-japao.webp" },
+          { "code": "ko", "label": "한국어", "flag": "assets/images/bandeiras/bandeira-coreia.webp" },
+          { "code": "ar", "label": "العربية", "flag": "assets/images/bandeiras/bandeira-arabia.webp" },
+          { "code": "hi", "label": "हिन्दी", "flag": "assets/images/bandeiras/bandeira-india.webp" },
+          { "code": "id", "label": "Bahasa Indonesia", "flag": "assets/images/bandeiras/bandeira-indonesia.webp" },
+          { "code": "vi", "label": "Tiếng Việt", "flag": "assets/images/bandeiras/bandeira-vietna.webp" },
+          { "code": "uk", "label": "Українська", "flag": "assets/images/bandeiras/bandeira-ucrania.webp" }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "columns": [
+      {
+        "title": "Institucional",
+        "links": [
+          { "text": "Início", "href": "index.html" },
+          { "text": "Missão, Visão e Valores", "href": "missao.html" },
+          { "text": "Objetivo do Site", "href": "objetivo.html" },
+          { "text": "Mapa do Site", "href": "mapa-do-site.html" }
+        ]
+      },
+      {
+        "title": "Acessibilidade Digital",
+        "links": [
+          { "text": "Política de Acessibilidade", "href": "politicadeacessibilidade.html" },
+          { "text": "Recursos Assistivos", "href": "recursos-assistivos.html" }
+        ]
+      },
+      {
+        "title": "Sustentabilidade Digital",
+        "links": [
+          { "text": "Nosso Compromisso", "href": "nossocompromisso.html" },
+          { "text": "Relatório de Impacto", "href": "impactodigital.html" },
+          { "text": "Tecnologia Verde", "href": "tecnologiaverde.html" }
+        ]
+      }
+    ],
+    "commitment": {
+      "title": "Nosso Compromisso",
+      "text": "Adotamos como princípio de governança o comprometimento com elevados padrões de acessibilidade digital, sustentabilidade digital e proteção de dados."
+    },
+    "legalLinks": [
+      { "text": "Central de Privacidade", "href": "politica.html" },
+      { "text": "Notificações Legais", "href": "notificacoes-legais.html" },
+      { "text": "Política de Cookies", "href": "termos.html" }
+    ],
+    "social": [
+      { "name": "LinkedIn", "icon": "fab fa-linkedin-in", "url": "https://www.linkedin.com/company/calculadoras-de-enfermagem" },
+      { "name": "Instagram", "icon": "fab fa-instagram", "url": "https://www.instagram.com/calculadorasdeenfermagem/" },
+      { "name": "TikTok", "icon": "fab fa-tiktok", "url": "https://www.tiktok.com/@calculadorasdeenf" },
+      { "name": "YouTube", "icon": "fab fa-youtube", "url": "https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" }
+    ],
+    "copyrightName": "Calculadoras de Enfermagem"
   }
 }

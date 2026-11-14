@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     TEMPLATE PADRÃO v5 — Calculadoras de Enfermagem
+     ============================================================
+     Como usar:
+     1. Copie este arquivo para o destino (ex.: calculadoras/nova/index.html).
+     2. Substitua os marcadores {{...}} pelos valores da página.
+     3. Ajuste o caminho do module-loader-v5.js conforme a profundidade:
+        raiz:                 ./assets/js/module-loader-v5.js
+        calculadoras/<x>/:    ../../assets/js/module-loader-v5.js
+     O carregador injeta automaticamente: barra de acessibilidade,
+     cabeçalho com rotas (gerado de data/site.json), rodapé com logotipo
+     oficial e sistema de cookies. Nada disso precisa ser copiado à mão.
+
+     Para calculadoras dirigidas por JSON, defina window.PAGE_CONFIG com o
+     JSON validado por schema/calculadora (ver configs/insulina-config.json
+     e MAPEAMENTO-IDS.md).
+     ============================================================ -->
+<html lang="pt-br" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>{{TITULO}} | Calculadoras de Enfermagem</title>
+  <meta name="description" content="{{DESCRICAO}}"/>
+  <meta name="keywords" content="{{PALAVRAS_CHAVE}}"/>
+  <meta name="author" content="Calculadoras de Enfermagem"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/{{ROTA}}"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/{{ROTA}}"/>
+  <meta property="og:title" content="{{TITULO}}"/>
+  <meta property="og:description" content="{{DESCRICAO}}"/>
+  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp"/>
+  <meta property="og:locale" content="pt_BR"/>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="{{TITULO}}"/>
+  <meta name="twitter:description" content="{{DESCRICAO}}"/>
+
+  <!-- Favicon oficial -->
+  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/favicon-calculadoras-de-enfermagem.webp" type="image/webp"/>
+
+  <!-- Fontes e ícones padrão do site -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- Tailwind (tokens do projeto) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (typeof tailwind !== 'undefined') {
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: { nunito: ['"Nunito Sans"', 'sans-serif'], inter: ['Inter', 'sans-serif'] },
+            colors: { 'nurse-primary': '#1A3E74', 'nurse-secondary': '#00838f', 'nurse-bgDark': '#0F172A' }
+          }
+        }
+      };
+    }
+  </script>
+
+  <!-- Integrador de componentes modulares (cabeçalho, rodapé, acessibilidade) -->
+  <script src="{{CAMINHO_RELATIVO}}assets/js/module-loader-v5.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter">
+
+  <!-- Os contêineres abaixo são opcionais: o module-loader-v5 os cria
+       automaticamente caso não existam. Declará-los evita salto de layout. -->
+  <div id="accessibility-container"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50 shadow-sm" role="banner"></div>
+
+  <main id="main-content" class="max-w-6xl mx-auto px-4 pt-8 pb-12">
+    <header class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-nunito font-black text-nurse-primary dark:text-cyan-400 mb-2">{{TITULO}}</h1>
+      <p class="text-slate-600 dark:text-slate-400">{{DESCRICAO}}</p>
+    </header>
+
+    <!-- CONTEÚDO DA PÁGINA AQUI -->
+
+  </main>
+
+  <div id="footer-container" class="relative z-10 transition-opacity duration-500 opacity-50" role="contentinfo"></div>
+
+</body>
+</html>
