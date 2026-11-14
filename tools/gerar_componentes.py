@@ -183,7 +183,37 @@ def gerar_mega_item(item, base, quebradas):
 </li>"""
 
 
+def overlay_de_idioma(code):
+    """Há tradução publicada só quando existe configs/i18n/<code>/*.json."""
+    pasta = RAIZ / "configs" / "i18n" / str(code)
+    return pasta.is_dir() and any(pasta.glob("*.json"))
+
+
+def idiomas_publicaveis(idiomas):
+    padrao = idiomas.get("default")
+    grupos = []
+    for grupo in idiomas.get("groups") or []:
+        itens = [
+            it for it in grupo.get("items") or []
+            if it.get("code") == padrao or overlay_de_idioma(it.get("code"))
+        ]
+        if itens:
+            novo = dict(grupo)
+            novo["items"] = itens
+            grupos.append(novo)
+    saida = dict(idiomas)
+    saida["groups"] = grupos
+    return saida
+
+
+def href_idioma(it, padrao, base):
+    if it["code"] == padrao or not overlay_de_idioma(it["code"]):
+        return abs_url(base, "index.html")
+    return abs_url(base, f"{it['code']}/")
+
+
 def gerar_idiomas_desktop(idiomas, base):
+    idiomas = idiomas_publicaveis(idiomas)
     padrao = idiomas["default"]
     bandeira_padrao = None
     triggers, contents = [], []
@@ -198,7 +228,7 @@ def gerar_idiomas_desktop(idiomas, base):
             if it["code"] == padrao:
                 bandeira_padrao = it
             itens.append(
-                f'<li>\n    <a href="#" data-lang="{it["code"]}" onclick="selectLanguage(event, \'{it["code"]}\')">\n'
+                f'<li>\n    <a href="{escape(href_idioma(it, padrao, base))}" data-lang="{escape(it["code"])}" hreflang="{escape(it["code"])}">\n'
                 f'        <img src="{escape(abs_url(base, it["flag"]))}" alt="{escape(it["label"])}" class="idioma-flag-link">\n'
                 f'        {escape(it["label"])}\n    </a>\n</li>'
             )
@@ -322,6 +352,7 @@ def gerar_menu_mobile(cfg, base, quebradas):
 
 
 def gerar_idiomas_mobile(idiomas, base):
+    idiomas = idiomas_publicaveis(idiomas)
     padrao = idiomas["default"]
     todos = [it for g in idiomas["groups"] for it in g["items"]]
     atual = next((it for it in todos if it["code"] == padrao), todos[0])
@@ -329,7 +360,7 @@ def gerar_idiomas_mobile(idiomas, base):
     for it in todos:
         ativo = " active" if it["code"] == padrao else ""
         flags.append(
-            f'<a href="#" data-lang="{it["code"]}" class="language-flag-item{ativo}" title="{escape(it["label"])}">\n'
+            f'<a href="{escape(href_idioma(it, padrao, base))}" data-lang="{escape(it["code"])}" hreflang="{escape(it["code"])}" class="language-flag-item{ativo}" title="{escape(it["label"])}">\n'
             f'    <img src="{escape(abs_url(base, it["flag"]))}" alt="{escape(it["label"])}">\n</a>'
         )
     return f"""<div class="mobile-language-section" id="mobile-idiomas-section">

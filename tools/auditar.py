@@ -30,6 +30,7 @@ RELATORIO = RAIZ / "docs" / "relatorio-auditoria.md"
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import gerar_componentes  # noqa: E402
+import gerar_conteudo  # noqa: E402
 import gerar_paginas  # noqa: E402
 
 PASTAS_FORA_DO_SITE = {".git", "node_modules", "tools", "docs", "schema", "templates", ".cursor"}
@@ -64,6 +65,11 @@ def check_paginas():
     _validas, erros = gerar_paginas.configs_validas()
     falhas.extend(erros)
     dessinc = [] if erros else gerar_paginas.gerar(somente_checar=True)
+    falhas_conteudo = gerar_conteudo.gerar(somente_checar=True)
+    conteudo_erros = [f for f in falhas_conteudo if not f.endswith(".html")]
+    conteudo_dessinc = [f for f in falhas_conteudo if f.endswith(".html")]
+    falhas.extend(conteudo_erros)
+    dessinc.extend(conteudo_dessinc)
     return falhas, dessinc
 
 
@@ -100,6 +106,10 @@ def check_orfaos():
             continue  # fontes de dados têm consumidores via tools/
         if rel.name == "index.html":
             continue  # alcançável pela URL do diretório
+        if rel.parts == (rel.name,) and rel.suffix == ".html":
+            texto = arq.read_text(encoding="utf-8", errors="replace")
+            if 'url=calculadoras/' in texto and "http-equiv=\"refresh\"" in texto:
+                continue  # apelido gerado da calculadora; a URL canônica é a pasta
         candidatos.append((arq, rel))
 
     orfaos = []

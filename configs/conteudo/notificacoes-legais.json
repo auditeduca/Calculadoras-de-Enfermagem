@@ -1,0 +1,63 @@
+{
+  "id": "notificacoes-legais",
+  "title": "Avisos e Notificações Legais",
+  "description": "Consulte as notificações legais, isenções de responsabilidade médica e termos de propriedade intelectual das Calculadoras de Enfermagem.",
+  "keywords": "notificações legais, isenção médica, termos de uso, direito autoral enfermagem, responsabilidade técnica, avisos legais saúde",
+  "lead": "Leia atentamente os termos de utilização, isenções de responsabilidade técnica e direitos de propriedade intelectual da nossa plataforma.",
+  "sections": [
+    {
+      "heading": "",
+      "paragraphs": [
+        "O conteúdo desta plataforma é meramente informativo e não substitui o julgamento clínico do enfermeiro."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Isenção de Responsabilidade Clínica",
+      "paragraphs": [
+        "As Calculadoras de Enfermagem fornecem resultados baseados em fórmulas matemáticas validadas pela literatura científica. No entanto, o utilizador assume total responsabilidade pela introdução correta dos dados e pela interpretação dos resultados dentro do contexto assistencial. O software é um suporte à decisão e nunca uma ordem absoluta."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Propriedade Intelectual",
+      "paragraphs": [
+        "Todo o design, código-fonte original, textos e logótipos são propriedade das Calculadoras de Enfermagem. É proibida a reprodução total ou parcial para fins comerciais sem autorização prévia. O uso acadêmico e assistencial pessoal é livre, desde que mantida a citação da fonte original."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Limitação de Garantias Técnicas",
+      "paragraphs": [
+        "A plataforma é fornecida \"como está\", sem garantias implícitas de disponibilidade ininterrupta. Embora façamos esforços hercúleos para garantir a precisão de 100%, não nos responsabilizamos por perdas de dados, erros de rede ou falhas técnicas de terceiros que possam afetar o funcionamento das ferramentas."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Jurisdição e Atualização de Termos",
+      "paragraphs": [
+        "Estes termos podem ser atualizados a qualquer momento sem aviso prévio para refletir mudanças na legislação de saúde ou na arquitetura técnica. Ao utilizar a plataforma, o profissional declara-se ciente e concorda com estas diretrizes. Eventuais litígios serão resolvidos no foro da comarca da sede administrativa da plataforma.",
+        "\"A transparência jurídica protege tanto o profissional quanto a inovação tecnológica.\""
+      ],
+      "items": []
+    }
+  ],
+  "related": [
+    {
+      "href": "nossocompromisso.html",
+      "title": "Nosso Compromisso",
+      "text": "Governança, transparência e sustentabilidade digital na prática."
+    },
+    {
+      "href": "objetivo.html",
+      "title": "Objetivos Estratégicos",
+      "text": "A visão técnica e científica que guia o desenvolvimento da plataforma."
+    },
+    {
+      "href": "missao.html",
+      "title": "Missão, Visão e Valores",
+      "text": "O compromisso ético e os pilares técnicos que sustentam o projeto."
+    }
+  ],
+  "kind": "pagina"
+}

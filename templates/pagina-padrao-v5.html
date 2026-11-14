@@ -2,18 +2,10 @@
 <!-- ============================================================
      TEMPLATE PADRÃO v5 — Calculadoras de Enfermagem
      ============================================================
-     Como usar:
-     1. Copie este arquivo para o destino (ex.: calculadoras/nova/index.html).
-     2. Substitua os marcadores {{...}} pelos valores da página.
-     3. Ajuste o caminho do module-loader-v5.js conforme a profundidade:
-        raiz:                 ./assets/js/module-loader-v5.js
-        calculadoras/<x>/:    ../../assets/js/module-loader-v5.js
-     O carregador injeta automaticamente: barra de acessibilidade,
-     cabeçalho com rotas (gerado de data/site.json), rodapé com logotipo
-     oficial e sistema de cookies. Nada disso precisa ser copiado à mão.
-
-     Calculadoras novas não copiam este arquivo: edite configs/paginas/<id>.json
-     e rode python3 tools/gerar_paginas.py. O runtime é js/calculadora.js.
+     Páginas novas não copiam este arquivo.
+     Calculadora: configs/paginas/<id>.json e python3 tools/gerar_paginas.py.
+     Institucional, home, mapa ou notificação: configs/conteudo/<id>.json
+     e python3 tools/gerar_conteudo.py. A casca gerada é templates/pagina-casca.html.
      ============================================================ -->
 <html lang="pt-br" class="scroll-smooth">
 <head>

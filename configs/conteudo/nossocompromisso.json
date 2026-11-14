@@ -1,0 +1,63 @@
+{
+  "id": "nossocompromisso",
+  "title": "Sustentabilidade Digital",
+  "description": "Nosso Compromisso com a Sustentabilidade Digital: Acreditamos em um mundo digital mais consciente, acessível e ecológico através de código eficiente e baixo impacto.",
+  "keywords": "sustentabilidade digital, código eficiente, acessibilidade web, baixo impacto ambiental, enfermagem digital, TI verde",
+  "lead": "Acreditamos em um mundo digital mais consciente, acessível e ecológico. Conheça as nossas medidas concretas.",
+  "sections": [
+    {
+      "heading": "",
+      "paragraphs": [
+        "Reduzir a nossa pegada digital é um compromisso ético com o futuro da saúde e do planeta."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Hospedagem e Infraestrutura",
+      "paragraphs": [
+        "Atualmente, nossa hospedagem não é certificada pela The Green Web Foundation ou por outras iniciativas de energia renovável. Reconhecemos essa limitação e, por isso, compensamos com medidas concretas em outras áreas, como otimização de código e redução de consumo de dados. Seguimos avaliando fornecedores com menor impacto ambiental para migrações futuras."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Código Eficiente e Performance",
+      "paragraphs": [
+        "Utilizamos Tailwind CSS otimizado com eliminação de classes não utilizadas. Nossas imagens são comprimidas no formato WebP com loading=\"lazy\", e evitamos bibliotecas pesadas desnecessárias para garantir um carregamento rápido com o menor consumo energético possível."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Acessibilidade como Princípio",
+      "paragraphs": [
+        "Aplicamos boas práticas para tornar nossos conteúdos inclusivos: contraste de cores de acordo com o padrão WCAG AAA, navegação compatível com leitores de tela e teclado, e uso de landmarks semânticos. A inclusão é o pilar central da nossa sustentabilidade social e digital."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Monitoramento e Relatórios",
+      "paragraphs": [
+        "Monitoramos nossa pegada digital utilizando ferramentas como Website Carbon Calculator e EcoGrader. Publicamos relatórios periódicos sobre consumo energético estimado por página e melhorias implementadas para reduzir peso e requisições.",
+        "\"Reduzindo bits, preservando o planeta e incluindo profissionais.\""
+      ],
+      "items": []
+    }
+  ],
+  "related": [
+    {
+      "href": "tecnologiaverde.html",
+      "title": "Inovação Verde",
+      "text": "Como as soluções digitais podem ser aliadas da preservação ambiental na saúde."
+    },
+    {
+      "href": "objetivo.html",
+      "title": "Objetivos Estratégicos",
+      "text": "A visão técnica e científica que guia o desenvolvimento da nossa plataforma clínica."
+    },
+    {
+      "href": "missao.html",
+      "title": "Missão e Valores",
+      "text": "O compromisso ético e os pilares técnicos que sustentam o nosso projeto assistencial."
+    }
+  ],
+  "kind": "pagina"
+}

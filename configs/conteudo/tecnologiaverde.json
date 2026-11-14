@@ -1,0 +1,63 @@
+{
+  "id": "tecnologiaverde",
+  "title": "Tecnologia Verde na Enfermagem",
+  "description": "Saiba como a plataforma Calculadoras de Enfermagem aplica os princípios da Tecnologia Verde: sustentabilidade digital, eficiência energética e baixo impacto ambiental.",
+  "keywords": "tecnologia verde, sustentabilidade digital, enfermagem sustentável, saúde eco-friendly, eficiência energética, TI verde",
+  "lead": "Promovendo um ecossistema digital de baixo impacto ambiental, focado na eficiência e na responsabilidade ecológica na saúde.",
+  "sections": [
+    {
+      "heading": "",
+      "paragraphs": [
+        "Nosso compromisso vai além do código: buscamos a neutralidade digital através de práticas sustentáveis e conscientes."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Eficiência Energética Digital",
+      "paragraphs": [
+        "Desenvolvemos algoritmos otimizados que exigem menor processamento de CPU e consumo de memória. Isso resulta em um menor consumo de energia nos dispositivos dos usuários e servidores, contribuindo diretamente para a redução da pegada de carbono digital."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Design Minimalista e Limpo",
+      "paragraphs": [
+        "Adotamos o princípio de \"menos é mais\". Ao reduzir o uso de scripts desnecessários e imagens pesadas, diminuímos a quantidade de dados transferidos globalmente. Um design limpo é um design sustentável."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Infraestrutura Estática",
+      "paragraphs": [
+        "Nossa arquitetura baseada em arquivos estáticos e entrega via CDN elimina a necessidade de bancos de dados ativos 24/7 para consultas simples. Isso reduz drasticamente a infraestrutura de servidores necessária para manter a plataforma no ar."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Educação Ambiental na Saúde",
+      "paragraphs": [
+        "Acreditamos que o enfermeiro tem um papel vital na gestão de resíduos e recursos. Integramos conceitos de sustentabilidade em nossa base didática, incentivando práticas que reduzam o desperdício de insumos no ambiente hospitalar.",
+        "\"Cuidar do planeta é uma extensão natural do cuidar do ser humano.\""
+      ],
+      "items": []
+    }
+  ],
+  "related": [
+    {
+      "href": "objetivo.html",
+      "title": "Objetivos da Plataforma",
+      "text": "Conheça nossos pilares técnicos e científicos para a assistência."
+    },
+    {
+      "href": "missao.html",
+      "title": "Nossa Identidade",
+      "text": "Os valores éticos que guiam nossa atuação tecnológica."
+    },
+    {
+      "href": "nossocompromisso.html",
+      "title": "Ecossistema Responsável",
+      "text": "Como garantimos uma tecnologia humana e sustentável."
+    }
+  ],
+  "kind": "pagina"
+}

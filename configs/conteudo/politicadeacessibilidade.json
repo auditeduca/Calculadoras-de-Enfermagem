@@ -1,0 +1,63 @@
+{
+  "id": "politicadeacessibilidade",
+  "title": "Política de Acessibilidade Digital",
+  "description": "Política de Acessibilidade Digital das Calculadoras de Enfermagem. Nosso compromisso com a inclusão, conformidade WCAG e recursos assistivos para profissionais de saúde.",
+  "keywords": "acessibilidade digital, WCAG 2.1, inclusão digital, enfermagem acessível, tecnologia assistiva, suporte deficiência",
+  "lead": "A inclusão digital não é apenas um recurso técnico, mas um direito fundamental. Conheça as diretrizes que tornam a nossa plataforma acessível a todos.",
+  "sections": [
+    {
+      "heading": "",
+      "paragraphs": [
+        "O nosso objetivo é atingir a conformidade total com as diretrizes WCAG para garantir que todos os enfermeiros possam utilizar estas ferramentas com autonomia."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Conformidade com WCAG",
+      "paragraphs": [
+        "Desenvolvemos a plataforma seguindo as Web Content Accessibility Guidelines (WCAG) 2.1, focando-nos nos níveis AA e AAA. Isto inclui a garantia de contraste de cores adequado, textos alternativos para imagens e uma estrutura semântica que permite a compreensão clara por tecnologias assistivas."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Navegação por Teclado e Voz",
+      "paragraphs": [
+        "Todas as funções e calculadoras podem ser operadas exclusivamente via teclado, utilizando a tecla Tab para navegação lógica. Além disso, as nossas etiquetas ARIA (Accessible Rich Internet Applications) garantem que leitores de ecrã possam descrever as ações de forma precisa."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Contraste e Fontes Adaptáveis",
+      "paragraphs": [
+        "Disponibilizamos uma barra de ferramentas nativa que permite alterar o tamanho da fonte e alternar entre o Modo Claro e Escuro com um clique. Utilizamos fontes com alta legibilidade (Nunito Sans e Inter) para minimizar a fadiga visual e apoiar utilizadores com dislexia ou baixa visão."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Monitoramento e Feedback",
+      "paragraphs": [
+        "Realizamos auditorias periódicas utilizando ferramentas como Lighthouse e WAVE para identificar barreiras de acesso. Caso encontre alguma dificuldade de navegação, por favor, contacte-nos através do e-mail ciadeenfermagem@gmail.com para que possamos corrigir a falha prontamente.",
+        "\"A verdadeira inovação na saúde começa com a inclusão de todos os profissionais.\""
+      ],
+      "items": []
+    }
+  ],
+  "related": [
+    {
+      "href": "politica.html",
+      "title": "Privacidade de Dados",
+      "text": "Como protegemos as suas informações e garantimos a conformidade com a LGPD."
+    },
+    {
+      "href": "nossocompromisso.html",
+      "title": "Nosso Compromisso",
+      "text": "Governança, transparência e sustentabilidade digital na prática assistencial."
+    },
+    {
+      "href": "impactodigital.html",
+      "title": "Impacto Digital",
+      "text": "Veja como a tecnologia está a transformar o cuidado de enfermagem moderno."
+    }
+  ],
+  "kind": "pagina"
+}

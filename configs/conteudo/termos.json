@@ -1,0 +1,60 @@
+{
+  "id": "termos",
+  "title": "Termos e Condições de Uso",
+  "description": "Leia os Termos e Condições de Uso das Calculadoras de Enfermagem. Entenda nossas diretrizes, isenção de responsabilidade e regras de utilização da plataforma.",
+  "keywords": "termos de uso, condições de uso, isenção de responsabilidade, ética enfermagem, regulamento plataforma, institucional enfermagem",
+  "lead": "Diretrizes para a utilização de nossas ferramentas digitais e o compromisso ético na assistência de enfermagem.",
+  "sections": [
+    {
+      "heading": "Aceitação dos Termos",
+      "paragraphs": [
+        "Ao acessar a plataforma Calculadoras de Enfermagem, você concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis. Se você não concordar com algum destes termos, está proibido de usar ou acessar este site."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Isenção de Responsabilidade Médica",
+      "paragraphs": [
+        "Os materiais e ferramentas neste site são fornecidos apenas para fins informativos e educacionais. As calculadoras automáticas (gotejamento, diluição, escalas) são baseadas em literatura científica, mas:"
+      ],
+      "items": [
+        "Não substituem a conferência manual obrigatória por parte do profissional de saúde.",
+        "A responsabilidade final pela administração de medicamentos é exclusiva do profissional executor, conforme o Código de Ética de Enfermagem.",
+        "Não garantimos que as ferramentas estejam livres de erros humanos ou técnicos em todas as circunstâncias."
+      ]
+    },
+    {
+      "heading": "Uso de Dados e Privacidade",
+      "paragraphs": [
+        "Não coletamos dados sensíveis de pacientes através de nossas calculadoras. Os valores inseridos para cálculos são processados localmente no seu dispositivo. Para mais detalhes, consulte nossa Política de Privacidade."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Propriedade Intelectual",
+      "paragraphs": [
+        "É concedida permissão para baixar temporariamente uma cópia dos materiais no site apenas para visualização transitória pessoal e não comercial. Esta é a concessão de uma licença, não uma transferência de título.",
+        "\"A transparência e a responsabilidade técnica fundamentam nossa presença digital.\""
+      ],
+      "items": []
+    }
+  ],
+  "related": [
+    {
+      "href": "politicadeprivacidade.html",
+      "title": "Política de Privacidade",
+      "text": "Saiba como tratamos seus dados e garantimos sua segurança digital."
+    },
+    {
+      "href": "missao.html",
+      "title": "Missão, Visão e Valores",
+      "text": "O compromisso ético por trás de nossa atuação tecnológica."
+    },
+    {
+      "href": "tecnologiaverde.html",
+      "title": "Tecnologia Verde",
+      "text": "Como operamos um sistema digital de baixo impacto ambiental."
+    }
+  ],
+  "kind": "pagina"
+}
