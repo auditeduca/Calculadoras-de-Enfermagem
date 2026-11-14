@@ -122,6 +122,37 @@ def ler_partial(nome):
     return (PARTIALS / nome).read_text(encoding="utf-8")
 
 
+def absolutizar_hrefs(html, base):
+    """Converte hrefs internos do partial para a URL absoluta do site."""
+    marca = 'href="'
+    partes = []
+    resto = html
+    while True:
+        i = resto.find(marca)
+        if i < 0:
+            partes.append(resto)
+            break
+        fim = resto.find('"', i + len(marca))
+        href = resto[i + len(marca):fim]
+        partes.append(resto[:i] + f'href="{escape(abs_url(base, href))}"')
+        resto = resto[fim + 1:]
+    return "".join(partes)
+
+
+def hrefs_internos(html):
+    marca = 'href="'
+    resto = html
+    achados = []
+    while True:
+        i = resto.find(marca)
+        if i < 0:
+            break
+        fim = resto.find('"', i + len(marca))
+        achados.append(resto[i + len(marca):fim])
+        resto = resto[fim + 1:]
+    return achados
+
+
 # ---------------------------------------------------------------- geração
 
 def gerar_links(links, base, quebradas, indent=8):
@@ -489,7 +520,7 @@ def gerar_footer(cfg, quebradas):
     rodape = cfg["footer"]
     nome = escape(cfg["site"]["name"])
     logo_url = escape(abs_url(base, cfg["site"]["logoFooter"]))
-    cookies = ler_partial("cookies-v4.html").rstrip()
+    cookies = absolutizar_hrefs(ler_partial("cookies-v4.html"), base).rstrip()
 
     colunas = []
     for col in rodape["columns"]:

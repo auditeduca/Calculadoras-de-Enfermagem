@@ -603,6 +603,26 @@
           {
             "text": "Mapa do Site",
             "href": "mapa-do-site.html"
+          },
+          {
+            "text": "Busca por tópicos",
+            "href": "busca.html"
+          },
+          {
+            "text": "Responsabilidade no uso de IA",
+            "href": "responsabilidade-inteligencia-artificial.html"
+          },
+          {
+            "text": "Equipe editorial",
+            "href": "equipe-editorial.html"
+          },
+          {
+            "text": "Métricas do site",
+            "href": "metricas.html"
+          },
+          {
+            "text": "Fórum de enfermagem",
+            "href": "forum-enfermagem.html"
           }
         ]
       },
@@ -653,6 +673,10 @@
       {
         "text": "Política de Cookies",
         "href": "termos.html"
+      },
+      {
+        "text": "Política de Reembolso",
+        "href": "reembolso.html"
       }
     ],
     "social": [

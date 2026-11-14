@@ -57,6 +57,11 @@ def check_site_json():
     for col in cfg.get("footer", {}).get("columns", []):
         varrer_links(col.get("links", []))
     varrer_links(cfg.get("footer", {}).get("legalLinks", []))
+    for href in gerar_componentes.hrefs_internos(
+        (RAIZ / "tools" / "partials" / "cookies-v4.html").read_text(encoding="utf-8")
+    ):
+        if not gerar_componentes.rota_existe(href):
+            quebradas.append(f"cookies: {href}")
     return falhas, quebradas
 
 
