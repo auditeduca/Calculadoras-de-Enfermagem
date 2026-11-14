@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!-- gerado por tools/gerar_conteudo.py — não editar à mão -->
+<html lang="pt-br" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Métricas do Site | Calculadoras de Enfermagem</title>
+  <meta name="description" content="Painel de métricas públicas do site Calculadoras de Enfermagem, com acessos, páginas, países, cidades e evolução do público."/>
+  <meta name="keywords" content="métricas, audiência, acessos, calculadoras de enfermagem"/>
+  <meta name="author" content="Calculadoras de Enfermagem"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/metricas.html"/>
+  <link rel="alternate" hreflang="pt-br" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/metricas.html"/>
+  <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/metricas.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Métricas do Site | Calculadoras de Enfermagem"/>
+  <meta property="og:description" content="Painel de métricas públicas do site Calculadoras de Enfermagem, com acessos, páginas, países, cidades e evolução do público."/>
+  <meta property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/metricas.html"/>
+  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Métricas do Site | Calculadoras de Enfermagem"/>
+  <meta name="twitter:description" content="Painel de métricas públicas do site Calculadoras de Enfermagem, com acessos, páginas, países, cidades e evolução do público."/>
+  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/favicon-calculadoras-de-enfermagem.webp" type="image/webp"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: {
+      fontFamily: { nunito: ['"Nunito Sans"', 'sans-serif'], inter: ['Inter', 'sans-serif'] },
+      colors: { 'nurse-primary': '#1A3E74', 'nurse-secondary': '#00838f', 'nurse-accent': '#00838f', 'nurse-bgDark': '#0F172A' }
+    }}};
+  </script>
+<style>
+.metricas-shell { width: min(1320px, 100%); margin: 0 auto; }
+.metricas-breadcrumb { display: flex; gap: .55rem; align-items: center; color: #64748b; font-size: .9rem; margin: 0 0 1rem; }
+.metricas-breadcrumb a { color: #1a3e74; font-weight: 700; }
+.metricas-hero { border-radius: 18px; background: linear-gradient(135deg, #1A3E74 0%, #1E4D8C 60%, #163269 100%); color: #fff; padding: 1.65rem 1.5rem; margin-bottom: 1rem; }
+.metricas-hero h1 { font-size: clamp(1.6rem, 2.8vw, 2.25rem); margin: .35rem 0 .45rem; }
+.metricas-toolbar, .metricas-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; }
+.metricas-toolbar { padding: .8rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .7rem; margin-bottom: 1rem; }
+.metricas-controls { display: flex; flex-wrap: wrap; gap: .5rem; }
+.metricas-controls button { font: inherit; border: 1px solid #d8e0ea; background: #fff; border-radius: 9px; padding: .48rem .65rem; cursor: pointer; font-weight: 700; }
+.metricas-controls button.active { background: #eaf1ff; border-color: #a9c5ff; color: #174ea6; }
+.metricas-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
+.metricas-card { padding: 1rem; }
+.metricas-card h2 { font-size: 1rem; color: #1a3e74; margin: 0 0 .75rem; }
+.metricas-kpi-label { font-size: .72rem; color: #64748b; text-transform: uppercase; letter-spacing: .06em; }
+.metricas-kpi-value { font-size: 1.7rem; font-weight: 900; margin-top: .25rem; }
+.metricas-note { font-size: .8rem; line-height: 1.6; color: #64748b; }
+.metricas-dot { width: 8px; height: 8px; border-radius: 50%; background: #94a3b8; display: inline-block; }
+.metricas-dot.ok { background: #16a34a; }
+.metricas-dot.err { background: #dc2626; }
+.metricas-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.metricas-table th, .metricas-table td { padding: .5rem; border-bottom: 1px solid #edf2f7; text-align: left; }
+.metricas-table td.num { text-align: right; }
+@media (max-width: 900px) { .metricas-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+  <script src="assets/js/module-loader-v5.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter">
+  <div id="accessibility-container"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px]"></div>
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 py-8 md:py-12 w-full">
+<div class="metricas-shell">
+<nav class="metricas-breadcrumb" aria-label="Trilha"><a href="index.html">Início</a><span aria-hidden="true">&gt;</span><span>Métricas</span></nav>
+<section class="metricas-hero">
+  <p style="font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase">Painel de audiência</p>
+  <h1>Métricas do Site</h1>
+  <p style="margin:0;max-width:820px">Acompanhamento público de audiência, páginas, países, cidades e evolução do site. Fonte: Google Analytics 4, propriedade 522498030. A credencial permanece no servidor.</p>
+  <p id="ultima-atualizacao" style="margin:.6rem 0 0;font-size:.8rem">Última atualização: —</p>
+</section>
+<section class="metricas-toolbar" aria-label="Controles de período">
+  <div class="metricas-controls">
+    <button type="button" class="periodo active" data-range="last_30_days">30 dias</button>
+    <button type="button" class="periodo" data-range="last_7_days">7 dias</button>
+    <button type="button" class="periodo" data-range="this_month_inc">Este mês</button>
+    <button type="button" class="periodo" data-range="last_month">Mês anterior</button>
+  </div>
+  <div id="status-operacional" style="font-size:.8rem;color:#64748b"><span class="metricas-dot"></span> <span>Aguardando dados…</span></div>
+</section>
+<section class="metricas-grid" aria-label="Indicadores principais">
+  <article class="metricas-card"><div class="metricas-kpi-label">Usuários ativos</div><div class="metricas-kpi-value" id="k-users">—</div></article>
+  <article class="metricas-card"><div class="metricas-kpi-label">Sessões</div><div class="metricas-kpi-value" id="k-sessions">—</div></article>
+  <article class="metricas-card"><div class="metricas-kpi-label">Visualizações</div><div class="metricas-kpi-value" id="k-views">—</div></article>
+  <article class="metricas-card"><div class="metricas-kpi-label">Engajamento</div><div class="metricas-kpi-value" id="k-eng">—</div></article>
+</section>
+<section class="metricas-card" style="margin-bottom:12px">
+  <h2>Páginas mais acessadas</h2>
+  <div style="overflow:auto;max-height:360px"><table class="metricas-table" id="tabela-paginas"><thead><tr><th>#</th><th>Página</th><th class="num">Views</th><th class="num">Usuários</th></tr></thead><tbody><tr><td colspan="4">Carregando…</td></tr></tbody></table></div>
+</section>
+<section class="metricas-card">
+  <h2>Atualização e metodologia</h2>
+  <p class="metricas-note">O painel consulta a propriedade GA4 por meio da Google Analytics Data API, através de uma Edge Function. A credencial permanece no servidor e não é enviada ao navegador. A API só autoriza a origem do site publicado; fora dela os indicadores permanecem em branco.</p>
+  <p class="metricas-note">Referências: <a href="https://developers.google.com/analytics/devguides/reporting/data/v1">Google Analytics Data API</a>, <a href="https://supabase.com/docs/guides/functions">Supabase Edge Functions</a>.</p>
+</section>
+</div>
+  </main>
+
+  <div id="footer-container"></div>
+  <script src="js/metricas.js" defer></script>
+
+</body>
+</html>

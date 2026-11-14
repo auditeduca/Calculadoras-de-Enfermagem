@@ -43,6 +43,22 @@
             {
               "text": "Busca por tópicos",
               "href": "busca.html"
+            },
+            {
+              "text": "Responsabilidade no uso de IA",
+              "href": "responsabilidade-inteligencia-artificial.html"
+            },
+            {
+              "text": "Equipe editorial",
+              "href": "equipe-editorial.html"
+            },
+            {
+              "text": "Métricas do site",
+              "href": "metricas.html"
+            },
+            {
+              "text": "Fórum de enfermagem",
+              "href": "forum-enfermagem.html"
             }
           ]
         },
@@ -93,6 +109,10 @@
             {
               "text": "Isenção de Responsabilidade",
               "href": "notificacoes-legais.html"
+            },
+            {
+              "text": "Política de Reembolso",
+              "href": "reembolso.html"
             }
           ]
         }
