@@ -1,0 +1,9 @@
+{
+  "id": "conta",
+  "kind": "conta",
+  "title": "Conta",
+  "description": "Área de quem usa o site. Nesta origem não há sessão remota nem armazenamento de prontuário.",
+  "keywords": "conta, visitante, calculadoras de enfermagem",
+  "lead": "A conta desta origem identifica o visitante. Ela não cria usuário, não pede senha e não guarda dado de paciente.",
+  "robots": "noindex, follow"
+}

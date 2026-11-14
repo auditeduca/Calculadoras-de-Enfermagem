@@ -1,0 +1,17 @@
+{
+  "id": "modelo-artigo",
+  "kind": "modelo",
+  "profile": "article",
+  "template_id": "TPL-ARTICLE-001",
+  "title": "Modelo de artigo",
+  "description": "Molde reutilizável de artigo: título, abertura, seções e referências.",
+  "keywords": "modelo, artigo, conteúdo",
+  "lead": "Um artigo novo nasce deste molde. O texto clínico só entra quando houver fonte conferida.",
+  "slots": [
+    "Título",
+    "Abertura",
+    "Trilha",
+    "Seções",
+    "Referências"
+  ]
+}

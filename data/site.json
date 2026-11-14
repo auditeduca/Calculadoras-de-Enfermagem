@@ -8,7 +8,7 @@
     "logoFooter": "assets/images/logotipo-calculadoras-de-enfermagem.webp",
     "favicon": "assets/images/favicon-calculadoras-de-enfermagem.webp",
     "author": "Calculadoras de Enfermagem",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "versionDate": "2026-11-14",
     "social": {
       "twitter": "@CalculadorasEnf"
@@ -61,6 +61,28 @@
             {
               "text": "Fórum de enfermagem",
               "href": "forum-enfermagem.html"
+            }
+          ]
+        },
+        {
+          "id": "areas",
+          "label": "Áreas",
+          "links": [
+            {
+              "text": "Entrar",
+              "href": "entrar.html"
+            },
+            {
+              "text": "Conta",
+              "href": "conta.html"
+            },
+            {
+              "text": "Área do assinante",
+              "href": "assinante.html"
+            },
+            {
+              "text": "Modelos",
+              "href": "modelos.html"
             }
           ]
         },
@@ -455,6 +477,10 @@
             {
               "text": "Notificações compulsórias",
               "href": "notificacao-compulsoria.html"
+            },
+            {
+              "text": "SBAR — passagem de plantão",
+              "href": "sbar.html"
             }
           ]
         }
@@ -625,6 +651,22 @@
           {
             "text": "Fórum de enfermagem",
             "href": "forum-enfermagem.html"
+          },
+          {
+            "text": "Entrar",
+            "href": "entrar.html"
+          },
+          {
+            "text": "Conta",
+            "href": "conta.html"
+          },
+          {
+            "text": "Área do assinante",
+            "href": "assinante.html"
+          },
+          {
+            "text": "Modelos",
+            "href": "modelos.html"
           }
         ]
       },

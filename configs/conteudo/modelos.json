@@ -1,0 +1,35 @@
+{
+  "id": "modelos",
+  "kind": "modelos",
+  "title": "Modelos",
+  "description": "Moldes reutilizáveis de artigo, quiz, flashcard, caso e guia de bolso, no visual do site.",
+  "keywords": "modelos, artigo, quiz, flashcard, caso clínico, guia de bolso",
+  "lead": "Cada modelo declara os blocos que um conteúdo futuro precisa preencher. O visual é o desta versão, sem um design paralelo.",
+  "profiles": [
+    {
+      "href": "modelo-artigo.html",
+      "title": "Artigo",
+      "text": "Título, abertura, seções e referências."
+    },
+    {
+      "href": "modelo-quiz.html",
+      "title": "Quiz",
+      "text": "Perguntas, justificativa e objetivo de aprendizagem."
+    },
+    {
+      "href": "modelo-flashcard.html",
+      "title": "Flashcard",
+      "text": "Frente, verso e referência."
+    },
+    {
+      "href": "modelo-caso.html",
+      "title": "Caso",
+      "text": "Cenário, dados, pergunta e discussão."
+    },
+    {
+      "href": "modelo-guia.html",
+      "title": "Guia de bolso",
+      "text": "Passos curtos para consulta rápida."
+    }
+  ]
+}

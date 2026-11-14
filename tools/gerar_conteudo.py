@@ -106,6 +106,7 @@ def render_casca(cfg, corpo, extra="", head_extra="", depois="", main_class=MAIN
         "CANONICAL": esc(canonical),
         "OG_IMAGE": esc(og),
         "FAVICON": esc(favicon),
+        "ROBOTS": esc(cfg.get("robots") or "index, follow"),
         "BODY": corpo,
         "EXTRA": extra,
         "HEAD_EXTRA": head_extra,
@@ -504,11 +505,133 @@ def render_busca(cfg, site):
     return ESTILO_MAPA, miolo, ""
 
 
+def trilha(atual):
+    return (
+        '<nav class="text-sm text-slate-500 mb-6" aria-label="Trilha">'
+        '<a class="hover:underline" href="index.html">Início</a>'
+        f' <span aria-hidden="true">&gt;</span> <span>{esc(atual)}</span></nav>'
+    )
+
+
+def cartao(href, titulo, texto):
+    return (
+        f'<a href="{esc(href)}" class="block rounded-2xl border border-slate-200 dark:border-slate-700 '
+        'bg-white dark:bg-slate-900 p-5">'
+        f'<h3 class="font-bold text-nurse-primary dark:text-white">{esc(titulo)}</h3>'
+        f'<p class="text-sm text-slate-600 dark:text-slate-400 mt-1">{esc(texto)}</p></a>'
+    )
+
+
+def render_entrar(cfg):
+    return (
+        trilha(cfg["title"])
+        + f'<h1 class="text-3xl md:text-4xl font-black text-nurse-primary dark:text-white mb-4">{esc(cfg["title"])}</h1>'
+        + f'<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6">{esc(cfg.get("lead") or "")}</p>'
+        + '<div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 mb-6">'
+        + '<p class="font-bold text-nurse-primary dark:text-white mb-2">Autenticação desligada</p>'
+        + '<p class="text-slate-700 dark:text-slate-300">Neste endereço o site público abre sem entrar. '
+        + "Não há senha nem provedor de login nesta origem.</p></div>"
+        + '<div class="grid md:grid-cols-3 gap-4">'
+        + cartao("index.html", "Site público", "As calculadoras continuam abertas.")
+        + cartao("conta.html", "Conta", "A área de quem usa o site, sem sessão remota.")
+        + cartao("assinante.html", "Área do assinante", "A lista do que esta versão publicou.")
+        + "</div>"
+    )
+
+
+def render_conta(cfg):
+    return (
+        trilha(cfg["title"])
+        + f'<h1 class="text-3xl md:text-4xl font-black text-nurse-primary dark:text-white mb-4">{esc(cfg["title"])}</h1>'
+        + f'<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6">{esc(cfg.get("lead") or "")}</p>'
+        + '<dl class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 mb-6 space-y-3">'
+        + '<div><dt class="text-sm text-slate-500">Papel nesta origem</dt>'
+        + '<dd class="font-bold text-nurse-primary dark:text-white">Visitante</dd></div>'
+        + '<div><dt class="text-sm text-slate-500">Sessão remota</dt>'
+        + '<dd class="text-slate-700 dark:text-slate-300">Não há. A conta não guarda senha nem prontuário.</dd></div>'
+        + "</dl>"
+        + '<div class="grid md:grid-cols-3 gap-4">'
+        + cartao("index.html", "Ferramentas públicas", "O cálculo é o mesmo para todo mundo.")
+        + cartao("assinante.html", "Área do assinante", "O catálogo publicado nesta versão.")
+        + cartao("entrar.html", "Entrar", "A entrada fica desligada neste endereço.")
+        + "</div>"
+    )
+
+
+def render_assinante(cfg, site):
+    return (
+        trilha(cfg["title"])
+        + f'<h1 class="text-3xl md:text-4xl font-black text-nurse-primary dark:text-white mb-4">{esc(cfg["title"])}</h1>'
+        + f'<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">{esc(cfg.get("lead") or "")}</p>'
+        + '<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-8">O cálculo de cada ferramenta é o da página pública. '
+        + "Esta área não cria um segundo motor.</p>"
+        + render_diretorio(grupos_de(site, "ferramentas"))
+    )
+
+
+def render_modelos(cfg):
+    cards = "".join(
+        cartao(item["href"], item["title"], item.get("text") or "")
+        for item in cfg.get("profiles") or []
+    )
+    return (
+        trilha(cfg["title"])
+        + f'<h1 class="text-3xl md:text-4xl font-black text-nurse-primary dark:text-white mb-4">{esc(cfg["title"])}</h1>'
+        + f'<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6">{esc(cfg.get("lead") or "")}</p>'
+        + f'<div class="grid md:grid-cols-2 gap-4">{cards}</div>'
+    )
+
+
+def render_modelo(cfg):
+    itens = "".join(
+        '<li class="flex gap-2"><span class="text-nurse-secondary" aria-hidden="true">•</span>'
+        f"<span>{esc(slot)}</span></li>"
+        for slot in cfg.get("slots") or []
+    )
+    return (
+        trilha("Modelos")
+        + f'<p class="text-sm text-slate-500 mb-2">{esc(cfg.get("template_id") or "")} · {esc(cfg.get("profile") or "")}</p>'
+        + f'<h1 class="text-3xl md:text-4xl font-black text-nurse-primary dark:text-white mb-4">{esc(cfg["title"])}</h1>'
+        + f'<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6">{esc(cfg.get("lead") or "")}</p>'
+        + '<h2 class="text-xl font-black text-nurse-primary dark:text-white mb-3">Blocos</h2>'
+        + f'<ul class="space-y-2 mb-8 text-slate-700 dark:text-slate-300">{itens}</ul>'
+        + cartao("modelos.html", "Todos os modelos", "O mesmo molde serve para o próximo conteúdo.")
+    )
+
+
+def render_sbar(cfg):
+    campos = [
+        ("sbar-situacao", "Situação", "O que está acontecendo agora."),
+        ("sbar-contexto", "Contexto", "O que já se sabe e importa para o próximo plantão."),
+        ("sbar-avaliacao", "Avaliação", "O que você conclui a partir desses dados."),
+        ("sbar-recomendacao", "Recomendação", "O que precisa ser feito ou decidido."),
+    ]
+    blocos = []
+    for fid, rotulo, ajuda in campos:
+        blocos.append(
+            f'<label class="block mb-4" for="{fid}"><span class="font-bold text-nurse-primary dark:text-white">{esc(rotulo)}</span>'
+            f'<span class="block text-sm text-slate-500 mb-2">{esc(ajuda)}</span>'
+            f'<textarea id="{fid}" rows="4" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 '
+            'bg-white dark:bg-slate-950 p-3"></textarea></label>'
+        )
+    return (
+        trilha(cfg["title"])
+        + f'<h1 class="text-3xl md:text-4xl font-black text-nurse-primary dark:text-white mb-4">{esc(cfg["title"])}</h1>'
+        + f'<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6">{esc(cfg.get("lead") or "")}</p>'
+        + '<form id="sbar-form" class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6">'
+        + "".join(blocos)
+        + '<button id="sbar-copiar" type="button" class="rounded-full bg-nurse-primary text-white font-bold px-5 py-3">Copiar passagem</button>'
+        + '<p id="sbar-aviso" class="text-sm text-slate-500 mt-3" role="status"></p></form>'
+    )
+
+
 def extra(cfg):
     if cfg.get("kind") == "notificacao":
         return '  <script src="js/notificacao.js" defer></script>\n'
     if cfg.get("kind") == "busca":
         return '  <script src="js/busca.js" defer></script>\n'
+    if cfg.get("kind") == "sbar":
+        return '  <script src="js/sbar.js" defer></script>\n'
     if cfg.get("id") == "metricas":
         return '  <script src="js/metricas.js" defer></script>\n'
     return ""
@@ -522,10 +645,23 @@ def gerar(somente_checar=False):
     existentes = {rota(pid) for pid in paginas}
     divergencias = []
     for pid, cfg in paginas.items():
-        if cfg.get("kind") == "mapa":
+        tipo = cfg.get("kind")
+        if tipo == "mapa":
             estilo, miolo, depois = render_mapa(cfg, site)
             html = render_casca(cfg, miolo, extra(cfg), estilo, depois, MAIN_INSTITUCIONAL)
-        elif cfg.get("kind") == "busca":
+        elif tipo == "entrar":
+            html = render_casca(cfg, render_entrar(cfg), extra(cfg))
+        elif tipo == "conta":
+            html = render_casca(cfg, render_conta(cfg), extra(cfg))
+        elif tipo == "assinante":
+            html = render_casca(cfg, render_assinante(cfg, site), extra(cfg))
+        elif tipo == "modelos":
+            html = render_casca(cfg, render_modelos(cfg), extra(cfg))
+        elif tipo == "modelo":
+            html = render_casca(cfg, render_modelo(cfg), extra(cfg))
+        elif tipo == "sbar":
+            html = render_casca(cfg, render_sbar(cfg), extra(cfg))
+        elif tipo == "busca":
             estilo, miolo, depois = render_busca(cfg, site)
             html = render_casca(cfg, miolo, extra(cfg), estilo, depois, MAIN_INSTITUCIONAL)
         elif (layout := layout_de(pid)):

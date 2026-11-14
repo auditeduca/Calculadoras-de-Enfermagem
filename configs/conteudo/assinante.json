@@ -1,0 +1,9 @@
+{
+  "id": "assinante",
+  "kind": "assinante",
+  "title": "Área do assinante",
+  "description": "Catálogo do que esta versão publicou. O cálculo de cada ferramenta é o da página pública.",
+  "keywords": "assinante, catálogo, ferramentas publicadas, calculadoras de enfermagem",
+  "lead": "Esta tela lista o que a fonte única deixou publicado. Ela não é um segundo site e não altera o cálculo.",
+  "robots": "noindex, follow"
+}

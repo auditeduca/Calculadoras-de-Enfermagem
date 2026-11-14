@@ -3,6 +3,21 @@
 A versão publicada fica em `data/site.json` (`site.version`) e aparece no rodapé.
 O número usa três partes: mudança de molde, inclusão de páginas, correção.
 
+## 1.1.0 — 14 de novembro de 2026
+
+Áreas e modelos canônicos, no visual desta versão.
+
+Revisão das branches de `IndiciumFIN/dev-chatgpt-workspace`. Entrou o que
+serve a este site e cabe na casca atual:
+
+- Entrar, com a autenticação desligada nesta origem.
+- Conta do visitante, sem senha e sem prontuário.
+- Área do assinante, que lista o catálogo publicado. O cálculo continua o da página pública.
+- Modelos reutilizáveis de artigo, quiz, flashcard, caso e guia de bolso. Os blocos vêm do contrato; a página não inventa conteúdo clínico.
+- SBAR como formulário local de passagem de plantão.
+
+Ficou de fora, por não caber neste site ou por trazer outro desenho: tokens e HTML do CKO, as 19 línguas sem tradução própria, Supabase, bancos de questões, cardiologia, PMO, nota fiscal, área infantil e calculadoras trabalhistas sem página.
+
 ## 1.0.1 — 14 de novembro de 2026
 
 Correções da auditoria de conclusão.
