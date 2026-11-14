@@ -451,17 +451,18 @@
                 }, 300);
             });
 
-            // Click (mobile/tablet)
+            // Clique abre o painel. No desktop o mouseenter já abre;
+            // o clique não pode fechar no mesmo gesto.
             trigger.addEventListener('click', function(e) {
-                if (isDesktop()) return;
                 e.preventDefault();
+                e.stopPropagation();
                 const isActive = panel.classList.contains('active');
-                if (isActive) {
+                if (!isDesktop() && isActive) {
                     hidePanel(trigger, panel);
-                } else {
-                    closeAllPanels();
-                    showPanel(trigger, panel);
+                    return;
                 }
+                closeAllPanels();
+                showPanel(trigger, panel);
             });
 
             // Focus (accessibility)
