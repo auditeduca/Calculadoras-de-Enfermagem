@@ -18,8 +18,8 @@
     "description": "Calculadora precisa para aspiração de insulina em seringas de 100UI e 300UI. Inclui auditoria e checklists de segurança.",
     "keywords": "insulina, enfermagem, cálculo de medicação, segurança do paciente",
     "author": "Calculadoras de Enfermagem",
-    "canonical": "https://www.calculadorasdeenfermagem.com.br/insulina.html",
-    "ogImage": "https://www.calculadorasdeenfermagem.com.br/assets/images/author-info.webp",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/insulina/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
     "ogLocale": "pt_BR",
     "twitterCard": "summary_large_image"
   },
@@ -29,15 +29,43 @@
     "description": "Ferramenta profissional para aspiração precisa em seringas de 100UI ou 300UI."
   },
   "breadcrumb": [
-    { "text": "Início", "url": "index.html" },
-    { "text": "Ferramentas", "url": null },
-    { "text": "Calculadoras Clínicas", "url": null },
-    { "text": "Cálculo de Insulina", "url": null, "active": true }
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Calculadoras Clínicas",
+      "url": null
+    },
+    {
+      "text": "Cálculo de Insulina",
+      "url": null,
+      "active": true
+    }
   ],
   "tags": [
-    { "text": "insulina", "url": "busca.html?tag=insulina", "lang": "pt", "abbr": null },
-    { "text": "farmacologia", "url": "busca.html?tag=farmacologia", "lang": "pt", "abbr": null },
-    { "text": "segurança-do-paciente", "url": "busca.html?tag=seguranca", "lang": "pt", "abbr": null }
+    {
+      "text": "insulina",
+      "url": "busca.html?tag=insulina",
+      "lang": "pt",
+      "abbr": null
+    },
+    {
+      "text": "farmacologia",
+      "url": "busca.html?tag=farmacologia",
+      "lang": "pt",
+      "abbr": null
+    },
+    {
+      "text": "segurança-do-paciente",
+      "url": "busca.html?tag=seguranca",
+      "lang": "pt",
+      "abbr": null
+    }
   ],
   "form": {
     "sections": [
@@ -83,13 +111,30 @@
             "type": "select",
             "label": "Concentração da Insulina (UI/mL)",
             "options": [
-              { "value": 100, "label": "100 UI/mL (Insulina Regular U100)" },
-              { "value": 200, "label": "200 UI/mL (Insulina Glargine U200)" },
-              { "value": 300, "label": "300 UI/mL (Insulina Degludec U300)" }
+              {
+                "value": 100,
+                "label": "100 UI/mL (Insulina Regular U100)"
+              },
+              {
+                "value": 200,
+                "label": "200 UI/mL (Insulina Glargine U200)"
+              },
+              {
+                "value": 300,
+                "label": "300 UI/mL (Insulina Degludec U300)"
+              }
             ],
             "default": 100,
             "tooltip": "Concentração da insulina.",
-            "libras": false
+            "libras": false,
+            "alerts": [
+              {
+                "when": "gte",
+                "value": 200,
+                "level": "warning",
+                "message": "Insulina de alta concentração — medicamento de alta vigilância. Confirme a seringa e faça dupla checagem."
+              }
+            ]
           }
         ]
       }
@@ -112,7 +157,9 @@
     "result": {
       "label": "Dose a Aspirar",
       "unit": "mL",
-      "decimals": 2
+      "decimals": 2,
+      "key": "volume",
+      "interpretationOf": "prescribedDose"
     },
     "audit": {
       "title": "Auditoria do Cálculo",
@@ -167,6 +214,44 @@
         "icon": "fa-stethoscope",
         "action": "searchNursingDiagnosis",
         "searchQuery": "{{ title }} {{ result }} NANDA NIC NOC"
+      }
+    ],
+    "mode": "formula",
+    "interpretation": [
+      {
+        "max": 0,
+        "label": "Dose zero",
+        "color": "text-slate-500",
+        "bg": "bg-slate-50",
+        "conduct": "Confirmar a prescrição"
+      },
+      {
+        "max": 20,
+        "label": "Dose baixa",
+        "color": "text-blue-600",
+        "bg": "bg-blue-50",
+        "conduct": "Monitorar a glicemia"
+      },
+      {
+        "max": 100,
+        "label": "Dose habitual",
+        "color": "text-green-600",
+        "bg": "bg-green-50",
+        "conduct": "Administrar conforme prescrito"
+      },
+      {
+        "max": 200,
+        "label": "Dose elevada",
+        "color": "text-yellow-600",
+        "bg": "bg-yellow-50",
+        "conduct": "Dupla checagem recomendada"
+      },
+      {
+        "max": 100000,
+        "label": "Dose muito elevada",
+        "color": "text-red-600",
+        "bg": "bg-red-50",
+        "conduct": "Dupla checagem obrigatória — confirmar com quem prescreveu"
       }
     ]
   },
@@ -251,11 +336,31 @@
         "type": "share",
         "title": "Compartilhar",
         "networks": [
-          { "name": "Facebook", "icon": "fab fa-facebook-f", "url": "https://www.facebook.com/sharer/sharer.php?u={{url}}" },
-          { "name": "WhatsApp", "icon": "fab fa-whatsapp", "url": "https://api.whatsapp.com/send?text={{text}}%20{{url}}" },
-          { "name": "LinkedIn", "icon": "fab fa-linkedin-in", "url": "https://www.linkedin.com/sharing/share-offsite/?url={{url}}" },
-          { "name": "Twitter", "icon": "fab fa-x-twitter", "url": "https://twitter.com/intent/tweet?text={{title}}&url={{url}}" },
-          { "name": "Link", "icon": "fas fa-link", "action": "copyLink" }
+          {
+            "name": "Facebook",
+            "icon": "fab fa-facebook-f",
+            "url": "https://www.facebook.com/sharer/sharer.php?u={{url}}"
+          },
+          {
+            "name": "WhatsApp",
+            "icon": "fab fa-whatsapp",
+            "url": "https://api.whatsapp.com/send?text={{text}}%20{{url}}"
+          },
+          {
+            "name": "LinkedIn",
+            "icon": "fab fa-linkedin-in",
+            "url": "https://www.linkedin.com/sharing/share-offsite/?url={{url}}"
+          },
+          {
+            "name": "Twitter",
+            "icon": "fab fa-x-twitter",
+            "url": "https://twitter.com/intent/tweet?text={{title}}&url={{url}}"
+          },
+          {
+            "name": "Link",
+            "icon": "fas fa-link",
+            "action": "copyLink"
+          }
         ],
         "libras": false
       },
@@ -263,9 +368,24 @@
         "type": "related",
         "title": "Outras Calculadoras",
         "items": [
-          { "text": "Cálculo de Heparina", "description": "Calcule a dose de heparina com base no peso e tempo de tromboplastina.", "icon": "fa-calculator", "url": "heparina.html" },
-          { "text": "Diluição de Medicamentos", "description": "Aprenda a diluir medicamentos de forma segura.", "icon": "fa-flask", "url": "medicamentos.html" },
-          { "text": "Cálculo de Gotejamento", "description": "Determine o gotejamento de soros e medicamentos.", "icon": "fa-droplet", "url": "gotejamento.html" }
+          {
+            "text": "Cálculo de Heparina",
+            "description": "Calcule a dose de heparina com base no peso e tempo de tromboplastina.",
+            "icon": "fa-calculator",
+            "url": "heparina.html"
+          },
+          {
+            "text": "Diluição de Medicamentos",
+            "description": "Aprenda a diluir medicamentos de forma segura.",
+            "icon": "fa-flask",
+            "url": "medicamentos.html"
+          },
+          {
+            "text": "Cálculo de Gotejamento",
+            "description": "Determine o gotejamento de soros e medicamentos.",
+            "icon": "fa-droplet",
+            "url": "gotejamento.html"
+          }
         ],
         "libras": false
       }
@@ -274,7 +394,6 @@
   "author": {
     "name": "Calculadoras de Enfermagem Profissional",
     "quote": "Transformando a complexidade técnica em segurança para o paciente através da precisão dos dados e protocolos clínicos rigorosos.",
-    "image": "https://www.calculadorasdeenfermagem.com.br/assets/images/author-info.webp"
-  },
-  "script": "js/insulina.js"
+    "image": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp"
+  }
 }

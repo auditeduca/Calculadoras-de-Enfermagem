@@ -1,0 +1,163 @@
+{
+  "metadata": {
+    "id": "gestacional",
+    "title": "Idade Gestacional e DPP",
+    "category": "obstetricia",
+    "version": "1.0.0",
+    "lastUpdate": "2026-11-14",
+    "type": "calculator"
+  },
+  "seo": {
+    "title": "Idade Gestacional e DPP | Calculadoras de Enfermagem",
+    "description": "Idade gestacional e data provável do parto a partir da última menstruação.",
+    "keywords": "Idade Gestacional e DPP, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/gestacional/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Calculadora Clínica",
+    "title": "Idade Gestacional e DPP",
+    "description": "Idade gestacional e data provável do parto a partir da última menstruação."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Idade Gestacional e DPP",
+      "url": null,
+      "active": true
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "title": "Parâmetros",
+        "fields": [
+          {
+            "id": "dum",
+            "type": "date",
+            "label": "Data da última menstruação",
+            "required": true,
+            "tooltip": "Primeiro dia da última menstruação."
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Calcular",
+        "icon": "fa-calculator",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "mode": "named",
+    "formula": "gestacional",
+    "result": {
+      "label": "Idade gestacional",
+      "unit": "",
+      "decimals": 0,
+      "key": "semanas"
+    },
+    "interpretation": [
+      {
+        "max": 100000,
+        "label": "Ver resultado",
+        "conduct": "Semanas e dias são contados da DUM até hoje. A DPP soma 280 dias."
+      }
+    ],
+    "audit": {
+      "title": "Auditoria",
+      "steps": [
+        {
+          "label": "Semanas",
+          "sourceField": "semanas",
+          "icon": "fa-baby"
+        },
+        {
+          "label": "Dias",
+          "sourceField": "dias",
+          "icon": "fa-calendar-day"
+        },
+        {
+          "label": "DPP",
+          "sourceField": "dpp",
+          "icon": "fa-calendar-check"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Calculadora",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Idade Gestacional e DPP",
+        "body": "<p>A idade gestacional conta os dias entre a data da última menstruação e hoje. A data provável do parto aplica a regra de Naegele, 280 dias após a DUM.</p>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Informe o primeiro dia da última menstruação.",
+        "Confirme a idade gestacional com ultrassom quando ele estiver disponível.",
+        "A DPP é uma estimativa, não a data do parto."
+      ]
+    }
+  ]
+}

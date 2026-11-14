@@ -1,0 +1,641 @@
+{
+  "metadata": {
+    "id": "barthel",
+    "title": "Escala de Barthel — Independência Funcional | Enfermagem",
+    "category": "escalas",
+    "version": "1.0.0",
+    "lastUpdate": "2026-02-18",
+    "type": "scale"
+  },
+  "accessibility": {
+    "vlibras": true,
+    "screenReader": true,
+    "highContrast": true,
+    "librasAvailable": true
+  },
+  "seo": {
+    "title": "Escala de Barthel — Avaliação da Independência Funcional",
+    "description": "Avalie o grau de dependência funcional do paciente com a Escala de Barthel. Ferramenta essencial para enfermagem em reabilitação, geriatria e neurologia.",
+    "keywords": "Barthel, independência funcional, reabilitação, geriatria, AVD, atividades de vida diária, enfermagem",
+    "author": "Calculadoras de Enfermagem",
+    "canonical": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/calculadoras/barthel/",
+    "ogImage": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp",
+    "ogLocale": "pt_BR",
+    "twitterCard": "summary_large_image"
+  },
+  "header": {
+    "badge": "Escala Clínica",
+    "title": "Escala de Barthel",
+    "description": "Avaliação do grau de independência funcional nas Atividades de Vida Diária (AVD)."
+  },
+  "breadcrumb": [
+    {
+      "text": "Início",
+      "url": "index.html"
+    },
+    {
+      "text": "Ferramentas",
+      "url": null
+    },
+    {
+      "text": "Escalas Clínicas",
+      "url": null
+    },
+    {
+      "text": "Escala de Barthel",
+      "url": null,
+      "active": true
+    }
+  ],
+  "tags": [
+    {
+      "text": "barthel",
+      "url": "busca.html?tag=barthel",
+      "lang": "pt",
+      "abbr": null
+    },
+    {
+      "text": "independência funcional",
+      "url": "busca.html?tag=funcional",
+      "lang": "pt",
+      "abbr": "AVD"
+    },
+    {
+      "text": "reabilitação",
+      "url": "busca.html?tag=reabilitacao",
+      "lang": "pt",
+      "abbr": null
+    }
+  ],
+  "form": {
+    "sections": [
+      {
+        "title": "Dados do Paciente",
+        "fields": [
+          {
+            "id": "patientName",
+            "type": "text",
+            "label": "Nome do Paciente",
+            "placeholder": "Nome completo (opcional)",
+            "optional": true,
+            "tooltip": "Identificação do paciente para fins de registro.",
+            "libras": false
+          },
+          {
+            "id": "patientBirthdate",
+            "type": "date",
+            "label": "Data de Nascimento",
+            "optional": true,
+            "tooltip": "Para cálculo de idade e contextualização clínica.",
+            "libras": false
+          }
+        ]
+      },
+      {
+        "title": "Atividades de Vida Diária (AVD)",
+        "fields": [
+          {
+            "id": "alimentacao",
+            "type": "select",
+            "label": "Alimentação",
+            "icon": "fa-utensils",
+            "maxScore": 10,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — Incapaz (necessita ser alimentado)"
+              },
+              {
+                "value": 5,
+                "label": "5 — Necessita de ajuda (cortar alimentos, etc.)"
+              },
+              {
+                "value": 10,
+                "label": "10 — Independente (come sem ajuda)"
+              }
+            ],
+            "default": 10,
+            "required": true,
+            "tooltip": "Capacidade de se alimentar usando utensílios. Inclui cortar alimentos se necessário.",
+            "libras": false
+          },
+          {
+            "id": "banho",
+            "type": "select",
+            "label": "Banho",
+            "icon": "fa-shower",
+            "maxScore": 5,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — Dependente"
+              },
+              {
+                "value": 5,
+                "label": "5 — Independente (entra/sai do banho sem ajuda)"
+              }
+            ],
+            "default": 5,
+            "required": true,
+            "tooltip": "Capacidade de tomar banho sem supervisão.",
+            "libras": false
+          },
+          {
+            "id": "higiene",
+            "type": "select",
+            "label": "Higiene Pessoal",
+            "icon": "fa-face-smile",
+            "maxScore": 5,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — Dependente"
+              },
+              {
+                "value": 5,
+                "label": "5 — Independente (rosto, cabelo, dentes, aparência)"
+              }
+            ],
+            "default": 5,
+            "required": true,
+            "tooltip": "Higiene do rosto, cabelo, dentes e uso de máquina de barbear.",
+            "libras": false
+          },
+          {
+            "id": "vestuario",
+            "type": "select",
+            "label": "Vestuário",
+            "icon": "fa-shirt",
+            "maxScore": 10,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — Dependente"
+              },
+              {
+                "value": 5,
+                "label": "5 — Necessita de ajuda (metade das tarefas)"
+              },
+              {
+                "value": 10,
+                "label": "10 — Independente (inclui sapatos, fechos, cintos)"
+              }
+            ],
+            "default": 10,
+            "required": true,
+            "tooltip": "Capacidade de vestir e despir. Inclui sapatos e fechos.",
+            "libras": false
+          },
+          {
+            "id": "intestino",
+            "type": "select",
+            "label": "Controle Intestinal",
+            "icon": "fa-circle-check",
+            "maxScore": 10,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — Incontinente (ou necessita enema)"
+              },
+              {
+                "value": 5,
+                "label": "5 — Acidente ocasional (máx. 1x/semana)"
+              },
+              {
+                "value": 10,
+                "label": "10 — Continente"
+              }
+            ],
+            "default": 10,
+            "required": true,
+            "tooltip": "Controle da função intestinal. Registrar semana anterior.",
+            "libras": false
+          },
+          {
+            "id": "bexiga",
+            "type": "select",
+            "label": "Controle Vesical",
+            "icon": "fa-droplet",
+            "maxScore": 10,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — Incontinente ou sondado sem controle"
+              },
+              {
+                "value": 5,
+                "label": "5 — Acidente ocasional (máx. 1x/24h)"
+              },
+              {
+                "value": 10,
+                "label": "10 — Continente (por mais de 7 dias)"
+              }
+            ],
+            "default": 10,
+            "required": true,
+            "tooltip": "Controle urinário. Inclui uso de sonda com controle.",
+            "libras": false
+          },
+          {
+            "id": "banheiro",
+            "type": "select",
+            "label": "Uso do Banheiro (WC)",
+            "icon": "fa-restroom",
+            "maxScore": 10,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — Dependente"
+              },
+              {
+                "value": 5,
+                "label": "5 — Necessita de ajuda (equilíbrio, roupas)"
+              },
+              {
+                "value": 10,
+                "label": "10 — Independente (higiene e roupas)"
+              }
+            ],
+            "default": 10,
+            "required": true,
+            "tooltip": "Uso do banheiro. Inclui se desviar, higiene íntima e roupas.",
+            "libras": false
+          },
+          {
+            "id": "transferencia",
+            "type": "select",
+            "label": "Transferência Cadeira–Cama",
+            "icon": "fa-arrows-up-down",
+            "maxScore": 15,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — Incapaz (sem equilíbrio sentado)"
+              },
+              {
+                "value": 5,
+                "label": "5 — Precisa de ajuda maior (2 pessoas)"
+              },
+              {
+                "value": 10,
+                "label": "10 — Precisa de ajuda menor (1 pessoa)"
+              },
+              {
+                "value": 15,
+                "label": "15 — Independente"
+              }
+            ],
+            "default": 15,
+            "required": true,
+            "tooltip": "Transferência da cadeira de rodas para a cama e retorno.",
+            "libras": false
+          },
+          {
+            "id": "deambulacao",
+            "type": "select",
+            "label": "Deambulação",
+            "icon": "fa-person-walking",
+            "maxScore": 15,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — Imóvel"
+              },
+              {
+                "value": 5,
+                "label": "5 — Independente em cadeira de rodas (> 50m)"
+              },
+              {
+                "value": 10,
+                "label": "10 — Anda com ajuda (1 pessoa, > 50m)"
+              },
+              {
+                "value": 15,
+                "label": "15 — Independente (podendo usar andador > 50m)"
+              }
+            ],
+            "default": 15,
+            "required": true,
+            "tooltip": "Capacidade de deambular no andar. Distância mínima de 50 metros.",
+            "libras": false
+          },
+          {
+            "id": "escadas",
+            "type": "select",
+            "label": "Escadas",
+            "icon": "fa-stairs",
+            "maxScore": 10,
+            "options": [
+              {
+                "value": 0,
+                "label": "0 — Incapaz"
+              },
+              {
+                "value": 5,
+                "label": "5 — Necessita de ajuda (física ou verbal)"
+              },
+              {
+                "value": 10,
+                "label": "10 — Independente (pode usar apoio ou corrimão)"
+              }
+            ],
+            "default": 10,
+            "required": true,
+            "tooltip": "Capacidade de subir e descer um lance de escadas.",
+            "libras": false
+          }
+        ]
+      }
+    ],
+    "buttons": {
+      "calculate": {
+        "label": "Avaliar",
+        "icon": "fa-check",
+        "action": "calculate"
+      },
+      "reset": {
+        "label": "Limpar",
+        "icon": "fa-rotate-left",
+        "action": "reset"
+      }
+    }
+  },
+  "calculation": {
+    "formula": "total = alimentacao + banho + higiene + vestuario + intestino + bexiga + banheiro + transferencia + deambulacao + escadas",
+    "result": {
+      "label": "Pontuação Barthel",
+      "unit": "pontos",
+      "decimals": 0,
+      "max": 100,
+      "key": "total",
+      "interpretationOf": "total"
+    },
+    "interpretation": [
+      {
+        "max": 20,
+        "label": "Dependência Total",
+        "color": "text-red-600",
+        "bg": "bg-red-50",
+        "conduct": "Cuidado intensivo — supervisão contínua necessária"
+      },
+      {
+        "max": 60,
+        "label": "Dependência Grave",
+        "color": "text-orange-600",
+        "bg": "bg-orange-50",
+        "conduct": "Assistência em quase todas as AVDs"
+      },
+      {
+        "max": 90,
+        "label": "Dependência Moderada",
+        "color": "text-yellow-600",
+        "bg": "bg-yellow-50",
+        "conduct": "Supervisão e ajuda em algumas atividades"
+      },
+      {
+        "max": 99,
+        "label": "Dependência Leve",
+        "color": "text-blue-600",
+        "bg": "bg-blue-50",
+        "conduct": "Assistência mínima e supervisão esporádica"
+      },
+      {
+        "max": 100,
+        "label": "Independente",
+        "color": "text-green-600",
+        "bg": "bg-green-50",
+        "conduct": "Alta avaliada conforme contexto clínico global"
+      }
+    ],
+    "audit": {
+      "title": "Auditoria da Avaliação",
+      "steps": [
+        {
+          "label": "Alimentação",
+          "sourceField": "alimentacao",
+          "icon": "fa-utensils"
+        },
+        {
+          "label": "Banho",
+          "sourceField": "banho",
+          "icon": "fa-shower"
+        },
+        {
+          "label": "Higiene Pessoal",
+          "sourceField": "higiene",
+          "icon": "fa-face-smile"
+        },
+        {
+          "label": "Vestuário",
+          "sourceField": "vestuario",
+          "icon": "fa-shirt"
+        },
+        {
+          "label": "Controle Intestinal",
+          "sourceField": "intestino",
+          "icon": "fa-circle-check"
+        },
+        {
+          "label": "Controle Vesical",
+          "sourceField": "bexiga",
+          "icon": "fa-droplet"
+        },
+        {
+          "label": "Uso do Banheiro",
+          "sourceField": "banheiro",
+          "icon": "fa-restroom"
+        },
+        {
+          "label": "Transferência",
+          "sourceField": "transferencia",
+          "icon": "fa-arrows-up-down"
+        },
+        {
+          "label": "Deambulação",
+          "sourceField": "deambulacao",
+          "icon": "fa-person-walking"
+        },
+        {
+          "label": "Escadas",
+          "sourceField": "escadas",
+          "icon": "fa-stairs"
+        },
+        {
+          "label": "Pontuação Total",
+          "sourceField": "total",
+          "suffix": "pontos",
+          "icon": "fa-star"
+        }
+      ]
+    },
+    "actionButtons": [
+      {
+        "type": "primary",
+        "label": "Gerar PDF",
+        "icon": "fa-file-pdf",
+        "action": "generatePDF"
+      },
+      {
+        "type": "secondary",
+        "label": "Copiar Resultado",
+        "icon": "fa-copy",
+        "action": "copyResult"
+      },
+      {
+        "type": "secondary",
+        "label": "Diagnóstico de Enfermagem",
+        "icon": "fa-stethoscope",
+        "action": "searchNursingDiagnosis"
+      }
+    ],
+    "mode": "formula"
+  },
+  "tabs": [
+    {
+      "id": "calculator",
+      "label": "Avaliação",
+      "type": "calculator"
+    },
+    {
+      "id": "about",
+      "label": "Sobre",
+      "type": "content",
+      "content": {
+        "title": "Sobre a Escala de Barthel",
+        "body": "<p>A Escala de Barthel foi desenvolvida por Mahoney e Barthel em 1965 para avaliar o nível de independência funcional de pacientes em programas de reabilitação. É amplamente utilizada em geriatria, neurologia, fisioterapia e enfermagem.</p><p>Avalia 10 atividades de vida diária (AVD), com pontuação total de 0 a 100 pontos. Quanto maior a pontuação, maior o grau de independência.</p><div class='bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 mt-4'><span class='font-black text-nurse-primary text-xs uppercase tracking-widest block mb-3'>Interpretação Clínica</span><ul class='space-y-2 text-sm'><li><strong>0–20 pts:</strong> Dependência Total — cuidado intensivo</li><li><strong>21–60 pts:</strong> Dependência Grave — assistência em quase todas as AVDs</li><li><strong>61–90 pts:</strong> Dependência Moderada — supervisão e ajuda em algumas AVDs</li><li><strong>91–99 pts:</strong> Dependência Leve — assistência mínima</li><li><strong>100 pts:</strong> Independente — alta avaliada conforme contexto clínico</li></ul></div>"
+      }
+    },
+    {
+      "id": "instructions",
+      "label": "Instruções",
+      "type": "list",
+      "items": [
+        "Avalie o paciente nas últimas 24–48 horas, considerando o desempenho real (não potencial).",
+        "Utilize o critério mais rigoroso em caso de dúvida entre dois níveis.",
+        "Selecione a opção que melhor descreve a capacidade do paciente em cada atividade.",
+        "O escore reflete o que o paciente FAZ, não o que poderia fazer.",
+        "Transfira: avalie a transferência mais difícil habitualmente realizada.",
+        "Gere PDF ou copie o resultado para registro em prontuário."
+      ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<div class='p-5 bg-slate-50 dark:bg-slate-900/40 rounded-2xl space-y-3 border border-slate-100 dark:border-slate-700'><p>• <strong>Mahoney FI, Barthel DW.</strong> Functional Evaluation: The Barthel Index. Maryland State Medical Journal, 1965; 14:61-65.</p><p>• <strong>Collin C, Wade DT, Davies S, Horne V.</strong> The Barthel ADL Index: A reliability study. Disability & Rehabilitation, 1988.</p><p>• <strong>Conselho Federal de Enfermagem (COFEN).</strong> Resolução COFEN nº 358/2009 — Sistematização da Assistência de Enfermagem.</p><p>• <strong>Ministério da Saúde.</strong> Manual de Reabilitação na Atenção Básica. Brasília, 2020.</p></div>"
+      }
+    }
+  ],
+  "modals": {
+    "tutorial": {
+      "title": "Tutorial — Escala de Barthel",
+      "icon": "fa-question-circle",
+      "content": "<div class='space-y-4'><p>Avalie cada atividade conforme o desempenho real nas últimas 24–48h. Use a pontuação mais baixa em caso de dúvida.</p></div>",
+      "libras": false
+    },
+    "nanda": {
+      "title": "Diagnósticos de Enfermagem — NANDA",
+      "icon": "fa-stethoscope",
+      "content": "<div class='space-y-4'><p><strong>Diagnósticos frequentes:</strong></p><ul class='space-y-2 text-sm'><li>• Mobilidade física prejudicada</li><li>• Autocuidado prejudicado para banho/higiene</li><li>• Incontinência urinária funcional</li><li>• Risco de queda</li><li>• Déficit no autocuidado para vestuário</li></ul></div>",
+      "libras": false
+    },
+    "nineRights": {
+      "title": "9 Certos da Medicação",
+      "icon": "fa-check-double",
+      "source": "shared",
+      "sharedId": "nineRights",
+      "libras": true
+    },
+    "safetyGoals": {
+      "title": "Metas Internacionais de Segurança",
+      "icon": "fa-star",
+      "source": "shared",
+      "sharedId": "safetyGoals",
+      "libras": true
+    }
+  },
+  "sidebar": {
+    "modules": [
+      {
+        "type": "simulados",
+        "title": "Desafio Clínico",
+        "content": "Teste sua agilidade e precisão em simulados reais de enfermagem.",
+        "link": {
+          "url": "https://simulados-para-enfermagem.com.br/",
+          "label": "Acessar Simulados",
+          "icon": "fa-bolt"
+        },
+        "libras": false
+      },
+      {
+        "type": "share",
+        "title": "Compartilhar",
+        "networks": [
+          {
+            "name": "Facebook",
+            "icon": "fab fa-facebook-f",
+            "url": "https://www.facebook.com/sharer/sharer.php?u={{url}}"
+          },
+          {
+            "name": "WhatsApp",
+            "icon": "fab fa-whatsapp",
+            "url": "https://api.whatsapp.com/send?text={{text}}%20{{url}}"
+          },
+          {
+            "name": "LinkedIn",
+            "icon": "fab fa-linkedin-in",
+            "url": "https://www.linkedin.com/sharing/share-offsite/?url={{url}}"
+          },
+          {
+            "name": "Twitter",
+            "icon": "fab fa-x-twitter",
+            "url": "https://twitter.com/intent/tweet?text={{title}}&url={{url}}"
+          },
+          {
+            "name": "Link",
+            "icon": "fas fa-link",
+            "action": "copyLink"
+          }
+        ],
+        "libras": false
+      },
+      {
+        "type": "related",
+        "title": "Outras Calculadoras",
+        "items": [
+          {
+            "text": "Escala de Braden",
+            "description": "Avaliação de risco de lesão por pressão.",
+            "icon": "fa-calculator",
+            "url": "braden.html"
+          },
+          {
+            "text": "Escala de Glasgow",
+            "description": "Avaliação do nível de consciência.",
+            "icon": "fa-brain",
+            "url": "glasgow.html"
+          },
+          {
+            "text": "Minimental (MEEM)",
+            "description": "Rastreio de comprometimento cognitivo.",
+            "icon": "fa-thought-bubble",
+            "url": "meem.html"
+          },
+          {
+            "text": "Escala de Aldrete",
+            "description": "Recuperação pós-anestésica.",
+            "icon": "fa-calculator",
+            "url": "aldrete.html"
+          }
+        ],
+        "libras": false
+      }
+    ]
+  },
+  "author": {
+    "name": "Calculadoras de Enfermagem Profissional",
+    "quote": "Transformando a complexidade técnica em segurança para o paciente através da precisão dos dados e protocolos clínicos rigorosos.",
+    "image": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp"
+  }
+}

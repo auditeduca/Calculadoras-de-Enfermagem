@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/schema/calculadora.schema.json",
+  "title": "Configuração de Página de Calculadora (PAGE_CONFIG)",
+  "description": "Fonte única de verdade do conteúdo de uma calculadora. Os arquivos vivem em configs/paginas/<id>.json. tools/gerar_paginas.py emite só a casca HTML; js/calculadora.js lê este JSON. Não existe PAGE_CONFIG dentro do HTML.",
+  "type": "object",
+  "required": ["metadata", "seo", "header", "form", "calculation", "tabs"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["id", "title", "type"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "version": { "type": "string" },
+        "lastUpdate": { "type": "string" },
+        "type": { "type": "string", "enum": ["calculator", "scale", "score"] }
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "properties": {
+        "vlibras": { "type": "boolean" },
+        "screenReader": { "type": "boolean" },
+        "highContrast": { "type": "boolean" },
+        "librasAvailable": { "type": "boolean" }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "required": ["title", "description"],
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "keywords": { "type": "string" },
+        "author": { "type": "string" },
+        "canonical": { "type": "string" },
+        "ogImage": { "type": "string" },
+        "ogLocale": { "type": "string" },
+        "twitterCard": { "type": "string" }
+      }
+    },
+    "header": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "badge": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "breadcrumb": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text"],
+        "properties": {
+          "text": { "type": "string" },
+          "url": { "type": ["string", "null"] },
+          "active": { "type": "boolean" }
+        }
+      }
+    },
+    "tags": { "type": "array" },
+    "form": {
+      "type": "object",
+      "required": ["sections"],
+      "properties": {
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["fields"],
+            "properties": {
+              "title": { "type": "string" },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["id", "type", "label"],
+                  "properties": {
+                    "id": { "type": "string" },
+                    "type": { "type": "string" },
+                    "label": { "type": "string" },
+                    "options": { "type": "array" },
+                    "required": { "type": "boolean" },
+                    "optional": { "type": "boolean" },
+                    "default": {},
+                    "min": { "type": "number" },
+                    "max": { "type": "number" },
+                    "step": { "type": "number" },
+                    "unit": { "type": "string" },
+                    "placeholder": { "type": "string" },
+                    "tooltip": { "type": "string" },
+                    "libras": { "type": "boolean" },
+                    "alerts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["when", "value", "message"],
+                        "properties": {
+                          "when": { "type": "string", "enum": ["eq", "gte", "lte", "gt", "lt"] },
+                          "value": { "type": "number" },
+                          "level": { "type": "string" },
+                          "message": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "buttons": { "type": "object" }
+      }
+    },
+    "calculation": {
+      "type": "object",
+      "required": ["mode", "formula", "result", "interpretation"],
+      "properties": {
+        "mode": { "type": "string", "enum": ["formula", "score", "named"] },
+        "formula": { "type": "string", "minLength": 1 },
+        "result": {
+          "type": "object",
+          "required": ["label", "unit"],
+          "properties": {
+            "label": { "type": "string" },
+            "unit": { "type": "string" },
+            "decimals": { "type": "integer", "minimum": 0 },
+            "key": { "type": "string" },
+            "keys": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+            "interpretationOf": { "type": "string" }
+          }
+        },
+        "audit": { "type": "object" },
+        "actionButtons": { "type": "array" },
+        "interpretation": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["max", "label"],
+            "properties": {
+              "max": { "type": "number" },
+              "label": { "type": "string" },
+              "conduct": { "type": "string" },
+              "mortality": { "type": "string" },
+              "color": { "type": "string" },
+              "bg": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "type"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "type": { "type": "string" },
+          "content": { "type": "object" },
+          "items": { "type": "array" }
+        }
+      }
+    },
+    "modals": { "type": "object" },
+    "sidebar": { "type": "object" },
+    "author": { "type": "object" },
+    "script": { "type": "string" }
+  }
+}
