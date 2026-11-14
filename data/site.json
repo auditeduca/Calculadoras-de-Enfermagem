@@ -39,6 +39,10 @@
             {
               "text": "Mapa do Site",
               "href": "mapa-do-site.html"
+            },
+            {
+              "text": "Busca por tópicos",
+              "href": "busca.html"
             }
           ]
         },

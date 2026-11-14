@@ -1,0 +1,10 @@
+{
+  "id": "busca",
+  "kind": "busca",
+  "title": "Busca por tópicos",
+  "description": "Encontre páginas institucionais e ferramentas pelos tópicos marcados em cada uma.",
+  "keywords": "busca, tópicos, tags, calculadoras de enfermagem",
+  "lead": "Cada botão é um tópico usado nas páginas. A busca também encontra o nome da página.",
+  "sections": [],
+  "related": []
+}
