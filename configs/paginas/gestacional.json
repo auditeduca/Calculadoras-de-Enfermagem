@@ -158,6 +158,14 @@
         "Confirme a idade gestacional com ultrassom quando ele estiver disponível.",
         "A DPP é uma estimativa, não a data do parto."
       ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>AMERICAN COLLEGE OF OBSTETRICIANS AND GYNECOLOGISTS. Committee Opinion No. 700: methods for estimating the due date. Obstetrics &amp; Gynecology, v. 129, n. 5, p. e150-e154, 2017.</p><p>A data provável do parto desta página soma 280 dias à data da última menstruação.</p>"
+      }
     }
   ]
 }

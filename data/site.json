@@ -8,6 +8,8 @@
     "logoFooter": "assets/images/logotipo-calculadoras-de-enfermagem.webp",
     "favicon": "assets/images/favicon-calculadoras-de-enfermagem.webp",
     "author": "Calculadoras de Enfermagem",
+    "version": "1.0.1",
+    "versionDate": "2026-11-14",
     "social": {
       "twitter": "@CalculadorasEnf"
     }

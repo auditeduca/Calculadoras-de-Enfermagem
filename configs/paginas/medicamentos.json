@@ -180,6 +180,14 @@
         "Informe o volume total da apresentação.",
         "Confira o volume calculado antes de administrar."
       ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>WHALEN, Karen. Farmacologia ilustrada. 6. ed. Porto Alegre: Artmed, 2016.</p><p>O volume a aspirar segue a regra de três entre a dose prescrita, a quantidade do frasco e o volume da apresentação. A prescrição e o rótulo precisam estar na mesma unidade.</p>"
+      }
     }
   ]
 }

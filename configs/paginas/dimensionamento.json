@@ -199,6 +199,14 @@
         "Conte os pacientes de cada categoria assistencial.",
         "O resultado é uma estimativa de postos, não a escala pronta do serviço."
       ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>CONSELHO FEDERAL DE ENFERMAGEM. Parecer normativo nº 1/2024/COFEN. A Resolução COFEN nº 543/2017 foi revogada pela Resolução COFEN nº 743, de 12 de março de 2024.</p><p>As horas de enfermagem por 24 horas usadas aqui são cuidado mínimo 4, intermediário 6, alta dependência 10 e semi-intensivo 10. O quadro multiplica essa soma por 7 e divide pela carga horária semanal. A página não inclui cuidado intensivo nem o índice de segurança técnica.</p>"
+      }
     }
   ]
 }

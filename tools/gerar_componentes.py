@@ -20,6 +20,7 @@ Regras:
 """
 
 import json
+import re
 import sys
 from html import escape
 from pathlib import Path
@@ -50,8 +51,10 @@ def validar_estrutura(cfg):
 
     site = exigir(cfg, "site", dict, "raiz")
     if site is not None:
-        for ch in ("name", "baseUrl", "logoHeader", "logoFooter"):
+        for ch in ("name", "baseUrl", "logoHeader", "logoFooter", "version"):
             exigir(site, ch, str, "site")
+        if isinstance(site.get("version"), str) and not re.fullmatch(r"\d+\.\d+\.\d+", site["version"]):
+            erros.append("site.version deve usar três números, como 1.0.1")
         if isinstance(site.get("baseUrl"), str) and not site["baseUrl"].startswith("http"):
             erros.append("site.baseUrl deve começar com http(s)://")
 
@@ -563,6 +566,8 @@ def gerar_footer(cfg, quebradas):
         )
 
     copyright_nome = escape(rodape.get("copyrightName", cfg["site"]["name"]))
+    versao = escape(cfg["site"].get("version", ""))
+    linha_versao = f"\n                <p>Versão {versao}</p>" if versao else ""
 
     return f"""<!-- ============================================================
      COMPONENTE GERADO AUTOMATICAMENTE — NÃO EDITAR À MÃO.
@@ -587,7 +592,7 @@ def gerar_footer(cfg, quebradas):
         <div class="footer-bottom-divider"></div>
         <div class="footer-bottom">
             <div class="footer-copyright">
-                <p>&copy; <span id="current-year">2026</span> {copyright_nome}. Todos os direitos reservados.</p>
+                <p>&copy; <span id="current-year">2026</span> {copyright_nome}. Todos os direitos reservados.</p>{linha_versao}
                 <div class="footer-legal-links">
 {chr(10).join(legais)}
                 </div>

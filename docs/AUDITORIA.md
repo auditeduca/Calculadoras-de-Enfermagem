@@ -1,5 +1,9 @@
 # Auditoria e Padronização do Site — Novembro/2026
 
+Estado na versão 1.0.1: a fila clínica das 57 ferramentas foi concluída
+e o site publica 70 ferramentas. As seções 1 e 2 registram o ponto de
+partida. O que vale agora está em `docs/VERSOES.md` e em `INDEX.md`.
+
 Avaliação completa do repositório em resposta às pendências apontadas:
 componentes modulares ausentes em páginas, rotas quebradas no cabeçalho,
 rodapé sem logotipo oficial, páginas fora de padrão e problemas de contraste.
@@ -134,23 +138,19 @@ motor `calculator-engine`/`calculator-system`, `assets/pages/`).
 
 ## 3. Fábrica de calculadoras
 
-As 13 ferramentas com configuração clínica válida são geradas por
-`tools/gerar_paginas.py` em `calculadoras/<id>/index.html` e lidas por
-`js/calculadora.js`. A raiz `<id>.html` só redireciona. As outras 57 pastas
-de `calculadoras/` exibem aviso de revisão e saíram do menu. Idiomas não
-tinham strings próprias nas 95 cópias; as pastas foram removidas e o gerador
-só recria `<lang>/<id>.html` quando existe `configs/i18n/<lang>/<id>.json`.
+Na versão 1.0.0 as 70 ferramentas têm `configs/paginas/<id>.json`.
+`tools/gerar_paginas.py` escreve `calculadoras/<id>/index.html` e o atalho
+da raiz. `js/calculadora.js` lê o JSON. Idiomas só são gerados quando existe
+`configs/i18n/<lang>/<id>.json`.
 
-`python3 tools/auditar.py` falha se a trava clínica, uma rota do menu ou o
-sincronismo das cascas quebrar.
+`python3 tools/auditar.py` falha se a trava clínica, uma rota do menu, do
+rodapé ou do corpo, a aba Referências ou o sincronismo das cascas quebrar.
 
-## 4. Pendências de conteúdo
+## 4. O que ficou de fora de propósito
 
-1. **Fila clínica** — as 57 ferramentas em revisão voltam ao menu quando
-   ganharem `configs/paginas/<id>.json` que passe na trava.
-2. **Biblioteca, carreiras e calendário vacinal** — criar as páginas e
-   declará-las em `data/site.json`.
-3. **Contraste pontual** — os tokens globais já estão em AA; usos fora dos
-   tokens ainda podem ser revistos página a página.
-4. **Traduções** — um overlay em `configs/i18n/<lang>/<id>.json` passa a
-   gerar a página daquele idioma.
+1. **Biblioteca, carreiras e calendário vacinal** não têm página e não
+   voltam ao menu enquanto não existirem.
+2. **Traduções** entram por `configs/i18n/<lang>/<id>.json`. Sem esse
+   arquivo, o menu lista só português.
+3. **Contraste pontual** fora dos tokens globais continua passível de
+   revisão página a página. Os tokens principais já estão em AA.

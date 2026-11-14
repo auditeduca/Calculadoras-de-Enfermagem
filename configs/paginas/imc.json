@@ -206,6 +206,14 @@
         "Informe a altura em metros (1,70 e não 170).",
         "A faixa exibida vale como referência para adultos."
       ]
+    },
+    {
+      "id": "references",
+      "label": "Referências",
+      "type": "content",
+      "content": {
+        "body": "<p>WORLD HEALTH ORGANIZATION. Obesity: preventing and managing the global epidemic. Geneva: WHO, 2000. (WHO Technical Report Series, 894).</p><p>Os pontos de corte de adulto desta página são abaixo de 18,5, de 18,5 a 24,9, de 25 a 29,9, de 30 a 34,9, de 35 a 39,9 e 40 ou mais.</p>"
+      }
     }
   ]
 }
