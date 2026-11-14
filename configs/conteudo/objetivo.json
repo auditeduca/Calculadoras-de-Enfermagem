@@ -1,0 +1,67 @@
+{
+  "id": "objetivo",
+  "title": "Objetivos da Plataforma",
+  "description": "Conheça os pilares estratégicos da plataforma Calculadoras de Enfermagem: rigor científico em cálculos, escalas validadas e educação continuada.",
+  "keywords": "objetivos enfermagem, segurança do paciente, cálculo medicamentos, escalas clínicas, SAE, educação enfermagem",
+  "lead": "Unindo tecnologia e rigor científico para transformar a assistência de enfermagem através de ferramentas de alta precisão.",
+  "sections": [
+    {
+      "heading": "",
+      "paragraphs": [
+        "A plataforma foi estruturada sob quatro pilares fundamentais de excelência clínica e tecnológica."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Cálculo de Medicamentos",
+      "paragraphs": [
+        "Automatizamos fórmulas complexas como regra de três, gotejamento e diluições críticas. O objetivo é reduzir a carga cognitiva do profissional e minimizar riscos de eventos adversos, promovendo a segurança em cada etapa da administração."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Escalas Assistenciais",
+      "paragraphs": [
+        "Digitalização de mais de 50 escalas clínicas validadas (Braden, Glasgow, Morse). O objetivo é permitir a estratificação de risco instantânea, otimizando a Sistematização da Assistência de Enfermagem (SAE) e a monitorização da evolução do paciente."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Integração Multiprofissional",
+      "paragraphs": [
+        "Atuamos como ponte na comunicação da equipe de saúde. Ferramentas integradas fornecem indicadores objetivos que fundamentam a tomada de decisão conjunta, fortalecendo o papel do enfermeiro como gestor do cuidado."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Educação e Base Didática",
+      "paragraphs": [
+        "Cada recurso é acompanhado de fundamentação teórica baseada em literatura científica atualizada. O objetivo é transformar a ferramenta digital num ambiente de aprendizado contínuo para estudantes e profissionais de enfermagem.",
+        "\"A precisão técnica é a expressão máxima do cuidado ético ao paciente.\"",
+        "CONSELHO FEDERAL DE ENFERMAGEM (Brasil). Resolução COFEN nº 358/2009. Dispõe sobre a SAE. Ver Doc",
+        "CONSELHO FEDERAL DE ENFERMAGEM (Brasil). Resolução COFEN nº 543/2017. Dimensionamento do Quadro de Profissionais. Ver Doc",
+        "WHALEN, Karen. Farmacologia Ilustrada. 6. ed. Porto Alegre: Artmed, 2016.",
+        "HINKLE, J. L.; CHEEVER, K. H. Brunner & Suddarth: Tratado de Enfermagem Médico-Cirúrgica. 14. ed. Rio de Janeiro: Koogan, 2020."
+      ],
+      "items": []
+    }
+  ],
+  "related": [
+    {
+      "href": "missao.html",
+      "title": "Missão e Valores",
+      "text": "Compromisso ético e os pilares da nossa atuação técnica e humana."
+    },
+    {
+      "href": "politicadeacessibilidade.html",
+      "title": "Inclusão Sem Barreiras",
+      "text": "Garantindo que nossas ferramentas sejam úteis para todos os profissionais."
+    },
+    {
+      "href": "nossocompromisso.html",
+      "title": "Compromisso Ético",
+      "text": "Promoção de um ecossistema tecnológico responsável e sustentável."
+    }
+  ],
+  "kind": "pagina"
+}

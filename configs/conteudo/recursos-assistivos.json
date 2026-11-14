@@ -1,0 +1,63 @@
+{
+  "id": "recursos-assistivos",
+  "title": "Tecnologias e Recursos Assistivos",
+  "description": "Conheça os Recursos Assistivos das Calculadoras de Enfermagem. Ferramentas de acessibilidade, VLibras, suporte a leitores de ecrã e navegação adaptada para todos.",
+  "keywords": "recursos assistivos, acessibilidade digital, VLibras, leitor de ecrã, tecnologia assistiva, inclusão enfermagem, saúde acessível",
+  "lead": "Conheça as ferramentas e tecnologias integradas na nossa plataforma para garantir uma experiência inclusiva a todos os profissionais de enfermagem.",
+  "sections": [
+    {
+      "heading": "",
+      "paragraphs": [
+        "Providenciamos os canais e as ferramentas necessárias para que a tecnologia assistiva seja uma ponte, e não uma barreira."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Tradutor de Libras (VLibras)",
+      "paragraphs": [
+        "Integramos o widget VLibras, uma ferramenta de código aberto que traduz conteúdos digitais (texto, áudio e vídeo) para a Língua Brasileira de Sinais. Isto permite que profissionais de saúde surdos ou com deficiência auditiva acedam às instruções e resultados das calculadoras com total autonomia."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Navegação por Teclado e Foco",
+      "paragraphs": [
+        "A nossa interface foi desenhada para ser totalmente navegável via teclado (tecla Tab). Implementámos indicadores de foco visíveis e lógicos para que utilizadores com limitações motoras ou que utilizem dispositivos de varrimento possam operar as calculadoras sem necessidade de rato."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Suporte a Leitores de Ecrã (ARIA)",
+      "paragraphs": [
+        "Aplicamos atributos WAI-ARIA rigorosos em todos os elementos dinâmicos. Leitores de ecrã como NVDA, JAWS e TalkBack conseguem identificar estados de erro, resultados de cálculos em tempo real e descrições de imagens, garantindo que a informação visual seja convertida em áudio percetível."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Barra de Personalização Nativa",
+      "paragraphs": [
+        "Além das tecnologias externas, a plataforma inclui uma barra nativa de recursos assistivos (acessível no topo da página) que permite o ajuste instantâneo do tamanho da fonte, ativação do Modo de Alto Contraste e alteração de tipografia para fontes de leitura facilitada.",
+        "\"Recursos assistivos são o alicerce para uma prática de enfermagem equitativa e moderna.\""
+      ],
+      "items": []
+    }
+  ],
+  "related": [
+    {
+      "href": "politicadeacessibilidade.html",
+      "title": "Política de Acessibilidade",
+      "text": "Nosso compromisso ético e conformidade com as diretrizes globais WCAG."
+    },
+    {
+      "href": "politica.html",
+      "title": "Privacidade de Dados",
+      "text": "Como protegemos as suas informações e garantimos a conformidade com a LGPD."
+    },
+    {
+      "href": "nossocompromisso.html",
+      "title": "Nosso Compromisso",
+      "text": "Governança, transparência e sustentabilidade digital na prática assistencial."
+    }
+  ],
+  "kind": "pagina"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "mapa-do-site",
+  "kind": "mapa",
+  "title": "Mapa do site",
+  "description": "Lista das páginas institucionais e das ferramentas publicadas, gerada a partir da navegação do site.",
+  "keywords": "mapa do site, calculadoras de enfermagem",
+  "lead": "Os grupos são os mesmos do menu e do rodapé. Um link só aparece uma vez.",
+  "sections": [],
+  "related": []
+}

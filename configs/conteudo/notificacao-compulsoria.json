@@ -1,0 +1,261 @@
+{
+  "items": [
+    {
+      "name": "Botulismo",
+      "detail": "CID-10: A05.1 | Tipo: Doença",
+      "periodicity": "imediata",
+      "type": "doenca",
+      "note": "Ministério da Saúde"
+    },
+    {
+      "name": "Cólera",
+      "detail": "CID-10: A00 | Tipo: Doença",
+      "periodicity": "imediata",
+      "type": "doenca",
+      "note": ""
+    },
+    {
+      "name": "Dengue - Casos",
+      "detail": "CID-10: A90 | Tipo: Doença",
+      "periodicity": "semanal",
+      "type": "doenca",
+      "note": "Casos leves"
+    },
+    {
+      "name": "Dengue - Óbitos",
+      "detail": "CID-10: A90 | Tipo: Doença",
+      "periodicity": "imediata",
+      "type": "doenca",
+      "note": ""
+    },
+    {
+      "name": "Febre Amarela",
+      "detail": "CID-10: A95 | Tipo: Doença",
+      "periodicity": "imediata",
+      "type": "doenca",
+      "note": ""
+    },
+    {
+      "name": "Hanseníase",
+      "detail": "CID-10: A30 | Tipo: Doença",
+      "periodicity": "semanal",
+      "type": "doenca",
+      "note": ""
+    },
+    {
+      "name": "Raiva Humana",
+      "detail": "CID-10: A82 | Tipo: Doença",
+      "periodicity": "imediata",
+      "type": "doenca",
+      "note": ""
+    },
+    {
+      "name": "Tuberculose",
+      "detail": "CID-10: A15-A19 | Tipo: Doença",
+      "periodicity": "semanal",
+      "type": "doenca",
+      "note": ""
+    },
+    {
+      "name": "Violência Doméstica e Sexual",
+      "detail": "CID-10: Y05-Y09 | Tipo: Agravo",
+      "periodicity": "imediata",
+      "type": "agravo",
+      "note": ""
+    },
+    {
+      "name": "Eventos de Saúde Pública (ESP)",
+      "detail": "Qualquer evento com potencial de risco à saúde pública | Tipo: Evento",
+      "periodicity": "imediata",
+      "type": "evento",
+      "note": ""
+    }
+  ],
+  "states": [
+    {
+      "id": "AC",
+      "title": "Acre",
+      "d": "M 64.6,220.6 L 55.4,228.4 L 42.4,225.2 L 28.1,235.8 L 13.5,232.1 L 3.5,248.6 L 12.1,262.2 L 53.6,258.9 L 75.6,250.2 L 85.1,234.9 Z"
+    },
+    {
+      "id": "AM",
+      "title": "Amazonas",
+      "d": "M 64.6,220.6 L 75.1,211.9 L 66.8,187.6 L 82.3,161.4 L 115.6,158.4 L 135.1,135.1 L 182.4,141.6 L 203.1,168.1 L 226.4,166.4 L 235.4,195.1 L 210.6,215.8 L 195.1,211.9 L 180.1,232.9 L 158.4,231.1 L 140.6,249.4 L 105.1,244.6 L 85.1,234.9 Z"
+    },
+    {
+      "id": "RR",
+      "title": "Roraima",
+      "d": "M 135.1,135.1 L 145.4,103.6 L 168.1,89.6 L 196.1,99.4 L 203.1,168.1 L 182.4,141.6 Z"
+    },
+    {
+      "id": "PA",
+      "title": "Pará",
+      "d": "M 226.4,166.4 L 235.9,140.4 L 261.6,128.6 L 285.4,136.9 L 306.9,122.9 L 333.4,129.9 L 341.1,154.4 L 332.1,173.6 L 345.1,185.1 L 336.9,235.6 L 305.4,244.6 L 290.4,271.6 L 264.4,260.6 L 246.6,278.4 L 221.9,249.4 L 235.4,195.1 Z"
+    },
+    {
+      "id": "AP",
+      "title": "Amapá",
+      "d": "M 306.9,122.9 L 316.6,99.4 L 343.1,108.4 L 333.4,129.9 Z"
+    },
+    {
+      "id": "MA",
+      "title": "Maranhão",
+      "d": "M 341.1,154.4 L 361.6,143.9 L 383.1,155.4 L 379.6,183.4 L 393.6,197.6 L 384.4,236.4 L 336.9,235.6 L 345.1,185.1 L 332.1,173.6 Z"
+    },
+    {
+      "id": "PI",
+      "title": "Piauí",
+      "d": "M 379.6,183.4 L 404.1,170.9 L 416.9,178.4 L 406.6,211.6 L 413.6,231.6 L 393.6,248.9 L 384.4,236.4 L 393.6,197.6 Z"
+    },
+    {
+      "id": "CE",
+      "title": "Ceará",
+      "d": "M 404.1,170.9 L 426.6,163.4 L 450.1,173.6 L 441.9,203.6 L 416.9,178.4 Z"
+    },
+    {
+      "id": "RN",
+      "title": "Rio Grande do Norte",
+      "d": "M 450.1,173.6 L 465.1,172.4 L 468.6,186.4 L 441.9,203.6 Z"
+    },
+    {
+      "id": "PB",
+      "title": "Paraíba",
+      "d": "M 441.9,203.6 L 468.6,186.4 L 471.6,201.1 L 448.1,208.4 Z"
+    },
+    {
+      "id": "PE",
+      "title": "Pernambuco",
+      "d": "M 406.6,211.6 L 448.1,208.4 L 471.6,201.1 L 462.6,220.4 L 420.6,222.9 L 413.6,231.6 Z"
+    },
+    {
+      "id": "AL",
+      "title": "Alagoas",
+      "d": "M 462.6,220.4 L 452.1,234.4 L 439.1,231.9 L 420.6,222.9 Z"
+    },
+    {
+      "id": "SE",
+      "title": "Sergipe",
+      "d": "M 439.1,231.9 L 452.1,234.4 L 444.6,247.9 L 426.1,241.9 Z"
+    },
+    {
+      "id": "BA",
+      "title": "Bahia",
+      "d": "M 393.6,248.9 L 413.6,231.6 L 420.6,222.9 L 426.1,241.9 L 444.6,247.9 L 438.1,267.4 L 445.6,290.4 L 405.6,306.4 L 372.1,294.9 L 358.1,274.6 L 366.6,252.1 Z"
+    },
+    {
+      "id": "TO",
+      "title": "Tocantins",
+      "d": "M 305.4,244.6 L 336.9,235.6 L 384.4,236.4 L 393.6,248.9 L 366.6,252.1 L 358.1,274.6 L 341.6,268.6 L 329.1,293.6 L 305.1,288.6 L 290.4,271.6 Z"
+    },
+    {
+      "id": "MT",
+      "title": "Mato Grosso",
+      "d": "M 195.1,211.9 L 210.6,215.8 L 235.4,195.1 L 221.9,249.4 L 246.6,278.4 L 264.4,260.6 L 290.4,271.6 L 305.1,288.6 L 329.1,293.6 L 299.1,332.1 L 246.6,339.6 L 233.1,311.6 L 195.1,319.6 L 180.1,232.9 Z"
+    },
+    {
+      "id": "RO",
+      "title": "Rondônia",
+      "d": "M 140.6,249.4 L 158.4,231.1 L 180.1,232.9 L 195.1,319.6 L 186.1,328.6 L 160.1,310.6 L 155.1,282.6 L 138.6,277.6 Z"
+    },
+    {
+      "id": "GO",
+      "title": "Goiás",
+      "d": "M 329.1,293.6 L 341.6,268.6 L 358.1,274.6 L 372.1,294.9 L 369.6,339.6 L 385.1,353.1 L 347.1,364.6 L 328.1,351.6 L 299.1,332.1 Z"
+    },
+    {
+      "id": "DF",
+      "title": "Distrito Federal",
+      "d": "M 347.6,306.4 L 352.6,306.4 L 352.6,311.4 L 347.6,311.4 Z"
+    },
+    {
+      "id": "MG",
+      "title": "Minas Gerais",
+      "d": "M 372.1,294.9 L 405.6,306.4 L 445.6,290.4 L 459.1,316.4 L 442.6,346.4 L 466.1,363.9 L 452.1,387.9 L 419.6,396.4 L 388.1,380.4 L 385.1,353.1 L 369.6,339.6 Z"
+    },
+    {
+      "id": "ES",
+      "title": "Espírito Santo",
+      "d": "M 445.6,290.4 L 438.1,267.4 L 458.1,273.4 L 471.1,304.4 L 459.1,316.4 Z"
+    },
+    {
+      "id": "RJ",
+      "title": "Rio de Janeiro",
+      "d": "M 466.1,363.9 L 442.6,346.4 L 459.1,316.4 L 471.1,304.4 L 491.1,372.4 L 476.1,375.4 Z"
+    },
+    {
+      "id": "SP",
+      "title": "São Paulo",
+      "d": "M 385.1,353.1 L 388.1,380.4 L 419.6,396.4 L 401.1,437.9 L 361.1,434.9 L 346.1,407.9 L 368.1,376.9 L 347.1,364.6 Z"
+    },
+    {
+      "id": "MS",
+      "title": "Mato Grosso do Sul",
+      "d": "M 299.1,332.1 L 328.1,351.6 L 347.1,364.6 L 368.1,376.9 L 346.1,407.9 L 333.1,405.9 L 313.1,422.9 L 273.1,399.9 L 246.6,339.6 Z"
+    },
+    {
+      "id": "PR",
+      "title": "Paraná",
+      "d": "M 333.1,405.9 L 346.1,407.9 L 361.1,434.9 L 391.1,436.9 L 369.1,471.9 L 305.1,446.9 L 313.1,422.9 Z"
+    },
+    {
+      "id": "SC",
+      "title": "Santa Catarina",
+      "d": "M 305.1,446.9 L 369.1,471.9 L 376.1,501.9 L 318.1,489.9 Z"
+    },
+    {
+      "id": "RS",
+      "title": "Rio Grande do Sul",
+      "d": "M 318.1,489.9 L 376.1,501.9 L 356.1,566.9 L 303.1,529.9 Z"
+    }
+  ],
+  "description": "Calculadora de Notificação Compulsória para doenças, agravos e eventos de saúde pública. Consulte prazos e periodicidade de notificação.",
+  "keywords": "Notificação Compulsória, Doenças de notificação, Vigilância Epidemiológica, Saúde Pública, Calculadoras de Enfermagem",
+  "id": "notificacao-compulsoria",
+  "kind": "notificacao",
+  "title": "Notificação compulsória",
+  "lead": "Consulta de prazo e classificação de doenças, agravos e eventos da lista nacional. A seleção de estado mostra o local; a lista em si é nacional.",
+  "sections": [
+    {
+      "heading": "Sobre a lista",
+      "paragraphs": [
+        "Esta consulta reúne a lista nacional de notificação compulsória de doenças, agravos e eventos de saúde pública que já estava publicada nesta página.",
+        "A notificação compulsória é a comunicação obrigatória à autoridade de saúde, feita por médicos, outros profissionais de saúde ou responsáveis por estabelecimentos públicos ou privados, sobre suspeita ou confirmação de doença, agravo ou evento de saúde pública."
+      ],
+      "items": [
+        "Imediata (24h): comunicar em até 24 horas a partir do conhecimento da ocorrência, pelo meio mais rápido disponível.",
+        "Semanal: comunicar em até 7 dias, no fluxo da ficha de notificação.",
+        "Negativa: comunicação semanal de que não houve ocorrência de doença de notificação compulsória na unidade."
+      ]
+    },
+    {
+      "heading": "Como usar",
+      "paragraphs": [],
+      "items": [
+        "Busque pelo nome, pelo agravo ou pelo CID.",
+        "Combine o período (imediata ou semanal) com a classificação (doença, agravo ou evento).",
+        "O mapa define o texto do local. A lista não muda por estado, porque os prazos publicados aqui são os nacionais.",
+        "Limpar filtros volta o local para Nacional e mostra a lista inteira."
+      ]
+    },
+    {
+      "heading": "Informações técnicas",
+      "paragraphs": [
+        "O Sistema de Informação de Agravos de Notificação (SINAN) é alimentado pela notificação e pela investigação dos casos da lista nacional.",
+        "O fluxo sobe da unidade de saúde para a secretaria municipal, a secretaria estadual e o Ministério da Saúde.",
+        "A notificação é obrigatória para médicos, outros profissionais de saúde ou responsáveis pelos serviços públicos e privados que prestam assistência ao paciente.",
+        "Legislação citada na página original: Portaria de Consolidação nº 4, de 28 de setembro de 2017, Anexo V (origem: PRT MS/GM 204/2016)."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Referências",
+      "paragraphs": [
+        "Ministério da Saúde. Lista Nacional de Notificação Compulsória.",
+        "Portaria de Consolidação nº 4, de 28 de setembro de 2017.",
+        "Guia de Vigilância em Saúde. 5ª ed. Brasília: Ministério da Saúde, 2021."
+      ],
+      "items": []
+    }
+  ],
+  "related": []
+}

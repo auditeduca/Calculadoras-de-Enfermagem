@@ -1,0 +1,18 @@
+{
+  "id": "index",
+  "kind": "inicio",
+  "title": "Calculadoras de Enfermagem",
+  "description": "Plataforma de calculadoras e escalas clínicas para enfermagem. Cada ferramenta lê a mesma configuração e mostra a conta, a interpretação e os itens considerados.",
+  "keywords": "enfermagem, cálculo de medicação, escalas clínicas, segurança do paciente",
+  "lead": "As ferramentas abaixo são as que estão no menu. Cada uma usa a mesma casca e a configuração em JSON.",
+  "sections": [
+    {
+      "heading": "O que a ferramenta mostra",
+      "paragraphs": [
+        "O resultado traz a interpretação da faixa e a lista dos itens que entraram na conta. Dá para copiar o resultado ou gerar o PDF na própria página."
+      ],
+      "items": []
+    }
+  ],
+  "related": []
+}

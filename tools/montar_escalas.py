@@ -1521,37 +1521,7 @@ def gravar():
     (RAIZ / "data" / "site.json").write_text(
         json.dumps(site, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("✔ data/site.json")
-    mapa = (RAIZ / "mapa-do-site.html").read_text(encoding="utf-8")
-    bloco = []
-    vistos = set()
-    for _tid, _rot, links in MENU:
-        for alvo, texto in links:
-            if alvo.startswith("__html__"):
-                continue
-            if alvo in vistos:
-                continue
-            vistos.add(alvo)
-            bloco.append(f'                                <a href="{alvo}.html" class="sitemap-link">{texto}</a>')
-    inicio = mapa.find('<section id="pane-escalas"')
-    fim = mapa.find('<section id="pane-biblioteca"')
-    if inicio < 0 or fim < 0:
-        raise SystemExit("mapa do site sem as seções esperadas")
-    novo = (
-        mapa[:inicio]
-        + """<section id="pane-escalas" class="mb-14 scroll-mt-24">
-                            <h2 class="sitemap-category-title"><i class="fa-solid fa-ruler-combined"></i> Escalas de Avaliação</h2>
-                            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-1 text-sm">
-"""
-        + "\n".join(bloco)
-        + """
-                            </div>
-                        </section>
-
-                        """
-        + mapa[fim:]
-    )
-    (RAIZ / "mapa-do-site.html").write_text(novo, encoding="utf-8")
-    print(f"✔ mapa-do-site.html ({len(vistos)} escalas)")
+    print("O mapa do site sai de data/site.json por tools/gerar_conteudo.py.")
 
 
 if __name__ == "__main__":

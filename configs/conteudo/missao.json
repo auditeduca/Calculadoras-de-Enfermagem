@@ -1,0 +1,68 @@
+{
+  "id": "missao",
+  "title": "Nossa Identidade Ética",
+  "description": "Conheça a missão, visão e os valores éticos das Calculadoras de Enfermagem. Nosso compromisso é com a precisão clínica e a segurança do paciente.",
+  "keywords": "missão enfermagem, valores ética enfermagem, visão estratégica saúde, segurança do paciente, calculadoras clínicas",
+  "lead": "Descubra os pilares que sustentam o nosso compromisso com a excelência técnica e a humanização na enfermagem moderna.",
+  "sections": [
+    {
+      "heading": "",
+      "paragraphs": [
+        "O projeto Calculadoras de Enfermagem nasceu da necessidade de unir a precisão matemática à segurança do paciente."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Nossa Missão",
+      "paragraphs": [
+        "Empoderar o profissional de enfermagem através de ferramentas digitais de alta precisão, reduzindo o risco de erros assistenciais e promovendo uma prática clínica baseada em evidências científicas sólidas."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Nossa Visão",
+      "paragraphs": [
+        "Ser a maior referência global em suporte digital para a enfermagem, reconhecida pela fiabilidade técnica, inovação constante e pelo impacto positivo direto na segurança do paciente em instituições de saúde de todo o mundo."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Nossos Valores",
+      "paragraphs": [],
+      "items": [
+        "Ética e Rigor: Compromisso inabalável com a verdade científica.",
+        "Precisão: Tolerância zero para imprecisões em fórmulas clínicas.",
+        "Inovação: Evolução tecnológica centrada no utilizador.",
+        "Humanização: Tecnologia que aproxima o enfermeiro do paciente."
+      ]
+    },
+    {
+      "heading": "Compromisso Social",
+      "paragraphs": [
+        "Acreditamos na democratização do conhecimento técnico. Por isso, mantemos a plataforma acessível e gratuita para estudantes e profissionais, contribuindo para o fortalecimento da enfermagem enquanto pilar fundamental da saúde pública.",
+        "\"Nossa missão é proteger vidas através da precisão técnica.\"",
+        "CONSELHO FEDERAL DE ENFERMAGEM (Brasil). Resolução COFEN nº 564/2017. Código de Ética dos Profissionais de Enfermagem.",
+        "ORGANIZAÇÃO MUNDIAL DA SAÚDE. Segundo Desafio Global para a Segurança do Paciente: Cirurgias Seguras Salvam Vidas."
+      ],
+      "items": []
+    }
+  ],
+  "related": [
+    {
+      "href": "objetivo.html",
+      "title": "Objetivos Estratégicos",
+      "text": "Conheça os pilares científicos e a visão estratégica do projeto."
+    },
+    {
+      "href": "politicadeacessibilidade.html",
+      "title": "Inclusão Sem Barreiras",
+      "text": "Garantindo que nossas ferramentas sejam úteis para todos os profissionais."
+    },
+    {
+      "href": "tecnologiaverde.html",
+      "title": "Sustentabilidade Digital",
+      "text": "Nosso compromisso com a redução do impacto ambiental na saúde."
+    }
+  ],
+  "kind": "pagina"
+}

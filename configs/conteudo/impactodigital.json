@@ -1,0 +1,65 @@
+{
+  "id": "impactodigital",
+  "title": "A Transformação Digital na Enfermagem",
+  "description": "Relatório de Impacto Digital da Calculadoras de Enfermagem. Conheça nossa contribuição para a transformação digital e a segurança do paciente na saúde.",
+  "keywords": "impacto digital, transformação digital, saúde, enfermagem, inovação, SAE digital, tecnologia assistencial",
+  "lead": "Análise do impacto gerado pela tecnologia na assistência, segurança e empoderamento dos profissionais de saúde.",
+  "sections": [
+    {
+      "heading": "",
+      "paragraphs": [
+        "O impacto digital vai além da ferramenta; ele redefine o tempo de resposta e a precisão do cuidado assistencial."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Eficiência na Assistência Direta",
+      "paragraphs": [
+        "A automação de cálculos e escalas reduz o tempo médio de tomada de decisão clínica em até 70%. Isso permite que o enfermeiro dedique mais tempo ao cuidado direto e à humanização, delegando a complexidade matemática à precisão algorítmica."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Segurança do Paciente e Erro Zero",
+      "paragraphs": [
+        "O impacto digital mais significativo é a criação de barreiras tecnológicas contra o erro humano. Ao fornecer resultados validados instantaneamente, a plataforma atua como uma camada crítica de segurança na administração de medicamentos de alta vigilância."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Empoderamento Baseado em Dados",
+      "paragraphs": [
+        "A tecnologia digital transforma dados isolados em indicadores de saúde. Isso empodera o profissional de enfermagem para argumentar tecnicamente em discussões multiprofissionais, utilizando evidências objetivas geradas por escalas digitais."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Escalabilidade e Futuro Digital",
+      "paragraphs": [
+        "O impacto se estende pela capacidade de atualização rápida. À medida que novas evidências científicas surgem, a plataforma digital as propaga instantaneamente para milhares de utilizadores, garantindo que o conhecimento de ponta esteja sempre na palma da mão.",
+        "\"O impacto digital é medido pela segurança de quem cuida e de quem é cuidado.\"",
+        "HIMSS. Digital Health Transformation in Clinical Settings. Relatório sobre adoção tecnológica e redução de erros médicos. 2024.",
+        "COREN/COFEN. O Impacto da Tecnologia na Assistência de Enfermagem. Diretrizes sobre o uso de softwares no suporte à decisão. 2023."
+      ],
+      "items": []
+    }
+  ],
+  "related": [
+    {
+      "href": "tecnologiaverde.html",
+      "title": "Sustentabilidade Digital",
+      "text": "Nosso compromisso com a redução do impacto ambiental na saúde através da tecnologia verde."
+    },
+    {
+      "href": "objetivo.html",
+      "title": "Objetivos da Plataforma",
+      "text": "Conheça os pilares científicos e a visão estratégica que regem este projeto."
+    },
+    {
+      "href": "missao.html",
+      "title": "Missão e Valores",
+      "text": "O compromisso ético e os valores que guiam a nossa identidade na saúde."
+    }
+  ],
+  "kind": "pagina"
+}

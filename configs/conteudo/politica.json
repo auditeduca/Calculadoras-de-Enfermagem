@@ -1,0 +1,63 @@
+{
+  "id": "politica",
+  "title": "Política de Privacidade",
+  "description": "Leia nossa Política de Privacidade. Saiba como as Calculadoras de Enfermagem protegem seus dados e garantem a transparência no tratamento das informações assistenciais.",
+  "keywords": "política de privacidade, proteção de dados, LGPD enfermagem, segurança digital saúde, privacidade online, termos privacidade",
+  "lead": "O nosso compromisso é com a transparência absoluta no tratamento dos seus dados e com o cumprimento rigoroso da LGPD.",
+  "sections": [
+    {
+      "heading": "",
+      "paragraphs": [
+        "Não recolhemos dados pessoais sensíveis de pacientes; a nossa plataforma foca-se exclusivamente no suporte ao cálculo clínico."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Recolha de Informações",
+      "paragraphs": [
+        "Recolhemos apenas dados técnicos anónimos necessários para o funcionamento da plataforma e análise estatística (via Google Analytics), como tipo de browser, idioma e páginas visitadas. Não solicitamos nem armazenamos nomes, CPF ou dados de saúde de pacientes durante o uso das calculadoras."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Finalidade e Uso",
+      "paragraphs": [
+        "As informações estatísticas são utilizadas exclusivamente para melhorar a usabilidade da plataforma, identificar quais calculadoras são mais requisitadas e otimizar o desempenho técnico para conexões lentas em ambiente hospitalar. Nunca vendemos ou partilhamos dados com terceiros para fins de marketing."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Cookies e Tecnologias de Terceiros",
+      "paragraphs": [
+        "Utilizamos cookies essenciais para manter as suas preferências de acessibilidade (como o Modo Escuro). Cookies de terceiros (Google AdSense) podem ser utilizados para exibir anúncios relevantes; no entanto, pode gerir estas preferências diretamente nas definições do seu browser ou através da nossa barra de consentimento."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Segurança e Direitos do Utilizador",
+      "paragraphs": [
+        "Em conformidade com a LGPD, garantimos o direito de acesso, correção ou eliminação de quaisquer dados que nos tenha fornecido voluntariamente (por exemplo, via e-mail de suporte). Empregamos protocolos de encriptação SSL (HTTPS) em toda a navegação para proteger a integridade da comunicação.",
+        "\"A sua privacidade é a base da nossa confiança profissional.\""
+      ],
+      "items": []
+    }
+  ],
+  "related": [
+    {
+      "href": "notificacoes-legais.html",
+      "title": "Notificações Legais",
+      "text": "Avisos importantes sobre isenção profissional e propriedade intelectual."
+    },
+    {
+      "href": "nossocompromisso.html",
+      "title": "Nosso Compromisso",
+      "text": "Governança, transparência e sustentabilidade digital na prática."
+    },
+    {
+      "href": "objetivo.html",
+      "title": "Objetivos d Plataforma",
+      "text": "A visão técnica e científica que guia o desenvolvimento da plataforma."
+    }
+  ],
+  "kind": "pagina"
+}

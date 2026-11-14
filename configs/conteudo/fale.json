@@ -1,0 +1,65 @@
+{
+  "id": "fale",
+  "title": "Canais de Atendimento",
+  "description": "Tem alguma dúvida, sugestão ou precisa de suporte técnico? Entre em contato com a equipe das Calculadoras de Enfermagem. Estamos prontos para ajudar.",
+  "keywords": "contato enfermagem, suporte calculadoras, fale conosco, atendimento saúde, sugestões plataforma, ouvidoria enfermagem",
+  "lead": "Precisa de ajuda, deseja sugerir uma nova calculadora ou reportar um erro técnico? Nossa equipe está à disposição para ouvir você.",
+  "sections": [
+    {
+      "heading": "",
+      "paragraphs": [
+        "Valorizamos o feedback da comunidade assistencial para manter a plataforma sempre atualizada e segura."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Suporte Técnico e Dúvidas",
+      "paragraphs": [
+        "Tem dificuldades em utilizar alguma calculadora ou encontrou um comportamento inesperado? Nossa equipe técnica analisa cada reporte para garantir que a precisão matemática da ferramenta seja mantida em 100%."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Parcerias e Projetos Científicos",
+      "paragraphs": [
+        "Representa uma instituição de ensino ou hospital e deseja integrar nossas ferramentas ao seu fluxo de trabalho? Estamos abertos a parcerias estratégicas e colaborações em pesquisas científicas que visem a segurança do paciente."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Ouvidoria e Ética Assistencial",
+      "paragraphs": [
+        "Mantemos um canal ético rigoroso. Se tiver comentários sobre a fundamentação teórica das nossas escalas ou sugestões sobre conduta profissional, nossa comissão assistencial está pronta para avaliar."
+      ],
+      "items": []
+    },
+    {
+      "heading": "Sugestões e Novas Ferramentas",
+      "paragraphs": [
+        "A plataforma evolui com base no seu plantão. Se sente falta de uma escala específica ou de uma fórmula de cálculo recorrente na sua rotina, envie sua sugestão para que possamos desenvolvê-la.",
+        "\"Sua voz ajuda a construir uma enfermagem mais segura e tecnológica.\"",
+        "E-mail de Suporte: suporte@calculadorasdeenfermagem.com.br",
+        "Redes Sociais: @CalculadorasEnfermagem (Direct/Mensagem Privada)"
+      ],
+      "items": []
+    }
+  ],
+  "related": [
+    {
+      "href": "objetivo.html",
+      "title": "Objetivos Estratégicos",
+      "text": "Conheça os pilares científicos e a visão estratégica do projeto."
+    },
+    {
+      "href": "missao.html",
+      "title": "Missão e Valores",
+      "text": "O compromisso ético e os pilares técnicos que sustentam nosso projeto."
+    },
+    {
+      "href": "politicadeacessibilidade.html",
+      "title": "Inclusão Sem Barreiras",
+      "text": "Garantindo que nossas ferramentas sejam úteis para todos os profissionais."
+    }
+  ],
+  "kind": "pagina"
+}

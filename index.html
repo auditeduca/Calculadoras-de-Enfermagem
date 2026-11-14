@@ -1,312 +1,60 @@
 <!DOCTYPE html>
+<!-- gerado por tools/gerar_conteudo.py — não editar à mão -->
 <html lang="pt-br" class="scroll-smooth">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-
-  <!-- SEO & MONETIZAÇÃO -->
-  <title id="page-title">Calculadoras de Enfermagem Profissional</title>
-  <meta name="description" content="Plataforma profissional de calculadoras clínicas para enfermagem com foco em segurança do paciente e auditoria de cálculos.">
-  <meta name="keywords" content="enfermagem, cálculo de medicação, segurança do paciente, auditoria clínica, insulina, heparina, gotejamento">
-  <meta name="author" content="Calculadoras de Enfermagem">
-  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadoras de Enfermagem</title>
+  <meta name="description" content="Plataforma de calculadoras e escalas clínicas para enfermagem. Cada ferramenta lê a mesma configuração e mostra a conta, a interpretação e os itens considerados."/>
+  <meta name="keywords" content="enfermagem, cálculo de medicação, escalas clínicas, segurança do paciente"/>
+  <meta name="author" content="Calculadoras de Enfermagem"/>
+  <meta name="robots" content="index, follow"/>
   <link rel="canonical" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/"/>
-  
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Calculadoras de Enfermagem - Precisão e Segurança">
-  <meta property="og:description" content="Plataforma profissional com protocolos integrados para enfermagem.">
-  <meta property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/">
-  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:site_name" content="Calculadoras de Enfermagem">
-  <meta property="og:updated_time" content="2026-02-05T00:00:00-03:00">
-
-  <!-- Twitter Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Calculadoras de Enfermagem - Precisão e Segurança">
-  <meta name="twitter:description" content="Plataforma profissional com protocolos integrados para enfermagem.">
-  <meta name="twitter:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp">
-  <meta name="twitter:creator" content="@CalculadorasEnf">
-
-  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" type="image/webp"/>
-
-  <!-- Fontes e Ícones -->
+  <link rel="alternate" hreflang="pt-br" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/"/>
+  <link rel="alternate" hreflang="x-default" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Calculadoras de Enfermagem"/>
+  <meta property="og:description" content="Plataforma de calculadoras e escalas clínicas para enfermagem. Cada ferramenta lê a mesma configuração e mostra a conta, a interpretação e os itens considerados."/>
+  <meta property="og:url" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/"/>
+  <meta property="og:image" content="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/logotipo-calculadoras-de-enfermagem.webp"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Calculadoras de Enfermagem"/>
+  <meta name="twitter:description" content="Plataforma de calculadoras e escalas clínicas para enfermagem. Cada ferramenta lê a mesma configuração e mostra a conta, a interpretação e os itens considerados."/>
+  <link rel="icon" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/favicon-calculadoras-de-enfermagem.webp" type="image/webp"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-  
-  <!-- Tailwind CSS - Versão mais recente e estável -->
- <script src="https://cdn.tailwindcss.com"></script>
-
-<script>
-  // Verificação de segurança: Só configura se o script carregou com sucesso
-  if (typeof tailwind !== 'undefined') {
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: { 
-            nunito: ['"Nunito Sans"', 'sans-serif'], 
-            inter: ['Inter', 'sans-serif'] 
-          },
-          colors: { 
-            'nurse-primary': '#1A3E74', 
-            'nurse-secondary': '#00bcd4', 
-            'nurse-accent': '#00838f', 
-            'nurse-bgDark': '#0F172A' 
-          },
-          animation: {
-            'slide-in': 'slideIn 0.3s ease-out',
-            'fade-in': 'fadeIn 0.3s ease-out',
-            'pulse-slow': 'pulse 3s infinite',
-            'bounce-slow': 'bounce 2s infinite',
-          }
-        }
-      }
-    }
-  } else {
-    console.error("❌ Falha crítica: O script do Tailwind não foi carregado via CDN.");
-  }
-</script>
-  
-  <!-- Estilos Modulares (CSS Externo) -->
-  <link rel="stylesheet" href="assets/css/variables-v4.css"/>
-  <link rel="stylesheet" href="assets/css/header-v4.css"/>
-  <link rel="stylesheet" href="assets/css/footer-v4.css"/>
-  <link rel="stylesheet" href="assets/css/accessibility-v4.css"/>
-  <link rel="stylesheet" href="assets/css/components-v4.css"/>
-  <link rel="stylesheet" href="assets/css/animations-v4.css"/>
-
-  <!-- Estilos Base para Fallback -->
-  <style>
-    /* Estilos base para caso o Tailwind falhe */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f8fafc;
-      color: #0f172a;
-    }
-    
-    .dark body {
-      background-color: #0F172A;
-      color: #cbd5e1;
-    }
-    
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Nunito Sans', sans-serif;
-      font-weight: 800;
-    }
-    
-    /* Classes utilitárias básicas */
-    .hidden {
-      display: none !important;
-    }
-    
-    .flex {
-      display: flex;
-    }
-    
-    .grid {
-      display: grid;
-    }
-    
-    /* Animações básicas */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    .animate-fade-in {
-      animation: fadeIn 0.3s ease-out;
-    }
-  </style>
-
-  <!-- Schema.org -->
-  <script type="application/ld+json">
-  {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Calculadoras de Enfermagem",
-      "description": "Plataforma profissional de calculadoras clínicas para enfermagem",
-      "applicationCategory": "MedicalApplication",
-      "operatingSystem": "Any",
-      "browserRequirements": "Requires JavaScript",
-      "screenshot": "https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp",
-      "author": {
-          "@type": "Organization",
-          "name": "Calculadoras de Enfermagem"
-      }
-  }
-  </script>
-</head>
-<body class="flex flex-col min-h-screen">
-
-  <!-- Indicador de offline -->
-  <div id="offline-indicator" 
-       class="fixed bottom-4 right-4 bg-yellow-500 text-white px-4 py-3 rounded-xl shadow-xl z-[9999] hidden animate-fade-in"
-       role="alert"
-       aria-live="polite">
-    <div class="flex items-center gap-3">
-      <i class="fa-solid fa-wifi-slash text-lg"></i>
-      <div>
-        <p class="font-bold text-sm">Você está offline</p>
-        <p class="text-xs opacity-90">Algumas funcionalidades podem estar limitadas</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONTAINERS PARA MÓDULOS MODULARES -->
-  <div id="accessibility-container"></div>
-  <div id="notification-container" class="fixed top-6 right-6 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
-  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px] transition-opacity duration-500 opacity-50 shadow-sm"></div>
-
-  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 pt-24 pb-8 md:py-12 w-full">
-    
-    <!-- BREADCRUMB RESPONSIVO -->
-    <nav id="breadcrumb" class="mb-8 font-semibold">
-        <!-- O breadcrumb será injetado dinamicamente -->
-    </nav>
-
-    <!-- ÁREA PARA CONTEÚDO DINÂMICO -->
-    <div id="dynamic-content"></div>
-
-    <!-- SEÇÃO DO AUTOR (Comum a todas as páginas) -->
-    <section id="author-section" class="max-w-7xl mx-auto px-4 py-12 border-t border-slate-200 dark:border-slate-800 mt-20">
-        <!-- O conteúdo será injetado dinamicamente -->
-    </section>
-  </main>
-
-  <div id="footer-container" class="relative z-10 transition-opacity duration-500 opacity-50"></div>
-
-  <!-- MODAL GENÉRICO -->
-  <div id="generic-modal" 
-       class="fixed inset-0 z-[10001] hidden"
-       aria-hidden="true"
-       aria-labelledby="modal-title"
-       aria-describedby="modal-content"
-       role="dialog">
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="window.SystemUtils.closeModal()" role="presentation"></div>
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[90vh] overflow-hidden">
-      <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl mx-4 overflow-hidden flex flex-col max-h-[90vh]" role="document">
-        <div class="bg-nurse-primary dark:bg-slate-900 text-white p-6 flex justify-between items-center">
-          <div class="flex items-center gap-3">
-            <i id="modal-icon" class="fa-solid text-2xl"></i>
-            <h3 id="modal-title" class="text-xl font-bold font-nunito"></h3>
-          </div>
-          <button onclick="window.SystemUtils.closeModal()" class="text-white hover:text-nurse-secondary text-xl" aria-label="Fechar modal">
-            <i class="fa-solid fa-times"></i>
-          </button>
-        </div>
-        <div id="modal-content" class="p-6 overflow-y-auto flex-grow text-sm"></div>
-        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 border-t border-slate-200 dark:border-slate-700">
-          <button onclick="window.SystemUtils.closeModal()" class="w-full bg-nurse-accent hover:bg-nurse-primary text-white font-bold py-3 rounded-xl transition" aria-label="Fechar">
-            Fechar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PDF TEMPLATE (OCULTO) -->
-  <div id="pdf-render-template" style="position: absolute; left: -9999px; top: 0; width: 794px; background: white; padding: 40px; color: #0f172a; font-family: 'Inter', sans-serif;">
-    <div id="pdf-body"></div>
-  </div>
-
-  <!-- SCRIPTS DO SISTEMA -->
-  <!-- Carregar scripts na ordem correta -->
-  <script src="assets/js/system-utils-v4.js"></script>
-  <script src="assets/js/page-loader-v4.js"></script>
-  <script src="assets/js/calculator-system-v4.js"></script>
-  
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Verificar se o Tailwind foi carregado
-    function checkTailwindLoaded() {
-      const tailwindClasses = ['flex', 'grid', 'hidden', 'block'];
-      const testDiv = document.createElement('div');
-      testDiv.className = tailwindClasses.join(' ');
-      document.body.appendChild(testDiv);
-      
-      // Verificar se as classes foram aplicadas
-      const computedStyle = window.getComputedStyle(testDiv);
-      const isFlex = computedStyle.display === 'flex' || computedStyle.display === 'grid';
-      
-      testDiv.remove();
-      return isFlex;
-    }
-
-    /// Inicializar quando o DOM carregar
-document.addEventListener('DOMContentLoaded', async () => {
-  console.log('🚀 Inicializando sistema modular...');
-  
-  try {
-    // 1. Verificar se o Tailwind foi carregado
-    if (!checkTailwindLoaded()) {
-      console.warn('⚠️ Tailwind não carregado completamente, usando fallback CSS');
-      document.body.classList.add('tailwind-fallback');
-    }
-    
-    // 2. Garantir que SystemUtils está carregado
-    if (typeof window.SystemUtils === 'undefined') {
-      await loadScript('assets/js/system-utils-v4.js');
-    }
-    
-    // 3. Carregar módulos básicos de interface
-    await Promise.all([
-      window.SystemUtils.loadModule('accessibility-container', 'assets/components/accessibility-v4.html'),
-      window.SystemUtils.loadModule('header-container', 'assets/components/header-v4.html'),
-      window.SystemUtils.loadModule('footer-container', 'assets/components/footer-v4.html')
-    ]);
-    
-    // 4. Inicializar componentes carregados
-    if (typeof window.initializeAccessibility === 'function') window.initializeAccessibility();
-    if (typeof window.initializeHeader === 'function') window.initializeHeader();
-    
-    // 5. Garantir que PageLoader está carregado
-    if (typeof window.PageLoader === 'undefined') {
-      await loadScript('assets/js/page-loader-v4.js');
-    }
-    
-    // 6. Carregar o conteúdo da página atual
-    await window.PageLoader.loadCurrentPage();
-
-    // 7. Injeção de lógica específica da calculadora (via MainContentInjector)
-    if (typeof window.MainContentInjector !== 'undefined') {
-        const currentPath = window.location.pathname;
-        if (currentPath.includes('insulina')) {
-            await window.MainContentInjector.inject('insulina');
-        } else if (currentPath.includes('heparina')) {
-            await window.MainContentInjector.inject('heparina');
-        }
-    }
-    
-    console.log('✅ Sistema inicializado com sucesso');
-    
-  } catch (error) {
-    console.error('❌ Erro ao inicializar sistema:', error);
-    
-    // Fallback de emergência para o conteúdo dinâmico
-    const dynamicContent = document.getElementById('dynamic-content');
-    if (dynamicContent) {
-      dynamicContent.innerHTML = `
-        <div class="text-center py-20 px-4">
-          <h1 class="text-3xl font-black text-nurse-primary mb-4">Erro de Carregamento</h1>
-          <p class="text-slate-600 mb-8">Não foi possível carregar a calculadora. Por favor, tente atualizar a página.</p>
-          <button onclick="window.location.reload()" class="bg-nurse-primary text-white px-6 py-2 rounded-xl">Atualizar</button>
-        </div>
-      `;
-    }
-  }
-});
+    tailwind.config = { darkMode: 'class', theme: { extend: {
+      fontFamily: { nunito: ['"Nunito Sans"', 'sans-serif'], inter: ['Inter', 'sans-serif'] },
+      colors: { 'nurse-primary': '#1A3E74', 'nurse-secondary': '#00838f', 'nurse-bgDark': '#0F172A' }
+    }}};
   </script>
+  <script src="assets/js/module-loader-v5.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-nurse-bgDark dark:text-slate-100 antialiased font-inter">
+  <div id="accessibility-container"></div>
+  <div id="header-container" class="sticky top-0 z-50 bg-white dark:bg-nurse-bgDark min-h-[70px]"></div>
+  <main id="main-content" class="max-w-6xl mx-auto px-4 pt-8 pb-16">
+<nav class="text-sm text-slate-500 mb-4" aria-label="Trilha"><a class="hover:underline" href="index.html">Início</a></nav>
+<h1 class="text-3xl md:text-4xl font-black text-nurse-primary dark:text-white font-nunito">Calculadoras de Enfermagem</h1>
+<p class="mt-3 text-lg text-slate-600 dark:text-slate-300 max-w-3xl">As ferramentas abaixo são as que estão no menu. Cada uma usa a mesma casca e a configuração em JSON.</p>
+<section class="mt-8"><h2 class="text-xl font-black text-nurse-primary dark:text-white mb-3">Calculadoras clínicas</h2><ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2"><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/heparina/">Aspiração de heparina</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/insulina/">Aspiração de insulina</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/balancohidrico/">Balanço hídrico</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/dimensionamento/">Dimensionamento de pessoal</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/gasometria/">Gasometria arterial</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/gotejamento/">Gotejamento</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/gestacional/">Idade gestacional e DPP</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/imc/">Índice de massa corporal</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/medicamentos/">Cálculo de medicamentos</a></li></ul></section>
+<section class="mt-8"><h2 class="text-xl font-black text-nurse-primary dark:text-white mb-3">Risco assistencial</h2><ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2"><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/aldrete/">Aldrete e Kroulik</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/asa/">Classificação ASA</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/braden/">Braden</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/norton/">Norton</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/gosnell/">Gosnell</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/waterlow/">Waterlow</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/elpo/">ELPO</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/morse/">Morse</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/downton/">Downton</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/hendrich/">Hendrich II</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/humpty/">Humpty Dumpty</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/johns/">Johns Hopkins</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/ofras/">OFRAS</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/berg/">Berg</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/tinetti/">Tinetti</a></li></ul></section>
+<section class="mt-8"><h2 class="text-xl font-black text-nurse-primary dark:text-white mb-3">Dor e sedação</h2><ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2"><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/escalanumerica/">Escala numérica</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/bps/">BPS</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/flacc/">FLACC</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/cries/">CRIES</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/nips/">NIPS</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/painad/">PAINAD</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/lanss/">LANSS</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/ramsay/">Ramsay</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/richmond/">Richmond (RASS)</a></li></ul></section>
+<section class="mt-8"><h2 class="text-xl font-black text-nurse-primary dark:text-white mb-3">Neurologia e cognição</h2><ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2"><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/glasgow/">Glasgow</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/four/">FOUR</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/jouvet/">Jouvet</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/cincinnati/">Cincinnati</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/fast/">FAST</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/nihss/">NIHSS</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/rancholosamigos/">Rancho Los Amigos</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/meem/">Mini-Exame do Estado Mental</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/moca/">MoCA</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/cam/">CAM-ICU</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/gds/">Depressão geriátrica</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/cornell/">Cornell</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/hamilton/">Hamilton — ansiedade</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/zarit/">Zarit</a></li></ul></section>
+<section class="mt-8"><h2 class="text-xl font-black text-nurse-primary dark:text-white mb-3">Funcionalidade</h2><ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2"><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/barthel/">Barthel</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/katz/">Katz</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/lawton/">Lawton</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/lachs/">Lachs</a></li></ul></section>
+<section class="mt-8"><h2 class="text-xl font-black text-nurse-primary dark:text-white mb-3">Obstetrícia e neonatologia</h2><ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2"><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/apgar/">Apgar</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/bishop/">Bishop</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/ballard/">Ballard</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/capurro/">Capurro somático</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/silverman/">Silverman-Andersen</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/downes/">Wood-Downes</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/meows/">MEOWS</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/pews/">PEWS</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/prism/">PRISM</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/pelod/">PELOD-2</a></li></ul></section>
+<section class="mt-8"><h2 class="text-xl font-black text-nurse-primary dark:text-white mb-3">Gravidade e triagem</h2><ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2"><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/apache/">APACHE II</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/news/">NEWS2</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/qsofa/">qSOFA</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/sofa/">SOFA</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/curb-65/">CURB-65</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/saps/">SAPS 3</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/manchester/">Manchester</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/fugulin/">Fugulin</a></li><li><a class="text-nurse-secondary font-semibold hover:underline" href="calculadoras/perroca/">Perroca</a></li></ul></section>
+<section class="mt-8"><h2 class="text-xl font-black text-nurse-primary dark:text-white mb-3">Ferramentas específicas</h2><ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2"><li><a class="text-nurse-secondary font-semibold hover:underline" href="notificacao-compulsoria.html">Notificações compulsórias</a></li></ul></section>
+<p class="mt-8"><a class="font-bold text-nurse-secondary hover:underline" href="mapa-do-site.html">Ver o mapa do site</a></p>
+<h2 class="text-2xl font-black text-nurse-primary dark:text-white mt-10 mb-3">O que a ferramenta mostra</h2>
+<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">O resultado traz a interpretação da faixa e a lista dos itens que entraram na conta. Dá para copiar o resultado ou gerar o PDF na própria página.</p>
+  </main>
+  <div id="footer-container"></div>
+
 </body>
 </html>
