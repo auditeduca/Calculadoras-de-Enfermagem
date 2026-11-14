@@ -109,7 +109,11 @@ rodapé sem logotipo oficial, páginas fora de padrão e problemas de contraste.
    `calculator-engine.js`, como nas páginas v4 da raiz (apgar.html etc.).
 5. **Revisão de contraste página a página** — os tokens globais foram
    corrigidos; vale auditar usos pontuais de cores fora dos tokens.
-6. **Unificar domínio canônico** — há referências mistas a
+6. **Reserva de espaço do cabeçalho** — nas páginas de `calculadoras/` o
+   contêiner do cabeçalho é criado em tempo de execução, o que gera um salto
+   de layout breve na carga. Mitigação futura: declarar os contêineres no
+   HTML (como no template v5) ao migrar essas páginas para o motor JSON.
+7. **Unificar domínio canônico** — há referências mistas a
    `auditeduca.github.io`, `calculadoras-enfermagem.github.io` e
    `www.calculadorasdeenfermagem.com.br` (fora do ar). O `baseUrl` em
    `data/site.json` centraliza isso para os componentes; os metadados das
