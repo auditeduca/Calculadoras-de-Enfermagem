@@ -14,7 +14,7 @@
     /* Primary Colors */
     --color-primary: #1A3E74;
     --color-primary-hover: #0d2847;
-    --color-accent: #00bcd4;
+    --color-accent: #00838f; /* WCAG AA: 4.7:1 sobre branco para texto/foco (antes #00bcd4 = 2.2:1) */
     --color-accent-glow: #00bcd4;
     --color-accent-light: #7dd3fc;
     
